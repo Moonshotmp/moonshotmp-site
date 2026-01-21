@@ -26,7 +26,11 @@
         <input id="email" name="email" type="email" placeholder="name@acme.com" />
       </label>
 
-      <button type="submit">Save Partner</button>
+      <div style="display:flex; gap:10px; margin-top:12px; align-items:center;">
+        <button id="save-btn" type="submit" class="btn-primary">Save Partner</button>
+        <button id="connect-stripe" type="button" class="btn-outline">Connect Stripe</button>
+        <a id="view-store" class="btn-outline" href="#" style="display:none;">View Store</a>
+      </div>
     </form>
 
     <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
@@ -34,9 +38,26 @@
 
   <script>
     const statusEl = document.getElementById("status");
+    const slugEl = document.getElementById("slug");
+    const viewStoreEl = document.getElementById("view-store");
 
-    function setStatus(msg) {
-      statusEl.textContent = msg;
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    function getSlugFromUrl() {
+      const url = new URL(window.location.href);
+      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    }
+
+    function setSlugInUrl(slug) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("slug", slug);
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    function updateStoreLink(slug) {
+      if (!slug) { viewStoreEl.style.display = "none"; return; }
+      viewStoreEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      viewStoreEl.style.display = "inline-flex";
     }
 
     async function savePartnerToServer(partner) {
@@ -48,27 +69,48 @@
 
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error || "Failed to save partner");
-      return data; // { ok: true, slug: "..." }
+      return data; // { ok:true, slug }
     }
+
+    // Prefill slug if coming back from Stripe
+    window.addEventListener("DOMContentLoaded", () => {
+      const slug = getSlugFromUrl();
+      if (slug) {
+        slugEl.value = slug;
+        updateStoreLink(slug);
+      }
+      const stripeStatus = new URL(window.location.href).searchParams.get("stripe");
+      if (stripeStatus) setStatus(`Stripe: ${stripeStatus}`);
+    });
 
     document.getElementById("partner-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       setStatus("");
 
       const partner = {
-        slug: document.getElementById("slug").value.trim(),
+        slug: slugEl.value.trim(),
         name: document.getElementById("name").value.trim(),
         email: document.getElementById("email").value.trim(),
       };
 
       try {
         const saved = await savePartnerToServer(partner);
+        setSlugInUrl(saved.slug);
+        updateStoreLink(saved.slug);
         setStatus(JSON.stringify(saved, null, 2));
-        window.location.href = `/partners/store.html?slug=${encodeURIComponent(saved.slug)}`;
       } catch (err) {
         setStatus(String(err?.message || err));
         alert(err?.message || String(err));
       }
+    });
+
+    document.getElementById("connect-stripe").addEventListener("click", () => {
+      const slug = slugEl.value.trim().toLowerCase();
+      if (!slug) {
+        alert("Enter a slug first, then click Save Partner.");
+        return;
+      }
+      window.location.href = `/.netlify/functions/stripe-connect-start?slug=${encodeURIComponent(slug)}`;
     });
   </script>
 </body>
