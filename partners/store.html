@@ -31,16 +31,31 @@
 
     async function loadPartner(slug) {
       const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error || "Failed to load partner");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load partner");
       return data;
     }
 
     async function loadCatalog() {
       const res = await fetch("/partners/catalog.json", { cache: "no-store" });
-      const data = await res.json().catch(() => null);
-      if (!res.ok || !data) throw new Error("Failed to load catalog");
-      return Array.isArray(data) ? data : (data.products || []);
+      const data = await res.json();
+      return Array.isArray(data) ? data : data.products || [];
+    }
+
+    async function startCheckout(slug, productId) {
+      const res = await fetch("/.netlify/functions/create-checkout-session", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ slug, productId }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || "Checkout failed");
+        return;
+      }
+
+      window.location.href = data.url;
     }
 
     function escapeHtml(s) {
@@ -49,119 +64,49 @@
       );
     }
 
-    function resolveImageUrl(img) {
+    function resolveImage(img) {
       if (!img) return "";
-      const s = String(img).trim();
-
-      // already absolute URL
-      if (/^https?:\/\//i.test(s)) return s;
-
-      // absolute path
-      if (s.startsWith("/")) return s;
-
-      // filename -> /images/<filename>
-      return `/images/${s}`;
+      if (img.startsWith("http") || img.startsWith("/")) return img;
+      return `/images/${img}`;
     }
 
-    function renderCatalog(products) {
-      const active = products.filter(p => p?.active !== false);
-
-      if (!active.length) {
-        statusEl.textContent = "No active products found in catalog.json";
-        gridEl.innerHTML = "";
-        return;
-      }
-
-      statusEl.textContent = "";
-      gridEl.innerHTML = active.map(p => {
-        const name = escapeHtml(p.name || p.title || "Unnamed");
-        const desc = escapeHtml(p.description || "");
-        const price = p.price != null ? `$${p.price}` : "";
-        const imgUrl = resolveImageUrl(p.image || p.imageUrl || "");
-
-        // We hide broken images with onerror; no broken icon
-        const imgHtml = imgUrl ? `
-          <div class="img-wrap">
-            <img class="card-img" src="${escapeHtml(imgUrl)}" alt="${name}"
-                 onerror="this.style.display='none'; this.parentElement.classList.add('img-missing');" />
-          </div>
-        ` : `<div class="img-wrap img-missing"></div>`;
-
+    function renderCatalog(products, slug) {
+      gridEl.innerHTML = products.map(p => {
+        const img = resolveImage(p.image);
         return `
           <div class="card">
-            ${imgHtml}
+            <div class="img-wrap">
+              ${img ? `<img class="card-img" src="${img}" />` : `<div>No image</div>`}
+            </div>
             <div class="card-body">
-              <div class="card-title">${name}</div>
-              ${desc ? `<div class="card-desc">${desc}</div>` : ""}
-              <div class="card-meta">
-                ${price ? `<span class="pill">${escapeHtml(price)}</span>` : ""}
-              </div>
-              <div class="card-actions">
-                <button class="btn" disabled>Buy (soon)</button>
-              </div>
+              <div class="card-title">${escapeHtml(p.name)}</div>
+              <div class="card-desc">${escapeHtml(p.description || "")}</div>
+              <div class="pill">$${p.price}</div>
+              <button class="btn"
+                onclick="startCheckout('${slug}', '${p.id}')">
+                Buy
+              </button>
             </div>
           </div>
         `;
       }).join("");
     }
 
-    function injectStyles() {
-      const css = `
-        #catalog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px; }
-
-        .card { border:1px solid rgba(255,255,255,0.12); border-radius:16px; overflow:hidden; background:rgba(255,255,255,0.03); }
-        .card-body { padding:16px; }
-        .card-title { font-size:16px; font-weight:700; margin:0 0 8px 0; }
-        .card-desc { font-size:13px; opacity:0.85; line-height:1.4; margin:0 0 12px 0; }
-        .card-meta { display:flex; gap:10px; margin-bottom:14px; }
-        .pill { display:inline-block; font-size:12px; border:1px solid rgba(255,255,255,0.14); padding:4px 10px; border-radius:999px; }
-
-        /* Logo-card style image area */
-        .img-wrap {
-          height: 170px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          background: rgba(255,255,255,0.04);
-          border-bottom: 1px solid rgba(255,255,255,0.10);
-        }
-        .card-img {
-          max-width: 78%;
-          max-height: 78%;
-          object-fit: contain;
-          display:block;
-          filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
-        }
-        .img-missing::after {
-          content: "No image";
-          font-size: 12px;
-          opacity: 0.65;
-        }
-
-        .card-actions { display:flex; gap:10px; }
-        .btn { padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:inherit; cursor:not-allowed; }
-      `;
-      const style = document.createElement("style");
-      style.textContent = css;
-      document.head.appendChild(style);
-    }
-
     window.addEventListener("DOMContentLoaded", async () => {
-      injectStyles();
-
       const slug = getSlugFromUrl();
-      if (!slug) {
-        subtitleEl.textContent = "Missing slug";
-        return;
-      }
+      if (!slug) return;
 
       try {
-        const [partner, products] = await Promise.all([ loadPartner(slug), loadCatalog() ]);
-        titleEl.textContent = partner?.name ? `${partner.name} Store` : `Store: ${slug}`;
+        const [partner, products] = await Promise.all([
+          loadPartner(slug),
+          loadCatalog(),
+        ]);
+
+        titleEl.textContent = `${partner.name} Store`;
         subtitleEl.textContent = `slug: ${slug}`;
-        renderCatalog(products);
+        renderCatalog(products, slug);
       } catch (err) {
-        subtitleEl.textContent = err.message || String(err);
+        statusEl.textContent = err.message;
       }
     });
   </script>
