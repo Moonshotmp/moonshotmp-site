@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Connect Stripe</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+</head>
+<body>
+  <section class="section section-dark bg-texture">
+    <div class="container" style="max-width: 720px;">
+      <h1>Connect Stripe</h1>
+      <p class="lead">Final step: connect your Stripe account so you can accept payments from your storefront.</p>
+
+      <div class="card" style="padding: 1.5rem;">
+        <div class="muted">Partner slug</div>
+        <div id="slug" style="margin-bottom: 1rem; font-family: var(--font-heading); letter-spacing: 0.05em;"></div>
+
+        <div style="display:flex; gap:10px; align-items:center; margin-top: 1rem;">
+          <button id="connect" class="btn-primary" type="button">Connect Stripe</button>
+          <a id="store" class="btn-outline" href="#" style="display:none;">View Store</a>
+        </div>
+
+        <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const slugEl = document.getElementById("slug");
+    const statusEl = document.getElementById("status");
+    const storeEl = document.getElementById("store");
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    function getSlug() {
+      const url = new URL(window.location.href);
+      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    }
+
+    const slug = getSlug();
+    if (!slug) {
+      setStatus("Missing slug. Go back to /partners/setup.html to create your store first.");
+    } else {
+      slugEl.textContent = slug;
+      storeEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      storeEl.style.display = "inline-flex";
+    }
+
+    document.getElementById("connect").addEventListener("click", () => {
+      if (!slug) return;
+      window.location.href = `/.netlify/functions/stripe-connect-start?slug=${encodeURIComponent(slug)}`;
+    });
+
+    const stripeStatus = new URL(window.location.href).searchParams.get("stripe");
+    if (stripeStatus) setStatus(`Stripe: ${stripeStatus}`);
+  </script>
+</body>
+</html>
