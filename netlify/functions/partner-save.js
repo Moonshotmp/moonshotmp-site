@@ -3,7 +3,7 @@ import { getStore } from "@netlify/blobs";
 const STORE_NAME = "partners";
 const KEY_PREFIX = "partners/";
 
-const json = (status, body, extraHeaders = {}) =>
+const json = (status, body) =>
   new Response(JSON.stringify(body, null, 2), {
     status,
     headers: {
@@ -11,7 +11,6 @@ const json = (status, body, extraHeaders = {}) =>
       "access-control-allow-origin": "*",
       "access-control-allow-methods": "POST,OPTIONS",
       "access-control-allow-headers": "content-type",
-      ...extraHeaders,
     },
   });
 
@@ -38,21 +37,30 @@ export default async (req) => {
   const store = getStore(STORE_NAME);
   const key = `${KEY_PREFIX}${slug}`;
 
-  // Load existing record so we don't wipe fields like stripe.*
   const existing = await store.get(key, { type: "json", consistency: "strong" });
+
+  // Duplicate prevention: create-only mode
+  if (payload?.createOnly && existing) {
+    return json(409, { error: "Store already exists", slug });
+  }
 
   const now = new Date().toISOString();
 
-  // Preserve createdAt and stripe unless explicitly provided
   const partner = {
     ...(existing || {}),
     ...(payload || {}),
     slug,
-
     createdAt: existing?.createdAt || payload?.createdAt || now,
     updatedAt: now,
 
-    stripe: payload?.stripe ? { ...(existing?.stripe || {}), ...(payload.stripe || {}) } : (existing?.stripe || undefined),
+    // Preserve important nested objects unless explicitly provided
+    stripe: payload?.stripe
+      ? { ...(existing?.stripe || {}), ...(payload.stripe || {}) }
+      : (existing?.stripe || undefined),
+
+    branding: payload?.branding
+      ? { ...(existing?.branding || {}), ...(payload.branding || {}) }
+      : (existing?.branding || undefined),
   };
 
   await store.setJSON(key, partner);
