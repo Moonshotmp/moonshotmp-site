@@ -9,6 +9,9 @@
 <body>
   <main class="container">
     <h1 id="title">Partner Store</h1>
+    <div id="partner-logo-wrap" style="display:none;margin:8px 0 10px 0;">
+      <img id="partner-logo" alt="Partner logo" style="max-height:70px;max-width:220px;object-fit:contain;display:block;" />
+    </div>
     <p id="subtitle"></p>
 
     <section style="margin-top:24px;">
@@ -176,3 +179,41 @@ button.btn { cursor: pointer !important; }
     cursor: pointer;
   }
 </style>
+
+<style>
+  /* Prevent super-wide stretched cards on big screens */
+  #catalog-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+    gap: 16px;
+    justify-content: start; /* cards stay same width, grid doesn't stretch them */
+  }
+
+  /* Optional: center the whole grid block on ultra-wide screens */
+  @media (min-width: 1200px){
+    #catalog-grid{ justify-content: center; }
+  }
+</style>
+
+<style>
+  /* Prevent super-wide stretched cards on big screens */
+  #catalog-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+    gap: 16px;
+    justify-content: start; /* cards stay same width, grid doesn't stretch them */
+  }
+
+  /* Optional: center the whole grid block on ultra-wide screens */
+  @media (min-width: 1200px){
+    #catalog-grid{ justify-content: center; }
+  }
+</style>
+
+<script>
+  // If partner logo exists, render it (non-dominant sizing)
+  (function () {
+    const original = window.addEventListener;
+    // no-op: this is just a marker to avoid duplicate injections
+  })();
+</script>
