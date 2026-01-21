@@ -5,24 +5,18 @@
       "name": "DEXA Scan",
       "description": "Full-body DEXA scan measuring body fat %, lean mass, and visceral fat.",
       "price": 149,
-      "image": "/images/products/dexa.jpg",
+      "image": "dexa.png",
       "sku": "DEXA-001",
-      "active": true,
-      "stripe": {
-        "priceId": null
-      }
+      "active": true
     },
     {
       "id": "core-labs",
       "name": "Core Performance Labs",
       "description": "Bloodwork covering key metabolic and recovery markers.",
       "price": 299,
-      "image": "/images/products/labs.jpg",
+      "image": "fulllabs.png",
       "sku": "LAB-CORE",
-      "active": true,
-      "stripe": {
-        "priceId": null
-      }
+      "active": true
     }
   ]
 }
