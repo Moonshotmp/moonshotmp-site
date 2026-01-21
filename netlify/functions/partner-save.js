@@ -3,14 +3,15 @@ import { getStore } from "@netlify/blobs";
 const STORE_NAME = "partners";
 const KEY_PREFIX = "partners/";
 
-const json = (status, body) =>
+const json = (status, body, extraHeaders = {}) =>
   new Response(JSON.stringify(body, null, 2), {
     status,
     headers: {
-      "content-type": "application/json",
+      "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
       "access-control-allow-methods": "POST,OPTIONS",
       "access-control-allow-headers": "content-type",
+      ...extraHeaders,
     },
   });
 
@@ -28,22 +29,31 @@ export default async (req) => {
   try {
     payload = await req.json();
   } catch {
-    return json(400, { error: "Invalid JSON" });
+    return json(400, { error: "Invalid JSON body" });
   }
 
   const slug = normalizeSlug(payload?.slug);
-  if (!slug) return json(400, { error: "Invalid slug" });
-
-  const now = new Date().toISOString();
-  const partner = {
-    ...payload,
-    slug,
-    createdAt: payload?.createdAt ?? now,
-    updatedAt: now,
-  };
+  if (!slug) return json(400, { error: "Missing/invalid slug" });
 
   const store = getStore(STORE_NAME);
   const key = `${KEY_PREFIX}${slug}`;
+
+  // Load existing record so we don't wipe fields like stripe.*
+  const existing = await store.get(key, { type: "json", consistency: "strong" });
+
+  const now = new Date().toISOString();
+
+  // Preserve createdAt and stripe unless explicitly provided
+  const partner = {
+    ...(existing || {}),
+    ...(payload || {}),
+    slug,
+
+    createdAt: existing?.createdAt || payload?.createdAt || now,
+    updatedAt: now,
+
+    stripe: payload?.stripe ? { ...(existing?.stripe || {}), ...(payload.stripe || {}) } : (existing?.stripe || undefined),
+  };
 
   await store.setJSON(key, partner);
 
