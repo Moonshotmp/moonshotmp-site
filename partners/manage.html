@@ -122,9 +122,9 @@
     if (data?.link) {
       // dev/preview: show the link directly
       devLinkEl.textContent = data.link;
-      setStatus("Dev mode: open the link above to sign in.");
+      setStatus("Dev mode: open the link above to sign in. (Production will email it only if the address matches the store owner email.)");
     } else {
-      setStatus("Check your email for the sign-in link.");
+      setStatus("If the email matches the store owner email, you’ll receive a sign-in link.");
     }
   });
 
