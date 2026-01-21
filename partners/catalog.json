@@ -1,9 +1,18 @@
 {
   "products": [
     {
+      "id": "moonshot-test-1",
+      "name": "Moonshot $1 Test Service",
+      "description": "Internal test item used to verify checkout, payments, and Stripe Connect routing. This is a non-clinical, non-deliverable test charge.",
+      "price": 1,
+      "image": "fulllogodarkcentered.png",
+      "sku": "TEST-001",
+      "active": true
+    },
+    {
       "id": "dexa-scan",
       "name": "DEXA Scan",
-      "description": "Full-body DEXA scan measuring body fat %, lean mass, and visceral fat.",
+      "description": "Full-body DEXA scan measuring body fat percentage, lean mass distribution, bone density, and visceral fat. Provides a precise baseline for body composition, metabolic health, and performance tracking.",
       "price": 149,
       "image": "dexa.png",
       "sku": "DEXA-001",
@@ -11,11 +20,11 @@
     },
     {
       "id": "core-labs",
-      "name": "Core Performance Labs",
-      "description": "Bloodwork covering key metabolic and recovery markers.",
+      "name": "Comprehensive Performance Blood Panel",
+      "description": "A systems-level blood analysis covering 50+ actionable biomarkers across cardiovascular health, metabolic function, hormones, thyroid, inflammation, and key nutrient status. This panel goes beyond standard bloodwork to evaluate how your body is functioning right now — identifying early metabolic resistance, hormonal imbalances, inflammation load, and recovery limitations. By analyzing multiple systems together, we establish your personal performance baseline and uncover root causes behind fatigue, stubborn body fat, low drive, poor recovery, and long-term health risk.",
       "price": 299,
       "image": "fulllabs.png",
-      "sku": "LAB-CORE",
+      "sku": "LAB-COMP",
       "active": true
     }
   ]
