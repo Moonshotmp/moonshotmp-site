@@ -14,6 +14,10 @@
     </div>
     <p id="subtitle"></p>
 
+    <div style="margin-top:10px; opacity:0.85; font-size:14px;">
+      <a id="manageLink" class="btn-outline" href="#" style="display:none; padding:6px 10px;">Partner login</a>
+    </div>
+
     <section style="margin-top:24px;">
       <h2 style="font-size:18px;margin:0 0 12px 0;">Catalog</h2>
       <div id="catalog-grid"></div>
@@ -106,7 +110,7 @@
         ]);
 
         titleEl.textContent = `${partner.name} Store`;
-        subtitleEl.textContent = `slug: ${slug}`;
+        subtitleEl.textContent = "";
         renderCatalog(products, slug);
       } catch (err) {
         statusEl.textContent = err.message;

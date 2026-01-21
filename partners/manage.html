@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Manage Store</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+</head>
+<body>
+  <main class="container" style="max-width:720px;">
+    <h1>Manage Your Store</h1>
+    <p class="muted" style="margin-top:-6px;">Sign in with an email magic link.</p>
+
+    <div id="login" class="card" style="padding:1.25rem;">
+      <label>
+        Store ID
+        <input id="slug" placeholder="e.g. tommy-k-fitness" />
+      </label>
+
+      <label>
+        Email
+        <input id="email" type="email" placeholder="you@company.com" />
+      </label>
+
+      <div style="display:flex; gap:10px; align-items:center; margin-top:12px;">
+        <button class="btn-primary" id="sendLink">Email sign-in link</button>
+        <a class="btn-outline" href="/partners/index.html">Back</a>
+      </div>
+
+      <pre id="status" style="white-space:pre-wrap;margin-top:14px;"></pre>
+      <pre id="devLink" style="white-space:pre-wrap;margin-top:10px;"></pre>
+    </div>
+
+    <div id="manage" class="card" style="padding:1.25rem; display:none;">
+      <div class="badge" id="stripeBadge" style="display:inline-flex; margin-bottom:12px;"></div>
+
+      <label>
+        Partner name
+        <input id="name" />
+      </label>
+
+      <label>
+        Contact email
+        <input id="email2" type="email" />
+      </label>
+
+      <div style="display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap;">
+        <button class="btn-primary" id="saveBtn">Save</button>
+        <button class="btn-outline" id="resetStripeBtn">Reset Stripe</button>
+        <a class="btn-outline" id="viewStore" href="#">View Store</a>
+        <button class="btn-outline" id="logoutBtn">Sign out</button>
+      </div>
+
+      <pre id="status2" style="white-space:pre-wrap;margin-top:14px;"></pre>
+    </div>
+  </main>
+
+<script>
+  const qs = new URL(window.location.href).searchParams;
+  const slugPrefill = (qs.get("slug") || "").trim().toLowerCase();
+  if (slugPrefill) document.getElementById("slug").value = slugPrefill;
+
+  const statusEl = document.getElementById("status");
+  const devLinkEl = document.getElementById("devLink");
+  const loginEl = document.getElementById("login");
+  const manageEl = document.getElementById("manage");
+
+  function setStatus(msg) { statusEl.textContent = msg || ""; }
+  function setStatus2(msg) { document.getElementById("status2").textContent = msg || ""; }
+
+  async function tryLoadMe() {
+    const res = await fetch("/.netlify/functions/partner-me");
+    if (!res.ok) return false;
+    const data = await res.json();
+    const partner = data.partner;
+
+    loginEl.style.display = "none";
+    manageEl.style.display = "block";
+
+    document.getElementById("name").value = partner.name || "";
+    document.getElementById("email2").value = partner.email || "";
+
+    const slug = (partner.slug || "").trim();
+    document.getElementById("viewStore").href =
+      `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+
+    const connected = !!partner?.stripe?.connectedAccountId;
+    const onboarded = !!partner?.stripe?.onboarded;
+    const badge = document.getElementById("stripeBadge");
+    badge.textContent = !connected ? "Stripe: not connected"
+      : (onboarded ? "Stripe: connected ✅" : "Stripe: setup incomplete ⚠️");
+
+    return true;
+  }
+
+  document.getElementById("sendLink").addEventListener("click", async () => {
+    devLinkEl.textContent = "";
+    setStatus("");
+
+    const slug = document.getElementById("slug").value.trim().toLowerCase();
+    const email = document.getElementById("email").value.trim();
+
+    if (!slug || !email) {
+      setStatus("Enter Store ID + Email.");
+      return;
+    }
+
+    const res = await fetch("/.netlify/functions/auth-request", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ slug, email })
+    });
+
+    const raw = await res.text();
+    let data = null;
+    try { data = JSON.parse(raw); } catch {}
+    if (!res.ok) {
+      setStatus((data && (data.error || data.message)) || "Request failed");
+      return;
+    }
+
+    if (data?.link) {
+      // dev/preview: show the link directly
+      devLinkEl.textContent = data.link;
+      setStatus("Dev mode: open the link above to sign in.");
+    } else {
+      setStatus("Check your email for the sign-in link.");
+    }
+  });
+
+  document.getElementById("saveBtn").addEventListener("click", async () => {
+    setStatus2("");
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email2").value.trim();
+
+    const res = await fetch("/.netlify/functions/partner-update", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ name, email })
+    });
+
+    const raw = await res.text();
+    let data = null; try { data = JSON.parse(raw); } catch {}
+    if (!res.ok) return setStatus2((data && (data.error || data.message)) || "Save failed");
+    setStatus2("Saved ✅");
+  });
+
+  document.getElementById("resetStripeBtn").addEventListener("click", async () => {
+    setStatus2("");
+    const res = await fetch("/.netlify/functions/stripe-reset", { method: "POST" });
+    const raw = await res.text();
+    let data = null; try { data = JSON.parse(raw); } catch {}
+    if (!res.ok) return setStatus2((data && (data.error || data.message)) || "Reset failed");
+    setStatus2("Stripe reset ✅");
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await fetch("/.netlify/functions/auth-logout", { method: "POST" });
+    window.location.reload();
+  });
+
+  // auto-load session if present
+  tryLoadMe();
+</script>
+</body>
+</html>
