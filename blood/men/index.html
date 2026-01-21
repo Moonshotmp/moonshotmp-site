@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonshot Comprehensive Blood Panel (Men)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#101921',
+                            light: '#F0EEE9', // Cloud Dancer
+                            gray: '#B2BFBE',
+                            slate: '#2C353E'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        body: ['Poppins', 'sans-serif']
+                    },
+                    fontSize: {
+                        'xxs': '0.65rem',
+                    },
+                    backgroundImage: {
+                        'texture-header': `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E")`
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Print specific adjustments to ensure exact fit on 8.5x11 */
+        @media print {
+            body {
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            #page-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                max-width: none;
+                overflow: hidden; 
+            }
+            .no-print {
+                display: none;
+            }
+        }
+        
+        /* Screen preview simulation */
+        body {
+            background-color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        #page-container {
+            width: 8.5in;
+            height: 11in;
+            background-color: #ffffff;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Ensures content stays within page bounds */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page Wrapper -->
+    <div id="page-container" class="text-brand-dark font-body selection:bg-brand-gray selection:text-brand-dark">
+        
+        <!-- HEADER SECTION -->
+        <header class="bg-white text-brand-dark relative shrink-0 border-b border-brand-gray/20">
+            <!-- Optional subtle texture overlay - kept very faint -->
+            <div class="absolute inset-0 bg-texture-header opacity-30 mix-blend-multiply pointer-events-none"></div>
+            
+            <div class="relative px-8 pt-6 pb-2">
+                <!-- Headline -->
+                <h1 class="font-heading text-4xl font-bold uppercase tracking-wide leading-[0.9] mb-2 text-brand-dark">
+                    Moonshot Comprehensive<br>Blood Panel <span class="text-brand-gray font-light">(Men)</span>
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="font-body font-light italic text-brand-slate text-sm tracking-wide">
+                    A systems-level view of performance, energy, hormones, and long-term health.
+                </p>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="px-8 py-3 flex-grow flex flex-col gap-3">
+
+            <!-- SECTION 1: WHAT THIS PANEL IS -->
+            <section>
+                <h3 class="font-heading text-sm font-bold uppercase tracking-wider text-brand-dark mb-1">What This Panel Is</h3>
+                <p class="font-light text-sm leading-relaxed text-brand-dark/90 text-justify">
+                    This is not a standard check-up. While traditional bloodwork looks for disease, the Moonshot Comprehensive Panel analyzes key biomarkers to evaluate how your body is functioning right now. By looking at multiple systems together—metabolism, hormones, lipids, and inflammation—we move beyond broad population averages to establish your personal baseline for optimal performance.
+                </p>
+            </section>
+            
+            <!-- 50+ MARKERS CALLOUT / DIVIDER -->
+            <div class="flex items-center gap-4 py-1">
+                <div class="h-px bg-brand-gray/40 flex-grow"></div>
+                <div class="font-heading font-bold text-lg tracking-widest text-brand-slate uppercase">50+ Actionable Markers</div>
+                <div class="h-px bg-brand-gray/40 flex-grow"></div>
+            </div>
+
+            <!-- SECTION 3: BIOMARKERS (2x3 Grid) -->
+             <section class="flex-grow flex flex-col">
+                 <h3 class="font-heading text-sm font-bold uppercase tracking-wider text-brand-dark mb-2">Biomarkers By System</h3>
+                <div class="grid grid-cols-2 gap-3 flex-grow">
+                    
+                    <!-- A. Cardio -->
+                    <div class="border border-brand-gray p-2.5 flex flex-col bg-white">
+                        <h4 class="font-heading text-sm font-bold uppercase tracking-wide text-brand-slate mb-0.5">A. Cardiovascular & Lipid Health</h4>
+                        <p class="text-[10px] text-brand-gray font-medium uppercase tracking-widest mb-1">Heart health, endurance, and longevity</p>
+                        
+                        <div class="space-y-1 flex-grow">
+                            <p class="text-[10px] leading-tight"><span class="font-semibold text-brand-dark">Includes:</span> Total Cholesterol, LDL, HDL, Triglycerides, <span class="font-bold">ApoB</span>, Lipoprotein(a).</p>
+                            <p class="text-[10px] leading-tight font-light"><span class="font-medium text-brand-dark">Why It Matters:</span> We go beyond standard cholesterol to measure the actual number of particles in your blood (ApoB) and genetic risk factors (Lp(a)).</p>
+                            <p class="text-[10px] leading-tight font-light italic text-brand-slate/80"><span class="not-italic font-medium text-brand-dark">Explains:</span> Cardiovascular endurance issues and long-term heart risk.</p>
+                        </div>
+                    </div>
+
+                    <!-- B. Metabolic -->
+                    <div class="border border-brand-gray p-2.5 flex flex-col bg-white">
+                        <h4 class="font-heading text-sm font-bold uppercase tracking-wide text-brand-slate mb-0.5">B. Metabolic Health & Glucose</h4>
+                        <p class="text-[10px] text-brand-gray font-medium uppercase tracking-widest mb-1">Energy systems and fuel efficiency</p>
+                        
+                        <div class="space-y-1 flex-grow">
+                            <p class="text-[10px] leading-tight"><span class="font-semibold text-brand-dark">Includes:</span> Fasting Glucose, Hemoglobin A1c, <span class="font-bold">Fasting Insulin</span>.</p>
+                            <p class="text-[10px] leading-tight font-light"><span class="font-medium text-brand-dark">Why It Matters:</span> This reveals how efficiently your body processes fuel. Fasting insulin often rises years before blood sugar, giving us an early warning sign.</p>
+                            <p class="text-[10px] leading-tight font-light italic text-brand-slate/80"><span class="not-italic font-medium text-brand-dark">Explains:</span> Energy crashes, stubborn body fat, and difficulty building lean muscle.</p>
+                        </div>
+                    </div>
+
+                    <!-- C. Hormones -->
+                    <div class="border border-brand-gray p-2.5 flex flex-col bg-white">
+                        <h4 class="font-heading text-sm font-bold uppercase tracking-wide text-brand-slate mb-0.5">C. Male Hormones & Signaling</h4>
+                        <p class="text-[10px] text-brand-gray font-medium uppercase tracking-widest mb-1">Drive, vitality, and anabolic potential</p>
+                        
+                        <div class="space-y-1 flex-grow">
+                            <p class="text-[10px] leading-tight"><span class="font-semibold text-brand-dark">Includes:</span> Total & Free Testosterone, SHBG, LH, FSH, Prolactin, Estradiol, DHEA-S.</p>
+                            <p class="text-[10px] leading-tight font-light"><span class="font-medium text-brand-dark">Why It Matters:</span> We look at the total amount of testosterone available and how well your brain is signaling your body to produce it.</p>
+                            <p class="text-[10px] leading-tight font-light italic text-brand-slate/80"><span class="not-italic font-medium text-brand-dark">Explains:</span> Libido, motivation, recovery rate, mood, and muscle retention.</p>
+                        </div>
+                    </div>
+
+                    <!-- D. Thyroid -->
+                    <div class="border border-brand-gray p-2.5 flex flex-col bg-white">
+                        <h4 class="font-heading text-sm font-bold uppercase tracking-wide text-brand-slate mb-0.5">D. Thyroid Function & Pace</h4>
+                        <p class="text-[10px] text-brand-gray font-medium uppercase tracking-widest mb-1">Metabolism and temperature regulation</p>
+                        
+                        <div class="space-y-1 flex-grow">
+                            <p class="text-[10px] leading-tight"><span class="font-semibold text-brand-dark">Includes:</span> TSH, Free T4, Free T3, Thyroid Antibodies.</p>
+                            <p class="text-[10px] leading-tight font-light"><span class="font-medium text-brand-dark">Why It Matters:</span> The thyroid controls the "pace" of your metabolism. A complete panel ensures the signal is being sent and received.</p>
+                            <p class="text-[10px] leading-tight font-light italic text-brand-slate/80"><span class="not-italic font-medium text-brand-dark">Explains:</span> Unexplained weight changes, sensitivity to cold, and sluggishness.</p>
+                        </div>
+                    </div>
+
+                    <!-- E. Inflammation -->
+                    <div class="border border-brand-gray p-2.5 flex flex-col bg-white">
+                        <h4 class="font-heading text-sm font-bold uppercase tracking-wide text-brand-slate mb-0.5">E. Inflammation & Recovery</h4>
+                        <p class="text-[10px] text-brand-gray font-medium uppercase tracking-widest mb-1">Systemic stress and immune status</p>
+                        
+                        <div class="space-y-1 flex-grow">
+                            <p class="text-[10px] leading-tight"><span class="font-semibold text-brand-dark">Includes:</span> hs-CRP, Immune/Inflammation patterns (CBC).</p>
+                            <p class="text-[10px] leading-tight font-light"><span class="font-medium text-brand-dark">Why It Matters:</span> High inflammation suggests the body is fighting stress, injury, or infection, which halts performance progress.</p>
+                            <p class="text-[10px] leading-tight font-light italic text-brand-slate/80"><span class="not-italic font-medium text-brand-dark">Explains:</span> Joint pain, poor recovery from workouts, and general fatigue.</p>
+                        </div>
+                    </div>
+
+                    <!-- F. Nutrients -->
+                    <div class="border border-brand-gray p-2.5 flex flex-col bg-white">
+                        <h4 class="font-heading text-sm font-bold uppercase tracking-wide text-brand-slate mb-0.5">F. Nutrients & Cellular Support</h4>
+                        <p class="text-[10px] text-brand-gray font-medium uppercase tracking-widest mb-1">Foundational fuel</p>
+                        
+                        <div class="space-y-1 flex-grow">
+                            <p class="text-[10px] leading-tight"><span class="font-semibold text-brand-dark">Includes:</span> Vitamin D, Vitamin B12, Electrolytes, Liver & Kidney Function.</p>
+                            <p class="text-[10px] leading-tight font-light"><span class="font-medium text-brand-dark">Why It Matters:</span> These are the co-factors required for energy production and hormone synthesis.</p>
+                            <p class="text-[10px] leading-tight font-light italic text-brand-slate/80"><span class="not-italic font-medium text-brand-dark">Explains:</span> Cognitive function, bone health, and daily energy levels.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 4: INCLUDED PANELS -->
+            <section class="border-t border-b border-brand-gray/50 py-3 bg-white">
+                <div class="flex flex-col md:flex-row md:items-start gap-4">
+                    <div class="w-full md:w-32 shrink-0">
+                        <h4 class="font-heading text-sm font-bold uppercase tracking-wider text-brand-dark">Included Panels</h4>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-1 w-full">
+                        <div class="text-[10px] font-light text-brand-dark">• Complete Blood Count (CBC)</div>
+                        <div class="text-[10px] font-light text-brand-dark">• Comprehensive Metabolic Panel (CMP)</div>
+                        <div class="text-[10px] font-light text-brand-dark">• Lipid Panel + ApoB + Lipoprotein(a)</div>
+                        <div class="text-[10px] font-light text-brand-dark">• Hemoglobin A1c + Fasting Insulin</div>
+                        <div class="text-[10px] font-light text-brand-dark">• Complete Thyroid Panel</div>
+                        <div class="text-[10px] font-light text-brand-dark">• Male Hormone Signaling Panel</div>
+                        <div class="text-[10px] font-light text-brand-dark col-span-2 flex justify-between items-center">
+                            <span>• Vitamin D + Vitamin B12</span>
+                            <span class="text-[9px] italic text-brand-slate/70">* Panels may be adjusted slightly based on individual clinical context.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-brand-dark text-brand-light py-4 px-8 text-center shrink-0">
+            <p class="font-light italic text-xs mb-2 text-brand-gray/90">
+                "This comprehensive panel gives us the clearest possible roadmap for understanding your health and performance today — and tracking progress over time."
+            </p>
+            <div class="border-t border-brand-gray/20 w-12 mx-auto my-2"></div>
+            <p class="font-heading text-xs tracking-[0.15em] uppercase text-brand-light">
+                <span class="font-bold">Moonshot Medical + Performance</span> <span class="text-brand-gray mx-2">|</span> Park Ridge, IL <span class="text-brand-gray mx-2">|</span> moonshotmp.com
+            </p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

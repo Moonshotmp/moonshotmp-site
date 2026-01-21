@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonshot Medical - Personalized Supplement Plan</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- FONTS --- */
+        @font-face {
+            font-family: 'Patron';
+            src: url('Patron - PersonalUse.otf') format('opentype'),
+                 url('PATRON.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* --- COLORS --- */
+        :root {
+            --color-black: #101921;       /* PANTONE BLACK 6 C */
+            --color-cloud: #F0EEE9;       /* PANTONE CLOUD DANCER */
+            --color-gray: #B2BFBE;        /* PANTONE COOL GRAY 5 C */
+            --font-heading: 'Patron', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-cloud);
+            color: var(--color-black);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* --- PAGE CONTAINER (Print & Screen) --- */
+        .page-container {
+            width: 100%;
+            max-width: 850px; /* Approx Letter width */
+            background-color: white;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            border-top: 8px solid var(--color-black);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-black);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700; /* Bold if available in font family, else faux bold */
+        }
+
+        h2 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--color-gray);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: 12px;
+            margin-bottom: 4px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--color-gray);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* --- HEADER SECTION --- */
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header-logo {
+            font-family: var(--font-heading);
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            color: var(--color-gray);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .intro-text {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* --- PROCESS SECTION (3 Steps) --- */
+        .process-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px; /* Increased margin since note was removed */
+            background-color: var(--color-cloud);
+            padding: 25px;
+            border-radius: 4px;
+        }
+
+        .process-step {
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: var(--color-black);
+            color: white;
+            border-radius: 50%;
+            font-family: var(--font-heading);
+            font-size: 14px;
+            line-height: 24px;
+            margin-bottom: 10px;
+        }
+
+        .process-step h3 {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .process-step p {
+            font-size: 11px;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        /* --- CATEGORIES GRID --- */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            padding: 10px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .supp-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            border-bottom: 1px dotted #e0e0e0;
+            padding-bottom: 2px;
+        }
+
+        .supp-name {
+            font-weight: 500;
+            font-size: 13px;
+            color: var(--color-black);
+        }
+
+        .supp-desc {
+            font-size: 11px;
+            color: #777;
+            text-align: right;
+            padding-left: 10px;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            text-align: center;
+            border-top: 1px solid var(--color-gray);
+            padding-top: 20px;
+            font-size: 11px;
+            color: #888;
+        }
+
+        .footer strong {
+            color: var(--color-black);
+        }
+
+        /* --- PRINT MEDIA QUERY --- */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page-container {
+                box-shadow: none;
+                width: 100%;
+                max-width: 100%;
+                padding: 30px;
+                border: none;
+            }
+            .process-section {
+                background-color: #F0EEE9 !important; /* Force background print */
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 600px) {
+            .page-container {
+                padding: 20px;
+            }
+            .process-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        
+        <!-- HEADER -->
+        <div class="header">
+            <span class="header-logo">MOONSHOT MEDICAL + PERFORMANCE</span>
+            <h1>Your Personalized Supplement Plan</h1>
+            <p class="intro-text">
+                We have reviewed your bloodwork in detail. The recommendations below are selected specifically for your current physiology, focusing on nutrient status, metabolic markers, hormone balance, and recovery needs.
+            </p>
+        </div>
+
+        <!-- PROCESS -->
+        <div class="process-section">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3>Check Your Email</h3>
+                <p>You will receive a personalized link from <strong>Fullscript</strong> with your specific recommendations pre-loaded.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3>Choose What Fits</h3>
+                <p>Review the list and choose which items to order. Nothing is mandatory—this is your toolkit.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3>Flexible Refills</h3>
+                <p>Most supplies last >1 month. Autoship is optional, and you can easily reorder whenever you run low.</p>
+            </div>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="categories-grid">
+            
+            <!-- Category 1 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h2>FOUNDATIONAL SUPPORT</h2>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Vitamin D3 + K2</span>
+                    <span class="supp-desc">Immune & bone health</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Magnesium</span>
+                    <span class="supp-desc">Sleep & nervous system</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Omega-3s</span>
+                    <span class="supp-desc">Heart & brain health</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Creatine</span>
+                    <span class="supp-desc">Muscle energy & cognition</span>
+                </div>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h2>METABOLIC & BLOOD SUGAR</h2>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Fiber Complex</span>
+                    <span class="supp-desc">Gut health & satiety</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Bergamot</span>
+                    <span class="supp-desc">Lipid profile support</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Berberine</span>
+                    <span class="supp-desc">Glucose optimization</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Inositol</span>
+                    <span class="supp-desc">Insulin sensitivity</span>
+                </div>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h2>INFLAMMATION & RECOVERY</h2>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Curcumin</span>
+                    <span class="supp-desc">Joint & systemic health</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Glutathione</span>
+                    <span class="supp-desc">Master antioxidant</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">ProEPA</span>
+                    <span class="supp-desc">High-potency inflammation support</span>
+                </div>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h2>HORMONE & PERFORMANCE</h2>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">Zinc & Selenium</span>
+                    <span class="supp-desc">Thyroid & testosterone</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">CJC-1295 + Ipamorelin</span>
+                    <span class="supp-desc">Growth hormone support</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">GHK-Cu</span>
+                    <span class="supp-desc">Skin & tissue repair</span>
+                </div>
+                <div class="supp-item">
+                    <span class="supp-name">PT-141</span>
+                    <span class="supp-desc">Libido optimization</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p><strong>Your health is a journey.</strong> These recommendations are designed to evolve as your labs and goals change. <br>Start with what feels manageable for you today.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

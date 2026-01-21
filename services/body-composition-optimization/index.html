@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Composition Optimization | Moonshot Medical + Performance</title>
+    <meta name="description" content="Data-driven body composition optimization in Park Ridge, IL. Medical weight loss, muscle preservation, and metabolic health beyond the scale.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moonshotmp.com/services/body-composition-optimization/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#101921',
+                            light: '#F0EEE9',
+                            gray: '#B2BFBE',
+                            slate: '#2C353E'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        body: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #101921; color: #F0EEE9; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
+        .btn-primary { background-color: #B2BFBE; color: #101921; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 600; padding: 0.75rem 2rem; transition: all 0.3s ease; }
+        .btn-primary:hover { background-color: #F0EEE9; transform: translateY(-2px); }
+        .btn-outline { background-color: transparent; border: 1px solid #B2BFBE; color: #B2BFBE; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 500; padding: 0.75rem 2rem; transition: all 0.3s ease; }
+        .btn-outline:hover { border-color: #F0EEE9; color: #F0EEE9; transform: translateY(-2px); }
+    </style>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this the same as a weight loss clinic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Weight loss clinics typically focus on scale weight or medications. Our focus is fat loss, muscle preservation, and metabolic health."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a DEXA scan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DEXA is one of the most accurate tools for assessing body composition and is strongly recommended when available. It allows us to track fat and lean mass changes objectively."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are GLP-1 medications required?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Some patients benefit from them, others do not. Decisions are based on data, medical history, and response patterns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will I lose muscle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Preserving lean mass is a priority. Nutrition, training, and recovery strategies are designed to protect muscle while fat mass is reduced."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this covered by insurance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most body composition optimization services are not covered by insurance. We are transparent about this upfront."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to see changes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Initial changes can be seen within weeks, but meaningful body recomposition typically occurs over months. The focus is sustainable progress, not rapid swings."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a href="/" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+            <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain">
+            <div class="hidden sm:block text-brand-light font-heading text-sm tracking-wide leading-tight ml-3">
+              MOONSHOT<br>MEDICAL + PERFORMANCE
+            </div>
+          </a>
+
+          <div class="hidden md:flex space-x-8 items-center">
+            <a href="/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Home</a>
+
+            <div class="relative inline-block" id="services-menu-wrapper">
+              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+                      id="services-menu-button" aria-expanded="false" aria-haspopup="true">
+                Services
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+
+              <div class="absolute left-0 mt-2 w-64 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden"
+                   id="services-dropdown">
+                <div class="py-2">
+                  <a href="/services/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">All Services</a>
+                  <a href="/services/performance-medicine/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Performance Medicine</a>
+                  <a href="/services/mens-hormone-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Men’s Hormone Optimization</a>
+                  <a href="/services/womens-hormone-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Women’s Hormone Optimization</a>
+                  <a href="/services/body-composition-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Body Composition</a>
+                  <a href="/services/recovery-and-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Recovery & Optimization</a>
+                </div>
+              </div>
+            </div>
+
+            <a href="/membership/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Membership</a>
+            <a href="/contact/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Contact</a>
+            <a href="/booking/" class="btn-primary text-xs tracking-widest">Book Consult</a>
+          </div>
+
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-btn" class="text-brand-light hover:text-white focus:outline-none">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="md:hidden bg-brand-dark border-b border-white/10 hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+          <a href="/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Home</a>
+
+          <div>
+            <button id="mobile-services-btn"
+                    class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+              <span class="w-4"></span>
+              <span class="flex-1 text-center font-bold border-b border-white">Services</span>
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-services-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <div id="mobile-services-submenu" class="bg-black/20 hidden">
+              <a href="/services/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">All Services</a>
+              <a href="/services/performance-medicine/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Performance Medicine</a>
+              <a href="/services/mens-hormone-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Men’s Hormones</a>
+              <a href="/services/womens-hormone-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women’s Hormones</a>
+              <a href="/services/body-composition-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Composition</a>
+              <a href="/services/recovery-and-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Recovery</a>
+            </div>
+          </div>
+
+          <a href="/membership/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Membership</a>
+          <a href="/contact/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Contact</a>
+          <a href="/booking/" class="block w-full text-brand-light bg-brand-gray/10 hover:bg-brand-gray/20 py-3 text-sm uppercase tracking-widest mt-2 font-bold">Book Consult</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-20">
+        
+        <!-- Hero Section -->
+        <section class="py-24 bg-brand-dark border-b border-white/5">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <a href="/services/" class="text-brand-gray text-xs uppercase tracking-widest mb-6 hover:text-white inline-block">&larr; Back to Services</a>
+                <h1 class="text-4xl md:text-6xl font-bold text-brand-light mb-6">BODY COMPOSITION OPTIMIZATION</h1>
+                <p class="text-xl text-brand-gray font-light max-w-2xl mx-auto leading-relaxed">
+                    A data-driven medical approach to fat loss, muscle preservation, and metabolic health.
+                </p>
+            </div>
+        </section>
+
+        <!-- What Body Composition Means -->
+        <section class="py-20 bg-brand-light text-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6">WHAT BODY COMPOSITION OPTIMIZATION MEANS</h2>
+                        <div class="space-y-4 text-brand-slate font-light leading-relaxed">
+                            <p>Body composition optimization focuses on how much fat and lean tissue you carry, not just what the scale says.</p>
+                            <p>At Moonshot Medical & Performance, we approach body composition through measurement, metabolism, and long-term sustainability — not crash diets or cosmetic weight loss.</p>
+                            <p>This is not about being smaller.</p>
+                            <p class="font-medium">It’s about being metabolically healthier, stronger, and more resilient.</p>
+                        </div>
+                    </div>
+                    <div class="bg-brand-slate/5 p-8 border-l-4 border-brand-dark">
+                        <h3 class="text-lg font-bold mb-4">WHY THE SCALE IS A POOR METRIC</h3>
+                        <p class="text-sm text-brand-slate mb-4">Body weight alone hides what actually matters. Two people can weigh the same and have very different fat mass, muscle mass, metabolic health, and long-term risk profiles.</p>
+                        <p class="text-sm text-brand-slate font-medium">That’s why body composition optimization starts with objective measurement, not assumptions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who This Is For -->
+        <section class="py-20 bg-brand-dark border-b border-white/5">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-xl font-bold text-brand-light mb-6">THIS APPROACH MAY BE APPROPRIATE IF...</h3>
+                        <ul class="space-y-3 text-brand-gray font-light">
+                            <li class="flex items-start gap-3"><span class="text-brand-light">✓</span> Fat loss has stalled despite effort.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-light">✓</span> You’ve regained weight after dieting.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-light">✓</span> Body composition changed with age, stress, or hormones.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-light">✓</span> You want to preserve muscle while losing fat.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-light">✓</span> You want medical guidance instead of trial-and-error.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-light">✓</span> You care about long-term metabolic health.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-brand-gray mb-6 opacity-80">THIS MAY NOT BE THE RIGHT FIT IF...</h3>
+                        <ul class="space-y-3 text-brand-gray font-light opacity-80">
+                            <li class="flex items-start gap-3"><span>×</span> You want rapid scale weight loss without evaluation.</li>
+                            <li class="flex items-start gap-3"><span>×</span> You’re looking for cosmetic-only results.</li>
+                            <li class="flex items-start gap-3"><span>×</span> You want medications without diagnostics.</li>
+                            <li class="flex items-start gap-3"><span>×</span> You’re not interested in tracking or follow-up.</li>
+                        </ul>
+                        <p class="mt-6 text-brand-gray italic opacity-80">We prioritize sustainability over speed.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Metabolic Side -->
+        <section class="py-20 bg-brand-slate/30 border-b border-white/5">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-2xl font-bold text-brand-light mb-6">THE METABOLIC SIDE OF BODY COMPOSITION</h2>
+                <p class="text-lg text-brand-gray font-light max-w-3xl mx-auto mb-10 leading-relaxed">
+                    Body composition is regulated by more than calories. Without addressing the underlying factors, most weight loss is temporary.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-left max-w-3xl mx-auto">
+                    <div class="p-4 border border-white/10 rounded-sm">
+                        <span class="block text-brand-light font-bold mb-1">Insulin Resistance</span>
+                    </div>
+                    <div class="p-4 border border-white/10 rounded-sm">
+                        <span class="block text-brand-light font-bold mb-1">Hormonal Shifts</span>
+                    </div>
+                    <div class="p-4 border border-white/10 rounded-sm">
+                        <span class="block text-brand-light font-bold mb-1">Poor Sleep & Stress Load</span>
+                    </div>
+                    <div class="p-4 border border-white/10 rounded-sm">
+                        <span class="block text-brand-light font-bold mb-1">Loss of Lean Mass</span>
+                    </div>
+                    <div class="p-4 border border-white/10 rounded-sm">
+                        <span class="block text-brand-light font-bold mb-1">Adaptive Metabolic Slowdown</span>
+                    </div>
+                    <div class="p-4 border border-white/10 rounded-sm">
+                        <span class="block text-brand-light font-bold mb-1">Inconsistent Recovery</span>
+                    </div>
+                </div>
+                <p class="text-brand-gray mt-10 font-light italic">Body composition optimization focuses on changing the system, not just forcing results.</p>
+            </div>
+        </section>
+
+        <!-- The Moonshot Body Composition Framework -->
+        <section class="py-24 bg-brand-dark">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-light">THE MOONSHOT BODY COMPOSITION FRAMEWORK</h2>
+                    <div class="w-16 h-1 bg-brand-gray mx-auto mt-4"></div>
+                    <p class="text-brand-gray mt-6 font-light">Our approach follows the same clinical loop used across all services:</p>
+                </div>
+                
+                <div class="grid md:grid-cols-4 gap-8 text-center">
+                    <div class="p-6 border border-white/5 bg-white/5 rounded-sm">
+                        <div class="text-4xl font-bold text-brand-gray mb-4 opacity-30">01</div>
+                        <h3 class="text-xl font-bold text-brand-light mb-3">MEASURE</h3>
+                        <p class="text-sm text-brand-gray font-light">We assess body composition, metabolic markers, and relevant hormones to establish a clear baseline.</p>
+                    </div>
+                    <div class="p-6 border border-white/5 bg-white/5 rounded-sm">
+                        <div class="text-4xl font-bold text-brand-gray mb-4 opacity-30">02</div>
+                        <h3 class="text-xl font-bold text-brand-light mb-3">INTERPRET</h3>
+                        <p class="text-sm text-brand-gray font-light">We evaluate patterns — fat distribution, lean mass, metabolic signals, and lifestyle context.</p>
+                    </div>
+                    <div class="p-6 border border-white/5 bg-white/5 rounded-sm">
+                        <div class="text-4xl font-bold text-brand-gray mb-4 opacity-30">03</div>
+                        <h3 class="text-xl font-bold text-brand-light mb-3">OPTIMIZE</h3>
+                        <p class="text-sm text-brand-gray font-light">When appropriate, we design a personalized plan that may include medical therapies, nutritional strategies, and recovery support.</p>
+                    </div>
+                    <div class="p-6 border border-white/5 bg-white/5 rounded-sm">
+                        <div class="text-4xl font-bold text-brand-gray mb-4 opacity-30">04</div>
+                        <h3 class="text-xl font-bold text-brand-light mb-3">TRACK</h3>
+                        <p class="text-sm text-brand-gray font-light">Progress is monitored over time so adjustments are based on data, not guesswork. Fat loss without tracking is temporary.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools & GLP-1s -->
+        <section class="py-20 bg-brand-slate/30 border-t border-b border-white/5">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-16">
+                    <div>
+                        <h2 class="text-2xl font-bold text-brand-light mb-6">TOOLS WE MAY USE</h2>
+                        <ul class="space-y-4 text-brand-gray font-light">
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-light rounded-full"></span> Body composition analysis (DEXA)</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-light rounded-full"></span> Metabolic and hormonal bloodwork</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-light rounded-full"></span> Nutrition and protein-adequacy strategies</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-light rounded-full"></span> Lifestyle and recovery guidance</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-light rounded-full"></span> Clinician-guided medical therapies (when appropriate)</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-brand-light rounded-full"></span> Targeted supplementation</li>
+                        </ul>
+                        <p class="text-brand-gray/60 font-light text-xs italic mt-4">Medications are never the starting point — they are considered only when data supports their use.</p>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-brand-light mb-6">WHERE GLP-1 MEDICATIONS FIT</h2>
+                        <div class="space-y-4 text-brand-gray font-light">
+                            <p>GLP-1 medications can be helpful tools for some individuals — but they are not a body composition strategy on their own.</p>
+                            <p>When used, they are:</p>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-center gap-2"><span class="text-brand-light">•</span> Part of a broader metabolic plan</li>
+                                <li class="flex items-center gap-2"><span class="text-brand-light">•</span> Paired with muscle preservation strategies</li>
+                                <li class="flex items-center gap-2"><span class="text-brand-light">•</span> Monitored medically</li>
+                                <li class="flex items-center gap-2"><span class="text-brand-light">•</span> Tapered thoughtfully when appropriate</li>
+                            </ul>
+                            <p class="font-medium text-brand-light mt-4">The goal is not dependence. The goal is metabolic reset and sustainability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="py-20 bg-brand-light text-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-2xl font-bold mb-6">WHAT PROGRESS OFTEN LOOKS LIKE</h2>
+                <p class="text-brand-slate font-light mb-8 max-w-2xl mx-auto">Healthy body composition change is gradual and measurable. Patients often report:</p>
+                <div class="grid md:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
+                    <div class="flex items-center gap-3"><span class="text-brand-dark">✓</span> Fat loss with preserved strength</div>
+                    <div class="flex items-center gap-3"><span class="text-brand-dark">✓</span> Improved energy and insulin control</div>
+                    <div class="flex items-center gap-3"><span class="text-brand-dark">✓</span> Better appetite regulation</div>
+                    <div class="flex items-center gap-3"><span class="text-brand-dark">✓</span> Fewer rebounds after dieting</div>
+                    <div class="flex items-center gap-3"><span class="text-brand-dark">✓</span> Clearer understanding of their metabolism</div>
+                    <div class="flex items-center gap-3"><span class="text-brand-dark">✓</span> Confidence in a long-term plan</div>
+                </div>
+                <div class="mt-12">
+                    <p class="text-xl font-heading font-medium text-brand-dark">The outcome is not just weight loss — it’s durable change.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-20 bg-brand-dark">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-8 text-center">COMMON QUESTIONS</h2>
+                <div class="space-y-4">
+                    <details class="group bg-white/5 p-4 cursor-pointer border border-white/5 rounded-sm">
+                        <summary class="flex justify-between items-center font-medium text-brand-light list-none">
+                            <span>Is this the same as a weight loss clinic?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="text-brand-gray mt-3 text-sm font-light">No. Weight loss clinics typically focus on scale weight or medications. Our focus is fat loss, muscle preservation, and metabolic health.</p>
+                    </details>
+                    <details class="group bg-white/5 p-4 cursor-pointer border border-white/5 rounded-sm">
+                        <summary class="flex justify-between items-center font-medium text-brand-light list-none">
+                            <span>Do I need a DEXA scan?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="text-brand-gray mt-3 text-sm font-light">DEXA is one of the most accurate tools for assessing body composition and is strongly recommended when available. It allows us to track fat and lean mass changes objectively.</p>
+                    </details>
+                    <details class="group bg-white/5 p-4 cursor-pointer border border-white/5 rounded-sm">
+                        <summary class="flex justify-between items-center font-medium text-brand-light list-none">
+                            <span>Are GLP-1 medications required?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="text-brand-gray mt-3 text-sm font-light">No. Some patients benefit from them, others do not. Decisions are based on data, medical history, and response patterns.</p>
+                    </details>
+                    <details class="group bg-white/5 p-4 cursor-pointer border border-white/5 rounded-sm">
+                        <summary class="flex justify-between items-center font-medium text-brand-light list-none">
+                            <span>Will I lose muscle?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="text-brand-gray mt-3 text-sm font-light">Preserving lean mass is a priority. Nutrition, training, and recovery strategies are designed to protect muscle while fat mass is reduced.</p>
+                    </details>
+                    <details class="group bg-white/5 p-4 cursor-pointer border border-white/5 rounded-sm">
+                        <summary class="flex justify-between items-center font-medium text-brand-light list-none">
+                            <span>Is this covered by insurance?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="text-brand-gray mt-3 text-sm font-light">Most body composition optimization services are not covered by insurance. We are transparent about this upfront.</p>
+                    </details>
+                    <details class="group bg-white/5 p-4 cursor-pointer border border-white/5 rounded-sm">
+                        <summary class="flex justify-between items-center font-medium text-brand-light list-none">
+                            <span>How long does it take to see changes?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="text-brand-gray mt-3 text-sm font-light">Initial changes can be seen within weeks, but meaningful body recomposition typically occurs over months. The focus is sustainable progress, not rapid swings.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Soft CTA -->
+        <section class="py-24 bg-brand-light text-brand-dark text-center">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">GETTING STARTED</h2>
+                <p class="text-lg text-brand-slate font-light mb-4">Body composition optimization starts with understanding your baseline.</p>
+                <p class="text-brand-slate font-light mb-10 max-w-xl mx-auto">If you’re ready to move beyond the scale and take a data-driven approach to fat loss and metabolic health, we’ll start with diagnostics and build from there.</p>
+                <p class="font-heading font-bold text-xl mb-10">Measure first. Decide second. Optimize over time.</p>
+                <button onclick="window.location.href='/booking/'" class="bg-brand-dark text-brand-light font-heading font-bold uppercase py-4 px-10 tracking-widest hover:bg-brand-slate transition">Book Consultation</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <div>
+                    <a href="/" class="flex items-center gap-2 mb-2">
+                         <img src="/images/mm+logocloud.png" alt="Moonshot Medical Full Logo" class="h-8 md:h-10 w-auto object-contain">
+                    </a>
+                    <div class="text-brand-light font-heading font-bold text-xl tracking-widest">Moonshot Medical and Performance</div>
+                    <p class="text-brand-gray text-xs mt-2 max-w-xs">542 Busse Hwy, Park Ridge IL 60068</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        Instagram
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-white/5 text-center md:text-left text-xs text-brand-gray/50">
+                &copy; 2025 Moonshot Medical + Performance. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileServicesBtn = document.getElementById('mobile-services-btn');
+      const mobileServicesSubmenu = document.getElementById('mobile-services-submenu');
+      const mobileServicesArrow = document.getElementById('mobile-services-arrow');
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+          if (mobileMenu.classList.contains('hidden') && mobileServicesSubmenu) {
+            mobileServicesSubmenu.classList.add('hidden');
+            if (mobileServicesArrow) mobileServicesArrow.classList.remove('rotate-180');
+          }
+        });
+      }
+
+      if (mobileServicesBtn && mobileServicesSubmenu && mobileServicesArrow) {
+        mobileServicesBtn.addEventListener('click', () => {
+          mobileServicesSubmenu.classList.toggle('hidden');
+          mobileServicesArrow.classList.toggle('rotate-180');
+        });
+      }
+
+      const wrapper = document.getElementById('services-menu-wrapper');
+      const btn = document.getElementById('services-menu-button');
+      const dropdown = document.getElementById('services-dropdown');
+
+      if (wrapper && btn && dropdown) {
+        let closeTimer = null;
+
+        const openMenu = () => {
+          clearTimeout(closeTimer);
+          dropdown.classList.remove('hidden');
+          btn.setAttribute('aria-expanded', 'true');
+          const icon = btn.querySelector('svg');
+          if (icon) icon.classList.add('rotate-180');
+        };
+
+        const closeMenu = () => {
+          closeTimer = setTimeout(() => {
+            dropdown.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+            const icon = btn.querySelector('svg');
+            if (icon) icon.classList.remove('rotate-180');
+          }, 150);
+        };
+
+        wrapper.addEventListener('mouseenter', openMenu);
+        wrapper.addEventListener('mouseleave', closeMenu);
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openMenu();
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!wrapper.contains(e.target)) dropdown.classList.add('hidden');
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') dropdown.classList.add('hidden');
+        });
+      }
+    </script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonshot Medical Postcard</title>
+    
+    <!-- Fonts matched from Website -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            /* Moonshot Brand Colors */
+            --bg-color: #F0EEE9;      /* Cloud Dancer */
+            --text-main: #101921;     /* Black 6 C / Dark Navy */
+            --text-muted: #6e7a79;    /* Readable gray on tan */
+            --border-color: #B2BFBE;  /* Cool Gray 5 C */
+            
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            background-color: #ccc; /* Grey background for screen preview only */
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            gap: 40px;
+        }
+
+        /* --- POSTCARD CONTAINER (Shared) --- */
+        .card-side {
+            width: 8.5in;
+            height: 5.5in;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 0.5in 0.75in;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Shadow for screen preview */
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            color: var(--text-main);
+        }
+
+        p, li {
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        /* --- FRONT SIDE DESIGN --- */
+        .front-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Header Logo Area */
+        .front-logo {
+            height: 0.6in;
+            margin-bottom: 0.4in;
+        }
+        
+        .front-logo-fallback {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+            margin-bottom: 0.4in;
+        }
+
+        .front-headline {
+            font-size: 52px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.2in;
+        }
+
+        .front-subheadline {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+        }
+
+        /* --- BACK SIDE DESIGN --- */
+        .back-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr; /* Adjusted ratio for better balance */
+            gap: 0.75in; /* Increased gap from 0.5in to 0.75in */
+            height: 100%;
+            align-items: start; /* Align items to start to prevent stretching issues */
+            padding-bottom: 0.4in; /* Add padding at bottom to push closing line down */
+        }
+
+        .back-left {
+            display: flex;
+            flex-direction: column;
+            /* Remove justify-content: center to allow better manual spacing */
+            padding-top: 0.2in; /* Add top padding */
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: var(--border-color); 
+            margin-bottom: 0.15in; /* Increased slightly */
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        .main-text {
+            font-size: 11px;
+            margin-bottom: 0.5in; /* Increased from 0.4in for even better separation */
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        .bullet-list li {
+            font-size: 11px;
+            margin-bottom: 8px; /* Increased from 6px */
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            color: var(--border-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .back-right {
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border-color);
+            padding-left: 0.75in; /* Keep increased padding */
+            height: 100%; /* Fill height */
+            justify-content: space-between; /* Push logo to bottom */
+            padding-top: 0.2in; /* Align top with left column */
+        }
+        
+        .right-content-wrapper {
+             /* Wrapper for text content in right column */
+        }
+
+        .closing-line {
+            margin-top: auto;
+            font-size: 10px;
+            font-style: italic;
+            color: var(--text-muted);
+            text-align: center;
+            width: 100%;
+            /* Removed padding-top as margin-top: auto handles pushing it down */
+            position: absolute; /* Position absolute to ensure it stays at bottom */
+            bottom: 0.5in;
+            left: 0;
+            padding: 0 0.75in;
+        }
+        
+        /* Small Footer Logo for Back */
+        .back-logo {
+            height: 0.25in;
+            opacity: 0.6;
+            /* margin-top: auto handled by flex justify-content space-between */
+        }
+
+        /* --- PRINT MEDIA QUERY --- */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .card-side {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always; /* Force page break between cards */
+                /* Ensure background prints */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Remove break after the last card to avoid blank page */
+            .card-side:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDE 1: FRONT -->
+    <div class="card-side">
+        <div class="front-content">
+            <!-- Text-only Logo (moonshotmpdark.png) -->
+            <img src="moonshotmpdark.png" alt="Moonshot Medical + Performance" class="front-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <div class="front-logo-fallback" style="display:none;">MOONSHOT MEDICAL + PERFORMANCE</div>
+
+            <h1 class="front-headline">Data First.<br>Decisions Second.</h1>
+            <div class="front-subheadline">Performance medicine built on measurement, context, and clarity.</div>
+        </div>
+    </div>
+
+    <!-- SIDE 2: BACK -->
+    <div class="card-side">
+        <div class="back-grid">
+            
+            <!-- Left Column: Educational -->
+            <div class="back-left">
+                
+                <!-- Section 1 -->
+                <div style="margin-bottom: 0.5in;"> <!-- Hard spacing -->
+                    <h3 class="section-title">WHY BLOODWORK MATTERS</h3>
+                    <p class="main-text" style="margin-bottom: 0;"> <!-- Remove bottom margin from p here, handle with div -->
+                        “Normal” labs don’t always explain why you feel the way you do. Standard ranges are broad averages, not optimal targets. We use comprehensive testing to understand your unique physiology, patterns, and context.
+                    </p>
+                </div>
+
+                <!-- Section 2 -->
+                <div>
+                    <h3 class="section-title">HOW WE USE YOUR DATA</h3>
+                    <ul class="bullet-list">
+                        <li>We look at systems, not single numbers</li>
+                        <li>We compare results to your physiology, not averages</li>
+                        <li>We track trends over time</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Process -->
+            <div class="back-right">
+                
+                <div class="right-content-wrapper">
+                    <h3 class="section-title">WHAT COMES NEXT</h3>
+                    <p class="main-text">
+                        Your results will be reviewed by licensed medical professionals. We’ll discuss the findings together, explain what they mean for your goals, and you decide the next steps with no pressure.
+                    </p>
+                </div>
+
+                <!-- Back Logo/Branding -->
+                <img src="fulllogodark.png" alt="MM+" class="back-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <div style="display:none; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; opacity: 0.6;">MM+</div>
+
+            </div>
+        </div>
+
+        <!-- Bottom Full Width -->
+        <div class="closing-line">
+            Our goal is understanding first — treatment only when it makes sense.
+        </div>
+    </div>
+
+</body>
+</html>

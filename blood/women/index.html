@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonshot Comprehensive Blood Panel (Women)</title>
+    
+    <!-- Fonts: Oswald (Heading/Patron Alternative) & Poppins (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#101921', // Pantone Black 6 C
+                            cloud: '#F0EEE9', // Pantone Cloud Dancer
+                            gray: '#B2BFBE',  // Cool Gray 5 C (Web Match)
+                            slate: '#2C353E'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        body: ['Poppins', 'sans-serif']
+                    },
+                    spacing: {
+                        'print-x': '0.5in',
+                        'print-y': '0.5in',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Print Optimization */
+        @media print {
+            @page {
+                size: 8.5in 11in;
+                margin: 0;
+            }
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+                background-color: #FFFFFF !important;
+                margin: 0;
+            }
+            .page-container {
+                width: 100% !important;
+                height: 100% !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                border: none !important;
+            }
+        }
+
+        /* Screen Preview Styling */
+        body {
+            background-color: #e5e5e5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .page-container {
+            width: 8.5in;
+            min-height: 11in;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="font-body text-brand-black antialiased">
+
+    <div class="page-container">
+        
+        <!-- HEADER SECTION -->
+        <header class="bg-brand-black text-brand-cloud px-6 py-4 relative">
+            <div class="flex justify-between items-start">
+                <div>
+                    <div class="bg-brand-gray/20 border border-brand-gray/30 px-2 py-0.5 rounded-sm backdrop-blur-sm inline-block mb-1">
+                        <span class="text-[9px] tracking-[0.2em] font-heading font-medium uppercase text-brand-cloud/80">Patient Education</span>
+                    </div>
+                    <h1 class="font-heading text-2xl uppercase tracking-wide leading-none mb-1">Moonshot Comprehensive<br><span class="text-brand-gray">Blood Panel (Women)</span></h1>
+                    <p class="text-brand-gray font-light text-[10px] tracking-wide uppercase">A life-stage-aware view of hormones, metabolism, and long-term health</p>
+                </div>
+                <img src="https://moonshotmp.com/images/mm+logocloud.png" alt="Moonshot Medical" class="h-8 w-auto object-contain opacity-90 mt-1">
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-grow px-6 py-4 flex flex-col gap-3">
+
+            <!-- Section: What This Is (Strictly Compressed) -->
+            <div class="border-b border-brand-black/10 pb-2">
+                <h2 class="font-heading text-sm text-brand-black uppercase tracking-widest mb-1 flex items-center gap-2">
+                    <span class="w-1 h-1 bg-brand-black"></span> What This Panel Is
+                </h2>
+                <p class="text-[11px] leading-snug text-brand-slate max-w-5xl">
+                    Analyzing 50+ biomarkers, this panel connects hormones, metabolism, and heart health to pinpoint fatigue and weight shifts across every life stage.
+                </p>
+            </div>
+
+            <!-- BIOMARKERS GRID -->
+            <div class="flex-grow">
+                <div class="flex justify-between items-end mb-3">
+                    <h2 class="font-heading text-lg text-brand-black uppercase tracking-widest">Biomarkers by System</h2>
+                    <span class="text-[9px] font-bold text-brand-slate bg-brand-gray/30 px-2 py-0.5 uppercase tracking-wider rounded-sm">50+ Actionable Markers</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+                    
+                    <!-- A. Cardiovascular -->
+                    <div class="space-y-0.5">
+                        <h3 class="font-heading text-sm font-bold text-brand-black border-b border-brand-black/10 pb-0.5 mb-1">A. Cardiovascular & Lipid Health</h3>
+                        <p class="text-[10px] font-bold text-brand-slate uppercase">Includes: Cholesterol, LDL, HDL, Trigs, ApoB, Lp(a), hs-CRP</p>
+                        <p class="text-[11px] leading-snug text-brand-slate/90">Beyond basic cholesterol, we measure particle number and genetic risk to explain stamina, heart resilience, and inflammation.</p>
+                    </div>
+
+                    <!-- B. Metabolic -->
+                    <div class="space-y-0.5">
+                        <h3 class="font-heading text-sm font-bold text-brand-black border-b border-brand-black/10 pb-0.5 mb-1">B. Metabolic Health & Blood Sugar</h3>
+                        <p class="text-[10px] font-bold text-brand-slate uppercase">Includes: Fasting Glucose, A1c, Fasting Insulin</p>
+                        <p class="text-[11px] leading-snug text-brand-slate/90">Monitoring insulin sensitivity helps prevent stubborn weight gain and energy crashes before blood sugar ever rises.</p>
+                    </div>
+
+                    <!-- C. Hormones -->
+                    <div class="space-y-0.5">
+                        <h3 class="font-heading text-sm font-bold text-brand-black border-b border-brand-black/10 pb-0.5 mb-1">C. Female Hormones & Life-Stage</h3>
+                        <p class="text-[10px] font-bold text-brand-slate uppercase">Includes: Estradiol, Progesterone, Testosterone, FSH, LH</p>
+                        <p class="text-[11px] leading-snug text-brand-slate/90">We map hormone balance against your life stage to explain cycle irregularities, hot flashes, sleep issues, and mood shifts.</p>
+                    </div>
+
+                    <!-- D. Thyroid -->
+                    <div class="space-y-0.5">
+                        <h3 class="font-heading text-sm font-bold text-brand-black border-b border-brand-black/10 pb-0.5 mb-1">D. Thyroid Function & Metabolic Pace</h3>
+                        <p class="text-[10px] font-bold text-brand-slate uppercase">Includes: TSH, Free T4, Free T3, Antibodies</p>
+                        <p class="text-[11px] leading-snug text-brand-slate/90">Checking antibody status and conversion efficiency ensures your metabolism is active, explaining hair loss, coldness, and fatigue.</p>
+                    </div>
+
+                    <!-- E. Inflammation -->
+                    <div class="space-y-0.5">
+                        <h3 class="font-heading text-sm font-bold text-brand-black border-b border-brand-black/10 pb-0.5 mb-1">E. Inflammation & Stress Load</h3>
+                        <p class="text-[10px] font-bold text-brand-slate uppercase">Includes: hs-CRP, CBC (Immune Patterns)</p>
+                        <p class="text-[11px] leading-snug text-brand-slate/90">Differentiating between healthy training load and chronic stress helps explain fluid retention, joint pain, and slow recovery.</p>
+                    </div>
+
+                    <!-- F. Nutrients -->
+                    <div class="space-y-0.5">
+                        <h3 class="font-heading text-sm font-bold text-brand-black border-b border-brand-black/10 pb-0.5 mb-1">F. Nutrients & Cellular Support</h3>
+                        <p class="text-[10px] font-bold text-brand-slate uppercase">Includes: Vitamin D, Vitamin B12, Electrolytes, Protein</p>
+                        <p class="text-[11px] leading-snug text-brand-slate/90">Assessing key co-factors for hormone production helps explain low energy, weak immunity, and poor sleep quality.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUMMARY LIST -->
+            <div class="mt-auto bg-white p-3 border-l-4 border-brand-black shadow-sm">
+                <h3 class="font-heading text-[10px] font-bold text-brand-black uppercase tracking-widest mb-1.5">Included Panels</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-y-1 gap-x-2 text-[10px] text-brand-slate font-medium">
+                    <div class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-brand-gray"></span> CBC + CMP</div>
+                    <div class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-brand-gray"></span> Lipid Panel + ApoB</div>
+                    <div class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-brand-gray"></span> Full Thyroid Panel</div>
+                    <div class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-brand-gray"></span> Vitamin D + B12</div>
+                    <div class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-brand-gray"></span> A1c + Fasting Insulin</div>
+                    <div class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-brand-gray"></span> Lipoprotein(a)</div>
+                    <div class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-brand-gray"></span> Hormone Panel</div>
+                    <div class="col-span-1 md:col-span-1 text-[9px] text-brand-gray italic flex items-center">*Timing varies by cycle.</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="bg-brand-gray/20 px-6 py-3 mt-auto">
+            <p class="text-brand-slate font-medium text-center text-[10px] leading-snug">
+                “This comprehensive panel gives us the clarity to understand your health in context — and build a plan aligned to your goals and life stage.”
+            </p>
+            <p class="text-center text-[9px] uppercase tracking-widest text-brand-black/60 font-heading mt-1">Moonshot Medical + Performance</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men’s Hormone Optimization Pathways - Moonshot Medical</title>
+    <style>
+        /* --- FONTS --- */
+        @font-face {
+            font-family: 'Patron';
+            src: url('PATRON.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Poppins';
+            src: url('Poppins-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            src: url('Poppins-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            src: url('Poppins-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        /* --- VARIABLES --- */
+        :root {
+            --primary-dark: #101921;    /* Pantone Black 6 C */
+            --primary-light: #FFFFFF;   /* Changed to White per request */
+            --secondary: #B2BFBE;       /* Pantone Cool Gray 5 C */
+            
+            --font-heading: 'Patron', 'Impact', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            background-color: #E0E0E0; /* Darker grey canvas for contrast with white page */
+            font-family: var(--font-body);
+            color: var(--primary-dark);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .page {
+            width: 8.5in;
+            height: 11in;
+            background-color: var(--primary-light);
+            padding: 0.5in 0.6in; /* Reduced margins to fit content */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- TYPOGRAPHY UTILS --- */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: 0.05em;
+        }
+
+        p, li {
+            font-size: 10px; /* Slightly reduced for compression */
+            line-height: 1.4;
+            color: var(--primary-dark);
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 3px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* --- HEADER --- */
+        header {
+            margin-bottom: 0.2in; /* Compressed */
+            padding-bottom: 0.1in; /* Compressed */
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 14pt;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.05in; /* Compressed */
+            display: block;
+        }
+
+        h1.page-title {
+            font-size: 22pt; /* Slightly smaller */
+            letter-spacing: 0.02em;
+            color: var(--primary-dark);
+        }
+
+        /* --- INTRODUCTION --- */
+        .intro {
+            margin-bottom: 0.2in; /* Compressed */
+        }
+        
+        .intro p {
+            font-size: 10px;
+            max-width: 100%;
+            margin-bottom: 6px;
+        }
+
+        .intro strong {
+            font-weight: 600;
+        }
+
+        /* --- PRICING BOX --- */
+        .pricing-section {
+            margin-bottom: 0.25in; /* Compressed */
+        }
+
+        .pricing-title {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            color: var(--secondary); 
+            margin-bottom: 2px;
+        }
+
+        .price-line {
+            font-family: var(--font-heading);
+            font-size: 28px; /* Slightly smaller */
+            font-weight: normal;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .price-line span {
+            font-family: var(--font-body);
+            font-size: 11px;
+            color: var(--secondary);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .price-disclaimer {
+            font-size: 9px;
+            color: var(--primary-dark);
+            margin-top: 2px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* --- TWO COLUMNS (BOXED) --- */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3in; /* Reduced gap */
+            margin-bottom: 0.25in; /* Compressed */
+            flex-grow: 1; /* Allow this to take available space */
+        }
+
+        .col-left, .col-right {
+            border: 1px solid var(--secondary);
+            padding: 0.2in;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .col-header {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            margin-bottom: 0.1in;
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 4px;
+            display: block;
+        }
+
+        .subsection {
+            margin-bottom: 0.15in;
+        }
+
+        .sub-label {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 8px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 4px;
+            display: block;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- SHARED MONITORING --- */
+        .monitoring-section {
+            margin-bottom: 0.2in; /* Compressed */
+            padding-top: 0.15in;
+            border-top: 1px solid var(--secondary);
+        }
+
+        .monitoring-title {
+            font-family: var(--font-heading);
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        /* --- ADDITIONAL OPTIONS --- */
+        .addons-section {
+            padding-top: 0.15in;
+            border-top: 2px solid var(--secondary);
+            margin-bottom: 0.1in;
+        }
+
+        .addons-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.15in;
+        }
+
+        .addons-title {
+            font-family: var(--font-heading);
+            font-size: 13px;
+        }
+
+        .addons-intro {
+            font-size: 8px;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .addons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.2in;
+        }
+
+        .addon-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .addon-card h4 {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 10px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            color: var(--primary-dark);
+        }
+
+        /* New clear description style */
+        .addon-desc {
+            font-size: 9px;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            min-height: 3em; /* Ensure alignment */
+            opacity: 0.9;
+        }
+
+        .addon-price {
+            font-size: 10px;
+            font-weight: 600;
+            display: block;
+            color: var(--secondary);
+            margin-top: auto; /* Push to bottom */
+        }
+
+        .final-disclaimer {
+            font-size: 8px;
+            text-align: center;
+            color: var(--secondary);
+            margin-top: auto;
+            width: 100%;
+            padding-bottom: 0.1in;
+        }
+
+        /* --- PRINT MEDIA --- */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .page {
+                box-shadow: none;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0.5in;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <!-- HEADER -->
+        <header>
+            <div class="logo">MOONSHOT MEDICAL + PERFORMANCE</div>
+            <h1 class="page-title">Men’s Hormone Optimization Pathways</h1>
+        </header>
+
+        <!-- INTRODUCTION -->
+        <section class="intro">
+            <p>
+                Hormone optimization for men is a <strong>medically guided process</strong> focused on evaluating and managing testosterone levels in the context of symptoms, health history, and long-term wellbeing.
+            </p>
+            <p>
+                Decisions are based on comprehensive bloodwork with ongoing monitoring and medical oversight. There is no single "right" protocol; care is adjusted over time based on labs and how you feel.
+            </p>
+        </section>
+
+        <!-- CORE PRICING -->
+        <section class="pricing-section">
+            <div class="pricing-title">HORMONE OPTIMIZATION</div>
+            <div class="price-line">
+                $208 <span>/ MONTH</span>
+            </div>
+            <div class="price-disclaimer">
+                Introductory rate. Available to the first 20 hormone optimization patients only.
+            </div>
+        </section>
+
+        <!-- MAIN TWO COLUMNS -->
+        <section class="pathways-grid">
+            
+            <!-- LEFT: INJECTIONS -->
+            <div class="col-left">
+                <h3 class="col-header">TESTOSTERONE INJECTIONS</h3>
+                
+                <div class="subsection">
+                    <span class="sub-label">How it works</span>
+                    <ul>
+                        <li>Bioidentical testosterone administered via injection</li>
+                        <li>Typically dosed twice per week</li>
+                        <li>Can be self-administered at home or given in-clinic</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <span class="sub-label">What to expect</span>
+                    <ul>
+                        <li>Flexible dosing that can be adjusted over time</li>
+                        <li>Requires consistent injections on a weekly schedule</li>
+                        <li>Bloodwork monitored at regular intervals to ensure safety and effectiveness</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <span class="sub-label">Good fit for</span>
+                    <ul>
+                        <li>Patients who prefer flexibility</li>
+                        <li>Those comfortable with injections</li>
+                        <li>Individuals who want easier dose adjustments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- RIGHT: PELLETS -->
+            <div class="col-right">
+                <h3 class="col-header">TESTOSTERONE PELLETS</h3>
+
+                <div class="subsection">
+                    <span class="sub-label">How it works</span>
+                    <ul>
+                        <li>Brief in-office procedure (approximately 5 minutes)</li>
+                        <li>Small incision in the upper buttocks</li>
+                        <li>Bioidentical testosterone pellets inserted based on height, weight, labs, and symptoms</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <span class="sub-label">What to expect</span>
+                    <ul>
+                        <li>Slow, steady release of testosterone over approximately 5 months</li>
+                        <li>No weekly or daily dosing</li>
+                        <li>Return every ~5 months for pellet replacement</li>
+                        <li>Bloodwork monitored regularly and dosage adjusted at future insertions as needed</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <span class="sub-label">Additional Note</span>
+                    <ul>
+                        <li>One-time initial pellet insertion fee: <strong>$215</strong></li>
+                        <li>After the initial insertion, there are <strong>no additional pellet procedure charges</strong> beyond the standard monthly hormone optimization program</li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SHARED MONITORING -->
+        <section class="monitoring-section">
+            <h3 class="monitoring-title">MONITORING & ADJUSTMENTS</h3>
+            <p>
+                Both pathways include regular bloodwork. Care begins with a conservative dose, which can be adjusted up or down based on labs and symptoms. All changes are reviewed by licensed medical providers. The goal is <strong>supporting how you feel while prioritizing long-term safety</strong>, not chasing numbers.
+            </p>
+        </section>
+
+        <!-- ADD-ONS -->
+        <section class="addons-section">
+            <div class="addons-header">
+                <h3 class="addons-title">ADDITIONAL OPTIONS (OPTIONAL)</h3>
+                <span class="addons-intro">These options may be added to either pathway when clinically appropriate.</span>
+            </div>
+
+            <div class="addons-grid">
+                <!-- Enclomiphene -->
+                <div class="addon-card">
+                    <h4>ENCLOMIPHENE</h4>
+                    <div class="addon-desc">
+                        Preserves fertility and stimulates natural testosterone production. Typically taken orally once a week.
+                    </div>
+                    <div class="addon-price">
+                        $70 / month (Add-on)<br>
+                        $200 / month (Standalone)
+                    </div>
+                </div>
+
+                <!-- hCG -->
+                <div class="addon-card">
+                    <h4>hCG</h4>
+                    <div class="addon-desc">
+                        Maintains fertility and natural testosterone signals while on therapy. Helps prevent testicular shrinkage.
+                    </div>
+                    <div class="addon-price">
+                        $300 / month
+                    </div>
+                </div>
+
+                <!-- Tadalafil -->
+                <div class="addon-card">
+                    <h4>TADALAFIL</h4>
+                    <div class="addon-desc">
+                        Improves overall blood flow and circulation. Commonly used to support stronger erectile quality.
+                    </div>
+                    <div class="addon-price">
+                        $70 / month
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="final-disclaimer">
+            All add-ons are prescribed and monitored under medical supervision.
+        </div>
+
+    </div>
+
+</body>
+</html>

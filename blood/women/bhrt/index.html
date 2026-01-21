@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women's Hormone Optimization Pathways</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #101921;
+            --primary-light: #F0EEE9;
+            --secondary: #B2BFBE;
+            --font-heading: 'Patron', 'Montserrat', sans-serif; /* Fallback to Montserrat if Patron unavailable locally */
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-family: var(--font-body);
+            width: 8.5in;
+            height: 11in;
+            margin: 0 auto;
+            padding: 0.5in 0.6in; /* Standard margins */
+            position: relative;
+            overflow: hidden; /* Ensure single page appearance on screen */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary-dark);
+        }
+
+        p {
+            font-size: 9pt;
+            line-height: 1.4;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        /* HEADER */
+        header {
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 10pt;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        h1.page-title {
+            font-size: 18pt;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* INTRO */
+        .intro {
+            text-align: left;
+            margin-bottom: 20px;
+            padding-right: 15%; /* Restrain width for readability */
+        }
+        .intro p {
+            font-size: 9.5pt;
+            color: #2c353c; /* Slightly softer for reading */
+        }
+
+        /* PRICING HERO */
+        .pricing-hero {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .pricing-row {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .pricing-title {
+            font-size: 11pt;
+            font-weight: 700;
+        }
+
+        .price-tag {
+            font-size: 14pt;
+            font-weight: 600;
+            font-family: var(--font-heading);
+        }
+
+        .price-period {
+            font-size: 9pt;
+            color: #555;
+            font-weight: 400;
+        }
+
+        /* COLUMNS CONTAINER */
+        .pathways-container {
+            display: flex;
+            gap: 40px; /* Generous gap */
+            margin-bottom: 20px;
+            flex-grow: 1; /* Allow to take up space */
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .column-header {
+            font-size: 11pt;
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .section-subhead {
+            font-family: var(--font-body);
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 10px;
+        }
+
+        li {
+            font-size: 8.5pt;
+            line-height: 1.35;
+            margin-bottom: 4px;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* MONITORING & SUPPORT */
+        .monitoring-section {
+            background-color: rgba(178, 191, 190, 0.15); /* Very faint tint of secondary */
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .monitoring-content {
+            display: flex;
+            gap: 30px;
+        }
+
+        .monitoring-text {
+            flex: 2;
+        }
+        
+        .included-support {
+            flex: 1.2;
+            padding-left: 20px;
+            border-left: 1px solid var(--secondary);
+        }
+
+        h3.small-header {
+            font-size: 9pt;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        /* ADDITIONAL OPTIONS */
+        .additional-options {
+            margin-top: auto; /* Push to bottom */
+            border-top: 1px solid var(--secondary);
+            padding-top: 15px;
+        }
+
+        .options-intro {
+            font-size: 8.5pt;
+            margin-bottom: 12px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .options-grid {
+            display: flex;
+            gap: 40px;
+        }
+
+        .option-item {
+            flex: 1;
+        }
+
+        .option-name {
+            font-family: var(--font-heading);
+            font-size: 10pt;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .option-price {
+            font-size: 9pt;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .disclaimer {
+            margin-top: 15px;
+            font-size: 7pt;
+            text-align: center;
+            color: #888;
+        }
+
+        /* PRINT MEDIA QUERY */
+        @media print {
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0.5in;
+                -webkit-print-color-adjust: exact;
+            }
+            /* Hide browser headers/footers in settings ideally, but ensuring bg colors print */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="logo">MOONSHOT MEDICAL + PERFORMANCE</span>
+        <h1 class="page-title">Women’s Hormone Optimization Pathways</h1>
+    </header>
+
+    <div class="intro">
+        <p>
+            Women’s hormone optimization is a medically guided process focused on evaluating and supporting hormone balance in the context of symptoms, health history, life stage, and long-term wellbeing. Care may include estradiol, progesterone, and testosterone, depending on individual needs.
+        </p>
+        <p>
+            Treatment begins conservatively, decisions are guided by comprehensive bloodwork and symptoms, and care is adjusted gradually over time under medical oversight. There is no single "right" protocol.
+        </p>
+    </div>
+
+    <div class="pricing-hero">
+        <div class="pricing-row">
+            <span class="pricing-title">HORMONE OPTIMIZATION PROGRAM</span>
+            <span class="price-tag">$208 <span class="price-period">/ month</span></span>
+        </div>
+    </div>
+
+    <div class="pathways-container">
+        <!-- LEFT COLUMN -->
+        <div class="column">
+            <div class="column-header">TOPICAL CREAMS</div>
+            
+            <div class="section-subhead">How it works</div>
+            <ul>
+                <li>Bioidentical hormones delivered via topical creams</li>
+                <li>Typically includes estradiol (estrogen) and testosterone</li>
+                <li>Applied twice daily: once in the morning and once before bed</li>
+            </ul>
+
+            <div class="section-subhead">What to expect</div>
+            <ul>
+                <li>Requires daily consistency and compliance</li>
+                <li>Allows for gradual dose adjustments</li>
+                <li>Bloodwork monitored at regular intervals</li>
+                <li>Important to follow application instructions carefully</li>
+            </ul>
+
+            <div class="section-subhead">Additional considerations</div>
+            <ul>
+                <li>Potential for transfer to others if instructions are not followed</li>
+                <li>Must be mindful of proper application and hygiene</li>
+            </ul>
+
+            <div class="section-subhead">Good fit for</div>
+            <ul>
+                <li>Patients who prefer non-procedural options</li>
+                <li>Those who want flexibility without pellet insertion</li>
+                <li>Individuals comfortable with daily routines</li>
+            </ul>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="column">
+            <div class="column-header">HORMONE PELLETS</div>
+            
+            <div class="section-subhead">How it works</div>
+            <ul>
+                <li>Brief in-office procedure (approximately 5 minutes)</li>
+                <li>Small incision in the upper buttocks</li>
+                <li>Bioidentical hormone pellets inserted based on labs, symptoms, body weight, and clinical assessment</li>
+            </ul>
+
+            <div class="section-subhead">What to expect</div>
+            <ul>
+                <li>Slow, steady hormone release over several months</li>
+                <li>No daily or weekly dosing</li>
+                <li>Return periodically for pellet replacement</li>
+                <li>Bloodwork monitored regularly; dosing adjusted at future insertions as needed</li>
+            </ul>
+
+            <div class="section-subhead" style="visibility: hidden;">Additional considerations</div> <!-- Spacer to align layout -->
+            <ul style="visibility: hidden;">
+                <li>Spacer text</li>
+                <li>Spacer text</li>
+            </ul>
+
+            <div class="section-subhead">Good fit for</div>
+            <ul>
+                <li>Patients who prefer a “set-it-and-forget-it” approach</li>
+                <li>Those who want consistent delivery without daily application</li>
+                <li>Individuals seeking fewer day-to-day touchpoints</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- MONITORING & INCLUDED SUPPORT -->
+    <div class="monitoring-section">
+        <div class="monitoring-content">
+            <div class="monitoring-text">
+                <h3 class="small-header">MONITORING & ADJUSTMENTS</h3>
+                <p>For both pathways, bloodwork is monitored at regular intervals. Care begins conservatively, and doses can be adjusted up or down based on labs and symptoms. All decisions are reviewed by licensed medical providers to support how you feel while prioritizing safety and long-term health.</p>
+            </div>
+            <div class="included-support">
+                <h3 class="small-header">INCLUDED: PROGESTERONE</h3>
+                <p>Oral progesterone is included as part of women’s hormone optimization to support sleep, mood, and hormonal balance. Prescribed and monitored based on individual needs.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADDITIONAL OPTIONS -->
+    <div class="additional-options">
+        <h3 class="small-header">ADDITIONAL OPTIONS (OPTIONAL)</h3>
+        <p class="options-intro">These options may be added when clinically appropriate. Your provider can help determine whether they are a good fit.</p>
+        
+        <div class="options-grid">
+            <div class="option-item">
+                <div class="option-name">NAD+ INJECTIONS</div>
+                <span class="option-price">$90 / month</span>
+                <p>Administered once weekly. Supports cellular energy production and metabolic health. Often used to support energy and resilience.</p>
+            </div>
+            <div class="option-item">
+                <div class="option-name">GLUTATHIONE INJECTIONS</div>
+                <span class="option-price">$60 / month</span>
+                <p>Administered once weekly. Supports antioxidant defenses, liver detoxification, and cellular protection. Commonly used for recovery and wellness.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        All add-ons are prescribed and monitored under medical supervision.
+    </div>
+
+</body>
+</html>

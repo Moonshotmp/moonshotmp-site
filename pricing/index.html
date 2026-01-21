@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonshot Medical + Performance Pricing</title>
+    
+    <!-- Fonts matched from Website -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            /* Premium Light Theme */
+            --bg-color: #ffffff;      /* Changed from #F0EEE9 to White */
+            --text-main: #101921;     /* Dark Navy */
+            --text-muted: #6e7a79;    /* Muted Slate */
+            --border-color: #B2BFBE;  /* Cool Gray */
+            
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            width: 8.5in;
+            height: 11in;
+            margin: 0 auto;
+            padding: 0.5in 0.75in; /* Reduced top padding slightly to 0.5in */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            color: var(--text-main);
+        }
+
+        .text-muted { color: var(--text-muted); }
+        
+        /* --- 1. HEADER --- */
+        header {
+            text-align: center;
+            margin-bottom: 0.3in; /* Reduced slightly */
+            padding-bottom: 0.15in; /* Reduced slightly */
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        /* Center Logo Styles */
+        .logo-wrapper-center {
+            display: block;
+            margin-bottom: 0.15in;
+            text-align: center;
+        }
+
+        .header-logo-center {
+            height: 0.7in; /* Adjusted size for the full logo */
+            display: inline-block;
+        }
+
+        .logo-fallback-center {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 22px;
+            letter-spacing: 0.1em;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+        
+        /* REMOVED CORNER LOGO STYLES */
+
+        header h1 {
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 0.05in;
+            letter-spacing: 0.1em;
+        }
+
+        header .subline {
+            font-family: var(--font-body);
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 500;
+        }
+
+        /* --- 2. CORE PROGRAMS --- */
+        .core-programs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.2in;
+            margin-bottom: 0.25in;
+        }
+
+        .program-card {
+            border: 1px solid var(--border-color);
+            padding: 0.2in;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 1.8in; /* Adjusted height */
+            text-align: left;
+            position: relative;
+        }
+
+        .program-title {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .program-price {
+            font-family: var(--font-heading);
+            font-size: 26px;
+            color: var(--text-main);
+            font-weight: 400;
+            margin-top: auto;
+        }
+
+        .program-period {
+            font-family: var(--font-body);
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Sub-details for Weight Loss Card */
+        .card-subtext {
+            font-size: 9px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            line-height: 1.3;
+            font-weight: 300;
+        }
+
+        /* --- NEW SECTION: WHAT'S INCLUDED --- */
+        .included-section {
+            margin-bottom: 0.3in; /* Reduced slightly */
+            padding-bottom: 0.15in;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .included-header {
+            font-family: var(--font-heading);
+            font-size: 12px;
+            color: var(--text-main);
+            margin-bottom: 0.15in;
+            letter-spacing: 0.1em;
+        }
+
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 Columns now */
+            gap: 0.2in;
+        }
+
+        .included-item h4 {
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+        
+        .included-item p {
+            font-size: 10px;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .value-line {
+            margin-top: 0.15in;
+            font-size: 10px;
+            color: var(--text-muted);
+            font-style: italic;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 6px;
+            display: block;
+        }
+
+        /* --- 3. COMMON LIST STYLES --- */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 12px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+            font-size: 11px;
+        }
+
+        .item-name {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .item-price {
+            color: var(--text-muted);
+            font-weight: 400;
+            text-align: right;
+        }
+
+        /* --- LAYOUT COLUMNS --- */
+        .main-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4in;
+            flex-grow: 1; 
+        }
+
+        .add-ons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 0.2in;
+        }
+
+        /* --- FOOTER CALLOUT --- */
+        .footer-callout {
+            margin-top: auto; /* Push to bottom of flex container */
+            margin-bottom: auto; /* Center vertically if there is extra space */
+            border: 1px solid var(--border-color); /* Changed from var(--text-main) to var(--border-color) */
+            padding: 0.2in;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            align-self: stretch; /* Ensure it takes full width */
+        }
+
+        .footer-left h3 {
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        .footer-left p {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+        
+        .market-val {
+            font-size: 10px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 1px;
+        }
+
+        .your-price {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* --- PRINT MEDIA QUERY --- */
+        @media print {
+            body {
+                width: 8.5in;
+                height: 11in;
+                padding: 0.5in 0.75in;
+                /* Force background color print */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            @page {
+                size: 8.5in 11in;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER -->
+    <header>
+        <!-- Center Logo (Full Logo) -->
+        <div class="logo-wrapper-center">
+            <img src="fulllogodark.png" alt="Moonshot Medical + Performance" class="header-logo-center" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <div class="logo-fallback-center" style="display:none;">MOONSHOT MEDICAL + PERFORMANCE</div>
+        </div>
+        
+        <!-- REMOVED CORNER LOGO -->
+
+        <h1>Pricing Overview</h1>
+        <div class="subline">Performance Medicine • Hormones • Body Composition</div>
+    </header>
+
+    <!-- 2. CORE PROGRAMS -->
+    <section class="core-programs">
+        <div class="program-card">
+            <div class="program-title">HORMONE<br>OPTIMIZATION</div>
+            <div class="program-price">
+                $208
+                <span class="program-period">Per Month</span>
+            </div>
+        </div>
+        <div class="program-card">
+            <div class="program-title">WEIGHT LOSS &<br>METABOLIC</div>
+            
+            <!-- Clarification Subtext -->
+            <div style="margin-bottom: auto; margin-top: 8px;">
+                <p class="card-subtext">• Includes prescribed medication</p> <!-- Removed "(when clinically appropriate)" -->
+                <p class="card-subtext">• Includes monthly nutrition coaching</p>
+            </div>
+
+            <div class="program-price">
+                $405
+                <span class="program-period">Per Month</span>
+            </div>
+        </div>
+        <div class="program-card">
+            <div class="program-title">COMBINED<br>PROGRAM</div>
+            <div class="program-price">
+                $523
+                <span class="program-period">Per Month</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: WHAT'S INCLUDED -->
+    <section class="included-section">
+        <div class="included-header">WHAT’S INCLUDED (IN ABOVE PROGRAMS)</div>
+        <div class="included-grid">
+            <div class="included-item">
+                <h4>DEXA Scan</h4>
+                <p>1 scan per quarter included<br>for tracking body composition.</p>
+            </div>
+            <div class="included-item">
+                <h4>Comprehensive Bloodwork</h4>
+                <p>Detailed panels every 6 months<br>included in membership.</p>
+            </div>
+            <div class="included-item">
+                <h4>Medical Oversight</h4>
+                <p>Licensed providers, ongoing<br>monitoring & personalized care.</p>
+            </div>
+            <div class="included-item">
+                <h4>Vitamin Injection</h4>
+                <p>1 complimentary injection<br>per month included.</p>
+            </div>
+        </div>
+        <div class="value-line">
+            Estimated annual value of included services: $1,500+
+        </div>
+    </section>
+
+    <!-- 3. SPLIT COLUMNS -->
+    <div class="main-columns">
+        
+        <!-- LEFT COLUMN -->
+        <div>
+            <!-- ADD-ONS -->
+            <div style="margin-bottom: 0.25in;">
+                <h3 class="section-title">ADD-ON THERAPIES</h3>
+                <div class="add-ons-grid">
+                    <div class="item-row">
+                        <span class="item-name">NAD+</span>
+                        <span class="item-price">$60 / shot</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-name">Glutathione</span>
+                        <span class="item-price">$30 / shot</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-name">MIC B</span>
+                        <span class="item-price">$30 / shot</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-name">Vitamin C</span>
+                        <span class="item-price">$30 / shot</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-name">B12</span>
+                        <span class="item-price">$30 / shot</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEDICATIONS -->
+            <div>
+                <h3 class="section-title">MEDICATIONS & MONITORING</h3>
+                <div class="item-row">
+                    <span class="item-name">HCG</span>
+                    <span class="item-price">$350 / month</span>
+                </div>
+                <div class="item-row">
+                    <span class="item-name">Enclomiphene</span>
+                    <span class="item-price">$200 / month</span>
+                </div>
+                <div class="item-row">
+                    <span class="item-name">Tadalafil</span>
+                    <span class="item-price">$70 / month</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div>
+            <!-- PEPTIDES -->
+            <div style="margin-bottom: 0.25in;">
+                <h3 class="section-title">PEPTIDES</h3>
+                <div class="item-row">
+                    <span class="item-name">Sermorelin</span>
+                    <span class="item-price">$250 / month</span>
+                </div>
+                <div class="item-row">
+                    <span class="item-name">PT-141</span>
+                    <span class="item-price">$250 / month</span>
+                </div>
+            </div>
+
+            <!-- DIAGNOSTICS -->
+            <div>
+                <h3 class="section-title">DIAGNOSTICS</h3>
+                <div class="item-row">
+                    <span class="item-name">DEXA Scan</span>
+                    <span class="item-price">$150</span>
+                </div>
+                <div class="item-row">
+                    <span class="item-name">DEXA Scan (2-pack)</span>
+                    <span class="item-price">$225</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Spacer to help vertical centering of footer in remaining space -->
+    <div style="flex-grow: 1;"></div>
+
+    <!-- 4. FOOTER CALLOUT -->
+    <footer class="footer-callout">
+        <div class="footer-left">
+            <h3>INITIAL COMPREHENSIVE LABS</h3>
+            <p>Required for all new patients • 50+ Biomarkers</p>
+        </div>
+        <div class="footer-right">
+            <span class="market-val">Market value: $450</span>
+            <span class="your-price">Your price: $210</span>
+        </div>
+    </footer>
+    
+    <!-- Spacer to help vertical centering of footer in remaining space -->
+    <div style="flex-grow: 1;"></div>
+
+</body>
+</html>

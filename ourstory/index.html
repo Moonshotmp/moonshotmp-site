@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Metadata -->
+    <title>Tom's Story | Moonshot Medical & Performance | Park Ridge, IL</title>
+    <meta name="description" content="I hit a wall in my mid-30s. I was doing everything right but stopped feeling like myself. Here is the story and data behind why we built Moonshot.">
+    <link rel="canonical" href="https://moonshotmp.com/ourstory/">
+    
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Why We Built Moonshot Medical + Performance">
+    <meta property="og:description" content="I hit a wall in my mid-30s. Training hard wasn't enough anymore. Here's what I learned when I finally stopped guessing.">
+    <meta property="og:url" content="https://moonshotmp.com/ourstory/">
+    <meta property="og:image" content="https://moonshotmp.com/images/Tomblack.JPG">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config to match Homepage Design System -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#101921',   /* Dark Navy/Black */
+                            light: '#F0EEE9',  /* Warm Off-White */
+                            gray: '#B2BFBE',   /* Muted Green-Gray */
+                            slate: '#2C353E',  /* Deep Slate */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        heading: ['Oswald', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'texture-concrete': "url('data:image/svg+xml,%3Csvg width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 100 100\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cpath d=\\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\\' fill=\\'%2394a3b8\\' fill-opacity=\\'0.05\\' fill-rule=\\'evenodd\\'/%3E%3C/svg%3E')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": ["MedicalBusiness", "LocalBusiness"],
+          "@id": "https://moonshotmp.com/#clinic",
+          "name": "Moonshot Medical and Performance",
+          "alternateName": "Moonshot Medical + Performance",
+          "url": "https://moonshotmp.com/",
+          "logo": "https://moonshotmp.com/images/mm+logocloud.png",
+          "image": "https://moonshotmp.com/images/moonshotmedical_cloud.png",
+          "description": "Performance medicine clinic in Park Ridge, IL offering data-driven health optimization through advanced diagnostics, individualized care, and long-term tracking.",
+          "foundingDate": "2026-01-01",
+          "telephone": "+18474991266",
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "hello@moonshotmp.com"
+            }
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.01764,
+            "longitude": -87.84407
+          },
+          "sameAs": [
+            "https://www.instagram.com/moonshotmp",
+            "https://www.google.com/maps/place/Moonshot+Medical+and+Performance/@42.0176207,-87.8466339,17z/data=!3m1!4b1!4m6!3m5!1s0x880fc93808b7eb21:0xab080186251e700d!8m2!3d42.0176207!4d-87.844059!16s%2Fg%2F11ytc_ydsk",
+            "https://www.google.com/maps?cid=12324102055959359501",
+            "https://moonshotcrossfit.com/"
+          ],
+          "areaServed": [
+            { "@type": "Place", "name": "Park Ridge, IL" },
+            { "@type": "Place", "name": "Chicago, IL" },
+            { "@type": "Place", "name": "Chicago’s northwest suburbs" }
+          ],
+          "mainEntityOfPage": "https://moonshotmp.com/"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://moonshotmp.com/ourstory/#webpage",
+          "url": "https://moonshotmp.com/ourstory/",
+          "name": "Our Story | Moonshot Medical and Performance | Park Ridge, IL",
+          "isPartOf": { "@id": "https://moonshotmp.com/#website" },
+          "about": { "@id": "https://moonshotmp.com/#clinic" },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://moonshotmp.com/images/Tomblack.JPG"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "Lab Snapshot Dates",
+              "value": "04/2025 → 08/2025"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Total Cholesterol (mg/dL)",
+              "value": "172 → 149 (Δ -23)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "HDL (mg/dL)",
+              "value": "42 → 45 (Δ +3)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "LDL Calculated (mg/dL)",
+              "value": "117 → 88 (Δ -29)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Apolipoprotein B ApoB (mg/dL)",
+              "value": "95 → 81 (Δ -14)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Measurement Dates",
+              "value": "2025-07-21 → 2025-11-02"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Scale Weight (lbs)",
+              "value": "208.2 → 207.4 (Δ -0.8)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "InBody Weight (lbs)",
+              "value": "208.6 → 208.6 (Δ 0.0)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "InBody Body Fat Percentage",
+              "value": "17.8% → 11.2% (Δ -6.6%)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Waist (in)",
+              "value": "35.4 → 33.3 (Δ -2.1)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Chest (in)",
+              "value": "41.25 → 43.0 (Δ +1.75)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Hips (in)",
+              "value": "40.0 → 39.0 (Δ -1.0)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Arms Relaxed (in)",
+              "value": "15.0 → 15.1 (Δ +0.1)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Arms Flexed (in)",
+              "value": "16.0 → 16.2 (Δ +0.2)"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Quad (in)",
+              "value": "25.0 → 25.0 (Δ 0.0)"
+            }
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://moonshotmp.com/#tom",
+          "name": "Tom",
+          "jobTitle": "Partner, Strategy & Vision",
+          "worksFor": { "@id": "https://moonshotmp.com/#clinic" }
+        },
+        {
+          "@type": "VideoObject",
+          "@id": "https://moonshotmp.com/ourstory/#video-tom-intro",
+          "name": "Tom’s Intro",
+          "description": "Tom explains the gap between feeling ‘normal’ on paper and feeling normal in real life.",
+          "thumbnailUrl": "https://moonshotmp.com/images/Tomblack.JPG",
+          "uploadDate": "2026-01-01",
+          "contentUrl": "https://moonshotmp.com/videos/Tom-Intro-no-music.mp4",
+          "publisher": { "@id": "https://moonshotmp.com/#clinic" }
+        },
+        {
+          "@type": "VideoObject",
+          "@id": "https://moonshotmp.com/ourstory/#video-blood-results",
+          "name": "Blood Results Walkthrough",
+          "description": "Tom walks through what comprehensive labs can reveal and how trends are interpreted.",
+          "thumbnailUrl": "https://moonshotmp.com/images/Beforeafter.JPG",
+          "uploadDate": "2026-01-01",
+          "contentUrl": "https://moonshotmp.com/videos/Blood-Results.mp4",
+          "publisher": { "@id": "https://moonshotmp.com/#clinic" }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; color: #2C353E; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
+        .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        
+        /* Custom Button Styles */
+        .btn-primary { background-color: #B2BFBE; color: #101921; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 600; padding: 0.75rem 2rem; transition: all 0.3s ease; }
+        .btn-primary:hover { background-color: #F0EEE9; transform: translateY(-2px); }
+        .btn-outline { background-color: transparent; border: 1px solid #B2BFBE; color: #B2BFBE; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 500; padding: 0.75rem 2rem; transition: all 0.3s ease; }
+        .btn-outline:hover { border-color: #F0EEE9; color: #F0EEE9; transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-brand-light antialiased">
+
+    <!-- NAVIGATION (Replaced with Homepage Version) -->
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a href="/" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+            <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain">
+            <div class="hidden sm:block text-brand-light font-heading text-sm tracking-wide leading-tight ml-3">
+              MOONSHOT<br>MEDICAL AND PERFORMANCE
+            </div>
+          </a>
+
+          <div class="hidden md:flex space-x-8 items-center">
+            <a href="/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Home</a>
+
+            <div class="relative inline-block" id="services-menu-wrapper">
+              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+                      id="services-menu-button" aria-expanded="false" aria-haspopup="true">
+                Services
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+
+              <div class="absolute left-0 mt-2 w-64 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden"
+                   id="services-dropdown">
+                <div class="py-2">
+                  <a href="/services/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">All Services</a>
+                  <a href="/services/performance-medicine/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Performance Medicine</a>
+                  <a href="/services/mens-hormone-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Men’s Hormone Optimization</a>
+                  <a href="/services/womens-hormone-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Women’s Hormone Optimization</a>
+                  <a href="/services/body-composition-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Body Composition</a>
+                  <a href="/services/recovery-and-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Recovery & Optimization</a>
+                </div>
+              </div>
+            </div>
+
+            <a href="/membership/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Membership</a>
+            <a href="/contact/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Contact</a>
+            <a href="/booking/" class="btn-primary text-xs tracking-widest">Book Consult</a>
+          </div>
+
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-btn" class="text-brand-light hover:text-white focus:outline-none">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="md:hidden bg-brand-dark border-b border-white/10 hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+          <a href="/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Home</a>
+
+          <div>
+            <button id="mobile-services-btn"
+                    class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+              <span class="w-4"></span>
+              <span class="flex-1 text-center font-bold border-b border-white">Services</span>
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-services-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <div id="mobile-services-submenu" class="bg-black/20 hidden">
+              <a href="/services/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">All Services</a>
+              <a href="/services/performance-medicine/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Performance Medicine</a>
+              <a href="/services/mens-hormone-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Men’s Hormones</a>
+              <a href="/services/womens-hormone-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women’s Hormones</a>
+              <a href="/services/body-composition-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Composition</a>
+              <a href="/services/recovery-and-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Recovery</a>
+            </div>
+          </div>
+
+          <a href="/membership/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Membership</a>
+          <a href="/contact/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Contact</a>
+          <a href="/booking/" class="block w-full text-brand-light bg-brand-gray/10 hover:bg-brand-gray/20 py-3 text-sm uppercase tracking-widest mt-2 font-bold">Book Consult</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT (Added pt-20 to clear fixed header) -->
+    <main class="pt-20">
+
+        <!-- SECTION 1: HERO -->
+        <section class="bg-brand-dark bg-texture-concrete text-white relative overflow-hidden">
+            <!-- Subtle gradient overlay -->
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/95 to-brand-dark/80 z-0"></div>
+            
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-10">
+                <div class="flex flex-col-reverse md:flex-row items-center gap-12">
+                    
+                    <!-- Text Content -->
+                    <div class="w-full md:w-3/5 space-y-6">
+                        <span class="text-brand-gray font-bold tracking-widest text-sm uppercase">Founder Story</span>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight">
+                            Why We Built <br/><span class="text-white">Moonshot Medical</span>
+                        </h1>
+                        <p class="text-lg md:text-xl text-brand-gray font-light leading-relaxed max-w-2xl">
+                            I hit a wall in my mid-30s. I was training hard, eating right, and doing everything "correctly," but I stopped feeling like myself. 
+                            So I stopped guessing, got real labs, and learned way more than I expected.
+                        </p>
+                    </div>
+
+                    <!-- Headshot -->
+                    <div class="w-full md:w-2/5 flex justify-center md:justify-end">
+                        <div class="relative w-64 h-80 md:w-80 md:h-96 rounded-lg overflow-hidden border-4 border-brand-gray/20 shadow-2xl">
+                            <img src="/images/Tomblack.JPG" alt="Tom, Co-Founder of Moonshot Medical & Performance" class="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition duration-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CONTEXT / TL;DR -->
+        <section class="py-12 bg-brand-light border-b border-brand-gray/20">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6">
+                <div class="bg-white p-6 md:p-8 rounded-sm shadow-sm border-l-4 border-brand-slate">
+                    <h2 class="text-xl font-heading font-bold text-brand-dark mb-4">In 20 Seconds</h2>
+                    <ul class="space-y-3 text-brand-slate font-medium">
+                        <li class="flex items-start">
+                            <span class="text-brand-slate mr-3 mt-1 font-bold">•</span>
+                            <span>Moonshot Medical & Performance is a clinic focused on optimization for men and women—not sick care.</span>
+                        </li>
+                        <li class="flex items-start">
+                             <span class="text-brand-slate mr-3 mt-1 font-bold">•</span>
+                            <span>It exists because I hit a wall personally and realized that training harder wasn't the answer to my physiology.</span>
+                        </li>
+                        <li class="flex items-start">
+                             <span class="text-brand-slate mr-3 mt-1 font-bold">•</span>
+                            <span>We simply built the medical resource we wished existed in Park Ridge.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: THE STORY -->
+        <section class="py-16 bg-brand-dark bg-texture-concrete text-white">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6">
+                
+                <h3 class="font-heading text-2xl text-white mb-8 border-b border-brand-gray/20 pb-4">The Story Behind the Clinic</h3>
+                
+                <div class="prose prose-lg prose-invert text-brand-gray hover:prose-a:text-white leading-relaxed space-y-8">
+                    <p>
+                        About a year and a half ago, I stopped feeling like myself. I’d always heard people warn about the "drop off" that happens in your mid-30s. Honestly? I ignored it. I didn't believe it applied to me. I was disciplined. I trained hard five days a week. I dialed in my nutrition. I prioritized sleep. I was doing all the things you are supposed to do.
+                    </p>
+                    <p>
+                        But despite all that effort, the math stopped working. My energy was unpredictable. My motivation—which had always been a constant—started to flicker. My recovery slowed down. I would have a great workout one day and feel completely drained for the next two.
+                    </p>
+                    <p>
+                        It was frustrating because looking at me, or looking at my routine, nothing was "wrong." But I knew something was off.
+                    </p>
+                    <p>
+                        So I finally decided to stop guessing. I went and got comprehensive blood work done for the first time in years. That’s when I found out my testosterone levels were low—significantly lower than they should have been for someone my age living my lifestyle.
+                    </p>
+                    <p>
+                        Finding out was a relief, but fixing it was a headache. I spent about a year trying to correct it naturally. I took every supplement recommended. I adjusted my sleep hygiene. I tweaked my diet. I re-tested, and the numbers barely budged.
+                    </p>
+                    <p>
+                        I then tried an online, tele-health clinic. I thought it would be efficient. Instead, it was impersonal and bordering on reckless. I was prescribed a protocol that made me feel physically worse—depressed, foggy, and anxious. When I tried to get a hold of a provider to adjust the dosage, I couldn't get an appointment for weeks. I was just a number in a database.
+                    </p>
+                    <p>
+                        I realized then that this entire space is broken. If you aren't "sick" in the traditional sense, the medical system doesn't really know what to do with you. And if you go the online route, you often trade safety for convenience.
+                    </p>
+                    <p>
+                        This past summer, I decided to do it correctly. I found a provider who actually sat down with me. We looked at the whole picture—not just hormones, but lipids, metabolic health, and inflammation. I started a medically supervised protocol, and it made a bigger difference than I expected.
+                    </p>
+                    <p>
+                        My motivation came back online. My mood stabilized. My sleep deepened. And physically, my body started responding to exercise again. I leaned out significantly, dropping body fat while getting stronger.
+                    </p>
+                </div>
+                
+                <!-- VIDEO EMBED 1 -->
+                <div class="my-12 bg-black/70 border border-white/15 p-2 rounded-sm shadow-2xl ring-1 ring-white/10 max-w-sm mx-auto">
+                    <div class="aspect-[9/16] relative bg-brand-dark rounded-sm overflow-hidden">
+                         <video controls preload="metadata" playsinline poster="/images/tomposter.png" class="w-full h-full object-cover shadow-xl">
+                            <source src="/videos/Tom-Intro-no-music.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="p-4 text-brand-gray text-sm text-center font-light italic">
+                        Talking through the gap between "normal" labs and actually feeling optimal.
+                    </div>
+                </div>
+
+                <div class="prose prose-lg prose-invert text-brand-gray leading-relaxed space-y-8">
+                    <p>
+                        The biggest lesson for me wasn't about testosterone. It was that <strong>physiology drives psychology</strong>. When your internal biomarkers are off, willpower can only take you so far.
+                    </p>
+                    <p>
+                        It also taught me that it is rarely just one thing. Hormones matter, but so does your metabolic health, your body composition, your bone density, and your cardiovascular status. You cannot optimize one variable in a vacuum.
+                    </p>
+                    <p>
+                        That experience is why my partners—Michael and Niko—and I decided to build Moonshot Medical & Performance. We wanted to build the clinic we wished existed. One that works with licensed medical providers, measures everything that matters, and helps people go from "fine" to "optimal" using real data, right here in Park Ridge.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: THE RECEIPTS -->
+        <section class="py-16 bg-brand-light border-y border-brand-gray/20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6">
+                
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-heading font-bold text-brand-dark">The Receipts</h2>
+                    <p class="text-brand-slate mt-2 max-w-2xl mx-auto">It's easy to tell a good story. It's harder to argue with data. Here is exactly what I tracked so I wasn't just guessing based on how I looked in the mirror.</p>
+                </div>
+
+                <!-- RECEIPTS GRID -->
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    
+                    <!-- CARD 1: Bloodwork -->
+                    <div class="bg-white p-6 rounded-sm shadow-sm border-t-4 border-brand-slate">
+                        <h4 class="font-heading font-bold text-brand-dark mb-4 uppercase tracking-wide">The Bloodwork</h4>
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <img src="/images/cholesterol.png" alt="Cholesterol results" class="w-full h-auto rounded-sm border border-brand-gray/20">
+                            <img src="/images/HDL.png" alt="HDL results" class="w-full h-auto rounded-sm border border-brand-gray/20">
+                            <img src="/images/LDL.png" alt="LDL results" class="w-full h-auto rounded-sm border border-brand-gray/20">
+                            <img src="/images/APOB.png" alt="ApoB results" class="w-full h-auto rounded-sm border border-brand-gray/20">
+                        </div>
+                        <p class="text-sm text-brand-slate leading-relaxed">
+                            We look at trends, not just snapshots. This data allowed us to dial in the protocol safely, ensuring that while performance went up, risk markers (like hematocrit or lipids) stayed managed.
+                        </p>
+                    </div>
+
+                    <!-- CARD 2: InBody -->
+                    <div class="bg-white p-6 rounded-sm shadow-sm border-t-4 border-brand-slate">
+                        <h4 class="font-heading font-bold text-brand-dark mb-4 uppercase tracking-wide">Body Composition</h4>
+                        <div class="border border-brand-gray/20 rounded-sm overflow-hidden mb-4">
+                            <img src="/images/Beforeafter.JPG" alt="Body composition comparison" class="w-full h-auto">
+                        </div>
+                        <p class="text-sm text-brand-slate leading-relaxed">
+                            This is the nuance the scale misses. We tracked Skeletal Muscle Mass vs. Body Fat Mass to ensure weight loss was actually fat loss, not muscle degradation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- MEASUREMENTS TABLE -->
+                <div class="bg-white p-8 rounded-sm shadow-sm border border-brand-gray/20 max-w-3xl mx-auto mb-12">
+                    <h4 class="font-heading font-bold text-brand-dark mb-6 text-xl uppercase tracking-wide">The Tape Measure</h4>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm md:text-base">
+                            <thead class="text-xs uppercase text-brand-gray border-b border-brand-gray/20">
+                                <tr>
+                                    <th class="pb-3 font-medium tracking-wider">Metric</th>
+                                    <th class="pb-3 font-medium tracking-wider">July 21</th>
+                                    <th class="pb-3 font-medium tracking-wider">Nov 2</th>
+                                    <th class="pb-3 font-bold text-brand-slate tracking-wider">Net Change</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-brand-gray/10 text-brand-slate">
+                                <tr>
+                                    <td class="py-3 font-medium">Weight</td>
+                                    <td class="py-3">208.2 lbs</td>
+                                    <td class="py-3">207.4 lbs</td>
+                                    <td class="py-3 font-bold text-brand-dark">-0.8 lbs</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">InBody Weight</td>
+                                    <td class="py-3">208.6 lbs</td>
+                                    <td class="py-3">208.6 lbs</td>
+                                    <td class="py-3 font-bold text-brand-gray">No change</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">InBody Body Fat %</td>
+                                    <td class="py-3">17.8%</td>
+                                    <td class="py-3">11.2%</td>
+                                    <td class="py-3 font-bold text-brand-dark">-6.6%</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">Waist</td>
+                                    <td class="py-3">35.4 in</td>
+                                    <td class="py-3">33.3 in</td>
+                                    <td class="py-3 font-bold text-brand-dark">-2.1 in</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">Chest</td>
+                                    <td class="py-3">41.25 in</td>
+                                    <td class="py-3">43.0 in</td>
+                                    <td class="py-3 font-bold text-brand-dark">+1.75 in</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">Hips</td>
+                                    <td class="py-3">40.0 in</td>
+                                    <td class="py-3">39.0 in</td>
+                                    <td class="py-3 font-bold text-brand-dark">-1.0 in</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">Arms (Relaxed)</td>
+                                    <td class="py-3">15.0 in</td>
+                                    <td class="py-3">15.1 in</td>
+                                    <td class="py-3 font-bold text-brand-dark">+0.1 in</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">Arms (Flexed)</td>
+                                    <td class="py-3">16.0 in</td>
+                                    <td class="py-3">16.2 in</td>
+                                    <td class="py-3 font-bold text-brand-dark">+0.2 in</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium">Quad</td>
+                                    <td class="py-3">25.0 in</td>
+                                    <td class="py-3">25.0 in</td>
+                                    <td class="py-3 font-bold text-brand-gray">No change</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-4 text-xs text-brand-slate/70 italic border-l-2 border-brand-slate pl-3">
+                        Look closely at the weight versus the waist. The scale barely moved (-0.8 lbs), but I lost over 2 inches off my waist while my chest and arms grew. If I had only used a scale, I would have thought "nothing is happening." This is why data matters.
+                    </p>
+                    <p class="mt-3 text-xs text-brand-slate/60 italic">
+                        Note: “InBody Weight” and “InBody Body Fat %” are pulled from the trend view shown above.
+                    </p>
+                </div>
+
+                <!-- VIDEO EMBED 2 -->
+                <div class="max-w-sm mx-auto">
+                     <div class="bg-black/70 border border-white/15 p-2 rounded-sm shadow-2xl ring-1 ring-white/10">
+                        <div class="aspect-[9/16] relative bg-brand-dark rounded-sm overflow-hidden">
+                             <video controls preload="metadata" playsinline poster="/images/bloodposter.png" class="w-full h-full object-cover shadow-xl">
+                                <source src="/videos/Blood-Results.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="p-4 text-brand-gray text-sm text-center font-light">
+                            If you want the nerdy breakdown of the numbers, I walk through the blood work in detail here.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 7: PHOTO CONTEXT -->
+        <section class="py-16 bg-brand-dark bg-texture-concrete text-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6">
+                 <h2 class="text-2xl font-heading font-bold text-white mb-8 text-center uppercase tracking-widest">Visual Context</h2>
+                 <p class="text-center text-brand-gray mb-12 max-w-2xl mx-auto font-light">
+                     I'm sharing these just to show the physical difference between "fine" and "optimized." <br/>
+                     <span class="text-xs opacity-60">(Context only. Individual results vary. This is simply my personal tracking.)</span>
+                 </p>
+
+                 <div class="grid gap-12">
+                     <!-- EARLIER PHASE -->
+                     <div>
+                         <h4 class="text-sm font-bold text-brand-gray uppercase tracking-widest mb-4 border-l-2 border-brand-gray pl-3">July 21, 2025</h4>
+                         <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-black/50 aspect-[3/4]">
+                                <img src="/images/beforefrontfullbody.jpeg" alt="Earlier phase front view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                            </div>
+                            <div class="bg-black/50 aspect-[3/4]">
+                                <img src="/images/beforeside.jpeg" alt="Earlier phase side view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                            </div>
+                            <div class="bg-black/50 aspect-[3/4]">
+                                <img src="/images/beforeback.jpeg" alt="Earlier phase back view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                            </div>
+                         </div>
+                     </div>
+
+                     <!-- LATER PHASE -->
+                     <div>
+                        <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-4 border-l-2 border-white pl-3">November 2, 2025</h4>
+                        <div class="grid grid-cols-3 gap-4">
+                           <div class="bg-black/50 aspect-[3/4]">
+                               <img src="/images/afterfrontfullbody.jpeg" alt="Later phase front view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                           </div>
+                           <div class="bg-black/50 aspect-[3/4]">
+                               <img src="/images/afterside.jpeg" alt="Later phase side view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                           </div>
+                           <div class="bg-black/50 aspect-[3/4]">
+                               <img src="/images/afterback.jpeg" alt="Later phase back view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                           </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: WOMEN'S HEALTH -->
+        <section class="py-16 bg-brand-light border-b border-brand-gray/20">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6">
+                <div class="bg-white p-8 rounded-sm shadow-sm border-l-4 border-brand-slate">
+                    <h3 class="font-heading text-2xl font-bold text-brand-dark mb-6">An Important Note on Women's Health</h3>
+                    <div class="prose prose-slate leading-relaxed space-y-6">
+                        <p>
+                            While my story is obviously from a male perspective, serving women has always been a core part of the vision for Moonshot Medical, especially for those navigating perimenopause and menopause.
+                        </p>
+                        <p>
+                            Far too many women are told that feeling exhausted, dealing with brain fog, struggling with sleep, or gaining stubborn weight is just "part of getting older." They are told everything is "normal" even when they don’t feel like themselves.
+                        </p>
+                        <p>
+                            The reality is that hormonal shifts during these transitions have a massive impact on energy, mood, bone density, and metabolic health. Ignoring those changes doesn’t make them go away. It just leaves people guessing and suffering in silence.
+                        </p>
+                        <p>
+                            From the beginning, our goal has been to create a place where women are evaluated and supported with the same level of intention, data, and medical oversight as anyone else. This isn’t about chasing aesthetic trends—it’s about feeling strong, capable, and medically supported through a major physiological transition.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 9: HOW IT WORKS -->
+        <section class="py-20 bg-brand-dark text-white bg-texture-concrete relative">
+            <div class="absolute inset-0 bg-brand-dark/95 z-0"></div>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+                
+                <h2 class="text-3xl font-heading font-bold mb-12 tracking-widest uppercase">How It Works</h2>
+                
+                <div class="grid md:grid-cols-4 gap-8 text-left md:text-center">
+                    <div class="bg-white/5 p-6 rounded-sm border border-white/10 hover:border-brand-gray/50 transition">
+                        <div class="text-4xl font-heading font-bold text-brand-gray mb-4 opacity-50">01</div>
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-wide">Labs</h4>
+                        <p class="text-sm text-brand-gray font-light">Comprehensive blood panel covering hormones, lipids, metabolic health, and inflammation.</p>
+                    </div>
+                    
+                    <div class="bg-white/5 p-6 rounded-sm border border-white/10 hover:border-brand-gray/50 transition">
+                        <div class="text-4xl font-heading font-bold text-brand-gray mb-4 opacity-50">02</div>
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-wide">Data</h4>
+                        <p class="text-sm text-brand-gray font-light">Health questionnaire and body composition analysis (DEXA scan scheduled for delivery in February).</p>
+                    </div>
+
+                    <div class="bg-white/5 p-6 rounded-sm border border-white/10 hover:border-brand-gray/50 transition">
+                        <div class="text-4xl font-heading font-bold text-brand-gray mb-4 opacity-50">03</div>
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-wide">Review</h4>
+                        <p class="text-sm text-brand-gray font-light">Our medical team reviews your entire profile to build a personalized roadmap.</p>
+                    </div>
+
+                    <div class="bg-white/5 p-6 rounded-sm border border-white/10 hover:border-brand-gray/50 transition">
+                        <div class="text-4xl font-heading font-bold text-brand-gray mb-4 opacity-50">04</div>
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-wide">Consult</h4>
+                        <p class="text-sm text-brand-gray font-light">We walk through the data together. You decide what—if anything—you want to pursue.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 10: CLOSE -->
+        <section class="py-16 bg-brand-light">
+             <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+                 <p class="text-lg text-brand-slate font-light mb-8 leading-relaxed">
+                     We just wanted to share what we’ve been building and the personal experience that led us here.
+                 </p>
+                 <div class="flex flex-col sm:flex-row justify-center items-center gap-6 text-sm font-medium tracking-wide">
+                     <a href="/booking/" class="text-brand-dark border-b border-brand-dark hover:text-brand-slate hover:border-brand-slate transition pb-1">
+                         Check availability
+                     </a>
+                     <span class="hidden sm:inline text-brand-gray/50">•</span>
+                     <a href="https://instagram.com/moonshotmp" target="_blank" class="text-brand-dark border-b border-brand-dark hover:text-brand-slate hover:border-brand-slate transition pb-1">
+                         See more on Instagram
+                     </a>
+                 </div>
+             </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <div>
+                    <a href="/" class="flex items-center gap-2 mb-2">
+                         <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain">
+                    </a>
+                    <div class="text-brand-light font-heading font-bold text-xl tracking-widest">Moonshot Medical and Performance</div>
+                    <p class="text-brand-gray text-xs mt-2 max-w-xs">
+                        542 Busse Hwy, Park Ridge, IL 60068<br>
+                        <a href="tel:+18474991266" class="hover:text-brand-light transition">847-499-1266</a><br>
+                        <a href="mailto:hello@moonshotmp.com" class="hover:text-brand-light transition">hello@moonshotmp.com</a>
+                    </p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        Instagram
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-white/5 text-center md:text-left text-xs text-brand-gray/50">
+                &copy; 2025 Moonshot Medical and Performance. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- NAVIGATION LOGIC (From Homepage) -->
+    <script>
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileServicesBtn = document.getElementById('mobile-services-btn');
+      const mobileServicesSubmenu = document.getElementById('mobile-services-submenu');
+      const mobileServicesArrow = document.getElementById('mobile-services-arrow');
+    
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+          if (mobileMenu.classList.contains('hidden') && mobileServicesSubmenu) {
+            mobileServicesSubmenu.classList.add('hidden');
+            if (mobileServicesArrow) mobileServicesArrow.classList.remove('rotate-180');
+          }
+        });
+      }
+    
+      if (mobileServicesBtn && mobileServicesSubmenu && mobileServicesArrow) {
+        mobileServicesBtn.addEventListener('click', () => {
+          mobileServicesSubmenu.classList.toggle('hidden');
+          mobileServicesArrow.classList.toggle('rotate-180');
+        });
+      }
+    
+      const wrapper = document.getElementById('services-menu-wrapper');
+      const btn = document.getElementById('services-menu-button');
+      const dropdown = document.getElementById('services-dropdown');
+    
+      if (wrapper && btn && dropdown) {
+        let closeTimer = null;
+    
+        const openMenu = () => {
+          clearTimeout(closeTimer);
+          dropdown.classList.remove('hidden');
+          btn.setAttribute('aria-expanded', 'true');
+          const icon = btn.querySelector('svg');
+          if (icon) icon.classList.add('rotate-180');
+        };
+    
+        const closeMenu = () => {
+          closeTimer = setTimeout(() => {
+            dropdown.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+            const icon = btn.querySelector('svg');
+            if (icon) icon.classList.remove('rotate-180');
+          }, 150);
+        };
+    
+        wrapper.addEventListener('mouseenter', openMenu);
+        wrapper.addEventListener('mouseleave', closeMenu);
+    
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openMenu();
+        });
+    
+        document.addEventListener('click', (e) => {
+          if (!wrapper.contains(e.target)) dropdown.classList.add('hidden');
+        });
+    
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') dropdown.classList.add('hidden');
+        });
+      }
+    </script>
+
+</body>
+</html>
