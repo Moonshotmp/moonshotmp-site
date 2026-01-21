@@ -66,8 +66,8 @@ export default async (req) => {
   const accountLink = await stripe.accountLinks.create({
     account: accountId,
     type: "account_onboarding",
-    return_url: `${siteUrl}/partners/setup.html?slug=${slug}&stripe=connected`,
-    refresh_url: `${siteUrl}/partners/setup.html?slug=${slug}&stripe=refresh`,
+    return_url: `/.netlify/functions/stripe-connect-return?slug=`,
+    refresh_url: `/partners/setup.html?slug=&stripe=refresh`,
   });
 
   return new Response(null, {
