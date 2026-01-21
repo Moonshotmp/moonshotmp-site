@@ -12,13 +12,8 @@
 
     <form id="partner-form">
       <label>
-        Slug (required)
-        <input id="slug" name="slug" placeholder="e.g. acme-co" required />
-      </label>
-
-      <label>
         Partner name
-        <input id="name" name="name" placeholder="e.g. Acme Co" />
+        <input id="name" name="name" placeholder="e.g. Acme Co" required />
       </label>
 
       <label>
@@ -26,8 +21,24 @@
         <input id="email" name="email" type="email" placeholder="name@acme.com" />
       </label>
 
-      <div style="display:flex; gap:10px; margin-top:12px; align-items:center;">
-        <button id="save-btn" type="submit" class="btn-primary">Save Partner</button>
+      <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
+        <input id="edit-slug-toggle" type="checkbox" />
+        <label for="edit-slug-toggle" style="margin:0;">Advanced: edit store URL</label>
+      </div>
+
+      <div id="slug-row" style="display:none; margin-top:10px;">
+        <label>
+          Store URL slug
+          <input id="slug" name="slug" placeholder="e.g. acme-co" />
+        </label>
+      </div>
+
+      <div style="margin-top:10px; opacity:0.85;">
+        Store link: <span id="store-link-preview"></span>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:14px; align-items:center;">
+        <button id="create-btn" type="submit" class="btn-primary">Create Partner Store</button>
         <button id="connect-stripe" type="button" class="btn-outline">Connect Stripe</button>
         <a id="view-store" class="btn-outline" href="#" style="display:none;">View Store</a>
       </div>
@@ -38,10 +49,25 @@
 
   <script>
     const statusEl = document.getElementById("status");
+    const nameEl = document.getElementById("name");
+    const emailEl = document.getElementById("email");
+    const slugToggleEl = document.getElementById("edit-slug-toggle");
+    const slugRowEl = document.getElementById("slug-row");
     const slugEl = document.getElementById("slug");
+    const linkPreviewEl = document.getElementById("store-link-preview");
     const viewStoreEl = document.getElementById("view-store");
 
     function setStatus(msg) { statusEl.textContent = msg; }
+
+    function slugify(input) {
+      return String(input || "")
+        .trim()
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 64);
+    }
 
     function getSlugFromUrl() {
       const url = new URL(window.location.href);
@@ -55,9 +81,17 @@
     }
 
     function updateStoreLink(slug) {
-      if (!slug) { viewStoreEl.style.display = "none"; return; }
-      viewStoreEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
-      viewStoreEl.style.display = "inline-flex";
+      const href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      linkPreviewEl.textContent = `${window.location.origin}${href}`;
+      viewStoreEl.href = href;
+      viewStoreEl.style.display = slug ? "inline-flex" : "none";
+    }
+
+    function getCurrentSlug() {
+      // if advanced edit enabled, trust slug input
+      if (slugToggleEl.checked && slugEl.value.trim()) return slugify(slugEl.value);
+      // otherwise generate from name
+      return slugify(nameEl.value);
     }
 
     async function savePartnerToServer(partner) {
@@ -66,19 +100,43 @@
         headers: { "content-type": "application/json" },
         body: JSON.stringify(partner),
       });
-
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error || "Failed to save partner");
       return data; // { ok:true, slug }
     }
 
-    // Prefill slug if coming back from Stripe
+    // UI behavior
+    slugToggleEl.addEventListener("change", () => {
+      slugRowEl.style.display = slugToggleEl.checked ? "block" : "none";
+      const slug = getCurrentSlug();
+      if (slugToggleEl.checked) slugEl.value = slug;
+      updateStoreLink(slug);
+    });
+
+    nameEl.addEventListener("input", () => {
+      const slug = getCurrentSlug();
+      if (slugToggleEl.checked && document.activeElement === slugEl) return;
+      if (slugToggleEl.checked) slugEl.value = slug;
+      updateStoreLink(slug);
+    });
+
+    slugEl.addEventListener("input", () => {
+      if (!slugToggleEl.checked) return;
+      updateStoreLink(getCurrentSlug());
+    });
+
     window.addEventListener("DOMContentLoaded", () => {
-      const slug = getSlugFromUrl();
-      if (slug) {
-        slugEl.value = slug;
-        updateStoreLink(slug);
+      const existingSlug = getSlugFromUrl();
+      if (existingSlug) {
+        // If coming from Stripe return, show advanced + keep slug stable
+        slugToggleEl.checked = true;
+        slugRowEl.style.display = "block";
+        slugEl.value = existingSlug;
+        updateStoreLink(existingSlug);
+      } else {
+        updateStoreLink("");
       }
+
       const stripeStatus = new URL(window.location.href).searchParams.get("stripe");
       if (stripeStatus) setStatus(`Stripe: ${stripeStatus}`);
     });
@@ -87,10 +145,16 @@
       e.preventDefault();
       setStatus("");
 
+      const slug = getCurrentSlug();
+      if (!slug) {
+        alert("Enter a partner name.");
+        return;
+      }
+
       const partner = {
-        slug: slugEl.value.trim(),
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
+        slug,
+        name: nameEl.value.trim(),
+        email: emailEl.value.trim(),
       };
 
       try {
@@ -105,9 +169,9 @@
     });
 
     document.getElementById("connect-stripe").addEventListener("click", () => {
-      const slug = slugEl.value.trim().toLowerCase();
+      const slug = getCurrentSlug();
       if (!slug) {
-        alert("Enter a slug first, then click Save Partner.");
+        alert("Enter partner name, then click Create Partner Store first.");
         return;
       }
       window.location.href = `/.netlify/functions/stripe-connect-start?slug=${encodeURIComponent(slug)}`;
