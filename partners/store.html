@@ -118,3 +118,61 @@
 button.btn { cursor: pointer !important; }
 .card, .card * { pointer-events: auto !important; }
 </style>
+
+<style>
+  /* Store-only sizing overrides */
+  #catalog-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:16px;
+  }
+  #catalog-grid .card{
+    padding: 0;                 /* override global .card padding */
+    border-radius: 14px;
+    overflow:hidden;
+  }
+  #catalog-grid .img-wrap{
+    height: 140px;              /* smaller hero image */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  #catalog-grid .card-img{
+    max-width: 78%;
+    max-height: 78%;
+    object-fit: contain;
+    display:block;
+  }
+  #catalog-grid .card-body{
+    padding: 14px;              /* tighter body */
+  }
+  #catalog-grid .card-title{
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+  }
+  #catalog-grid .card-desc{
+    font-size: 13px;
+    opacity: 0.85;
+    margin: 0 0 10px 0;
+  }
+  #catalog-grid .pill{
+    display:inline-block;
+    font-size:12px;
+    border:1px solid rgba(255,255,255,0.14);
+    padding:4px 10px;
+    border-radius:999px;
+    margin-bottom: 10px;
+  }
+  #catalog-grid .btn{
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.06);
+    color: inherit;
+    cursor: pointer;
+  }
+</style>
