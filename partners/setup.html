@@ -3,59 +3,62 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Partner Setup</title>
+  <title>Partner Store Setup</title>
   <link rel="stylesheet" href="/partners/styles.css" />
 </head>
 <body>
-  <main class="container">
-    <h1>Partner Setup</h1>
+  <section class="section section-dark bg-texture">
+    <div class="container" style="max-width: 720px;">
+      <h1>Partner Store Setup</h1>
+      <p class="lead">Create your partner storefront first. Stripe connection happens on the next step.</p>
 
-    <form id="partner-form">
-      <label>
-        Partner name
-        <input id="name" name="name" placeholder="e.g. Acme Co" required />
-      </label>
-
-      <label>
-        Contact email
-        <input id="email" name="email" type="email" placeholder="name@acme.com" />
-      </label>
-
-      <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
-        <input id="edit-slug-toggle" type="checkbox" />
-        <label for="edit-slug-toggle" style="margin:0;">Advanced: edit store URL</label>
-      </div>
-
-      <div id="slug-row" style="display:none; margin-top:10px;">
+      <form id="partner-form" class="card" style="padding: 1.5rem;">
         <label>
-          Store URL slug
-          <input id="slug" name="slug" placeholder="e.g. acme-co" />
+          Partner name
+          <input id="name" name="name" placeholder="e.g. Acme Co" required />
         </label>
-      </div>
 
-      <div style="margin-top:10px; opacity:0.85;">
-        Store link: <span id="store-link-preview"></span>
-      </div>
+        <label>
+          Contact email
+          <input id="email" name="email" type="email" placeholder="name@acme.com" />
+        </label>
 
-      <div style="display:flex; gap:10px; margin-top:14px; align-items:center;">
-        <button id="create-btn" type="submit" class="btn-primary">Create Partner Store</button>
-        <button id="connect-stripe" type="button" class="btn-outline">Connect Stripe</button>
-        <a id="view-store" class="btn-outline" href="#" style="display:none;">View Store</a>
-      </div>
-    </form>
+        <div style="margin-top: 1rem;">
+          <div class="muted" style="margin-bottom: 0.5rem;">Logo (optional)</div>
+          <input id="logo" type="file" accept="image/*" />
+          <div class="muted" style="margin-top: 0.5rem;">We’ll auto-resize large images so they display cleanly.</div>
 
-    <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
-  </main>
+          <div id="logo-preview-wrap" style="display:none; margin-top: 1rem;">
+            <div class="muted" style="margin-bottom: 0.5rem;">Preview</div>
+            <div style="height: 120px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03);">
+              <img id="logo-preview" alt="Logo preview" style="max-height: 80px; max-width: 80%; object-fit: contain;" />
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; opacity: 0.9;">
+          Store link: <span id="store-link-preview"></span>
+        </div>
+
+        <div style="display:flex; gap: 10px; margin-top: 1.25rem; align-items:center;">
+          <button type="submit" class="btn-primary">Create Store</button>
+          <a id="go-connect" class="btn-outline" href="#" style="display:none;">Continue to Stripe</a>
+        </div>
+
+        <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+      </form>
+    </div>
+  </section>
 
   <script>
     const statusEl = document.getElementById("status");
     const nameEl = document.getElementById("name");
     const emailEl = document.getElementById("email");
-    const slugToggleEl = document.getElementById("edit-slug-toggle");
-    const slugRowEl = document.getElementById("slug-row");
-    const slugEl = document.getElementById("slug");
+    const logoEl = document.getElementById("logo");
+    const previewWrapEl = document.getElementById("logo-preview-wrap");
+    const previewImgEl = document.getElementById("logo-preview");
     const linkPreviewEl = document.getElementById("store-link-preview");
-    const viewStoreEl = document.getElementById("view-store");
+    const goConnectEl = document.getElementById("go-connect");
 
     function setStatus(msg) { statusEl.textContent = msg; }
 
@@ -69,113 +72,124 @@
         .slice(0, 64);
     }
 
-    function getSlugFromUrl() {
-      const url = new URL(window.location.href);
-      return (url.searchParams.get("slug") || "").trim().toLowerCase();
-    }
-
-    function setSlugInUrl(slug) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("slug", slug);
-      window.history.replaceState({}, "", url.toString());
-    }
-
     function updateStoreLink(slug) {
       const href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
-      linkPreviewEl.textContent = `${window.location.origin}${href}`;
-      viewStoreEl.href = href;
-      viewStoreEl.style.display = slug ? "inline-flex" : "none";
+      linkPreviewEl.textContent = slug ? `${window.location.origin}${href}` : "";
+      goConnectEl.href = `/partners/connect.html?slug=${encodeURIComponent(slug)}`;
+      goConnectEl.style.display = slug ? "inline-flex" : "none";
     }
 
-    function getCurrentSlug() {
-      // if advanced edit enabled, trust slug input
-      if (slugToggleEl.checked && slugEl.value.trim()) return slugify(slugEl.value);
-      // otherwise generate from name
-      return slugify(nameEl.value);
+    async function resizeImageToDataUrl(file, maxW = 600, maxH = 240, quality = 0.86) {
+      const img = await new Promise((resolve, reject) => {
+        const i = new Image();
+        i.onload = () => resolve(i);
+        i.onerror = reject;
+        i.src = URL.createObjectURL(file);
+      });
+
+      const ratio = Math.min(maxW / img.width, maxH / img.height, 1);
+      const w = Math.round(img.width * ratio);
+      const h = Math.round(img.height * ratio);
+
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+
+      // Use JPEG for smaller payload unless source has transparency needs
+      const mime = "image/jpeg";
+      const dataUrl = canvas.toDataURL(mime, quality);
+
+      return { dataUrl, mime, width: w, height: h };
     }
 
-    async function savePartnerToServer(partner) {
+    let logoData = null;
+
+    logoEl.addEventListener("change", async () => {
+      setStatus("");
+      logoData = null;
+
+      const file = logoEl.files && logoEl.files[0];
+      if (!file) {
+        previewWrapEl.style.display = "none";
+        return;
+      }
+
+      // Simple size guard (keeps blobs sane)
+      if (file.size > 3 * 1024 * 1024) {
+        alert("Logo file too large. Please use an image under 3MB.");
+        logoEl.value = "";
+        previewWrapEl.style.display = "none";
+        return;
+      }
+
+      try {
+        logoData = await resizeImageToDataUrl(file);
+        previewImgEl.src = logoData.dataUrl;
+        previewWrapEl.style.display = "block";
+      } catch (e) {
+        console.error(e);
+        alert("Could not process that image. Try a different file.");
+        logoEl.value = "";
+        previewWrapEl.style.display = "none";
+      }
+    });
+
+    nameEl.addEventListener("input", () => {
+      updateStoreLink(slugify(nameEl.value));
+    });
+
+    async function createStore(partner) {
       const res = await fetch("/.netlify/functions/partner-save", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(partner),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error || "Failed to save partner");
-      return data; // { ok:true, slug }
-    }
 
-    // UI behavior
-    slugToggleEl.addEventListener("change", () => {
-      slugRowEl.style.display = slugToggleEl.checked ? "block" : "none";
-      const slug = getCurrentSlug();
-      if (slugToggleEl.checked) slugEl.value = slug;
-      updateStoreLink(slug);
-    });
+      const raw = await res.text();
+      let data = null;
+      try { data = JSON.parse(raw); } catch {}
 
-    nameEl.addEventListener("input", () => {
-      const slug = getCurrentSlug();
-      if (slugToggleEl.checked && document.activeElement === slugEl) return;
-      if (slugToggleEl.checked) slugEl.value = slug;
-      updateStoreLink(slug);
-    });
-
-    slugEl.addEventListener("input", () => {
-      if (!slugToggleEl.checked) return;
-      updateStoreLink(getCurrentSlug());
-    });
-
-    window.addEventListener("DOMContentLoaded", () => {
-      const existingSlug = getSlugFromUrl();
-      if (existingSlug) {
-        // If coming from Stripe return, show advanced + keep slug stable
-        slugToggleEl.checked = true;
-        slugRowEl.style.display = "block";
-        slugEl.value = existingSlug;
-        updateStoreLink(existingSlug);
-      } else {
-        updateStoreLink("");
+      if (!res.ok) {
+        if (res.status === 409) throw new Error("That store already exists. Ask us to invite you to it, or choose a different name.");
+        throw new Error((data && (data.error || data.message)) || "Failed to create store");
       }
-
-      const stripeStatus = new URL(window.location.href).searchParams.get("stripe");
-      if (stripeStatus) setStatus(`Stripe: ${stripeStatus}`);
-    });
+      return data;
+    }
 
     document.getElementById("partner-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       setStatus("");
 
-      const slug = getCurrentSlug();
+      const slug = slugify(nameEl.value);
       if (!slug) {
         alert("Enter a partner name.");
         return;
       }
 
       const partner = {
+        createOnly: true,
         slug,
         name: nameEl.value.trim(),
         email: emailEl.value.trim(),
+        branding: logoData ? { logoDataUrl: logoData.dataUrl, logoMime: logoData.mime } : undefined,
       };
 
       try {
-        const saved = await savePartnerToServer(partner);
-        setSlugInUrl(saved.slug);
+        const saved = await createStore(partner);
         updateStoreLink(saved.slug);
-        setStatus(JSON.stringify(saved, null, 2));
+        setStatus("Store created ✅  Redirecting to Stripe connection…");
+        window.location.href = `/partners/connect.html?slug=${encodeURIComponent(saved.slug)}`;
       } catch (err) {
         setStatus(String(err?.message || err));
         alert(err?.message || String(err));
       }
     });
 
-    document.getElementById("connect-stripe").addEventListener("click", () => {
-      const slug = getCurrentSlug();
-      if (!slug) {
-        alert("Enter partner name, then click Create Partner Store first.");
-        return;
-      }
-      window.location.href = `/.netlify/functions/stripe-connect-start?slug=${encodeURIComponent(slug)}`;
-    });
+    // initialize preview
+    updateStoreLink("");
   </script>
 </body>
 </html>
