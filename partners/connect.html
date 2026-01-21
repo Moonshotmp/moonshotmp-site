@@ -16,6 +16,8 @@
         <div class="muted">Partner slug</div>
         <div id="slug" style="margin-bottom: 1rem; font-family: var(--font-heading); letter-spacing: 0.05em;"></div>
 
+        <div id="stripe-badge" class="badge" style="display:none; margin-bottom: 1rem;"></div>
+
         <div style="display:flex; gap:10px; align-items:center; margin-top: 1rem;">
           <button id="connect" class="btn-primary" type="button">Connect Stripe</button>
           <a id="store" class="btn-outline" href="#" style="display:none;">View Store</a>
@@ -30,30 +32,94 @@
     const slugEl = document.getElementById("slug");
     const statusEl = document.getElementById("status");
     const storeEl = document.getElementById("store");
+    const connectBtn = document.getElementById("connect");
+    const badgeEl = document.getElementById("stripe-badge");
 
     function setStatus(msg) { statusEl.textContent = msg; }
+    function showBadge(text) { badgeEl.textContent = text; badgeEl.style.display = "inline-flex"; }
 
     function getSlug() {
       const url = new URL(window.location.href);
       return (url.searchParams.get("slug") || "").trim().toLowerCase();
     }
 
+    async function loadPartner(slug) {
+      const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`, {
+        method: "GET",
+      });
+
+      const raw = await res.text();
+      let data = null;
+      try { data = JSON.parse(raw); } catch {}
+      if (!res.ok) {
+        throw new Error((data && (data.error || data.message)) || "Failed to load partner");
+      }
+      // partner-get returns { ok:true, partner: {...} } in some versions, or partner directly in others.
+      return data?.partner || data;
+    }
+
+    function setConnectMode({ connected, onboarded }) {
+      if (!connected) {
+        showBadge("Stripe: not connected");
+        connectBtn.textContent = "Connect Stripe";
+        connectBtn.style.display = "inline-block";
+        return;
+      }
+
+      if (onboarded) {
+        showBadge("Stripe: connected ✅");
+        connectBtn.style.display = "none";
+        setStatus("Stripe is connected and ready for payments.");
+        return;
+      }
+
+      showBadge("Stripe: setup incomplete ⚠️");
+      connectBtn.textContent = "Finish Stripe Setup";
+      connectBtn.style.display = "inline-block";
+      setStatus("Stripe is connected, but onboarding is not complete. Click to finish setup.");
+    }
+
     const slug = getSlug();
-    if (!slug) {
-      setStatus("Missing slug. Go back to /partners/setup.html to create your store first.");
-    } else {
+
+    (async () => {
+      if (!slug) {
+        slugEl.textContent = "(missing)";
+        setStatus("Missing slug. Go back to /partners/setup.html to create your store first.");
+        connectBtn.disabled = true;
+        return;
+      }
+
       slugEl.textContent = slug;
       storeEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
       storeEl.style.display = "inline-flex";
-    }
 
-    document.getElementById("connect").addEventListener("click", () => {
+      try {
+        const partner = await loadPartner(slug);
+        const connected = !!partner?.stripe?.connectedAccountId;
+        const onboarded = !!partner?.stripe?.onboarded;
+
+        setConnectMode({ connected, onboarded });
+      } catch (err) {
+        setStatus(err?.message || String(err));
+        // still allow connect attempt if partner exists but status call failed
+      }
+    })();
+
+    connectBtn.addEventListener("click", () => {
       if (!slug) return;
       window.location.href = `/.netlify/functions/stripe-connect-start?slug=${encodeURIComponent(slug)}`;
     });
 
-    const stripeStatus = new URL(window.location.href).searchParams.get("stripe");
-    if (stripeStatus) setStatus(`Stripe: ${stripeStatus}`);
+    // If coming back from Stripe, re-check partner status (no reliance on URL params)
+    window.addEventListener("focus", async () => {
+      if (!slug) return;
+      try {
+        const partner = await loadPartner(slug);
+        const connected = !!partner?.stripe?.connectedAccountId;
+        const onboarded = !!partner?.stripe?.onboarded;
+        setConnectMode({ connected, onboarded });
+      } catch {}
+    });
   </script>
 </body>
 </html>
