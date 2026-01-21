@@ -9,6 +9,24 @@
     .muted { opacity: 0.8; }
     .inline-note { font-size: 13px; opacity: 0.85; margin-top: 10px; }
     .status { white-space: pre-wrap; margin-top: 14px; }
+
+    /* Button micro-UX */
+    .btn-content { display:inline-flex; align-items:center; gap:10px; justify-content:center; }
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: rgba(255,255,255,0.95);
+      border-radius: 999px;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .okmark {
+      display:none;
+      font-weight: 800;
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 
@@ -32,7 +50,13 @@
       </div>
 
       <div style="display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap;">
-        <button class="btn-primary" id="sendLink">Email sign-in link</button>
+        <button class="btn-primary" id="sendLink">
+          <span class="btn-content">
+            <span class="spinner" id="sendSpinner"></span>
+            <span id="sendLabel">Email sign-in link</span>
+            <span class="okmark" id="sendOk">✓</span>
+          </span>
+        </button>
         <a class="btn-outline" href="/partners/index.html">Back</a>
       </div>
 
@@ -79,12 +103,34 @@
 
   const slugEl = document.getElementById("slug");
   const emailEl = document.getElementById("email");
+
   const sendBtn = document.getElementById("sendLink");
+  const sendSpinner = document.getElementById("sendSpinner");
+  const sendLabel = document.getElementById("sendLabel");
+  const sendOk = document.getElementById("sendOk");
 
   const EMAIL_KEY = "ms_partner_last_email";
 
   function setStatus(msg) { statusEl.textContent = msg || ""; }
   function setStatus2(msg) { document.getElementById("status2").textContent = msg || ""; }
+
+  function setSending(isSending) {
+    sendBtn.disabled = isSending;
+    sendSpinner.style.display = isSending ? "inline-block" : "none";
+    sendOk.style.display = "none";
+    sendLabel.textContent = isSending ? "Sending…" : "Email sign-in link";
+  }
+
+  function flashSent() {
+    // momentary "Sent ✓" feedback
+    sendSpinner.style.display = "none";
+    sendOk.style.display = "inline";
+    sendLabel.textContent = "Sent";
+    setTimeout(() => {
+      sendOk.style.display = "none";
+      sendLabel.textContent = "Email sign-in link";
+    }, 1200);
+  }
 
   // Prefill Store ID from URL and email from localStorage
   const slugPrefill = (qs.get("slug") || "").trim().toLowerCase();
@@ -93,17 +139,18 @@
   const rememberedEmail = (localStorage.getItem(EMAIL_KEY) || "").trim();
   if (!emailEl.value && rememberedEmail) emailEl.value = rememberedEmail;
 
-  // Autofocus email on load (slight delay helps Safari sometimes)
+  // Autofocus email on load
   setTimeout(() => { try { emailEl.focus(); emailEl.select(); } catch {} }, 50);
 
-  // Save email as user types (so it's remembered even if they bounce)
+  // Remember email as user types
   emailEl.addEventListener("input", () => {
     localStorage.setItem(EMAIL_KEY, (emailEl.value || "").trim());
   });
 
   let sending = false;
+
   async function requestLink() {
-    if (sending) return; // prevent double submits
+    if (sending) return;
     devLinkEl.textContent = "";
     setStatus("");
 
@@ -115,11 +162,8 @@
       return;
     }
 
-    // Disable button + show sending state
     sending = true;
-    const originalText = sendBtn.textContent;
-    sendBtn.disabled = true;
-    sendBtn.textContent = "Sending…";
+    setSending(true);
 
     try {
       const res = await fetch("/.netlify/functions/auth-request", {
@@ -132,13 +176,14 @@
       let data = null;
       try { data = JSON.parse(raw); } catch {}
 
-      // Store remembered email on submit too (belt + suspenders)
       localStorage.setItem(EMAIL_KEY, email);
 
       if (!res.ok) {
         setStatus((data && (data.error || data.message)) || "Request failed");
         return;
       }
+
+      flashSent();
 
       if (data?.link) {
         devLinkEl.textContent = data.link;
@@ -148,8 +193,7 @@
       }
     } finally {
       sending = false;
-      sendBtn.disabled = false;
-      sendBtn.textContent = originalText;
+      setSending(false);
     }
   }
 
@@ -166,7 +210,7 @@
   slugEl.addEventListener("keydown", submitIfEnter);
   emailEl.addEventListener("keydown", submitIfEnter);
 
-  // Session auto-load (if signed in)
+  // Session auto-load
   async function tryLoadMe() {
     const res = await fetch("/.netlify/functions/partner-me");
     if (!res.ok) return false;
