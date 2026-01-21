@@ -93,7 +93,19 @@
     return true;
   }
 
-  document.getElementById("sendLink").addEventListener("click", async () => {
+  const sendBtn = document.getElementById("sendLink");
+
+  function submitIfEnter(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendBtn.click();
+    }
+  }
+
+  document.getElementById("slug").addEventListener("keydown", submitIfEnter);
+  document.getElementById("email").addEventListener("keydown", submitIfEnter);
+
+document.getElementById("sendLink").addEventListener("click", async () => {
     devLinkEl.textContent = "";
     setStatus("");
 
