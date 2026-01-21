@@ -5,41 +5,55 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Manage Store</title>
   <link rel="stylesheet" href="/partners/styles.css" />
+  <style>
+    .muted { opacity: 0.8; }
+    .inline-note { font-size: 13px; opacity: 0.85; margin-top: 10px; }
+    .status { white-space: pre-wrap; margin-top: 14px; }
+  </style>
 </head>
+
 <body>
   <main class="container" style="max-width:720px;">
     <h1>Manage Your Store</h1>
     <p class="muted" style="margin-top:-6px;">Sign in with an email magic link.</p>
 
+    <!-- LOGIN -->
     <div id="login" class="card" style="padding:1.25rem;">
-      <label>
-        Store ID
-        <input id="slug" placeholder="e.g. tommy-k-fitness" />
-      </label>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <label style="display:flex; flex-direction:column; gap:6px;">
+          Store ID
+          <input id="slug" placeholder="e.g. tommy-k-fitness" />
+        </label>
 
-      <label>
-        Email
-        <input id="email" type="email" placeholder="you@company.com" />
-      </label>
+        <label style="display:flex; flex-direction:column; gap:6px;">
+          Email
+          <input id="email" type="email" placeholder="you@company.com" />
+        </label>
+      </div>
 
-      <div style="display:flex; gap:10px; align-items:center; margin-top:12px;">
+      <div style="display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap;">
         <button class="btn-primary" id="sendLink">Email sign-in link</button>
         <a class="btn-outline" href="/partners/index.html">Back</a>
       </div>
 
-      <pre id="status" style="white-space:pre-wrap;margin-top:14px;"></pre>
-      <pre id="devLink" style="white-space:pre-wrap;margin-top:10px;"></pre>
+      <div class="inline-note">
+        If the email matches the store owner email, you’ll receive a sign-in link.
+      </div>
+
+      <pre id="status" class="status"></pre>
+      <pre id="devLink" class="status"></pre>
     </div>
 
+    <!-- MANAGE (shown after session) -->
     <div id="manage" class="card" style="padding:1.25rem; display:none;">
       <div class="badge" id="stripeBadge" style="display:inline-flex; margin-bottom:12px;"></div>
 
-      <label>
+      <label style="display:flex; flex-direction:column; gap:6px;">
         Partner name
         <input id="name" />
       </label>
 
-      <label>
+      <label style="display:flex; flex-direction:column; gap:6px; margin-top:10px;">
         Contact email
         <input id="email2" type="email" />
       </label>
@@ -51,26 +65,112 @@
         <button class="btn-outline" id="logoutBtn">Sign out</button>
       </div>
 
-      <pre id="status2" style="white-space:pre-wrap;margin-top:14px;"></pre>
+      <pre id="status2" class="status"></pre>
     </div>
   </main>
 
 <script>
   const qs = new URL(window.location.href).searchParams;
-  const slugPrefill = (qs.get("slug") || "").trim().toLowerCase();
-  if (slugPrefill) document.getElementById("slug").value = slugPrefill;
 
-  const statusEl = document.getElementById("status");
-  const devLinkEl = document.getElementById("devLink");
   const loginEl = document.getElementById("login");
   const manageEl = document.getElementById("manage");
+  const statusEl = document.getElementById("status");
+  const devLinkEl = document.getElementById("devLink");
+
+  const slugEl = document.getElementById("slug");
+  const emailEl = document.getElementById("email");
+  const sendBtn = document.getElementById("sendLink");
+
+  const EMAIL_KEY = "ms_partner_last_email";
 
   function setStatus(msg) { statusEl.textContent = msg || ""; }
   function setStatus2(msg) { document.getElementById("status2").textContent = msg || ""; }
 
+  // Prefill Store ID from URL and email from localStorage
+  const slugPrefill = (qs.get("slug") || "").trim().toLowerCase();
+  if (slugPrefill) slugEl.value = slugPrefill;
+
+  const rememberedEmail = (localStorage.getItem(EMAIL_KEY) || "").trim();
+  if (!emailEl.value && rememberedEmail) emailEl.value = rememberedEmail;
+
+  // Autofocus email on load (slight delay helps Safari sometimes)
+  setTimeout(() => { try { emailEl.focus(); emailEl.select(); } catch {} }, 50);
+
+  // Save email as user types (so it's remembered even if they bounce)
+  emailEl.addEventListener("input", () => {
+    localStorage.setItem(EMAIL_KEY, (emailEl.value || "").trim());
+  });
+
+  let sending = false;
+  async function requestLink() {
+    if (sending) return; // prevent double submits
+    devLinkEl.textContent = "";
+    setStatus("");
+
+    const slug = (slugEl.value || "").trim().toLowerCase();
+    const email = (emailEl.value || "").trim();
+
+    if (!slug || !email) {
+      setStatus("Enter Store ID + Email.");
+      return;
+    }
+
+    // Disable button + show sending state
+    sending = true;
+    const originalText = sendBtn.textContent;
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Sending…";
+
+    try {
+      const res = await fetch("/.netlify/functions/auth-request", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ slug, email })
+      });
+
+      const raw = await res.text();
+      let data = null;
+      try { data = JSON.parse(raw); } catch {}
+
+      // Store remembered email on submit too (belt + suspenders)
+      localStorage.setItem(EMAIL_KEY, email);
+
+      if (!res.ok) {
+        setStatus((data && (data.error || data.message)) || "Request failed");
+        return;
+      }
+
+      if (data?.link) {
+        devLinkEl.textContent = data.link;
+        setStatus("Dev mode: open the link above to sign in. (Production will email it only if the address matches the store owner email.)");
+      } else {
+        setStatus("If the email matches the store owner email, you’ll receive a sign-in link.");
+      }
+    } finally {
+      sending = false;
+      sendBtn.disabled = false;
+      sendBtn.textContent = originalText;
+    }
+  }
+
+  // Click submit
+  sendBtn.addEventListener("click", requestLink);
+
+  // Enter submits (both inputs)
+  function submitIfEnter(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      requestLink();
+    }
+  }
+  slugEl.addEventListener("keydown", submitIfEnter);
+  emailEl.addEventListener("keydown", submitIfEnter);
+
+  // Session auto-load (if signed in)
   async function tryLoadMe() {
     const res = await fetch("/.netlify/functions/partner-me");
     if (!res.ok) return false;
+
     const data = await res.json();
     const partner = data.partner;
 
@@ -92,53 +192,6 @@
 
     return true;
   }
-
-  const sendBtn = document.getElementById("sendLink");
-
-  function submitIfEnter(e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendBtn.click();
-    }
-  }
-
-  document.getElementById("slug").addEventListener("keydown", submitIfEnter);
-  document.getElementById("email").addEventListener("keydown", submitIfEnter);
-
-document.getElementById("sendLink").addEventListener("click", async () => {
-    devLinkEl.textContent = "";
-    setStatus("");
-
-    const slug = document.getElementById("slug").value.trim().toLowerCase();
-    const email = document.getElementById("email").value.trim();
-
-    if (!slug || !email) {
-      setStatus("Enter Store ID + Email.");
-      return;
-    }
-
-    const res = await fetch("/.netlify/functions/auth-request", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ slug, email })
-    });
-
-    const raw = await res.text();
-    let data = null;
-    try { data = JSON.parse(raw); } catch {}
-    if (!res.ok) {
-      setStatus((data && (data.error || data.message)) || "Request failed");
-      return;
-    }
-
-    if (data?.link) {
-      // dev/preview: show the link directly
-      devLinkEl.textContent = data.link;
-      setStatus("Dev mode: open the link above to sign in. (Production will email it only if the address matches the store owner email.)");
-    } else {
-      setStatus("If the email matches the store owner email, you’ll receive a sign-in link.");
-    }
-  });
 
   document.getElementById("saveBtn").addEventListener("click", async () => {
     setStatus2("");
@@ -171,7 +224,6 @@ document.getElementById("sendLink").addEventListener("click", async () => {
     window.location.reload();
   });
 
-  // auto-load session if present
   tryLoadMe();
 </script>
 </body>
