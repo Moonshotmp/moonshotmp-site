@@ -5,17 +5,84 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Partner Store</title>
   <link rel="stylesheet" href="/partners/styles.css" />
+
+  <style>
+    /* Store-only sizing overrides (kept minimal, no duplicates) */
+    #catalog-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+      gap: 16px;
+      justify-content: start;
+    }
+    @media (min-width: 1200px){
+      #catalog-grid{ justify-content: center; }
+    }
+
+    #catalog-grid .card{
+      padding: 0;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    #catalog-grid .img-wrap{
+      height: 140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    #catalog-grid .card-img{
+      max-width: 78%;
+      max-height: 78%;
+      object-fit: contain;
+      display:block;
+    }
+    #catalog-grid .card-body{ padding: 14px; }
+    #catalog-grid .card-title{
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+    }
+    #catalog-grid .card-desc{
+      font-size: 13px;
+      opacity: 0.85;
+      margin: 0 0 10px 0;
+    }
+    #catalog-grid .pill{
+      display:inline-block;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      padding:4px 10px;
+      border-radius:999px;
+      margin-bottom: 10px;
+    }
+    #catalog-grid .btn{
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: inherit;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
   <main class="container">
     <h1 id="title">Partner Store</h1>
+
     <div id="partner-logo-wrap" style="display:none;margin:8px 0 10px 0;">
-      <img id="partner-logo" alt="Partner logo" style="max-height:70px;max-width:220px;object-fit:contain;display:block;" />
+      <img id="partner-logo" alt="Partner logo"
+        style="max-height:70px;max-width:220px;object-fit:contain;display:block;" />
     </div>
+
     <p id="subtitle"></p>
 
-    <div style="margin-top:10px; opacity:0.85; font-size:14px;">
-      <a id="manageLink" class="btn-outline" href="#" style="display:none; padding:6px 10px;">Partner login</a>
+    <div style="margin-top:10px; opacity:0.9; font-size:14px;">
+      <a id="manageLink" class="btn-outline" href="#" style="padding:6px 10px; display:inline-flex;">
+        Partner login
+      </a>
     </div>
 
     <section style="margin-top:24px;">
@@ -47,7 +114,7 @@
     async function loadCatalog() {
       const res = await fetch("/partners/catalog.json", { cache: "no-store" });
       const data = await res.json();
-      return Array.isArray(data) ? data : data.products || [];
+      return Array.isArray(data) ? data : (data.products || []);
     }
 
     async function startCheckout(slug, productId) {
@@ -90,10 +157,7 @@
               <div class="card-title">${escapeHtml(p.name)}</div>
               <div class="card-desc">${escapeHtml(p.description || "")}</div>
               <div class="pill">$${p.price}</div>
-              <button class="btn"
-                onclick="startCheckout('${slug}', '${p.id}')">
-                Buy
-              </button>
+              <button class="btn" onclick="startCheckout('${slug}', '${p.id}')">Buy</button>
             </div>
           </div>
         `;
@@ -104,14 +168,24 @@
       const slug = getSlugFromUrl();
       if (!slug) return;
 
+      // Always enable Partner login link (no auth leakage; it just requests magic link)
+      manageLinkEl.href = `/partners/manage.html?slug=${encodeURIComponent(slug)}`;
+
       try {
-        const [partner, products] = await Promise.all([
-          loadPartner(slug),
-          loadCatalog(),
-        ]);
+        const [partner, products] = await Promise.all([ loadPartner(slug), loadCatalog() ]);
 
         titleEl.textContent = `${partner.name} Store`;
-        subtitleEl.textContent = "";
+        subtitleEl.textContent = ""; // never show "slug"
+
+        // Optional: render partner logo if present
+        const wrap = document.getElementById("partner-logo-wrap");
+        const img = document.getElementById("partner-logo");
+        const logo = partner?.branding?.logoDataUrl;
+        if (logo) {
+          img.src = logo;
+          wrap.style.display = "block";
+        }
+
         renderCatalog(products, slug);
       } catch (err) {
         statusEl.textContent = err.message;
@@ -120,105 +194,3 @@
   </script>
 </body>
 </html>
-
-<style>
-/* Force button cursor + prevent any overlay from blocking clicks */
-button.btn { cursor: pointer !important; }
-.card, .card * { pointer-events: auto !important; }
-</style>
-
-<style>
-  /* Store-only sizing overrides */
-  #catalog-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:16px;
-  }
-  #catalog-grid .card{
-    padding: 0;                 /* override global .card padding */
-    border-radius: 14px;
-    overflow:hidden;
-  }
-  #catalog-grid .img-wrap{
-    height: 140px;              /* smaller hero image */
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: rgba(255,255,255,0.04);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  #catalog-grid .card-img{
-    max-width: 78%;
-    max-height: 78%;
-    object-fit: contain;
-    display:block;
-  }
-  #catalog-grid .card-body{
-    padding: 14px;              /* tighter body */
-  }
-  #catalog-grid .card-title{
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 0 6px 0;
-  }
-  #catalog-grid .card-desc{
-    font-size: 13px;
-    opacity: 0.85;
-    margin: 0 0 10px 0;
-  }
-  #catalog-grid .pill{
-    display:inline-block;
-    font-size:12px;
-    border:1px solid rgba(255,255,255,0.14);
-    padding:4px 10px;
-    border-radius:999px;
-    margin-bottom: 10px;
-  }
-  #catalog-grid .btn{
-    margin-top: 8px;
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.16);
-    background: rgba(255,255,255,0.06);
-    color: inherit;
-    cursor: pointer;
-  }
-</style>
-
-<style>
-  /* Prevent super-wide stretched cards on big screens */
-  #catalog-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-    gap: 16px;
-    justify-content: start; /* cards stay same width, grid doesn't stretch them */
-  }
-
-  /* Optional: center the whole grid block on ultra-wide screens */
-  @media (min-width: 1200px){
-    #catalog-grid{ justify-content: center; }
-  }
-</style>
-
-<style>
-  /* Prevent super-wide stretched cards on big screens */
-  #catalog-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-    gap: 16px;
-    justify-content: start; /* cards stay same width, grid doesn't stretch them */
-  }
-
-  /* Optional: center the whole grid block on ultra-wide screens */
-  @media (min-width: 1200px){
-    #catalog-grid{ justify-content: center; }
-  }
-</style>
-
-<script>
-  // If partner logo exists, render it (non-dominant sizing)
-  (function () {
-    const original = window.addEventListener;
-    // no-op: this is just a marker to avoid duplicate injections
-  })();
-</script>
