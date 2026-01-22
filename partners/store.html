@@ -169,7 +169,7 @@
       if (!slug) return;
 
       // Always enable Partner login link (no auth leakage; it just requests magic link)
-      manageLinkEl.href = `/partners/manage.html?slug=${encodeURIComponent(slug)}`;
+      manageLinkEl.href = `/partners/login.html?slug=${encodeURIComponent(slug)}`;
 
       try {
         const [partner, products] = await Promise.all([ loadPartner(slug), loadCatalog() ]);

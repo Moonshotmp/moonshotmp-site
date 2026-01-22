@@ -7,324 +7,226 @@
   <link rel="stylesheet" href="/partners/styles.css" />
   <style>
     .muted { opacity: 0.8; }
-    .inline-note { font-size: 13px; opacity: 0.85; margin-top: 10px; }
-    .status { white-space: pre-wrap; margin-top: 14px; }
-
-    /* Button micro-UX */
-    .btn-content { display:inline-flex; align-items:center; gap:10px; justify-content:center; }
-    .spinner { width:14px; height:14px; border:2px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:999px; animation:spin 0.8s linear infinite; display:none; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 24px;
-      transform: translateX(-50%);
-      background: rgba(20, 20, 20, 0.96);
-      color: white;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 14px;
-      max-width: min(560px, calc(100vw - 32px));
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 180ms ease, transform 180ms ease;
-      z-index: 9999;
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-    .toast small { display:block; opacity:0.8; margin-top:4px; }
-  </style>
-
-  <style data-noflicker>
-    html { visibility: hidden; }
-    html.ready { visibility: visible; }
+    .row { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; }
+    .col { display:flex; flex-direction:column; gap:6px; }
+    .pill { display:inline-flex; align-items:center; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); font-size:12px; }
+    .status { white-space: pre-wrap; margin-top: 12px; }
+    .thumb { height:64px; width:64px; border-radius:12px; border:1px solid rgba(255,255,255,0.14); object-fit:contain; background: rgba(255,255,255,0.06); }
+    .toast { display:none; padding:12px 14px; margin:12px 0; border:1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); }
   </style>
 </head>
-
-
 <body>
-  <header class="topbar">
-    <a href="/partners/index.html" class="brand">Moonshot Partners</a>
-    <nav class="nav">
-      <a href="/partners/index.html">Partners</a>
-      <a href="/partners/store.html">Storefront</a>
-      <a href="/partners/manage.html" class="active">Manage</a>
-    </nav>
-  </header>
+  <main class="container" style="max-width:900px;">
+    <h1>Manage Store</h1>
+    <p class="muted" id="subtitle" style="margin-top:-6px;">Loading…</p>
 
-  <main class="container">
-    <h1>Partner Login + Store Manager</h1>
-    <p class="muted">
-      Enter your Store ID (slug) and the email that matches the partner record.
-      We’ll email you a sign-in link if it matches.
-    </p>
+    <div id="verifiedToast" class="toast">✅ Signed in. You can manage your store below.</div>
 
-    <section class="card" id="login">
-      <h2>Sign in</h2>
-
-      <div class="grid-2">
-        <label>
-          <div>Store ID (slug)</div>
-          <input id="slug" placeholder="tommy-k-fitness" />
-        </label>
-
-        <label>
-          <div>Email</div>
-          <input id="email" type="email" placeholder="you@domain.com" />
-        </label>
+    <div id="panel" class="card" style="padding:1.25rem; display:none;">
+      <div class="row" style="justify-content:space-between; align-items:center;">
+        <div class="pill" id="stripeBadge">Stripe: …</div>
+        <div class="pill" id="storeIdPill">Store ID: …</div>
       </div>
 
-      <div style="margin-top:14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <button id="sendLink" class="btn primary">
-          <span class="btn-content">
-            <span class="spinner" id="spinner"></span>
-            <span id="btnText">Email sign-in link</span>
-          </span>
-        </button>
-        <span class="inline-note">
-          Tip: for inline link on this page, add <code>&amp;dev=1</code> to the URL and enable echo server-side.
-        </span>
+      <div class="row" style="margin-top:14px;">
+        <div class="col">
+          <div class="muted" style="font-size:12px;">Logo / Picture</div>
+          <img id="logoPreview" class="thumb" alt="Logo preview" />
+          <input id="logoInput" type="file" accept="image/*" />
+          <div class="muted" style="font-size:12px; max-width:320px;">
+            Upload a square-ish logo. We store it as a data URL in the partner record (simple + works everywhere).
+          </div>
+        </div>
+
+        <div style="flex:1; min-width:280px;">
+          <div class="row">
+            <label class="col" style="min-width:280px; flex:1;">
+              Partner name
+              <input id="name" />
+            </label>
+
+            <label class="col" style="min-width:280px; flex:1;">
+              Contact email
+              <input id="email" type="email" />
+            </label>
+          </div>
+
+          <div style="margin-top:12px;">
+            <div class="muted" style="font-size:12px;">Store URL</div>
+            <div class="pill" style="user-select:all;" id="storeUrl"></div>
+          </div>
+
+          <div class="row" style="margin-top:14px;">
+            <button class="btn-primary" id="saveBtn">Save changes</button>
+            <a class="btn-outline" id="viewStore" href="#">View store</a>
+            <a class="btn-outline" id="connectStripe" href="#">Connect / Manage Stripe</a>
+            <button class="btn-outline" id="resetStripeBtn">Reset Stripe</button>
+            <button class="btn-outline" id="logoutBtn">Sign out</button>
+          </div>
+
+          <pre id="status" class="status"></pre>
+        </div>
       </div>
-
-      <div class="inline-note">
-        <div><strong>Dev link (only appears if server returns it):</strong></div>
-        <pre id="devLink" style="margin-top:8px; padding:10px; border-radius:8px; background:#0b1020; color:#e6e6ff; overflow:auto;"></pre>
-      </div>
-
-      <pre id="status" class="status"></pre>
-    </section>
-
-    <section class="card" id="manage" style="display:none;">
-      <h2>Manage your store</h2>
-      <p class="muted">You’re signed in. Update your details below.</p>
-
-      <div id="stripeStatus" class="inline-note"></div>
-
-      <div class="grid-2" style="margin-top:14px;">
-        <label>
-          <div>Store Name</div>
-          <input id="storeName" />
-        </label>
-
-        <label>
-          <div>Email</div>
-          <input id="storeEmail" type="email" />
-        </label>
-      </div>
-
-      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="save" class="btn primary">Save</button>
-        <button id="resetStripe" class="btn">Reset Stripe</button>
-      </div>
-
-      <pre id="manageStatus" class="status"></pre>
-    </section>
+    </div>
   </main>
 
-  <div class="toast" id="toast"></div>
-
 <script>
-  document.documentElement.classList.add('ready');
-
   const qs = new URL(window.location.href).searchParams;
-  const DEV = qs.get("dev") === "1";
+  const slugHint = (qs.get("slug") || "").trim().toLowerCase();
 
-  const loginEl = document.getElementById("login");
-  const manageEl = document.getElementById("manage");
+  // show verified toast once
+  if (qs.get("verified") === "1") {
+    const toast = document.getElementById("verifiedToast");
+    toast.style.display = "block";
+    const url = new URL(window.location.href);
+    url.searchParams.delete("verified");
+    window.history.replaceState({}, "", url.toString());
+  }
 
-  const slugEl = document.getElementById("slug");
-  const emailEl = document.getElementById("email");
-
-  const sendBtn = document.getElementById("sendLink");
-  const spinner = document.getElementById("spinner");
-  const btnText = document.getElementById("btnText");
-  const devLinkEl = document.getElementById("devLink");
+  const subtitle = document.getElementById("subtitle");
+  const panel = document.getElementById("panel");
   const statusEl = document.getElementById("status");
 
-  const storeNameEl = document.getElementById("storeName");
-  const storeEmailEl = document.getElementById("storeEmail");
-  const stripeStatusEl = document.getElementById("stripeStatus");
-  const saveBtn = document.getElementById("save");
-  const resetStripeBtn = document.getElementById("resetStripe");
-  const manageStatusEl = document.getElementById("manageStatus");
+  const stripeBadge = document.getElementById("stripeBadge");
+  const storeIdPill = document.getElementById("storeIdPill");
+  const storeUrlEl = document.getElementById("storeUrl");
 
-  const toastEl = document.getElementById("toast");
+  const logoPreview = document.getElementById("logoPreview");
+  const logoInput = document.getElementById("logoInput");
 
-  const EMAIL_KEY = "ms_partner_email";
+  const nameEl = document.getElementById("name");
+  const emailEl = document.getElementById("email");
 
-  function setStatus(msg) { statusEl.textContent = msg || ""; }
-  function setManageStatus(msg) { manageStatusEl.textContent = msg || ""; }
+  const viewStore = document.getElementById("viewStore");
+  const connectStripe = document.getElementById("connectStripe");
 
-  function toast(msg, sub) {
-    toastEl.innerHTML = "";
-    toastEl.textContent = msg;
-    if (sub) {
-      const s = document.createElement("small");
-      s.textContent = sub;
-      toastEl.appendChild(s);
-    }
-    toastEl.classList.add("show");
-    setTimeout(() => toastEl.classList.remove("show"), 2600);
-  }
+  let currentSlug = null;
+  let currentPartner = null;
+  let pendingLogoDataUrl = null;
 
-  function setSending(isSending) {
-    spinner.style.display = isSending ? "inline-block" : "none";
-    btnText.textContent = isSending ? "Sending..." : "Email sign-in link";
-    sendBtn.disabled = isSending;
-  }
-
-  function flashSent() {
-    toast("✅ Sign-in link sent", "Check your inbox (and spam).");
-  }
-
-  function cleanParamOnce(key) {
-    if (!qs.has(key)) return;
-    const url = new URL(window.location.href);
-    url.searchParams.delete(key);
-    history.replaceState({}, "", url.toString());
-  }
-
-  // Pull slug from URL if present
-  const urlSlug = qs.get("slug");
-  if (urlSlug) slugEl.value = urlSlug;
-
-  // Prefill email from storage
-  const savedEmail = localStorage.getItem(EMAIL_KEY);
-  if (savedEmail && !emailEl.value) emailEl.value = savedEmail;
-
-  // Verified toast (one-time)
-  if (qs.get("verified") === "1") {
-    toast("✅ Signed in.", "You can manage your store below.");
-    cleanParamOnce("verified");
-  }
-
-  async function requestLink() {
-    devLinkEl.textContent = "";
-    setStatus("");
-
-    const slug = String(slugEl.value || "").trim();
-    const email = String(emailEl.value || "").trim();
-
-    if (!slug || !email) {
-      setStatus("Enter Store ID + Email.");
-      return;
-    }
-
-    setSending(true);
-
-    try {
-      const res = await fetch("/.netlify/functions/auth-request", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ slug, email, dev: DEV })
-      });
-
-      const raw = await res.text();
-      let data = null;
-      try { data = JSON.parse(raw); } catch {}
-
-      localStorage.setItem(EMAIL_KEY, email);
-
-      if (!res.ok) {
-        setStatus((data && (data.error || data.message)) || "Request failed");
-        return;
-      }
-
-      flashSent();
-
-      if (data?.link) {
-        devLinkEl.textContent = data.link;
-        setStatus("Dev mode: open the link above to sign in.");
-      } else {
-        setStatus(
-          DEV
-            ? "Dev mode is ON, but the server did not return a link. (In production we do not echo magic links.)"
-            : "If the email matches the store owner email, you’ll receive a sign-in link."
-        );
-      }
-    } finally {
-      setSending(false);
-    }
-  }
-
-  sendBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    requestLink();
-  });
+  function setStatus(msg){ statusEl.textContent = msg || ""; }
 
   async function loadMe() {
-    try {
-      const res = await fetch("/.netlify/functions/partner-me", { cache: "no-store" });
-      const data = await res.json().catch(() => null);
-      if (!res.ok || !data?.partner) return false;
+    const res = await fetch("/.netlify/functions/partner-me");
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.partner || null;
+  }
 
-      // show manage UI
-      loginEl.style.display = "none";
-      manageEl.style.display = "block";
+  function toDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
 
-      const p = data.partner;
-      storeNameEl.value = p?.name || "";
-      storeEmailEl.value = p?.email || "";
+  function setStripeBadge(p) {
+    const connected = !!p?.stripe?.connectedAccountId;
+    const onboarded = !!p?.stripe?.onboarded;
+    stripeBadge.textContent = !connected ? "Stripe: not connected"
+      : (onboarded ? "Stripe: connected ✅" : "Stripe: setup incomplete ⚠️");
+  }
 
-      const connected = !!p?.stripe?.connectedAccountId;
-      const onboarded = !!p?.stripe?.onboarded || !!p?.stripe?.detailsSubmitted;
+  function showPanel(p) {
+    currentPartner = p;
+    currentSlug = (p.slug || slugHint || "").trim().toLowerCase();
 
-      stripeStatusEl.textContent = connected
-        ? (onboarded ? "Stripe: Connected ✅" : "Stripe: Connected (onboarding incomplete)")
-        : "Stripe: Not connected";
+    subtitle.textContent = `Signed in as ${p.email || ""}`;
+    panel.style.display = "block";
 
-      return true;
-    } catch (err) {
-      return false;
-    }
+    setStripeBadge(p);
+    storeIdPill.textContent = `Store ID: ${currentSlug || "—"}`;
+
+    const storeUrl = `${window.location.origin}/partners/store.html?slug=${encodeURIComponent(currentSlug)}`;
+    storeUrlEl.textContent = storeUrl;
+
+    nameEl.value = p.name || "";
+    emailEl.value = p.email || "";
+
+    const logo = p?.branding?.logoDataUrl || "";
+    logoPreview.src = logo || "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+
+    viewStore.href = `/partners/store.html?slug=${encodeURIComponent(currentSlug)}`;
+    connectStripe.href = `/partners/connect.html?slug=${encodeURIComponent(currentSlug)}`;
   }
 
   async function save() {
-    setManageStatus("");
-    const name = String(storeNameEl.value || "").trim();
-    const email = String(storeEmailEl.value || "").trim();
-    try {
-      const res = await fetch("/.netlify/functions/partner-update", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name, email })
-      });
-      const data = await res.json().catch(() => null);
-      if (!res.ok) {
-        setManageStatus((data && (data.error || data.message)) || "Save failed");
-        return;
-      }
-      toast("✅ Saved", "Your store details were updated.");
-      setManageStatus("Saved.");
-    } catch (e) {
-      setManageStatus("Save failed.");
+    setStatus("Saving…");
+    const payload = {
+      name: nameEl.value.trim(),
+      email: emailEl.value.trim(),
+      branding: {}
+    };
+    if (pendingLogoDataUrl) payload.branding.logoDataUrl = pendingLogoDataUrl;
+
+    const res = await fetch("/.netlify/functions/partner-update", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const raw = await res.text();
+    let data = null; try { data = JSON.parse(raw); } catch {}
+
+    if (!res.ok) {
+      setStatus((data && (data.error || data.message)) || "Save failed");
+      return;
     }
+
+    setStatus("Saved ✅");
+    pendingLogoDataUrl = null;
+
+    // reload partner to reflect updates
+    const p = await loadMe();
+    if (p) showPanel(p);
   }
 
   async function resetStripe() {
-    setManageStatus("");
-    try {
-      const res = await fetch("/.netlify/functions/stripe-reset", { method: "POST" });
-      const data = await res.json().catch(() => null);
-      if (!res.ok) {
-        setManageStatus((data && (data.error || data.message)) || "Reset failed");
-        return;
-      }
-      toast("✅ Stripe reset", "You can reconnect Stripe from setup.");
-      setManageStatus("Stripe reset.");
-      // reload state
-      await loadMe();
-    } catch {
-      setManageStatus("Reset failed.");
+    setStatus("Resetting Stripe…");
+    const res = await fetch("/.netlify/functions/stripe-reset", { method: "POST" });
+    const raw = await res.text();
+    let data = null; try { data = JSON.parse(raw); } catch {}
+
+    if (!res.ok) {
+      setStatus((data && (data.error || data.message)) || "Reset failed");
+      return;
     }
+
+    setStatus("Stripe reset ✅");
+    const p = await loadMe();
+    if (p) showPanel(p);
   }
 
-  saveBtn.addEventListener("click", (e) => { e.preventDefault(); save(); });
-  resetStripeBtn.addEventListener("click", (e) => { e.preventDefault(); resetStripe(); });
+  async function logout() {
+    await fetch("/.netlify/functions/auth-logout", { method: "POST" });
+    const next = `/partners/login.html${currentSlug ? `?slug=${encodeURIComponent(currentSlug)}` : ""}`;
+    window.location.href = next;
+  }
 
-  // Try to load session on page load
-  loadMe();
+  logoInput.addEventListener("change", async (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    pendingLogoDataUrl = await toDataURL(f);
+    logoPreview.src = pendingLogoDataUrl;
+    setStatus("Logo ready — click Save changes to apply.");
+  });
+
+  document.getElementById("saveBtn").addEventListener("click", save);
+  document.getElementById("resetStripeBtn").addEventListener("click", resetStripe);
+  document.getElementById("logoutBtn").addEventListener("click", logout);
+
+  (async () => {
+    const p = await loadMe();
+    if (!p) {
+      // Not signed in → send to login, preserving slug if we have it
+      const target = `/partners/login.html${slugHint ? `?slug=${encodeURIComponent(slugHint)}` : ""}`;
+      window.location.href = target;
+      return;
+    }
+    showPanel(p);
+  })();
 </script>
 </body>
 </html>

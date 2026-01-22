@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partner Login</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+</head>
+<body>
+  <main class="container" style="max-width:760px;">
+    <h1>Partner Login</h1>
+    <p class="muted" style="margin-top:-6px;">We’ll email you a sign-in link.</p>
+
+    <div class="card" style="padding:1.25rem;">
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <label style="display:flex; flex-direction:column; gap:6px;">
+          Store ID
+          <input id="slug" placeholder="e.g. tommy-k-fitness" />
+        </label>
+
+        <label style="display:flex; flex-direction:column; gap:6px;">
+          Email
+          <input id="email" type="email" placeholder="you@company.com" />
+        </label>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap;">
+        <button class="btn-primary" id="sendLink">
+          <span style="display:inline-flex; align-items:center; gap:10px; justify-content:center;">
+            <span id="sendLabel">Email sign-in link</span>
+          </span>
+        </button>
+        <a class="btn-outline" id="backToStore" href="/partners/store.html">Back to store</a>
+      </div>
+
+      <div class="muted" style="font-size:13px; margin-top:10px;">
+        If the email matches the store owner email, you’ll receive a sign-in link.
+      </div>
+
+      <pre id="status" style="white-space:pre-wrap;margin-top:14px;"></pre>
+      <pre id="devLink" style="white-space:pre-wrap;margin-top:10px;"></pre>
+    </div>
+  </main>
+
+<script>
+  const qs = new URL(window.location.href).searchParams;
+  const slugEl = document.getElementById("slug");
+  const emailEl = document.getElementById("email");
+  const sendBtn = document.getElementById("sendLink");
+  const sendLabel = document.getElementById("sendLabel");
+  const statusEl = document.getElementById("status");
+  const devLinkEl = document.getElementById("devLink");
+  const backToStore = document.getElementById("backToStore");
+
+  const slugPrefill = (qs.get("slug") || "").trim().toLowerCase();
+  if (slugPrefill) slugEl.value = slugPrefill;
+
+  if (slugPrefill) backToStore.href = `/partners/store.html?slug=${encodeURIComponent(slugPrefill)}`;
+
+  const EMAIL_KEY = "ms_partner_last_email";
+  const rememberedEmail = (localStorage.getItem(EMAIL_KEY) || "").trim();
+  if (!emailEl.value && rememberedEmail) emailEl.value = rememberedEmail;
+  setTimeout(() => { try { emailEl.focus(); emailEl.select(); } catch {} }, 50);
+
+  emailEl.addEventListener("input", () => localStorage.setItem(EMAIL_KEY, (emailEl.value || "").trim()));
+
+  let sending = false;
+  async function requestLink() {
+    if (sending) return;
+    devLinkEl.textContent = "";
+    statusEl.textContent = "";
+
+    const slug = (slugEl.value || "").trim().toLowerCase();
+    const email = (emailEl.value || "").trim();
+    if (!slug || !email) {
+      statusEl.textContent = "Enter Store ID + Email.";
+      return;
+    }
+
+    sending = true;
+    sendBtn.disabled = true;
+    sendLabel.textContent = "Sending…";
+
+    try {
+      const res = await fetch("/.netlify/functions/auth-request", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ slug, email })
+      });
+
+      const raw = await res.text();
+      let data = null; try { data = JSON.parse(raw); } catch {}
+
+      localStorage.setItem(EMAIL_KEY, email);
+
+      if (!res.ok) {
+        statusEl.textContent = (data && (data.error || data.message)) || "Request failed";
+        return;
+      }
+
+      // In prod you won't see the link (by design). In dev you might.
+      if (data?.link) {
+        devLinkEl.textContent = data.link;
+        statusEl.textContent = "Dev mode: open the link above to sign in.";
+      } else {
+        statusEl.textContent = "If the email matches the store owner email, you’ll receive a sign-in link.";
+      }
+    } finally {
+      sending = false;
+      sendBtn.disabled = false;
+      sendLabel.textContent = "Email sign-in link";
+    }
+  }
+
+  sendBtn.addEventListener("click", requestLink);
+  function submitIfEnter(e){ if (e.key === "Enter") { e.preventDefault(); requestLink(); } }
+  slugEl.addEventListener("keydown", submitIfEnter);
+  emailEl.addEventListener("keydown", submitIfEnter);
+</script>
+</body>
+</html>
