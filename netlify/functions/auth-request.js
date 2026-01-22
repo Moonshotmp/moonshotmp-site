@@ -9,6 +9,20 @@ function store(name) {
   return getStore({ name, siteID, token })
 }
 
+async function loadPartner(partnersStore, slug) {
+  // Try both common patterns:
+  // 1) key = "<slug>"
+  // 2) key = "partners/<slug>"  (matches your earlier design note)
+  const direct = await partnersStore.get(slug)
+  if (direct) return { partner: direct, keyUsed: slug }
+
+  const prefixedKey = `partners/${slug}`
+  const prefixed = await partnersStore.get(prefixedKey)
+  if (prefixed) return { partner: prefixed, keyUsed: prefixedKey }
+
+  return { partner: null, keyUsed: null }
+}
+
 export async function handler(event) {
   const startedAt = Date.now()
 
@@ -18,12 +32,28 @@ export async function handler(event) {
     if (!slug || !email) return json(400, { error: 'Missing store ID or email' })
 
     const partners = store('partners')
-    const partner = await partners.get(slug)
+    const { partner, keyUsed } = await loadPartner(partners, slug)
 
-    const storedEmail = (partner?.email || '').trim().toLowerCase()
+    console.log('[auth-request] partner loaded', {
+      slug,
+      found: !!partner,
+      keyUsed
+    })
+
+    // If partner missing, do NOT leak info
+    if (!partner) return json(200, { ok: true })
+
+    // Support both shapes just in case
+    const partnerEmailRaw = (partner.email ?? partner?.partner?.email ?? '').toString()
+    const storedEmail = partnerEmailRaw.trim().toLowerCase()
     const reqEmail = String(email).trim().toLowerCase()
+
     const emailMatches = !!storedEmail && storedEmail === reqEmail
-    console.log('[auth-request] email check', { slug, emailMatches })
+    console.log('[auth-request] email check', {
+      slug,
+      emailMatches,
+      storedEmailPreview: storedEmail ? storedEmail.slice(0, 3) + '***' : ''
+    })
 
     // Anti-enumeration: always OK in prod
     if (!emailMatches) return json(200, { ok: true })
@@ -43,8 +73,11 @@ export async function handler(event) {
     } = process.env
 
     console.log('[auth-request] smtp env present', {
-      host: SMTP_HOST, port: SMTP_PORT,
-      hasUser: !!SMTP_USER, hasPass: !!SMTP_PASS, hasFrom: !!SMTP_FROM
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      hasUser: !!SMTP_USER,
+      hasPass: !!SMTP_PASS,
+      hasFrom: !!SMTP_FROM
     })
 
     if (!SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
