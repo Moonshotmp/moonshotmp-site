@@ -2,280 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Manage Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/partners/styles.css" />
-  <style>
-    .muted { opacity: 0.8; }
-    .row { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; }
-    .col { display:flex; flex-direction:column; gap:6px; }
-    .pill { display:inline-flex; align-items:center; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); font-size:12px; }
-    .status { white-space: pre-wrap; margin-top: 12px; }
-    .thumb { height:64px; width:64px; border-radius:12px; border:1px solid rgba(255,255,255,0.14); object-fit:contain; background: rgba(255,255,255,0.06); }
-    .toast { display:none; padding:12px 14px; margin:12px 0; border:1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); }
-  </style>
 </head>
 <body>
-  <main class="container" style="max-width:900px;">
-    <h1>Manage Store</h1>
-    <p class="muted" id="subtitle" style="margin-top:-6px;">Loading…</p>
 
-    <div id="verifiedToast" class="toast">✅ Signed in. You can manage your store below.</div>
+  <div class="container">
+    <h1>MANAGE STORE</h1>
 
-    <div id="panel" class="card" style="padding:1.25rem; display:none;">
-      <div class="row" style="justify-content:space-between; align-items:center;">
-        <div class="pill" id="stripeBadge">Stripe: …</div>
-        <div class="pill" id="storeIdPill">Store ID: …</div>
-      </div>
+    <div id="statusMessage" class="notice" style="display:none;"></div>
 
-      <div class="row" style="margin-top:14px;">
-        <div class="col">
-          <div class="muted" style="font-size:12px;">Logo / Picture</div>
-          <img id="logoPreview" class="thumb" alt="Logo preview" />
-          <input id="logoInput" type="file" accept="image/*" />
-          <div class="muted" style="font-size:12px; max-width:320px;">
-            Upload a logo. We store the file in Netlify Blobs (not in the partner record), so big images are fine.
-          </div>
-        </div>
+    <div id="storeCard" style="display:none;">
+      <div class="pill" id="stripeStatus">Stripe: —</div>
 
-        <div style="flex:1; min-width:280px;">
-          <div class="row">
-            <label class="col" style="min-width:280px; flex:1;">
-              Partner name
-              <input id="name" />
-            </label>
+      <label>Partner name</label>
+      <input id="partnerName" />
 
-            <label class="col" style="min-width:280px; flex:1;">
-              Contact email
-              <input id="email" type="email" />
-            </label>
-          </div>
+      <label>Contact email</label>
+      <input id="partnerEmail" />
 
-          <div style="margin-top:12px;">
-            <div class="muted" style="font-size:12px;">Store URL</div>
-            <div class="pill" style="user-select:all;" id="storeUrl"></div>
-          </div>
+      <label>Store URL</label>
+      <input id="storeUrl" readonly />
 
-          <div class="row" style="margin-top:14px;">
-            <button class="btn-primary" id="saveBtn">Save changes</button>
-            <a class="btn-outline" id="viewStore" href="#">View store</a>
-            <a class="btn-outline" id="connectStripe" href="#">Connect / Manage Stripe</a>
-            <button class="btn-outline" id="resetStripeBtn" style="display:none;">Reset Stripe</button>
-            <button class="btn-outline" id="logoutBtn">Sign out</button>
-          </div>
-
-          <pre id="status" class="status"></pre>
-        </div>
-      </div>
+      <button id="saveBtn">SAVE CHANGES</button>
+      <button id="viewStoreBtn">VIEW STORE</button>
+      <button id="stripeBtn">CONNECT / MANAGE STRIPE</button>
+      <button id="signOutBtn">SIGN OUT</button>
     </div>
-  </main>
+  </div>
 
 <script>
-  const qs = new URL(window.location.href).searchParams;
-  const slugHint = (qs.get("slug") || "").trim().toLowerCase();
+async function loadMe() {
+  try {
+    const res = await fetch('/.netlify/functions/partner-me', {
+      credentials: 'include'
+    })
 
-  if (qs.get("verified") === "1") {
-    const toast = document.getElementById("verifiedToast");
-    toast.style.display = "block";
-    const url = new URL(window.location.href);
-    url.searchParams.delete("verified");
-    window.history.replaceState({}, "", url.toString());
-  }
-
-  const subtitle = document.getElementById("subtitle");
-  const panel = document.getElementById("panel");
-  const statusEl = document.getElementById("status");
-
-  const stripeBadge = document.getElementById("stripeBadge");
-  const storeIdPill = document.getElementById("storeIdPill");
-  const storeUrlEl = document.getElementById("storeUrl");
-
-  const logoPreview = document.getElementById("logoPreview");
-  const logoInput = document.getElementById("logoInput");
-
-  const nameEl = document.getElementById("name");
-  const emailEl = document.getElementById("email");
-
-  const viewStore = document.getElementById("viewStore");
-  const connectStripe = document.getElementById("connectStripe");
-
-  let currentSlug = null;
-  let currentPartner = null;
-  let pendingLogoDataUrl = null;
-
-  function setStatus(msg){ statusEl.textContent = msg || ""; }
-
-  async function loadMe() {
-    const res = await fetch("/.netlify/functions/partner-me");
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.partner || null;
-  }
-
-  function setStripeBadge(p) {
-    const connected = !!p?.stripe?.connectedAccountId;
-    const onboarded = !!p?.stripe?.onboarded;
-    stripeBadge.textContent = !connected ? "Stripe: not connected"
-      : (onboarded ? "Stripe: connected ✅" : "Stripe: setup incomplete ⚠️");
-
-    // Stripe CTA behavior
-    const resetBtn = document.getElementById("resetStripeBtn");
-    if (!connected) {
-      connectStripe.textContent = "Connect Stripe";
-      connectStripe.className = "btn-primary";
-      resetBtn.style.display = "none";
-    } else if (!onboarded) {
-      connectStripe.textContent = "Finish Stripe Setup";
-      connectStripe.className = "btn-primary";
-      resetBtn.style.display = "inline-flex";
-    } else {
-      connectStripe.textContent = "Manage Stripe";
-      connectStripe.className = "btn-outline";
-      resetBtn.style.display = "inline-flex";
+    if (res.status === 401) {
+      window.location.href = '/partners/login.html'
+      return
     }
-  }
-
-  function logoUrl(p) {
-    const key = p?.branding?.logoKey;
-    const v = p?.branding?.logoVersion || "";
-    if (!key) return "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
-    return `/.netlify/functions/logo-get?key=${encodeURIComponent(key)}&v=${encodeURIComponent(v)}`;
-  }
-
-  function showPanel(p) {
-    currentPartner = p;
-    currentSlug = (p.slug || slugHint || "").trim().toLowerCase();
-
-    subtitle.textContent = `Signed in as ${p.email || ""}`;
-    panel.style.display = "block";
-
-    setStripeBadge(p);
-    storeIdPill.textContent = `Store ID: ${currentSlug || "—"}`;
-
-    const storeUrl = `${window.location.origin}/partners/store.html?slug=${encodeURIComponent(currentSlug)}`;
-    storeUrlEl.textContent = storeUrl;
-
-    nameEl.value = p.name || "";
-    emailEl.value = p.email || "";
-
-    logoPreview.src = logoUrl(p);
-
-    viewStore.href = `/partners/store.html?slug=${encodeURIComponent(currentSlug)}`;
-    connectStripe.href = `/partners/connect.html?slug=${encodeURIComponent(currentSlug)}`;
-  }
-
-  function fileToDataUrl(file) {
-    return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.onerror = reject;
-      r.readAsDataURL(file);
-    });
-  }
-
-  async function uploadLogoIfNeeded() {
-    if (!pendingLogoDataUrl) return null;
-
-    setStatus("Uploading logo…");
-    const res = await fetch("/.netlify/functions/logo-upload", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ dataUrl: pendingLogoDataUrl })
-    });
-
-    const raw = await res.text();
-    let data = null; try { data = JSON.parse(raw); } catch {}
 
     if (!res.ok) {
-      setStatus((data && (data.error || data.message)) || "Logo upload failed");
-      throw new Error("logo upload failed");
+      showError('Unable to load store. Please refresh.')
+      return
     }
 
-    pendingLogoDataUrl = null;
-    return { logoKey: data.logoKey, logoVersion: data.logoVersion };
+    const data = await res.json()
+    renderPartner(data.partner)
+  } catch (err) {
+    console.error(err)
+    showError('Network error. Please refresh.')
   }
+}
 
-  async function save() {
-    try {
-      setStatus("Saving…");
+function renderPartner(p) {
+  document.getElementById('storeCard').style.display = 'block'
+  document.getElementById('partnerName').value = p.name || ''
+  document.getElementById('partnerEmail').value = p.email || ''
+  document.getElementById('storeUrl').value =
+    location.origin + '/partners/store.html?slug=' + p.slug
 
-      const logoInfo = await uploadLogoIfNeeded();
+  document.getElementById('stripeStatus').textContent =
+    p.stripe?.connectedAccountId ? 'Stripe: connected' : 'Stripe: not connected'
+}
 
-      const payload = {
-        name: nameEl.value.trim(),
-        email: emailEl.value.trim(),
-        branding: {}
-      };
+function showError(msg) {
+  const el = document.getElementById('statusMessage')
+  el.textContent = msg
+  el.style.display = 'block'
+}
 
-      if (logoInfo) {
-        payload.branding.logoKey = logoInfo.logoKey;
-        payload.branding.logoVersion = logoInfo.logoVersion;
-      }
-
-      const res = await fetch("/.netlify/functions/partner-update", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      const raw = await res.text();
-      let data = null; try { data = JSON.parse(raw); } catch {}
-
-      if (!res.ok) {
-        setStatus((data && (data.error || data.message)) || "Save failed");
-        return;
-      }
-
-      setStatus("Saved ✅");
-
-      const p = await loadMe();
-      if (p) showPanel(p);
-    } catch (e) {
-      // status already set
-    }
-  }
-
-  async function resetStripe() {
-    setStatus("Resetting Stripe…");
-    const res = await fetch("/.netlify/functions/stripe-reset", { method: "POST" });
-    const raw = await res.text();
-    let data = null; try { data = JSON.parse(raw); } catch {}
-    if (!res.ok) {
-      setStatus((data && (data.error || data.message)) || "Reset failed");
-      return;
-    }
-    setStatus("Stripe reset ✅");
-    const p = await loadMe();
-    if (p) showPanel(p);
-  }
-
-  async function logout() {
-    await fetch("/.netlify/functions/auth-logout", { method: "POST" });
-    const next = `/partners/login.html${currentSlug ? `?slug=${encodeURIComponent(currentSlug)}` : ""}`;
-    window.location.href = next;
-  }
-
-  logoInput.addEventListener("change", async (e) => {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    pendingLogoDataUrl = await fileToDataUrl(f);
-    logoPreview.src = pendingLogoDataUrl;
-    setStatus("Logo selected — click Save changes to upload.");
-  });
-
-  document.getElementById("saveBtn").addEventListener("click", save);
-  document.getElementById("resetStripeBtn").addEventListener("click", resetStripe);
-  document.getElementById("logoutBtn").addEventListener("click", logout);
-
-  (async () => {
-    const p = await loadMe();
-    if (!p) {
-      const target = `/partners/login.html${slugHint ? `?slug=${encodeURIComponent(slugHint)}` : ""}`;
-      window.location.href = target;
-      return;
-    }
-    showPanel(p);
-  })();
+document.addEventListener('DOMContentLoaded', loadMe)
 </script>
+
 </body>
 </html>
