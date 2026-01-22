@@ -1,11 +1,9 @@
 import { getStore } from '@netlify/blobs'
 
 function store(name) {
-  // Try Netlify runtime style first
   try {
     return getStore(name)
   } catch (e) {
-    // Fallback: local/dev credentials style
     const siteID = process.env.NETLIFY_SITE_ID
     const token = process.env.NETLIFY_AUTH_TOKEN
     if (!siteID || !token) throw e
@@ -22,7 +20,8 @@ function json(statusCode, body) {
   return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }
 
-function normalizeRecord(x) {
+function normalize(x) {
+  if (!x) return null
   if (typeof x === 'string') { try { return JSON.parse(x) } catch { return null } }
   if (x && typeof x === 'object' && x.partner && typeof x.partner === 'object') return x.partner
   return x
@@ -30,16 +29,15 @@ function normalizeRecord(x) {
 
 async function loadPartnerCanonical(partnersStore, slug) {
   const canonicalKey = `partners/${slug}`
-  const canonical = normalizeRecord(await partnersStore.get(canonicalKey))
+  const canonical = normalize(await partnersStore.get(canonicalKey))
   if (canonical) return canonical
 
-  const legacy = normalizeRecord(await partnersStore.get(slug))
+  const legacy = normalize(await partnersStore.get(slug))
   if (legacy) {
     const merged = { ...legacy, slug: legacy.slug || slug }
     await partnersStore.set(canonicalKey, merged)
     return merged
   }
-
   return null
 }
 
@@ -49,7 +47,9 @@ export async function handler(event) {
     if (!sessionId) return json(401, { error: 'Not signed in' })
 
     const sessions = store('auth_sessions')
-    const session = await sessions.get(sessionId)
+    const sessionRaw = await sessions.get(sessionId)
+    const session = normalize(sessionRaw)
+
     if (!session || !session.expiresAt || session.expiresAt < Date.now()) {
       return json(401, { error: 'Session expired' })
     }
@@ -65,10 +65,6 @@ export async function handler(event) {
     return json(200, { ok: true, partner })
   } catch (err) {
     console.error('[partner-me] failed', err)
-    return json(500, {
-      error: 'Server error',
-      detail: String(err?.message || err),
-      stack: String(err?.stack || '')
-    })
+    return json(500, { error: 'Server error' })
   }
 }
