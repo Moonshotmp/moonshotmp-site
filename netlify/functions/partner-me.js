@@ -38,6 +38,7 @@ async function loadPartnerCanonical(partnersStore, slug) {
     await partnersStore.set(canonicalKey, merged)
     return merged
   }
+
   return null
 }
 
@@ -50,12 +51,18 @@ export async function handler(event) {
     const sessionRaw = await sessions.get(sessionId)
     const session = normalize(sessionRaw)
 
-    if (!session || !session.expiresAt || session.expiresAt < Date.now()) {
-      return json(401, { error: 'Session expired' })
+    if (!session) {
+      return json(401, { error: 'Session missing', sessionId, type: typeof sessionRaw })
+    }
+    if (!session.expiresAt) {
+      return json(401, { error: 'Session missing expiresAt', sessionId, session })
+    }
+    if (session.expiresAt < Date.now()) {
+      return json(401, { error: 'Session expired', sessionId, expiresAt: session.expiresAt, now: Date.now() })
     }
 
     const slug = String(session.slug || '').trim().toLowerCase()
-    if (!slug) return json(401, { error: 'Session missing slug' })
+    if (!slug) return json(401, { error: 'Session missing slug', sessionId, session })
 
     const partners = store('partners')
     const partner = await loadPartnerCanonical(partners, slug)
@@ -65,6 +72,10 @@ export async function handler(event) {
     return json(200, { ok: true, partner })
   } catch (err) {
     console.error('[partner-me] failed', err)
-    return json(500, { error: 'Server error' })
+    return json(500, {
+      error: 'Server error',
+      detail: String(err?.message || err),
+      stack: String(err?.stack || '')
+    })
   }
 }
