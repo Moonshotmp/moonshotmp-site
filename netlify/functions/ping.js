@@ -1,6 +1,7 @@
-export default async () => {
-  return new Response(
-    JSON.stringify({ ok: true, time: new Date().toISOString() }),
-    { status: 200, headers: { "content-type": "application/json" } }
-  );
-};
+export async function handler() {
+  return {
+    statusCode: 200,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ ok: true, ts: Date.now() })
+  }
+}
