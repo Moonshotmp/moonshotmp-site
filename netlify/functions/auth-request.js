@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import fetch from 'node-fetch'
 import { getStore } from '@netlify/blobs'
 
 function store(name) {
@@ -8,137 +9,83 @@ function store(name) {
   return getStore({ name, siteID, token })
 }
 
-function getBaseUrl(event) {
-  // Prefer explicit env if set
-  const env = (process.env.SITE_URL || process.env.URL || '').trim()
-  if (env) {
-    try {
-      const u = new URL(env.startsWith('http') ? env : `https://${env}`)
-      return u.origin
-    } catch {
-      // ignore
-    }
-  }
-
-  // Fallback: derive from request headers (works in prod + deploy previews)
-  const host = event.headers?.host || event.headers?.Host
-  const proto = event.headers?.['x-forwarded-proto'] || event.headers?.['X-Forwarded-Proto'] || 'https'
-  if (!host) return 'https://moonshotmp.com'
-  return `${proto}://${host}`
+function json(statusCode, body) {
+  return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }
 
-async function sendMailGraph({ to, subject, text }) {
-  const { MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET, MAIL_SENDER } = process.env
-  if (!MS_TENANT_ID || !MS_CLIENT_ID || !MS_CLIENT_SECRET || !MAIL_SENDER) {
-    throw new Error('Missing MS_* env vars or MAIL_SENDER')
-  }
+async function sendMail(to, link) {
+  const tenant = process.env.MS_TENANT_ID
+  const clientId = process.env.MS_CLIENT_ID
+  const clientSecret = process.env.MS_CLIENT_SECRET
+  const from = process.env.MAIL_SENDER
 
-  const tokenRes = await fetch(
-    `https://login.microsoftonline.com/${MS_TENANT_ID}/oauth2/v2.0/token`,
-    {
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        client_id: MS_CLIENT_ID,
-        client_secret: MS_CLIENT_SECRET,
-        scope: 'https://graph.microsoft.com/.default',
-        grant_type: 'client_credentials'
-      })
-    }
-  )
+  const tokenRes = await fetch(`https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      scope: 'https://graph.microsoft.com/.default',
+      grant_type: 'client_credentials'
+    })
+  })
 
   const tokenJson = await tokenRes.json()
-  if (!tokenRes.ok) throw new Error(`Token error: ${tokenJson.error_description || JSON.stringify(tokenJson)}`)
+  const accessToken = tokenJson.access_token
 
-  const res = await fetch(
-    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(MAIL_SENDER)}/sendMail`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${tokenJson.access_token}`,
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: {
-          subject,
-          body: { contentType: 'Text', content: text },
-          toRecipients: [{ emailAddress: { address: to } }]
+  await fetch('https://graph.microsoft.com/v1.0/users/' + from + '/sendMail', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      message: {
+        subject: 'Your Moonshot Partner sign-in link',
+        body: {
+          contentType: 'HTML',
+          content: `
+            <p>Click the link below to manage your store:</p>
+            <p><a href="${link}">${link}</a></p>
+            <p>This link expires in 15 minutes.</p>
+          `
         },
-        saveToSentItems: false
-      })
-    }
-  )
-
-  if (!res.ok) {
-    const t = await res.text()
-    throw new Error(`sendMail failed: ${t}`)
-  }
-}
-
-function normalizeRecord(x) {
-  if (typeof x === 'string') { try { return JSON.parse(x) } catch { return null } }
-  if (x && typeof x === 'object' && x.partner && typeof x.partner === 'object') return x.partner
-  return x
-}
-
-async function loadPartner(partnersStore, slug) {
-  const direct = normalizeRecord(await partnersStore.get(slug))
-  if (direct) return direct
-  const prefixed = normalizeRecord(await partnersStore.get(`partners/${slug}`))
-  if (prefixed) return prefixed
-  return null
+        toRecipients: [{ emailAddress: { address: to } }]
+      }
+    })
+  })
 }
 
 export async function handler(event) {
   try {
-    const { slug, email, dev } = JSON.parse(event.body || '{}')
-    if (!slug || !email) return ok()
+    const { slug, email } = JSON.parse(event.body || '{}')
+    if (!slug || !email) return json(200, { ok: true })
 
-    const partner = await loadPartner(store('partners'), slug)
-    if (!partner) return ok()
+    const partners = store('partners')
+    const partner =
+      (await partners.get(slug)) ||
+      (await partners.get(`partners/${slug}`))
 
-    const storedEmail = String(partner.email || '').trim().toLowerCase()
-    const reqEmail = String(email).trim().toLowerCase()
-    if (!storedEmail || storedEmail !== reqEmail) return ok()
+    if (!partner) return json(200, { ok: true })
+    if ((partner.email || '').toLowerCase() !== email.toLowerCase()) {
+      return json(200, { ok: true }) // silent fail
+    }
 
-    const token = crypto.randomBytes(32).toString('hex')
-    const expiresAt = Date.now() + 15 * 60 * 1000
+    const token = crypto.randomBytes(24).toString('hex')
+    const tokens = store('auth_tokens')
 
-    await store('auth_tokens').set(token, { slug, email: reqEmail, expiresAt, usedAt: null })
-
-    const baseUrl = getBaseUrl(event)
-    const link = `${baseUrl}/.netlify/functions/auth-verify?token=${token}`
-
-    await sendMailGraph({
-      to: reqEmail,
-      subject: 'Your Moonshot partner sign-in link',
-      text:
-`Use this link to sign in and manage your store:
-
-${link}
-
-This link expires in 15 minutes. If you didn’t request it, you can ignore this email.`
+    await tokens.set(token, {
+      slug,
+      email,
+      expiresAt: Date.now() + 15 * 60 * 1000
     })
 
-    console.log('[auth-request] graph sendMail ok', { slug })
+    const link = `${process.env.SITE_URL}/.netlify/functions/auth-verify?token=${token}`
+    await sendMail(email, link)
 
-    // Optional: echo link for deploy previews / explicit testing only
-    const context = (process.env.CONTEXT || process.env.NETLIFY_CONTEXT || '').toLowerCase()
-    const allowEcho =
-      process.env.ALLOW_MAGICLINK_ECHO === 'true' ||
-      context === 'deploy-preview' ||
-      context === 'branch-deploy'
-
-    if (dev && allowEcho) return ok({ link })
-
-    return ok()
+    return json(200, { ok: true })
   } catch (err) {
-    console.error('[auth-request] graph failed', err?.message)
-    return ok()
+    console.error('[auth-request] failed', err)
+    return json(500, { error: 'Server error' })
   }
-}
-
-function ok(extra = null) {
-  const body = extra ? { ok: true, ...extra } : { ok: true }
-  return { statusCode: 200, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }
