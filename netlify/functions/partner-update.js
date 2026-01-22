@@ -35,7 +35,7 @@ async function loadPartnerCanonical(partnersStore, slug) {
   const legacy = normalize(await partnersStore.get(slug))
   if (legacy) {
     const merged = { ...legacy, slug: legacy.slug || slug }
-    await partnersStore.set(canonicalKey, merged)
+    await partnersStore.setJSON(canonicalKey, merged)
     return { partner: merged, keyUsed: canonicalKey }
   }
   return { partner: null, keyUsed: null }
@@ -78,7 +78,7 @@ export async function handler(event) {
 
     if (merged?.branding?.logoDataUrl) delete merged.branding.logoDataUrl
 
-    await partners.set(keyUsed, merged)
+    await partners.setJSON(keyUsed, merged)
     return json(200, { ok: true })
   } catch (err) {
     console.error('[partner-update] failed', err)
