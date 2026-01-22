@@ -33,7 +33,7 @@
 <body>
   <main class="container" style="max-width:720px;">
     <h1>Manage Your Store</h1>
-    <p class="muted" style="margin-top:-6px;">Sign in with an email magic link.</p>
+    <p class="muted" id="subtitle" style="margin-top:-6px;">Sign in with an email magic link.</p>
 
     <!-- LOGIN -->
     <div id="login" class="card" style="padding:1.25rem;">
@@ -220,6 +220,13 @@
 
     loginEl.style.display = "none";
     manageEl.style.display = "block";
+
+    const sub = document.getElementById("subtitle");
+    if (sub) sub.textContent = `Signed in as `;
+
+
+    const h1 = document.querySelector("h1");
+    if (h1) h1.textContent = "Manage Store";
 
     document.getElementById("name").value = partner.name || "";
     document.getElementById("email2").value = partner.email || "";
