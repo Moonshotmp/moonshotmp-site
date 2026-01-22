@@ -15,7 +15,7 @@ function redirect(location) {
 export async function handler(event) {
   try {
     const tokenParam = event.queryStringParameters?.token
-    if (!tokenParam) return redirect('/partners/login.html?error=missing_token')
+    if (!tokenParam) return redirect('/partners/login.html?error=missing')
 
     const tokens = store('auth_tokens')
     const record = await tokens.get(tokenParam)
@@ -24,7 +24,6 @@ export async function handler(event) {
       return redirect('/partners/login.html?error=expired')
     }
 
-    // Create session
     const sessionId = crypto.randomBytes(32).toString('hex')
     const sessions = store('auth_sessions')
 
@@ -34,25 +33,27 @@ export async function handler(event) {
       expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000
     })
 
-    // Invalidate token (delete if supported; otherwise mark used)
-    try {
-      await tokens.delete(tokenParam)
-    } catch {
-      await tokens.set(tokenParam, { ...record, usedAt: Date.now() })
-    }
+    try { await tokens.delete(tokenParam) } catch {}
 
-    // Redirect to admin page with a one-time toast
     const dest = `/partners/manage.html?verified=1&slug=${encodeURIComponent(record.slug)}`
 
     return {
       statusCode: 302,
       headers: {
-        'Set-Cookie': `ms_partner_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`,
+        'Set-Cookie': [
+          `ms_partner_session=${sessionId}`,
+          'Path=/',
+          'Domain=moonshotmp.com',
+          'HttpOnly',
+          'Secure',
+          'SameSite=Lax',
+          'Max-Age=604800'
+        ].join('; '),
         'Location': dest
       }
     }
   } catch (err) {
-    console.error('[auth-verify] failed', err?.message)
+    console.error('[auth-verify] failed', err)
     return redirect('/partners/login.html?error=server')
   }
 }
