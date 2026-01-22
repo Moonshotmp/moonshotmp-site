@@ -7,32 +7,21 @@ function store(name) {
   return getStore({ name, siteID, token })
 }
 
-export async function handler(event) {
-  try {
-    const sessionId = getCookie(event.headers.cookie, 'ms_partner_session')
-    if (!sessionId) return json(401, { error: 'Not signed in' })
+function normalizeRecord(x) {
+  if (typeof x === 'string') { try { return JSON.parse(x) } catch { return null } }
+  if (x && typeof x === 'object' && x.partner && typeof x.partner === 'object') return x.partner
+  return x
+}
 
-    const session = await store('auth_sessions').get(sessionId)
-    if (!session || session.expiresAt < Date.now()) return json(401, { error: 'Session expired' })
+async function loadPartner(partnersStore, slug) {
+  const direct = normalizeRecord(await partnersStore.get(slug))
+  if (direct) return { partner: direct, keyUsed: slug }
 
-    const updates = JSON.parse(event.body || '{}')
-    const partners = store('partners')
-    const existing = await partners.get(session.slug)
-    if (!existing) return json(404, { error: 'Partner not found' })
+  const prefixedKey = `partners/${slug}`
+  const prefixed = normalizeRecord(await partnersStore.get(prefixedKey))
+  if (prefixed) return { partner: prefixed, keyUsed: prefixedKey }
 
-    const merged = {
-      ...existing,
-      name: typeof updates.name === 'string' ? updates.name : existing.name,
-      email: typeof updates.email === 'string' ? updates.email : existing.email,
-      branding: { ...(existing.branding || {}), ...(updates.branding || {}) }
-    }
-
-    await partners.set(session.slug, merged)
-    return json(200, { ok: true })
-  } catch (err) {
-    console.error('[partner-update] failed', err?.message)
-    return json(500, { error: 'Server error' })
-  }
+  return { partner: null, keyUsed: null }
 }
 
 function getCookie(header = '', name) {
@@ -42,4 +31,44 @@ function getCookie(header = '', name) {
 
 function json(statusCode, body) {
   return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
+}
+
+export async function handler(event) {
+  try {
+    const sessionId = getCookie(event.headers.cookie, 'ms_partner_session')
+    if (!sessionId) return json(401, { error: 'Not signed in' })
+
+    const sessions = store('auth_sessions')
+    const session = await sessions.get(sessionId)
+    if (!session || session.expiresAt < Date.now()) return json(401, { error: 'Session expired' })
+
+    const updates = JSON.parse(event.body || '{}')
+
+    // Guard: prevent gigantic logo payloads from causing 500s
+    const logoDataUrl = updates?.branding?.logoDataUrl
+    if (logoDataUrl && typeof logoDataUrl === 'string' && logoDataUrl.length > 350_000) {
+      return json(413, { error: 'Logo file too large. Use a smaller image.' })
+    }
+
+    const partners = store('partners')
+    const { partner: existing, keyUsed } = await loadPartner(partners, session.slug)
+    if (!existing || !keyUsed) return json(404, { error: 'Partner not found' })
+
+    const merged = {
+      ...existing,
+      slug: existing.slug || session.slug,
+      name: typeof updates.name === 'string' ? updates.name : existing.name,
+      email: typeof updates.email === 'string' ? updates.email : existing.email,
+      branding: {
+        ...(existing.branding || {}),
+        ...(updates.branding || {})
+      }
+    }
+
+    await partners.set(keyUsed, merged)
+    return json(200, { ok: true })
+  } catch (err) {
+    console.error('[partner-update] failed', err?.message)
+    return json(500, { error: 'Server error' })
+  }
 }
