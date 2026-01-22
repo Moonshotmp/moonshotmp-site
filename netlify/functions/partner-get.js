@@ -1,18 +1,30 @@
 import { getStore } from "@netlify/blobs";
 
-const STORE_NAME = "partners";
-const KEY_PREFIX = "partners/";
+function store(name) {
+  const siteID = process.env.NETLIFY_SITE_ID;
+  const token = process.env.NETLIFY_AUTH_TOKEN;
+  if (!siteID || !token) throw new Error("Missing NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN");
+  return getStore({ name, siteID, token });
+}
 
-const json = (status, body) =>
-  new Response(JSON.stringify(body, null, 2), {
-    status,
+function json(statusCode, body) {
+  return {
+    statusCode,
     headers: {
       "content-type": "application/json",
       "access-control-allow-origin": "*",
       "access-control-allow-methods": "GET,OPTIONS",
       "access-control-allow-headers": "content-type",
     },
-  });
+    body: JSON.stringify(body),
+  };
+}
+
+function parseBlob(x) {
+  if (!x) return null;
+  if (typeof x === "string") { try { return JSON.parse(x); } catch { return null; } }
+  return x;
+}
 
 const normalizeSlug = (raw) => {
   const s = String(raw ?? "").trim().toLowerCase();
@@ -20,19 +32,23 @@ const normalizeSlug = (raw) => {
   return s;
 };
 
-export default async (req) => {
-  if (req.method === "OPTIONS") return json(204, {});
-  if (req.method !== "GET") return json(405, { error: "Method Not Allowed" });
+export async function handler(event) {
+  try {
+    if (event.httpMethod === "OPTIONS") return json(204, {});
+    if (event.httpMethod !== "GET") return json(405, { error: "Method Not Allowed" });
 
-  const url = new URL(req.url);
-  const slug = normalizeSlug(url.searchParams.get("slug"));
-  if (!slug) return json(400, { error: "Missing slug" });
+    const slug = normalizeSlug(event.queryStringParameters?.slug);
+    if (!slug) return json(400, { error: "Missing slug" });
 
-  const store = getStore(STORE_NAME);
-  const key = `${KEY_PREFIX}${slug}`;
+    const partners = store("partners");
+    const key = `partners/${slug}`;
 
-  const partner = await store.get(key, { type: "json" });
-  if (!partner) return json(404, { error: "Partner not found" });
+    const partner = parseBlob(await partners.get(key));
+    if (!partner) return json(404, { error: "Partner not found" });
 
-  return json(200, partner);
-};
+    return json(200, partner);
+  } catch (err) {
+    console.error("[partner-get] failed", err);
+    return json(500, { error: "Server error" });
+  }
+}
