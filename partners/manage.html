@@ -35,7 +35,13 @@
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
     .toast small { display:block; opacity:0.8; margin-top:4px; }
   </style>
+
+  <style data-noflicker>
+    html { visibility: hidden; }
+    html.ready { visibility: visible; }
+  </style>
 </head>
+
 
 <body>
   <header class="topbar">
@@ -119,6 +125,8 @@
   <div class="toast" id="toast"></div>
 
 <script>
+  document.documentElement.classList.add('ready');
+
   const qs = new URL(window.location.href).searchParams;
   const DEV = qs.get("dev") === "1";
 
