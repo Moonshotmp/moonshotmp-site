@@ -1,6 +1,6 @@
 import crypto from 'crypto'
-import fetch from 'node-fetch'
 import { getStore } from '@netlify/blobs'
+// Note: using native fetch (Node 18+)
 
 function store(name) {
   const siteID = process.env.NETLIFY_SITE_ID
@@ -62,9 +62,10 @@ export async function handler(event) {
     if (!slug || !email) return json(200, { ok: true })
 
     const partners = store('partners')
+    const parseBlob = (x) => x ? (typeof x === 'string' ? JSON.parse(x) : x) : null
     const partner =
-      (await partners.get(slug)) ||
-      (await partners.get(`partners/${slug}`))
+      parseBlob(await partners.get(slug)) ||
+      parseBlob(await partners.get(`partners/${slug}`))
 
     if (!partner) return json(200, { ok: true })
     if ((partner.email || '').toLowerCase() !== email.toLowerCase()) {
@@ -74,11 +75,11 @@ export async function handler(event) {
     const token = crypto.randomBytes(24).toString('hex')
     const tokens = store('auth_tokens')
 
-    await tokens.set(token, {
+    await tokens.set(token, JSON.stringify({
       slug,
       email,
       expiresAt: Date.now() + 15 * 60 * 1000
-    })
+    }))
 
     const link = `${process.env.SITE_URL}/.netlify/functions/auth-verify?token=${token}`
     await sendMail(email, link)

@@ -18,20 +18,21 @@ export async function handler(event) {
     if (!tokenParam) return redirect('/partners/login.html?error=missing')
 
     const tokens = store('auth_tokens')
-    const record = await tokens.get(tokenParam)
+    const raw = await tokens.get(tokenParam)
+    const record = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : null
 
-    if (!record || record.expiresAt < Date.now()) {
+    if (!record || !record.expiresAt || record.expiresAt < Date.now()) {
       return redirect('/partners/login.html?error=expired')
     }
 
     const sessionId = crypto.randomBytes(32).toString('hex')
     const sessions = store('auth_sessions')
 
-    await sessions.set(sessionId, {
+    await sessions.set(sessionId, JSON.stringify({
       slug: record.slug,
       email: record.email,
       expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000
-    })
+    }))
 
     try { await tokens.delete(tokenParam) } catch {}
 
@@ -40,15 +41,7 @@ export async function handler(event) {
     return {
       statusCode: 302,
       headers: {
-        'Set-Cookie': [
-          `ms_partner_session=${sessionId}`,
-          'Path=/',
-          'Domain=moonshotmp.com',
-          'HttpOnly',
-          'Secure',
-          'SameSite=Lax',
-          'Max-Age=604800'
-        ].join('; '),
+        'Set-Cookie': `ms_partner_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`,
         'Location': dest
       }
     }
