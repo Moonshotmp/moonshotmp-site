@@ -16,6 +16,12 @@ function json(statusCode, body) {
   return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }
 
+function parseBlob(x) {
+  if (!x) return null
+  if (typeof x === 'string') { try { return JSON.parse(x) } catch { return null } }
+  return x
+}
+
 function parseDataUrl(dataUrl) {
   const m = /^data:([^;]+);base64,(.+)$/.exec(dataUrl || '')
   if (!m) return null
@@ -28,8 +34,8 @@ export async function handler(event) {
     if (!sessionId) return json(401, { error: 'Not signed in' })
 
     const sessions = store('auth_sessions')
-    const session = await sessions.get(sessionId)
-    if (!session || session.expiresAt < Date.now()) return json(401, { error: 'Session expired' })
+    const session = parseBlob(await sessions.get(sessionId))
+    if (!session || !session.expiresAt || session.expiresAt < Date.now()) return json(401, { error: 'Session expired' })
 
     const body = JSON.parse(event.body || '{}')
     const parsed = parseDataUrl(body.dataUrl)
@@ -44,11 +50,11 @@ export async function handler(event) {
     const key = `logos/${session.slug}`
     const logos = store('logos')
 
-    await logos.set(key, {
+    await logos.set(key, JSON.stringify({
       mime: parsed.mime,
       b64: parsed.b64,
       updatedAt: Date.now()
-    })
+    }))
 
     return json(200, { ok: true, logoKey: key, logoVersion: Date.now() })
   } catch (err) {

@@ -180,11 +180,11 @@
         // Optional: render partner logo if present
         const wrap = document.getElementById("partner-logo-wrap");
         const img = document.getElementById("partner-logo");
-        const logo = partner?.branding?.logoDataUrl;
-        if (logo) {
-          img.src = logo;
-          wrap.style.display = "block";
-        }
+        // Logo is stored at deterministic key logos/{slug}
+        const logoKey = `logos/${slug}`;
+        img.src = `/.netlify/functions/logo-get?key=${encodeURIComponent(logoKey)}`;
+        img.onload = () => { wrap.style.display = "block"; };
+        img.onerror = () => { wrap.style.display = "none"; };
 
         renderCatalog(products, slug);
       } catch (err) {
