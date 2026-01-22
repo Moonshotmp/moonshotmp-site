@@ -1,6 +1,13 @@
-import { getStore } from '@netlify/blobs'
 import crypto from 'crypto'
 import nodemailer from 'nodemailer'
+import { getStore } from '@netlify/blobs'
+
+function store(name) {
+  const siteID = process.env.NETLIFY_SITE_ID
+  const token = process.env.NETLIFY_AUTH_TOKEN
+  if (!siteID || !token) throw new Error('Missing NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN')
+  return getStore({ name, siteID, token })
+}
 
 export async function handler(event) {
   const startedAt = Date.now()
@@ -8,46 +15,25 @@ export async function handler(event) {
   try {
     const { slug, email } = JSON.parse(event.body || '{}')
     console.log('[auth-request] hit', { slug, emailProvided: !!email })
-
     if (!slug || !email) return json(400, { error: 'Missing store ID or email' })
 
-    const partners = getStore('partners')
+    const partners = store('partners')
     const partner = await partners.get(slug)
 
     const storedEmail = (partner?.email || '').trim().toLowerCase()
     const reqEmail = String(email).trim().toLowerCase()
     const emailMatches = !!storedEmail && storedEmail === reqEmail
+    console.log('[auth-request] email check', { slug, emailMatches })
 
-    console.log('[auth-request] email check', {
-      slug,
-      emailMatches,
-      storedEmailPresent: !!storedEmail
-    })
+    // Anti-enumeration: always OK in prod
+    if (!emailMatches) return json(200, { ok: true })
 
-    // Anti-enumeration: in production, always return ok even on mismatch
-    if (!emailMatches) {
-      if (process.env.NODE_ENV !== 'production') {
-        return json(403, { error: 'Email does not match store owner email' })
-      }
-      return json(200, { ok: true })
-    }
-
-    // Create token in Blobs
     const token = crypto.randomBytes(32).toString('hex')
     const expiresAt = Date.now() + 15 * 60 * 1000
-
-    const tokens = getStore('auth_tokens')
-    await tokens.set(token, { slug, email: reqEmail, expiresAt, usedAt: null })
-    console.log('[auth-request] token saved', { slug, expiresInMin: 15 })
+    await store('auth_tokens').set(token, { slug, email: reqEmail, expiresAt, usedAt: null })
 
     const link = `https://moonshotmp.com/.netlify/functions/auth-verify?token=${token}`
 
-    // Dev: return link
-    if (process.env.NODE_ENV !== 'production') {
-      return json(200, { ok: true, link })
-    }
-
-    // SMTP config
     const {
       SMTP_HOST = 'smtp.office365.com',
       SMTP_PORT = '587',
@@ -57,11 +43,8 @@ export async function handler(event) {
     } = process.env
 
     console.log('[auth-request] smtp env present', {
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      hasUser: !!SMTP_USER,
-      hasPass: !!SMTP_PASS,
-      hasFrom: !!SMTP_FROM
+      host: SMTP_HOST, port: SMTP_PORT,
+      hasUser: !!SMTP_USER, hasPass: !!SMTP_PASS, hasFrom: !!SMTP_FROM
     })
 
     if (!SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
@@ -101,7 +84,6 @@ This link expires in 15 minutes. If you didn’t request it, you can ignore this
         code: smtpErr?.code,
         response: smtpErr?.response
       })
-      // Still return ok (don’t leak)
       return json(200, { ok: true })
     }
 
@@ -113,9 +95,5 @@ This link expires in 15 minutes. If you didn’t request it, you can ignore this
 }
 
 function json(statusCode, body) {
-  return {
-    statusCode,
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
-  }
+  return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }

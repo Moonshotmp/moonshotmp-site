@@ -1,19 +1,26 @@
 import { getStore } from '@netlify/blobs'
 
+function store(name) {
+  const siteID = process.env.NETLIFY_SITE_ID
+  const token = process.env.NETLIFY_AUTH_TOKEN
+  if (!siteID || !token) throw new Error('Missing NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN')
+  return getStore({ name, siteID, token })
+}
+
 export async function handler(event) {
-  const sessionId = getCookie(event.headers.cookie, 'ms_partner_session')
-  if (!sessionId) return json(401, { error: 'Not signed in' })
+  try {
+    const sessionId = getCookie(event.headers.cookie, 'ms_partner_session')
+    if (!sessionId) return json(401, { error: 'Not signed in' })
 
-  const sessions = getStore('auth_sessions')
-  const session = await sessions.get(sessionId)
-  if (!session || session.expiresAt < Date.now()) {
-    return json(401, { error: 'Session expired' })
+    const session = await store('auth_sessions').get(sessionId)
+    if (!session || session.expiresAt < Date.now()) return json(401, { error: 'Session expired' })
+
+    const partner = await store('partners').get(session.slug)
+    return json(200, { ok: true, partner })
+  } catch (err) {
+    console.error('[partner-me] failed', err?.message)
+    return json(500, { error: 'Server error' })
   }
-
-  const partners = getStore('partners')
-  const partner = await partners.get(session.slug)
-
-  return json(200, { ok: true, partner })
 }
 
 function getCookie(header = '', name) {
@@ -22,9 +29,5 @@ function getCookie(header = '', name) {
 }
 
 function json(statusCode, body) {
-  return {
-    statusCode,
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
-  }
+  return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }

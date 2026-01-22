@@ -1,33 +1,38 @@
 import { getStore } from '@netlify/blobs'
 
+function store(name) {
+  const siteID = process.env.NETLIFY_SITE_ID
+  const token = process.env.NETLIFY_AUTH_TOKEN
+  if (!siteID || !token) throw new Error('Missing NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN')
+  return getStore({ name, siteID, token })
+}
+
 export async function handler(event) {
-  const sessionId = getCookie(event.headers.cookie, 'ms_partner_session')
-  if (!sessionId) return json(401, { error: 'Not signed in' })
+  try {
+    const sessionId = getCookie(event.headers.cookie, 'ms_partner_session')
+    if (!sessionId) return json(401, { error: 'Not signed in' })
 
-  const sessions = getStore('auth_sessions')
-  const session = await sessions.get(sessionId)
-  if (!session || session.expiresAt < Date.now()) {
-    return json(401, { error: 'Session expired' })
-  }
+    const session = await store('auth_sessions').get(sessionId)
+    if (!session || session.expiresAt < Date.now()) return json(401, { error: 'Session expired' })
 
-  const updates = JSON.parse(event.body || '{}')
+    const updates = JSON.parse(event.body || '{}')
+    const partners = store('partners')
+    const existing = await partners.get(session.slug)
+    if (!existing) return json(404, { error: 'Partner not found' })
 
-  const partners = getStore('partners')
-  const existing = await partners.get(session.slug)
-  if (!existing) return json(404, { error: 'Partner not found' })
-
-  const merged = {
-    ...existing,
-    name: typeof updates.name === 'string' ? updates.name : existing.name,
-    email: typeof updates.email === 'string' ? updates.email : existing.email,
-    branding: {
-      ...(existing.branding || {}),
-      ...(updates.branding || {})
+    const merged = {
+      ...existing,
+      name: typeof updates.name === 'string' ? updates.name : existing.name,
+      email: typeof updates.email === 'string' ? updates.email : existing.email,
+      branding: { ...(existing.branding || {}), ...(updates.branding || {}) }
     }
-  }
 
-  await partners.set(session.slug, merged)
-  return json(200, { ok: true })
+    await partners.set(session.slug, merged)
+    return json(200, { ok: true })
+  } catch (err) {
+    console.error('[partner-update] failed', err?.message)
+    return json(500, { error: 'Server error' })
+  }
 }
 
 function getCookie(header = '', name) {
@@ -36,9 +41,5 @@ function getCookie(header = '', name) {
 }
 
 function json(statusCode, body) {
-  return {
-    statusCode,
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
-  }
+  return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }
