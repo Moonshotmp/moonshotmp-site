@@ -9,15 +9,22 @@ function store(name) {
   return getStore({ name, siteID, token })
 }
 
+function normalizeRecord(x) {
+  // If blobs returns a JSON string, parse it.
+  if (typeof x === 'string') {
+    try { return JSON.parse(x) } catch { return null }
+  }
+  // If blobs returns a {partner: {...}} wrapper, unwrap it.
+  if (x && typeof x === 'object' && x.partner && typeof x.partner === 'object') return x.partner
+  return x
+}
+
 async function loadPartner(partnersStore, slug) {
-  // Try both common patterns:
-  // 1) key = "<slug>"
-  // 2) key = "partners/<slug>"  (matches your earlier design note)
-  const direct = await partnersStore.get(slug)
+  const direct = normalizeRecord(await partnersStore.get(slug))
   if (direct) return { partner: direct, keyUsed: slug }
 
   const prefixedKey = `partners/${slug}`
-  const prefixed = await partnersStore.get(prefixedKey)
+  const prefixed = normalizeRecord(await partnersStore.get(prefixedKey))
   if (prefixed) return { partner: prefixed, keyUsed: prefixedKey }
 
   return { partner: null, keyUsed: null }
@@ -37,33 +44,29 @@ export async function handler(event) {
     console.log('[auth-request] partner loaded', {
       slug,
       found: !!partner,
-      keyUsed
+      keyUsed,
+      type: partner ? typeof partner : null
     })
 
-    // If partner missing, do NOT leak info
-    if (!partner) return json(200, { ok: true })
+    if (!partner) return json(200, { ok: true }) // anti-enumeration
 
-    // Support both shapes just in case
-    const partnerEmailRaw = (partner.email ?? partner?.partner?.email ?? '').toString()
-    const storedEmail = partnerEmailRaw.trim().toLowerCase()
+    const storedEmail = String(partner.email || '').trim().toLowerCase()
     const reqEmail = String(email).trim().toLowerCase()
-
     const emailMatches = !!storedEmail && storedEmail === reqEmail
-    console.log('[auth-request] email check', {
-      slug,
-      emailMatches,
-      storedEmailPreview: storedEmail ? storedEmail.slice(0, 3) + '***' : ''
-    })
 
-    // Anti-enumeration: always OK in prod
+    console.log('[auth-request] email check', { slug, emailMatches })
+
+    // Anti-enumeration: always OK
     if (!emailMatches) return json(200, { ok: true })
 
+    // Create token
     const token = crypto.randomBytes(32).toString('hex')
     const expiresAt = Date.now() + 15 * 60 * 1000
     await store('auth_tokens').set(token, { slug, email: reqEmail, expiresAt, usedAt: null })
 
     const link = `https://moonshotmp.com/.netlify/functions/auth-verify?token=${token}`
 
+    // SMTP config
     const {
       SMTP_HOST = 'smtp.office365.com',
       SMTP_PORT = '587',
@@ -73,11 +76,8 @@ export async function handler(event) {
     } = process.env
 
     console.log('[auth-request] smtp env present', {
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      hasUser: !!SMTP_USER,
-      hasPass: !!SMTP_PASS,
-      hasFrom: !!SMTP_FROM
+      host: SMTP_HOST, port: SMTP_PORT,
+      hasUser: !!SMTP_USER, hasPass: !!SMTP_PASS, hasFrom: !!SMTP_FROM
     })
 
     if (!SMTP_USER || !SMTP_PASS || !SMTP_FROM) {
