@@ -1,47 +1,106 @@
-import crypto from 'crypto'
-import { getStore } from '@netlify/blobs'
+import { getStore } from "@netlify/blobs";
+import crypto from "crypto";
 
-function store(name) {
-  const siteID = process.env.NETLIFY_SITE_ID
-  const token = process.env.NETLIFY_AUTH_TOKEN
-  if (!siteID || !token) throw new Error('Missing NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN')
-  return getStore({ name, siteID, token })
+function redirect(location, extraHeaders = {}) {
+  return {
+    statusCode: 302,
+    headers: {
+      Location: location,
+      ...extraHeaders,
+    },
+    body: "",
+  };
+}
+
+function json(statusCode, body) {
+  return {
+    statusCode,
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  };
+}
+
+function safeLower(s) {
+  return String(s || "").trim().toLowerCase();
+}
+
+async function getJson(store, key) {
+  const v = await store.get(key, { type: "json" });
+  if (v && typeof v === "object") return v;
+  if (typeof v === "string") {
+    try { return JSON.parse(v); } catch { return null; }
+  }
+  return null;
 }
 
 export async function handler(event) {
   try {
-    const tokenParam = event.queryStringParameters?.token
-    if (!tokenParam) return redirect('/partners/manage.html?error=missing')
+    const q = event.queryStringParameters || {};
+    const token = q.token || q.t || "";
+    const slugHint = safeLower(q.slug || "");
 
-    const tokens = store('auth_tokens')
-    const record = await tokens.get(tokenParam)
-
-    if (!record || record.usedAt || record.expiresAt < Date.now()) {
-      return redirect('/partners/manage.html?error=expired')
+    if (!token) {
+      const dest = `/partners/login.html${slugHint ? `?slug=${encodeURIComponent(slugHint)}` : ""}`;
+      return redirect(dest);
     }
 
-    await tokens.set(tokenParam, { ...record, usedAt: Date.now() })
+    const tokens = getStore("auth_tokens");
+    const tokenRec = await getJson(tokens, token);
 
-    const sessionId = crypto.randomBytes(32).toString('hex')
-    await store('auth_sessions').set(sessionId, {
-      slug: record.slug,
-      email: record.email,
-      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000
-    })
-
-    return {
-      statusCode: 302,
-      headers: {
-        'Set-Cookie': `ms_partner_session=${sessionId}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=604800`,
-        Location: '/partners/manage.html?verified=1'
-      }
+    // If token missing/expired, bounce to login with slug if we have it.
+    const slug = safeLower(tokenRec?.slug || slugHint);
+    if (!tokenRec) {
+      const dest = `/partners/login.html${slug ? `?slug=${encodeURIComponent(slug)}&error=expired` : ""}`;
+      return redirect(dest);
     }
+
+    if (!tokenRec.expiresAt || tokenRec.expiresAt < Date.now()) {
+      // Burn token if it exists but expired
+      try { await tokens.delete(token); } catch {}
+      const dest = `/partners/login.html${slug ? `?slug=${encodeURIComponent(slug)}&error=expired` : ""}`;
+      return redirect(dest);
+    }
+
+    if (!slug) {
+      // Token exists but no slug is a hard error
+      return json(400, { error: "Token missing slug" });
+    }
+
+    // Create a new session
+    const sessionId = crypto.randomBytes(24).toString("hex");
+    const sessions = getStore("auth_sessions");
+
+    const session = {
+      slug,
+      email: tokenRec.email || "",
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days
+    };
+
+    if (typeof sessions.setJSON === "function") {
+      await sessions.setJSON(sessionId, session);
+    } else {
+      await sessions.set(sessionId, JSON.stringify(session));
+    }
+
+    // Burn the token (one-time)
+    try { await tokens.delete(token); } catch {}
+
+    // CRITICAL: cookie must be Path=/ or manage.html won't send it to functions.
+    // Secure+SameSite=Lax is correct for same-site magic link landings.
+    const cookie = [
+      `ms_partner_session=${sessionId}`,
+      "Path=/",
+      "HttpOnly",
+      "Secure",
+      "SameSite=Lax",
+      `Max-Age=${60 * 60 * 24 * 7}`,
+    ].join("; ");
+
+    const dest = `/partners/manage.html?verified=1&slug=${encodeURIComponent(slug)}`;
+    return redirect(dest, { "Set-Cookie": cookie });
   } catch (err) {
-    console.error('[auth-verify] failed', err?.message)
-    return redirect('/partners/manage.html?error=server')
+    console.error("[auth-verify] failed", err);
+    return json(500, { error: "Server error" });
   }
-}
-
-function redirect(path) {
-  return { statusCode: 302, headers: { Location: path } }
 }
