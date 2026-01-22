@@ -32,6 +32,16 @@ const normalizeSlug = (raw) => {
   return s;
 };
 
+async function loadPartner(partnersStore, slug) {
+  // Try direct key first (legacy)
+  const direct = parseBlob(await partnersStore.get(slug));
+  if (direct) return direct;
+  // Try prefixed key
+  const prefixed = parseBlob(await partnersStore.get(`partners/${slug}`));
+  if (prefixed) return prefixed;
+  return null;
+}
+
 export async function handler(event) {
   try {
     if (event.httpMethod === "OPTIONS") return json(204, {});
@@ -41,10 +51,11 @@ export async function handler(event) {
     if (!slug) return json(400, { error: "Missing slug" });
 
     const partners = store("partners");
-    const key = `partners/${slug}`;
-
-    const partner = parseBlob(await partners.get(key));
+    const partner = await loadPartner(partners, slug);
     if (!partner) return json(404, { error: "Partner not found" });
+
+    // Ensure slug is set
+    partner.slug = partner.slug || slug;
 
     return json(200, partner);
   } catch (err) {
