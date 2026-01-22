@@ -8,6 +8,25 @@ function store(name) {
   return getStore({ name, siteID, token })
 }
 
+function getBaseUrl(event) {
+  // Prefer explicit env if set
+  const env = (process.env.SITE_URL || process.env.URL || '').trim()
+  if (env) {
+    try {
+      const u = new URL(env.startsWith('http') ? env : `https://${env}`)
+      return u.origin
+    } catch {
+      // ignore
+    }
+  }
+
+  // Fallback: derive from request headers (works in prod + deploy previews)
+  const host = event.headers?.host || event.headers?.Host
+  const proto = event.headers?.['x-forwarded-proto'] || event.headers?.['X-Forwarded-Proto'] || 'https'
+  if (!host) return 'https://moonshotmp.com'
+  return `${proto}://${host}`
+}
+
 async function sendMailGraph({ to, subject, text }) {
   const { MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET, MAIL_SENDER } = process.env
   if (!MS_TENANT_ID || !MS_CLIENT_ID || !MS_CLIENT_SECRET || !MAIL_SENDER) {
@@ -72,7 +91,7 @@ async function loadPartner(partnersStore, slug) {
 
 export async function handler(event) {
   try {
-    const { slug, email } = JSON.parse(event.body || '{}')
+    const { slug, email, dev } = JSON.parse(event.body || '{}')
     if (!slug || !email) return ok()
 
     const partner = await loadPartner(store('partners'), slug)
@@ -87,7 +106,8 @@ export async function handler(event) {
 
     await store('auth_tokens').set(token, { slug, email: reqEmail, expiresAt, usedAt: null })
 
-    const link = `https://moonshotmp.com/.netlify/functions/auth-verify?token=${token}`
+    const baseUrl = getBaseUrl(event)
+    const link = `${baseUrl}/.netlify/functions/auth-verify?token=${token}`
 
     await sendMailGraph({
       to: reqEmail,
@@ -101,6 +121,16 @@ This link expires in 15 minutes. If you didn’t request it, you can ignore this
     })
 
     console.log('[auth-request] graph sendMail ok', { slug })
+
+    // Optional: echo link for deploy previews / explicit testing only
+    const context = (process.env.CONTEXT || process.env.NETLIFY_CONTEXT || '').toLowerCase()
+    const allowEcho =
+      process.env.ALLOW_MAGICLINK_ECHO === 'true' ||
+      context === 'deploy-preview' ||
+      context === 'branch-deploy'
+
+    if (dev && allowEcho) return ok({ link })
+
     return ok()
   } catch (err) {
     console.error('[auth-request] graph failed', err?.message)
@@ -108,6 +138,7 @@ This link expires in 15 minutes. If you didn’t request it, you can ignore this
   }
 }
 
-function ok() {
-  return { statusCode: 200, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ok: true }) }
+function ok(extra = null) {
+  const body = extra ? { ok: true, ...extra } : { ok: true }
+  return { statusCode: 200, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
 }
