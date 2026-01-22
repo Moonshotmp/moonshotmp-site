@@ -23,17 +23,8 @@
           <input id="email" name="email" type="email" placeholder="name@acme.com" />
         </label>
 
-        <div style="margin-top: 1rem;">
-          <div class="muted" style="margin-bottom: 0.5rem;">Logo (optional)</div>
-          <input id="logo" type="file" accept="image/*" />
-          <div class="muted" style="margin-top: 0.5rem;">We’ll auto-resize large images so they display cleanly.</div>
-
-          <div id="logo-preview-wrap" style="display:none; margin-top: 1rem;">
-            <div class="muted" style="margin-bottom: 0.5rem;">Preview</div>
-            <div style="height: 120px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03);">
-              <img id="logo-preview" alt="Logo preview" style="max-height: 80px; max-width: 80%; object-fit: contain;" />
-            </div>
-          </div>
+        <div class="muted" style="margin-top: 0.75rem;">
+          Logo upload happens after you sign in (magic link) on the Manage Store page.
         </div>
 
         <div style="margin-top: 1rem; opacity: 0.9;">
@@ -54,9 +45,6 @@
     const statusEl = document.getElementById("status");
     const nameEl = document.getElementById("name");
     const emailEl = document.getElementById("email");
-    const logoEl = document.getElementById("logo");
-    const previewWrapEl = document.getElementById("logo-preview-wrap");
-    const previewImgEl = document.getElementById("logo-preview");
     const linkPreviewEl = document.getElementById("store-link-preview");
     const goConnectEl = document.getElementById("go-connect");
 
@@ -78,64 +66,6 @@
       goConnectEl.href = `/partners/connect.html?slug=${encodeURIComponent(slug)}`;
       goConnectEl.style.display = slug ? "inline-flex" : "none";
     }
-
-    async function resizeImageToDataUrl(file, maxW = 600, maxH = 240, quality = 0.86) {
-      const img = await new Promise((resolve, reject) => {
-        const i = new Image();
-        i.onload = () => resolve(i);
-        i.onerror = reject;
-        i.src = URL.createObjectURL(file);
-      });
-
-      const ratio = Math.min(maxW / img.width, maxH / img.height, 1);
-      const w = Math.round(img.width * ratio);
-      const h = Math.round(img.height * ratio);
-
-      const canvas = document.createElement("canvas");
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, w, h);
-      ctx.drawImage(img, 0, 0, w, h);
-
-      // Use JPEG for smaller payload unless source has transparency needs
-      const mime = "image/jpeg";
-      const dataUrl = canvas.toDataURL(mime, quality);
-
-      return { dataUrl, mime, width: w, height: h };
-    }
-
-    let logoData = null;
-
-    logoEl.addEventListener("change", async () => {
-      setStatus("");
-      logoData = null;
-
-      const file = logoEl.files && logoEl.files[0];
-      if (!file) {
-        previewWrapEl.style.display = "none";
-        return;
-      }
-
-      // Simple size guard (keeps blobs sane)
-      if (file.size > 3 * 1024 * 1024) {
-        alert("Logo file too large. Please use an image under 3MB.");
-        logoEl.value = "";
-        previewWrapEl.style.display = "none";
-        return;
-      }
-
-      try {
-        logoData = await resizeImageToDataUrl(file);
-        previewImgEl.src = logoData.dataUrl;
-        previewWrapEl.style.display = "block";
-      } catch (e) {
-        console.error(e);
-        alert("Could not process that image. Try a different file.");
-        logoEl.value = "";
-        previewWrapEl.style.display = "none";
-      }
-    });
 
     nameEl.addEventListener("input", () => {
       updateStoreLink(slugify(nameEl.value));
@@ -174,21 +104,25 @@
         slug,
         name: nameEl.value.trim(),
         email: emailEl.value.trim(),
-        branding: logoData ? { logoDataUrl: logoData.dataUrl, logoMime: logoData.mime } : undefined,
       };
 
       try {
+        setStatus("Creating store...");
         const saved = await createStore(partner);
         updateStoreLink(saved.slug);
-        setStatus("Store created ✅  Redirecting to Stripe connection…");
-        window.location.href = `/partners/connect.html?slug=${encodeURIComponent(saved.slug)}`;
+        setStatus(
+          "Store created ✅\n\n" +
+          `Slug: ${saved.slug}\n` +
+          "Next: click “Continue to Stripe”.\n\n" +
+          "Logo upload: after you sign in via magic link on Manage Store."
+        );
       } catch (err) {
-        setStatus(String(err?.message || err));
-        alert(err?.message || String(err));
+        console.error(err);
+        setStatus(String(err && err.message ? err.message : err));
       }
     });
 
-    // initialize preview
+    // Initialize preview
     updateStoreLink("");
   </script>
 </body>
