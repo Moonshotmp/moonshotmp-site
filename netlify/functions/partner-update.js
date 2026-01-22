@@ -16,11 +16,9 @@ function normalizeRecord(x) {
 async function loadPartner(partnersStore, slug) {
   const direct = normalizeRecord(await partnersStore.get(slug))
   if (direct) return { partner: direct, keyUsed: slug }
-
   const prefixedKey = `partners/${slug}`
   const prefixed = normalizeRecord(await partnersStore.get(prefixedKey))
   if (prefixed) return { partner: prefixed, keyUsed: prefixedKey }
-
   return { partner: null, keyUsed: null }
 }
 
@@ -44,16 +42,11 @@ export async function handler(event) {
 
     const updates = JSON.parse(event.body || '{}')
 
-    // Guard: prevent gigantic logo payloads from causing 500s
-    const logoDataUrl = updates?.branding?.logoDataUrl
-    if (logoDataUrl && typeof logoDataUrl === 'string' && logoDataUrl.length > 350_000) {
-      return json(413, { error: 'Logo file too large. Use a smaller image.' })
-    }
-
     const partners = store('partners')
     const { partner: existing, keyUsed } = await loadPartner(partners, session.slug)
     if (!existing || !keyUsed) return json(404, { error: 'Partner not found' })
 
+    // Only allow safe fields
     const merged = {
       ...existing,
       slug: existing.slug || session.slug,
@@ -64,6 +57,9 @@ export async function handler(event) {
         ...(updates.branding || {})
       }
     }
+
+    // Guard: do not allow inline images anymore
+    if (merged?.branding?.logoDataUrl) delete merged.branding.logoDataUrl
 
     await partners.set(keyUsed, merged)
     return json(200, { ok: true })

@@ -7,20 +7,6 @@ function store(name) {
   return getStore({ name, siteID, token })
 }
 
-function normalizeRecord(x) {
-  if (typeof x === 'string') { try { return JSON.parse(x) } catch { return null } }
-  if (x && typeof x === 'object' && x.partner && typeof x.partner === 'object') return x.partner
-  return x
-}
-
-async function loadPartner(partnersStore, slug) {
-  const direct = normalizeRecord(await partnersStore.get(slug))
-  if (direct) return direct
-  const prefixed = normalizeRecord(await partnersStore.get(`partners/${slug}`))
-  if (prefixed) return prefixed
-  return null
-}
-
 function getCookie(header = '', name) {
   const match = header.match(new RegExp(name + '=([^;]+)'))
   return match?.[1]
@@ -28,6 +14,12 @@ function getCookie(header = '', name) {
 
 function json(statusCode, body) {
   return { statusCode, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
+}
+
+function parseDataUrl(dataUrl) {
+  const m = /^data:([^;]+);base64,(.+)$/.exec(dataUrl || '')
+  if (!m) return null
+  return { mime: m[1], b64: m[2] }
 }
 
 export async function handler(event) {
@@ -39,13 +31,28 @@ export async function handler(event) {
     const session = await sessions.get(sessionId)
     if (!session || session.expiresAt < Date.now()) return json(401, { error: 'Session expired' })
 
-    const partner = await loadPartner(store('partners'), session.slug)
-    if (!partner) return json(404, { error: 'Partner not found' })
+    const body = JSON.parse(event.body || '{}')
+    const parsed = parseDataUrl(body.dataUrl)
+    if (!parsed) return json(400, { error: 'Invalid image data' })
 
-    partner.slug = partner.slug || session.slug
-    return json(200, { ok: true, partner })
+    // Cap raw base64 to ~6MB to prevent abuse (still supports big images)
+    if (parsed.b64.length > 8_000_000) {
+      return json(413, { error: 'Logo too large. Please use a smaller image.' })
+    }
+
+    // Store as deterministic key per slug (no extension needed)
+    const key = `logos/${session.slug}`
+    const logos = store('logos')
+
+    await logos.set(key, {
+      mime: parsed.mime,
+      b64: parsed.b64,
+      updatedAt: Date.now()
+    })
+
+    return json(200, { ok: true, logoKey: key, logoVersion: Date.now() })
   } catch (err) {
-    console.error('[partner-me] failed', err?.message)
+    console.error('[logo-upload] failed', err?.message)
     return json(500, { error: 'Server error' })
   }
 }

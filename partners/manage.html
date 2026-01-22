@@ -34,7 +34,7 @@
           <img id="logoPreview" class="thumb" alt="Logo preview" />
           <input id="logoInput" type="file" accept="image/*" />
           <div class="muted" style="font-size:12px; max-width:320px;">
-            Upload a square-ish logo. We store it as a data URL in the partner record (simple + works everywhere).
+            Upload a logo. We store the file in Netlify Blobs (not in the partner record), so big images are fine.
           </div>
         </div>
 
@@ -74,7 +74,6 @@
   const qs = new URL(window.location.href).searchParams;
   const slugHint = (qs.get("slug") || "").trim().toLowerCase();
 
-  // show verified toast once
   if (qs.get("verified") === "1") {
     const toast = document.getElementById("verifiedToast");
     toast.style.display = "block";
@@ -113,20 +112,34 @@
     return data.partner || null;
   }
 
-  function toDataURL(file) {
-    return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.onerror = reject;
-      r.readAsDataURL(file);
-    });
-  }
-
   function setStripeBadge(p) {
     const connected = !!p?.stripe?.connectedAccountId;
     const onboarded = !!p?.stripe?.onboarded;
     stripeBadge.textContent = !connected ? "Stripe: not connected"
       : (onboarded ? "Stripe: connected ✅" : "Stripe: setup incomplete ⚠️");
+
+    // Stripe CTA behavior
+    const resetBtn = document.getElementById("resetStripeBtn");
+    if (!connected) {
+      connectStripe.textContent = "Connect Stripe";
+      connectStripe.className = "btn-primary";
+      resetBtn.style.display = "none";
+    } else if (!onboarded) {
+      connectStripe.textContent = "Finish Stripe Setup";
+      connectStripe.className = "btn-primary";
+      resetBtn.style.display = "inline-flex";
+    } else {
+      connectStripe.textContent = "Manage Stripe";
+      connectStripe.className = "btn-outline";
+      resetBtn.style.display = "inline-flex";
+    }
+  }
+
+  function logoUrl(p) {
+    const key = p?.branding?.logoKey;
+    const v = p?.branding?.logoVersion || "";
+    if (!key) return "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+    return `/.netlify/functions/logo-get?key=${encodeURIComponent(key)}&v=${encodeURIComponent(v)}`;
   }
 
   function showPanel(p) {
@@ -145,42 +158,81 @@
     nameEl.value = p.name || "";
     emailEl.value = p.email || "";
 
-    const logo = p?.branding?.logoDataUrl || "";
-    logoPreview.src = logo || "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+    logoPreview.src = logoUrl(p);
 
     viewStore.href = `/partners/store.html?slug=${encodeURIComponent(currentSlug)}`;
     connectStripe.href = `/partners/connect.html?slug=${encodeURIComponent(currentSlug)}`;
   }
 
-  async function save() {
-    setStatus("Saving…");
-    const payload = {
-      name: nameEl.value.trim(),
-      email: emailEl.value.trim(),
-      branding: {}
-    };
-    if (pendingLogoDataUrl) payload.branding.logoDataUrl = pendingLogoDataUrl;
+  function fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
 
-    const res = await fetch("/.netlify/functions/partner-update", {
+  async function uploadLogoIfNeeded() {
+    if (!pendingLogoDataUrl) return null;
+
+    setStatus("Uploading logo…");
+    const res = await fetch("/.netlify/functions/logo-upload", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ dataUrl: pendingLogoDataUrl })
     });
 
     const raw = await res.text();
     let data = null; try { data = JSON.parse(raw); } catch {}
 
     if (!res.ok) {
-      setStatus((data && (data.error || data.message)) || "Save failed");
-      return;
+      setStatus((data && (data.error || data.message)) || "Logo upload failed");
+      throw new Error("logo upload failed");
     }
 
-    setStatus("Saved ✅");
     pendingLogoDataUrl = null;
+    return { logoKey: data.logoKey, logoVersion: data.logoVersion };
+  }
 
-    // reload partner to reflect updates
-    const p = await loadMe();
-    if (p) showPanel(p);
+  async function save() {
+    try {
+      setStatus("Saving…");
+
+      const logoInfo = await uploadLogoIfNeeded();
+
+      const payload = {
+        name: nameEl.value.trim(),
+        email: emailEl.value.trim(),
+        branding: {}
+      };
+
+      if (logoInfo) {
+        payload.branding.logoKey = logoInfo.logoKey;
+        payload.branding.logoVersion = logoInfo.logoVersion;
+      }
+
+      const res = await fetch("/.netlify/functions/partner-update", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const raw = await res.text();
+      let data = null; try { data = JSON.parse(raw); } catch {}
+
+      if (!res.ok) {
+        setStatus((data && (data.error || data.message)) || "Save failed");
+        return;
+      }
+
+      setStatus("Saved ✅");
+
+      const p = await loadMe();
+      if (p) showPanel(p);
+    } catch (e) {
+      // status already set
+    }
   }
 
   async function resetStripe() {
@@ -188,12 +240,10 @@
     const res = await fetch("/.netlify/functions/stripe-reset", { method: "POST" });
     const raw = await res.text();
     let data = null; try { data = JSON.parse(raw); } catch {}
-
     if (!res.ok) {
       setStatus((data && (data.error || data.message)) || "Reset failed");
       return;
     }
-
     setStatus("Stripe reset ✅");
     const p = await loadMe();
     if (p) showPanel(p);
@@ -208,9 +258,9 @@
   logoInput.addEventListener("change", async (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
-    pendingLogoDataUrl = await toDataURL(f);
+    pendingLogoDataUrl = await fileToDataUrl(f);
     logoPreview.src = pendingLogoDataUrl;
-    setStatus("Logo ready — click Save changes to apply.");
+    setStatus("Logo selected — click Save changes to upload.");
   });
 
   document.getElementById("saveBtn").addEventListener("click", save);
@@ -220,7 +270,6 @@
   (async () => {
     const p = await loadMe();
     if (!p) {
-      // Not signed in → send to login, preserving slug if we have it
       const target = `/partners/login.html${slugHint ? `?slug=${encodeURIComponent(slugHint)}` : ""}`;
       window.location.href = target;
       return;
