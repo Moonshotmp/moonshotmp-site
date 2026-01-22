@@ -5,76 +5,234 @@
   <title>Manage Store</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/partners/styles.css" />
+  <style>
+    .status { margin-top: 14px; white-space: pre-wrap; }
+    .badge { display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 13px; margin-bottom: 12px; }
+    .badge-green { background: #d4edda; color: #155724; }
+    .badge-yellow { background: #fff3cd; color: #856404; }
+    .badge-red { background: #f8d7da; color: #721c24; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; margin-bottom: 4px; font-weight: 500; }
+    .form-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    .form-group input[readonly] { background: #f5f5f5; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .logo-section { margin: 16px 0; }
+    .logo-preview { max-width: 150px; max-height: 150px; border-radius: 8px; margin-top: 8px; }
+  </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>MANAGE STORE</h1>
+  <div class="container" style="max-width: 600px;">
+    <h1>Manage Your Store</h1>
 
-    <div id="statusMessage" class="notice" style="display:none;"></div>
+    <div id="loading" style="text-align: center; padding: 2rem;">Loading...</div>
+    <div id="errorBox" style="display:none; background:#fee; border:1px solid #c00; color:#900; padding:1rem; margin:1rem 0; border-radius:6px;"></div>
 
-    <div id="storeCard" style="display:none;">
-      <div class="pill" id="stripeStatus">Stripe: —</div>
+    <div id="storeCard" class="card" style="display:none; padding: 1.5rem;">
+      <div id="stripeBadge" class="badge badge-yellow">Stripe: checking...</div>
 
-      <label>Partner name</label>
-      <input id="partnerName" />
+      <div class="form-group">
+        <label>Partner Name</label>
+        <input type="text" id="partnerName" placeholder="Your business name" />
+      </div>
 
-      <label>Contact email</label>
-      <input id="partnerEmail" />
+      <div class="form-group">
+        <label>Contact Email</label>
+        <input type="email" id="partnerEmail" placeholder="you@example.com" />
+      </div>
 
-      <label>Store URL</label>
-      <input id="storeUrl" readonly />
+      <div class="form-group">
+        <label>Your Store URL</label>
+        <input type="text" id="storeUrl" readonly />
+      </div>
 
-      <button id="saveBtn">SAVE CHANGES</button>
-      <button id="viewStoreBtn">VIEW STORE</button>
-      <button id="stripeBtn">CONNECT / MANAGE STRIPE</button>
-      <button id="signOutBtn">SIGN OUT</button>
+      <div class="logo-section">
+        <label>Logo</label>
+        <div>
+          <input type="file" id="logoInput" accept="image/*" />
+          <img id="logoPreview" class="logo-preview" style="display:none;" />
+        </div>
+      </div>
+
+      <div id="statusMsg" class="status"></div>
+
+      <div class="btn-row">
+        <button class="btn-primary" id="saveBtn">SAVE CHANGES</button>
+        <button class="btn-outline" id="viewStoreBtn">VIEW STORE</button>
+        <button class="btn-outline" id="stripeBtn">CONNECT STRIPE</button>
+        <button class="btn-outline" id="signOutBtn">SIGN OUT</button>
+      </div>
     </div>
   </div>
 
 <script>
-async function loadMe() {
-  try {
-    const res = await fetch('/.netlify/functions/partner-me', {
-      credentials: 'include'
-    })
+(function() {
+  let currentPartner = null;
 
-    if (res.status === 401) {
-      window.location.href = '/partners/login.html'
-      return
+  // Load partner data on page load
+  loadPartner();
+
+  async function loadPartner() {
+    try {
+      const res = await fetch('/.netlify/functions/partner-me', {
+        credentials: 'include'
+      });
+
+      if (res.status === 401) {
+        window.location.href = '/partners/login.html';
+        return;
+      }
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        showError('Failed to load: ' + (err.error || 'Unknown error'));
+        return;
+      }
+
+      const data = await res.json();
+      currentPartner = data.partner;
+      renderPartner(currentPartner);
+
+    } catch (err) {
+      console.error('[manage] error:', err);
+      showError('Network error. Please refresh.');
     }
-
-    if (!res.ok) {
-      showError('Unable to load store. Please refresh.')
-      return
-    }
-
-    const data = await res.json()
-    renderPartner(data.partner)
-  } catch (err) {
-    console.error(err)
-    showError('Network error. Please refresh.')
   }
-}
 
-function renderPartner(p) {
-  document.getElementById('storeCard').style.display = 'block'
-  document.getElementById('partnerName').value = p.name || ''
-  document.getElementById('partnerEmail').value = p.email || ''
-  document.getElementById('storeUrl').value =
-    location.origin + '/partners/store.html?slug=' + p.slug
+  function showError(msg) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('errorBox').style.display = 'block';
+    document.getElementById('errorBox').textContent = msg;
+  }
 
-  document.getElementById('stripeStatus').textContent =
-    p.stripe?.connectedAccountId ? 'Stripe: connected' : 'Stripe: not connected'
-}
+  function setStatus(msg, isError) {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg;
+    el.style.color = isError ? '#c00' : '#080';
+  }
 
-function showError(msg) {
-  const el = document.getElementById('statusMessage')
-  el.textContent = msg
-  el.style.display = 'block'
-}
+  function renderPartner(p) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('storeCard').style.display = 'block';
 
-document.addEventListener('DOMContentLoaded', loadMe)
+    document.getElementById('partnerName').value = p.name || '';
+    document.getElementById('partnerEmail').value = p.email || '';
+    document.getElementById('storeUrl').value = location.origin + '/partners/store.html?slug=' + p.slug;
+
+    // Stripe status
+    const badge = document.getElementById('stripeBadge');
+    const stripeBtn = document.getElementById('stripeBtn');
+    if (p.stripe && p.stripe.connectedAccountId) {
+      badge.className = 'badge badge-green';
+      badge.textContent = 'Stripe: Connected ✓';
+      stripeBtn.textContent = 'MANAGE STRIPE';
+    } else {
+      badge.className = 'badge badge-yellow';
+      badge.textContent = 'Stripe: Not Connected';
+      stripeBtn.textContent = 'CONNECT STRIPE';
+    }
+
+    // Logo preview
+    if (p.branding && p.branding.logoKey) {
+      const logoImg = document.getElementById('logoPreview');
+      logoImg.src = '/.netlify/functions/logo-get?key=' + encodeURIComponent(p.branding.logoKey);
+      logoImg.style.display = 'block';
+    }
+
+    // Wire up buttons
+    wireUpButtons(p);
+  }
+
+  function wireUpButtons(p) {
+    // View Store
+    document.getElementById('viewStoreBtn').onclick = function() {
+      window.open('/partners/store.html?slug=' + p.slug, '_blank');
+    };
+
+    // Sign Out
+    document.getElementById('signOutBtn').onclick = async function() {
+      try {
+        await fetch('/.netlify/functions/auth-logout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+      } catch (e) {}
+      window.location.href = '/partners/login.html';
+    };
+
+    // Stripe Connect
+    document.getElementById('stripeBtn').onclick = function() {
+      window.location.href = '/.netlify/functions/stripe-connect-start?slug=' + p.slug;
+    };
+
+    // Save Changes
+    document.getElementById('saveBtn').onclick = async function() {
+      const name = document.getElementById('partnerName').value.trim();
+      const email = document.getElementById('partnerEmail').value.trim();
+
+      setStatus('Saving...', false);
+
+      try {
+        const res = await fetch('/.netlify/functions/partner-update', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email })
+        });
+
+        if (res.ok) {
+          setStatus('Saved ✓', false);
+        } else {
+          const err = await res.json().catch(() => ({}));
+          setStatus('Error: ' + (err.error || 'Save failed'), true);
+        }
+      } catch (e) {
+        setStatus('Network error', true);
+      }
+    };
+
+    // Logo Upload
+    document.getElementById('logoInput').onchange = async function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      setStatus('Uploading logo...', false);
+
+      try {
+        // Read file as base64
+        const reader = new FileReader();
+        reader.onload = async function(evt) {
+          const base64 = evt.target.result;
+
+          const res = await fetch('/.netlify/functions/logo-upload', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              slug: p.slug,
+              image: base64
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            setStatus('Logo uploaded ✓', false);
+            // Update preview
+            const logoImg = document.getElementById('logoPreview');
+            logoImg.src = base64;
+            logoImg.style.display = 'block';
+          } else {
+            const err = await res.json().catch(() => ({}));
+            setStatus('Upload failed: ' + (err.error || 'Unknown error'), true);
+          }
+        };
+        reader.readAsDataURL(file);
+      } catch (e) {
+        setStatus('Upload error', true);
+      }
+    };
+  }
+})();
 </script>
 
 </body>
