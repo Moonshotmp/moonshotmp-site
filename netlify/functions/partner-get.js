@@ -29,11 +29,28 @@ export default async (req) => {
     const store = getStore("partners");
 
     // Try prefixed key first (current format)
-    let partner = await store.get(`partners/${slug}`, { type: "json" });
+    let partner = null;
+    let rawData = null;
+
+    try {
+      rawData = await store.get(`partners/${slug}`);
+      if (rawData) {
+        partner = typeof rawData === "string" ? JSON.parse(rawData) : rawData;
+      }
+    } catch (parseErr) {
+      console.error("[partner-get] parse error for prefixed key", parseErr?.message);
+    }
 
     // Try direct key (legacy format)
     if (!partner) {
-      partner = await store.get(slug, { type: "json" });
+      try {
+        rawData = await store.get(slug);
+        if (rawData) {
+          partner = typeof rawData === "string" ? JSON.parse(rawData) : rawData;
+        }
+      } catch (parseErr) {
+        console.error("[partner-get] parse error for direct key", parseErr?.message);
+      }
     }
 
     if (!partner) return json(404, { error: "Partner not found" });
