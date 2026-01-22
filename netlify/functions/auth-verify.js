@@ -33,7 +33,7 @@ export async function handler(event) {
       statusCode: 302,
       headers: {
         'Set-Cookie': `ms_partner_session=${sessionId}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=604800`,
-        Location: '/partners/manage.html'
+        Location: '/partners/manage.html?verified=1'
       }
     }
   } catch (err) {
