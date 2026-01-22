@@ -1,52 +1,55 @@
-import crypto from 'crypto'
-import { getStore } from '@netlify/blobs'
-
-function store(name) {
-  const siteID = process.env.NETLIFY_SITE_ID
-  const token = process.env.NETLIFY_AUTH_TOKEN
-  if (!siteID || !token) throw new Error('Missing NETLIFY_SITE_ID or NETLIFY_AUTH_TOKEN')
-  return getStore({ name, siteID, token })
-}
+import crypto from "crypto";
+import { getStore } from "@netlify/blobs";
 
 function redirect(location) {
-  return { statusCode: 302, headers: { Location: location } }
+  return new Response(null, {
+    status: 302,
+    headers: { Location: location },
+  });
 }
 
-export async function handler(event) {
-  try {
-    const tokenParam = event.queryStringParameters?.token
-    if (!tokenParam) return redirect('/partners/login.html?error=missing')
+function redirectWithCookie(location, cookie) {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: location,
+      "Set-Cookie": cookie,
+    },
+  });
+}
 
-    const tokens = store('auth_tokens')
-    const raw = await tokens.get(tokenParam)
-    const record = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : null
+export default async (req) => {
+  try {
+    const url = new URL(req.url);
+    const tokenParam = url.searchParams.get("token");
+    if (!tokenParam) return redirect("/partners/login.html?error=missing");
+
+    const tokens = getStore("auth_tokens");
+    const record = await tokens.get(tokenParam, { type: "json" });
 
     if (!record || !record.expiresAt || record.expiresAt < Date.now()) {
-      return redirect('/partners/login.html?error=expired')
+      return redirect("/partners/login.html?error=expired");
     }
 
-    const sessionId = crypto.randomBytes(32).toString('hex')
-    const sessions = store('auth_sessions')
+    const sessionId = crypto.randomBytes(32).toString("hex");
+    const sessions = getStore("auth_sessions");
 
-    await sessions.set(sessionId, JSON.stringify({
+    await sessions.setJSON(sessionId, {
       slug: record.slug,
       email: record.email,
-      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000
-    }))
+      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    });
 
-    try { await tokens.delete(tokenParam) } catch {}
+    try {
+      await tokens.delete(tokenParam);
+    } catch {}
 
-    const dest = `/partners/manage.html?verified=1&slug=${encodeURIComponent(record.slug)}`
+    const dest = `/partners/manage.html?verified=1&slug=${encodeURIComponent(record.slug)}`;
+    const cookie = `ms_partner_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`;
 
-    return {
-      statusCode: 302,
-      headers: {
-        'Set-Cookie': `ms_partner_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`,
-        'Location': dest
-      }
-    }
+    return redirectWithCookie(dest, cookie);
   } catch (err) {
-    console.error('[auth-verify] failed', err)
-    return redirect('/partners/login.html?error=server')
+    console.error("[auth-verify] failed", err);
+    return redirect("/partners/login.html?error=server");
   }
-}
+};
