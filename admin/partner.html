@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Partner Details | Moonshot Admin</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #101921;
+      color: #F0EEE9;
+      min-height: 100vh;
+    }
+    .header {
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .header a { color: #B2BFBE; text-decoration: none; font-size: 14px; }
+    .header a:hover { color: #F0EEE9; }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .back-link {
+      color: #B2BFBE;
+      text-decoration: none;
+      font-size: 13px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .back-link:hover { color: #F0EEE9; }
+    .partner-header {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .partner-name {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .partner-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      color: #B2BFBE;
+      font-size: 14px;
+    }
+    .partner-meta span { display: flex; align-items: center; gap: 6px; }
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .status-dot.green { background: #4ade80; }
+    .status-dot.red { background: #f87171; }
+    .status-dot.gray { background: #666; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .table-container {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    th {
+      background: rgba(0,0,0,0.2);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #B2BFBE;
+      font-weight: 600;
+    }
+    td { font-size: 14px; }
+    .muted { color: #666; }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #B2BFBE;
+    }
+    .error-box {
+      background: rgba(220, 53, 69, 0.1);
+      border: 1px solid rgba(220, 53, 69, 0.3);
+      color: #ff6b6b;
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 24px;
+    }
+    .complete-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #B2BFBE;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .complete-btn:hover {
+      border-color: #4ade80;
+      color: #4ade80;
+    }
+    .complete-btn.completed {
+      border-color: #4ade80;
+      color: #4ade80;
+      cursor: default;
+    }
+    .items-list {
+      font-size: 12px;
+      color: #B2BFBE;
+    }
+    .items-list li { margin-bottom: 2px; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: #1a2530;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .modal h3 {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    .modal label {
+      display: block;
+      font-size: 13px;
+      color: #B2BFBE;
+      margin-bottom: 6px;
+    }
+    .modal input {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      color: #F0EEE9;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    .modal-btn {
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+    }
+    .modal-btn.primary {
+      background: #4ade80;
+      color: #101921;
+    }
+    .modal-btn.secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #B2BFBE;
+    }
+    .amount { font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Moonshot Admin</h1>
+    <a href="/admin/index.html">&larr; Back to Dashboard</a>
+  </header>
+
+  <div class="container">
+    <div id="loadingState" class="loading">Loading partner...</div>
+    <div id="errorBox" class="error-box" style="display:none;"></div>
+
+    <div id="content" style="display:none;">
+      <a href="/admin/index.html" class="back-link">&larr; All Partners</a>
+
+      <div class="partner-header">
+        <div class="partner-name" id="partnerName">-</div>
+        <div class="partner-meta">
+          <span id="partnerEmail">-</span>
+          <span id="partnerPhone">-</span>
+          <span>
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">-</span>
+          </span>
+          <span>
+            <a id="storefrontLink" href="#" target="_blank" style="color:#B2BFBE;">View Storefront &rarr;</a>
+          </span>
+        </div>
+      </div>
+
+      <h2 class="section-title">
+        Orders
+        <span class="muted" style="font-size:13px;font-weight:400;" id="orderCount"></span>
+      </h2>
+
+      <div class="table-container">
+        <div id="ordersLoading" class="loading">Loading orders...</div>
+        <table id="ordersTable" style="display:none;">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Completion</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+        <div id="noOrders" class="loading" style="display:none;">No orders yet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Completion Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h3>Mark as Completed</h3>
+      <label for="completionDate">Completion Date</label>
+      <input type="date" id="completionDate">
+      <label for="completionNotes">Notes (optional)</label>
+      <input type="text" id="completionNotes" placeholder="e.g., DEXA scan performed">
+      <div class="modal-actions">
+        <button class="modal-btn secondary" id="cancelModal">Cancel</button>
+        <button class="modal-btn primary" id="saveCompletion">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ALLOWED_EMAIL = 'tom@moonshotmp.com';
+    let currentSessionId = null;
+
+    // Auth
+    function requireAuth() {
+      const user = netlifyIdentity.currentUser();
+      if (!user || user.email !== ALLOWED_EMAIL) {
+        window.location.href = '/admin/login.html';
+        return null;
+      }
+      return user;
+    }
+
+    async function getToken() {
+      const user = netlifyIdentity.currentUser();
+      if (!user) return null;
+      try { return await user.jwt(); } catch { return null; }
+    }
+
+    async function adminFetch(endpoint, options = {}) {
+      const token = await getToken();
+      if (!token) throw new Error('Not authenticated');
+      const res = await fetch(endpoint, {
+        ...options,
+        headers: {
+          ...options.headers,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Request failed: ${res.status}`);
+      }
+      return res.json();
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '-';
+      return new Date(iso).toLocaleDateString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric'
+      });
+    }
+
+    function formatCurrency(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function getSlug() {
+      return new URLSearchParams(window.location.search).get('slug');
+    }
+
+    let orders = [];
+    let completions = {};
+
+    async function init() {
+      const user = requireAuth();
+      if (!user) return;
+
+      const slug = getSlug();
+      if (!slug) {
+        showError('No partner slug specified');
+        return;
+      }
+
+      try {
+        // Load partner
+        const partnerData = await adminFetch(`/.netlify/functions/admin-partners?slug=${encodeURIComponent(slug)}`);
+        const partner = partnerData.partner;
+        if (!partner) throw new Error('Partner not found');
+
+        // Display partner info
+        document.getElementById('partnerName').textContent = partner.name || partner.slug;
+        document.getElementById('partnerEmail').textContent = partner.email || '-';
+        document.getElementById('partnerPhone').textContent = partner.phone || '-';
+        document.getElementById('storefrontLink').href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+
+        // Stripe status
+        const accountId = partner.stripe?.connectedAccountId;
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+
+        if (accountId) {
+          const statusData = await adminFetch('/.netlify/functions/admin-stripe-status', {
+            method: 'POST',
+            body: JSON.stringify({ accountIds: [accountId] }),
+          });
+          const status = statusData.status?.[accountId];
+          if (status?.charges_enabled) {
+            statusDot.className = 'status-dot green';
+            statusText.textContent = 'Stripe Connected';
+          } else {
+            statusDot.className = 'status-dot red';
+            statusText.textContent = 'Stripe Pending';
+          }
+        } else {
+          statusDot.className = 'status-dot gray';
+          statusText.textContent = 'Not Connected';
+        }
+
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+
+        // Load orders
+        if (accountId) {
+          const ordersData = await adminFetch(`/.netlify/functions/admin-orders?slug=${encodeURIComponent(slug)}&accountId=${encodeURIComponent(accountId)}`);
+          orders = ordersData.orders || [];
+
+          // Load completion status
+          if (orders.length > 0) {
+            const sessionIds = orders.map(o => o.sessionId);
+            const completionData = await adminFetch('/.netlify/functions/admin-completion-get', {
+              method: 'POST',
+              body: JSON.stringify({ sessionIds }),
+            });
+            completions = completionData.completions || {};
+          }
+
+          renderOrders();
+        } else {
+          document.getElementById('ordersLoading').style.display = 'none';
+          document.getElementById('noOrders').textContent = 'Partner not connected to Stripe';
+          document.getElementById('noOrders').style.display = 'block';
+        }
+
+      } catch (err) {
+        console.error(err);
+        showError(err.message);
+      }
+    }
+
+    function showError(msg) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorBox').textContent = msg;
+      document.getElementById('errorBox').style.display = 'block';
+    }
+
+    function renderOrders() {
+      const tbody = document.getElementById('ordersBody');
+      const table = document.getElementById('ordersTable');
+      const loading = document.getElementById('ordersLoading');
+      const noOrders = document.getElementById('noOrders');
+      const orderCount = document.getElementById('orderCount');
+
+      loading.style.display = 'none';
+
+      if (orders.length === 0) {
+        noOrders.style.display = 'block';
+        orderCount.textContent = '(0)';
+        return;
+      }
+
+      orderCount.textContent = `(${orders.length})`;
+
+      tbody.innerHTML = orders.map(o => {
+        const completion = completions[o.sessionId];
+        const items = (o.items || []).map(i =>
+          `<li>${escapeHtml(i.name)} x${i.quantity}</li>`
+        ).join('');
+
+        const completionCell = completion
+          ? `<span style="color:#4ade80;">${formatDate(completion.completedAt)}</span>`
+          : `<button class="complete-btn" onclick="openModal('${o.sessionId}')">Mark Complete</button>`;
+
+        return `
+          <tr>
+            <td>${formatDate(o.created)}</td>
+            <td>
+              <div>${escapeHtml(o.customerName || 'Unknown')}</div>
+              <div class="muted" style="font-size:12px;">${escapeHtml(o.customerEmail || '')}</div>
+              ${o.customerPhone ? `<div class="muted" style="font-size:12px;">${escapeHtml(o.customerPhone)}</div>` : ''}
+            </td>
+            <td><ul class="items-list">${items || '<li class="muted">-</li>'}</ul></td>
+            <td class="amount">${formatCurrency(o.amount)}</td>
+            <td>${completionCell}</td>
+          </tr>
+        `;
+      }).join('');
+
+      table.style.display = 'table';
+    }
+
+    // Modal
+    function openModal(sessionId) {
+      currentSessionId = sessionId;
+      document.getElementById('completionDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('completionNotes').value = '';
+      document.getElementById('modalOverlay').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+      currentSessionId = null;
+    }
+
+    async function saveCompletion() {
+      if (!currentSessionId) return;
+
+      const completedAt = document.getElementById('completionDate').value;
+      const notes = document.getElementById('completionNotes').value.trim();
+
+      if (!completedAt) {
+        alert('Please select a date');
+        return;
+      }
+
+      try {
+        await adminFetch('/.netlify/functions/admin-completion-set', {
+          method: 'POST',
+          body: JSON.stringify({
+            sessionId: currentSessionId,
+            completedAt,
+            notes,
+          }),
+        });
+
+        completions[currentSessionId] = { completedAt, notes };
+        renderOrders();
+        closeModal();
+      } catch (err) {
+        alert('Failed to save: ' + err.message);
+      }
+    }
+
+    document.getElementById('cancelModal').addEventListener('click', closeModal);
+    document.getElementById('saveCompletion').addEventListener('click', saveCompletion);
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+
+    // Start
+    netlifyIdentity.on('init', init);
+    netlifyIdentity.on('logout', () => window.location.href = '/admin/login.html');
+    if (netlifyIdentity.currentUser()) init();
+  </script>
+</body>
+</html>

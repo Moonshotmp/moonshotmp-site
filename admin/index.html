@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard | Moonshot Medical</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #101921;
+      color: #F0EEE9;
+      min-height: 100vh;
+    }
+    .header {
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-email {
+      color: #B2BFBE;
+      font-size: 13px;
+    }
+    .logout-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #B2BFBE;
+      padding: 8px 16px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .logout-btn:hover {
+      border-color: rgba(255,255,255,0.4);
+      color: #F0EEE9;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .page-title {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .page-subtitle {
+      color: #B2BFBE;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .search-bar {
+      margin-bottom: 24px;
+    }
+    .search-bar input {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #F0EEE9;
+      font-size: 14px;
+    }
+    .search-bar input::placeholder { color: #666; }
+    .search-bar input:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.3);
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      color: #B2BFBE;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .table-container {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    th {
+      background: rgba(0,0,0,0.2);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #B2BFBE;
+      font-weight: 600;
+    }
+    td { font-size: 14px; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .partner-link {
+      color: #F0EEE9;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .partner-link:hover { text-decoration: underline; }
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .status-dot.green { background: #4ade80; }
+    .status-dot.red { background: #f87171; }
+    .status-dot.gray { background: #666; }
+    .slug-link {
+      color: #B2BFBE;
+      font-size: 12px;
+      text-decoration: none;
+    }
+    .slug-link:hover { color: #F0EEE9; }
+    .muted { color: #666; }
+    .loading {
+      text-align: center;
+      padding: 60px;
+      color: #B2BFBE;
+    }
+    .error-box {
+      background: rgba(220, 53, 69, 0.1);
+      border: 1px solid rgba(220, 53, 69, 0.3);
+      color: #ff6b6b;
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Moonshot Admin</h1>
+    <div class="header-actions">
+      <span class="user-email" id="userEmail"></span>
+      <button class="logout-btn" id="logoutBtn">Log Out</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2 class="page-title">Partners</h2>
+    <p class="page-subtitle">Manage partner storefronts and view sales</p>
+
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-value" id="totalPartners">-</div>
+        <div class="stat-label">Total Partners</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="connectedPartners">-</div>
+        <div class="stat-label">Stripe Connected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalOrders">-</div>
+        <div class="stat-label">Orders (30d)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalRevenue">-</div>
+        <div class="stat-label">Revenue (30d)</div>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by name, email, or business...">
+    </div>
+
+    <div id="errorBox" class="error-box" style="display:none;"></div>
+
+    <div class="table-container">
+      <div id="loadingState" class="loading">Loading partners...</div>
+      <table id="partnersTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>Business Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Slug</th>
+            <th>Stripe</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody id="partnersBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const ALLOWED_EMAIL = 'tom@moonshotmp.com';
+
+    // Auth check
+    function requireAuth() {
+      const user = netlifyIdentity.currentUser();
+      if (!user) {
+        window.location.href = '/admin/login.html';
+        return null;
+      }
+      if (user.email !== ALLOWED_EMAIL) {
+        netlifyIdentity.logout();
+        window.location.href = '/admin/login.html';
+        return null;
+      }
+      return user;
+    }
+
+    // Get auth token
+    async function getToken() {
+      const user = netlifyIdentity.currentUser();
+      if (!user) return null;
+      try {
+        const token = await user.jwt();
+        return token;
+      } catch {
+        return null;
+      }
+    }
+
+    // API helper
+    async function adminFetch(endpoint, options = {}) {
+      const token = await getToken();
+      if (!token) throw new Error('Not authenticated');
+
+      const res = await fetch(endpoint, {
+        ...options,
+        headers: {
+          ...options.headers,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Request failed: ${res.status}`);
+      }
+
+      return res.json();
+    }
+
+    // Format date
+    function formatDate(iso) {
+      if (!iso) return '-';
+      const d = new Date(iso);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // Initialize
+    let partners = [];
+    let stripeStatus = {};
+
+    async function init() {
+      const user = requireAuth();
+      if (!user) return;
+
+      document.getElementById('userEmail').textContent = user.email;
+
+      try {
+        // Load partners
+        const data = await adminFetch('/.netlify/functions/admin-partners');
+        partners = data.partners || [];
+
+        document.getElementById('totalPartners').textContent = partners.length;
+
+        // Get Stripe status for connected partners
+        const accountIds = partners
+          .filter(p => p.stripe?.connectedAccountId)
+          .map(p => p.stripe.connectedAccountId);
+
+        if (accountIds.length > 0) {
+          const statusData = await adminFetch('/.netlify/functions/admin-stripe-status', {
+            method: 'POST',
+            body: JSON.stringify({ accountIds }),
+          });
+          stripeStatus = statusData.status || {};
+        }
+
+        const connectedCount = partners.filter(p => {
+          const id = p.stripe?.connectedAccountId;
+          return id && stripeStatus[id]?.charges_enabled;
+        }).length;
+        document.getElementById('connectedPartners').textContent = connectedCount;
+
+        renderTable(partners);
+      } catch (err) {
+        console.error(err);
+        document.getElementById('errorBox').textContent = err.message;
+        document.getElementById('errorBox').style.display = 'block';
+        document.getElementById('loadingState').style.display = 'none';
+      }
+    }
+
+    function renderTable(list) {
+      const tbody = document.getElementById('partnersBody');
+      const table = document.getElementById('partnersTable');
+      const loading = document.getElementById('loadingState');
+
+      if (list.length === 0) {
+        loading.textContent = 'No partners found';
+        return;
+      }
+
+      tbody.innerHTML = list.map(p => {
+        const accountId = p.stripe?.connectedAccountId;
+        const status = accountId ? stripeStatus[accountId] : null;
+        const isConnected = status?.charges_enabled === true;
+        const dotClass = accountId ? (isConnected ? 'green' : 'red') : 'gray';
+        const statusText = accountId ? (isConnected ? 'Connected' : 'Pending') : 'Not connected';
+
+        return `
+          <tr onclick="window.location.href='/admin/partner.html?slug=${encodeURIComponent(p.slug)}'" style="cursor:pointer;">
+            <td>
+              <a href="/admin/partner.html?slug=${encodeURIComponent(p.slug)}" class="partner-link">
+                ${escapeHtml(p.name || p.slug)}
+              </a>
+            </td>
+            <td>${escapeHtml(p.contactName || '-')}</td>
+            <td>${escapeHtml(p.email || '-')}</td>
+            <td>
+              <a href="/partners/store.html?slug=${encodeURIComponent(p.slug)}" target="_blank" class="slug-link">
+                ${escapeHtml(p.slug)}
+              </a>
+            </td>
+            <td>
+              <span class="status-dot ${dotClass}"></span>
+              ${statusText}
+            </td>
+            <td class="muted">${formatDate(p.createdAt)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      loading.style.display = 'none';
+      table.style.display = 'table';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    // Search filter
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        renderTable(partners);
+        return;
+      }
+      const filtered = partners.filter(p =>
+        (p.name || '').toLowerCase().includes(q) ||
+        (p.email || '').toLowerCase().includes(q) ||
+        (p.slug || '').toLowerCase().includes(q) ||
+        (p.contactName || '').toLowerCase().includes(q)
+      );
+      renderTable(filtered);
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      netlifyIdentity.logout();
+    });
+
+    netlifyIdentity.on('logout', () => {
+      window.location.href = '/admin/login.html';
+    });
+
+    // Start
+    netlifyIdentity.on('init', init);
+    if (netlifyIdentity.currentUser()) {
+      init();
+    }
+  </script>
+</body>
+</html>

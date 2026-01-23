@@ -2,5 +2,8 @@ https://login.moonshotmp.com/* https://sso.evexias.com/7bc81991-bb6a-4975-a585-b
 
 https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1fe-c431-40fd-b734-b3d510391488/patient 301!
 
+# Admin dashboard - protected by Netlify Identity (client-side + function auth)
+# Login page is public, dashboard pages check auth on load
+
 
 
