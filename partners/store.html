@@ -341,6 +341,12 @@
       background: var(--color-brand-light);
       transform: scale(1.02);
     }
+    .mp-product-availability {
+      font-size: 12px;
+      color: var(--color-brand-gray);
+      margin-top: 10px;
+      line-height: 1.4;
+    }
 
     /* Cart Drawer */
     .mp-cart-overlay {
@@ -990,6 +996,7 @@
 
       gridEl.innerHTML = filtered.map(p => {
         const bullets = (p.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
+        const isDEXA = p.category === 'dexa';
         return `
           <div class="mp-product" data-id="${p.id}">
             ${p.badge ? `<span class="mp-product-badge">${escapeHtml(p.badge)}</span>` : ''}
@@ -1002,6 +1009,7 @@
                 <div class="mp-product-price">$${p.price}</div>
                 <button class="mp-add-btn" onclick="addToCart('${p.id}')">Add to Cart</button>
               </div>
+              ${isDEXA ? `<div class="mp-product-availability">DEXA appointments begin Feb 25 — purchase now to reserve your spot.</div>` : ''}
             </div>
           </div>
         `;
