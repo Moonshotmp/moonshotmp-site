@@ -10,7 +10,7 @@
         "Bone mineral density screening",
         "Visceral fat measurement"
       ],
-      "price": 149,
+      "price": 150,
       "image": "dexa.png",
       "sku": "DEXA-001",
       "duration": "15 min scan + review",
@@ -27,7 +27,7 @@
         "Hormone optimization markers",
         "Inflammation & nutrient status"
       ],
-      "price": 299,
+      "price": 285,
       "image": "fulllabs.png",
       "sku": "LAB-COMP",
       "duration": "Results in 3-5 days",
