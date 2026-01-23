@@ -21,19 +21,9 @@
       justify-content: space-between;
       align-items: center;
     }
-    .header h1 {
-      font-size: 18px;
-      font-weight: 600;
-    }
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .user-email {
-      color: #B2BFBE;
-      font-size: 13px;
-    }
+    .header h1 { font-size: 18px; font-weight: 600; }
+    .header-actions { display: flex; align-items: center; gap: 16px; }
+    .user-email { color: #B2BFBE; font-size: 13px; }
     .logout-btn {
       background: transparent;
       border: 1px solid rgba(255,255,255,0.2);
@@ -43,31 +33,21 @@
       cursor: pointer;
       border-radius: 4px;
     }
-    .logout-btn:hover {
-      border-color: rgba(255,255,255,0.4);
-      color: #F0EEE9;
+    .logout-btn:hover { border-color: rgba(255,255,255,0.4); color: #F0EEE9; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-    .page-title {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-    .page-subtitle {
-      color: #B2BFBE;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-    .search-bar {
-      margin-bottom: 24px;
-    }
+    .section-title { font-size: 20px; font-weight: 600; }
+    .section-subtitle { color: #B2BFBE; font-size: 13px; margin-top: 4px; }
+    .search-bar { margin-bottom: 16px; }
     .search-bar input {
       width: 100%;
       max-width: 400px;
-      padding: 12px 16px;
+      padding: 10px 14px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 6px;
@@ -75,48 +55,31 @@
       font-size: 14px;
     }
     .search-bar input::placeholder { color: #666; }
-    .search-bar input:focus {
-      outline: none;
-      border-color: rgba(255,255,255,0.3);
-    }
+    .search-bar input:focus { outline: none; border-color: rgba(255,255,255,0.3); }
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
     }
     .stat-card {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 8px;
-      padding: 20px;
+      padding: 16px;
     }
-    .stat-value {
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    .stat-label {
-      color: #B2BFBE;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+    .stat-value { font-size: 24px; font-weight: 600; margin-bottom: 2px; }
+    .stat-label { color: #B2BFBE; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
     .table-container {
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 8px;
       overflow: hidden;
+      margin-bottom: 32px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 800px; }
+    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
     th {
       background: rgba(0,0,0,0.2);
       font-size: 11px;
@@ -124,37 +87,41 @@
       letter-spacing: 0.05em;
       color: #B2BFBE;
       font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
     }
-    td { font-size: 14px; }
+    th:hover { color: #F0EEE9; }
+    th .sort-icon { margin-left: 4px; opacity: 0.5; }
+    th.sorted .sort-icon { opacity: 1; }
+    td { font-size: 13px; }
     tr:hover td { background: rgba(255,255,255,0.02); }
-    .partner-link {
-      color: #F0EEE9;
-      text-decoration: none;
-      font-weight: 500;
-    }
+    .clickable-row { cursor: pointer; }
+    .partner-link { color: #F0EEE9; text-decoration: none; font-weight: 500; }
     .partner-link:hover { text-decoration: underline; }
     .status-dot {
       display: inline-block;
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       margin-right: 6px;
     }
     .status-dot.green { background: #4ade80; }
     .status-dot.red { background: #f87171; }
     .status-dot.gray { background: #666; }
-    .slug-link {
-      color: #B2BFBE;
-      font-size: 12px;
-      text-decoration: none;
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
     }
+    .badge-green { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+    .badge-gray { background: rgba(255,255,255,0.08); color: #888; }
+    .slug-link { color: #B2BFBE; font-size: 12px; text-decoration: none; }
     .slug-link:hover { color: #F0EEE9; }
     .muted { color: #666; }
-    .loading {
-      text-align: center;
-      padding: 60px;
-      color: #B2BFBE;
-    }
+    .loading { text-align: center; padding: 40px; color: #B2BFBE; }
     .error-box {
       background: rgba(220, 53, 69, 0.1);
       border: 1px solid rgba(220, 53, 69, 0.3);
@@ -163,6 +130,9 @@
       border-radius: 6px;
       margin-bottom: 24px;
     }
+    .items-cell { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .amount { font-weight: 600; }
+    .text-right { text-align: right; }
   </style>
 </head>
 <body>
@@ -175,66 +145,123 @@
   </header>
 
   <div class="container">
-    <h2 class="page-title">Partners</h2>
-    <p class="page-subtitle">Manage partner storefronts and view sales</p>
-
+    <!-- Stats Row -->
     <div class="stats-row" id="statsRow">
       <div class="stat-card">
+        <div class="stat-value" id="totalOrders">-</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalRevenue">-</div>
+        <div class="stat-label">Total Revenue</div>
+      </div>
+      <div class="stat-card">
         <div class="stat-value" id="totalPartners">-</div>
-        <div class="stat-label">Total Partners</div>
+        <div class="stat-label">Partners</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="connectedPartners">-</div>
         <div class="stat-label">Stripe Connected</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="totalOrders">-</div>
-        <div class="stat-label">Orders (30d)</div>
+        <div class="stat-value" id="billingSetup">-</div>
+        <div class="stat-label">Billing Setup</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-value" id="totalRevenue">-</div>
-        <div class="stat-label">Revenue (30d)</div>
-      </div>
-    </div>
-
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search by name, email, or business...">
     </div>
 
     <div id="errorBox" class="error-box" style="display:none;"></div>
 
+    <!-- All Orders Section -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">All Orders</h2>
+        <p class="section-subtitle">Orders across all partner stores</p>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="ordersSearch" placeholder="Search orders by partner, customer, or items...">
+    </div>
+
     <div class="table-container">
-      <div id="loadingState" class="loading">Loading partners...</div>
-      <table id="partnersTable" style="display:none;">
-        <thead>
-          <tr>
-            <th>Business Name</th>
-            <th>Contact</th>
-            <th>Email</th>
-            <th>Slug</th>
-            <th>Stripe</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-        <tbody id="partnersBody"></tbody>
-      </table>
+      <div id="ordersLoading" class="loading">Loading orders...</div>
+      <div class="table-scroll">
+        <table id="ordersTable" style="display:none;">
+          <thead>
+            <tr>
+              <th data-sort="partnerName">Partner <span class="sort-icon">↕</span></th>
+              <th data-sort="created">Date <span class="sort-icon">↕</span></th>
+              <th data-sort="customerName">Customer <span class="sort-icon">↕</span></th>
+              <th data-sort="items">Items <span class="sort-icon">↕</span></th>
+              <th data-sort="amount" class="text-right">Total <span class="sort-icon">↕</span></th>
+              <th data-sort="completed">Status <span class="sort-icon">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+      <div id="ordersEmpty" class="loading" style="display:none;">No orders found</div>
+    </div>
+
+    <!-- Partners Section -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Partners</h2>
+        <p class="section-subtitle">Manage partner storefronts</p>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="partnersSearch" placeholder="Search by name, email, or business...">
+    </div>
+
+    <div class="table-container">
+      <div id="partnersLoading" class="loading">Loading partners...</div>
+      <div class="table-scroll">
+        <table id="partnersTable" style="display:none;">
+          <thead>
+            <tr>
+              <th data-sort="name">Business Name <span class="sort-icon">↕</span></th>
+              <th data-sort="contactName">Contact <span class="sort-icon">↕</span></th>
+              <th data-sort="email">Email <span class="sort-icon">↕</span></th>
+              <th data-sort="stripe">Stripe <span class="sort-icon">↕</span></th>
+              <th data-sort="billing">Billing <span class="sort-icon">↕</span></th>
+              <th data-sort="customers" class="text-right">Customers <span class="sort-icon">↕</span></th>
+              <th data-sort="revenue" class="text-right">Revenue <span class="sort-icon">↕</span></th>
+              <th data-sort="createdAt">Created <span class="sort-icon">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="partnersBody"></tbody>
+        </table>
+      </div>
+      <div id="partnersEmpty" class="loading" style="display:none;">No partners found</div>
     </div>
   </div>
 
   <script>
-    // Get auth token from localStorage
+    // Data stores
+    let allOrders = [];
+    let partners = [];
+    let stripeStatus = {};
+    let partnerStats = {};
+
+    // Sort state
+    let ordersSortCol = 'created';
+    let ordersSortDir = 'desc';
+    let partnersSortCol = 'createdAt';
+    let partnersSortDir = 'desc';
+
+    // Auth
     function getToken() {
       return localStorage.getItem('admin_token');
     }
 
-    // Check if authenticated
     async function requireAuth() {
       const token = getToken();
       if (!token) {
         window.location.href = '/admin/login.html';
         return false;
       }
-      // Verify token is still valid
       try {
         const res = await fetch('/.netlify/functions/admin-verify', {
           headers: { 'Authorization': `Bearer ${token}` }
@@ -252,11 +279,9 @@
       }
     }
 
-    // API helper
     async function adminFetch(endpoint, options = {}) {
       const token = getToken();
       if (!token) throw new Error('Not authenticated');
-
       const res = await fetch(endpoint, {
         ...options,
         headers: {
@@ -265,26 +290,31 @@
           'Content-Type': 'application/json',
         },
       });
-
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || `Request failed: ${res.status}`);
       }
-
       return res.json();
     }
 
-    // Format date
+    // Helpers
     function formatDate(iso) {
       if (!iso) return '-';
-      const d = new Date(iso);
-      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function formatCurrency(cents) {
+      return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
     }
 
     // Initialize
-    let partners = [];
-    let stripeStatus = {};
-
     async function init() {
       const isAuth = await requireAuth();
       if (!isAuth) return;
@@ -292,11 +322,15 @@
       document.getElementById('userEmail').textContent = 'Admin';
 
       try {
-        // Load partners
-        const data = await adminFetch('/.netlify/functions/admin-partners');
-        partners = data.partners || [];
+        // Load partners and orders in parallel
+        const [partnersData, ordersData] = await Promise.all([
+          adminFetch('/.netlify/functions/admin-partners'),
+          adminFetch('/.netlify/functions/admin-all-orders'),
+        ]);
 
-        document.getElementById('totalPartners').textContent = partners.length;
+        partners = partnersData.partners || [];
+        allOrders = ordersData.orders || [];
+        partnerStats = ordersData.partnerStats || {};
 
         // Get Stripe status for connected partners
         const accountIds = partners
@@ -311,86 +345,293 @@
           stripeStatus = statusData.status || {};
         }
 
+        // Update stats
+        document.getElementById('totalOrders').textContent = allOrders.length;
+        const totalRev = allOrders.reduce((sum, o) => sum + (o.amount || 0), 0);
+        document.getElementById('totalRevenue').textContent = formatCurrency(totalRev);
+        document.getElementById('totalPartners').textContent = partners.length;
+
         const connectedCount = partners.filter(p => {
           const id = p.stripe?.connectedAccountId;
           return id && stripeStatus[id]?.charges_enabled;
         }).length;
         document.getElementById('connectedPartners').textContent = connectedCount;
 
-        renderTable(partners);
+        const billingCount = partners.filter(p => p.billing?.cardLast4).length;
+        document.getElementById('billingSetup').textContent = billingCount;
+
+        // Render tables
+        renderOrdersTable(allOrders);
+        renderPartnersTable(partners);
+
+        // Setup sorting
+        setupSorting();
+
       } catch (err) {
         console.error(err);
         document.getElementById('errorBox').textContent = err.message;
         document.getElementById('errorBox').style.display = 'block';
-        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('ordersLoading').style.display = 'none';
+        document.getElementById('partnersLoading').style.display = 'none';
       }
     }
 
-    function renderTable(list) {
-      const tbody = document.getElementById('partnersBody');
-      const table = document.getElementById('partnersTable');
-      const loading = document.getElementById('loadingState');
+    // Orders table
+    function renderOrdersTable(orders) {
+      const tbody = document.getElementById('ordersBody');
+      const table = document.getElementById('ordersTable');
+      const loading = document.getElementById('ordersLoading');
+      const empty = document.getElementById('ordersEmpty');
 
-      if (list.length === 0) {
-        loading.textContent = 'No partners found';
+      loading.style.display = 'none';
+
+      if (orders.length === 0) {
+        empty.style.display = 'block';
+        table.style.display = 'none';
         return;
       }
+
+      empty.style.display = 'none';
+
+      tbody.innerHTML = orders.map(o => {
+        const items = (o.items || []).map(i => `${i.name} x${i.quantity}`).join(', ') || '-';
+        const statusBadge = o.completed
+          ? '<span class="badge badge-green">Complete</span>'
+          : '<span class="badge badge-gray">Pending</span>';
+
+        return `
+          <tr class="clickable-row" onclick="window.location.href='/admin/partner.html?slug=${encodeURIComponent(o.partnerSlug)}'">
+            <td><span class="partner-link">${escapeHtml(o.partnerName)}</span></td>
+            <td>${formatDate(o.created)}</td>
+            <td>${escapeHtml(o.customerName || 'Unknown')}</td>
+            <td class="items-cell" title="${escapeHtml(items)}">${escapeHtml(items)}</td>
+            <td class="text-right amount">${formatCurrency(o.amount)}</td>
+            <td>${statusBadge}</td>
+          </tr>
+        `;
+      }).join('');
+
+      table.style.display = 'table';
+    }
+
+    // Partners table
+    function renderPartnersTable(list) {
+      const tbody = document.getElementById('partnersBody');
+      const table = document.getElementById('partnersTable');
+      const loading = document.getElementById('partnersLoading');
+      const empty = document.getElementById('partnersEmpty');
+
+      loading.style.display = 'none';
+
+      if (list.length === 0) {
+        empty.style.display = 'block';
+        table.style.display = 'none';
+        return;
+      }
+
+      empty.style.display = 'none';
 
       tbody.innerHTML = list.map(p => {
         const accountId = p.stripe?.connectedAccountId;
         const status = accountId ? stripeStatus[accountId] : null;
         const isConnected = status?.charges_enabled === true;
-        const dotClass = accountId ? (isConnected ? 'green' : 'red') : 'gray';
-        const statusText = accountId ? (isConnected ? 'Connected' : 'Pending') : 'Not connected';
+        const stripeDot = accountId ? (isConnected ? 'green' : 'red') : 'gray';
+        const stripeText = accountId ? (isConnected ? 'Connected' : 'Pending') : 'Not connected';
+
+        const hasBilling = !!p.billing?.cardLast4;
+        const billingDot = hasBilling ? 'green' : 'gray';
+        const billingText = hasBilling ? `****${p.billing.cardLast4}` : 'None';
+
+        const stats = partnerStats[p.slug] || { uniqueCustomers: 0, totalRevenue: 0 };
 
         return `
-          <tr onclick="window.location.href='/admin/partner.html?slug=${encodeURIComponent(p.slug)}'" style="cursor:pointer;">
+          <tr class="clickable-row" onclick="window.location.href='/admin/partner.html?slug=${encodeURIComponent(p.slug)}'">
             <td>
-              <a href="/admin/partner.html?slug=${encodeURIComponent(p.slug)}" class="partner-link">
+              <a href="/admin/partner.html?slug=${encodeURIComponent(p.slug)}" class="partner-link" onclick="event.stopPropagation();">
                 ${escapeHtml(p.name || p.slug)}
               </a>
             </td>
             <td>${escapeHtml(p.contactName || '-')}</td>
             <td>${escapeHtml(p.email || '-')}</td>
-            <td>
-              <a href="/partners/store.html?slug=${encodeURIComponent(p.slug)}" target="_blank" class="slug-link">
-                ${escapeHtml(p.slug)}
-              </a>
-            </td>
-            <td>
-              <span class="status-dot ${dotClass}"></span>
-              ${statusText}
-            </td>
+            <td><span class="status-dot ${stripeDot}"></span>${stripeText}</td>
+            <td><span class="status-dot ${billingDot}"></span>${billingText}</td>
+            <td class="text-right">${stats.uniqueCustomers}</td>
+            <td class="text-right amount">${formatCurrency(stats.totalRevenue)}</td>
             <td class="muted">${formatDate(p.createdAt)}</td>
           </tr>
         `;
       }).join('');
 
-      loading.style.display = 'none';
       table.style.display = 'table';
     }
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[c]));
+    // Sorting
+    function setupSorting() {
+      // Orders table sorting
+      document.querySelectorAll('#ordersTable th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+          const col = th.dataset.sort;
+          if (ordersSortCol === col) {
+            ordersSortDir = ordersSortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            ordersSortCol = col;
+            ordersSortDir = 'desc';
+          }
+          updateSortIndicators('#ordersTable', ordersSortCol, ordersSortDir);
+          const sorted = sortOrders([...allOrders], ordersSortCol, ordersSortDir);
+          const q = document.getElementById('ordersSearch').value.toLowerCase().trim();
+          renderOrdersTable(q ? filterOrders(sorted, q) : sorted);
+        });
+      });
+
+      // Partners table sorting
+      document.querySelectorAll('#partnersTable th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+          const col = th.dataset.sort;
+          if (partnersSortCol === col) {
+            partnersSortDir = partnersSortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            partnersSortCol = col;
+            partnersSortDir = 'desc';
+          }
+          updateSortIndicators('#partnersTable', partnersSortCol, partnersSortDir);
+          const sorted = sortPartners([...partners], partnersSortCol, partnersSortDir);
+          const q = document.getElementById('partnersSearch').value.toLowerCase().trim();
+          renderPartnersTable(q ? filterPartners(sorted, q) : sorted);
+        });
+      });
     }
 
-    // Search filter
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      if (!q) {
-        renderTable(partners);
-        return;
+    function updateSortIndicators(tableSelector, col, dir) {
+      document.querySelectorAll(`${tableSelector} th`).forEach(th => {
+        th.classList.remove('sorted');
+        const icon = th.querySelector('.sort-icon');
+        if (icon) icon.textContent = '↕';
+      });
+      const activeTh = document.querySelector(`${tableSelector} th[data-sort="${col}"]`);
+      if (activeTh) {
+        activeTh.classList.add('sorted');
+        const icon = activeTh.querySelector('.sort-icon');
+        if (icon) icon.textContent = dir === 'asc' ? '↑' : '↓';
       }
-      const filtered = partners.filter(p =>
+    }
+
+    function sortOrders(orders, col, dir) {
+      const mult = dir === 'asc' ? 1 : -1;
+      return orders.sort((a, b) => {
+        let aVal, bVal;
+        switch (col) {
+          case 'partnerName':
+            aVal = (a.partnerName || '').toLowerCase();
+            bVal = (b.partnerName || '').toLowerCase();
+            break;
+          case 'created':
+            aVal = new Date(a.created || 0).getTime();
+            bVal = new Date(b.created || 0).getTime();
+            break;
+          case 'customerName':
+            aVal = (a.customerName || '').toLowerCase();
+            bVal = (b.customerName || '').toLowerCase();
+            break;
+          case 'items':
+            aVal = (a.items || []).map(i => i.name).join(' ').toLowerCase();
+            bVal = (b.items || []).map(i => i.name).join(' ').toLowerCase();
+            break;
+          case 'amount':
+            aVal = a.amount || 0;
+            bVal = b.amount || 0;
+            break;
+          case 'completed':
+            aVal = a.completed ? 1 : 0;
+            bVal = b.completed ? 1 : 0;
+            break;
+          default:
+            aVal = 0; bVal = 0;
+        }
+        if (aVal < bVal) return -1 * mult;
+        if (aVal > bVal) return 1 * mult;
+        return 0;
+      });
+    }
+
+    function sortPartners(list, col, dir) {
+      const mult = dir === 'asc' ? 1 : -1;
+      return list.sort((a, b) => {
+        let aVal, bVal;
+        switch (col) {
+          case 'name':
+            aVal = (a.name || a.slug || '').toLowerCase();
+            bVal = (b.name || b.slug || '').toLowerCase();
+            break;
+          case 'contactName':
+            aVal = (a.contactName || '').toLowerCase();
+            bVal = (b.contactName || '').toLowerCase();
+            break;
+          case 'email':
+            aVal = (a.email || '').toLowerCase();
+            bVal = (b.email || '').toLowerCase();
+            break;
+          case 'stripe':
+            const aConn = a.stripe?.connectedAccountId && stripeStatus[a.stripe.connectedAccountId]?.charges_enabled;
+            const bConn = b.stripe?.connectedAccountId && stripeStatus[b.stripe.connectedAccountId]?.charges_enabled;
+            aVal = aConn ? 2 : (a.stripe?.connectedAccountId ? 1 : 0);
+            bVal = bConn ? 2 : (b.stripe?.connectedAccountId ? 1 : 0);
+            break;
+          case 'billing':
+            aVal = a.billing?.cardLast4 ? 1 : 0;
+            bVal = b.billing?.cardLast4 ? 1 : 0;
+            break;
+          case 'customers':
+            aVal = partnerStats[a.slug]?.uniqueCustomers || 0;
+            bVal = partnerStats[b.slug]?.uniqueCustomers || 0;
+            break;
+          case 'revenue':
+            aVal = partnerStats[a.slug]?.totalRevenue || 0;
+            bVal = partnerStats[b.slug]?.totalRevenue || 0;
+            break;
+          case 'createdAt':
+            aVal = new Date(a.createdAt || 0).getTime();
+            bVal = new Date(b.createdAt || 0).getTime();
+            break;
+          default:
+            aVal = 0; bVal = 0;
+        }
+        if (aVal < bVal) return -1 * mult;
+        if (aVal > bVal) return 1 * mult;
+        return 0;
+      });
+    }
+
+    // Filtering
+    function filterOrders(orders, q) {
+      return orders.filter(o =>
+        (o.partnerName || '').toLowerCase().includes(q) ||
+        (o.customerName || '').toLowerCase().includes(q) ||
+        (o.customerEmail || '').toLowerCase().includes(q) ||
+        (o.items || []).some(i => (i.name || '').toLowerCase().includes(q))
+      );
+    }
+
+    function filterPartners(list, q) {
+      return list.filter(p =>
         (p.name || '').toLowerCase().includes(q) ||
         (p.email || '').toLowerCase().includes(q) ||
         (p.slug || '').toLowerCase().includes(q) ||
         (p.contactName || '').toLowerCase().includes(q)
       );
-      renderTable(filtered);
+    }
+
+    // Search handlers
+    document.getElementById('ordersSearch').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const sorted = sortOrders([...allOrders], ordersSortCol, ordersSortDir);
+      renderOrdersTable(q ? filterOrders(sorted, q) : sorted);
+    });
+
+    document.getElementById('partnersSearch').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const sorted = sortPartners([...partners], partnersSortCol, partnersSortDir);
+      renderPartnersTable(q ? filterPartners(sorted, q) : sorted);
     });
 
     // Logout
