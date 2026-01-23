@@ -46,7 +46,31 @@
         .btn-primary { background-color: #B2BFBE; color: #101921; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 600; padding: 0.75rem 2rem; transition: all 0.3s ease; }
         .btn-primary:hover { background-color: #F0EEE9; transform: translateY(-2px); }
     </style>
-<script type="application/ld+json">
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://moonshotmp.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Membership",
+          "item": "https://moonshotmp.com/membership/"
+        }
+      ]
+    }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
