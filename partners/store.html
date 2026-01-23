@@ -229,6 +229,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
+      align-items: stretch;
     }
     .mp-product {
       background: rgba(255,255,255,0.03);
@@ -236,6 +237,9 @@
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
     .mp-product:hover {
       border-color: rgba(255,255,255,0.15);
@@ -259,6 +263,9 @@
     }
     .mp-product-body {
       padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
     .mp-product-name {
       font-family: var(--font-heading);
@@ -301,6 +308,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 16px;
+      margin-top: auto;
+      padding-top: 16px;
     }
     .mp-product-price {
       font-family: var(--font-heading);
@@ -320,6 +330,7 @@
       letter-spacing: 0.03em;
       cursor: pointer;
       transition: all 0.2s;
+      flex: 0 0 auto;
     }
     .mp-add-btn:hover {
       background: var(--color-brand-light);
