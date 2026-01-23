@@ -8,43 +8,27 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/partners/styles.css" />
+
+  <!-- Tailwind CSS (for header/footer consistency with main site) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { dark: '#101921', light: '#F0EEE9', gray: '#B2BFBE', slate: '#2C353E' }
+          },
+          fontFamily: { heading: ['Oswald', 'sans-serif'], body: ['Poppins', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
   <style>
     /* Partner Marketplace Styles */
     body { padding-top: 0; }
     main { padding-top: 0; }
 
-    /* Header */
-    .mp-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: rgba(16, 25, 33, 0.97);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding: 0 24px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .mp-header-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .mp-header-logo img {
-      height: 36px;
-      width: auto;
-    }
-    .mp-header-logo span {
-      font-family: var(--font-heading);
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-brand-light);
-    }
+    /* Cart Button (used in header) */
     .mp-cart-btn {
       position: relative;
       background: rgba(255,255,255,0.08);
@@ -81,7 +65,7 @@
 
     /* Hero */
     .mp-hero {
-      padding: 120px 24px 60px;
+      padding: 140px 24px 60px; /* Extra top padding for fixed header */
       text-align: center;
       background: linear-gradient(180deg, var(--color-brand-dark) 0%, rgba(16,25,33,0.95) 100%);
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -579,32 +563,6 @@
       line-height: 1.6;
     }
 
-    /* Footer */
-    .mp-footer {
-      padding: 40px 24px;
-      text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .mp-footer-logo {
-      height: 32px;
-      margin-bottom: 16px;
-    }
-    .mp-footer-text {
-      font-size: 13px;
-      color: var(--color-brand-gray);
-    }
-    .mp-footer-links {
-      margin-top: 12px;
-    }
-    .mp-footer-links a {
-      color: var(--color-brand-gray);
-      font-size: 13px;
-      margin: 0 12px;
-    }
-    .mp-footer-links a:hover {
-      color: var(--color-brand-light);
-    }
-
     /* Loading & Error States */
     .mp-loading {
       text-align: center;
@@ -634,20 +592,38 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="mp-header">
-    <div class="mp-header-logo">
-      <img src="/images/fulllogodarkcentered.png" alt="Moonshot" />
+  <!-- Header (Lite version matching main site) -->
+  <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Brand Lockup -->
+        <a href="/" class="flex-shrink-0 flex items-center gap-2">
+          <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain">
+          <div class="hidden sm:block text-brand-light font-heading text-sm tracking-wide leading-tight ml-3">
+            MOONSHOT<br>MEDICAL AND PERFORMANCE
+          </div>
+        </a>
+
+        <!-- Right side: Cart + optional action -->
+        <div class="flex items-center gap-4">
+          <a href="tel:+18474991266" class="hidden md:flex items-center gap-2 text-brand-gray hover:text-brand-light text-xs uppercase tracking-wider transition">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            847-499-1266
+          </a>
+          <button class="mp-cart-btn" id="cartBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            Cart
+            <span class="mp-cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
     </div>
-    <button class="mp-cart-btn" id="cartBtn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-      </svg>
-      Cart
-      <span class="mp-cart-count" id="cartCount">0</span>
-    </button>
-  </header>
+  </nav>
 
   <!-- Main Content -->
   <main>
@@ -739,13 +715,34 @@
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="mp-footer">
-    <img src="/images/fulllogodarkcentered.png" alt="Moonshot" class="mp-footer-logo" />
-    <div class="mp-footer-text">Moonshot Medical Performance</div>
-    <div class="mp-footer-links">
-      <a href="mailto:info@moonshotmp.com">Contact</a>
-      <a href="/partners/login.html" id="partnerLoginLink">Partner Login</a>
+  <!-- Footer (matching main site) -->
+  <footer class="bg-black border-t border-white/10 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div>
+          <a href="/" class="flex items-center gap-2 mb-2">
+            <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain">
+          </a>
+          <div class="text-brand-light font-heading font-bold text-xl tracking-widest">Moonshot Medical and Performance</div>
+          <p class="text-brand-gray text-xs mt-2 max-w-xs">
+            542 Busse Hwy, Park Ridge, IL 60068<br>
+            <a href="tel:+18474991266" class="hover:text-brand-light transition">847-499-1266</a><br>
+            <a href="mailto:hello@moonshotmp.com" class="hover:text-brand-light transition">hello@moonshotmp.com</a>
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+          <a href="/partners/login.html" id="partnerLoginLink" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider transition">
+            Partner Login
+          </a>
+          <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+      <div class="mt-8 pt-8 border-t border-white/5 text-center md:text-left text-xs text-brand-gray/50">
+        &copy; 2025 Moonshot Medical and Performance. All Rights Reserved.
+      </div>
     </div>
   </footer>
 
