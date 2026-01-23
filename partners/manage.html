@@ -36,6 +36,11 @@
     .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 16px; text-align: center; }
     .stat-value { font-size: 24px; font-weight: 600; }
     .stat-label { font-size: 11px; text-transform: uppercase; color: #888; margin-top: 4px; }
+    .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+    .status-dot.green { background: #4ade80; }
+    .status-dot.red { background: #f87171; }
+    .status-dot.gray { background: #666; }
+    .status-row { display: flex; align-items: center; margin-bottom: 12px; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -129,11 +134,10 @@
         <p style="margin: 0 0 12px; font-size: 14px; color: var(--muted);">
           Card on file for wholesale diagnostic charges:
         </p>
-        <div id="billingCard">
-          <span class="card-on-file" id="cardDisplay" style="display:none;">
-            <span id="cardBrand">VISA</span>
-            <span>****</span>
-            <span id="cardLast4">4242</span>
+        <div id="billingCard" class="status-row">
+          <span class="status-dot" id="billingDot"></span>
+          <span id="cardDisplay" style="display:none;">
+            <span id="cardBrand">VISA</span> **** <span id="cardLast4">4242</span>
           </span>
           <span id="noCard" style="color: #888;">No card on file</span>
         </div>
@@ -144,6 +148,10 @@
 
       <!-- Stripe Connect -->
       <h3 class="section-title">Stripe Payments</h3>
+      <div id="stripeStatus" class="status-row">
+        <span class="status-dot" id="stripeDot"></span>
+        <span id="stripeStatusText">Not connected</span>
+      </div>
       <p style="font-size: 14px; color: var(--muted); margin-bottom: 12px;">
         Connect Stripe to receive payments from customers on your store.
       </p>
@@ -254,21 +262,30 @@
 
     document.getElementById('storeUrl').value = location.origin + '/partners/store.html?slug=' + p.slug;
 
-    // Stripe status
+    // Stripe status (badge + dot)
     const stripeBadge = document.getElementById('stripeBadge');
     const stripeBtn = document.getElementById('stripeBtn');
+    const stripeDot = document.getElementById('stripeDot');
+    const stripeStatusText = document.getElementById('stripeStatusText');
     if (p.stripe && p.stripe.connectedAccountId) {
       stripeBadge.className = 'badge badge-green';
       stripeBadge.textContent = 'Stripe Connected';
+      stripeDot.className = 'status-dot green';
+      stripeStatusText.textContent = 'Connected and ready to accept payments';
+      stripeStatusText.style.color = '#4ade80';
       stripeBtn.textContent = 'MANAGE STRIPE';
     } else {
       stripeBadge.className = 'badge badge-yellow';
       stripeBadge.textContent = 'Stripe Not Connected';
+      stripeDot.className = 'status-dot red';
+      stripeStatusText.textContent = 'Not connected - connect to accept payments';
+      stripeStatusText.style.color = '#f87171';
       stripeBtn.textContent = 'CONNECT STRIPE';
     }
 
-    // Billing status
+    // Billing status (badge + dot)
     const billingBadge = document.getElementById('billingBadge');
+    const billingDot = document.getElementById('billingDot');
     const cardDisplay = document.getElementById('cardDisplay');
     const noCard = document.getElementById('noCard');
     const manageBillingBtn = document.getElementById('manageBillingBtn');
@@ -278,13 +295,15 @@
     if (p.billing && p.billing.cardLast4) {
       billingBadge.className = 'badge badge-green';
       billingBadge.textContent = 'Billing Active';
+      billingDot.className = 'status-dot green';
       document.getElementById('cardBrand').textContent = (p.billing.cardBrand || 'Card').toUpperCase();
       document.getElementById('cardLast4').textContent = p.billing.cardLast4;
-      cardDisplay.style.display = 'inline-flex';
+      cardDisplay.style.display = 'inline';
       noCard.style.display = 'none';
     } else {
       billingBadge.className = 'badge badge-gray';
       billingBadge.textContent = 'No Billing Card';
+      billingDot.className = 'status-dot red';
       cardDisplay.style.display = 'none';
       noCard.style.display = 'inline';
     }
