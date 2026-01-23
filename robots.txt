@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Block utility-only partner pages (not useful to crawl)
+Disallow: /partners/login.html
+Disallow: /partners/setup.html
+Disallow: /partners/manage.html
+Disallow: /partners/connect.html
+Disallow: /partners/checkout-success.html
+Disallow: /partners/success.html
+Disallow: /partners/cancel.html
+
+# Block high-churn param patterns (partner slug variations)
+Disallow: /*?slug=
+
+Sitemap: https://moonshotmp.com/sitemap.xml
