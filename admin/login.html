@@ -131,11 +131,28 @@
       netlifyIdentity.open('login');
     });
 
-    // Handle recovery/invite links
-    if (window.location.hash.includes('recovery_token') ||
-        window.location.hash.includes('invite_token')) {
-      netlifyIdentity.open();
+    // Handle recovery/invite/confirmation links - must open widget immediately
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      if (hash.includes('invite_token') ||
+          hash.includes('recovery_token') ||
+          hash.includes('confirmation_token')) {
+        // Small delay to ensure widget is fully initialized
+        setTimeout(() => {
+          netlifyIdentity.open();
+        }, 100);
+      }
     }
+
+    // Also listen for the init event to handle tokens
+    netlifyIdentity.on('init', (user) => {
+      const hash = window.location.hash;
+      if (hash.includes('invite_token') ||
+          hash.includes('recovery_token') ||
+          hash.includes('confirmation_token')) {
+        netlifyIdentity.open();
+      }
+    });
   </script>
 </body>
 </html>
