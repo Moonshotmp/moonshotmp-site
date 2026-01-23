@@ -1005,11 +1005,11 @@
               <div class="mp-product-desc">${escapeHtml(p.description)}</div>
               ${bullets ? `<ul class="mp-product-bullets">${bullets}</ul>` : ''}
               ${p.duration ? `<div class="mp-product-duration">${escapeHtml(p.duration)}</div>` : ''}
+              ${isDEXA ? `<div class="mp-product-availability">DEXA appointments begin Feb 25 — purchase now to reserve your spot.</div>` : ''}
               <div class="mp-product-footer">
                 <div class="mp-product-price">$${p.price}</div>
                 <button class="mp-add-btn" onclick="addToCart('${p.id}')">Add to Cart</button>
               </div>
-              ${isDEXA ? `<div class="mp-product-availability">DEXA appointments begin Feb 25 — purchase now to reserve your spot.</div>` : ''}
             </div>
           </div>
         `;
