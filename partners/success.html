@@ -99,8 +99,6 @@
     }
     .success-btn {
       display: inline-block;
-      background: var(--color-brand-gray);
-      color: var(--color-brand-dark);
       padding: 14px 32px;
       border-radius: 8px;
       font-family: var(--font-heading);
@@ -111,9 +109,23 @@
       text-decoration: none;
       transition: all 0.2s;
     }
-    .success-btn:hover {
+    .success-btn-primary {
+      background: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+      margin-bottom: 16px;
+    }
+    .success-btn-primary:hover {
       background: var(--color-brand-light);
       transform: translateY(-2px);
+    }
+    .success-btn-secondary {
+      background: transparent;
+      color: var(--color-brand-gray);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .success-btn-secondary:hover {
+      color: var(--color-brand-light);
+      border-color: rgba(255,255,255,0.3);
     }
   </style>
 </head>
@@ -127,7 +139,7 @@
       </div>
 
       <h1 class="success-title">Order Confirmed!</h1>
-      <p class="success-subtitle">Thank you for your purchase. We're excited to help you on your health journey.</p>
+      <p class="success-subtitle">Next step: book your appointment.</p>
 
       <div class="success-steps">
         <h3>What Happens Next</h3>
@@ -140,7 +152,7 @@
         <div class="success-step">
           <div class="success-step-num">2</div>
           <div class="success-step-text">
-            <strong>We'll reach out</strong> — Our scheduling team will contact you within 24 hours to book your appointment.
+            <strong>Book your appointment</strong> — Use the button below to schedule your visit with our clinical team.
           </div>
         </div>
         <div class="success-step">
@@ -151,11 +163,13 @@
         </div>
       </div>
 
+      <a href="https://moonshot.myaestheticrecord.com/online-booking" class="success-btn success-btn-primary" target="_blank" rel="noopener">Book Your Appointment</a>
+
       <div class="success-contact">
-        Questions? Reach out to <a href="mailto:info@moonshotmp.com">info@moonshotmp.com</a>
+        Can't find a time that works? Email <a href="mailto:info@moonshotmp.com">info@moonshotmp.com</a> and we'll help you schedule.
       </div>
 
-      <a href="/" class="success-btn">Back to Moonshot</a>
+      <a href="/" class="success-btn success-btn-secondary">Back to Moonshot</a>
     </div>
   </main>
 </body>
