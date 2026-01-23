@@ -47,12 +47,21 @@ export default async (req) => {
       ...existing,
       slug,
       name: typeof updates.name === "string" ? updates.name : existing.name,
+      contactName: typeof updates.contactName === "string" ? updates.contactName : existing.contactName,
+      phone: typeof updates.phone === "string" ? updates.phone : existing.phone,
       email: typeof updates.email === "string" ? updates.email : existing.email,
+      address: updates.address ? {
+        street: updates.address.street || existing.address?.street || "",
+        city: updates.address.city || existing.address?.city || "",
+        state: updates.address.state || existing.address?.state || "",
+        zip: updates.address.zip || existing.address?.zip || "",
+      } : existing.address,
       branding: {
         ...(existing.branding || {}),
         ...(updates.branding || {}),
       },
       stripe: existing.stripe,
+      billing: existing.billing,
       updatedAt: new Date().toISOString(),
     };
 
