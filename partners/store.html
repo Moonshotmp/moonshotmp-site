@@ -241,56 +241,13 @@
       border-color: rgba(255,255,255,0.15);
       transform: translateY(-2px);
     }
-    .mp-product-img {
-      height: 100px;
-      background: rgba(255,255,255,0.02);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+    /* Product Card Badge Area (for badges like "Most Popular") */
+    .mp-product-header {
       position: relative;
-    }
-
-    /* Product Card Brand Badge */
-    .productCard__logoWrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 140px;
-      height: 52px;
-      padding: 10px 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-      transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-    .productCard__logo {
-      height: 30px;
-      width: auto;
-      object-fit: contain;
-    }
-    @media (max-width: 640px) {
-      .mp-product-img {
-        height: 88px;
-      }
-      .productCard__logoWrap {
-        height: 44px;
-        padding: 8px 12px;
-        max-width: 120px;
-      }
-      .productCard__logo {
-        height: 26px;
-      }
-    }
-    .mp-product:hover .productCard__logoWrap {
-      border-color: rgba(255,255,255,0.12);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+      padding: 16px 20px 0;
     }
     .mp-product-badge {
-      position: absolute;
-      top: 12px;
-      right: 12px;
+      display: inline-block;
       background: var(--color-brand-gray);
       color: var(--color-brand-dark);
       font-size: 10px;
@@ -1007,9 +964,6 @@
     }
 
     // Render products
-    // All product tiles use the MM+ white logo
-    const MM_PLUS_LOGO = '/images/mmpluswhite.png';
-
     function renderProducts(filter = 'all') {
       const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
 
@@ -1022,10 +976,7 @@
         const bullets = (p.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
         return `
           <div class="mp-product" data-id="${p.id}">
-            <div class="mp-product-img">
-              <div class="productCard__logoWrap"><img class="productCard__logo" src="${MM_PLUS_LOGO}" alt="Moonshot Medical + Performance" /></div>
-              ${p.badge ? `<div class="mp-product-badge">${escapeHtml(p.badge)}</div>` : ''}
-            </div>
+            ${p.badge ? `<div class="mp-product-header"><div class="mp-product-badge">${escapeHtml(p.badge)}</div></div>` : ''}
             <div class="mp-product-body">
               <div class="mp-product-name">${escapeHtml(p.name)}</div>
               <div class="mp-product-desc">${escapeHtml(p.description)}</div>
