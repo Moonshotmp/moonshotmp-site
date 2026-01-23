@@ -266,10 +266,42 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
       position: relative;
     }
-    .mp-product-img img {
-      max-width: 70%;
-      max-height: 70%;
+
+    /* Logo Container - makes logos pop */
+    .mp-logo-container {
+      height: 56px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    @media (max-width: 640px) {
+      .mp-logo-container {
+        height: 48px;
+        padding: 8px 10px;
+      }
+    }
+    .mp-logo-container img {
+      max-height: 100%;
+      max-width: 100%;
       object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.55));
+      transition: filter 0.3s ease;
+    }
+    .mp-product:hover .mp-logo-container {
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .mp-product:hover .mp-logo-container img {
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.6));
+    }
+
+    /* For dark logos that need lighter background */
+    .mp-logo-container.mp-logo-light-bg {
+      background: rgba(255,255,255,0.14);
     }
     .mp-product-badge {
       position: absolute;
@@ -810,10 +842,13 @@
       gridEl.innerHTML = filtered.map(p => {
         const img = resolveImage(p.image);
         const bullets = (p.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
+        // Use light background for dark logos (moonshot logo is dark)
+        const needsLightBg = p.image && (p.image.includes('fulllogo') || p.darkLogo);
+        const logoClass = needsLightBg ? 'mp-logo-container mp-logo-light-bg' : 'mp-logo-container';
         return `
           <div class="mp-product" data-id="${p.id}">
             <div class="mp-product-img">
-              ${img ? `<img src="${img}" alt="${escapeHtml(p.name)}" />` : ''}
+              ${img ? `<div class="${logoClass}"><img src="${img}" alt="${escapeHtml(p.name)}" /></div>` : ''}
               ${p.badge ? `<div class="mp-product-badge">${escapeHtml(p.badge)}</div>` : ''}
             </div>
             <div class="mp-product-body">
