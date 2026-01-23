@@ -20,8 +20,9 @@
 
         <div id="stripe-badge" class="badge" style="display:none; margin-bottom: 1rem;"></div>
 
-        <div style="display:flex; gap:10px; align-items:center; margin-top: 1rem;">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap: wrap; margin-top: 1rem;">
           <button id="connect" class="btn-primary" type="button">Connect Stripe</button>
+          <a id="billing" class="btn-primary" href="#" style="display:none;">Set Up Billing</a>
           <a id="store" class="btn-outline" href="#" style="display:none;">View Store</a>
         </div>
 
@@ -34,6 +35,7 @@
     const slugEl = document.getElementById("slug");
     const statusEl = document.getElementById("status");
     const storeEl = document.getElementById("store");
+    const billingEl = document.getElementById("billing");
     const connectBtn = document.getElementById("connect");
     const badgeEl = document.getElementById("stripe-badge");
 
@@ -60,7 +62,9 @@
       return data?.partner || data;
     }
 
-    function setConnectMode({ connected, onboarded }) {
+    function setConnectMode({ connected, onboarded, hasBilling }) {
+      billingEl.style.display = "none";
+
       if (!connected) {
         showBadge("Stripe: not connected");
         connectBtn.textContent = "Connect Stripe";
@@ -71,7 +75,13 @@
       if (onboarded) {
         showBadge("Stripe: connected ✅");
         connectBtn.style.display = "none";
-        setStatus("Stripe is connected and ready for payments.");
+
+        if (hasBilling) {
+          setStatus("Setup complete! Your store is ready to accept orders.");
+        } else {
+          billingEl.style.display = "inline-flex";
+          setStatus("Stripe is connected. Next: set up billing for wholesale costs.");
+        }
         return;
       }
 
@@ -94,13 +104,15 @@
       slugEl.textContent = slug;
       storeEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
       storeEl.style.display = "inline-flex";
+      billingEl.href = `/partners/billing.html?slug=${encodeURIComponent(slug)}`;
 
       try {
         const partner = await loadPartner(slug);
         const connected = !!partner?.stripe?.connectedAccountId;
         const onboarded = !!partner?.stripe?.onboarded;
+        const hasBilling = !!partner?.billing?.cardLast4;
 
-        setConnectMode({ connected, onboarded });
+        setConnectMode({ connected, onboarded, hasBilling });
       } catch (err) {
         setStatus(err?.message || String(err));
         // still allow connect attempt if partner exists but status call failed
@@ -119,7 +131,8 @@
         const partner = await loadPartner(slug);
         const connected = !!partner?.stripe?.connectedAccountId;
         const onboarded = !!partner?.stripe?.onboarded;
-        setConnectMode({ connected, onboarded });
+        const hasBilling = !!partner?.billing?.cardLast4;
+        setConnectMode({ connected, onboarded, hasBilling });
       } catch {}
     });
   </script>

@@ -15,17 +15,52 @@
       <p class="lead">Create your partner storefront first. Stripe connection happens on the next step.</p>
 
       <form id="partner-form" class="card" style="padding: 1.5rem;">
+        <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Business Information</h3>
+
         <label>
-          Partner name
-          <input id="name" name="name" placeholder="e.g. Acme Co" required />
+          Business name
+          <input id="name" name="name" placeholder="e.g. Acme Wellness Clinic" required />
         </label>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <label>
+            Contact name
+            <input id="contactName" name="contactName" placeholder="Dr. Jane Smith" required />
+          </label>
+          <label>
+            Phone number
+            <input id="phone" name="phone" type="tel" placeholder="(555) 123-4567" required />
+          </label>
+        </div>
 
         <label>
           Contact email
-          <input id="email" name="email" type="email" placeholder="name@acme.com" />
+          <input id="email" name="email" type="email" placeholder="jane@acmewellness.com" required />
         </label>
 
-        <div class="muted" style="margin-top: 0.75rem;">
+        <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Business Address</h3>
+
+        <label>
+          Street address
+          <input id="street" name="street" placeholder="123 Main Street, Suite 100" required />
+        </label>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
+          <label>
+            City
+            <input id="city" name="city" placeholder="Austin" required />
+          </label>
+          <label>
+            State
+            <input id="state" name="state" placeholder="TX" maxlength="2" required style="text-transform: uppercase;" />
+          </label>
+          <label>
+            ZIP
+            <input id="zip" name="zip" placeholder="78701" required />
+          </label>
+        </div>
+
+        <div class="muted" style="margin-top: 1rem;">
           Logo upload happens after you sign in (magic link) on the Manage Store page.
         </div>
 
@@ -46,7 +81,13 @@
   <script>
     const statusEl = document.getElementById("status");
     const nameEl = document.getElementById("name");
+    const contactNameEl = document.getElementById("contactName");
+    const phoneEl = document.getElementById("phone");
     const emailEl = document.getElementById("email");
+    const streetEl = document.getElementById("street");
+    const cityEl = document.getElementById("city");
+    const stateEl = document.getElementById("state");
+    const zipEl = document.getElementById("zip");
     const linkPreviewEl = document.getElementById("store-link-preview");
     const goConnectEl = document.getElementById("go-connect");
 
@@ -105,7 +146,15 @@
         createOnly: true,
         slug,
         name: nameEl.value.trim(),
+        contactName: contactNameEl.value.trim(),
+        phone: phoneEl.value.trim(),
         email: emailEl.value.trim(),
+        address: {
+          street: streetEl.value.trim(),
+          city: cityEl.value.trim(),
+          state: stateEl.value.trim().toUpperCase(),
+          zip: zipEl.value.trim(),
+        },
       };
 
       try {

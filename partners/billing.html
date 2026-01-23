@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://moonshotmp.com/partners/billing.html" />
+  <title>Billing Setup | Partner Portal</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    .card-element {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 1rem;
+    }
+    .card-element.StripeElement--focus {
+      border-color: rgba(255,255,255,0.4);
+    }
+    .card-element.StripeElement--invalid {
+      border-color: #f87171;
+    }
+    .card-errors {
+      color: #f87171;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      min-height: 1.25rem;
+    }
+    .success-box {
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      border-radius: 6px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .success-box h3 {
+      color: #4ade80;
+      margin-bottom: 0.5rem;
+    }
+    .card-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-family: var(--font-heading);
+    }
+    .info-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <section class="section section-dark bg-texture">
+    <div class="container" style="max-width: 560px;">
+      <h1>Billing Setup</h1>
+      <p class="lead">Add a payment method for wholesale diagnostic costs.</p>
+
+      <div class="card" style="padding: 1.5rem;">
+        <div class="muted">Partner</div>
+        <div id="partnerName" style="margin-bottom: 1rem; font-family: var(--font-heading); letter-spacing: 0.05em;"></div>
+
+        <div id="existing-card" style="display:none;">
+          <div class="success-box">
+            <h3>Card on File</h3>
+            <div class="card-display">
+              <span id="cardBrand"></span>
+              <span>****</span>
+              <span id="cardLast4"></span>
+            </div>
+            <p class="muted" style="margin-bottom: 1rem;">Your billing is set up. We'll charge this card for wholesale costs when patients complete their diagnostics.</p>
+            <button id="changeCard" class="btn-outline" type="button">Change Card</button>
+          </div>
+        </div>
+
+        <div id="card-form">
+          <div class="info-box">
+            <strong>How wholesale billing works:</strong><br>
+            When a patient purchases and completes a diagnostic through your store, we charge your card the wholesale cost. You keep the retail margin.
+          </div>
+
+          <label style="display:block; margin-bottom: 0.5rem;">Card details</label>
+          <div id="card-element" class="card-element"></div>
+          <div id="card-errors" class="card-errors"></div>
+
+          <button id="submit" class="btn-primary" type="button" style="width: 100%;">
+            Save Payment Method
+          </button>
+        </div>
+
+        <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+
+        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+          <a href="#" id="storeLink" class="btn-outline" style="width: 100%; text-align: center;">View Your Store</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const STRIPE_PUBLISHABLE_KEY = 'pk_live_51QKvLvRwXhRvdoNUGrGNE5MpLjrG2ib1LT0SWpZjHLYGYwzqZRJ6UuH8F5BQDP9Cm9HExONjlk1mq0B4kgxVgvOz00EeaxdOF0';
+
+    const statusEl = document.getElementById("status");
+    const partnerNameEl = document.getElementById("partnerName");
+    const cardFormEl = document.getElementById("card-form");
+    const existingCardEl = document.getElementById("existing-card");
+    const cardBrandEl = document.getElementById("cardBrand");
+    const cardLast4El = document.getElementById("cardLast4");
+    const submitBtn = document.getElementById("submit");
+    const changeCardBtn = document.getElementById("changeCard");
+    const storeLinkEl = document.getElementById("storeLink");
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    function getSlug() {
+      const url = new URL(window.location.href);
+      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    }
+
+    async function loadPartner(slug) {
+      const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load partner");
+      return data?.partner || data;
+    }
+
+    const slug = getSlug();
+    let stripe, elements, cardElement;
+    let clientSecret = null;
+
+    function showExistingCard(billing) {
+      cardBrandEl.textContent = (billing.cardBrand || "card").toUpperCase();
+      cardLast4El.textContent = billing.cardLast4;
+      existingCardEl.style.display = "block";
+      cardFormEl.style.display = "none";
+    }
+
+    function showCardForm() {
+      existingCardEl.style.display = "none";
+      cardFormEl.style.display = "block";
+    }
+
+    async function initStripe() {
+      stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+      elements = stripe.elements();
+
+      cardElement = elements.create("card", {
+        style: {
+          base: {
+            color: "#F0EEE9",
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontSize: "16px",
+            "::placeholder": { color: "#666" },
+          },
+          invalid: { color: "#f87171" },
+        },
+      });
+
+      cardElement.mount("#card-element");
+
+      cardElement.on("change", (event) => {
+        const errorsEl = document.getElementById("card-errors");
+        errorsEl.textContent = event.error ? event.error.message : "";
+      });
+    }
+
+    async function createSetupIntent() {
+      const res = await fetch("/.netlify/functions/stripe-setup-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to create setup intent");
+      return data.clientSecret;
+    }
+
+    async function savePaymentMethod(paymentMethodId) {
+      const res = await fetch("/.netlify/functions/stripe-save-payment-method", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, paymentMethodId }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to save payment method");
+      return data;
+    }
+
+    (async () => {
+      if (!slug) {
+        partnerNameEl.textContent = "(missing)";
+        setStatus("Missing slug. Go back to /partners/setup.html to create your store first.");
+        submitBtn.disabled = true;
+        return;
+      }
+
+      storeLinkEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+
+      try {
+        const partner = await loadPartner(slug);
+        partnerNameEl.textContent = partner.name || slug;
+
+        // Check if card already on file
+        if (partner.billing?.cardLast4) {
+          showExistingCard(partner.billing);
+        } else {
+          showCardForm();
+        }
+
+        await initStripe();
+      } catch (err) {
+        setStatus(err?.message || String(err));
+      }
+    })();
+
+    changeCardBtn.addEventListener("click", () => {
+      showCardForm();
+    });
+
+    submitBtn.addEventListener("click", async () => {
+      if (!slug) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Processing...";
+      setStatus("");
+
+      try {
+        // Create SetupIntent if we don't have one
+        if (!clientSecret) {
+          clientSecret = await createSetupIntent();
+        }
+
+        // Confirm SetupIntent with card
+        const { setupIntent, error } = await stripe.confirmCardSetup(clientSecret, {
+          payment_method: { card: cardElement },
+        });
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        // Save payment method to partner
+        const result = await savePaymentMethod(setupIntent.payment_method);
+
+        // Show success
+        showExistingCard({
+          cardBrand: result.cardBrand,
+          cardLast4: result.cardLast4,
+        });
+
+        setStatus("Payment method saved successfully!");
+        clientSecret = null; // Reset for next time
+
+      } catch (err) {
+        setStatus(err?.message || "Failed to save card");
+        clientSecret = null; // Reset on error
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Save Payment Method";
+      }
+    });
+  </script>
+</body>
+</html>

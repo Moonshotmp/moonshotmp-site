@@ -216,11 +216,21 @@
       <div class="partner-header">
         <div class="partner-name" id="partnerName">-</div>
         <div class="partner-meta">
+          <span id="partnerContact">-</span>
           <span id="partnerEmail">-</span>
           <span id="partnerPhone">-</span>
+        </div>
+        <div class="partner-meta" style="margin-top: 8px;">
+          <span id="partnerAddress" style="color:#666;">-</span>
+        </div>
+        <div class="partner-meta" style="margin-top: 12px;">
           <span>
             <span class="status-dot" id="statusDot"></span>
             <span id="statusText">-</span>
+          </span>
+          <span>
+            <span class="status-dot" id="billingDot"></span>
+            <span id="billingText">-</span>
           </span>
           <span>
             <a id="storefrontLink" href="#" target="_blank" style="color:#B2BFBE;">View Storefront &rarr;</a>
@@ -360,9 +370,17 @@
 
         // Display partner info
         document.getElementById('partnerName').textContent = partner.name || partner.slug;
+        document.getElementById('partnerContact').textContent = partner.contactName || '-';
         document.getElementById('partnerEmail').textContent = partner.email || '-';
         document.getElementById('partnerPhone').textContent = partner.phone || '-';
         document.getElementById('storefrontLink').href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+
+        // Address
+        const addr = partner.address;
+        if (addr && addr.street) {
+          document.getElementById('partnerAddress').textContent =
+            `${addr.street}, ${addr.city}, ${addr.state} ${addr.zip}`;
+        }
 
         // Stripe status
         const accountId = partner.stripe?.connectedAccountId;
@@ -385,6 +403,17 @@
         } else {
           statusDot.className = 'status-dot gray';
           statusText.textContent = 'Not Connected';
+        }
+
+        // Billing status
+        const billingDot = document.getElementById('billingDot');
+        const billingText = document.getElementById('billingText');
+        if (partner.billing?.cardLast4) {
+          billingDot.className = 'status-dot green';
+          billingText.textContent = `Billing: ${(partner.billing.cardBrand || 'Card').toUpperCase()} ****${partner.billing.cardLast4}`;
+        } else {
+          billingDot.className = 'status-dot gray';
+          billingText.textContent = 'No card on file';
         }
 
         document.getElementById('loadingState').style.display = 'none';
