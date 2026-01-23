@@ -34,22 +34,6 @@
       "active": true
     },
     {
-      "id": "dexa-followup",
-      "name": "Follow-up DEXA Scan",
-      "category": "dexa",
-      "description": "Track your progress with a follow-up body composition scan",
-      "bullets": [
-        "Compare to baseline results",
-        "Track lean mass & fat changes",
-        "Adjust your program accordingly"
-      ],
-      "price": 99,
-      "image": "dexa.png",
-      "sku": "DEXA-002",
-      "duration": "15 min scan + review",
-      "active": true
-    },
-    {
       "id": "baseline-bundle",
       "name": "Performance Baseline Bundle",
       "category": "bundles",
@@ -64,21 +48,6 @@
       "sku": "BUNDLE-001",
       "duration": "Same-day appointments available",
       "badge": "Best Value",
-      "active": true
-    },
-    {
-      "id": "moonshot-test-1",
-      "name": "Test Checkout ($1)",
-      "category": "other",
-      "description": "Internal test item for verifying checkout flow",
-      "bullets": [
-        "Test payment processing",
-        "Verify Stripe integration",
-        "Non-clinical test charge"
-      ],
-      "price": 1,
-      "image": "fulllogodarkcentered.png",
-      "sku": "TEST-001",
       "active": true
     }
   ]
