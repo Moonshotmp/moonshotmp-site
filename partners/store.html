@@ -242,7 +242,7 @@
       transform: translateY(-2px);
     }
     .mp-product-img {
-      height: 160px;
+      height: 100px;
       background: rgba(255,255,255,0.02);
       display: flex;
       align-items: center;
@@ -251,34 +251,41 @@
       position: relative;
     }
 
-    /* Logo Container - MM+ white logo */
-    .mp-logo-container {
-      padding: 8px 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 12px;
+    /* Product Card Brand Badge */
+    .productCard__logoWrap {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      max-width: 140px;
+      height: 52px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    .mp-logo-container img {
-      height: 34px;
+    .productCard__logo {
+      height: 30px;
       width: auto;
       object-fit: contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.6));
-      transition: filter 0.3s ease;
     }
     @media (max-width: 640px) {
-      .mp-logo-container img {
-        height: 28px;
+      .mp-product-img {
+        height: 88px;
+      }
+      .productCard__logoWrap {
+        height: 44px;
+        padding: 8px 12px;
+        max-width: 120px;
+      }
+      .productCard__logo {
+        height: 26px;
       }
     }
-    .mp-product:hover .mp-logo-container {
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 10px 30px rgba(0,0,0,0.35);
-    }
-    .mp-product:hover .mp-logo-container img {
-      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.7));
+    .mp-product:hover .productCard__logoWrap {
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.45);
     }
     .mp-product-badge {
       position: absolute;
@@ -1016,7 +1023,7 @@
         return `
           <div class="mp-product" data-id="${p.id}">
             <div class="mp-product-img">
-              <div class="mp-logo-container"><img src="${MM_PLUS_LOGO}" alt="Moonshot Medical + Performance" /></div>
+              <div class="productCard__logoWrap"><img class="productCard__logo" src="${MM_PLUS_LOGO}" alt="Moonshot Medical + Performance" /></div>
               ${p.badge ? `<div class="mp-product-badge">${escapeHtml(p.badge)}</div>` : ''}
             </div>
             <div class="mp-product-body">
