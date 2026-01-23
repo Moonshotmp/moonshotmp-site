@@ -3,194 +3,1007 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Partner Store</title>
+  <title>Moonshot Diagnostics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/partners/styles.css" />
-
   <style>
-    /* Store-only sizing overrides (kept minimal, no duplicates) */
-    #catalog-grid{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-      gap: 16px;
-      justify-content: start;
+    /* Partner Marketplace Styles */
+    body { padding-top: 0; }
+    main { padding-top: 0; }
+
+    /* Header */
+    .mp-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(16, 25, 33, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 24px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    @media (min-width: 1200px){
-      #catalog-grid{ justify-content: center; }
+    .mp-header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mp-header-logo img {
+      height: 36px;
+      width: auto;
+    }
+    .mp-header-logo span {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-brand-light);
+    }
+    .mp-cart-btn {
+      position: relative;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 10px 18px;
+      color: var(--color-brand-light);
+      font-family: var(--font-heading);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .mp-cart-btn:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .mp-cart-count {
+      background: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    #catalog-grid .card{
-      padding: 0;
-      border-radius: 14px;
-      overflow: hidden;
+    /* Hero */
+    .mp-hero {
+      padding: 120px 24px 60px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--color-brand-dark) 0%, rgba(16,25,33,0.95) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    #catalog-grid .img-wrap{
-      height: 140px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    .mp-hero-partner {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
       background: rgba(255,255,255,0.04);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 12px 24px;
+      margin-bottom: 32px;
     }
-    #catalog-grid .card-img{
-      max-width: 78%;
-      max-height: 78%;
+    .mp-hero-partner-logo {
+      width: 140px;
+      height: 140px;
       object-fit: contain;
-      display:block;
+      border-radius: 8px;
     }
-    #catalog-grid .card-body{ padding: 14px; }
-    #catalog-grid .card-title{
-      font-size: 16px;
-      font-weight: 700;
-      margin: 0 0 6px 0;
+    .mp-hero-partner-text {
+      text-align: left;
     }
-    #catalog-grid .card-desc{
+    .mp-hero-partner-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-brand-gray);
+      margin-bottom: 4px;
+    }
+    .mp-hero-partner-name {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-brand-light);
+    }
+    .mp-hero h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .mp-hero-sub {
+      font-size: 17px;
+      color: var(--color-brand-gray);
+      max-width: 540px;
+      margin: 0 auto 32px;
+      line-height: 1.5;
+    }
+    .mp-trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .mp-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 13px;
-      opacity: 0.85;
-      margin: 0 0 10px 0;
+      color: var(--color-brand-gray);
     }
-    #catalog-grid .pill{
-      display:inline-block;
-      font-size:12px;
-      border:1px solid rgba(255,255,255,0.14);
-      padding:4px 10px;
-      border-radius:999px;
-      margin-bottom: 10px;
+    .mp-trust-item svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.7;
     }
-    #catalog-grid .btn{
-      margin-top: 8px;
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color: inherit;
+
+    /* How it Works */
+    .mp-steps {
+      padding: 48px 24px;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mp-steps-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 640px) {
+      .mp-steps-inner { grid-template-columns: 1fr; gap: 16px; }
+    }
+    .mp-step {
+      text-align: center;
+      padding: 20px;
+    }
+    .mp-step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .mp-step-title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .mp-step-desc {
+      font-size: 13px;
+      color: var(--color-brand-gray);
+    }
+
+    /* Category Tabs */
+    .mp-catalog {
+      padding: 48px 24px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .mp-catalog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .mp-catalog-title {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      margin: 0;
+    }
+    .mp-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mp-tab {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 13px;
+      color: var(--color-brand-gray);
       cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+    .mp-tab:hover {
+      border-color: rgba(255,255,255,0.3);
+      color: var(--color-brand-light);
+    }
+    .mp-tab.active {
+      background: var(--color-brand-gray);
+      border-color: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+    }
+
+    /* Product Grid */
+    .mp-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .mp-product {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+    .mp-product:hover {
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+    }
+    .mp-product-img {
+      height: 160px;
+      background: rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .mp-product-img img {
+      max-width: 70%;
+      max-height: 70%;
+      object-fit: contain;
+    }
+    .mp-product-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .mp-product-body {
+      padding: 20px;
+    }
+    .mp-product-name {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .mp-product-desc {
+      font-size: 14px;
+      color: var(--color-brand-gray);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .mp-product-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+    }
+    .mp-product-bullets li {
+      font-size: 13px;
+      color: var(--color-brand-gray);
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .mp-product-bullets li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #6c9;
+    }
+    .mp-product-duration {
+      font-size: 12px;
+      color: var(--color-brand-gray);
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+    .mp-product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mp-product-price {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .mp-add-btn {
+      background: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mp-add-btn:hover {
+      background: var(--color-brand-light);
+      transform: scale(1.02);
+    }
+
+    /* Cart Drawer */
+    .mp-cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    .mp-cart-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .mp-cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 400px;
+      max-width: 100%;
+      background: var(--color-brand-dark);
+      border-left: 1px solid rgba(255,255,255,0.1);
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .mp-cart-drawer.open {
+      transform: translateX(0);
+    }
+    .mp-cart-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mp-cart-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      margin: 0;
+    }
+    .mp-cart-close {
+      background: none;
+      border: none;
+      color: var(--color-brand-gray);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .mp-cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+    .mp-cart-empty {
+      text-align: center;
+      color: var(--color-brand-gray);
+      padding: 40px 0;
+    }
+    .mp-cart-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mp-cart-item-img {
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mp-cart-item-img img {
+      max-width: 80%;
+      max-height: 80%;
+    }
+    .mp-cart-item-info {
+      flex: 1;
+    }
+    .mp-cart-item-name {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .mp-cart-item-price {
+      font-size: 14px;
+      color: var(--color-brand-gray);
+    }
+    .mp-cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .mp-qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: var(--color-brand-light);
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .mp-qty-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .mp-cart-item-qty {
+      min-width: 24px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .mp-cart-item-remove {
+      background: none;
+      border: none;
+      color: #e66;
+      font-size: 12px;
+      cursor: pointer;
+      margin-left: auto;
+    }
+    .mp-cart-footer {
+      padding: 20px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .mp-cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-heading);
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    .mp-checkout-btn {
+      width: 100%;
+      background: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+      border: none;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mp-checkout-btn:hover {
+      background: var(--color-brand-light);
+    }
+    .mp-checkout-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .mp-cart-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-brand-gray);
+      margin-top: 12px;
+    }
+
+    /* FAQ Section */
+    .mp-faq {
+      padding: 60px 24px;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .mp-faq-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .mp-faq h2 {
+      text-align: center;
+      margin-bottom: 32px;
+      font-size: 24px;
+    }
+    .mp-faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 0;
+    }
+    .mp-faq-q {
+      font-weight: 500;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .mp-faq-a {
+      font-size: 14px;
+      color: var(--color-brand-gray);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .mp-footer {
+      padding: 40px 24px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .mp-footer-logo {
+      height: 32px;
+      margin-bottom: 16px;
+    }
+    .mp-footer-text {
+      font-size: 13px;
+      color: var(--color-brand-gray);
+    }
+    .mp-footer-links {
+      margin-top: 12px;
+    }
+    .mp-footer-links a {
+      color: var(--color-brand-gray);
+      font-size: 13px;
+      margin: 0 12px;
+    }
+    .mp-footer-links a:hover {
+      color: var(--color-brand-light);
+    }
+
+    /* Loading & Error States */
+    .mp-loading {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--color-brand-gray);
+    }
+    .mp-error {
+      text-align: center;
+      padding: 80px 24px;
+      color: #e66;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .mp-hero-partner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .mp-hero-partner-text {
+        text-align: center;
+      }
+      .mp-trust-row {
+        gap: 16px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <main class="container">
-    <h1 id="title">Partner Store</h1>
 
-    <div id="partner-logo-wrap" style="display:none;margin:8px 0 10px 0;">
-      <img id="partner-logo" alt="Partner logo"
-        style="max-height:70px;max-width:220px;object-fit:contain;display:block;" />
+  <!-- Header -->
+  <header class="mp-header">
+    <div class="mp-header-logo">
+      <img src="/images/fulllogodarkcentered.png" alt="Moonshot" />
     </div>
+    <button class="mp-cart-btn" id="cartBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      Cart
+      <span class="mp-cart-count" id="cartCount">0</span>
+    </button>
+  </header>
 
-    <p id="subtitle"></p>
+  <!-- Main Content -->
+  <main>
+    <!-- Hero -->
+    <section class="mp-hero">
+      <div id="partnerBlock" class="mp-hero-partner" style="display:none;">
+        <img id="partnerLogo" class="mp-hero-partner-logo" alt="Partner" />
+        <div class="mp-hero-partner-text">
+          <div class="mp-hero-partner-label">Referred by</div>
+          <div class="mp-hero-partner-name" id="partnerName">Partner</div>
+        </div>
+      </div>
+      <h1 id="heroTitle">Moonshot Diagnostics</h1>
+      <p class="mp-hero-sub">Clinical-grade body composition and bloodwork for performance, longevity, and metabolic optimization.</p>
+      <div class="mp-trust-row">
+        <div class="mp-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Medical oversight
+        </div>
+        <div class="mp-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Secure checkout
+        </div>
+        <div class="mp-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Fast scheduling
+        </div>
+      </div>
+    </section>
 
-    <div style="margin-top:10px; opacity:0.9; font-size:14px;">
-      <a id="manageLink" class="btn-primary" href="#" style="padding:6px 10px; display:inline-flex;">
-        Partner login
-      </a>
-    </div>
+    <!-- How it Works -->
+    <section class="mp-steps">
+      <div class="mp-steps-inner">
+        <div class="mp-step">
+          <div class="mp-step-num">1</div>
+          <div class="mp-step-title">Choose Your Diagnostics</div>
+          <div class="mp-step-desc">Select the scans and panels that match your goals</div>
+        </div>
+        <div class="mp-step">
+          <div class="mp-step-num">2</div>
+          <div class="mp-step-title">Checkout Securely</div>
+          <div class="mp-step-desc">Complete your purchase with Stripe</div>
+        </div>
+        <div class="mp-step">
+          <div class="mp-step-num">3</div>
+          <div class="mp-step-title">Get Scheduled</div>
+          <div class="mp-step-desc">We'll contact you within 24 hours to book</div>
+        </div>
+      </div>
+    </section>
 
-    <section style="margin-top:24px;">
-      
-      <div id="catalog-grid"></div>
-      <pre id="catalog-status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+    <!-- Catalog -->
+    <section class="mp-catalog">
+      <div class="mp-catalog-header">
+        <h2 class="mp-catalog-title">Available Diagnostics</h2>
+        <div class="mp-tabs" id="tabs">
+          <button class="mp-tab active" data-cat="all">All</button>
+          <button class="mp-tab" data-cat="dexa">DEXA Scans</button>
+          <button class="mp-tab" data-cat="labs">Blood Panels</button>
+          <button class="mp-tab" data-cat="bundles">Bundles</button>
+        </div>
+      </div>
+      <div id="loadingState" class="mp-loading">Loading diagnostics...</div>
+      <div id="errorState" class="mp-error" style="display:none;"></div>
+      <div class="mp-products" id="productsGrid"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mp-faq">
+      <div class="mp-faq-inner">
+        <h2>Frequently Asked Questions</h2>
+        <div class="mp-faq-item">
+          <div class="mp-faq-q">Do I need to be an existing patient?</div>
+          <div class="mp-faq-a">No. These diagnostics are available to anyone, no prior relationship required. After your purchase, our team will reach out to schedule your appointment.</div>
+        </div>
+        <div class="mp-faq-item">
+          <div class="mp-faq-q">Where do I go for my appointment?</div>
+          <div class="mp-faq-a">Our clinic is located in Austin, TX. Full address and parking details will be sent with your appointment confirmation.</div>
+        </div>
+        <div class="mp-faq-item">
+          <div class="mp-faq-q">How long until I get my results?</div>
+          <div class="mp-faq-a">DEXA results are reviewed immediately after your scan. Blood panel results are typically ready within 3-5 business days.</div>
+        </div>
+        <div class="mp-faq-item">
+          <div class="mp-faq-q">What happens after I purchase?</div>
+          <div class="mp-faq-a">You'll receive a confirmation email, and our scheduling team will contact you within 24 hours to book your appointment at a time that works for you.</div>
+        </div>
+      </div>
     </section>
   </main>
 
+  <!-- Footer -->
+  <footer class="mp-footer">
+    <img src="/images/fulllogodarkcentered.png" alt="Moonshot" class="mp-footer-logo" />
+    <div class="mp-footer-text">Moonshot Medical Performance</div>
+    <div class="mp-footer-links">
+      <a href="mailto:info@moonshotmp.com">Contact</a>
+      <a href="/partners/login.html" id="partnerLoginLink">Partner Login</a>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <div class="mp-cart-overlay" id="cartOverlay"></div>
+  <div class="mp-cart-drawer" id="cartDrawer">
+    <div class="mp-cart-header">
+      <h3 class="mp-cart-title">Your Cart</h3>
+      <button class="mp-cart-close" id="cartClose">&times;</button>
+    </div>
+    <div class="mp-cart-items" id="cartItems">
+      <div class="mp-cart-empty">Your cart is empty</div>
+    </div>
+    <div class="mp-cart-footer">
+      <div class="mp-cart-total">
+        <span>Total</span>
+        <span id="cartTotal">$0</span>
+      </div>
+      <button class="mp-checkout-btn" id="checkoutBtn" disabled>Proceed to Checkout</button>
+      <div class="mp-cart-note">Secure payment via Stripe</div>
+    </div>
+  </div>
+
+  <!-- Cart Module -->
+  <script src="/partners/cart.js"></script>
+
   <script>
-    const titleEl = document.getElementById("title");
-    const subtitleEl = document.getElementById("subtitle");
-    const gridEl = document.getElementById("catalog-grid");
-    const statusEl = document.getElementById("catalog-status");
-    const manageLinkEl = document.getElementById("manageLink");
+    // State
+    let products = [];
+    let partner = null;
+    let currentCategory = 'all';
 
-    function getSlugFromUrl() {
-      const url = new URL(window.location.href);
-      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    // DOM Elements
+    const loadingEl = document.getElementById('loadingState');
+    const errorEl = document.getElementById('errorState');
+    const gridEl = document.getElementById('productsGrid');
+    const tabsEl = document.getElementById('tabs');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartClose = document.getElementById('cartClose');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    // Get slug from URL
+    function getSlug() {
+      return new URL(window.location.href).searchParams.get('slug')?.trim().toLowerCase() || '';
     }
 
+    // Load partner data
     async function loadPartner(slug) {
-      const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load partner");
-      return data;
-    }
-
-    async function loadCatalog() {
-      const res = await fetch("/partners/catalog.json", { cache: "no-store" });
-      const data = await res.json();
-      return Array.isArray(data) ? data : (data.products || []);
-    }
-
-    async function startCheckout(slug, productId) {
-      const res = await fetch("/.netlify/functions/create-checkout-session", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ slug, productId }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        alert(data.error || "Checkout failed");
-        return;
+      if (!slug) return null;
+      try {
+        const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
+        if (!res.ok) return null;
+        return await res.json();
+      } catch {
+        return null;
       }
-
-      window.location.href = data.url;
     }
 
-    function escapeHtml(s) {
-      return String(s ?? "").replace(/[&<>"']/g, c =>
-        ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c])
-      );
+    // Load catalog
+    async function loadCatalog() {
+      const res = await fetch('/partners/catalog.json', { cache: 'no-store' });
+      const data = await res.json();
+      return (data.products || data).filter(p => p.active !== false);
     }
 
+    // Resolve image URL
     function resolveImage(img) {
-      if (!img) return "";
-      if (img.startsWith("http") || img.startsWith("/")) return img;
+      if (!img) return '';
+      if (img.startsWith('http') || img.startsWith('/')) return img;
       return `/images/${img}`;
     }
 
-    function renderCatalog(products, slug) {
-      gridEl.innerHTML = products.map(p => {
+    // Escape HTML
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
+      );
+    }
+
+    // Render products
+    function renderProducts(filter = 'all') {
+      const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = '<div class="mp-loading">No diagnostics in this category</div>';
+        return;
+      }
+
+      gridEl.innerHTML = filtered.map(p => {
         const img = resolveImage(p.image);
+        const bullets = (p.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
         return `
-          <div class="card">
-            <div class="img-wrap">
-              ${img ? `<img class="card-img" src="${img}" />` : `<div>No image</div>`}
+          <div class="mp-product" data-id="${p.id}">
+            <div class="mp-product-img">
+              ${img ? `<img src="${img}" alt="${escapeHtml(p.name)}" />` : ''}
+              ${p.badge ? `<div class="mp-product-badge">${escapeHtml(p.badge)}</div>` : ''}
             </div>
-            <div class="card-body">
-              <div class="card-title">${escapeHtml(p.name)}</div>
-              <div class="card-desc">${escapeHtml(p.description || "")}</div>
-              <div class="pill">$${p.price}</div>
-              <button class="btn" onclick="startCheckout('${slug}', '${p.id}')">Buy</button>
+            <div class="mp-product-body">
+              <div class="mp-product-name">${escapeHtml(p.name)}</div>
+              <div class="mp-product-desc">${escapeHtml(p.description)}</div>
+              ${bullets ? `<ul class="mp-product-bullets">${bullets}</ul>` : ''}
+              ${p.duration ? `<div class="mp-product-duration">${escapeHtml(p.duration)}</div>` : ''}
+              <div class="mp-product-footer">
+                <div class="mp-product-price">$${p.price}</div>
+                <button class="mp-add-btn" onclick="addToCart('${p.id}')">Add to Cart</button>
+              </div>
             </div>
           </div>
         `;
-      }).join("");
+      }).join('');
     }
 
-    window.addEventListener("DOMContentLoaded", async () => {
-      const slug = getSlugFromUrl();
-      if (!slug) return;
+    // Add to cart
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      MoonshotCart.addItem(product);
+      openCart();
+    }
 
-      // Always enable Partner login link (no auth leakage; it just requests magic link)
-      manageLinkEl.href = `/partners/login.html?slug=${encodeURIComponent(slug)}`;
+    // Update cart UI
+    function updateCartUI() {
+      const items = MoonshotCart.getItems();
+      const count = MoonshotCart.getItemCount();
+      const total = MoonshotCart.getTotal();
+
+      cartCountEl.textContent = count;
+      cartTotalEl.textContent = `$${total}`;
+      checkoutBtn.disabled = items.length === 0;
+
+      if (items.length === 0) {
+        cartItemsEl.innerHTML = '<div class="mp-cart-empty">Your cart is empty</div>';
+        return;
+      }
+
+      cartItemsEl.innerHTML = items.map(item => {
+        const img = resolveImage(item.image);
+        return `
+          <div class="mp-cart-item">
+            <div class="mp-cart-item-img">
+              ${img ? `<img src="${img}" alt="" />` : ''}
+            </div>
+            <div class="mp-cart-item-info">
+              <div class="mp-cart-item-name">${escapeHtml(item.name)}</div>
+              <div class="mp-cart-item-price">$${item.price}</div>
+              <div class="mp-cart-item-actions">
+                <button class="mp-qty-btn" onclick="updateQty('${item.id}', ${item.quantity - 1})">−</button>
+                <span class="mp-cart-item-qty">${item.quantity}</span>
+                <button class="mp-qty-btn" onclick="updateQty('${item.id}', ${item.quantity + 1})">+</button>
+                <button class="mp-cart-item-remove" onclick="removeItem('${item.id}')">Remove</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateQty(id, qty) {
+      MoonshotCart.updateQuantity(id, qty);
+    }
+
+    function removeItem(id) {
+      MoonshotCart.removeItem(id);
+    }
+
+    // Cart drawer controls
+    function openCart() {
+      cartOverlay.classList.add('open');
+      cartDrawer.classList.add('open');
+    }
+
+    function closeCart() {
+      cartOverlay.classList.remove('open');
+      cartDrawer.classList.remove('open');
+    }
+
+    // Checkout
+    async function handleCheckout() {
+      const slug = getSlug();
+      const items = MoonshotCart.getItems();
+
+      if (items.length === 0) return;
+
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = 'Processing...';
 
       try {
-        const [partner, products] = await Promise.all([ loadPartner(slug), loadCatalog() ]);
+        const res = await fetch('/.netlify/functions/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slug,
+            items: items.map(i => ({ id: i.id, quantity: i.quantity }))
+          })
+        });
 
-        titleEl.textContent = `${partner.name} Store`;
-        subtitleEl.textContent = ""; // never show "slug"
+        const data = await res.json();
 
-        // Optional: render partner logo if present
-        const wrap = document.getElementById("partner-logo-wrap");
-        const img = document.getElementById("partner-logo");
-        // Logo is stored at deterministic key logos/{slug}
-        const logoKey = `logos/${slug}`;
-        img.src = `/.netlify/functions/logo-get?key=${encodeURIComponent(logoKey)}`;
-        img.onload = () => { wrap.style.display = "block"; };
-        img.onerror = () => { wrap.style.display = "none"; };
+        if (!res.ok) {
+          throw new Error(data.error || 'Checkout failed');
+        }
 
-        renderCatalog(products, slug);
+        // Clear cart and redirect
+        MoonshotCart.clear();
+        window.location.href = data.url;
       } catch (err) {
-        statusEl.textContent = err.message;
+        alert(err.message || 'Checkout failed. Please try again.');
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = 'Proceed to Checkout';
+      }
+    }
+
+    // Initialize
+    async function init() {
+      const slug = getSlug();
+      MoonshotCart.setSlug(slug);
+
+      // Update partner login link
+      if (slug) {
+        document.getElementById('partnerLoginLink').href = `/partners/login.html?slug=${encodeURIComponent(slug)}`;
+      }
+
+      try {
+        // Load partner and catalog in parallel
+        const [partnerData, catalogData] = await Promise.all([
+          loadPartner(slug),
+          loadCatalog()
+        ]);
+
+        partner = partnerData;
+        products = catalogData;
+
+        // Update hero with partner info
+        if (partner) {
+          document.getElementById('heroTitle').textContent = `${partner.name}`;
+          document.getElementById('partnerName').textContent = partner.name;
+
+          // Show partner block with logo
+          const partnerBlock = document.getElementById('partnerBlock');
+          const partnerLogo = document.getElementById('partnerLogo');
+
+          // Try to load partner logo
+          const logoKey = `logos/${slug}`;
+          partnerLogo.src = `/.netlify/functions/logo-get?key=${encodeURIComponent(logoKey)}`;
+          partnerLogo.onload = () => { partnerBlock.style.display = 'inline-flex'; };
+          partnerLogo.onerror = () => {
+            // Show partner block without logo if no logo exists
+            partnerLogo.style.display = 'none';
+            partnerBlock.style.display = 'inline-flex';
+          };
+        }
+
+        // Render products
+        loadingEl.style.display = 'none';
+        renderProducts();
+
+      } catch (err) {
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+        errorEl.textContent = err.message || 'Failed to load. Please refresh.';
+      }
+
+      // Setup cart listener
+      MoonshotCart.addListener(updateCartUI);
+      updateCartUI();
+    }
+
+    // Event listeners
+    cartBtn.addEventListener('click', openCart);
+    cartOverlay.addEventListener('click', closeCart);
+    cartClose.addEventListener('click', closeCart);
+    checkoutBtn.addEventListener('click', handleCheckout);
+
+    // Tab filtering
+    tabsEl.addEventListener('click', (e) => {
+      if (e.target.classList.contains('mp-tab')) {
+        tabsEl.querySelectorAll('.mp-tab').forEach(t => t.classList.remove('active'));
+        e.target.classList.add('active');
+        currentCategory = e.target.dataset.cat;
+        renderProducts(currentCategory);
       }
     });
+
+    // Start
+    init();
   </script>
 </body>
 </html>

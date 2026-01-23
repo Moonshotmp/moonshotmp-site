@@ -1,30 +1,84 @@
 {
   "products": [
     {
-      "id": "moonshot-test-1",
-      "name": "Moonshot $1 Test Service",
-      "description": "Internal test item used to verify checkout, payments, and Stripe Connect routing. This is a non-clinical, non-deliverable test charge.",
-      "price": 1,
-      "image": "fulllogodarkcentered.png",
-      "sku": "TEST-001",
-      "active": true
-    },
-    {
       "id": "dexa-scan",
-      "name": "DEXA Scan",
-      "description": "Full-body DEXA scan measuring body fat percentage, lean mass distribution, bone density, and visceral fat. Provides a precise baseline for body composition, metabolic health, and performance tracking.",
+      "name": "DEXA Body Composition Scan",
+      "category": "dexa",
+      "description": "Clinical-grade body composition analysis with bone density assessment",
+      "bullets": [
+        "Precise body fat % and lean mass by region",
+        "Bone mineral density screening",
+        "Visceral fat measurement"
+      ],
       "price": 149,
       "image": "dexa.png",
       "sku": "DEXA-001",
+      "duration": "15 min scan + review",
+      "badge": "Most Popular",
       "active": true
     },
     {
       "id": "core-labs",
-      "name": "Comprehensive Performance Blood Panel",
-      "description": "A systems-level blood analysis covering 50+ actionable biomarkers across cardiovascular health, metabolic function, hormones, thyroid, inflammation, and key nutrient status. This panel goes beyond standard bloodwork to evaluate how your body is functioning right now — identifying early metabolic resistance, hormonal imbalances, inflammation load, and recovery limitations. By analyzing multiple systems together, we establish your personal performance baseline and uncover root causes behind fatigue, stubborn body fat, low drive, poor recovery, and long-term health risk.",
+      "name": "Comprehensive Blood Panel",
+      "category": "labs",
+      "description": "50+ biomarkers covering metabolic, hormonal, and cardiovascular health",
+      "bullets": [
+        "Complete metabolic & lipid panel",
+        "Hormone optimization markers",
+        "Inflammation & nutrient status"
+      ],
       "price": 299,
       "image": "fulllabs.png",
       "sku": "LAB-COMP",
+      "duration": "Results in 3-5 days",
+      "active": true
+    },
+    {
+      "id": "dexa-followup",
+      "name": "Follow-up DEXA Scan",
+      "category": "dexa",
+      "description": "Track your progress with a follow-up body composition scan",
+      "bullets": [
+        "Compare to baseline results",
+        "Track lean mass & fat changes",
+        "Adjust your program accordingly"
+      ],
+      "price": 99,
+      "image": "dexa.png",
+      "sku": "DEXA-002",
+      "duration": "15 min scan + review",
+      "active": true
+    },
+    {
+      "id": "baseline-bundle",
+      "name": "Performance Baseline Bundle",
+      "category": "bundles",
+      "description": "Complete starting point: DEXA scan + full blood panel at a bundled rate",
+      "bullets": [
+        "DEXA body composition scan",
+        "Comprehensive 50+ biomarker panel",
+        "Save $49 vs. purchasing separately"
+      ],
+      "price": 399,
+      "image": "fulllogodarkcentered.png",
+      "sku": "BUNDLE-001",
+      "duration": "Same-day appointments available",
+      "badge": "Best Value",
+      "active": true
+    },
+    {
+      "id": "moonshot-test-1",
+      "name": "Test Checkout ($1)",
+      "category": "other",
+      "description": "Internal test item for verifying checkout flow",
+      "bullets": [
+        "Test payment processing",
+        "Verify Stripe integration",
+        "Non-clinical test charge"
+      ],
+      "price": 1,
+      "image": "fulllogodarkcentered.png",
+      "sku": "TEST-001",
       "active": true
     }
   ]
