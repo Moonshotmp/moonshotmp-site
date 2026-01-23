@@ -313,6 +313,15 @@
   ]
 }
     </script>
+
+    <!-- Handle Netlify Identity invite/recovery tokens -->
+    <script>
+      if (window.location.hash.includes('invite_token') ||
+          window.location.hash.includes('recovery_token') ||
+          window.location.hash.includes('confirmation_token')) {
+        window.location.href = '/admin/login.html' + window.location.hash;
+      }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
