@@ -105,6 +105,10 @@ export default async (req) => {
 
     const stripe = new Stripe(secretKey, { apiVersion: "2024-06-20" });
 
+    // Prepare metadata (truncate to stay within Stripe limits)
+    const orderItemsJson = JSON.stringify(itemDetails).slice(0, 450);
+    const partnerName = partner.name || slug;
+
     const session = await stripe.checkout.sessions.create(
       {
         mode: "payment",
@@ -112,10 +116,27 @@ export default async (req) => {
         success_url: `${siteUrl}/partners/success.html?slug=${encodeURIComponent(slug)}`,
         cancel_url: `${siteUrl}/partners/cancel.html?slug=${encodeURIComponent(slug)}`,
         client_reference_id: slug,
+
+        // Collect customer info
+        customer_creation: "always",
+        phone_number_collection: { enabled: true },
+        billing_address_collection: "required",
+
+        // Session-level metadata
         metadata: {
-          slug,
-          partnerName: partner.name || slug,
-          items: JSON.stringify(itemDetails).slice(0, 500),
+          partner_slug: slug,
+          partner_name: partnerName,
+          order_items: orderItemsJson,
+        },
+
+        // PaymentIntent metadata (shows on Charges in dashboard)
+        payment_intent_data: {
+          metadata: {
+            partner_slug: slug,
+            partner_name: partnerName,
+            storefront_slug: slug,
+            order_items: orderItemsJson,
+          },
         },
       },
       { stripeAccount: connectedAccountId }
