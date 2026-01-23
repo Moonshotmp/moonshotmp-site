@@ -533,34 +533,138 @@
       margin-top: 12px;
     }
 
-    /* FAQ Section */
+    /* Partner Hero Image Section */
+    .mp-partner-hero {
+      padding: 100px 24px 40px; /* Top padding for fixed header */
+      background: linear-gradient(180deg, var(--color-brand-dark) 0%, rgba(16,25,33,0.98) 100%);
+    }
+    .mp-partner-hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .mp-partner-hero-img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .mp-partner-hero-caption {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+    }
+    .mp-partner-hero-badge {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mp-partner-hero-badge svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-brand-gray);
+    }
+    .mp-partner-hero-text {
+      flex: 1;
+    }
+    .mp-partner-hero-label {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-brand-light);
+      margin-bottom: 2px;
+    }
+    .mp-partner-hero-tagline {
+      font-size: 13px;
+      color: var(--color-brand-gray);
+    }
+
+    /* FAQ Section (Icon-based) */
     .mp-faq {
       padding: 60px 24px;
       background: rgba(255,255,255,0.02);
       border-top: 1px solid rgba(255,255,255,0.06);
     }
     .mp-faq-inner {
-      max-width: 700px;
+      max-width: 800px;
       margin: 0 auto;
     }
     .mp-faq h2 {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       font-size: 24px;
     }
+    .mp-faq-grid {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+    }
     .mp-faq-item {
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding: 20px 0;
+      display: flex;
+      gap: 16px;
+      padding: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mp-faq-item:last-child {
+      border-bottom: none;
+    }
+    .mp-faq-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mp-faq-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-brand-gray);
+      stroke-width: 2;
+      fill: none;
+    }
+    .mp-faq-content {
+      flex: 1;
     }
     .mp-faq-q {
-      font-weight: 500;
-      margin-bottom: 8px;
-      cursor: pointer;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-brand-light);
+      margin-bottom: 6px;
     }
     .mp-faq-a {
       font-size: 14px;
       color: var(--color-brand-gray);
-      line-height: 1.6;
+      line-height: 1.5;
+    }
+    @media (max-width: 640px) {
+      .mp-faq-item {
+        padding: 20px;
+      }
+      .mp-faq-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+      }
+      .mp-faq-icon svg {
+        width: 18px;
+        height: 18px;
+      }
     }
 
     /* Loading & Error States */
@@ -625,10 +729,28 @@
     </div>
   </nav>
 
+  <!-- Partner Hero Image (shown if partner has uploaded hero image) -->
+  <section class="mp-partner-hero" id="partnerHeroSection" style="display: none;">
+    <div class="mp-partner-hero-inner">
+      <img id="partnerHeroImg" class="mp-partner-hero-img" alt="Partner" />
+      <div class="mp-partner-hero-caption">
+        <div class="mp-partner-hero-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <div class="mp-partner-hero-text">
+          <div class="mp-partner-hero-label" id="partnerHeroLabel">Recommended by Partner</div>
+          <div class="mp-partner-hero-tagline" id="partnerHeroTagline">Trusted diagnostic partner</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Main Content -->
   <main>
     <!-- Hero -->
-    <section class="mp-hero">
+    <section class="mp-hero" id="mainHero">
       <div id="partnerBlock" class="mp-hero-partner" style="display:none;">
         <img id="partnerLogo" class="mp-hero-partner-logo" alt="Partner" />
         <div class="mp-hero-partner-text">
@@ -694,22 +816,79 @@
     <!-- FAQ -->
     <section class="mp-faq">
       <div class="mp-faq-inner">
-        <h2>Frequently Asked Questions</h2>
-        <div class="mp-faq-item">
-          <div class="mp-faq-q">Do I need to be an existing patient?</div>
-          <div class="mp-faq-a">No. These diagnostics are available to anyone, no prior relationship required. After your purchase, our team will reach out to schedule your appointment.</div>
-        </div>
-        <div class="mp-faq-item">
-          <div class="mp-faq-q">Where do I go for my appointment?</div>
-          <div class="mp-faq-a">Our clinic is located in Austin, TX. Full address and parking details will be sent with your appointment confirmation.</div>
-        </div>
-        <div class="mp-faq-item">
-          <div class="mp-faq-q">How long until I get my results?</div>
-          <div class="mp-faq-a">DEXA results are reviewed immediately after your scan. Blood panel results are typically ready within 3-5 business days.</div>
-        </div>
-        <div class="mp-faq-item">
-          <div class="mp-faq-q">What happens after I purchase?</div>
-          <div class="mp-faq-a">You'll receive a confirmation email, and our scheduling team will contact you within 24 hours to book your appointment at a time that works for you.</div>
+        <h2>Quick Answers</h2>
+        <div class="mp-faq-grid">
+          <!-- Do I need to be a Moonshot patient? -->
+          <div class="mp-faq-item">
+            <div class="mp-faq-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <polyline points="17 11 19 13 23 9"/>
+              </svg>
+            </div>
+            <div class="mp-faq-content">
+              <div class="mp-faq-q">Do I need to be a Moonshot patient?</div>
+              <div class="mp-faq-a">No — partner links give you access to diagnostics without a Moonshot membership.</div>
+            </div>
+          </div>
+          <!-- What happens after I buy? -->
+          <div class="mp-faq-item">
+            <div class="mp-faq-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <path d="M9 15l2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="mp-faq-content">
+              <div class="mp-faq-q">What happens after I buy?</div>
+              <div class="mp-faq-a">After purchase, book your appointment using the scheduling link. Most people schedule in under 2 minutes.</div>
+            </div>
+          </div>
+          <!-- Where do appointments take place? -->
+          <div class="mp-faq-item">
+            <div class="mp-faq-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="mp-faq-content">
+              <div class="mp-faq-q">Where do appointments take place?</div>
+              <div class="mp-faq-a">All diagnostics are completed at our clinic: 542 Busse Hwy, Park Ridge IL 60068.</div>
+            </div>
+          </div>
+          <!-- Can I reschedule my appointment? -->
+          <div class="mp-faq-item">
+            <div class="mp-faq-icon">
+              <svg viewBox="0 0 24 24">
+                <polyline points="23 4 23 10 17 10"/>
+                <polyline points="1 20 1 14 7 14"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
+            </div>
+            <div class="mp-faq-content">
+              <div class="mp-faq-q">Can I reschedule my appointment?</div>
+              <div class="mp-faq-a">Yes — after booking, you'll receive a link to easily reschedule if needed.</div>
+            </div>
+          </div>
+          <!-- Will a clinician review my results? -->
+          <div class="mp-faq-item">
+            <div class="mp-faq-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                <rect x="9" y="3" width="6" height="4" rx="2"/>
+                <path d="M9 14l2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="mp-faq-content">
+              <div class="mp-faq-q">Will a clinician review my results?</div>
+              <div class="mp-faq-a">Yes — all diagnostics are reviewed by a medical professional and shared securely.</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1000,6 +1179,29 @@
             // Show partner block without logo if no logo exists
             partnerLogo.style.display = 'none';
             partnerBlock.style.display = 'inline-flex';
+          };
+
+          // Try to load partner hero image
+          const partnerHeroSection = document.getElementById('partnerHeroSection');
+          const partnerHeroImg = document.getElementById('partnerHeroImg');
+          const partnerHeroLabel = document.getElementById('partnerHeroLabel');
+          const partnerHeroTagline = document.getElementById('partnerHeroTagline');
+          const mainHero = document.getElementById('mainHero');
+
+          const heroKey = `heroes/${slug}`;
+          partnerHeroImg.src = `/.netlify/functions/logo-get?key=${encodeURIComponent(heroKey)}`;
+          partnerHeroImg.onload = () => {
+            // Show partner hero section
+            partnerHeroSection.style.display = 'block';
+            // Update caption
+            partnerHeroLabel.textContent = `Recommended by ${partner.name}`;
+            partnerHeroTagline.textContent = partner.tagline || 'Trusted diagnostic partner';
+            // Reduce main hero padding since partner hero provides spacing
+            mainHero.style.paddingTop = '60px';
+          };
+          partnerHeroImg.onerror = () => {
+            // No hero image - keep section hidden, main hero keeps full padding
+            partnerHeroSection.style.display = 'none';
           };
         }
 
