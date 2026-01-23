@@ -21,49 +21,59 @@ const normalizeSlug = (raw) => {
 };
 
 export default async (req) => {
-  if (req.method === "OPTIONS") return json(204, {});
-  if (req.method !== "POST") return json(405, { error: "Method Not Allowed" });
-
-  let payload;
   try {
-    payload = await req.json();
-  } catch {
-    return json(400, { error: "Invalid JSON body" });
+    if (req.method === "OPTIONS") return json(204, {});
+    if (req.method !== "POST") return json(405, { error: "Method Not Allowed" });
+
+    let payload;
+    try {
+      payload = await req.json();
+    } catch {
+      return json(400, { error: "Invalid JSON body" });
+    }
+
+    const slug = normalizeSlug(payload?.slug);
+    if (!slug) return json(400, { error: "Missing/invalid slug" });
+
+    const store = getStore(STORE_NAME);
+    const key = `${KEY_PREFIX}${slug}`;
+
+    let existing = null;
+    try {
+      existing = await store.get(key, { type: "json" });
+    } catch (e) {
+      console.log("[partner-save] no existing record or parse error", e?.message);
+    }
+
+    // Duplicate prevention: create-only mode
+    if (payload?.createOnly && existing) {
+      return json(409, { error: "Store already exists", slug });
+    }
+
+    const now = new Date().toISOString();
+
+    const partner = {
+      ...(existing || {}),
+      ...(payload || {}),
+      slug,
+      createdAt: existing?.createdAt || payload?.createdAt || now,
+      updatedAt: now,
+
+      // Preserve important nested objects unless explicitly provided
+      stripe: payload?.stripe
+        ? { ...(existing?.stripe || {}), ...(payload.stripe || {}) }
+        : (existing?.stripe || undefined),
+
+      branding: payload?.branding
+        ? { ...(existing?.branding || {}), ...(payload.branding || {}) }
+        : (existing?.branding || undefined),
+    };
+
+    await store.setJSON(key, partner);
+
+    return json(200, { ok: true, slug });
+  } catch (err) {
+    console.error("[partner-save] failed", err);
+    return json(500, { error: "Server error" });
   }
-
-  const slug = normalizeSlug(payload?.slug);
-  if (!slug) return json(400, { error: "Missing/invalid slug" });
-
-  const store = getStore(STORE_NAME);
-  const key = `${KEY_PREFIX}${slug}`;
-
-  const existing = await store.get(key, { type: "json", consistency: "strong" });
-
-  // Duplicate prevention: create-only mode
-  if (payload?.createOnly && existing) {
-    return json(409, { error: "Store already exists", slug });
-  }
-
-  const now = new Date().toISOString();
-
-  const partner = {
-    ...(existing || {}),
-    ...(payload || {}),
-    slug,
-    createdAt: existing?.createdAt || payload?.createdAt || now,
-    updatedAt: now,
-
-    // Preserve important nested objects unless explicitly provided
-    stripe: payload?.stripe
-      ? { ...(existing?.stripe || {}), ...(payload.stripe || {}) }
-      : (existing?.stripe || undefined),
-
-    branding: payload?.branding
-      ? { ...(existing?.branding || {}), ...(payload.branding || {}) }
-      : (existing?.branding || undefined),
-  };
-
-  await store.setJSON(key, partner);
-
-  return json(200, { ok: true, slug });
 };
