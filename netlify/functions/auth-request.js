@@ -51,11 +51,12 @@ export default async (req) => {
 
     const partners = getStore("partners");
 
-    // Try both key formats
-    let partner = await partners.get(`partners/${slug}`, { type: "json" });
+    // Try both key formats with strong consistency
+    let partner = await partners.get(`partners/${slug}`, { type: "json", consistency: "strong" });
     if (!partner) {
-      partner = await partners.get(slug, { type: "json" });
+      partner = await partners.get(slug, { type: "json", consistency: "strong" });
     }
+    console.log("[auth-request] Partner found:", !!partner, "Email match:", partner?.email?.toLowerCase() === email.toLowerCase());
 
     if (!partner) return json(200, { ok: true });
     if ((partner.email || "").toLowerCase() !== email.toLowerCase()) {
@@ -72,7 +73,13 @@ export default async (req) => {
     });
 
     const link = `${process.env.SITE_URL || "https://moonshotmp.com"}/.netlify/functions/auth-verify?token=${token}`;
-    await sendMagicLink(email, link);
+    console.log("[auth-request] Sending magic link to:", email);
+    const result = await sendMagicLink(email, link);
+    console.log("[auth-request] Email result:", JSON.stringify(result));
+
+    if (!result.ok) {
+      console.error("[auth-request] Email failed:", result.error);
+    }
 
     return json(200, { ok: true });
   } catch (err) {
