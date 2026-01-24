@@ -1,7 +1,9 @@
 import { getStore } from "@netlify/blobs";
+import { sendEmail, partnerWelcomeEmail } from "./send-email.js";
 
 const STORE_NAME = "partners";
 const KEY_PREFIX = "partners/";
+const SITE_URL = "https://moonshotmp.com";
 
 const json = (status, body) =>
   new Response(JSON.stringify(body, null, 2), {
@@ -70,6 +72,35 @@ export default async (req) => {
     };
 
     await store.setJSON(key, partner);
+
+    // Send welcome email for new partners
+    const isNewPartner = payload?.createOnly && !existing;
+    if (isNewPartner && partner.email) {
+      const storeUrl = `${SITE_URL}/partners/store.html?slug=${slug}`;
+      const loginUrl = `${SITE_URL}/partners/login.html`;
+      const manageUrl = `${SITE_URL}/partners/manage.html`;
+
+      const emailContent = partnerWelcomeEmail({
+        partnerName: partner.name || partner.contactName || slug,
+        storeUrl,
+        manageUrl,
+        loginUrl,
+      });
+
+      // Send email (don't block response on email delivery)
+      sendEmail({
+        to: partner.email,
+        ...emailContent,
+      }).then(result => {
+        if (result.ok) {
+          console.log(`[partner-save] Welcome email sent to ${partner.email}`);
+        } else {
+          console.error(`[partner-save] Failed to send welcome email:`, result.error);
+        }
+      }).catch(err => {
+        console.error(`[partner-save] Email error:`, err);
+      });
+    }
 
     return json(200, { ok: true, slug });
   } catch (err) {
