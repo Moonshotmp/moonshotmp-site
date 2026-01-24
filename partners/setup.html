@@ -60,8 +60,21 @@
           </label>
         </div>
 
-        <div class="muted" style="margin-top: 1rem;">
-          Logo upload happens after you sign in (magic link) on the Manage Store page.
+        <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Logo <span style="font-weight: normal; opacity: 0.6;">(optional)</span></h3>
+
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="flex: 1;">
+            <label style="margin-bottom: 0;">
+              Upload your business logo
+              <input id="logo" name="logo" type="file" accept="image/png, image/jpeg, image/gif, image/webp" style="padding: 0.75rem; background: rgba(255,255,255,0.05);" />
+            </label>
+            <div class="muted" style="margin-top: 0.5rem; font-size: 0.85rem;">
+              PNG, JPG, GIF, or WebP. Max 4.5MB. You can also add or change this later.
+            </div>
+          </div>
+          <div id="logo-preview" style="display: none; width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.1); flex-shrink: 0;">
+            <img id="logo-preview-img" style="width: 100%; height: 100%; object-fit: contain;" alt="Logo preview" />
+          </div>
         </div>
 
         <div style="margin-top: 1rem; opacity: 0.9;">
@@ -90,8 +103,43 @@
     const zipEl = document.getElementById("zip");
     const linkPreviewEl = document.getElementById("store-link-preview");
     const goConnectEl = document.getElementById("go-connect");
+    const logoEl = document.getElementById("logo");
+    const logoPreviewEl = document.getElementById("logo-preview");
+    const logoPreviewImg = document.getElementById("logo-preview-img");
+
+    const MAX_LOGO_SIZE = 4.5 * 1024 * 1024; // 4.5MB
+    let logoDataUrl = null;
 
     function setStatus(msg) { statusEl.textContent = msg; }
+
+    // Handle logo file selection
+    logoEl.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      logoDataUrl = null;
+      logoPreviewEl.style.display = "none";
+
+      if (!file) return;
+
+      if (file.size > MAX_LOGO_SIZE) {
+        alert("Logo file is too large. Maximum size is 4.5MB.");
+        logoEl.value = "";
+        return;
+      }
+
+      if (!file.type.match(/^image\/(png|jpeg|gif|webp)$/)) {
+        alert("Please select a valid image file (PNG, JPG, GIF, or WebP).");
+        logoEl.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        logoDataUrl = ev.target.result;
+        logoPreviewImg.src = logoDataUrl;
+        logoPreviewEl.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    });
 
     function slugify(input) {
       return String(input || "")
@@ -157,6 +205,11 @@
         },
       };
 
+      // Include logo if one was selected
+      if (logoDataUrl) {
+        partner.logoDataUrl = logoDataUrl;
+      }
+
       try {
         setStatus("Creating store...");
         const saved = await createStore(partner);
@@ -164,8 +217,7 @@
         setStatus(
           "Store created ✅\n\n" +
           `Slug: ${saved.slug}\n` +
-          "Next: click “Continue to Stripe”.\n\n" +
-          "Logo upload: after you sign in via magic link on Manage Store."
+          "Next: click "Continue to Stripe"."
         );
       } catch (err) {
         console.error(err);

@@ -22,6 +22,16 @@ const normalizeSlug = (raw) => {
   return s;
 };
 
+// Parse data URL for logo
+function parseDataUrl(dataUrl) {
+  const m = /^data:([^;]+);base64,(.+)$/.exec(dataUrl || "");
+  if (!m) return null;
+  return { mime: m[1], b64: m[2] };
+}
+
+// Max logo size: ~4.5MB (base64 is ~33% larger, so ~6MB in base64)
+const MAX_LOGO_BASE64_SIZE = 6_000_000;
+
 export default async (req) => {
   try {
     if (req.method === "OPTIONS") return json(204, {});
@@ -70,6 +80,33 @@ export default async (req) => {
         ? { ...(existing?.branding || {}), ...(payload.branding || {}) }
         : (existing?.branding || undefined),
     };
+
+    // Handle optional logo upload during creation
+    let logoKey = partner.branding?.logoKey;
+    if (payload?.logoDataUrl) {
+      const parsed = parseDataUrl(payload.logoDataUrl);
+      if (parsed) {
+        if (parsed.b64.length > MAX_LOGO_BASE64_SIZE) {
+          return json(413, { error: "Logo too large. Maximum size is 4.5MB." });
+        }
+
+        const logos = getStore("logos");
+        logoKey = `logos/${slug}`;
+
+        await logos.setJSON(logoKey, {
+          mime: parsed.mime,
+          b64: parsed.b64,
+          updatedAt: Date.now(),
+        });
+
+        // Update partner with logo key
+        partner.branding = partner.branding || {};
+        partner.branding.logoKey = logoKey;
+      }
+    }
+
+    // Remove logoDataUrl from partner object before saving (don't store raw image data)
+    delete partner.logoDataUrl;
 
     await store.setJSON(key, partner);
 

@@ -449,9 +449,16 @@
     };
 
     // Logo Upload
+    const MAX_LOGO_SIZE = 4.5 * 1024 * 1024; // 4.5MB
     document.getElementById('logoInput').onchange = async function(e) {
       const file = e.target.files[0];
       if (!file) return;
+
+      if (file.size > MAX_LOGO_SIZE) {
+        setStatus('Logo too large. Maximum size is 4.5MB.', true);
+        e.target.value = '';
+        return;
+      }
 
       setStatus('Uploading logo...', false);
 
