@@ -1,23 +1,6 @@
 {
   "products": [
     {
-      "id": "dexa-scan",
-      "name": "DEXA Body Composition Scan",
-      "category": "dexa",
-      "description": "Clinical-grade body composition analysis with bone density assessment",
-      "bullets": [
-        "Precise body fat % and lean mass by region",
-        "Bone mineral density screening",
-        "Visceral fat measurement"
-      ],
-      "price": 150,
-      "image": "dexa.png",
-      "sku": "DEXA-001",
-      "duration": "15 min scan + review",
-      "badge": "Most Popular",
-      "active": true
-    },
-    {
       "id": "core-labs",
       "name": "Comprehensive Blood Panel",
       "category": "labs",
@@ -31,6 +14,22 @@
       "image": "fulllabs.png",
       "sku": "LAB-COMP",
       "duration": "Results in 3-5 days",
+      "active": true
+    },
+    {
+      "id": "dexa-scan",
+      "name": "DEXA Body Composition Scan",
+      "category": "dexa",
+      "description": "Clinical-grade body composition analysis with bone density assessment",
+      "bullets": [
+        "Precise body fat % and lean mass by region",
+        "Bone mineral density screening",
+        "Visceral fat measurement"
+      ],
+      "price": 150,
+      "image": "dexa.png",
+      "sku": "DEXA-001",
+      "duration": "15 min scan + review",
       "active": true
     },
     {
