@@ -1,42 +1,71 @@
-// Email sending utility using Resend
-// Set RESEND_API_KEY in Netlify environment variables
-
-const RESEND_API_URL = "https://api.resend.com/emails";
-const FROM_EMAIL = "Moonshot Medical <hello@moonshotmp.com>";
+// Email sending utility using Microsoft Graph API
+// Set MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET, MAIL_SENDER in Netlify environment variables
 
 export async function sendEmail({ to, subject, html, text }) {
-  const apiKey = (process.env.RESEND_API_KEY || "").trim();
+  const tenant = process.env.MS_TENANT_ID;
+  const clientId = process.env.MS_CLIENT_ID;
+  const clientSecret = process.env.MS_CLIENT_SECRET;
+  const from = process.env.MAIL_SENDER;
 
-  if (!apiKey) {
-    console.error("[send-email] RESEND_API_KEY not configured");
+  if (!tenant || !clientId || !clientSecret || !from) {
+    console.error("[send-email] Microsoft Graph API not configured");
     return { ok: false, error: "Email not configured" };
   }
 
   try {
-    const res = await fetch(RESEND_API_URL, {
+    // Get access token
+    const tokenRes = await fetch(
+      `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          client_id: clientId,
+          client_secret: clientSecret,
+          scope: "https://graph.microsoft.com/.default",
+          grant_type: "client_credentials",
+        }),
+      }
+    );
+
+    const tokenJson = await tokenRes.json();
+    const accessToken = tokenJson.access_token;
+
+    if (!accessToken) {
+      console.error("[send-email] Failed to get access token:", tokenJson);
+      return { ok: false, error: "Failed to authenticate with email service" };
+    }
+
+    // Send email
+    const recipients = Array.isArray(to) ? to : [to];
+    const toRecipients = recipients.map(addr => ({ emailAddress: { address: addr } }));
+
+    const res = await fetch(`https://graph.microsoft.com/v1.0/users/${from}/sendMail`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "content-type": "application/json",
       },
       body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: Array.isArray(to) ? to : [to],
-        subject,
-        html,
-        text,
+        message: {
+          subject,
+          body: {
+            contentType: "HTML",
+            content: html,
+          },
+          toRecipients,
+        },
       }),
     });
 
-    const data = await res.json();
-
     if (!res.ok) {
-      console.error("[send-email] Resend error:", data);
-      return { ok: false, error: data.message || "Failed to send email" };
+      const errText = await res.text();
+      console.error("[send-email] Microsoft Graph error:", errText);
+      return { ok: false, error: "Failed to send email" };
     }
 
-    console.log("[send-email] Sent successfully:", data.id);
-    return { ok: true, id: data.id };
+    console.log("[send-email] Sent successfully to:", recipients.join(", "));
+    return { ok: true };
   } catch (err) {
     console.error("[send-email] Error:", err);
     return { ok: false, error: err.message };
