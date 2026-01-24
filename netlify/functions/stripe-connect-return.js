@@ -61,5 +61,5 @@ export default async (req) => {
 
   await store.setJSON(key, updated);
 
-  return redirect(`${siteUrl}/partners/setup.html?slug=${encodeURIComponent(slug)}&stripe=${onboarded ? "connected" : "incomplete"}`);
+  return redirect(`${siteUrl}/partners/connect.html?slug=${encodeURIComponent(slug)}&stripe=${onboarded ? "connected" : "incomplete"}`);
 };
