@@ -36,7 +36,7 @@
       "id": "baseline-bundle",
       "name": "Performance Baseline Bundle",
       "category": "bundles",
-      "description": "Complete starting point: DEXA scan + full blood panel at a bundled rate. DEXA appointments begin Feb 25 — purchase now to reserve your spot.",
+      "description": "Complete starting point: DEXA scan + full blood panel at a bundled rate",
       "bullets": [
         "DEXA body composition scan",
         "Comprehensive 50+ biomarker panel",
@@ -45,7 +45,7 @@
       "price": 399,
       "image": "fulllogodarkcentered.png",
       "sku": "BUNDLE-001",
-      "duration": "Same-day appointments available",
+      "duration": "DEXA appointments begin Feb 25",
       "badge": "Best Value",
       "active": true
     },
