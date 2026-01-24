@@ -49,6 +49,20 @@
       "duration": "Same-day appointments available",
       "badge": "Best Value",
       "active": true
+    },
+    {
+      "id": "test-item",
+      "name": "Test Item ($1)",
+      "category": "test",
+      "description": "Test item for verifying checkout flow",
+      "bullets": [
+        "For testing purposes only"
+      ],
+      "price": 1,
+      "image": "fulllogodarkcentered.png",
+      "sku": "TEST-001",
+      "duration": "Instant",
+      "active": true
     }
   ]
 }
