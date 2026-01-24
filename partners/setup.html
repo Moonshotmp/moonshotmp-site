@@ -66,7 +66,7 @@
           <div style="flex: 1;">
             <label style="margin-bottom: 0;">
               Upload your business logo
-              <input id="logo" name="logo" type="file" accept="image/png, image/jpeg, image/gif, image/webp" style="padding: 0.75rem; background: rgba(255,255,255,0.05);" />
+              <input id="logo" name="logo" type="file" accept="image/*" style="padding: 0.75rem; background: rgba(255,255,255,0.05);" />
             </label>
             <div class="muted" style="margin-top: 0.5rem; font-size: 0.85rem;">
               Any image format. Will be automatically resized and compressed. You can also change this later.
@@ -175,7 +175,7 @@
         return;
       }
 
-      if (!file.type.match(/^image\/(png|jpeg|gif|webp|bmp|tiff)$/)) {
+      if (!file.type.startsWith("image/")) {
         alert("Please select a valid image file.");
         logoEl.value = "";
         return;
@@ -233,37 +233,47 @@
       return data;
     }
 
+    const submitBtn = document.querySelector('button[type="submit"]');
+
     document.getElementById("partner-form").addEventListener("submit", async (e) => {
       e.preventDefault();
+      e.stopPropagation();
+
+      // Prevent double submission
+      if (submitBtn.disabled) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Creating...";
       setStatus("");
 
-      const slug = slugify(nameEl.value);
-      if (!slug) {
-        alert("Enter a partner name.");
-        return;
-      }
-
-      const partner = {
-        createOnly: true,
-        slug,
-        name: nameEl.value.trim(),
-        contactName: contactNameEl.value.trim(),
-        phone: phoneEl.value.trim(),
-        email: emailEl.value.trim(),
-        address: {
-          street: streetEl.value.trim(),
-          city: cityEl.value.trim(),
-          state: stateEl.value.trim().toUpperCase(),
-          zip: zipEl.value.trim(),
-        },
-      };
-
-      // Include logo if one was selected
-      if (logoDataUrl) {
-        partner.logoDataUrl = logoDataUrl;
-      }
-
       try {
+        const slug = slugify(nameEl.value);
+        if (!slug) {
+          alert("Enter a partner name.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Create Store";
+          return;
+        }
+
+        const partner = {
+          createOnly: true,
+          slug,
+          name: nameEl.value.trim(),
+          contactName: contactNameEl.value.trim(),
+          phone: phoneEl.value.trim(),
+          email: emailEl.value.trim(),
+          address: {
+            street: streetEl.value.trim(),
+            city: cityEl.value.trim(),
+            state: stateEl.value.trim().toUpperCase(),
+            zip: zipEl.value.trim(),
+          },
+        };
+
+        // Include logo if one was selected
+        if (logoDataUrl) {
+          partner.logoDataUrl = logoDataUrl;
+        }
+
         setStatus("Creating store...");
         const saved = await createStore(partner);
         updateStoreLink(saved.slug);
@@ -272,9 +282,12 @@
           `Slug: ${saved.slug}\n` +
           "Next: click "Continue to Stripe"."
         );
+        submitBtn.textContent = "Store Created";
       } catch (err) {
-        console.error(err);
+        console.error("Form submission error:", err);
         setStatus(String(err && err.message ? err.message : err));
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Store";
       }
     });
 
