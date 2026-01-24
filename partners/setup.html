@@ -188,15 +188,16 @@
         .slice(0, 64);
     }
 
-    function updateStoreLink(slug) {
+    function updateStoreLink(slug, showButton) {
       const href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
       linkPreviewEl.textContent = slug ? `${window.location.origin}${href}` : "";
       goConnectEl.href = `/partners/connect.html?slug=${encodeURIComponent(slug)}`;
-      goConnectEl.style.display = slug ? "inline-flex" : "none";
+      // Only show button when explicitly requested (after store is created)
+      goConnectEl.style.display = showButton ? "inline-flex" : "none";
     }
 
     nameEl.addEventListener("input", () => {
-      updateStoreLink(slugify(nameEl.value));
+      updateStoreLink(slugify(nameEl.value), false);
     });
 
     async function createStore(partner) {
@@ -249,7 +250,7 @@
       try {
         setStatus("Creating store...");
         const saved = await createStore(partner);
-        updateStoreLink(saved.slug);
+        updateStoreLink(saved.slug, true);
         setStatus(
           "Store created ✅\n\n" +
           `Slug: ${saved.slug}\n` +
