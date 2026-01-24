@@ -28,10 +28,10 @@ export default async (req) => {
 
     const store = getStore("partners");
 
-    // Try prefixed key first (current format)
+    // Try prefixed key first (current format) - use strong consistency for fresh reads
     let partner = null;
     try {
-      partner = await store.get(`partners/${slug}`, { type: "json" });
+      partner = await store.get(`partners/${slug}`, { type: "json", consistency: "strong" });
     } catch (e) {
       console.error("[partner-get] prefixed key parse error", e?.message);
     }
@@ -39,7 +39,7 @@ export default async (req) => {
     // Try direct key (legacy format)
     if (!partner) {
       try {
-        partner = await store.get(slug, { type: "json" });
+        partner = await store.get(slug, { type: "json", consistency: "strong" });
       } catch (e) {
         console.error("[partner-get] legacy key parse error", e?.message);
       }
