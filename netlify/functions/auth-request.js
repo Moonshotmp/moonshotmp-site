@@ -13,6 +13,14 @@ async function sendMail(to, link) {
   const clientSecret = process.env.MS_CLIENT_SECRET;
   const from = process.env.MAIL_SENDER;
 
+  console.log("[auth-request] Sending email to:", to);
+  console.log("[auth-request] Config check - tenant:", !!tenant, "clientId:", !!clientId, "clientSecret:", !!clientSecret, "from:", from);
+
+  if (!tenant || !clientId || !clientSecret || !from) {
+    console.error("[auth-request] Missing Microsoft Graph config");
+    return;
+  }
+
   const tokenRes = await fetch(
     `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`,
     {
@@ -30,7 +38,14 @@ async function sendMail(to, link) {
   const tokenJson = await tokenRes.json();
   const accessToken = tokenJson.access_token;
 
-  await fetch("https://graph.microsoft.com/v1.0/users/" + from + "/sendMail", {
+  if (!accessToken) {
+    console.error("[auth-request] Failed to get access token:", JSON.stringify(tokenJson));
+    return;
+  }
+
+  console.log("[auth-request] Got access token, sending email...");
+
+  const emailRes = await fetch("https://graph.microsoft.com/v1.0/users/" + from + "/sendMail", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -51,6 +66,13 @@ async function sendMail(to, link) {
       },
     }),
   });
+
+  if (!emailRes.ok) {
+    const errText = await emailRes.text();
+    console.error("[auth-request] Email send failed:", emailRes.status, errText);
+  } else {
+    console.log("[auth-request] Email sent successfully to:", to);
+  }
 }
 
 export default async (req) => {
