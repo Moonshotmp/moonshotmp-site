@@ -30,7 +30,7 @@
                       id="medical-menu-button" aria-expanded="false" aria-haspopup="true">
                 Medical
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
               <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="medical-dropdown">
@@ -52,7 +52,7 @@
                       id="rehab-menu-button" aria-expanded="false" aria-haspopup="true">
                 Rehab
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
               <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="rehab-dropdown">
@@ -91,7 +91,7 @@
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Medical</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-medical-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
             <div id="mobile-medical-submenu" class="bg-black/20 hidden">
@@ -111,7 +111,7 @@
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Rehab</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-rehab-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
             <div id="mobile-rehab-submenu" class="bg-black/20 hidden">
@@ -224,7 +224,7 @@
             <div class="bg-brand-dark border border-white/10 rounded-sm max-w-md w-full p-8 relative">
                 <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-brand-gray hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
                 <h3 class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an Appointment</h3>
