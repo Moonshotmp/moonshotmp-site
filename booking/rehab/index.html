@@ -33,22 +33,61 @@
             </div>
         </section>
 
-        <!-- Booking Widget -->
-        <section class="py-12 bg-brand-light">
+        <!-- Booking Options -->
+        <section class="py-16 bg-brand-light">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <!-- Placeholder for booking integration -->
-                <div class="bg-white border border-brand-slate/10 p-8 rounded-sm text-center min-h-[600px] flex items-center justify-center">
-                    <div>
-                        <p class="text-brand-slate text-lg mb-4">Booking widget will be integrated here</p>
-                        <p class="text-brand-slate/60 text-sm mb-8">Jane App / ChiroTouch / Custom booking system</p>
-
-                        <!-- Temporary contact info -->
-                        <div class="bg-brand-slate text-brand-light p-6 rounded-sm inline-block">
-                            <p class="font-bold mb-2">Call to Book</p>
-                            <a href="tel:+12244354280" class="text-2xl font-bold hover:text-brand-gray transition">224-435-4280</a>
-                            <p class="text-brand-gray text-sm mt-2">or email <a href="mailto:support@principleperformancehealth.com" class="underline hover:text-brand-light">support@principleperformancehealth.com</a></p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Phone Booking -->
+                    <div class="bg-brand-dark text-brand-light p-8 rounded-sm text-center">
+                        <div class="w-16 h-16 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
                         </div>
+                        <h2 class="text-2xl font-bold mb-4">CALL TO BOOK</h2>
+                        <a href="tel:+12244354280" class="text-3xl font-bold hover:text-brand-gray transition block mb-4">224-435-4280</a>
+                        <p class="text-brand-gray font-light">
+                            Speak directly with our team to schedule your appointment and verify insurance.
+                        </p>
+                    </div>
+
+                    <!-- Request Callback / Form -->
+                    <div class="bg-white border border-brand-slate/10 p-8 rounded-sm">
+                        <h2 class="text-2xl font-bold text-brand-dark mb-6 text-center">REQUEST APPOINTMENT</h2>
+                        <form action="https://formspree.io/f/placeholder" method="POST" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Name</label>
+                                <input type="text" name="name" required class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Phone</label>
+                                <input type="tel" name="phone" required class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Email</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Service Needed</label>
+                                <select name="service" class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate bg-white">
+                                    <option value="">Select a service...</option>
+                                    <option value="chiropractic">Chiropractic</option>
+                                    <option value="physical-rehab">Physical Rehab</option>
+                                    <option value="dry-needling">Dry Needling</option>
+                                    <option value="shockwave">Shockwave Therapy</option>
+                                    <option value="not-sure">Not Sure / Multiple</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Message (optional)</label>
+                                <textarea name="message" rows="3" class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-dark text-brand-light font-bold py-4 uppercase tracking-wider hover:bg-brand-slate transition">
+                                Request Appointment
+                            </button>
+                        </form>
+                        <p class="text-brand-slate/60 text-xs text-center mt-4">We'll call you back within 1 business day to confirm.</p>
                     </div>
                 </div>
 
