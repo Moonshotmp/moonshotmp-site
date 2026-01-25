@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partner Setup</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Partner Setup</h1>
+
+    <form id="partner-form">
+      <label>
+        Slug (required)
+        <input id="slug" name="slug" placeholder="e.g. acme-co" required />
+      </label>
+
+      <label>
+        Partner name
+        <input id="name" name="name" placeholder="e.g. Acme Co" />
+      </label>
+
+      <label>
+        Contact email
+        <input id="email" name="email" type="email" placeholder="name@acme.com" />
+      </label>
+
+      <div style="display:flex; gap:10px; margin-top:12px; align-items:center;">
+        <button id="save-btn" type="submit" class="btn-primary">Save Partner</button>
+        <button id="connect-stripe" type="button" class="btn-outline">Connect Stripe</button>
+        <a id="view-store" class="btn-outline" href="#" style="display:none;">View Store</a>
+      </div>
+    </form>
+
+    <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+  </main>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const slugEl = document.getElementById("slug");
+    const viewStoreEl = document.getElementById("view-store");
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    function getSlugFromUrl() {
+      const url = new URL(window.location.href);
+      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    }
+
+    function setSlugInUrl(slug) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("slug", slug);
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    function updateStoreLink(slug) {
+      if (!slug) { viewStoreEl.style.display = "none"; return; }
+      viewStoreEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      viewStoreEl.style.display = "inline-flex";
+    }
+
+    async function savePartnerToServer(partner) {
+      const res = await fetch("/.netlify/functions/partner-save", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(partner),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || "Failed to save partner");
+      return data; // { ok:true, slug }
+    }
+
+    // Prefill slug
+

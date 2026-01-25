@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partner Store</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1 id="title">Partner Store</h1>
+    <p id="subtitle"></p>
+
+    <section style="margin-top:24px;">
+      <h2 style="font-size:18px;margin:0 0 12px 0;">Catalog</h2>
+      <div id="catalog-grid"></div>
+      <pre id="catalog-status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+    </section>
+  </main>
+
+  <script>
+    const titleEl = document.getElementById("title");
+    const subtitleEl = document.getElementById("subtitle");
+    const gridEl = document.getElementById("catalog-grid");
+    const statusEl = document.getElementById("catalog-status");
+
+    function getSlugFromUrl() {
+      const url = new URL(window.location.href);
+      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    }
+
+    async function loadPartner(slug) {
+      const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || "Failed to load partner");
+      return data;
+    }
+
+    async function loadCatalog() {
+      const res = await fetch("/partners/catalog.json", { cache: "no-store" });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data) throw new Error("Failed to load catalog");
+      return Array.isArray(data) ? data : data.products || [];
+    }
+
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c =>
+        ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c])
+      );
+    }
+
+    function renderCatalog(products) {
+      if (!products.length) {
+        statusEl.textContent = "No products found in catalog.json";
+        return;
+      }
+
+      gridEl.innerHTML = products.map(p => {
+        const name = escapeHtml(p.name || p.title || "Unnamed");
+        const desc = escapeHtml(p.description || "");
+        const price = p.price != null ? `$${p.price}` : "";
+        const img = p.image || p.imageUrl || "";
+
+        return `
+          <div class="card">
+            ${img ? `<img class="card-img" src="${escapeHtml(img)}" alt="${name}" />` : ""}
+            <div class="card-body">
+              <div class="card-title">${name}</div>
+              ${desc ? `<div class="card-desc">${desc}</div>` : ""}
+              ${price ? `<div class="pill">${price}</div>` : ""}
+              <div style="margin-top:10px;">
+                <button class="btn" disabled>Buy (soon)</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function injectStyles() {
+      const css = `
+        #catalog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+        .card { border:1px solid rgba(255,255,255,0.12); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.03); }
+        .card-img { width:100%; height:160px; object-fit:cover; }
+        .card-body { padding:14px; }
+        .card-title { font-size:16px; font-weight:700; margin-bottom:6px; }
+        .card-desc { font-size:13px; opacity:0.85; margin-bottom:8px; }
+        .pill { display:inline-block; font-size:12px; border:1px solid rgba(255,255,255,0.14); padding:4px 8px; border-radius:999px; }
+        .btn { padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); color:inherit; cursor:not-allowed; }
+      `;
+      const style = document.createElement("style");
+      style.textContent = css;
+      document.head.appendChild(style);
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      injectStyles();
+
+      const slug = getSlugFromUrl();
+      if (!slug) {
+        subtitleEl.textContent = "Missing slug";
+        return;
+      }
+
+      try {
+        const [partner, products] = await Promise.all([
+          loadPartner(slug),
+          loadCatalog(),
+        ]);
+
+        titleEl.textContent = partner?.name ? `${partner.name} Store` : `Store: ${slug}`;
+        subtitleEl.textContent = `slug: ${slug}`;
+        renderCatalog(products);
+      } catch (err) {
+        subtitleEl.textContent = err.message || String(err);
+      }
+    });
+  </script>
+</body>
+</html>

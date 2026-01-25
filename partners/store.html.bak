@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partner Store</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1 id="title">Partner Store</h1>
+    <p id="subtitle"></p>
+
+    <pre id="partner-json" style="white-space:pre-wrap;margin-top:16px;"></pre>
+  </main>
+
+  <script>
+    const titleEl = document.getElementById("title");
+    const subtitleEl = document.getElementById("subtitle");
+    const jsonEl = document.getElementById("partner-json");
+
+    function getSlugFromUrl() {
+      const url = new URL(window.location.href);
+      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    }
+
+    async function loadPartnerFromServer(slug) {
+      const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || "Failed to load partner");
+      // our current partner-get returns the partner object directly
+      return data;
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      const slug = getSlugFromUrl();
+      if (!slug) {
+        subtitleEl.textContent = "Missing slug. Use ?slug=your-slug";
+        return;
+      }
+
+      try {
+        const partner = await loadPartnerFromServer(slug);
+        titleEl.textContent = partner?.name ? `${partner.name} Store` : `Store: ${slug}`;
+        subtitleEl.textContent = `slug: ${slug}`;
+        jsonEl.textContent = JSON.stringify(partner, null, 2);
+      } catch (err) {
+        subtitleEl.textContent = `Error: ${err?.message || err}`;
+        jsonEl.textContent = "";
+      }
+    });
+  </script>
+</body>
+</html>

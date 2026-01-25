@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partner Setup</title>
+  <link rel="stylesheet" href="/partners/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Partner Setup</h1>
+
+    <form id="partner-form">
+      <label>
+        Partner name
+        <input id="name" name="name" placeholder="e.g. Acme Co" required />
+      </label>
+
+      <label>
+        Contact email
+        <input id="email" name="email" type="email" placeholder="name@acme.com" />
+      </label>
+
+      <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
+        <input id="edit-slug-toggle" type="checkbox" />
+        <label for="edit-slug-toggle" style="margin:0;">Advanced: edit store URL</label>
+      </div>
+
+      <div id="slug-row" style="display:none; margin-top:10px;">
+        <label>
+          Store URL slug
+          <input id="slug" name="slug" placeholder="e.g. acme-co" />
+        </label>
+      </div>
+
+      <div style="margin-top:10px; opacity:0.85;">
+        Store link: <span id="store-link-preview"></span>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:14px; align-items:center;">
+        <button id="create-btn" type="submit" class="btn-primary">Create Partner Store</button>
+        <button id="connect-stripe" type="button" class="btn-outline">Connect Stripe</button>
+        <a id="view-store" class="btn-outline" href="#" style="display:none;">View Store</a>
+      </div>
+    </form>
+
+    <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+  </main>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const nameEl = document.getElementById("name");
+    const emailEl = document.getElementById("email");
+    const slugToggleEl = document.getElementById("edit-slug-toggle");
+    const slugRowEl = document.getElementById("slug-row");
+    const slugEl = document.getElementById("slug");
+    const linkPreviewEl = document.getElementById("store-link-preview");
+    const viewStoreEl = document.getElementById("view-store");
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    function slugify(input) {
+      return String(input || "")
+        .trim()
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 64);
+    }
+
+    function getSlugFromUrl() {
+      const url = new URL(window.location.href);
+      return (url.searchParams.get("slug") || "").trim().toLowerCase();
+    }
+
+    function setSlugInUrl(slug) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("slug", slug);
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    function updateStoreLink(slug) {
+      const href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      linkPreviewEl.textContent = `${window.location.origin}${href}`;
+      viewStoreEl.href = href;
+      viewStoreEl.style.display = slug ? "inline-flex" : "none";
+    }
+
+    function getCurrentSlug() {
+      // if advanced edit enabled, trust slug input
+      if (slugToggleEl.checked && slugEl.value.trim()) return slugify(slugEl.value);
+      // otherwise generate from name
+      return slugify(nameEl.value);
+    }
+
+    async function savePartnerToServer(partner) {
+      const res = await fetch("/.netlify/functions/partner-save", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(partner),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || "Failed to save partner");
+      return data; // { ok:true, slug }
+    }
+
+    // UI behavior
+    slugToggleEl.addEventListener("change", () => {
+      slugRowEl.style.display = slugToggleEl.checked ? "block" : "none";
+      const slug = getCurrentSlug();
+      if (slugToggleEl.checked) slugEl.value = slug;
+      updateStoreLink(slug);
+    });
+
+    nameEl.addEventListener("input", () => {
+      const slug = getCurrentSlug();
+      if (slugToggleEl.checked && document.activeElement === slugEl) return;
+      if (slugToggleEl.checked) slugEl.value = slug;
+      updateStoreLink(slug);
+    });
+
+    slugEl.addEventListener("input", () => {
+      if (!slugToggleEl.checked) return;
+      updateStoreLink(getCurrentSlug());
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const existingSlug = getSlugFromUrl();
+      if (existingSlug) {
+        // If coming from Stripe return, show advanced + keep slug stable
+        slugToggleEl.checked = true;
+        slugRowEl.style.display = "block";
+        slugEl.value = existingSlug;
+        updateStoreLink(existingSlug);
+      } else {
+        updateStoreLink("");
+      }
+
+      const stripeStatus = new URL(window.location.href).searchParams.get("stripe");
+      if (stripeStatus) setStatus(`Stripe: ${stripeStatus}`);
+    });
+
+    document.getElementById("partner-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setStatus("");
+
+      const slug = getCurrentSlug();
+      if (!slug) {
+        alert("Enter a partner name.");
+        return;
+      }
+
+      const partner = {
+        slug,
+        name: nameEl.value.trim(),
+        email: emailEl.value.trim(),
+      };
+
+      try {
+        const saved = await savePartnerToServer(partner);
+        setSlugInUrl(saved.slug);
+        updateStoreLink(saved.slug);
+        setStatus(JSON.stringify(saved, null, 2));
+      } catch (err) {
+        setStatus(String(err?.message || err));
+        alert(err?.message || String(err));
+      }
+    });
+
+    document.getElementById("connect-stripe").addEventListener("click", () => {
+      const slug = getCurrentSlug();
+      if (!slug) {
+        alert("Enter partner name, then click Create Partner Store first.");
+        return;
+      }
+      window.location.href = `/.netlify/functions/stripe-connect-start?slug=${encodeURIComponent(slug)}`;
+    });
+  </script>
+</body>
+</html>
