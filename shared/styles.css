@@ -1,0 +1,331 @@
+/*
+ * Moonshot Global Styles
+ * ======================
+ * Include this file on all pages for consistent styling.
+ *
+ * Usage:
+ *   <link rel="stylesheet" href="/shared/styles.css">
+ *
+ * Also include the Tailwind config before this:
+ *   <script src="/shared/tailwind-config.js"></script>
+ */
+
+/* ========================================
+   Brand Colors (CSS Custom Properties)
+   ======================================== */
+:root {
+    --brand-dark: #101921;
+    --brand-light: #F0EEE9;
+    --brand-gray: #B2BFBE;
+    --brand-slate: #2C353E;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+body {
+    background-color: var(--brand-dark);
+    color: var(--brand-light);
+}
+
+/* ========================================
+   Typography
+   ======================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+.btn-primary {
+    background-color: var(--brand-gray);
+    color: var(--brand-dark);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--brand-light);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--brand-gray);
+    color: var(--brand-gray);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-outline:hover {
+    border-color: var(--brand-light);
+    color: var(--brand-light);
+    transform: translateY(-2px);
+}
+
+/* Secondary button variant (for light backgrounds) */
+.btn-secondary {
+    background-color: var(--brand-dark);
+    color: var(--brand-light);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: var(--brand-slate);
+    transform: translateY(-2px);
+}
+
+/* Outline variant for light backgrounds */
+.btn-outline-dark {
+    background-color: transparent;
+    border: 1px solid var(--brand-dark);
+    color: var(--brand-dark);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--brand-dark);
+    color: var(--brand-light);
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   Accordion Components
+   ======================================== */
+details > .accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+details[open] > .accordion-content {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.accordion-inner {
+    overflow: hidden;
+}
+
+summary {
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/* ========================================
+   Cards & Containers
+   ======================================== */
+.card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(178, 191, 190, 0.3);
+}
+
+.card-light {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(16, 25, 33, 0.1);
+    padding: 1.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.card-light:hover {
+    background-color: white;
+}
+
+/* ========================================
+   Section Backgrounds
+   ======================================== */
+.section-dark {
+    background-color: var(--brand-dark);
+    color: var(--brand-light);
+}
+
+.section-light {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+}
+
+.section-slate {
+    background-color: var(--brand-slate);
+    color: var(--brand-light);
+}
+
+/* ========================================
+   Links
+   ======================================== */
+.link-arrow {
+    color: var(--brand-dark);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--brand-dark);
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.link-arrow:hover {
+    color: var(--brand-slate);
+}
+
+.link-arrow-light {
+    color: var(--brand-light);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--brand-light);
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.link-arrow-light:hover {
+    color: var(--brand-gray);
+}
+
+/* ========================================
+   Form Elements
+   ======================================== */
+.input-field {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--brand-light);
+    padding: 0.75rem 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--brand-gray);
+}
+
+.input-field::placeholder {
+    color: rgba(240, 238, 233, 0.5);
+}
+
+.input-field-light {
+    background-color: white;
+    border: 1px solid rgba(16, 25, 33, 0.2);
+    color: var(--brand-dark);
+    padding: 0.75rem 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.input-field-light:focus {
+    outline: none;
+    border-color: var(--brand-dark);
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+.text-brand-dark { color: var(--brand-dark); }
+.text-brand-light { color: var(--brand-light); }
+.text-brand-gray { color: var(--brand-gray); }
+.text-brand-slate { color: var(--brand-slate); }
+
+.bg-brand-dark { background-color: var(--brand-dark); }
+.bg-brand-light { background-color: var(--brand-light); }
+.bg-brand-gray { background-color: var(--brand-gray); }
+.bg-brand-slate { background-color: var(--brand-slate); }
+
+.border-brand-dark { border-color: var(--brand-dark); }
+.border-brand-light { border-color: var(--brand-light); }
+.border-brand-gray { border-color: var(--brand-gray); }
+.border-brand-slate { border-color: var(--brand-slate); }
+
+/* ========================================
+   Image Treatments
+   ======================================== */
+.img-grayscale {
+    filter: grayscale(100%);
+    transition: filter 0.5s ease;
+}
+
+.img-grayscale:hover,
+.group:hover .img-grayscale {
+    filter: grayscale(0%);
+}
+
+/* ========================================
+   Navigation Active States
+   ======================================== */
+.nav-link {
+    position: relative;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--brand-gray);
+}
+
+/* ========================================
+   Dividers
+   ======================================== */
+.divider {
+    width: 4rem;
+    height: 1px;
+    background-color: var(--brand-gray);
+}
+
+.divider-dark {
+    width: 4rem;
+    height: 1px;
+    background-color: var(--brand-dark);
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
