@@ -42,6 +42,54 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How much does a DEXA scan cost at Moonshot?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A DEXA body composition scan costs $150 at Moonshot Medical and Performance in Park Ridge, IL. The Performance Baseline Bundle (DEXA + Comprehensive Blood Panel) costs $405, saving you $30."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How long does a DEXA scan take?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The entire DEXA scan appointment takes about 15 minutes total. The actual scan itself takes approximately 7 minutes while you lie still on the DEXA table."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I prepare for a DEXA scan?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Avoid eating or drinking for 2 hours before your scan. Wear comfortable clothing without metal (zippers, underwire bras). Remove jewelry. For consistent tracking, try to schedule scans at the same time of day."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is a DEXA scan safe? How much radiation is involved?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, DEXA scans are very safe. The radiation exposure is minimal—less than what you'd receive on a cross-country flight. The scan is non-invasive and painless."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does a DEXA scan measure?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "DEXA scans measure total body fat percentage, lean muscle mass, bone mineral density, visceral fat (dangerous fat around organs), and regional body composition (fat and muscle distribution in arms, legs, and trunk)."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
@@ -59,10 +107,13 @@
                         <p class="text-brand-gray text-lg font-light mb-8">
                             The gold standard for body composition. Know exactly how much muscle, fat, and bone you have—and track changes over time.
                         </p>
-                        <div class="flex flex-wrap gap-4">
+                        <div class="flex flex-wrap gap-4 mb-4">
                             <a href="/booking/" class="btn-primary">Book DEXA Scan</a>
                             <span class="text-brand-gray text-lg font-bold self-center">$150</span>
                         </div>
+                        <a href="/medical/dexa-scan/dexa-vs-inbody/" class="text-brand-gray text-sm hover:text-brand-light transition">
+                            Compare: DEXA vs InBody vs Calipers →
+                        </a>
                     </div>
                     <div class="aspect-square bg-brand-slate rounded-sm overflow-hidden">
                         <!-- Placeholder for DEXA machine image -->
@@ -186,6 +237,31 @@
                             <h3 class="font-bold text-lg mb-2">Review Results</h3>
                             <p class="text-brand-slate font-light">Get your report immediately. Our team will walk you through the key findings.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Facts - Direct Answer Block -->
+        <section class="py-12 bg-brand-dark border-y border-white/10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-6 text-center">DEXA SCAN QUICK FACTS</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                    <div class="bg-white/5 p-4 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-1">Cost</p>
+                        <p class="text-2xl font-bold text-brand-light">$150</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-1">Duration</p>
+                        <p class="text-2xl font-bold text-brand-light">15 min</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-1">Preparation</p>
+                        <p class="text-lg font-bold text-brand-light">2hr fast</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-1">Results</p>
+                        <p class="text-lg font-bold text-brand-light">Same day</p>
                     </div>
                 </div>
             </div>

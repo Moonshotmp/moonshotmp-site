@@ -44,6 +44,9 @@
                         <p class="text-brand-gray mt-3">
                             <a href="mailto:hello@moonshotmp.com" class="hover:text-brand-light transition">hello@moonshotmp.com</a>
                         </p>
+                        <p class="text-brand-gray mt-3">
+                            <a href="/insurance/" class="hover:text-brand-light transition">Insurance & Payment Info</a>
+                        </p>
                     </div>
                 </div>
 

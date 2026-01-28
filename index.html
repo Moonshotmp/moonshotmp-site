@@ -38,6 +38,182 @@
     <script src="/shared/tailwind-config.js"></script>
     <link rel="stylesheet" href="/shared/styles.css">
 
+    <!-- Structured Data for AI Search -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "alternateName": "Moonshot MP",
+        "url": "https://moonshotmp.com",
+        "logo": "https://moonshotmp.com/images/moonshotmptan.png",
+        "image": "https://moonshotmp.com/images/moonshotmedical_cloud.png",
+        "description": "Medical optimization and physical rehabilitation clinic offering hormone therapy, DEXA body composition scans, comprehensive blood panels, chiropractic care, dry needling, and shockwave therapy in Park Ridge, IL.",
+        "telephone": "+1-847-499-1266",
+        "email": "hello@moonshotmp.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0176,
+            "longitude": -87.8441
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "09:00",
+                "closes": "17:00"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Saturday",
+                "opens": "09:00",
+                "closes": "12:00"
+            }
+        ],
+        "priceRange": "$$",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Cash, Credit Card",
+        "areaServed": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+                "@type": "GeoCoordinates",
+                "latitude": 42.0176,
+                "longitude": -87.8441
+            },
+            "geoRadius": "30 mi"
+        },
+        "sameAs": [
+            "https://www.instagram.com/moonshotmp/"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Medical and Rehabilitation Services",
+            "itemListElement": [
+                {
+                    "@type": "OfferCatalog",
+                    "name": "Medical Optimization Services",
+                    "itemListElement": [
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "DEXA Body Composition Scan",
+                                "description": "Medical-grade body composition analysis measuring body fat, lean muscle mass, bone density, and visceral fat"
+                            },
+                            "price": "150",
+                            "priceCurrency": "USD"
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Comprehensive Blood Panel",
+                                "description": "60+ biomarker blood test including hormones, metabolic markers, inflammation, and nutrients"
+                            },
+                            "price": "285",
+                            "priceCurrency": "USD"
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Men's Hormone Optimization (TRT)",
+                                "description": "Testosterone replacement therapy with comprehensive monitoring, DEXA scans, and lab work included"
+                            },
+                            "price": "205",
+                            "priceCurrency": "USD",
+                            "priceSpecification": {
+                                "@type": "UnitPriceSpecification",
+                                "price": "205",
+                                "priceCurrency": "USD",
+                                "unitText": "month"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Women's Hormone Optimization (BHRT)",
+                                "description": "Bioidentical hormone replacement therapy for women including estrogen, progesterone, and thyroid optimization"
+                            },
+                            "price": "205",
+                            "priceCurrency": "USD",
+                            "priceSpecification": {
+                                "@type": "UnitPriceSpecification",
+                                "price": "205",
+                                "priceCurrency": "USD",
+                                "unitText": "month"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "GLP-1 Weight Loss Program",
+                                "description": "Medically supervised weight loss using Semaglutide or Tirzepatide with DEXA tracking"
+                            },
+                            "price": "405",
+                            "priceCurrency": "USD",
+                            "priceSpecification": {
+                                "@type": "UnitPriceSpecification",
+                                "price": "405",
+                                "priceCurrency": "USD",
+                                "unitText": "month"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "@type": "OfferCatalog",
+                    "name": "Rehabilitation Services",
+                    "itemListElement": [
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Chiropractic Care",
+                                "description": "McKenzie Method and evidence-based spinal care"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Physical Rehabilitation",
+                                "description": "Movement restoration and strength rehabilitation"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Dry Needling",
+                                "description": "Release tight muscles and improve range of motion"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Shockwave Therapy",
+                                "description": "Accelerate healing for tendon and soft tissue injuries"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+    </script>
+
     <style>
         /* Accordion Animations */
         details > .accordion-content {
@@ -287,7 +463,7 @@
                 <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500 relative">
-                            <img src="/images/Missyblack.jpg" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MISSY'" alt="Missy - NP" class="w-full h-full object-cover object-top">
+                            <img src="/images/Missyblack.JPG" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MISSY'" alt="Missy - NP" class="w-full h-full object-cover object-top">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light mt-4">MISSY</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Medical Director / NP</p>
@@ -295,7 +471,7 @@
                     </div>
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500 relative">
-                            <img src="/images/Michaelblack.jpg" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MICHAEL'" alt="Dr. Michael" class="w-full h-full object-cover object-top">
+                            <img src="/images/Michaelblack.JPG" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MICHAEL'" alt="Dr. Michael" class="w-full h-full object-cover object-top">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light mt-4">DR. MICHAEL</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">DC, MSc, DACBN</p>
@@ -311,7 +487,7 @@
                     </div>
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500 relative">
-                            <img src="/images/Melissablack.JPG" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MELISSA'" alt="Melissa" class="w-full h-full object-cover object-top">
+                            <img src="/images/MelissaBlack.JPG" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MELISSA'" alt="Melissa" class="w-full h-full object-cover object-top">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light mt-4">MELISSA</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Medical Assistant</p>
@@ -334,14 +510,14 @@
                     </div>
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500 relative">
-                            <img src="/images/Nikoblack.jpg" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=NIKO'" alt="Niko - Partner" class="w-full h-full object-cover object-top">
+                            <img src="/images/NikoBlack.JPG" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=NIKO'" alt="Niko - Partner" class="w-full h-full object-cover object-top">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light mt-4">NIKO</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Partner, Growth & Partnerships</p>
                     </div>
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500 relative">
-                            <img src="/images/Tomblack.jpg" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=TOM'" alt="Tom - Partner" class="w-full h-full object-cover object-top">
+                            <img src="/images/Tomblack.JPG" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=TOM'" alt="Tom - Partner" class="w-full h-full object-cover object-top">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light mt-4">TOM</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Partner, Strategy & Vision</p>
