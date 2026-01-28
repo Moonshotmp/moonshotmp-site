@@ -142,7 +142,7 @@
         </div>
       </div>
 
-      <div id="mobile-menu" class="lg:hidden bg-brand-dark border-b border-white/10 hidden">
+      <div id="mobile-menu" class="lg:hidden bg-brand-dark border-b border-white/10 hidden max-h-[calc(100vh-5rem)] overflow-y-auto">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
 
           <!-- Medical Mobile -->
