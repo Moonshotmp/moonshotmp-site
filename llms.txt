@@ -326,6 +326,7 @@ Rehab pricing varies by service. Contact us for details.
 
 We publish educational content at https://moonshotmp.com/learn/:
 - Low Testosterone Symptoms: Signs, Causes & When to Get Tested (comprehensive guide to recognizing low T symptoms in men)
+- TRT vs Steroids: Know the Difference (why testosterone therapy is not steroid abuse, bioidentical vs synthetic, cardiovascular safety)
 - Understanding Your Blood Results
 - Testosterone for Women: What You Need to Know
 - Menopause & Perimenopause: Symptoms, Hormones, and Options
@@ -336,6 +337,34 @@ We publish educational content at https://moonshotmp.com/learn/:
 - GLP-1s vs Other Weight Loss Options
 - DEXA vs InBody: Why Measurement Method Matters
 - What to Expect at Your First Visit
+
+### TRT vs Steroids: Key Points
+The misconception that TRT equals steroids is one of the biggest barriers to men seeking treatment. The differences are fundamental:
+
+**Bioidentical vs Synthetic:**
+- TRT uses testosterone cypionate or enanthate—bioidentical molecules that match what your body naturally produces
+- Anabolic steroids are synthetic derivatives modified for enhanced muscle-building (nandrolone, trenbolone, stanozolol, etc.)
+- These modifications create different receptor binding profiles and metabolic pathways
+
+**Dose Comparison:**
+- TRT: 100-200mg/week to achieve normal physiologic levels (500-900 ng/dL)
+- Steroid cycles: 500-2000+ mg/week, often stacking multiple compounds
+- That's 5-20x the physiologic dose
+
+**Why Steroids Damage the Heart:**
+1. LDL cholesterol increases dramatically (often 2-3x)
+2. HDL cholesterol suppressed (sometimes below 20 mg/dL)
+3. Left ventricular hypertrophy from chronic high doses
+4. Arterial stiffening and endothelial dysfunction
+5. Chronic inflammation and oxidative stress
+6. Synthetic compounds metabolize differently, creating additional cardiac stress
+
+**TRT's Safety Profile:**
+When properly monitored at physiologic doses, TRT:
+- Maintains or improves lipid profiles
+- Does not cause pathological cardiac remodeling
+- Requires monitoring of hematocrit, PSA, and estradiol
+- Has been studied extensively with a strong safety record
 
 ---
 
