@@ -102,6 +102,11 @@
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://moonshotmp.com/medical/tadalafil/</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 
   <!-- Rehab Services -->
   <url>
