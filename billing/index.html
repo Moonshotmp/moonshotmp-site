@@ -322,7 +322,7 @@
             </div>
             <div class="form-group">
               <label for="searchDob">Date of Birth</label>
-              <input type="date" id="searchDob">
+              <input type="text" id="searchDob" placeholder="MM/DD/YYYY" maxlength="10" inputmode="numeric">
             </div>
             <button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
           </div>
@@ -375,7 +375,7 @@
         </div>
         <div class="form-group">
           <label>Date of Birth *</label>
-          <input type="date" id="npDob" required>
+          <input type="text" id="npDob" placeholder="MM/DD/YYYY" maxlength="10" inputmode="numeric" required>
         </div>
         <div class="form-group">
           <label>Email</label>
@@ -431,6 +431,34 @@
       setTimeout(() => el.classList.remove('show'), 3000);
     }
 
+    // Date input auto-formatting (MM/DD/YYYY)
+    function setupDateInput(input) {
+      input.addEventListener('input', function(e) {
+        let v = this.value.replace(/\D/g, '');
+        if (v.length >= 2) v = v.slice(0,2) + '/' + v.slice(2);
+        if (v.length >= 5) v = v.slice(0,5) + '/' + v.slice(5,9);
+        this.value = v;
+      });
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && this.value.endsWith('/')) {
+          e.preventDefault();
+          this.value = this.value.slice(0, -1);
+        }
+      });
+    }
+    // Convert MM/DD/YYYY to YYYY-MM-DD for API
+    function toIsoDate(mmddyyyy) {
+      if (!mmddyyyy) return '';
+      const parts = mmddyyyy.split('/');
+      if (parts.length !== 3) return mmddyyyy;
+      return `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
+    }
+    // Setup date inputs on load
+    document.addEventListener('DOMContentLoaded', () => {
+      setupDateInput(document.getElementById('searchDob'));
+      setupDateInput(document.getElementById('npDob'));
+    });
+
     function openNewPatientModal() {
       document.getElementById('newPatientModal').classList.add('show');
     }
@@ -457,14 +485,14 @@
       e.preventDefault();
       const first = document.getElementById('searchFirst').value.trim();
       const last = document.getElementById('searchLast').value.trim();
-      const dob = document.getElementById('searchDob').value;
+      const dob = toIsoDate(document.getElementById('searchDob').value);
       if (!first && !last) { showToast('Enter at least a name', 'error'); return; }
 
       document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
       try {
         const res = await fetch(`${API}/membership-patient-search`, {
           method: 'POST', headers: authHeaders(),
-          body: JSON.stringify({ first_name: first, last_name: last, dob })
+          body: JSON.stringify({ first_name: first, last_name: last, dob: dob || undefined })
         });
         const data = await res.json();
         renderSearchResults(data.patients || []);
@@ -541,7 +569,7 @@
           body: JSON.stringify({
             first_name: document.getElementById('npFirst').value,
             last_name: document.getElementById('npLast').value,
-            dob: document.getElementById('npDob').value,
+            dob: toIsoDate(document.getElementById('npDob').value),
             email: document.getElementById('npEmail').value,
             phone: document.getElementById('npPhone').value,
           })
