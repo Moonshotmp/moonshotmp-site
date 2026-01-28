@@ -266,29 +266,27 @@
         // Mobile submenu toggles (accordion - only one open at a time)
         const mobileSubmenus = ['medical', 'rehab', 'learn', 'about'];
 
-        function closeAllMobileSubmenus(exceptId) {
-            mobileSubmenus.forEach(name => {
-                if (name !== exceptId) {
-                    const submenu = document.getElementById('mobile-' + name + '-submenu');
-                    const arrow = document.getElementById('mobile-' + name + '-arrow');
-                    if (submenu) submenu.classList.add('hidden');
-                    if (arrow) arrow.classList.remove('rotate-180');
-                }
-            });
-        }
-
         function setupMobileSubmenu(btnId, submenuId, arrowId, menuName) {
             const btn = document.getElementById(btnId);
             const submenu = document.getElementById(submenuId);
             const arrow = document.getElementById(arrowId);
             if (btn && submenu && arrow) {
                 btn.addEventListener('click', () => {
-                    const isOpening = submenu.classList.contains('hidden');
-                    if (isOpening) {
-                        closeAllMobileSubmenus(menuName);
+                    const wasOpen = !submenu.classList.contains('hidden');
+
+                    // Close ALL submenus first
+                    mobileSubmenus.forEach(name => {
+                        const sub = document.getElementById('mobile-' + name + '-submenu');
+                        const arr = document.getElementById('mobile-' + name + '-arrow');
+                        if (sub) sub.classList.add('hidden');
+                        if (arr) arr.classList.remove('rotate-180');
+                    });
+
+                    // If it was closed, open it (if it was open, it stays closed)
+                    if (!wasOpen) {
+                        submenu.classList.remove('hidden');
+                        arrow.classList.add('rotate-180');
                     }
-                    submenu.classList.toggle('hidden');
-                    arrow.classList.toggle('rotate-180');
                 });
             }
         }
