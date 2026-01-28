@@ -1,65 +1,335 @@
 # Moonshot Medical and Performance
 > Medical optimization and physical rehabilitation clinic in Park Ridge, IL
 
-## About
-Moonshot Medical and Performance combines medical optimization with physical rehabilitation under one roof. We take a data-driven, proactive approach to health—measuring early, interpreting in context, and optimizing before problems appear.
+## Quick Summary
+Moonshot Medical and Performance is a performance medicine clinic combining medical optimization with physical rehabilitation. We focus on taking people from "normal" to optimal—not waiting until something is broken to act. Data-driven, proactive, and evidence-based.
 
-## Location
-542 Busse Hwy, Park Ridge, IL 60068
-Phone: 847-499-1266 (Medical) | 224-435-4280 (Rehab)
-Email: hello@moonshotmp.com
-Website: https://moonshotmp.com
+## Location & Contact
+- Address: 542 Busse Hwy, Park Ridge, IL 60068
+- Medical Phone: 847-499-1266
+- Rehab Phone: 224-435-4280
+- Email: hello@moonshotmp.com
+- Website: https://moonshotmp.com
+- Hours: Monday–Friday 9am–5pm, Saturday by appointment
 
-## Hours
-Monday–Friday: 9am–5pm
-Saturday: By appointment
+## Our Team
 
-## Medical Services
-- Comprehensive Blood Panels: 60+ biomarkers including hormones, metabolic markers, inflammation, nutrients ($285)
-- DEXA Body Composition Scan: Medical-grade measurement of fat mass, lean muscle, bone density, visceral fat ($150)
-- Performance Baseline Bundle: DEXA + Blood Panel combined ($405, save $30)
-- Men's Hormone Optimization: Testosterone, thyroid, metabolic optimization with ongoing monitoring ($208/month)
-- Women's Hormone Optimization: Estrogen, progesterone, BHRT, thyroid, cycle-aware care ($208/month)
-- Weight Loss (GLP-1): Semaglutide/Tirzepatide with DEXA tracking and muscle preservation focus ($405/month)
-- Prescription Program: Medical oversight with Rx sent to your pharmacy ($105/month)
-- Peptides: BPC-157, TB-500, NAD+ support guided by labs
+### Missy, NP — Medical Director
+- Board-certified Nurse Practitioner
+- Leads all medical optimization services
+- Specializes in hormone optimization for men and women
+- Expertise in metabolic health, GLP-1 weight loss, and peptide therapy
+- Takes a data-driven, individualized approach to patient care
 
-## Rehab Services
-- Chiropractic Care: McKenzie method and evidence-based spinal care
-- Physical Rehabilitation: Movement restoration and strength rehabilitation
-- Trigger Point Injections: Targeted relief for chronic muscle pain
-- Dry Needling: Release tight muscles and improve range of motion
-- Shockwave Therapy: Accelerate healing for tendon and soft tissue injuries
-- IASTM: Instrument-assisted soft tissue mobilization
+### Dr. Michael — Partner, Physical Medicine
+- Doctor of Chiropractic (DC)
+- Master's in Clinical Nutrition (MSc)
+- Diplomate of the American Clinical Board of Nutrition (DACBN)
+- McKenzie Method certified (MDT)
+- Evidence-based approach to spine and musculoskeletal care
+- Focus on patient education and self-treatment
 
-## Team
-- Missy (NP): Medical Director, leads all medical optimization services
-- Dr. Michael (DC, MSc, DACBN): Doctor of Chiropractic, McKenzie Method certified, Master's in Clinical Nutrition
+### Supporting Team
 - Sarah (RN, MSN): Registered Nurse supporting medical services
 - Melissa: Medical Assistant, supports labs and DEXA scans
-- Sarah: Performance Specialist, movement and strength programming
 - Maria: Patient Experience & Brand Lead
 
-## Payment
-- Rehab services: Blue Cross Blue Shield PPO accepted
-- Medical services: Cash-pay (insurance covers sick care, not optimization—our goal is to take you from "normal" to optimal)
-- HSA and FSA accepted for most services
-- Prescription + Oversight program: $105/month (for patients whose insurance covers GLP-1 or hormone medications—we send Rx to your pharmacy)
+---
 
-## Equipment
-- DEXA Scanner: Hologic Horizon (industry gold standard)
-  - 128 ceramic detectors
-  - OnePass fan beam technology
-  - Under 3 minutes for whole body scan
-  - Precision exceeds standards by 4x
-  - Supports patients up to 500 lbs
+## Medical Services
 
-## Key Differentiators
-- Medical and rehab specialists working together under one roof
-- Individual baselines over population averages
-- Data-driven decisions, not trends
-- Long-term tracking over quick fixes
-- Treatment only when appropriate
+### Comprehensive Blood Panels — $285
+60+ biomarkers analyzed including:
+- Hormones: Total testosterone, free testosterone, estradiol, progesterone, DHEA-S, thyroid panel (TSH, free T3, free T4)
+- Metabolic: Fasting glucose, HbA1c, insulin, lipid panel, ApoB
+- Inflammation: CRP, homocysteine
+- Nutrients: Vitamin D, B12, ferritin, iron panel, magnesium
+- Organ function: Complete metabolic panel, liver enzymes, kidney function
+
+Why it matters: Standard primary care panels test 10-15 markers. We test 60+ because optimization requires seeing the full picture—not just checking for disease.
+
+### DEXA Body Composition Scan — $150
+Medical-grade body composition analysis measuring:
+- Total body fat percentage and distribution
+- Lean muscle mass by region (arms, legs, trunk)
+- Bone mineral density (osteoporosis screening)
+- Visceral adipose tissue (VAT) — the dangerous fat around organs
+- Android/gynoid fat ratio
+
+Equipment: Hologic Horizon scanner (gold standard in research and clinical settings)
+- 128 ceramic detectors
+- OnePass fan beam technology
+- Under 3 minutes for whole body scan
+- Precision exceeds ISCD standards by 4x
+- Supports patients up to 500 lbs
+
+Why DEXA over InBody or home scales: DEXA is the only method that directly measures body composition with X-ray technology. Bioelectrical impedance (InBody, home scales) estimates composition based on water content and can vary 5-10% based on hydration, meals, and time of day.
+
+### Performance Baseline Bundle — $405 (save $30)
+DEXA scan + comprehensive blood panel together. Best starting point for anyone serious about optimization.
+
+### Men's Hormone Optimization — $208/month
+Testosterone replacement therapy (TRT) and hormone optimization for men experiencing:
+- Low energy and fatigue
+- Decreased libido
+- Brain fog and poor concentration
+- Mood changes, irritability, depression
+- Difficulty building or maintaining muscle
+- Increased body fat, especially abdominal
+- Poor sleep quality
+
+What's included:
+- Ongoing medical oversight and provider access
+- Personalized protocol design
+- 2 DEXA scans per year
+- Comprehensive labs every 6 months
+- 1 vitamin shot per month
+- Dosing adjustments as needed
+
+Treatment options:
+- Testosterone cypionate injections
+- Testosterone cream
+- Enclomiphene (fertility-preserving alternative)
+- HCG (for fertility preservation)
+
+Safety monitoring: We track hematocrit, PSA, lipids, and estradiol regularly to ensure treatment remains safe.
+
+### Women's Hormone Optimization — $208/month
+Bioidentical hormone replacement therapy (BHRT) for women experiencing:
+- Perimenopause and menopause symptoms
+- Hot flashes, night sweats
+- Sleep disturbances
+- Mood changes, anxiety, depression
+- Brain fog and memory issues
+- Low libido
+- Vaginal dryness
+- Weight gain, especially around midsection
+- Bone density concerns
+
+What's included:
+- Ongoing medical oversight and provider access
+- Personalized protocol design
+- 2 DEXA scans per year
+- Comprehensive labs every 6 months
+- 1 vitamin shot per month
+- Dosing adjustments as needed
+
+Treatment options:
+- Estradiol (patch, cream, or pellets)
+- Progesterone (oral or cream)
+- Testosterone (yes, women need it too—for energy, libido, and muscle)
+- DHEA
+- Thyroid optimization
+
+We use bioidentical hormones—molecularly identical to what your body produces—not synthetic versions.
+
+### Weight Loss Program (GLP-1) — $405/month
+Medical weight loss using GLP-1 medications with a focus on muscle preservation:
+- Semaglutide (same active ingredient as Ozempic/Wegovy)
+- Tirzepatide (same active ingredient as Mounjaro/Zepbound)
+
+What's included:
+- GLP-1 medication
+- Medical oversight and provider access
+- DEXA tracking to ensure you're losing fat, not muscle
+- Lab monitoring
+- Dosing adjustments
+- Nutrition guidance
+
+Why we track body composition: The scale doesn't tell the whole story. Rapid weight loss often includes muscle loss, which hurts metabolism and long-term health. We use DEXA to ensure you're losing fat and preserving (or building) muscle.
+
+### Prescription + Oversight Program — $105/month
+For patients whose insurance covers GLP-1 or hormone medications:
+- We write the prescription and send to your pharmacy
+- Medical oversight and monitoring
+- Lab work as needed
+- Dosing guidance
+- Provider access for questions
+
+### Peptides
+Therapeutic peptides guided by labs and goals:
+- BPC-157: Tissue healing, gut repair
+- TB-500: Recovery, inflammation
+- NAD+: Cellular energy, longevity
+- Other peptides based on individual needs
+
+---
+
+## Rehab Services
+
+### Chiropractic Care
+Evidence-based chiropractic with Dr. Michael, McKenzie Method certified.
+
+Conditions treated:
+- Back pain (lower back, mid-back, disc issues, sciatica)
+- Neck pain (stiffness, headaches, radiating arm pain)
+- Joint pain (shoulder, hip, knee, ankle)
+- Sports injuries
+
+Our approach: We don't do "maintenance adjustments" or lock you into endless treatment plans. Goal is to fix the problem and teach you how to keep it fixed. Most patients see significant improvement within 6-8 visits.
+
+### Physical Rehabilitation
+Movement restoration and strength-based rehabilitation.
+
+### Trigger Point Injections
+Targeted injections for chronic muscle pain and tension. Effective for:
+- Chronic neck and shoulder tension
+- Tension headaches
+- Lower back muscle spasms
+- Fibromyalgia trigger points
+
+### Dry Needling
+Thin filament needles targeting muscle trigger points. Different from acupuncture—based on modern neuroscience, not meridian theory. Effective for:
+- Chronic muscle tension
+- Myofascial pain
+- Headaches
+- Tennis/golf elbow
+- TMJ pain
+
+### Shockwave Therapy (ESWT)
+Acoustic wave therapy accelerating healing for:
+- Plantar fasciitis
+- Achilles tendinopathy
+- Tennis elbow
+- Rotator cuff issues
+- Patellar tendinopathy
+- Chronic tendon injuries that haven't responded to other treatments
+
+---
+
+## Conditions We Help With
+
+### Men's Health
+- Low testosterone / hypogonadism
+- Fatigue and low energy
+- Weight gain and difficulty losing fat
+- Muscle loss
+- Low libido
+- Brain fog
+- Mood changes
+- Sleep issues
+- Metabolic dysfunction
+
+### Women's Health
+- Perimenopause symptoms
+- Menopause symptoms
+- Hot flashes and night sweats
+- Sleep disturbances
+- Mood changes and anxiety
+- Low libido
+- Weight gain
+- Brain fog
+- Bone density concerns (osteopenia, osteoporosis)
+- PCOS (polycystic ovary syndrome)
+- Thyroid dysfunction
+
+### Metabolic Health
+- Pre-diabetes and insulin resistance
+- High cholesterol / dyslipidemia
+- Elevated ApoB
+- Metabolic syndrome
+- Difficulty losing weight despite diet and exercise
+
+### Pain & Movement
+- Back pain (acute and chronic)
+- Neck pain
+- Headaches (tension, cervicogenic)
+- Sciatica
+- Joint pain
+- Sports injuries
+- Tendon injuries (plantar fasciitis, achilles, rotator cuff)
+- Chronic muscle tension
+
+---
+
+## Frequently Asked Questions
+
+### General
+
+**What makes Moonshot different from a regular doctor?**
+Primary care is designed for sick care—treating problems after they appear. We focus on optimization—measuring early, identifying trends, and intervening before problems develop. We also spend more time with patients (30-60 min visits, not 7 minutes) and test far more comprehensively (60+ biomarkers vs 10-15).
+
+**Do you accept insurance?**
+- Rehab services: We accept Blue Cross Blue Shield PPO
+- Medical services: Cash-pay only
+
+Insurance doesn't cover optimization. It's designed for sick care—waiting until something is broken to act. Our goal is to take you from "normal" to optimal, not just react when there's a problem. This model lets us spend more time with you, order the right tests, and focus on what actually moves the needle.
+
+**Do you accept HSA/FSA?**
+Yes, HSA and FSA are accepted for most services.
+
+### Hormone Therapy
+
+**Is testosterone therapy (TRT) safe?**
+When properly monitored, testosterone therapy has a strong safety profile. We monitor hematocrit, PSA, lipids, and estradiol regularly and adjust protocols as needed. The key is proper dosing and ongoing monitoring—not a prescription and a handshake.
+
+**Will TRT affect my fertility?**
+Standard TRT can suppress sperm production. If fertility is a concern, we offer protocols using HCG or enclomiphene that can help preserve fertility while optimizing hormones.
+
+**What's the difference between TRT and enclomiphene?**
+TRT replaces testosterone directly. Enclomiphene stimulates your body to produce more testosterone naturally by blocking estrogen feedback at the pituitary. Enclomiphene preserves fertility and testicular function but may not achieve the same testosterone levels as TRT. We help you decide which is right based on your goals, labs, and fertility plans.
+
+**Is hormone replacement therapy safe for women?**
+Yes, when properly prescribed and monitored. The 2002 WHI study created fear around HRT, but it studied synthetic hormones (Premarin, Provera) in older women, not bioidentical hormones in perimenopausal women. Subsequent research shows bioidentical hormones, started around menopause, are safe and protective for most women.
+
+**Do women need testosterone?**
+Yes. Women produce testosterone naturally (just less than men), and it declines with age. Low testosterone in women contributes to fatigue, low libido, difficulty building muscle, and brain fog. We prescribe it at physiologic doses appropriate for women.
+
+### Weight Loss
+
+**How do GLP-1 medications work?**
+GLP-1s (semaglutide, tirzepatide) mimic a hormone that regulates appetite and blood sugar. They reduce hunger, increase satiety, and help your body regulate blood sugar more effectively. Combined with proper nutrition and monitoring, they can produce significant, sustainable weight loss.
+
+**Will I lose muscle on GLP-1s?**
+Rapid weight loss—with or without medication—can include muscle loss. That's why we track body composition with DEXA, not just scale weight. We adjust nutrition and monitor to ensure you're losing fat while preserving muscle.
+
+**What happens when I stop GLP-1 medication?**
+Without lifestyle changes, weight often returns. That's why we focus on building sustainable habits during treatment and using DEXA to ensure you're building or maintaining muscle (which supports metabolism).
+
+### DEXA & Labs
+
+**How often should I get a DEXA scan?**
+For most optimization patients, every 6 months is ideal to track progress. More frequently if you're making significant body composition changes. Our hormone programs include 2 DEXA scans per year.
+
+**Why do you test so many biomarkers?**
+Standard panels are designed to detect disease, not optimize health. You can be "normal" on a basic panel and still have suboptimal testosterone, elevated insulin, low vitamin D, or high ApoB—all of which affect how you feel and your long-term health. We test comprehensively because optimization requires the full picture.
+
+---
+
+## Pricing Summary
+
+| Service | Price |
+|---------|-------|
+| Comprehensive Blood Panel | $285 |
+| DEXA Body Composition Scan | $150 |
+| Performance Baseline Bundle (DEXA + Labs) | $405 |
+| Men's Hormone Optimization | $208/month |
+| Women's Hormone Optimization | $208/month |
+| Weight Loss Program (GLP-1) | $405/month |
+| Prescription + Oversight (bring your own Rx) | $105/month |
+
+Rehab pricing varies by service. Contact us for details.
+
+---
+
+## Educational Resources
+
+We publish educational content at https://moonshotmp.com/learn/:
+- Understanding Your Blood Results
+- Testosterone for Women: What You Need to Know
+- Menopause & Perimenopause: Symptoms, Hormones, and Options
+- Progesterone: More Than a Pregnancy Hormone
+- PCOS: Types, Diagnosis, and Treatment
+- The WHI Study: What It Actually Showed About HRT
+- TRT vs Enclomiphene: Which Is Right for You?
+- GLP-1s vs Other Weight Loss Options
+- DEXA vs InBody: Why Measurement Method Matters
+- What to Expect at Your First Visit
+
+---
+
+## Service Area
+Park Ridge, IL and surrounding communities including Chicago, Des Plaines, Niles, Morton Grove, Glenview, Skokie, Evanston, and the greater northwest suburbs.
 
 ## Related Business
-Moonshot CrossFit operates next door, offering a seamless continuum from rehab to fitness.
+Moonshot CrossFit operates next door at the same address, offering a seamless continuum from rehab to fitness for patients ready to return to training.
