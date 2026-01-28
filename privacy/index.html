@@ -6,7 +6,14 @@
     <title>Privacy Policy | Moonshot Medical and Performance</title>
     <meta name="description" content="Privacy Policy for Moonshot Medical and Performance. Learn how we collect, use, and protect your personal and health information.">
     <meta name="robots" content="noindex, follow">
-    <link rel="canonical" href="https://moonshotmp.com/privacy/" />
+    <link rel="canonical" href="https://moonshotmp.com/privacy/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Privacy Policy | Moonshot Medical and Performance">
+    <meta property="og:description" content="Privacy Policy for Moonshot Medical and Performance. Learn how we collect, use, and protect your personal and health information.">
+    <meta property="og:url" content="https://moonshotmp.com/privacy/">
+    <meta property="og:image" content="https://moonshotmp.com/images/moonshotmptan.png">
+
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -15,118 +22,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#101921',
-                            light: '#F0EEE9',
-                            gray: '#B2BFBE',
-                            slate: '#2C353E'
-                        }
-                    },
-                    fontFamily: {
-                        heading: ['Oswald', 'sans-serif'],
-                        body: ['Poppins', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { background-color: #101921; color: #F0EEE9; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
-        .btn-primary { background-color: #B2BFBE; color: #101921; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 600; padding: 0.75rem 2rem; transition: all 0.3s ease; }
-        .btn-primary:hover { background-color: #F0EEE9; transform: translateY(-2px); }
-        .btn-outline { background-color: transparent; border: 1px solid #B2BFBE; color: #B2BFBE; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 500; padding: 0.75rem 2rem; transition: all 0.3s ease; }
-        .btn-outline:hover { border-color: #F0EEE9; color: #F0EEE9; transform: translateY(-2px); }
-    </style>
+    <script src="/shared/tailwind-config.js"></script>
+    <link rel="stylesheet" href="/shared/styles.css">
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
-          <a href="/" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-            <img src="/images/mm+logocloud.png" alt="Moonshot Medical and Performance Logo" class="h-8 md:h-10 w-auto object-contain">
-            <div class="hidden sm:block text-brand-light font-heading text-sm tracking-wide leading-tight ml-3">
-              MOONSHOT<br>MEDICAL AND PERFORMANCE
-            </div>
-          </a>
-
-          <div class="hidden md:flex space-x-8 items-center">
-            <a href="/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Home</a>
-
-            <div class="relative inline-block" id="services-menu-wrapper">
-              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
-                      id="services-menu-button" aria-expanded="false" aria-haspopup="true">
-                Services
-                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-
-              <div class="absolute left-0 mt-2 w-64 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden"
-                   id="services-dropdown">
-                <div class="py-2">
-                  <a href="/services/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">All Services</a>
-                  <a href="/services/performance-medicine/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Performance Medicine</a>
-                  <a href="/services/mens-hormone-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Men’s Hormone Optimization</a>
-                  <a href="/services/womens-hormone-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Women’s Hormone Optimization</a>
-                  <a href="/services/body-composition-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Body Composition</a>
-                  <a href="/services/recovery-and-optimization/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Recovery & Optimization</a>
-                </div>
-              </div>
-            </div>
-
-            <a href="/membership/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Membership</a>
-            <a href="/contact/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Contact</a>
-            <a href="/booking/" class="btn-primary text-xs tracking-widest">Book Consult</a>
-          </div>
-
-          <div class="md:hidden flex items-center">
-            <button id="mobile-menu-btn" class="text-brand-light hover:text-white focus:outline-none">
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div id="mobile-menu" class="md:hidden bg-brand-dark border-b border-white/10 hidden">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
-          <a href="/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Home</a>
-
-          <div>
-            <button id="mobile-services-btn"
-                    class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
-              <span class="w-4"></span>
-              <span class="flex-1 text-center font-bold border-b border-white">Services</span>
-              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-services-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-
-            <div id="mobile-services-submenu" class="bg-black/20 hidden">
-              <a href="/services/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">All Services</a>
-              <a href="/services/performance-medicine/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Performance Medicine</a>
-              <a href="/services/mens-hormone-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Men’s Hormones</a>
-              <a href="/services/womens-hormone-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women’s Hormones</a>
-              <a href="/services/body-composition-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Composition</a>
-              <a href="/services/recovery-and-optimization/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Recovery</a>
-            </div>
-          </div>
-
-          <a href="/membership/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Membership</a>
-          <a href="/contact/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Contact</a>
-          <a href="/booking/" class="block w-full text-brand-light bg-brand-gray/10 hover:bg-brand-gray/20 py-3 text-sm uppercase tracking-widest mt-2 font-bold">Book Consult</a>
-        </div>
-      </div>
-    </nav>
+    <script src="/shared/header.js"></script>
 
     <main class="flex-grow pt-20">
         <section class="py-12 bg-brand-light text-brand-dark min-h-screen">
@@ -139,7 +42,7 @@
                 </div>
 
                 <div class="space-y-12 text-brand-slate">
-                    
+
                     <!-- Info We Collect -->
                     <section>
                         <h2 class="text-xl font-bold text-brand-dark mb-3 uppercase tracking-wide">Information We Collect</h2>
@@ -260,101 +163,7 @@
         </section>
     </main>
 
-    <footer class="bg-black border-t border-white/10 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-                <div>
-                    <a href="/" class="flex items-center gap-2 mb-2">
-                         <img src="/images/mm+logocloud.png" alt="Moonshot Medical Full Logo" class="h-8 md:h-10 w-auto object-contain">
-                    </a>
-                    <div class="text-brand-light font-heading font-bold text-xl tracking-widest">
-                        Moonshot Medical and Performance
-                    </div>
-                    <p class="text-brand-gray text-xs mt-2 max-w-xs">
-                        542 Busse Hwy, Park Ridge, IL 60068
-                    </p>
-                    <p class="mt-2">
-                        <a href="tel:+18474991266" class="text-brand-gray hover:text-white text-sm font-bold tracking-wider">847-499-1266</a>
-                    </p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        Instagram
-                    </a>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-white/5 text-center md:text-left text-xs text-brand-gray/50 flex flex-col md:flex-row gap-4 justify-between">
-                <span>&copy; 2025 Moonshot Medical and Performance. All Rights Reserved.</span>
-                <span class="md:text-right"><a href="/privacy-policy/" class="hover:text-white transition">Privacy Policy</a></span>
-            </div>
-        </div>
-    </footer>
+    <script src="/shared/footer.js"></script>
 
-    <script>
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileServicesBtn = document.getElementById('mobile-services-btn');
-      const mobileServicesSubmenu = document.getElementById('mobile-services-submenu');
-      const mobileServicesArrow = document.getElementById('mobile-services-arrow');
-
-      if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-          if (mobileMenu.classList.contains('hidden') && mobileServicesSubmenu) {
-            mobileServicesSubmenu.classList.add('hidden');
-            if (mobileServicesArrow) mobileServicesArrow.classList.remove('rotate-180');
-          }
-        });
-      }
-
-      if (mobileServicesBtn && mobileServicesSubmenu && mobileServicesArrow) {
-        mobileServicesBtn.addEventListener('click', () => {
-          mobileServicesSubmenu.classList.toggle('hidden');
-          mobileServicesArrow.classList.toggle('rotate-180');
-        });
-      }
-
-      const wrapper = document.getElementById('services-menu-wrapper');
-      const btn = document.getElementById('services-menu-button');
-      const dropdown = document.getElementById('services-dropdown');
-
-      if (wrapper && btn && dropdown) {
-        let closeTimer = null;
-
-        const openMenu = () => {
-          clearTimeout(closeTimer);
-          dropdown.classList.remove('hidden');
-          btn.setAttribute('aria-expanded', 'true');
-          const icon = btn.querySelector('svg');
-          if (icon) icon.classList.add('rotate-180');
-        };
-
-        const closeMenu = () => {
-          closeTimer = setTimeout(() => {
-            dropdown.classList.add('hidden');
-            btn.setAttribute('aria-expanded', 'false');
-            const icon = btn.querySelector('svg');
-            if (icon) icon.classList.remove('rotate-180');
-          }, 150);
-        };
-
-        wrapper.addEventListener('mouseenter', openMenu);
-        wrapper.addEventListener('mouseleave', closeMenu);
-
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          openMenu();
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!wrapper.contains(e.target)) dropdown.classList.add('hidden');
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') dropdown.classList.add('hidden');
-        });
-      }
-    </script>
 </body>
 </html>

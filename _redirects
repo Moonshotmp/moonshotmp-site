@@ -5,5 +5,8 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 # Admin dashboard - protected by Netlify Identity (client-side + function auth)
 # Login page is public, dashboard pages check auth on load
 
+# 404 catch-all (must be last)
+/*    /404.html   404
+
 
 
