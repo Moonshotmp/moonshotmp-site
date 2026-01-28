@@ -142,7 +142,7 @@
         </div>
       </div>
 
-      <div id="mobile-menu" class="lg:hidden bg-brand-dark border-b border-white/10 hidden">
+      <div id="mobile-menu" class="lg:hidden bg-brand-dark border-b border-white/10 hidden max-h-[calc(100vh-5rem)] overflow-y-auto">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
 
           <!-- Medical Mobile -->
@@ -263,22 +263,37 @@
             });
         }
 
-        // Mobile submenu toggles
-        function setupMobileSubmenu(btnId, submenuId, arrowId) {
+        // Mobile submenu toggles (accordion - only one open at a time)
+        const mobileSubmenus = ['medical', 'rehab', 'learn', 'about'];
+
+        function setupMobileSubmenu(btnId, submenuId, arrowId, menuName) {
             const btn = document.getElementById(btnId);
             const submenu = document.getElementById(submenuId);
             const arrow = document.getElementById(arrowId);
             if (btn && submenu && arrow) {
                 btn.addEventListener('click', () => {
-                    submenu.classList.toggle('hidden');
-                    arrow.classList.toggle('rotate-180');
+                    const wasOpen = !submenu.classList.contains('hidden');
+
+                    // Close ALL submenus first
+                    mobileSubmenus.forEach(name => {
+                        const sub = document.getElementById('mobile-' + name + '-submenu');
+                        const arr = document.getElementById('mobile-' + name + '-arrow');
+                        if (sub) sub.classList.add('hidden');
+                        if (arr) arr.classList.remove('rotate-180');
+                    });
+
+                    // If it was closed, open it (if it was open, it stays closed)
+                    if (!wasOpen) {
+                        submenu.classList.remove('hidden');
+                        arrow.classList.add('rotate-180');
+                    }
                 });
             }
         }
-        setupMobileSubmenu('mobile-medical-btn', 'mobile-medical-submenu', 'mobile-medical-arrow');
-        setupMobileSubmenu('mobile-rehab-btn', 'mobile-rehab-submenu', 'mobile-rehab-arrow');
-        setupMobileSubmenu('mobile-learn-btn', 'mobile-learn-submenu', 'mobile-learn-arrow');
-        setupMobileSubmenu('mobile-about-btn', 'mobile-about-submenu', 'mobile-about-arrow');
+        setupMobileSubmenu('mobile-medical-btn', 'mobile-medical-submenu', 'mobile-medical-arrow', 'medical');
+        setupMobileSubmenu('mobile-rehab-btn', 'mobile-rehab-submenu', 'mobile-rehab-arrow', 'rehab');
+        setupMobileSubmenu('mobile-learn-btn', 'mobile-learn-submenu', 'mobile-learn-arrow', 'learn');
+        setupMobileSubmenu('mobile-about-btn', 'mobile-about-submenu', 'mobile-about-arrow', 'about');
 
         // Desktop dropdown menus
         function setupDesktopDropdown(wrapperId, buttonId, dropdownId) {

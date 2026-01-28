@@ -31,8 +31,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/shared/tailwind-config.js"></script>
+    <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
     <!-- Structured Data (JSON-LD) -->
@@ -641,73 +640,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- NAVIGATION LOGIC (From Homepage) -->
-    <script>
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileServicesBtn = document.getElementById('mobile-services-btn');
-      const mobileServicesSubmenu = document.getElementById('mobile-services-submenu');
-      const mobileServicesArrow = document.getElementById('mobile-services-arrow');
-    
-      if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-          if (mobileMenu.classList.contains('hidden') && mobileServicesSubmenu) {
-            mobileServicesSubmenu.classList.add('hidden');
-            if (mobileServicesArrow) mobileServicesArrow.classList.remove('rotate-180');
-          }
-        });
-      }
-    
-      if (mobileServicesBtn && mobileServicesSubmenu && mobileServicesArrow) {
-        mobileServicesBtn.addEventListener('click', () => {
-          mobileServicesSubmenu.classList.toggle('hidden');
-          mobileServicesArrow.classList.toggle('rotate-180');
-        });
-      }
-    
-      const wrapper = document.getElementById('services-menu-wrapper');
-      const btn = document.getElementById('services-menu-button');
-      const dropdown = document.getElementById('services-dropdown');
-    
-      if (wrapper && btn && dropdown) {
-        let closeTimer = null;
-    
-        const openMenu = () => {
-          clearTimeout(closeTimer);
-          dropdown.classList.remove('hidden');
-          btn.setAttribute('aria-expanded', 'true');
-          const icon = btn.querySelector('svg');
-          if (icon) icon.classList.add('rotate-180');
-        };
-    
-        const closeMenu = () => {
-          closeTimer = setTimeout(() => {
-            dropdown.classList.add('hidden');
-            btn.setAttribute('aria-expanded', 'false');
-            const icon = btn.querySelector('svg');
-            if (icon) icon.classList.remove('rotate-180');
-          }, 150);
-        };
-    
-        wrapper.addEventListener('mouseenter', openMenu);
-        wrapper.addEventListener('mouseleave', closeMenu);
-    
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          openMenu();
-        });
-    
-        document.addEventListener('click', (e) => {
-          if (!wrapper.contains(e.target)) dropdown.classList.add('hidden');
-        });
-    
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') dropdown.classList.add('hidden');
-        });
-      }
-    </script>
 
 </body>
 </html>

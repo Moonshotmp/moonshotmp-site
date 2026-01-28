@@ -9,3 +9,4 @@
 .netlify
 netlify/
 node_modules/
+tailwindcss

@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-dark: #101921;
+  --color-brand-black: #101921;
+  --color-brand-light: #F0EEE9;
+  --color-brand-cloud: #F0EEE9;
+  --color-brand-gray: #B2BFBE;
+  --color-brand-slate: #2C353E;
+
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+
+  --font-size-xxs: 0.65rem;
+}
