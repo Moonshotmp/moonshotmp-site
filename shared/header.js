@@ -39,6 +39,7 @@
                   <a href="/medical/blood-panels/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Blood Panels</a>
                   <a href="/medical/dexa-scan/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">DEXA Scan</a>
                   <a href="/medical/mens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Men's Hormones</a>
+                  <a href="/medical/tadalafil/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Daily Tadalafil</a>
                   <a href="/medical/womens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Women's Hormones</a>
                   <a href="/medical/weight-loss/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Weight Loss</a>
                   <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Peptides</a>
@@ -81,6 +82,7 @@
                   <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Men</span>
                   <a href="/learn/low-testosterone-symptoms/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Low T Symptoms</a>
                   <a href="/medical/trt-vs-enclomiphene/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">TRT vs Enclomiphene</a>
+                  <a href="/medical/tadalafil/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Daily Tadalafil</a>
                   <div class="border-t border-white/10 mt-2 pt-2">
                     <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Women</span>
                     <a href="/learn/menopause-perimenopause/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Menopause Guide</a>
@@ -135,6 +137,7 @@
               <a href="/medical/blood-panels/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Panels</a>
               <a href="/medical/dexa-scan/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA Scan</a>
               <a href="/medical/mens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Men's Hormones</a>
+              <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
               <a href="/medical/womens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women's Hormones</a>
               <a href="/medical/weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Weight Loss</a>
               <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides</a>
@@ -173,6 +176,7 @@
               <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide">— Men —</span>
               <a href="/learn/low-testosterone-symptoms/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Low T Symptoms</a>
               <a href="/medical/trt-vs-enclomiphene/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Enclomiphene</a>
+              <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
               <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Women —</span>
               <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Menopause Guide</a>
               <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Testosterone for Women</a>
