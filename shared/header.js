@@ -86,6 +86,8 @@
                     <a href="/learn/menopause-perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Menopause Guide</a>
                     <a href="/learn/testosterone-for-women/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Testosterone for Women</a>
                     <a href="/learn/whi-study-hrt-truth/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">HRT: Myths vs Facts</a>
+                    <a href="/learn/progesterone/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Progesterone Guide</a>
+                    <a href="/learn/pcos/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">PCOS Guide</a>
                     <a href="/learn/understanding-blood-results/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Understanding Blood Results</a>
                     <a href="/learn/first-visit/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Your First Visit</a>
                   </div>
@@ -165,6 +167,8 @@
               <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Menopause Guide</a>
               <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Testosterone for Women</a>
               <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
+              <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone Guide</a>
+              <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS Guide</a>
               <a href="/learn/understanding-blood-results/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Understanding Blood Results</a>
               <a href="/learn/first-visit/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Your First Visit</a>
             </div>
