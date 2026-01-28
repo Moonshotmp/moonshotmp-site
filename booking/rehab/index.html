@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Rehab Services | Moonshot Medical and Performance</title>
+    <meta name="description" content="Book rehab services at Moonshot Medical and Performance. Chiropractic care, physical rehabilitation, dry needling, and shockwave therapy in Park Ridge, IL.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moonshotmp.com/booking/rehab/">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/shared/tailwind-config.js"></script>
+    <link rel="stylesheet" href="/shared/styles.css">
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <script src="/shared/header.js"></script>
+
+    <main class="flex-grow pt-20">
+
+        <!-- Hero -->
+        <section class="py-16 bg-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-4">BOOK REHAB</h1>
+                <p class="text-brand-gray text-lg font-light max-w-2xl mx-auto">
+                    Schedule your rehab appointment below. We accept Blue Cross Blue Shield.
+                </p>
+            </div>
+        </section>
+
+        <!-- Booking Options -->
+        <section class="py-16 bg-brand-light">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Phone Booking -->
+                    <div class="bg-brand-dark text-brand-light p-8 rounded-sm text-center">
+                        <div class="w-16 h-16 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-4">CALL TO BOOK</h2>
+                        <a href="tel:+12244354280" class="text-3xl font-bold hover:text-brand-gray transition block mb-4">224-435-4280</a>
+                        <p class="text-brand-gray font-light">
+                            Speak directly with our team to schedule your appointment and verify insurance.
+                        </p>
+                    </div>
+
+                    <!-- Request Callback / Form -->
+                    <div class="bg-white border border-brand-slate/10 p-8 rounded-sm">
+                        <h2 class="text-2xl font-bold text-brand-dark mb-6 text-center">REQUEST APPOINTMENT</h2>
+                        <form name="rehab-appointment" method="POST" data-netlify="true" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Name</label>
+                                <input type="text" name="name" required class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Phone</label>
+                                <input type="tel" name="phone" required class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Email</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Service Needed</label>
+                                <select name="service" class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate bg-white">
+                                    <option value="">Select a service...</option>
+                                    <option value="chiropractic">Chiropractic</option>
+                                    <option value="physical-rehab">Physical Rehab</option>
+                                    <option value="dry-needling">Dry Needling</option>
+                                    <option value="shockwave">Shockwave Therapy</option>
+                                    <option value="not-sure">Not Sure / Multiple</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-slate mb-1">Message (optional)</label>
+                                <textarea name="message" rows="3" class="w-full px-4 py-3 border border-brand-slate/20 rounded-sm focus:outline-none focus:border-brand-slate"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-dark text-brand-light font-bold py-4 uppercase tracking-wider hover:bg-brand-slate transition">
+                                Request Appointment
+                            </button>
+                        </form>
+                        <p class="text-brand-slate/60 text-xs text-center mt-4">We'll call you back within 1 business day to confirm.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Insurance Info -->
+        <section class="py-12 bg-brand-slate">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-xl font-bold text-brand-light mb-4">INSURANCE</h2>
+                <p class="text-brand-gray font-light mb-4">
+                    We accept Blue Cross Blue Shield insurance plans. Self-pay options are also available.
+                </p>
+                <p class="text-brand-gray text-sm">
+                    Questions about coverage? <a href="/contact/" class="underline hover:text-brand-light">Contact us</a> to verify your benefits.
+                </p>
+            </div>
+        </section>
+
+        <!-- What to Expect -->
+        <section class="py-16 bg-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-8 text-center">WHAT TO EXPECT</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-brand-light font-bold">1</span>
+                        </div>
+                        <h3 class="font-bold text-brand-light mb-2">Book Online</h3>
+                        <p class="text-brand-gray text-sm font-light">Select your service and choose a time that works for you.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-brand-light font-bold">2</span>
+                        </div>
+                        <h3 class="font-bold text-brand-light mb-2">Initial Evaluation</h3>
+                        <p class="text-brand-gray text-sm font-light">Dr. Michael will assess your condition and create a treatment plan.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-brand-light font-bold">3</span>
+                        </div>
+                        <h3 class="font-bold text-brand-light mb-2">Start Treatment</h3>
+                        <p class="text-brand-gray text-sm font-light">Begin your personalized rehab program with our team.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Quick Links -->
+        <section class="py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold mb-8 text-center">REHAB SERVICES</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <a href="/rehab/chiropractic/" class="bg-white border border-brand-slate/10 p-4 text-center hover:border-brand-slate/30 transition">
+                        <span class="font-bold">Chiropractic</span>
+                    </a>
+                    <a href="/rehab/physical-rehab/" class="bg-white border border-brand-slate/10 p-4 text-center hover:border-brand-slate/30 transition">
+                        <span class="font-bold">Physical Rehab</span>
+                    </a>
+                    <a href="/rehab/trigger-point/" class="bg-white border border-brand-slate/10 p-4 text-center hover:border-brand-slate/30 transition">
+                        <span class="font-bold">Trigger Point</span>
+                    </a>
+                    <a href="/rehab/dry-needling/" class="bg-white border border-brand-slate/10 p-4 text-center hover:border-brand-slate/30 transition">
+                        <span class="font-bold">Dry Needling</span>
+                    </a>
+                    <a href="/rehab/shockwave/" class="bg-white border border-brand-slate/10 p-4 text-center hover:border-brand-slate/30 transition">
+                        <span class="font-bold">Shockwave</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/shared/footer.js"></script>
+
+</body>
+</html>
