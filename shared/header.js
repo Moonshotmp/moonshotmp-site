@@ -76,20 +76,30 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="about-dropdown">
+              <div class="absolute left-0 mt-2 w-64 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="about-dropdown">
                 <div class="py-2">
-                  <a href="/about/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">Our Team</a>
-                  <a href="/ourstory/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Tom's Story</a>
+                  <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Men</span>
+                  <a href="/learn/low-testosterone-symptoms/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Low T Symptoms</a>
+                  <a href="/medical/trt-vs-enclomiphene/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">TRT vs Enclomiphene</a>
                   <div class="border-t border-white/10 mt-2 pt-2">
-                    <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Learn</span>
-                    <a href="/learn/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">All Resources</a>
-                    <a href="/learn/menopause-perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Menopause Guide</a>
-                    <a href="/learn/testosterone-for-women/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Testosterone for Women</a>
-                    <a href="/learn/whi-study-hrt-truth/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">HRT: Myths vs Facts</a>
-                    <a href="/learn/progesterone/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Progesterone Guide</a>
-                    <a href="/learn/pcos/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">PCOS Guide</a>
-                    <a href="/learn/understanding-blood-results/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Understanding Blood Results</a>
-                    <a href="/learn/first-visit/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Your First Visit</a>
+                    <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Women</span>
+                    <a href="/learn/menopause-perimenopause/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Menopause Guide</a>
+                    <a href="/learn/testosterone-for-women/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Testosterone for Women</a>
+                    <a href="/learn/progesterone/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Progesterone</a>
+                    <a href="/learn/pcos/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">PCOS</a>
+                    <a href="/learn/whi-study-hrt-truth/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">HRT: Myths vs Facts</a>
+                  </div>
+                  <div class="border-t border-white/10 mt-2 pt-2">
+                    <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Diagnostics</span>
+                    <a href="/learn/understanding-blood-results/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Understanding Blood Results</a>
+                    <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">DEXA vs InBody</a>
+                    <a href="/learn/first-visit/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Your First Visit</a>
+                  </div>
+                  <div class="border-t border-white/10 mt-2 pt-2">
+                    <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Moonshot</span>
+                    <a href="/about/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Our Team</a>
+                    <a href="/ourstory/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Tom's Story</a>
+                    <a href="/medical/moonshot-vs-typical-clinic/" class="block px-4 py-2 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">How We're Different</a>
                   </div>
                 </div>
               </div>
@@ -160,17 +170,23 @@
               </svg>
             </button>
             <div id="mobile-about-submenu" class="bg-black/20 hidden">
-              <a href="/about/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Our Team</a>
-              <a href="/ourstory/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Tom's Story</a>
-              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Learn —</span>
-              <a href="/learn/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">All Resources</a>
+              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide">— Men —</span>
+              <a href="/learn/low-testosterone-symptoms/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Low T Symptoms</a>
+              <a href="/medical/trt-vs-enclomiphene/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Enclomiphene</a>
+              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Women —</span>
               <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Menopause Guide</a>
               <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Testosterone for Women</a>
+              <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone</a>
+              <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS</a>
               <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
-              <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone Guide</a>
-              <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS Guide</a>
+              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Diagnostics —</span>
               <a href="/learn/understanding-blood-results/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Understanding Blood Results</a>
+              <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA vs InBody</a>
               <a href="/learn/first-visit/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Your First Visit</a>
+              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Moonshot —</span>
+              <a href="/about/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Our Team</a>
+              <a href="/ourstory/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Tom's Story</a>
+              <a href="/medical/moonshot-vs-typical-clinic/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">How We're Different</a>
             </div>
           </div>
           <a href="/contact/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Contact</a>
