@@ -40,12 +40,11 @@ Saturday: By appointment
 - Sarah: Performance Specialist, movement and strength programming
 - Maria: Patient Experience & Brand Lead
 
-## Insurance & Payment
+## Payment
 - Rehab services: Blue Cross Blue Shield PPO accepted
-- Medical services: Self-pay (does not bill insurance directly)
-- If your insurance covers GLP-1 medications or hormone therapy, we can send prescriptions to your pharmacy
-- HSA and FSA accepted for most medical services
-- Prescription + Oversight program: $105/month (for patients whose insurance covers medication)
+- Medical services: Cash-pay (insurance covers sick care, not optimization—our goal is to take you from "normal" to optimal)
+- HSA and FSA accepted for most services
+- Prescription + Oversight program: $105/month (for patients whose insurance covers GLP-1 or hormone medications—we send Rx to your pharmacy)
 
 ## Equipment
 - DEXA Scanner: Hologic Horizon (industry gold standard)
