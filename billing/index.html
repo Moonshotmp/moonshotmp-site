@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Billing Portal | Moonshot Medical</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #101921;
+      color: #F0EEE9;
+      min-height: 100vh;
+    }
+    .portal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .portal-header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .portal-header .subtitle {
+      color: #B2BFBE;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary { background: #B2BFBE; color: #101921; }
+    .btn-primary:hover { background: #F0EEE9; }
+    .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #B2BFBE; }
+    .btn-outline:hover { border-color: #F0EEE9; color: #F0EEE9; }
+    .btn-danger { background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; }
+    .btn-danger:hover { background: rgba(220,53,69,0.25); }
+    .btn-sm { padding: 6px 14px; font-size: 11px; }
+
+    .portal-body { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .stat-card .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      margin-bottom: 8px;
+    }
+    .stat-card .value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 24px;
+    }
+    .tab {
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #B2BFBE;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: #F0EEE9; }
+    .tab.active { color: #F0EEE9; border-bottom-color: #B2BFBE; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .search-section {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .search-section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 140px auto;
+      gap: 12px;
+      align-items: end;
+    }
+    .search-grid.fallback { grid-template-columns: 1fr 1fr auto; }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #B2BFBE;
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: #F0EEE9;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .form-group input:focus { outline: none; border-color: rgba(255,255,255,0.3); }
+    .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .results-area { min-height: 100px; }
+    .no-results { text-align: center; padding: 40px; color: #B2BFBE; font-size: 14px; }
+
+    .patient-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+    .patient-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .patient-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .patient-meta { font-size: 13px; color: #B2BFBE; margin-top: 4px; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-active { background: rgba(40,167,69,0.15); color: #51cf66; border: 1px solid rgba(40,167,69,0.3); }
+    .badge-inactive { background: rgba(255,255,255,0.06); color: #B2BFBE; border: 1px solid rgba(255,255,255,0.1); }
+    .badge-past_due { background: rgba(255,193,7,0.15); color: #ffd43b; border: 1px solid rgba(255,193,7,0.3); }
+    .badge-canceled { background: rgba(220,53,69,0.1); color: #ff6b6b; border: 1px solid rgba(220,53,69,0.25); }
+    .patient-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+    .members-table { width: 100%; border-collapse: collapse; }
+    .members-table th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-weight: 500;
+    }
+    .members-table td {
+      padding: 14px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .members-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: #1a2530;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+    }
+    .modal h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .modal .form-group { margin-bottom: 14px; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #F0EEE9;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-success { background: rgba(40,167,69,0.9); color: white; }
+    .toast-error { background: rgba(220,53,69,0.9); color: white; }
+
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .search-grid, .search-grid.fallback { grid-template-columns: 1fr; }
+      .portal-header { flex-direction: column; gap: 12px; text-align: center; }
+      .patient-card-header { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-header">
+    <div>
+      <h1>Billing Portal</h1>
+      <div class="subtitle">Moonshot Medical + Performance</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary" onclick="openNewPatientModal()">+ New Patient</button>
+      <button class="btn btn-outline" onclick="logout()">Log Out</button>
+    </div>
+  </div>
+
+  <div class="portal-body">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="label">Active Members</div>
+        <div class="value" id="statActive">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Monthly Revenue</div>
+        <div class="value" id="statRevenue">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Past Due</div>
+        <div class="value" id="statPastDue">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total Patients</div>
+        <div class="value" id="statTotal">--</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="search" onclick="switchTab('search')">Patient Lookup</div>
+      <div class="tab" data-tab="members" onclick="switchTab('members')">Active Members</div>
+      <div class="tab" data-tab="all" onclick="switchTab('all')">All Members</div>
+    </div>
+
+    <!-- Tab: Patient Lookup -->
+    <div class="tab-content active" id="tab-search">
+      <div class="search-section">
+        <h2>Find Patient</h2>
+        <form id="searchForm" onsubmit="searchPatient(event)">
+          <div class="search-grid">
+            <div class="form-group">
+              <label for="searchFirst">First Name</label>
+              <input type="text" id="searchFirst" placeholder="First name">
+            </div>
+            <div class="form-group">
+              <label for="searchLast">Last Name</label>
+              <input type="text" id="searchLast" placeholder="Last name">
+            </div>
+            <div class="form-group">
+              <label for="searchDob">Date of Birth</label>
+              <input type="date" id="searchDob">
+            </div>
+            <button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
+          </div>
+        </form>
+        <details style="margin-top: 12px;">
+          <summary style="color: #B2BFBE; font-size: 12px; cursor: pointer;">Fallback: Search by email or phone</summary>
+          <form id="fallbackForm" onsubmit="searchPatientFallback(event)" style="margin-top: 12px;">
+            <div class="search-grid fallback">
+              <div class="form-group">
+                <label for="searchEmail">Email</label>
+                <input type="email" id="searchEmail" placeholder="patient@email.com">
+              </div>
+              <div class="form-group">
+                <label for="searchPhone">Phone</label>
+                <input type="tel" id="searchPhone" placeholder="(555) 555-5555">
+              </div>
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </form>
+        </details>
+      </div>
+      <div class="results-area" id="searchResults">
+        <div class="no-results">Search for a patient above to get started</div>
+      </div>
+    </div>
+
+    <!-- Tab: Active Members -->
+    <div class="tab-content" id="tab-members">
+      <div id="activeMembersList"></div>
+    </div>
+
+    <!-- Tab: All Members -->
+    <div class="tab-content" id="tab-all">
+      <div id="allMembersList"></div>
+    </div>
+  </div>
+
+  <!-- New Patient Modal -->
+  <div class="modal-overlay" id="newPatientModal">
+    <div class="modal">
+      <h2>Add New Patient</h2>
+      <form id="newPatientForm" onsubmit="createPatient(event)">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" id="npFirst" required>
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" id="npLast" required>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth *</label>
+          <input type="date" id="npDob" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="npEmail">
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="npPhone">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal('newPatientModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="npSubmitBtn">Add Patient</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API = '/.netlify/functions';
+    let token = localStorage.getItem('ms_membership_token');
+
+    // Auth guard
+    if (!token) {
+      window.location.href = '/billing/login.html';
+    } else {
+      fetch(`${API}/admin-verify`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => {
+        if (!res.ok) {
+          localStorage.removeItem('ms_membership_token');
+          window.location.href = '/billing/login.html';
+        }
+      }).catch(() => {
+        window.location.href = '/billing/login.html';
+      });
+    }
+
+    function authHeaders() {
+      return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+    }
+
+    function logout() {
+      localStorage.removeItem('ms_membership_token');
+      window.location.href = '/billing/login.html';
+    }
+
+    function showToast(msg, type = 'success') {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = `toast toast-${type} show`;
+      setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    function openNewPatientModal() {
+      document.getElementById('newPatientModal').classList.add('show');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    // Close modal on overlay click
+    document.getElementById('newPatientModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal('newPatientModal');
+    });
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      if (tab === 'members') loadMembers('active');
+      if (tab === 'all') loadMembers('all');
+    }
+
+    // Search
+    async function searchPatient(e) {
+      e.preventDefault();
+      const first = document.getElementById('searchFirst').value.trim();
+      const last = document.getElementById('searchLast').value.trim();
+      const dob = document.getElementById('searchDob').value;
+      if (!first && !last) { showToast('Enter at least a name', 'error'); return; }
+
+      document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      try {
+        const res = await fetch(`${API}/membership-patient-search`, {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ first_name: first, last_name: last, dob })
+        });
+        const data = await res.json();
+        renderSearchResults(data.patients || []);
+      } catch (err) { showToast('Search failed: ' + err.message, 'error'); }
+    }
+
+    async function searchPatientFallback(e) {
+      e.preventDefault();
+      const email = document.getElementById('searchEmail').value.trim();
+      const phone = document.getElementById('searchPhone').value.trim();
+      if (!email && !phone) { showToast('Enter email or phone', 'error'); return; }
+
+      document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      try {
+        const res = await fetch(`${API}/membership-patient-search`, {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ email, phone })
+        });
+        const data = await res.json();
+        renderSearchResults(data.patients || []);
+      } catch (err) { showToast('Search failed: ' + err.message, 'error'); }
+    }
+
+    function renderSearchResults(patients) {
+      const el = document.getElementById('searchResults');
+      if (!patients.length) {
+        el.innerHTML = '<div class="no-results">No patients found. Add a new patient using the button above.</div>';
+        return;
+      }
+      el.innerHTML = patients.map(p => {
+        const activeMem = (p.memberships || []).find(m => m.status === 'active');
+        const pastDue = (p.memberships || []).find(m => m.status === 'past_due');
+        const mem = activeMem || pastDue || (p.memberships || []).find(m => m.status === 'canceled');
+        const statusClass = mem ? mem.status : 'inactive';
+        const statusLabel = mem ? mem.status.replace('_', ' ') : 'No Membership';
+
+        return `
+          <div class="patient-card">
+            <div class="patient-card-header">
+              <div>
+                <div class="patient-name">${esc(p.first_name)} ${esc(p.last_name)}</div>
+                <div class="patient-meta">DOB: ${p.dob}${p.email ? ' &middot; ' + esc(p.email) : ''}${p.phone ? ' &middot; ' + formatPhone(p.phone) : ''}</div>
+              </div>
+              <span class="badge badge-${statusClass}">${statusLabel}</span>
+            </div>
+            <div class="patient-actions">
+              ${!activeMem ? `<button class="btn btn-primary btn-sm" onclick="goToCheckout('${p.id}', 'membership')">Start Membership ($208/mo)</button>` : ''}
+              <button class="btn btn-outline btn-sm" onclick="goToCheckout('${p.id}', 'lab_work')">Charge Lab Work ($285)</button>
+              ${activeMem ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${activeMem.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Cancel Membership</button>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    function formatPhone(phone) {
+      if (!phone || phone.length !== 10) return phone || '';
+      return `(${phone.slice(0,3)}) ${phone.slice(3,6)}-${phone.slice(6)}`;
+    }
+
+    // Create patient
+    async function createPatient(e) {
+      e.preventDefault();
+      const btn = document.getElementById('npSubmitBtn');
+      btn.disabled = true; btn.textContent = 'Saving...';
+      try {
+        const res = await fetch(`${API}/membership-create-patient`, {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({
+            first_name: document.getElementById('npFirst').value,
+            last_name: document.getElementById('npLast').value,
+            dob: document.getElementById('npDob').value,
+            email: document.getElementById('npEmail').value,
+            phone: document.getElementById('npPhone').value,
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        closeModal('newPatientModal');
+        showToast('Patient added');
+        document.getElementById('newPatientForm').reset();
+        document.getElementById('searchFirst').value = data.patient.first_name;
+        document.getElementById('searchLast').value = data.patient.last_name;
+        document.getElementById('searchDob').value = data.patient.dob;
+        renderSearchResults([{ ...data.patient, memberships: [], payments: [] }]);
+      } catch (err) {
+        showToast(err.message || 'Failed to create patient', 'error');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Add Patient';
+      }
+    }
+
+    function goToCheckout(patientId, type) {
+      window.location.href = `/billing/checkout.html?patient=${patientId}&type=${type}`;
+    }
+
+    async function cancelMembership(membershipId, patientName) {
+      if (!confirm(`Cancel membership for ${patientName}? This will stop future billing.`)) return;
+      try {
+        const res = await fetch(`${API}/membership-cancel`, {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ membership_id: membershipId })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        showToast('Membership canceled');
+        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+      } catch (err) { showToast(err.message || 'Cancel failed', 'error'); }
+    }
+
+    // Members list
+    async function loadMembers(status) {
+      const containerId = status === 'active' ? 'activeMembersList' : 'allMembersList';
+      const el = document.getElementById(containerId);
+      el.innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      try {
+        const res = await fetch(`${API}/membership-list?status=${status}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        renderMembersTable(el, data.memberships || []);
+      } catch (err) {
+        el.innerHTML = `<div class="no-results">Failed to load: ${err.message}</div>`;
+      }
+    }
+
+    function renderMembersTable(el, memberships) {
+      if (!memberships.length) { el.innerHTML = '<div class="no-results">No memberships found</div>'; return; }
+      el.innerHTML = `
+        <table class="members-table">
+          <thead><tr>
+            <th>Patient</th><th>Plan</th><th>Status</th><th>Started</th><th>Actions</th>
+          </tr></thead>
+          <tbody>${memberships.map(m => {
+            const p = m.patients;
+            return `<tr>
+              <td>
+                <strong>${esc(p?.first_name || '')} ${esc(p?.last_name || '')}</strong>
+                <div style="font-size:12px;color:#B2BFBE;">${esc(p?.email || '')}</div>
+              </td>
+              <td>HRT $${(m.amount_cents / 100).toFixed(0)}/mo</td>
+              <td><span class="badge badge-${m.status}">${m.status.replace('_', ' ')}</span></td>
+              <td style="font-size:13px;">${new Date(m.created_at).toLocaleDateString()}</td>
+              <td>${m.status === 'active' ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${m.id}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Cancel</button>` : ''}</td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table>`;
+    }
+
+    // Stats
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API}/membership-list?status=all`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const all = data.memberships || [];
+        const active = all.filter(m => m.status === 'active');
+        const pastDue = all.filter(m => m.status === 'past_due');
+        const revenue = active.reduce((s, m) => s + (m.amount_cents || 0), 0);
+        document.getElementById('statActive').textContent = active.length;
+        document.getElementById('statRevenue').textContent = '$' + (revenue / 100).toLocaleString();
+        document.getElementById('statPastDue').textContent = pastDue.length;
+        document.getElementById('statTotal').textContent = all.length;
+      } catch { /* stats fail silently */ }
+    }
+    loadStats();
+  </script>
+</body>
+</html>

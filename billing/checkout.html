@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Collect Payment | Moonshot Billing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://js.stripe.com/terminal/v1/"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #101921;
+      color: #F0EEE9;
+      min-height: 100vh;
+    }
+    .portal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .portal-header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .portal-header .subtitle { color: #B2BFBE; font-size: 12px; margin-top: 2px; }
+    .back-link {
+      color: #B2BFBE;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #F0EEE9; }
+
+    .checkout-container {
+      max-width: 520px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .patient-banner {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .patient-banner .name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .patient-banner .meta { color: #B2BFBE; font-size: 13px; margin-top: 4px; }
+
+    .charge-summary {
+      background: rgba(178,191,190,0.08);
+      border: 1px solid rgba(178,191,190,0.15);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+    .charge-summary .charge-type {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      margin-bottom: 4px;
+    }
+    .charge-summary .charge-amount {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+    }
+    .charge-summary .charge-detail {
+      color: #B2BFBE;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      margin-bottom: 12px;
+    }
+
+    /* Stripe Element container */
+    #card-element {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+    #card-element.StripeElement--focus {
+      border-color: rgba(255,255,255,0.4);
+    }
+    #card-element.StripeElement--invalid {
+      border-color: #ff6b6b;
+    }
+    #card-errors {
+      color: #ff6b6b;
+      font-size: 13px;
+      min-height: 20px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary { background: #B2BFBE; color: #101921; }
+    .btn-primary:hover { background: #F0EEE9; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .success-state {
+      text-align: center;
+      padding: 60px 0;
+      display: none;
+    }
+    .success-state.show { display: block; }
+    .success-state .checkmark {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(40,167,69,0.15);
+      border: 2px solid rgba(40,167,69,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .success-state .checkmark svg { color: #51cf66; }
+    .success-state h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .success-state p { color: #B2BFBE; font-size: 14px; }
+    .success-state .btn { margin-top: 24px; max-width: 240px; margin-left: auto; margin-right: auto; }
+
+    .payment-form { display: block; }
+    .payment-form.hidden { display: none; }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(16,25,33,0.2);
+      border-top-color: #101921;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-state {
+      text-align: center;
+      padding: 80px 0;
+      color: #B2BFBE;
+    }
+
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: #B2BFBE;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .terminal-btn {
+      padding: 14px 28px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: #B2BFBE;
+    }
+    .terminal-btn:hover { border-color: #F0EEE9; color: #F0EEE9; }
+    .terminal-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+  <div class="portal-header">
+    <div>
+      <h1>Collect Payment</h1>
+      <div class="subtitle">Moonshot Medical + Performance</div>
+    </div>
+    <a href="/billing/" class="back-link">&larr; Back to Dashboard</a>
+  </div>
+
+  <div class="checkout-container">
+    <!-- Loading -->
+    <div class="loading-state" id="loadingState">
+      <span class="spinner" style="width:24px;height:24px;border-color:rgba(255,255,255,0.2);border-top-color:#F0EEE9;"></span>
+      <p style="margin-top:12px;">Loading patient...</p>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-form hidden" id="paymentForm">
+      <div class="patient-banner" id="patientBanner"></div>
+
+      <div class="charge-summary" id="chargeSummary"></div>
+
+      <div class="section-label">Payment Method</div>
+
+      <!-- Manual card entry (Stripe Elements) -->
+      <div id="card-element"></div>
+      <div id="card-errors" role="alert"></div>
+
+      <button class="btn btn-primary" id="payBtn" onclick="handlePayment()">
+        Process Payment
+      </button>
+
+      <div class="or-divider">or</div>
+
+      <button class="terminal-btn" id="terminalBtn" onclick="handleTerminalPayment()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="12" x2="6" y2="12.01"/><line x1="10" y1="12" x2="10" y2="12.01"/>
+        </svg>
+        Tap / Swipe on Terminal
+      </button>
+    </div>
+
+    <!-- Success -->
+    <div class="success-state" id="successState">
+      <div class="checkmark">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 id="successTitle">Payment Successful</h2>
+      <p id="successDetail"></p>
+      <button class="btn btn-primary" onclick="window.location.href='/billing/'">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <script>
+    const API = '/.netlify/functions';
+    const token = localStorage.getItem('ms_membership_token');
+    if (!token) window.location.href = '/billing/login.html';
+
+    // Parse URL params
+    const params = new URLSearchParams(window.location.search);
+    const patientId = params.get('patient');
+    const chargeType = params.get('type'); // 'membership' or 'lab_work'
+
+    if (!patientId || !chargeType) {
+      window.location.href = '/billing/';
+    }
+
+    // Stripe setup
+    const stripe = Stripe(window.STRIPE_PUBLISHABLE_KEY || '');
+    let elements, cardElement, clientSecret, patientData;
+
+    function authHeaders() {
+      return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+    }
+
+    // Initialize
+    async function init() {
+      // First, load the Stripe publishable key
+      try {
+        const configRes = await fetch(`${API}/membership-config`);
+        const config = await configRes.json();
+        if (config.stripe_publishable_key) {
+          window.stripeInstance = Stripe(config.stripe_publishable_key);
+        }
+      } catch (e) {
+        console.error('Failed to load config:', e);
+      }
+
+      if (!window.stripeInstance) {
+        document.getElementById('loadingState').innerHTML =
+          '<p style="color:#ff6b6b;">Stripe not configured. Set STRIPE_PUBLISHABLE_KEY in Netlify env vars.</p>';
+        return;
+      }
+
+      // Get setup intent + patient info
+      try {
+        const res = await fetch(`${API}/membership-setup-intent`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({ patient_id: patientId })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        clientSecret = data.client_secret;
+        patientData = data.patient;
+
+        // Render patient info
+        document.getElementById('patientBanner').innerHTML = `
+          <div class="name">${esc(patientData.first_name)} ${esc(patientData.last_name)}</div>
+          <div class="meta">${patientData.email ? esc(patientData.email) : 'No email on file'}</div>
+        `;
+
+        // Render charge summary
+        if (chargeType === 'membership') {
+          document.getElementById('chargeSummary').innerHTML = `
+            <div class="charge-type">Hormone Therapy Membership</div>
+            <div class="charge-amount">$208<span style="font-size:16px;font-weight:400;color:#B2BFBE;">/mo</span></div>
+            <div class="charge-detail">Recurring monthly charge. Card will be stored on file.</div>
+          `;
+          document.getElementById('payBtn').textContent = 'Start Membership';
+        } else {
+          document.getElementById('chargeSummary').innerHTML = `
+            <div class="charge-type">Comprehensive Blood Work</div>
+            <div class="charge-amount">$285</div>
+            <div class="charge-detail">One-time charge.</div>
+          `;
+          document.getElementById('payBtn').textContent = 'Charge $285';
+        }
+
+        // Mount Stripe Elements
+        elements = window.stripeInstance.elements();
+        cardElement = elements.create('card', {
+          style: {
+            base: {
+              color: '#F0EEE9',
+              fontFamily: 'Poppins, -apple-system, sans-serif',
+              fontSize: '16px',
+              '::placeholder': { color: 'rgba(240,238,233,0.4)' },
+            },
+            invalid: { color: '#ff6b6b' },
+          },
+        });
+        cardElement.mount('#card-element');
+        cardElement.on('change', (event) => {
+          document.getElementById('card-errors').textContent = event.error ? event.error.message : '';
+        });
+
+        // Show form
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('paymentForm').classList.remove('hidden');
+
+      } catch (err) {
+        document.getElementById('loadingState').innerHTML =
+          `<p style="color:#ff6b6b;">Error: ${esc(err.message)}</p>
+           <p style="margin-top:12px;"><a href="/billing/" style="color:#B2BFBE;">Back to Dashboard</a></p>`;
+      }
+    }
+
+    // Handle manual card payment
+    async function handlePayment() {
+      const btn = document.getElementById('payBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Processing...';
+
+      try {
+        // Confirm SetupIntent to get payment method
+        const { setupIntent, error } = await window.stripeInstance.confirmCardSetup(clientSecret, {
+          payment_method: { card: cardElement },
+        });
+
+        if (error) throw new Error(error.message);
+
+        const paymentMethodId = setupIntent.payment_method;
+
+        // Now create subscription or one-time payment
+        const endpoint = chargeType === 'membership'
+          ? 'membership-create-subscription'
+          : 'membership-create-payment';
+
+        const res = await fetch(`${API}/${endpoint}`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({
+            patient_id: patientId,
+            payment_method_id: paymentMethodId,
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        // Show success
+        showSuccess(chargeType === 'membership'
+          ? 'Membership Started'
+          : 'Payment Successful',
+          chargeType === 'membership'
+            ? `${patientData.first_name} ${patientData.last_name} is now an active member. $208/mo will be charged automatically.`
+            : `$285 charged successfully for ${patientData.first_name} ${patientData.last_name}.`
+        );
+
+      } catch (err) {
+        document.getElementById('card-errors').textContent = err.message;
+        btn.disabled = false;
+        btn.textContent = chargeType === 'membership' ? 'Start Membership' : 'Charge $285';
+      }
+    }
+
+    // Stripe Terminal
+    let terminal = null;
+
+    async function initTerminal() {
+      if (terminal) return terminal;
+      terminal = StripeTerminal.create({
+        onFetchConnectionToken: async () => {
+          const res = await fetch(`${API}/membership-terminal-connection`, {
+            method: 'POST',
+            headers: authHeaders(),
+          });
+          const data = await res.json();
+          return data.secret;
+        },
+        onUnexpectedReaderDisconnect: () => {
+          console.log('Terminal reader disconnected');
+          alert('Terminal reader disconnected. Please reconnect.');
+        },
+      });
+      return terminal;
+    }
+
+    async function handleTerminalPayment() {
+      const btn = document.getElementById('terminalBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner" style="border-color:rgba(255,255,255,0.2);border-top-color:#F0EEE9;"></span> Connecting to terminal...';
+
+      try {
+        const term = await initTerminal();
+
+        // Discover readers
+        const discoverResult = await term.discoverReaders({ simulated: false });
+        if (discoverResult.error) throw new Error(discoverResult.error.message);
+
+        const readers = discoverResult.discoveredReaders;
+        if (readers.length === 0) throw new Error('No terminal readers found. Make sure your reader is on and connected to the internet.');
+
+        // Connect to first available reader
+        btn.innerHTML = '<span class="spinner" style="border-color:rgba(255,255,255,0.2);border-top-color:#F0EEE9;"></span> Connecting to reader...';
+        const connectResult = await term.connectReader(readers[0]);
+        if (connectResult.error) throw new Error(connectResult.error.message);
+
+        // Create payment intent on server
+        btn.innerHTML = '<span class="spinner" style="border-color:rgba(255,255,255,0.2);border-top-color:#F0EEE9;"></span> Waiting for tap/swipe...';
+        const piRes = await fetch(`${API}/membership-terminal-payment`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({ patient_id: patientId, type: chargeType }),
+        });
+        const piData = await piRes.json();
+        if (!piRes.ok) throw new Error(piData.error);
+
+        // Collect payment method on terminal
+        const collectResult = await term.collectPaymentMethod(piData.client_secret);
+        if (collectResult.error) throw new Error(collectResult.error.message);
+
+        // Confirm payment
+        btn.innerHTML = '<span class="spinner" style="border-color:rgba(255,255,255,0.2);border-top-color:#F0EEE9;"></span> Processing...';
+        const confirmResult = await term.processPayment(collectResult.paymentIntent);
+        if (confirmResult.error) throw new Error(confirmResult.error.message);
+
+        // Capture/finalize on server
+        const captureRes = await fetch(`${API}/membership-terminal-capture`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({
+            payment_intent_id: piData.payment_intent_id,
+            patient_id: patientId,
+            type: chargeType,
+          }),
+        });
+        const captureData = await captureRes.json();
+        if (!captureRes.ok) throw new Error(captureData.error);
+
+        let successMsg = chargeType === 'membership'
+          ? `${patientData.first_name} ${patientData.last_name} is now an active member. $208/mo will be charged automatically.`
+          : `$285 charged successfully for ${patientData.first_name} ${patientData.last_name}.`;
+
+        if (captureData.warning) {
+          successMsg += '\n\nNote: ' + captureData.warning;
+        }
+
+        showSuccess(
+          chargeType === 'membership' ? 'Membership Started' : 'Payment Successful',
+          successMsg
+        );
+
+      } catch (err) {
+        document.getElementById('card-errors').textContent = 'Terminal: ' + err.message;
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="12" x2="6" y2="12.01"/><line x1="10" y1="12" x2="10" y2="12.01"/>
+          </svg>
+          Tap / Swipe on Terminal`;
+      }
+    }
+
+    function showSuccess(title, detail) {
+      document.getElementById('paymentForm').classList.add('hidden');
+      document.getElementById('successTitle').textContent = title;
+      document.getElementById('successDetail').textContent = detail;
+      document.getElementById('successState').classList.add('show');
+    }
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    init();
+  </script>
+</body>
+</html>

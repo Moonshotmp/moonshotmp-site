@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@netlify/blobs": "^9.0.0",
+    "@supabase/supabase-js": "^2.93.2",
     "nodemailer": "^7.0.12",
     "stripe": "^20.2.0"
   }
