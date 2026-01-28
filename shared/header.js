@@ -67,7 +67,29 @@
               </div>
             </div>
 
-            <a href="/about/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">About</a>
+            <!-- About Dropdown -->
+            <div class="relative inline-block" id="about-menu-wrapper">
+              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+                      id="about-menu-button" aria-expanded="false" aria-haspopup="true">
+                About
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="about-dropdown">
+                <div class="py-2">
+                  <a href="/about/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">Our Team</a>
+                  <a href="/ourstory/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Tom's Story</a>
+                  <div class="border-t border-white/10 mt-2 pt-2">
+                    <span class="block px-4 py-2 text-xs text-brand-gray/60 uppercase tracking-widest">Learn</span>
+                    <a href="/learn/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">All Resources</a>
+                    <a href="/learn/menopause-perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Menopause Guide</a>
+                    <a href="/learn/testosterone-for-women/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Testosterone for Women</a>
+                    <a href="/learn/whi-study-hrt-truth/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">HRT: Myths vs Facts</a>
+                  </div>
+                </div>
+              </div>
+            </div>
             <a href="/contact/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Contact</a>
             <a href="/booking/medical/" class="btn-primary text-xs tracking-widest" onclick="event.preventDefault(); openBookingModal();">Book Now</a>
           </div>
@@ -124,7 +146,25 @@
             </div>
           </div>
 
-          <a href="/about/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">About</a>
+          <!-- About Mobile -->
+          <div>
+            <button id="mobile-about-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+              <span class="w-4"></span>
+              <span class="flex-1 text-center font-bold">About</span>
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-about-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div id="mobile-about-submenu" class="bg-black/20 hidden">
+              <a href="/about/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Our Team</a>
+              <a href="/ourstory/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Tom's Story</a>
+              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Learn —</span>
+              <a href="/learn/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">All Resources</a>
+              <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Menopause Guide</a>
+              <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Testosterone for Women</a>
+              <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
+            </div>
+          </div>
           <a href="/contact/" class="block w-full text-brand-light hover:bg-white/5 py-3 text-sm uppercase tracking-widest">Contact</a>
           <a href="#" onclick="event.preventDefault(); openBookingModal();" class="block w-full text-brand-light bg-brand-gray/10 hover:bg-brand-gray/20 py-3 text-sm uppercase tracking-widest mt-2 font-bold">Book Now</a>
         </div>
@@ -172,6 +212,7 @@
         }
         setupMobileSubmenu('mobile-medical-btn', 'mobile-medical-submenu', 'mobile-medical-arrow');
         setupMobileSubmenu('mobile-rehab-btn', 'mobile-rehab-submenu', 'mobile-rehab-arrow');
+        setupMobileSubmenu('mobile-about-btn', 'mobile-about-submenu', 'mobile-about-arrow');
 
         // Desktop dropdown menus
         function setupDesktopDropdown(wrapperId, buttonId, dropdownId) {
@@ -207,6 +248,7 @@
         }
         setupDesktopDropdown('medical-menu-wrapper', 'medical-menu-button', 'medical-dropdown');
         setupDesktopDropdown('rehab-menu-wrapper', 'rehab-menu-button', 'rehab-dropdown');
+        setupDesktopDropdown('about-menu-wrapper', 'about-menu-button', 'about-dropdown');
 
         // Close dropdowns on escape
         document.addEventListener('keydown', (e) => {
