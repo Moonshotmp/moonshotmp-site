@@ -77,7 +77,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute left-0 mt-2 w-[540px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
+              <div class="absolute right-0 mt-2 w-[540px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
                 <div class="p-6 grid grid-cols-3 gap-6">
                   <!-- Men Column -->
                   <div>
