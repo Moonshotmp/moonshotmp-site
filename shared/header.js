@@ -263,22 +263,39 @@
             });
         }
 
-        // Mobile submenu toggles
-        function setupMobileSubmenu(btnId, submenuId, arrowId) {
+        // Mobile submenu toggles (accordion - only one open at a time)
+        const mobileSubmenus = ['medical', 'rehab', 'learn', 'about'];
+
+        function closeAllMobileSubmenus(exceptId) {
+            mobileSubmenus.forEach(name => {
+                if (name !== exceptId) {
+                    const submenu = document.getElementById('mobile-' + name + '-submenu');
+                    const arrow = document.getElementById('mobile-' + name + '-arrow');
+                    if (submenu) submenu.classList.add('hidden');
+                    if (arrow) arrow.classList.remove('rotate-180');
+                }
+            });
+        }
+
+        function setupMobileSubmenu(btnId, submenuId, arrowId, menuName) {
             const btn = document.getElementById(btnId);
             const submenu = document.getElementById(submenuId);
             const arrow = document.getElementById(arrowId);
             if (btn && submenu && arrow) {
                 btn.addEventListener('click', () => {
+                    const isOpening = submenu.classList.contains('hidden');
+                    if (isOpening) {
+                        closeAllMobileSubmenus(menuName);
+                    }
                     submenu.classList.toggle('hidden');
                     arrow.classList.toggle('rotate-180');
                 });
             }
         }
-        setupMobileSubmenu('mobile-medical-btn', 'mobile-medical-submenu', 'mobile-medical-arrow');
-        setupMobileSubmenu('mobile-rehab-btn', 'mobile-rehab-submenu', 'mobile-rehab-arrow');
-        setupMobileSubmenu('mobile-learn-btn', 'mobile-learn-submenu', 'mobile-learn-arrow');
-        setupMobileSubmenu('mobile-about-btn', 'mobile-about-submenu', 'mobile-about-arrow');
+        setupMobileSubmenu('mobile-medical-btn', 'mobile-medical-submenu', 'mobile-medical-arrow', 'medical');
+        setupMobileSubmenu('mobile-rehab-btn', 'mobile-rehab-submenu', 'mobile-rehab-arrow', 'rehab');
+        setupMobileSubmenu('mobile-learn-btn', 'mobile-learn-submenu', 'mobile-learn-arrow', 'learn');
+        setupMobileSubmenu('mobile-about-btn', 'mobile-about-submenu', 'mobile-about-arrow', 'about');
 
         // Desktop dropdown menus
         function setupDesktopDropdown(wrapperId, buttonId, dropdownId) {
