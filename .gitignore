@@ -8,3 +8,4 @@
 # Netlify local artifacts
 .netlify
 netlify/
+node_modules/
