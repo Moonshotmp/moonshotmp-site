@@ -184,7 +184,54 @@
     .badge-inactive { background: rgba(255,255,255,0.06); color: #B2BFBE; border: 1px solid rgba(255,255,255,0.1); }
     .badge-past_due { background: rgba(255,193,7,0.15); color: #ffd43b; border: 1px solid rgba(255,193,7,0.3); }
     .badge-canceled { background: rgba(220,53,69,0.1); color: #ff6b6b; border: 1px solid rgba(220,53,69,0.25); }
-    .patient-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .patient-detail-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .detail-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #B2BFBE;
+      margin-bottom: 4px;
+    }
+    .detail-value {
+      font-size: 14px;
+      color: #F0EEE9;
+    }
+    .billing-row {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 12px;
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      align-items: center;
+    }
+    .billing-row:last-child { border-bottom: none; }
+    .pay-status {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    .pay-failed { background: rgba(220,53,69,0.2); color: #ff6b6b; }
+    .pay-refunded { background: rgba(255,193,7,0.2); color: #ffd43b; }
+    .refund-link {
+      background: none;
+      border: none;
+      color: #B2BFBE;
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      margin-left: 8px;
+    }
+    .refund-link:hover { color: #F0EEE9; }
+    .patient-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
 
     .members-table { width: 100%; border-collapse: collapse; }
     .members-table th {
@@ -265,6 +312,213 @@
       .portal-header { flex-direction: column; gap: 12px; text-align: center; }
       .patient-card-header { flex-direction: column; gap: 8px; }
     }
+
+    /* Cart Modal Styles */
+    .cart-modal {
+      background: #101921;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      width: 95%;
+      max-width: 900px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .cart-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      color: #B2BFBE;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .cart-close:hover { color: #F0EEE9; }
+    .cart-patient {
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .cart-patient-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+    .cart-patient-meta { font-size: 13px; color: #B2BFBE; margin-top: 2px; }
+    .cart-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    .cart-products {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .cart-sidebar {
+      width: 300px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      background: rgba(0,0,0,0.2);
+    }
+    .category-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .category-tab {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #B2BFBE;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .category-tab:hover { border-color: rgba(255,255,255,0.3); color: #F0EEE9; }
+    .category-tab.active { background: rgba(178,191,190,0.15); border-color: #B2BFBE; color: #F0EEE9; }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .product-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .product-card:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); }
+    .product-card.in-cart { border-color: #51cf66; background: rgba(40,167,69,0.1); }
+    .product-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .product-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      color: #F0EEE9;
+    }
+    .product-recurring {
+      font-size: 11px;
+      color: #B2BFBE;
+      margin-top: 2px;
+    }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 16px;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-size: 13px; font-weight: 500; }
+    .cart-item-price { font-size: 12px; color: #B2BFBE; }
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-right: 12px;
+    }
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #B2BFBE;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .qty-btn:hover { border-color: #F0EEE9; color: #F0EEE9; }
+    .cart-item-remove {
+      background: none;
+      border: none;
+      color: #ff6b6b;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px;
+    }
+    .cart-discount {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .cart-discount label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .cart-discount input { width: 16px; height: 16px; cursor: pointer; }
+    .cart-totals {
+      padding: 16px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .cart-total-row.grand {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .cart-total-row .amount { font-family: 'Oswald', sans-serif; }
+    .cart-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cart-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #B2BFBE;
+      font-size: 14px;
+    }
+    .btn-gold {
+      background: #c9a227;
+      color: #0a0f14;
+      font-weight: 600;
+    }
+    .btn-gold:hover { background: #ddb52f; }
+    @media (max-width: 768px) {
+      .cart-body { flex-direction: column; }
+      .cart-sidebar { width: 100%; border-right: none; border-top: 1px solid rgba(255,255,255,0.06); }
+      .cart-products { max-height: 40vh; }
+    }
   </style>
 </head>
 <body>
@@ -275,31 +529,12 @@
       <div class="subtitle">Moonshot Medical + Performance</div>
     </div>
     <div class="header-actions">
-      <button class="btn btn-primary" onclick="openNewPatientModal()">+ New Patient</button>
+            <button class="btn btn-primary" onclick="openNewPatientModal()">+ New Patient</button>
       <button class="btn btn-outline" onclick="logout()">Log Out</button>
     </div>
   </div>
 
   <div class="portal-body">
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="label">Active Members</div>
-        <div class="value" id="statActive">--</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Monthly Revenue</div>
-        <div class="value" id="statRevenue">--</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Past Due</div>
-        <div class="value" id="statPastDue">--</div>
-      </div>
-      <div class="stat-card">
-        <div class="label">Total Patients</div>
-        <div class="value" id="statTotal">--</div>
-      </div>
-    </div>
-
     <div class="tabs">
       <div class="tab active" data-tab="search" onclick="switchTab('search')">Patient Lookup</div>
       <div class="tab" data-tab="members" onclick="switchTab('members')">Active Members</div>
@@ -393,8 +628,99 @@
     </div>
   </div>
 
+  <!-- Refund Modal -->
+  <div class="modal-overlay" id="refundModal">
+    <div class="modal">
+      <h2>Issue Refund</h2>
+      <div id="refundDetails" style="margin-bottom:16px;padding:12px;background:rgba(255,255,255,0.04);border-radius:6px;"></div>
+      <form id="refundForm" onsubmit="processRefund(event)">
+        <input type="hidden" id="refundPaymentId">
+        <input type="hidden" id="refundStripeId">
+        <input type="hidden" id="refundInvoiceId">
+        <input type="hidden" id="refundMaxAmount">
+        <div class="form-group">
+          <label>Refund Amount ($)</label>
+          <input type="number" id="refundAmount" step="0.01" min="0.01" required placeholder="Enter amount">
+          <div style="font-size:12px;color:#B2BFBE;margin-top:4px;">Leave blank or enter full amount for complete refund</div>
+        </div>
+        <div class="form-group">
+          <label>Reason (optional)</label>
+          <input type="text" id="refundReason" placeholder="e.g., Customer request">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal('refundModal')">Cancel</button>
+          <button type="submit" class="btn btn-danger" id="refundSubmitBtn">Process Refund</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="cart-modal">
+      <div class="cart-header">
+        <h2>New Charge</h2>
+        <button class="cart-close" onclick="closeCartModal()">&times;</button>
+      </div>
+      <div class="cart-patient" id="cartPatientInfo"></div>
+      <div class="cart-body">
+        <div class="cart-products">
+          <div class="category-tabs" id="categoryTabs"></div>
+          <div class="products-grid" id="productsGrid"></div>
+        </div>
+        <div class="cart-sidebar">
+          <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:#B2BFBE;margin-bottom:12px;">Cart</div>
+          <div class="cart-items" id="cartItems">
+            <div class="cart-empty">Add items to get started</div>
+          </div>
+          <div class="cart-discount">
+            <label>
+              <input type="checkbox" id="familyDiscount" onchange="updateCartTotals()">
+              Apply Family Discount (40% off memberships)
+            </label>
+          </div>
+          <div class="cart-totals" id="cartTotals">
+            <div class="cart-total-row">
+              <span>Recurring (monthly)</span>
+              <span class="amount" id="totalRecurring">$0</span>
+            </div>
+            <div class="cart-total-row">
+              <span>One-time</span>
+              <span class="amount" id="totalOneTime">$0</span>
+            </div>
+            <div class="cart-total-row grand">
+              <span>Total Today</span>
+              <span class="amount" id="totalGrand">$0</span>
+            </div>
+          </div>
+          <div class="cart-actions">
+            <button class="btn btn-gold" id="checkoutCardBtn" onclick="checkoutWithCard()" disabled>Enter Card to Pay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Entry Modal -->
+  <div class="modal-overlay" id="cardEntryModal">
+    <div class="modal">
+      <h2>Enter Payment Card</h2>
+      <div id="cartSummaryForCard" style="margin-bottom:16px;padding:12px;background:rgba(255,255,255,0.04);border-radius:6px;font-size:13px;"></div>
+      <div class="form-group">
+        <label>Card Details</label>
+        <div id="card-element" style="padding:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;"></div>
+        <div id="card-errors" style="color:#ff6b6b;font-size:12px;margin-top:8px;"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" onclick="closeCardEntryModal()">Cancel</button>
+        <button type="button" class="btn btn-gold" id="processPaymentBtn" onclick="processCartPayment()">Process Payment</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
+  <script src="https://js.stripe.com/v3/"></script>
   <script>
     const API = '/.netlify/functions';
     let token = localStorage.getItem('ms_membership_token');
@@ -453,6 +779,13 @@
       if (parts.length !== 3) return mmddyyyy;
       return `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
     }
+    // Convert YYYY-MM-DD to MM/DD/YYYY for display
+    function fromIsoDate(isoDate) {
+      if (!isoDate) return '';
+      const parts = isoDate.split('-');
+      if (parts.length !== 3) return isoDate;
+      return `${parts[1]}/${parts[2]}/${parts[0]}`;
+    }
     // Setup date inputs on load
     document.addEventListener('DOMContentLoaded', () => {
       setupDateInput(document.getElementById('searchDob'));
@@ -469,6 +802,9 @@
     // Close modal on overlay click
     document.getElementById('newPatientModal').addEventListener('click', function(e) {
       if (e.target === this) closeModal('newPatientModal');
+    });
+    document.getElementById('refundModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal('refundModal');
     });
 
     function switchTab(tab) {
@@ -529,22 +865,90 @@
         const statusClass = mem ? mem.status : 'inactive';
         const statusLabel = mem ? mem.status.replace('_', ' ') : 'No Membership';
 
+        // Format membership info with next billing date
+        let membershipInfo = '';
+        if (mem) {
+          const startDate = new Date(mem.current_period_start || mem.created_at).toLocaleDateString();
+          const amount = (mem.amount_cents / 100).toFixed(2);
+          const planLabel = mem.plan_type?.includes('family') ? 'Family Plan' : 'Standard';
+          const nextBilling = mem.current_period_end ? new Date(mem.current_period_end).toLocaleDateString() : 'N/A';
+          membershipInfo = `
+            <div class="patient-detail-section">
+              <div class="detail-label">Membership</div>
+              <div class="detail-value">$${amount}/mo (${planLabel}) &middot; Started ${startDate}</div>
+              ${mem.status === 'active' ? `<div class="detail-value" style="margin-top:4px;font-size:13px;color:#B2BFBE;">Next billing: ${nextBilling}</div>` : ''}
+            </div>`;
+        }
+
+        // Format ALL payments (billing history)
+        const payments = (p.payments || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        let paymentsInfo = '';
+        if (payments.length > 0) {
+          const paymentsList = payments.map(pay => {
+            const date = new Date(pay.created_at).toLocaleDateString();
+            const amount = (pay.amount_cents / 100).toFixed(2);
+            const desc = pay.description || pay.type || 'Payment';
+            const isFailed = pay.status === 'failed';
+            const isRefunded = pay.status === 'refunded';
+            const statusStyle = isFailed ? 'color:#ff6b6b;' : isRefunded ? 'color:#ffd43b;' : '';
+            const statusBadge = isFailed ? '<span class="pay-status pay-failed">FAILED</span>' :
+                               isRefunded ? '<span class="pay-status pay-refunded">REFUNDED</span>' : '';
+            const canRefund = pay.status === 'succeeded' && (pay.stripe_payment_intent_id || pay.stripe_invoice_id);
+            const refundBtn = canRefund
+              ? `<button class="refund-link" onclick="openRefundModal('${pay.id}', '${pay.stripe_payment_intent_id || ''}', '${pay.stripe_invoice_id || ''}', ${pay.amount_cents}, '${esc(desc)}')">Refund</button>`
+              : '';
+            return `<div class="billing-row" style="${statusStyle}">
+              <span>${date}</span>
+              <span>${esc(desc)} ${statusBadge}</span>
+              <span><strong>$${amount}</strong> ${refundBtn}</span>
+            </div>`;
+          }).join('');
+          paymentsInfo = `
+            <div class="patient-detail-section">
+              <div class="detail-label">Billing History</div>
+              ${paymentsList}
+            </div>`;
+        }
+
+        // Contact info
+        let contactInfo = '';
+        if (p.email || p.phone) {
+          contactInfo = `
+            <div class="patient-detail-section">
+              <div class="detail-label">Contact</div>
+              <div class="detail-value">
+                ${p.email ? `<a href="mailto:${esc(p.email)}" style="color:#B2BFBE;">${esc(p.email)}</a>` : ''}
+                ${p.email && p.phone ? ' &middot; ' : ''}
+                ${p.phone ? `<a href="tel:${p.phone}" style="color:#B2BFBE;">${formatPhone(p.phone)}</a>` : ''}
+              </div>
+            </div>`;
+        }
+
         return `
           <div class="patient-card">
             <div class="patient-card-header">
               <div>
                 <div class="patient-name">${esc(p.first_name)} ${esc(p.last_name)}</div>
-                <div class="patient-meta">DOB: ${p.dob}${p.email ? ' &middot; ' + esc(p.email) : ''}${p.phone ? ' &middot; ' + formatPhone(p.phone) : ''}</div>
+                <div class="patient-meta">DOB: ${formatDob(p.dob)}</div>
               </div>
               <span class="badge badge-${statusClass}">${statusLabel}</span>
             </div>
+            ${contactInfo}
+            ${membershipInfo}
+            ${paymentsInfo}
             <div class="patient-actions">
-              ${!activeMem ? `<button class="btn btn-primary btn-sm" onclick="goToCheckout('${p.id}', 'membership')">Start Membership ($208/mo)</button>` : ''}
-              <button class="btn btn-outline btn-sm" onclick="goToCheckout('${p.id}', 'lab_work')">Charge Lab Work ($285)</button>
+              <button class="btn btn-gold btn-sm" onclick="openCartModal('${p.id}', '${esc(p.first_name)}', '${esc(p.last_name)}', '${formatDob(p.dob)}')">New Charge</button>
               ${activeMem ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${activeMem.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Cancel Membership</button>` : ''}
             </div>
           </div>`;
       }).join('');
+    }
+
+    function formatDob(dob) {
+      if (!dob) return '';
+      const parts = dob.split('-');
+      if (parts.length !== 3) return dob;
+      return `${parts[1]}/${parts[2]}/${parts[0]}`;
     }
 
     function esc(str) {
@@ -556,6 +960,62 @@
     function formatPhone(phone) {
       if (!phone || phone.length !== 10) return phone || '';
       return `(${phone.slice(0,3)}) ${phone.slice(3,6)}-${phone.slice(6)}`;
+    }
+
+    // Refund functions
+    function openRefundModal(paymentId, stripeId, invoiceId, amountCents, description) {
+      const maxAmount = (amountCents / 100).toFixed(2);
+      document.getElementById('refundPaymentId').value = paymentId;
+      document.getElementById('refundStripeId').value = stripeId || '';
+      document.getElementById('refundInvoiceId').value = invoiceId || '';
+      document.getElementById('refundMaxAmount').value = maxAmount;
+      document.getElementById('refundAmount').value = maxAmount;
+      document.getElementById('refundAmount').max = maxAmount;
+      document.getElementById('refundDetails').innerHTML = `
+        <div style="font-size:14px;"><strong>${description}</strong></div>
+        <div style="font-size:13px;color:#B2BFBE;margin-top:4px;">Original amount: $${maxAmount}</div>
+      `;
+      document.getElementById('refundModal').classList.add('show');
+    }
+
+    async function processRefund(e) {
+      e.preventDefault();
+      const btn = document.getElementById('refundSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+
+      const paymentId = document.getElementById('refundPaymentId').value;
+      const stripeId = document.getElementById('refundStripeId').value;
+      const invoiceId = document.getElementById('refundInvoiceId').value;
+      const amount = parseFloat(document.getElementById('refundAmount').value);
+      const reason = document.getElementById('refundReason').value;
+
+      try {
+        const res = await fetch(`${API}/membership-refund`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({
+            payment_id: paymentId,
+            payment_intent_id: stripeId || undefined,
+            invoice_id: invoiceId || undefined,
+            amount_dollars: amount,
+            reason: reason || undefined,
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        closeModal('refundModal');
+        showToast(`Refunded $${amount.toFixed(2)} successfully`);
+        document.getElementById('refundForm').reset();
+        // Re-run search to refresh data
+        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+      } catch (err) {
+        showToast(err.message || 'Refund failed', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Process Refund';
+      }
     }
 
     // Create patient
@@ -581,7 +1041,7 @@
         document.getElementById('newPatientForm').reset();
         document.getElementById('searchFirst').value = data.patient.first_name;
         document.getElementById('searchLast').value = data.patient.last_name;
-        document.getElementById('searchDob').value = data.patient.dob;
+        document.getElementById('searchDob').value = fromIsoDate(data.patient.dob);
         renderSearchResults([{ ...data.patient, memberships: [], payments: [] }]);
       } catch (err) {
         showToast(err.message || 'Failed to create patient', 'error');
@@ -635,7 +1095,9 @@
             const p = m.patients;
             return `<tr>
               <td>
-                <strong>${esc(p?.first_name || '')} ${esc(p?.last_name || '')}</strong>
+                <a href="#" onclick="viewPatientDetails('${p?.id}'); return false;" style="color:#F0EEE9;text-decoration:none;">
+                  <strong>${esc(p?.first_name || '')} ${esc(p?.last_name || '')}</strong>
+                </a>
                 <div style="font-size:12px;color:#B2BFBE;">${esc(p?.email || '')}</div>
               </td>
               <td>HRT $${(m.amount_cents / 100).toFixed(0)}/mo</td>
@@ -647,24 +1109,349 @@
         </table>`;
     }
 
-    // Stats
-    async function loadStats() {
+    // View patient details - switch to search tab and show patient
+    async function viewPatientDetails(patientId) {
+      if (!patientId) return;
+      switchTab('search');
+      document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
       try {
-        const res = await fetch(`${API}/membership-list?status=all`, {
-          headers: { 'Authorization': `Bearer ${token}` }
+        const res = await fetch(`${API}/membership-patient-search`, {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ patient_id: patientId })
         });
         const data = await res.json();
-        const all = data.memberships || [];
-        const active = all.filter(m => m.status === 'active');
-        const pastDue = all.filter(m => m.status === 'past_due');
-        const revenue = active.reduce((s, m) => s + (m.amount_cents || 0), 0);
-        document.getElementById('statActive').textContent = active.length;
-        document.getElementById('statRevenue').textContent = '$' + (revenue / 100).toLocaleString();
-        document.getElementById('statPastDue').textContent = pastDue.length;
-        document.getElementById('statTotal').textContent = all.length;
-      } catch { /* stats fail silently */ }
+        renderSearchResults(data.patients || []);
+      } catch (err) {
+        showToast('Failed to load patient: ' + err.message, 'error');
+      }
     }
-    loadStats();
+
+    // ===== CART FUNCTIONALITY =====
+    let cart = [];
+    let products = [];
+    let categories = [];
+    let currentPatientId = null;
+    let currentCategory = 'test';
+    let stripe = null;
+    let cardElement = null;
+
+    // Initialize Stripe
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Load products on page load
+      await loadProducts();
+    });
+
+    async function loadProducts() {
+      try {
+        const res = await fetch(`${API}/billing-products`);
+        const data = await res.json();
+        products = data.products || [];
+        categories = data.categories || [];
+      } catch (err) {
+        console.error('Failed to load products:', err);
+      }
+    }
+
+    function openCartModal(patientId, firstName, lastName, dob) {
+      currentPatientId = patientId;
+      cart = [];
+      currentCategory = 'test';
+      document.getElementById('familyDiscount').checked = false;
+
+      // Set patient info
+      document.getElementById('cartPatientInfo').innerHTML = `
+        <div class="cart-patient-name">${esc(firstName)} ${esc(lastName)}</div>
+        <div class="cart-patient-meta">DOB: ${dob}</div>
+      `;
+
+      renderCategoryTabs();
+      renderProducts();
+      renderCartItems();
+      updateCartTotals();
+
+      document.getElementById('cartModal').classList.add('show');
+    }
+
+    function closeCartModal() {
+      document.getElementById('cartModal').classList.remove('show');
+      cart = [];
+      currentPatientId = null;
+    }
+
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabs');
+      container.innerHTML = categories.map(cat => `
+        <button class="category-tab ${cat.id === currentCategory ? 'active' : ''}"
+                onclick="selectCategory('${cat.id}')">
+          ${esc(cat.name)}
+        </button>
+      `).join('');
+    }
+
+    function selectCategory(catId) {
+      currentCategory = catId;
+      renderCategoryTabs();
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const container = document.getElementById('productsGrid');
+      const filtered = products.filter(p => p.categoryId === currentCategory || p.category === currentCategory);
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="cart-empty">No products in this category</div>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => {
+        const inCart = cart.some(c => c.code === p.code);
+        const priceDisplay = (p.price / 100).toFixed(2);
+        return `
+          <div class="product-card ${inCart ? 'in-cart' : ''}" onclick="addToCart('${p.code}')">
+            <div class="product-name">${esc(p.name)}</div>
+            <div class="product-price">$${priceDisplay}</div>
+            ${p.recurring ? '<div class="product-recurring">/month</div>' : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function addToCart(code) {
+      const product = products.find(p => p.code === code);
+      if (!product) return;
+
+      const existing = cart.find(c => c.code === code);
+      if (existing) {
+        // For recurring items, don't allow multiples
+        if (product.recurring) return;
+        existing.quantity++;
+      } else {
+        cart.push({ code, quantity: 1 });
+      }
+
+      renderProducts();
+      renderCartItems();
+      updateCartTotals();
+    }
+
+    function removeFromCart(code) {
+      cart = cart.filter(c => c.code !== code);
+      renderProducts();
+      renderCartItems();
+      updateCartTotals();
+    }
+
+    function changeQuantity(code, delta) {
+      const item = cart.find(c => c.code === code);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity < 1) {
+        removeFromCart(code);
+        return;
+      }
+
+      renderCartItems();
+      updateCartTotals();
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cartItems');
+      if (cart.length === 0) {
+        container.innerHTML = '<div class="cart-empty">Add items to get started</div>';
+        return;
+      }
+
+      container.innerHTML = cart.map(item => {
+        const product = products.find(p => p.code === item.code);
+        if (!product) return '';
+
+        const unitPrice = (product.price / 100).toFixed(2);
+        const lineTotal = ((product.price * item.quantity) / 100).toFixed(2);
+
+        return `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <div class="cart-item-name">${esc(product.name)}</div>
+              <div class="cart-item-price">$${unitPrice}${product.recurring ? '/mo' : ''}</div>
+            </div>
+            ${!product.recurring ? `
+              <div class="cart-item-qty">
+                <button class="qty-btn" onclick="changeQuantity('${item.code}', -1)">&minus;</button>
+                <span>${item.quantity}</span>
+                <button class="qty-btn" onclick="changeQuantity('${item.code}', 1)">+</button>
+              </div>
+            ` : ''}
+            <button class="cart-item-remove" onclick="removeFromCart('${item.code}')">&times;</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateCartTotals() {
+      const familyDiscount = document.getElementById('familyDiscount').checked;
+      const discountPercent = familyDiscount ? 40 : 0;
+
+      let recurringTotal = 0;
+      let oneTimeTotal = 0;
+      let recurringDiscount = 0;
+
+      cart.forEach(item => {
+        const product = products.find(p => p.code === item.code);
+        if (!product) return;
+
+        const amount = product.price * item.quantity;
+
+        if (product.recurring) {
+          const discount = familyDiscount ? Math.round(amount * (discountPercent / 100)) : 0;
+          recurringDiscount += discount;
+          recurringTotal += (amount - discount);
+        } else {
+          oneTimeTotal += amount;
+        }
+      });
+
+      const grandTotal = recurringTotal + oneTimeTotal;
+
+      document.getElementById('totalRecurring').textContent = '$' + (recurringTotal / 100).toFixed(2);
+      document.getElementById('totalOneTime').textContent = '$' + (oneTimeTotal / 100).toFixed(2);
+      document.getElementById('totalGrand').textContent = '$' + (grandTotal / 100).toFixed(2);
+
+      // Enable/disable checkout button
+      document.getElementById('checkoutCardBtn').disabled = grandTotal === 0;
+    }
+
+    async function checkoutWithCard() {
+      if (cart.length === 0) return;
+
+      // Show summary in card entry modal
+      const familyDiscount = document.getElementById('familyDiscount').checked;
+      let summaryHtml = '<strong>Items:</strong><br>';
+      cart.forEach(item => {
+        const product = products.find(p => p.code === item.code);
+        if (!product) return;
+        summaryHtml += `${esc(product.name)} x${item.quantity}<br>`;
+      });
+      if (familyDiscount) {
+        summaryHtml += '<br><em>Family discount applied (40% off memberships)</em>';
+      }
+      summaryHtml += `<br><br><strong>Total: ${document.getElementById('totalGrand').textContent}</strong>`;
+      document.getElementById('cartSummaryForCard').innerHTML = summaryHtml;
+
+      // Initialize Stripe if not already
+      if (!stripe) {
+        const res = await fetch(`${API}/membership-config`);
+        const data = await res.json();
+        if (!data.stripe_publishable_key) {
+          throw new Error('Stripe not configured');
+        }
+        stripe = Stripe(data.stripe_publishable_key);
+      }
+
+      // Mount card element
+      const elements = stripe.elements();
+      if (cardElement) {
+        cardElement.destroy();
+      }
+      cardElement = elements.create('card', {
+        style: {
+          base: {
+            color: '#F0EEE9',
+            fontFamily: 'Poppins, sans-serif',
+            fontSize: '16px',
+            '::placeholder': { color: 'rgba(255,255,255,0.4)' }
+          },
+          invalid: { color: '#ff6b6b' }
+        }
+      });
+      cardElement.mount('#card-element');
+      cardElement.on('change', (event) => {
+        document.getElementById('card-errors').textContent = event.error ? event.error.message : '';
+      });
+
+      document.getElementById('cardEntryModal').classList.add('show');
+    }
+
+    function closeCardEntryModal() {
+      document.getElementById('cardEntryModal').classList.remove('show');
+      if (cardElement) {
+        cardElement.destroy();
+        cardElement = null;
+      }
+    }
+
+    async function processCartPayment() {
+      const btn = document.getElementById('processPaymentBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+
+      try {
+        // Create SetupIntent to collect payment method
+        const setupRes = await fetch(`${API}/membership-setup-intent`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({ patient_id: currentPatientId })
+        });
+        const setupData = await setupRes.json();
+        if (!setupRes.ok) throw new Error(setupData.error);
+
+        // Confirm card setup
+        const { setupIntent, error } = await stripe.confirmCardSetup(setupData.client_secret, {
+          payment_method: { card: cardElement }
+        });
+        if (error) throw new Error(error.message);
+
+        // Process cart checkout with payment method
+        const familyDiscount = document.getElementById('familyDiscount').checked;
+        const cartData = cart.map(item => ({ code: item.code, quantity: item.quantity }));
+
+        const checkoutRes = await fetch(`${API}/billing-cart-checkout`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({
+            patient_id: currentPatientId,
+            payment_method_id: setupIntent.payment_method,
+            cart: cartData,
+            discount_code: familyDiscount ? 'family' : null
+          })
+        });
+        const checkoutData = await checkoutRes.json();
+        if (!checkoutRes.ok) throw new Error(checkoutData.error);
+
+        // Success!
+        closeCardEntryModal();
+        closeCartModal();
+
+        // Build success message
+        let msg = 'Payment successful!';
+        if (checkoutData.subscriptions?.length > 0) {
+          msg += ` ${checkoutData.subscriptions.length} subscription(s) created.`;
+        }
+        if (checkoutData.payments?.length > 0) {
+          msg += ` $${(checkoutData.totals.oneTimeTotal / 100).toFixed(2)} charged for one-time items.`;
+        }
+        showToast(msg);
+
+        // Refresh patient data
+        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+
+      } catch (err) {
+        document.getElementById('card-errors').textContent = err.message;
+        showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Process Payment';
+      }
+    }
+
+    // Close cart modal on overlay click
+    document.getElementById('cartModal').addEventListener('click', function(e) {
+      if (e.target === this) closeCartModal();
+    });
+    document.getElementById('cardEntryModal').addEventListener('click', function(e) {
+      if (e.target === this) closeCardEntryModal();
+    });
+
   </script>
 </body>
 </html>
