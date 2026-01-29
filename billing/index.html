@@ -967,6 +967,7 @@
             ${paymentsInfo}
             <div class="patient-actions">
               <button class="btn btn-gold btn-sm" onclick="openCartModal('${p.id}', '${esc(p.first_name)}', '${esc(p.last_name)}', '${formatDob(p.dob)}')">New Charge</button>
+              <button class="btn btn-outline btn-sm" onclick="updateCard('${p.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Update Card</button>
               ${activeMem ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${activeMem.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Cancel Membership</button>` : ''}
             </div>
           </div>`;
