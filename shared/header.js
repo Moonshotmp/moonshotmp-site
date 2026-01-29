@@ -12,6 +12,17 @@
  */
 
 (function() {
+    // Google Analytics 4
+    const gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-TVYS826RW0';
+    document.head.appendChild(gtagScript);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TVYS826RW0');
+
     const headerHTML = `
     <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
