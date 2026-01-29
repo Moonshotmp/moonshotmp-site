@@ -56,8 +56,12 @@
                     </a>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-white/5 text-center md:text-left text-xs text-brand-gray/50">
-                &copy; ${currentYear} Moonshot Medical and Performance. All Rights Reserved.
+            <div class="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-brand-gray/50">
+                <span>&copy; ${currentYear} Moonshot Medical and Performance. All Rights Reserved.</span>
+                <div class="flex gap-6">
+                    <a href="/privacy/" class="hover:text-brand-gray transition">Privacy Policy</a>
+                    <a href="/terms/" class="hover:text-brand-gray transition">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
