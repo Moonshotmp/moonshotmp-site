@@ -32,10 +32,11 @@ export default async (req) => {
     return json(400, { error: "Invalid JSON" });
   }
 
-  const { payment_intent_id, patient_id, type } = body;
+  const { payment_intent_id, patient_id, type, discount_code } = body;
   if (!payment_intent_id || !patient_id || !type) {
     return json(400, { error: "payment_intent_id, patient_id, and type required" });
   }
+  const hasDiscount = discount_code?.toLowerCase() === 'family';
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const db = getSupabase();
@@ -48,13 +49,17 @@ export default async (req) => {
     }
 
     // Record payment
+    const discountLabel = hasDiscount ? " (Family Discount)" : "";
+    const paymentType = hasDiscount
+      ? (type === "membership" ? "membership_family" : "lab_work_family")
+      : (type === "membership" ? "membership" : "lab_work");
     await db.from("payments").insert({
       patient_id,
       stripe_payment_intent_id: payment_intent_id,
-      type: type === "membership" ? "membership" : "lab_work",
+      type: paymentType,
       description: type === "membership"
-        ? "HRT Membership - First Month (Terminal)"
-        : "Comprehensive Blood Work (Terminal)",
+        ? `HRT Membership - First Month${discountLabel} (Terminal)`
+        : `Comprehensive Blood Work${discountLabel} (Terminal)`,
       amount_cents: pi.amount,
       status: "succeeded",
     });
@@ -99,7 +104,10 @@ export default async (req) => {
             });
 
             // Get price
-            const priceId = await getOrCreatePrice(stripe);
+            const baseAmount = 285; // $2.85 for testing
+            const amountCents = hasDiscount ? Math.round(baseAmount * 0.6) : baseAmount;
+            const priceId = await getOrCreatePrice(stripe, amountCents, hasDiscount);
+            const planType = hasDiscount ? "hormone_therapy_family" : "hormone_therapy";
 
             // Create subscription starting next month (first month already paid via terminal)
             const trialEnd = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60; // ~30 days
@@ -110,15 +118,15 @@ export default async (req) => {
               trial_end: trialEnd,
               metadata: {
                 supabase_patient_id: patient_id,
-                plan_type: "hormone_therapy",
+                plan_type: planType,
               },
             });
 
             await db.from("memberships").insert({
               patient_id,
               stripe_subscription_id: subscription.id,
-              plan_type: "hormone_therapy",
-              amount_cents: 20800,
+              plan_type: planType,
+              amount_cents: amountCents,
               status: "active",
               current_period_start: new Date().toISOString(),
               current_period_end: new Date(trialEnd * 1000).toISOString(),
@@ -144,22 +152,24 @@ export default async (req) => {
   }
 };
 
-async function getOrCreatePrice(stripe) {
+async function getOrCreatePrice(stripe, amountCents, hasDiscount) {
+  const productType = hasDiscount ? "hrt_membership_family" : "hrt_membership";
   const products = await stripe.products.search({
-    query: "metadata['moonshot_type']:'hrt_membership'",
+    query: `metadata['moonshot_type']:'${productType}'`,
   });
   if (products.data.length > 0) {
-    const prices = await stripe.prices.list({ product: products.data[0].id, active: true, limit: 1 });
-    if (prices.data.length > 0) return prices.data[0].id;
+    const prices = await stripe.prices.list({ product: products.data[0].id, active: true });
+    const matchingPrice = prices.data.find(p => p.unit_amount === amountCents);
+    if (matchingPrice) return matchingPrice.id;
   }
-  const product = await stripe.products.create({
-    name: "Hormone Therapy Membership",
-    description: "Monthly membership - Moonshot Medical + Performance",
-    metadata: { moonshot_type: "hrt_membership" },
+  const product = products.data.length > 0 ? products.data[0] : await stripe.products.create({
+    name: hasDiscount ? "Hormone Therapy Membership (Family)" : "Hormone Therapy Membership",
+    description: hasDiscount ? "Family discount membership - Moonshot Medical" : "Monthly membership - Moonshot Medical + Performance",
+    metadata: { moonshot_type: productType },
   });
   const price = await stripe.prices.create({
     product: product.id,
-    unit_amount: 20800,
+    unit_amount: amountCents,
     currency: "usd",
     recurring: { interval: "month" },
   });

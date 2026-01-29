@@ -58,6 +58,12 @@
       border-color: rgba(255,255,255,0.4);
     }
     input::placeholder { color: #666; }
+    .code-input {
+      font-size: 24px;
+      letter-spacing: 8px;
+      text-align: center;
+      font-weight: 600;
+    }
     .login-btn {
       width: 100%;
       background: #B2BFBE;
@@ -86,6 +92,17 @@
       display: none;
     }
     .error.show { display: block; }
+    .success {
+      background: rgba(40, 167, 69, 0.1);
+      border: 1px solid rgba(40, 167, 69, 0.3);
+      color: #51cf66;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    .success.show { display: block; }
     .back-link {
       display: block;
       margin-top: 24px;
@@ -94,6 +111,8 @@
       text-decoration: none;
     }
     .back-link:hover { color: #F0EEE9; }
+    .step { display: none; }
+    .step.active { display: block; }
   </style>
 </head>
 <body>
@@ -101,13 +120,29 @@
     <h1>Billing Portal</h1>
     <p class="subtitle">Moonshot Medical + Performance</p>
 
-    <form id="loginForm">
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter staff password" required autofocus>
-      </div>
-      <button type="submit" class="login-btn" id="loginBtn">Log In</button>
-    </form>
+    <!-- Step 1: Password -->
+    <div class="step active" id="step1">
+      <form id="passwordForm">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter staff password" required autofocus>
+        </div>
+        <button type="submit" class="login-btn" id="passwordBtn">Continue</button>
+      </form>
+    </div>
+
+    <!-- Step 2: Email Code -->
+    <div class="step" id="step2">
+      <div class="success show" id="codeSentMsg">Code sent to ops@moonshotmp.com</div>
+      <form id="codeForm">
+        <div class="form-group">
+          <label for="code">Verification Code</label>
+          <input type="text" id="code" name="code" class="code-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required autofocus>
+        </div>
+        <button type="submit" class="login-btn" id="codeBtn">Log In</button>
+      </form>
+      <button type="button" class="back-link" onclick="resetToStep1()" style="border:none;background:none;cursor:pointer;">&larr; Use different password</button>
+    </div>
 
     <div class="error" id="errorMsg"></div>
     <a href="/" class="back-link">&larr; Back to main site</a>
@@ -124,23 +159,41 @@
       }).catch(() => localStorage.removeItem('ms_membership_token'));
     }
 
-    const form = document.getElementById('loginForm');
     const errorEl = document.getElementById('errorMsg');
-    const loginBtn = document.getElementById('loginBtn');
+    let sessionId = null;
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.classList.add('show');
+    }
+
+    function hideError() {
       errorEl.classList.remove('show');
+    }
+
+    function resetToStep1() {
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('password').value = '';
+      document.getElementById('code').value = '';
+      sessionId = null;
+      hideError();
+    }
+
+    // Step 1: Password form
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
 
       const password = document.getElementById('password').value;
       if (!password) {
-        errorEl.textContent = 'Please enter the password';
-        errorEl.classList.add('show');
+        showError('Please enter the password');
         return;
       }
 
-      loginBtn.disabled = true;
-      loginBtn.textContent = 'Logging in...';
+      const btn = document.getElementById('passwordBtn');
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
 
       try {
         const res = await fetch('/.netlify/functions/admin-login', {
@@ -151,14 +204,60 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Login failed');
 
+        if (data.requires_code) {
+          sessionId = data.session_id;
+          document.getElementById('step1').classList.remove('active');
+          document.getElementById('step2').classList.add('active');
+          document.getElementById('code').focus();
+        } else if (data.token) {
+          localStorage.setItem('ms_membership_token', data.token);
+          window.location.href = '/billing/';
+        }
+      } catch (err) {
+        showError(err.message || 'Login failed');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Continue';
+      }
+    });
+
+    // Step 2: Code form
+    document.getElementById('codeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const code = document.getElementById('code').value;
+      if (!code || code.length !== 6) {
+        showError('Please enter the 6-digit code');
+        return;
+      }
+
+      const btn = document.getElementById('codeBtn');
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+
+      try {
+        const res = await fetch('/.netlify/functions/admin-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId, code })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Verification failed');
+
         localStorage.setItem('ms_membership_token', data.token);
         window.location.href = '/billing/';
       } catch (err) {
-        errorEl.textContent = err.message || 'Login failed';
-        errorEl.classList.add('show');
-        loginBtn.disabled = false;
-        loginBtn.textContent = 'Log In';
+        showError(err.message || 'Verification failed');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Log In';
       }
+    });
+
+    // Auto-focus and format code input
+    document.getElementById('code').addEventListener('input', function(e) {
+      this.value = this.value.replace(/\D/g, '').slice(0, 6);
     });
   </script>
 </body>

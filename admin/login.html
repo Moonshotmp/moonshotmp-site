@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Admin Login | Moonshot Medical</title>
+  <title>Master Admin | Moonshot</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #101921;
+      background: #0a0f14;
       color: #F0EEE9;
       min-height: 100vh;
       display: flex;
@@ -58,10 +58,16 @@
       border-color: rgba(255,255,255,0.4);
     }
     input::placeholder { color: #666; }
+    .code-input {
+      font-size: 24px;
+      letter-spacing: 8px;
+      text-align: center;
+      font-weight: 600;
+    }
     .login-btn {
       width: 100%;
-      background: #B2BFBE;
-      color: #101921;
+      background: #c9a227;
+      color: #0a0f14;
       border: none;
       padding: 14px 32px;
       font-size: 14px;
@@ -73,13 +79,8 @@
       transition: all 0.2s;
       margin-top: 8px;
     }
-    .login-btn:hover {
-      background: #F0EEE9;
-    }
-    .login-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .login-btn:hover { background: #ddb52f; }
+    .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .error {
       background: rgba(220, 53, 69, 0.1);
       border: 1px solid rgba(220, 53, 69, 0.3);
@@ -91,6 +92,17 @@
       display: none;
     }
     .error.show { display: block; }
+    .success {
+      background: rgba(201, 162, 39, 0.15);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      color: #c9a227;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    .success.show { display: block; }
     .back-link {
       display: block;
       margin-top: 24px;
@@ -99,48 +111,69 @@
       text-decoration: none;
     }
     .back-link:hover { color: #F0EEE9; }
+    .badge {
+      display: inline-block;
+      background: rgba(201, 162, 39, 0.2);
+      color: #c9a227;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .step { display: none; }
+    .step.active { display: block; }
   </style>
 </head>
 <body>
   <div class="login-container">
-    <h1>Admin Login</h1>
+    <div class="badge">Master Admin</div>
+    <h1>Admin Portal</h1>
     <p class="subtitle">Moonshot Medical + Performance</p>
 
-    <form id="loginForm">
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter admin password" required autofocus>
-      </div>
+    <!-- Step 1: Password -->
+    <div class="step active" id="step1">
+      <form id="passwordForm">
+        <div class="form-group">
+          <label for="password">Master Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter master password" required autofocus>
+        </div>
+        <button type="submit" class="login-btn" id="passwordBtn">Continue</button>
+      </form>
+    </div>
 
-      <button type="submit" class="login-btn" id="loginBtn">Log In</button>
-    </form>
+    <!-- Step 2: Email Code -->
+    <div class="step" id="step2">
+      <div class="success show" id="codeSentMsg">Code sent to tom@moonshotmp.com</div>
+      <form id="codeForm">
+        <div class="form-group">
+          <label for="code">Verification Code</label>
+          <input type="text" id="code" name="code" class="code-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required autofocus>
+        </div>
+        <button type="submit" class="login-btn" id="codeBtn">Log In</button>
+      </form>
+      <button type="button" class="back-link" onclick="resetToStep1()" style="border:none;background:none;cursor:pointer;">&larr; Use different password</button>
+    </div>
 
     <div class="error" id="errorMsg"></div>
-
     <a href="/" class="back-link">&larr; Back to main site</a>
   </div>
 
   <script>
-    // Check if already logged in
-    const token = localStorage.getItem('admin_token');
+    const token = localStorage.getItem('ms_master_token');
     if (token) {
-      // Verify token is still valid
-      fetch('/.netlify/functions/admin-verify', {
+      fetch('/.netlify/functions/admin-master-verify', {
         headers: { 'Authorization': `Bearer ${token}` }
       }).then(res => {
-        if (res.ok) {
-          window.location.href = '/admin/index.html';
-        } else {
-          localStorage.removeItem('admin_token');
-        }
-      }).catch(() => {
-        localStorage.removeItem('admin_token');
-      });
+        if (res.ok) window.location.href = '/admin/';
+        else localStorage.removeItem('ms_master_token');
+      }).catch(() => localStorage.removeItem('ms_master_token'));
     }
 
-    const form = document.getElementById('loginForm');
     const errorEl = document.getElementById('errorMsg');
-    const loginBtn = document.getElementById('loginBtn');
+    let sessionId = null;
 
     function showError(msg) {
       errorEl.textContent = msg;
@@ -151,7 +184,17 @@
       errorEl.classList.remove('show');
     }
 
-    form.addEventListener('submit', async (e) => {
+    function resetToStep1() {
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('password').value = '';
+      document.getElementById('code').value = '';
+      sessionId = null;
+      hideError();
+    }
+
+    // Step 1: Password form
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       hideError();
 
@@ -161,31 +204,73 @@
         return;
       }
 
-      loginBtn.disabled = true;
-      loginBtn.textContent = 'Logging in...';
+      const btn = document.getElementById('passwordBtn');
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
 
       try {
-        const res = await fetch('/.netlify/functions/admin-login', {
+        const res = await fetch('/.netlify/functions/admin-master-login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password })
         });
-
         const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login failed');
 
-        if (!res.ok) {
-          throw new Error(data.error || 'Login failed');
+        if (data.requires_code) {
+          sessionId = data.session_id;
+          document.getElementById('step1').classList.remove('active');
+          document.getElementById('step2').classList.add('active');
+          document.getElementById('code').focus();
+        } else if (data.token) {
+          localStorage.setItem('ms_master_token', data.token);
+          window.location.href = '/admin/';
         }
-
-        // Store token and redirect
-        localStorage.setItem('admin_token', data.token);
-        window.location.href = '/admin/index.html';
-
       } catch (err) {
         showError(err.message || 'Login failed');
-        loginBtn.disabled = false;
-        loginBtn.textContent = 'Log In';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Continue';
       }
+    });
+
+    // Step 2: Code form
+    document.getElementById('codeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const code = document.getElementById('code').value;
+      if (!code || code.length !== 6) {
+        showError('Please enter the 6-digit code');
+        return;
+      }
+
+      const btn = document.getElementById('codeBtn');
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+
+      try {
+        const res = await fetch('/.netlify/functions/admin-master-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId, code })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Verification failed');
+
+        localStorage.setItem('ms_master_token', data.token);
+        window.location.href = '/admin/';
+      } catch (err) {
+        showError(err.message || 'Verification failed');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Log In';
+      }
+    });
+
+    // Auto-focus and format code input
+    document.getElementById('code').addEventListener('input', function(e) {
+      this.value = this.value.replace(/\D/g, '').slice(0, 6);
     });
   </script>
 </body>

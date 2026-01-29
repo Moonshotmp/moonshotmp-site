@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard | Moonshot Billing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #101921;
+      color: #F0EEE9;
+      min-height: 100vh;
+    }
+    .portal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .portal-header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .portal-header .subtitle { color: #B2BFBE; font-size: 12px; margin-top: 2px; }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #B2BFBE; }
+    .btn-outline:hover { border-color: #F0EEE9; color: #F0EEE9; }
+
+    .portal-body { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .stat-card .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      margin-bottom: 8px;
+    }
+    .stat-card .value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    .stat-card .subvalue {
+      font-size: 12px;
+      color: #B2BFBE;
+      margin-top: 4px;
+    }
+
+    .section {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+
+    .period-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .period-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #B2BFBE;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .period-btn:hover { border-color: rgba(255,255,255,0.3); color: #F0EEE9; }
+    .period-btn.active { background: rgba(178,191,190,0.15); border-color: #B2BFBE; color: #F0EEE9; }
+
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-weight: 500;
+    }
+    .data-table td {
+      padding: 12px 14px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .data-table .amount { font-family: 'Oswald', sans-serif; font-weight: 500; }
+    .data-table .positive { color: #51cf66; }
+    .data-table .negative { color: #ff6b6b; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .summary-item {
+      padding: 16px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 6px;
+    }
+    .summary-item .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #B2BFBE;
+      margin-bottom: 4px;
+    }
+    .summary-item .value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #F0EEE9;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading { text-align: center; padding: 40px; color: #B2BFBE; }
+
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .summary-grid { grid-template-columns: 1fr; }
+      .portal-header { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-header">
+    <div>
+      <h1>Admin Dashboard</h1>
+      <div class="subtitle">Moonshot Medical + Performance</div>
+    </div>
+    <div class="header-actions">
+      <a href="/billing/" class="btn btn-outline">&larr; Back to Billing</a>
+      <button class="btn btn-outline" onclick="logout()">Log Out</button>
+    </div>
+  </div>
+
+  <div class="portal-body">
+    <!-- Overview Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="label">Active Members</div>
+        <div class="value" id="statActive">--</div>
+        <div class="subvalue" id="statActiveRevenue">--/mo recurring</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total Revenue (All Time)</div>
+        <div class="value" id="statTotalRevenue">--</div>
+        <div class="subvalue" id="statTotalCount">-- payments</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Past Due</div>
+        <div class="value" id="statPastDue">--</div>
+        <div class="subvalue">accounts need attention</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total Patients</div>
+        <div class="value" id="statPatients">--</div>
+        <div class="subvalue" id="statNewPatients">-- new this month</div>
+      </div>
+    </div>
+
+    <!-- Period Summary -->
+    <div class="section">
+      <h2>Revenue by Period</h2>
+      <div class="period-selector">
+        <button class="period-btn active" onclick="setPeriod('month')">This Month</button>
+        <button class="period-btn" onclick="setPeriod('quarter')">This Quarter</button>
+        <button class="period-btn" onclick="setPeriod('year')">This Year</button>
+        <button class="period-btn" onclick="setPeriod('all')">All Time</button>
+      </div>
+      <div class="summary-grid" id="periodSummary">
+        <div class="loading"><span class="spinner"></span></div>
+      </div>
+    </div>
+
+    <!-- Monthly Breakdown -->
+    <div class="section">
+      <h2>Monthly Breakdown</h2>
+      <div id="monthlyBreakdown">
+        <div class="loading"><span class="spinner"></span></div>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="section">
+      <h2>Recent Transactions</h2>
+      <div id="recentTransactions">
+        <div class="loading"><span class="spinner"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = '/.netlify/functions';
+    const token = localStorage.getItem('ms_membership_token');
+
+    if (!token) {
+      window.location.href = '/billing/login.html';
+    } else {
+      fetch(`${API}/admin-verify`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => {
+        if (!res.ok) {
+          localStorage.removeItem('ms_membership_token');
+          window.location.href = '/billing/login.html';
+        }
+      });
+    }
+
+    function logout() {
+      localStorage.removeItem('ms_membership_token');
+      window.location.href = '/billing/login.html';
+    }
+
+    function authHeaders() {
+      return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+    }
+
+    let allMemberships = [];
+    let allPayments = [];
+    let allPatients = [];
+    let currentPeriod = 'month';
+
+    async function loadAllData() {
+      try {
+        // Load memberships
+        const memRes = await fetch(`${API}/membership-list?status=all`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const memData = await memRes.json();
+        allMemberships = memData.memberships || [];
+
+        // Load all payments via admin endpoint
+        const payRes = await fetch(`${API}/membership-admin-payments`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const payData = await payRes.json();
+        allPayments = payData.payments || [];
+
+        // Load patient count
+        const patRes = await fetch(`${API}/membership-admin-stats`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const patData = await patRes.json();
+        allPatients = patData.patients || [];
+
+        renderStats();
+        renderPeriodSummary();
+        renderMonthlyBreakdown();
+        renderRecentTransactions();
+      } catch (err) {
+        console.error('Failed to load data:', err);
+      }
+    }
+
+    function renderStats() {
+      const active = allMemberships.filter(m => m.status === 'active');
+      const pastDue = allMemberships.filter(m => m.status === 'past_due');
+      const activeRevenue = active.reduce((s, m) => s + (m.amount_cents || 0), 0);
+      const totalRevenue = allPayments.filter(p => p.status === 'succeeded').reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const totalCount = allPayments.filter(p => p.status === 'succeeded').length;
+
+      // New patients this month
+      const now = new Date();
+      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      const newThisMonth = allPatients.filter(p => new Date(p.created_at) >= monthStart).length;
+
+      document.getElementById('statActive').textContent = active.length;
+      document.getElementById('statActiveRevenue').textContent = '$' + (activeRevenue / 100).toLocaleString() + '/mo recurring';
+      document.getElementById('statTotalRevenue').textContent = '$' + (totalRevenue / 100).toLocaleString();
+      document.getElementById('statTotalCount').textContent = totalCount + ' payments';
+      document.getElementById('statPastDue').textContent = pastDue.length;
+      document.getElementById('statPatients').textContent = allPatients.length;
+      document.getElementById('statNewPatients').textContent = newThisMonth + ' new this month';
+    }
+
+    function setPeriod(period) {
+      currentPeriod = period;
+      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      renderPeriodSummary();
+    }
+
+    function getDateRange(period) {
+      const now = new Date();
+      let start;
+      switch (period) {
+        case 'month':
+          start = new Date(now.getFullYear(), now.getMonth(), 1);
+          break;
+        case 'quarter':
+          const q = Math.floor(now.getMonth() / 3);
+          start = new Date(now.getFullYear(), q * 3, 1);
+          break;
+        case 'year':
+          start = new Date(now.getFullYear(), 0, 1);
+          break;
+        default:
+          start = new Date(0);
+      }
+      return { start, end: now };
+    }
+
+    function renderPeriodSummary() {
+      const { start, end } = getDateRange(currentPeriod);
+      const periodPayments = allPayments.filter(p => {
+        const d = new Date(p.created_at);
+        return d >= start && d <= end;
+      });
+
+      const succeeded = periodPayments.filter(p => p.status === 'succeeded');
+      const failed = periodPayments.filter(p => p.status === 'failed');
+      const refunded = periodPayments.filter(p => p.status === 'refunded' || p.status === 'partially_refunded');
+
+      const totalRevenue = succeeded.reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const membershipRevenue = succeeded.filter(p => p.type?.includes('membership')).reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const labRevenue = succeeded.filter(p => p.type?.includes('lab')).reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const refundedAmount = refunded.reduce((s, p) => s + (p.amount_cents || 0), 0);
+
+      document.getElementById('periodSummary').innerHTML = `
+        <div class="summary-item">
+          <div class="label">Total Revenue</div>
+          <div class="value positive">$${(totalRevenue / 100).toLocaleString()}</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">Membership Revenue</div>
+          <div class="value">$${(membershipRevenue / 100).toLocaleString()}</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">Lab Work Revenue</div>
+          <div class="value">$${(labRevenue / 100).toLocaleString()}</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">Successful Payments</div>
+          <div class="value">${succeeded.length}</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">Failed Payments</div>
+          <div class="value" style="color: ${failed.length > 0 ? '#ff6b6b' : 'inherit'}">${failed.length}</div>
+        </div>
+        <div class="summary-item">
+          <div class="label">Refunds Issued</div>
+          <div class="value" style="color: ${refundedAmount > 0 ? '#ffd43b' : 'inherit'}">$${(refundedAmount / 100).toLocaleString()}</div>
+        </div>
+      `;
+    }
+
+    function renderMonthlyBreakdown() {
+      // Group payments by month
+      const months = {};
+      allPayments.filter(p => p.status === 'succeeded').forEach(p => {
+        const d = new Date(p.created_at);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        if (!months[key]) months[key] = { revenue: 0, count: 0, membership: 0, labs: 0 };
+        months[key].revenue += p.amount_cents || 0;
+        months[key].count++;
+        if (p.type?.includes('membership')) months[key].membership += p.amount_cents || 0;
+        if (p.type?.includes('lab')) months[key].labs += p.amount_cents || 0;
+      });
+
+      const sortedMonths = Object.entries(months).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 12);
+
+      if (sortedMonths.length === 0) {
+        document.getElementById('monthlyBreakdown').innerHTML = '<div style="color:#B2BFBE;text-align:center;padding:20px;">No payment data yet</div>';
+        return;
+      }
+
+      document.getElementById('monthlyBreakdown').innerHTML = `
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Total Revenue</th>
+              <th>Memberships</th>
+              <th>Lab Work</th>
+              <th>Transactions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sortedMonths.map(([month, data]) => {
+              const [y, m] = month.split('-');
+              const monthName = new Date(y, m - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+              return `
+                <tr>
+                  <td>${monthName}</td>
+                  <td class="amount positive">$${(data.revenue / 100).toLocaleString()}</td>
+                  <td class="amount">$${(data.membership / 100).toLocaleString()}</td>
+                  <td class="amount">$${(data.labs / 100).toLocaleString()}</td>
+                  <td>${data.count}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderRecentTransactions() {
+      const recent = [...allPayments].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 20);
+
+      if (recent.length === 0) {
+        document.getElementById('recentTransactions').innerHTML = '<div style="color:#B2BFBE;text-align:center;padding:20px;">No transactions yet</div>';
+        return;
+      }
+
+      document.getElementById('recentTransactions').innerHTML = `
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Patient</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${recent.map(p => {
+              const statusClass = p.status === 'succeeded' ? 'positive' : p.status === 'failed' ? 'negative' : '';
+              const patientName = p.patients ? `${p.patients.first_name} ${p.patients.last_name}` : 'Unknown';
+              return `
+                <tr>
+                  <td>${new Date(p.created_at).toLocaleDateString()}</td>
+                  <td>${esc(patientName)}</td>
+                  <td>${esc(p.description || p.type || 'Payment')}</td>
+                  <td class="amount ${statusClass}">$${(p.amount_cents / 100).toFixed(2)}</td>
+                  <td><span style="text-transform:capitalize;">${p.status}</span></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    loadAllData();
+  </script>
+</body>
+</html>

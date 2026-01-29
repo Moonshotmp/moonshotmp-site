@@ -32,10 +32,13 @@ export default async (req) => {
     return json(400, { error: "Invalid JSON" });
   }
 
-  const { patient_id, payment_method_id } = body;
+  const { patient_id, payment_method_id, discount_code } = body;
   if (!patient_id || !payment_method_id) {
     return json(400, { error: "patient_id and payment_method_id required" });
   }
+  const BASE_AMOUNT = 100; // $1 for testing
+  const hasDiscount = discount_code?.toLowerCase() === 'family';
+  const amountCents = hasDiscount ? Math.round(BASE_AMOUNT * 0.6) : BASE_AMOUNT;
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const db = getSupabase();
@@ -74,7 +77,7 @@ export default async (req) => {
 
     // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 28500,
+      amount: amountCents,
       currency: "usd",
       customer: customerId,
       payment_method: payment_method_id,
@@ -83,10 +86,10 @@ export default async (req) => {
         enabled: true,
         allow_redirects: "never",
       },
-      description: "Comprehensive Blood Work - Moonshot Medical",
+      description: hasDiscount ? "Comprehensive Blood Work (Family Discount) - Moonshot Medical" : "Comprehensive Blood Work - Moonshot Medical",
       metadata: {
         supabase_patient_id: patient.id,
-        type: "lab_work",
+        type: hasDiscount ? "lab_work_family" : "lab_work",
       },
     });
 
@@ -95,9 +98,9 @@ export default async (req) => {
       await db.from("payments").insert({
         patient_id: patient.id,
         stripe_payment_intent_id: paymentIntent.id,
-        type: "lab_work",
-        description: "Comprehensive Blood Work",
-        amount_cents: 28500,
+        type: hasDiscount ? "lab_work_family" : "lab_work",
+        description: hasDiscount ? "Comprehensive Blood Work (Family Discount)" : "Comprehensive Blood Work",
+        amount_cents: amountCents,
         status: "succeeded",
       });
     }

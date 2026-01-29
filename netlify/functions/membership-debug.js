@@ -29,13 +29,13 @@ export default async (req) => {
 
   try {
     const supabase = createClient(url, key);
-    const { data, error } = await supabase.from("patients").select("id").limit(1);
+    const { data, error } = await supabase.from("patients").select("id, first_name, last_name, email").limit(10);
 
     if (error) {
       return json(500, { error: error.message, code: error.code, debug });
     }
 
-    return json(200, { ok: true, patients_count: data?.length || 0, debug });
+    return json(200, { ok: true, patients: data, debug });
   } catch (err) {
     return json(500, { error: err.message, debug });
   }

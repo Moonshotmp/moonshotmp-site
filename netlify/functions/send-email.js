@@ -73,6 +73,43 @@ export async function sendEmail({ to, subject, html, text }) {
 }
 
 // Email templates
+export function loginCodeEmail({ code, portalName }) {
+  const subject = `${code} - Your Moonshot ${portalName} Login Code`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #101921; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+    <div style="background: #1a2530; border-radius: 8px; padding: 32px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+      <h1 style="color: #F0EEE9; margin: 0 0 8px; font-size: 20px;">Moonshot ${portalName}</h1>
+      <p style="color: #B2BFBE; margin: 0 0 24px; font-size: 14px;">Your login verification code</p>
+
+      <div style="background: rgba(201, 162, 39, 0.1); border: 2px solid #c9a227; border-radius: 8px; padding: 24px; margin: 0 0 24px;">
+        <p style="color: #c9a227; font-size: 36px; font-weight: 700; letter-spacing: 8px; margin: 0;">${code}</p>
+      </div>
+
+      <p style="color: #B2BFBE; font-size: 14px; margin: 0;">
+        This code expires in 10 minutes.<br>
+        If you didn't request this, ignore this email.
+      </p>
+    </div>
+
+    <p style="color: #666; font-size: 12px; text-align: center; margin-top: 24px;">
+      Moonshot Medical + Performance
+    </p>
+  </div>
+</body>
+</html>
+  `.trim();
+
+  return { subject, html };
+}
+
 export function partnerWelcomeEmail({ partnerName, storeUrl, manageUrl, loginUrl }) {
   const subject = `Welcome to Moonshot Partner Program - Your Store is Ready!`;
 

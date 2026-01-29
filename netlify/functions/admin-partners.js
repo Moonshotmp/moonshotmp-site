@@ -1,4 +1,5 @@
 import { getStore } from "@netlify/blobs";
+import { verifyMasterToken } from "./admin-master-verify.js";
 
 const json = (status, body) =>
   new Response(JSON.stringify(body, null, 2), {
@@ -6,7 +7,7 @@ const json = (status, body) =>
     headers: { "content-type": "application/json; charset=utf-8" },
   });
 
-// Verify token
+// Verify regular admin token
 function verifyToken(token, secret) {
   if (!token || !secret) return false;
   const parts = token.split(":");
@@ -28,7 +29,7 @@ function verifyToken(token, secret) {
 
 function checkAuth(req) {
   const adminPassword = (process.env.ADMIN_PASSWORD || "").trim();
-  if (!adminPassword) return { error: "Admin not configured", status: 500 };
+  const masterPassword = (process.env.MASTER_ADMIN_PASSWORD || "").trim();
 
   const authHeader = req.headers.get("authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -36,7 +37,12 @@ function checkAuth(req) {
   }
 
   const token = authHeader.slice(7);
-  if (!verifyToken(token, adminPassword)) {
+
+  // Accept either regular admin token or master admin token
+  const isRegularAdmin = adminPassword && verifyToken(token, adminPassword);
+  const isMasterAdmin = verifyMasterToken(token, masterPassword);
+
+  if (!isRegularAdmin && !isMasterAdmin) {
     return { error: "Invalid or expired token", status: 401 };
   }
 

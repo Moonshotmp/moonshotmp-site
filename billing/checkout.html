@@ -247,6 +247,16 @@
 
       <div class="charge-summary" id="chargeSummary"></div>
 
+      <!-- Discount Code -->
+      <div class="discount-section" style="margin-bottom: 20px;">
+        <div class="section-label">Discount Code</div>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="discountCode" placeholder="Enter code" style="flex:1; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; color: #F0EEE9; font-size: 14px;">
+          <button type="button" class="btn btn-outline" style="padding: 10px 16px;" onclick="applyDiscount()">Apply</button>
+        </div>
+        <div id="discountStatus" style="margin-top: 8px; font-size: 13px;"></div>
+      </div>
+
       <div class="section-label">Payment Method</div>
 
       <!-- Manual card entry (Stripe Elements) -->
@@ -289,6 +299,7 @@
     const params = new URLSearchParams(window.location.search);
     const patientId = params.get('patient');
     const chargeType = params.get('type'); // 'membership' or 'lab_work'
+    const testMode = params.get('test') === '1'; // Add ?test=1 to URL for $1 test charge
 
     if (!patientId || !chargeType) {
       window.location.href = '/billing/';
@@ -296,6 +307,63 @@
 
     // Stripe setup
     let elements, cardElement, clientSecret, patientData;
+    let discountApplied = false;
+    const DISCOUNT_PERCENT = 40; // 40% off for family
+
+    // Base prices (testing)
+    const BASE_MEMBERSHIP = 285; // $2.85 in cents
+    const BASE_LAB = 100; // $1 in cents
+
+    function getAmount() {
+      const base = chargeType === 'membership' ? BASE_MEMBERSHIP : BASE_LAB;
+      return discountApplied ? Math.round(base * 0.6) : base;
+    }
+
+    function formatAmount(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function applyDiscount() {
+      const code = document.getElementById('discountCode').value.trim().toLowerCase();
+      const statusEl = document.getElementById('discountStatus');
+
+      if (code === 'family') {
+        discountApplied = true;
+        statusEl.innerHTML = '<span style="color: #51cf66;">✓ Family discount applied (40% off)</span>';
+        updateChargeSummary();
+      } else if (code === '') {
+        discountApplied = false;
+        statusEl.innerHTML = '';
+        updateChargeSummary();
+      } else {
+        discountApplied = false;
+        statusEl.innerHTML = '<span style="color: #ff6b6b;">Invalid code</span>';
+        updateChargeSummary();
+      }
+    }
+
+    function updateChargeSummary() {
+      const amount = getAmount();
+      const discountBadge = discountApplied ? '<span style="background:#51cf66;color:#000;padding:2px 8px;border-radius:4px;font-size:11px;margin-left:8px;">40% OFF</span>' : '';
+
+      if (chargeType === 'membership') {
+        document.getElementById('chargeSummary').innerHTML = `
+          <div class="charge-type">Hormone Therapy Membership${discountBadge}</div>
+          <div class="charge-amount">${formatAmount(amount)}<span style="font-size:16px;font-weight:400;color:#B2BFBE;">/mo</span></div>
+          ${discountApplied ? '<div style="font-size:13px;color:#B2BFBE;text-decoration:line-through;">Was $2.85/mo</div>' : ''}
+          <div class="charge-detail">Recurring monthly charge. Card will be stored on file.</div>
+        `;
+        document.getElementById('payBtn').textContent = 'Start Membership';
+      } else {
+        document.getElementById('chargeSummary').innerHTML = `
+          <div class="charge-type">Comprehensive Blood Work${discountBadge}</div>
+          <div class="charge-amount">${formatAmount(amount)}</div>
+          ${discountApplied ? '<div style="font-size:13px;color:#B2BFBE;text-decoration:line-through;">Was $1.00</div>' : ''}
+          <div class="charge-detail">One-time charge.</div>
+        `;
+        document.getElementById('payBtn').textContent = `Charge ${formatAmount(amount)}`;
+      }
+    }
 
     function authHeaders() {
       return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
@@ -340,21 +408,7 @@
         `;
 
         // Render charge summary
-        if (chargeType === 'membership') {
-          document.getElementById('chargeSummary').innerHTML = `
-            <div class="charge-type">Hormone Therapy Membership</div>
-            <div class="charge-amount">$208<span style="font-size:16px;font-weight:400;color:#B2BFBE;">/mo</span></div>
-            <div class="charge-detail">Recurring monthly charge. Card will be stored on file.</div>
-          `;
-          document.getElementById('payBtn').textContent = 'Start Membership';
-        } else {
-          document.getElementById('chargeSummary').innerHTML = `
-            <div class="charge-type">Comprehensive Blood Work</div>
-            <div class="charge-amount">$285</div>
-            <div class="charge-detail">One-time charge.</div>
-          `;
-          document.getElementById('payBtn').textContent = 'Charge $285';
-        }
+        updateChargeSummary();
 
         // Mount Stripe Elements
         elements = window.stripeInstance.elements();
@@ -412,6 +466,7 @@
           body: JSON.stringify({
             patient_id: patientId,
             payment_method_id: paymentMethodId,
+            discount_code: discountApplied ? 'family' : null,
           })
         });
 
@@ -419,18 +474,19 @@
         if (!res.ok) throw new Error(data.error);
 
         // Show success
+        const amt = formatAmount(getAmount());
         showSuccess(chargeType === 'membership'
           ? 'Membership Started'
           : 'Payment Successful',
           chargeType === 'membership'
-            ? `${patientData.first_name} ${patientData.last_name} is now an active member. $208/mo will be charged automatically.`
-            : `$285 charged successfully for ${patientData.first_name} ${patientData.last_name}.`
+            ? `${patientData.first_name} ${patientData.last_name} is now an active member. ${amt}/mo will be charged automatically.`
+            : `${amt} charged successfully for ${patientData.first_name} ${patientData.last_name}.`
         );
 
       } catch (err) {
         document.getElementById('card-errors').textContent = err.message;
         btn.disabled = false;
-        btn.textContent = chargeType === 'membership' ? 'Start Membership' : 'Charge $285';
+        btn.textContent = chargeType === 'membership' ? 'Start Membership' : `Charge ${formatAmount(getAmount())}`;
       }
     }
 
@@ -481,7 +537,7 @@
         const piRes = await fetch(`${API}/membership-terminal-payment`, {
           method: 'POST',
           headers: authHeaders(),
-          body: JSON.stringify({ patient_id: patientId, type: chargeType }),
+          body: JSON.stringify({ patient_id: patientId, type: chargeType, discount_code: discountApplied ? 'family' : null }),
         });
         const piData = await piRes.json();
         if (!piRes.ok) throw new Error(piData.error);
@@ -503,14 +559,16 @@
             payment_intent_id: piData.payment_intent_id,
             patient_id: patientId,
             type: chargeType,
+            discount_code: discountApplied ? 'family' : null,
           }),
         });
         const captureData = await captureRes.json();
         if (!captureRes.ok) throw new Error(captureData.error);
 
+        const termAmt = formatAmount(getAmount());
         let successMsg = chargeType === 'membership'
-          ? `${patientData.first_name} ${patientData.last_name} is now an active member. $208/mo will be charged automatically.`
-          : `$285 charged successfully for ${patientData.first_name} ${patientData.last_name}.`;
+          ? `${patientData.first_name} ${patientData.last_name} is now an active member. ${termAmt}/mo will be charged automatically.`
+          : `${termAmt} charged successfully for ${patientData.first_name} ${patientData.last_name}.`;
 
         if (captureData.warning) {
           successMsg += '\n\nNote: ' + captureData.warning;

@@ -32,10 +32,11 @@ export default async (req) => {
     return json(400, { error: "Invalid JSON" });
   }
 
-  const { patient_id, type } = body; // type: 'membership' or 'lab_work'
+  const { patient_id, type, discount_code } = body; // type: 'membership' or 'lab_work'
   if (!patient_id || !type) {
     return json(400, { error: "patient_id and type required" });
   }
+  const hasDiscount = discount_code?.toLowerCase() === 'family';
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const db = getSupabase();
@@ -64,10 +65,12 @@ export default async (req) => {
       await db.from("patients").update({ stripe_customer_id: customerId }).eq("id", patient.id);
     }
 
-    const amount = type === "membership" ? 20800 : 28500;
+    const baseAmount = type === "membership" ? 285 : 100; // $2.85 membership, $1 labs for testing
+    const amount = hasDiscount ? Math.round(baseAmount * 0.6) : baseAmount;
+    const discountLabel = hasDiscount ? " (Family Discount)" : "";
     const description = type === "membership"
-      ? "Hormone Therapy Membership - First Month"
-      : "Comprehensive Blood Work";
+      ? `Hormone Therapy Membership - First Month${discountLabel}`
+      : `Comprehensive Blood Work${discountLabel}`;
 
     // Create PaymentIntent for terminal
     const paymentIntent = await stripe.paymentIntents.create({
@@ -79,7 +82,7 @@ export default async (req) => {
       description: `${description} - Moonshot Medical`,
       metadata: {
         supabase_patient_id: patient.id,
-        type,
+        type: hasDiscount ? `${type}_family` : type,
       },
     });
 

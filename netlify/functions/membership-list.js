@@ -1,6 +1,7 @@
 // List all members with optional status filter
 import { getSupabase } from "./shared/supabase.js";
 import { verifyToken } from "./admin-verify.js";
+import { verifyMasterToken } from "./admin-master-verify.js";
 
 const json = (status, body) =>
   new Response(JSON.stringify(body, null, 2), {
@@ -20,7 +21,13 @@ export default async (req) => {
   const authHeader = req.headers.get("authorization");
   const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null;
   const adminPassword = (process.env.ADMIN_PASSWORD || "").trim();
-  if (!verifyToken(token, adminPassword)) {
+  const masterPassword = (process.env.MASTER_ADMIN_PASSWORD || "").trim();
+
+  // Accept either regular admin token or master admin token
+  const isRegularAdmin = verifyToken(token, adminPassword);
+  const isMasterAdmin = verifyMasterToken(token, masterPassword);
+
+  if (!isRegularAdmin && !isMasterAdmin) {
     return json(401, { error: "Unauthorized" });
   }
 
