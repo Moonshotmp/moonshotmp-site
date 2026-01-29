@@ -538,7 +538,8 @@
     <div class="tabs">
       <div class="tab active" data-tab="search" onclick="switchTab('search')">Patient Lookup</div>
       <div class="tab" data-tab="members" onclick="switchTab('members')">Active Members</div>
-      <div class="tab" data-tab="all" onclick="switchTab('all')">All Members</div>
+      <div class="tab" data-tab="failed" onclick="switchTab('failed')">Failed Payments</div>
+      <div class="tab" data-tab="all" onclick="switchTab('all')">All Patients</div>
     </div>
 
     <!-- Tab: Patient Lookup -->
@@ -586,12 +587,37 @@
 
     <!-- Tab: Active Members -->
     <div class="tab-content" id="tab-members">
+      <div class="search-section" style="margin-bottom:16px;padding:16px;">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="memberSearch" placeholder="Search by name..." style="flex:1;min-width:200px;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#F0EEE9;font-size:14px;" oninput="filterMembers()">
+          <select id="memberSort" onchange="filterMembers()" style="padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#F0EEE9;font-size:14px;">
+            <option value="name">Sort by Name</option>
+            <option value="date">Sort by Start Date</option>
+            <option value="amount">Sort by Amount</option>
+            <option value="next">Sort by Next Billing</option>
+          </select>
+        </div>
+      </div>
       <div id="activeMembersList"></div>
     </div>
 
-    <!-- Tab: All Members -->
+    <!-- Tab: Failed Payments -->
+    <div class="tab-content" id="tab-failed">
+      <div id="failedPaymentsList"></div>
+    </div>
+
+    <!-- Tab: All Patients -->
     <div class="tab-content" id="tab-all">
-      <div id="allMembersList"></div>
+      <div class="search-section" style="margin-bottom:16px;padding:16px;">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="patientSearch" placeholder="Search by name..." style="flex:1;min-width:200px;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#F0EEE9;font-size:14px;" oninput="filterPatients()">
+          <select id="patientSort" onchange="filterPatients()" style="padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#F0EEE9;font-size:14px;">
+            <option value="name">Sort by Name</option>
+            <option value="date">Sort by Created Date</option>
+          </select>
+        </div>
+      </div>
+      <div id="allPatientsList"></div>
     </div>
   </div>
 
@@ -815,7 +841,8 @@
       document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
       document.getElementById(`tab-${tab}`).classList.add('active');
       if (tab === 'members') loadMembers('active');
-      if (tab === 'all') loadMembers('all');
+      if (tab === 'failed') loadFailedPayments();
+      if (tab === 'all') loadAllPatients();
     }
 
     // Search
@@ -1071,33 +1098,60 @@
     }
 
     // Members list
+    let allMemberships = [];
+    let allPatientsData = [];
+    let failedPaymentsData = [];
+
     async function loadMembers(status) {
-      const containerId = status === 'active' ? 'activeMembersList' : 'allMembersList';
-      const el = document.getElementById(containerId);
+      const el = document.getElementById('activeMembersList');
       el.innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
       try {
         const res = await fetch(`${API}/membership-list?status=${status}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
-        renderMembersTable(el, data.memberships || []);
+        allMemberships = data.memberships || [];
+        filterMembers();
       } catch (err) {
         el.innerHTML = `<div class="no-results">Failed to load: ${err.message}</div>`;
       }
     }
 
+    function filterMembers() {
+      const search = (document.getElementById('memberSearch')?.value || '').toLowerCase();
+      const sort = document.getElementById('memberSort')?.value || 'name';
+
+      let filtered = allMemberships.filter(m => {
+        const p = m.patients;
+        const name = `${p?.first_name || ''} ${p?.last_name || ''}`.toLowerCase();
+        return name.includes(search);
+      });
+
+      filtered.sort((a, b) => {
+        const pA = a.patients, pB = b.patients;
+        switch (sort) {
+          case 'name': return `${pA?.first_name} ${pA?.last_name}`.localeCompare(`${pB?.first_name} ${pB?.last_name}`);
+          case 'date': return new Date(b.created_at) - new Date(a.created_at);
+          case 'amount': return (b.amount_cents || 0) - (a.amount_cents || 0);
+          case 'next': return new Date(a.current_period_end || '9999') - new Date(b.current_period_end || '9999');
+          default: return 0;
+        }
+      });
+
+      renderMembersTable(document.getElementById('activeMembersList'), filtered);
+    }
+
     function renderMembersTable(el, memberships) {
-      console.log('Rendering memberships:', memberships);
-      if (!memberships.length) { el.innerHTML = '<div class="no-results">No memberships found</div>'; return; }
+      if (!memberships.length) { el.innerHTML = '<div class="no-results">No members found</div>'; return; }
       el.innerHTML = `
         <table class="members-table">
           <thead><tr>
-            <th>Patient</th><th>Plan</th><th>Status</th><th>Started</th><th>Actions</th>
+            <th>Patient</th><th>Plan</th><th>Status</th><th>Started</th><th>Next Billing</th><th>Actions</th>
           </tr></thead>
           <tbody>${memberships.map(m => {
             const p = m.patients;
             const patientId = p?.id || m.patient_id || '';
-            console.log('Patient data:', p, 'Using ID:', patientId);
+            const nextBilling = m.current_period_end ? new Date(m.current_period_end).toLocaleDateString() : '--';
             return `<tr>
               <td>
                 <a href="#" onclick="viewPatientDetails('${patientId}'); return false;" style="color:#F0EEE9;text-decoration:none;">
@@ -1105,13 +1159,210 @@
                 </a>
                 <div style="font-size:12px;color:#B2BFBE;">${esc(p?.email || '')}</div>
               </td>
-              <td>HRT $${(m.amount_cents / 100).toFixed(0)}/mo</td>
+              <td>$${(m.amount_cents / 100).toFixed(0)}/mo</td>
               <td><span class="badge badge-${m.status}">${m.status.replace('_', ' ')}</span></td>
               <td style="font-size:13px;">${new Date(m.created_at).toLocaleDateString()}</td>
-              <td>${m.status === 'active' ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${m.id}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Cancel</button>` : ''}</td>
+              <td style="font-size:13px;">${nextBilling}</td>
+              <td style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button class="btn btn-gold btn-sm" onclick="openCartModal('${patientId}', '${esc(p?.first_name)}', '${esc(p?.last_name)}', '${formatDob(p?.dob)}')">Charge</button>
+                <button class="btn btn-outline btn-sm" onclick="updateCard('${patientId}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Update Card</button>
+                ${m.status === 'active' ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${m.id}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Cancel</button>` : ''}
+              </td>
             </tr>`;
           }).join('')}</tbody>
         </table>`;
+    }
+
+    // Failed Payments
+    async function loadFailedPayments() {
+      const el = document.getElementById('failedPaymentsList');
+      el.innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      try {
+        const res = await fetch(`${API}/membership-admin-payments?status=failed`, {
+          headers: authHeaders()
+        });
+        const data = await res.json();
+        failedPaymentsData = (data.payments || []).filter(p => p.status === 'failed');
+        renderFailedPayments(el, failedPaymentsData);
+      } catch (err) {
+        el.innerHTML = `<div class="no-results">Failed to load: ${err.message}</div>`;
+      }
+    }
+
+    function renderFailedPayments(el, payments) {
+      if (!payments.length) { el.innerHTML = '<div class="no-results">No failed payments</div>'; return; }
+      el.innerHTML = `
+        <table class="members-table">
+          <thead><tr>
+            <th>Date</th><th>Patient</th><th>Description</th><th>Amount</th><th>Actions</th>
+          </tr></thead>
+          <tbody>${payments.map(p => {
+            const patient = p.patients;
+            const patientId = patient?.id || p.patient_id || '';
+            return `<tr>
+              <td style="font-size:13px;">${new Date(p.created_at).toLocaleDateString()}</td>
+              <td>
+                <a href="#" onclick="viewPatientDetails('${patientId}'); return false;" style="color:#F0EEE9;text-decoration:none;">
+                  <strong>${esc(patient?.first_name || '')} ${esc(patient?.last_name || '')}</strong>
+                </a>
+              </td>
+              <td>${esc(p.description || p.type || 'Payment')}</td>
+              <td class="amount" style="color:#ff6b6b;">$${(p.amount_cents / 100).toFixed(2)}</td>
+              <td>
+                <button class="btn btn-outline btn-sm" onclick="updateCard('${patientId}', '${esc(patient?.first_name)} ${esc(patient?.last_name)}')">Update Card</button>
+                <button class="btn btn-gold btn-sm" onclick="retryPayment('${patientId}', ${p.amount_cents}, '${esc(p.description || p.type)}')">Retry</button>
+              </td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table>`;
+    }
+
+    // All Patients
+    async function loadAllPatients() {
+      const el = document.getElementById('allPatientsList');
+      el.innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      try {
+        const res = await fetch(`${API}/membership-admin-stats`, {
+          headers: authHeaders()
+        });
+        const data = await res.json();
+        allPatientsData = data.patients || [];
+        filterPatients();
+      } catch (err) {
+        el.innerHTML = `<div class="no-results">Failed to load: ${err.message}</div>`;
+      }
+    }
+
+    function filterPatients() {
+      const search = (document.getElementById('patientSearch')?.value || '').toLowerCase();
+      const sort = document.getElementById('patientSort')?.value || 'name';
+
+      let filtered = allPatientsData.filter(p => {
+        const name = `${p.first_name || ''} ${p.last_name || ''}`.toLowerCase();
+        return name.includes(search);
+      });
+
+      filtered.sort((a, b) => {
+        switch (sort) {
+          case 'name': return `${a.first_name} ${a.last_name}`.localeCompare(`${b.first_name} ${b.last_name}`);
+          case 'date': return new Date(b.created_at) - new Date(a.created_at);
+          default: return 0;
+        }
+      });
+
+      renderAllPatients(document.getElementById('allPatientsList'), filtered);
+    }
+
+    function renderAllPatients(el, patients) {
+      if (!patients.length) { el.innerHTML = '<div class="no-results">No patients found</div>'; return; }
+      el.innerHTML = `
+        <table class="members-table">
+          <thead><tr>
+            <th>Patient</th><th>DOB</th><th>Email</th><th>Phone</th><th>Created</th><th>Actions</th>
+          </tr></thead>
+          <tbody>${patients.map(p => {
+            return `<tr>
+              <td>
+                <a href="#" onclick="viewPatientDetails('${p.id}'); return false;" style="color:#F0EEE9;text-decoration:none;">
+                  <strong>${esc(p.first_name || '')} ${esc(p.last_name || '')}</strong>
+                </a>
+              </td>
+              <td style="font-size:13px;">${formatDob(p.dob)}</td>
+              <td style="font-size:13px;">${esc(p.email || '--')}</td>
+              <td style="font-size:13px;">${formatPhone(p.phone) || '--'}</td>
+              <td style="font-size:13px;">${new Date(p.created_at).toLocaleDateString()}</td>
+              <td>
+                <button class="btn btn-gold btn-sm" onclick="openCartModal('${p.id}', '${esc(p.first_name)}', '${esc(p.last_name)}', '${formatDob(p.dob)}')">New Charge</button>
+              </td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table>`;
+    }
+
+    // Update card on file
+    async function updateCard(patientId, patientName) {
+      if (!confirm(`Update payment card for ${patientName}?`)) return;
+      // Open card entry modal for updating
+      currentPatientId = patientId;
+      document.getElementById('cartSummaryForCard').innerHTML = `<strong>Update payment method for:</strong><br>${patientName}<br><br><em>This will update the card on file for future charges.</em>`;
+
+      // Initialize Stripe if not already
+      if (!stripe) {
+        const res = await fetch(`${API}/membership-config`);
+        const data = await res.json();
+        if (!data.stripe_publishable_key) {
+          showToast('Stripe not configured', 'error');
+          return;
+        }
+        stripe = Stripe(data.stripe_publishable_key);
+      }
+
+      // Mount card element
+      const elements = stripe.elements();
+      if (cardElement) cardElement.destroy();
+      cardElement = elements.create('card', {
+        style: {
+          base: { color: '#F0EEE9', fontFamily: 'Poppins, sans-serif', fontSize: '16px', '::placeholder': { color: 'rgba(255,255,255,0.4)' } },
+          invalid: { color: '#ff6b6b' }
+        }
+      });
+      cardElement.mount('#card-element');
+      cardElement.on('change', (event) => {
+        document.getElementById('card-errors').textContent = event.error ? event.error.message : '';
+      });
+
+      // Change button to update mode
+      const btn = document.getElementById('processPaymentBtn');
+      btn.textContent = 'Update Card';
+      btn.onclick = processCardUpdate;
+
+      document.getElementById('cardEntryModal').classList.add('show');
+    }
+
+    async function processCardUpdate() {
+      const btn = document.getElementById('processPaymentBtn');
+      btn.disabled = true;
+      btn.textContent = 'Updating...';
+
+      try {
+        const setupRes = await fetch(`${API}/membership-setup-intent`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({ patient_id: currentPatientId })
+        });
+        const setupData = await setupRes.json();
+        if (!setupRes.ok) throw new Error(setupData.error);
+
+        const { setupIntent, error } = await stripe.confirmCardSetup(setupData.client_secret, {
+          payment_method: { card: cardElement }
+        });
+        if (error) throw new Error(error.message);
+
+        // Set as default payment method
+        await fetch(`${API}/membership-update-default-payment`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({
+            patient_id: currentPatientId,
+            payment_method_id: setupIntent.payment_method
+          })
+        });
+
+        closeCardEntryModal();
+        showToast('Card updated successfully');
+      } catch (err) {
+        document.getElementById('card-errors').textContent = err.message;
+        showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Update Card';
+        btn.onclick = processCartPayment;
+      }
+    }
+
+    function retryPayment(patientId, amountCents, description) {
+      // Open cart modal with this patient for retry
+      showToast('Use New Charge to retry the payment', 'error');
     }
 
     // View patient details - switch to search tab and show patient
