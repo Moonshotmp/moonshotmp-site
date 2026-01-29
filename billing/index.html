@@ -1085,6 +1085,7 @@
     }
 
     function renderMembersTable(el, memberships) {
+      console.log('Rendering memberships:', memberships);
       if (!memberships.length) { el.innerHTML = '<div class="no-results">No memberships found</div>'; return; }
       el.innerHTML = `
         <table class="members-table">
@@ -1093,9 +1094,11 @@
           </tr></thead>
           <tbody>${memberships.map(m => {
             const p = m.patients;
+            const patientId = p?.id || m.patient_id || '';
+            console.log('Patient data:', p, 'Using ID:', patientId);
             return `<tr>
               <td>
-                <a href="#" onclick="viewPatientDetails('${p?.id}'); return false;" style="color:#F0EEE9;text-decoration:none;">
+                <a href="#" onclick="viewPatientDetails('${patientId}'); return false;" style="color:#F0EEE9;text-decoration:none;">
                   <strong>${esc(p?.first_name || '')} ${esc(p?.last_name || '')}</strong>
                 </a>
                 <div style="font-size:12px;color:#B2BFBE;">${esc(p?.email || '')}</div>
@@ -1111,7 +1114,12 @@
 
     // View patient details - switch to search tab and show patient
     async function viewPatientDetails(patientId) {
-      if (!patientId) return;
+      console.log('viewPatientDetails called with:', patientId);
+      if (!patientId || patientId === 'undefined' || patientId === 'null') {
+        console.error('Invalid patient ID');
+        showToast('Could not load patient details', 'error');
+        return;
+      }
       switchTab('search');
       document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
       try {
