@@ -1155,13 +1155,23 @@
 
     async function loadProducts() {
       try {
-        const res = await fetch(`${API}/billing-products`);
+        // Add cache-busting parameter to prevent Safari caching issues
+        const cacheBust = Date.now();
+        const res = await fetch(`${API}/billing-products?_=${cacheBust}`, {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
         const data = await res.json();
         products = data.products || [];
         categories = data.categories || [];
         discounts = data.discounts || [];
+        console.log('Products loaded:', products.length);
       } catch (err) {
         console.error('Failed to load products:', err);
+        showToast('Failed to load products. Please refresh.', 'error');
       }
     }
 
