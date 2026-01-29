@@ -674,10 +674,12 @@
             <div class="cart-empty">Add items to get started</div>
           </div>
           <div class="cart-discount">
-            <label>
-              <input type="checkbox" id="familyDiscount" onchange="updateCartTotals()">
-              Apply Family Discount (40% off memberships)
-            </label>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <input type="text" id="discountCode" placeholder="Discount code"
+                style="flex:1;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#F0EEE9;font-size:13px;">
+              <button type="button" onclick="applyDiscountCode()" class="btn btn-sm btn-outline" style="padding:8px 12px;">Apply</button>
+            </div>
+            <div id="discountStatus" style="font-size:11px;margin-top:6px;color:#B2BFBE;"></div>
           </div>
           <div class="cart-totals" id="cartTotals">
             <div class="cart-total-row">
@@ -1138,6 +1140,8 @@
     let cart = [];
     let products = [];
     let categories = [];
+    let discounts = [];
+    let appliedDiscount = null;
     let currentPatientId = null;
     let currentCategory = 'test';
     let stripe = null;
@@ -1155,16 +1159,45 @@
         const data = await res.json();
         products = data.products || [];
         categories = data.categories || [];
+        discounts = data.discounts || [];
       } catch (err) {
         console.error('Failed to load products:', err);
       }
+    }
+
+    function applyDiscountCode() {
+      const codeInput = document.getElementById('discountCode');
+      const statusEl = document.getElementById('discountStatus');
+      const code = codeInput.value.trim().toLowerCase();
+
+      if (!code) {
+        appliedDiscount = null;
+        statusEl.textContent = '';
+        statusEl.style.color = '#B2BFBE';
+        updateCartTotals();
+        return;
+      }
+
+      const discount = discounts.find(d => d.code.toLowerCase() === code);
+      if (discount) {
+        appliedDiscount = discount;
+        statusEl.textContent = `${discount.percent}% discount applied to ${discount.appliesToRecurring ? 'memberships' : 'one-time items'}`;
+        statusEl.style.color = '#51cf66';
+      } else {
+        appliedDiscount = null;
+        statusEl.textContent = 'Invalid discount code';
+        statusEl.style.color = '#ff6b6b';
+      }
+      updateCartTotals();
     }
 
     function openCartModal(patientId, firstName, lastName, dob) {
       currentPatientId = patientId;
       cart = [];
       currentCategory = 'test';
-      document.getElementById('familyDiscount').checked = false;
+      appliedDiscount = null;
+      document.getElementById('discountCode').value = '';
+      document.getElementById('discountStatus').textContent = '';
 
       // Set patient info
       document.getElementById('cartPatientInfo').innerHTML = `
@@ -1297,12 +1330,9 @@
     }
 
     function updateCartTotals() {
-      const familyDiscount = document.getElementById('familyDiscount').checked;
-      const discountPercent = familyDiscount ? 40 : 0;
-
       let recurringTotal = 0;
       let oneTimeTotal = 0;
-      let recurringDiscount = 0;
+      let totalDiscount = 0;
 
       cart.forEach(item => {
         const product = products.find(p => p.code === item.code);
@@ -1311,11 +1341,21 @@
         const amount = product.price * item.quantity;
 
         if (product.recurring) {
-          const discount = familyDiscount ? Math.round(amount * (discountPercent / 100)) : 0;
-          recurringDiscount += discount;
-          recurringTotal += (amount - discount);
+          if (appliedDiscount && appliedDiscount.appliesToRecurring) {
+            const discount = Math.round(amount * (appliedDiscount.percent / 100));
+            totalDiscount += discount;
+            recurringTotal += (amount - discount);
+          } else {
+            recurringTotal += amount;
+          }
         } else {
-          oneTimeTotal += amount;
+          if (appliedDiscount && appliedDiscount.appliesToOneTime) {
+            const discount = Math.round(amount * (appliedDiscount.percent / 100));
+            totalDiscount += discount;
+            oneTimeTotal += (amount - discount);
+          } else {
+            oneTimeTotal += amount;
+          }
         }
       });
 
@@ -1333,15 +1373,14 @@
       if (cart.length === 0) return;
 
       // Show summary in card entry modal
-      const familyDiscount = document.getElementById('familyDiscount').checked;
       let summaryHtml = '<strong>Items:</strong><br>';
       cart.forEach(item => {
         const product = products.find(p => p.code === item.code);
         if (!product) return;
         summaryHtml += `${esc(product.name)} x${item.quantity}<br>`;
       });
-      if (familyDiscount) {
-        summaryHtml += '<br><em>Family discount applied (40% off memberships)</em>';
+      if (appliedDiscount) {
+        summaryHtml += `<br><em>${appliedDiscount.percent}% discount applied</em>`;
       }
       summaryHtml += `<br><br><strong>Total: ${document.getElementById('totalGrand').textContent}</strong>`;
       document.getElementById('cartSummaryForCard').innerHTML = summaryHtml;
@@ -1410,7 +1449,6 @@
         if (error) throw new Error(error.message);
 
         // Process cart checkout with payment method
-        const familyDiscount = document.getElementById('familyDiscount').checked;
         const cartData = cart.map(item => ({ code: item.code, quantity: item.quantity }));
 
         const checkoutRes = await fetch(`${API}/billing-cart-checkout`, {
@@ -1420,7 +1458,7 @@
             patient_id: currentPatientId,
             payment_method_id: setupIntent.payment_method,
             cart: cartData,
-            discount_code: familyDiscount ? 'family' : null
+            discount_code: appliedDiscount ? appliedDiscount.code : null
           })
         });
         const checkoutData = await checkoutRes.json();
