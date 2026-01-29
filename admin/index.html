@@ -4,644 +4,712 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Admin Dashboard | Moonshot Medical</title>
+  <title>Master Admin | Moonshot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #101921;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0f14;
       color: #F0EEE9;
       min-height: 100vh;
     }
-    .header {
-      background: rgba(0,0,0,0.3);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+    .portal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(201, 162, 39, 0.05);
     }
-    .header h1 { font-size: 18px; font-weight: 600; }
-    .header-actions { display: flex; align-items: center; gap: 16px; }
-    .user-email { color: #B2BFBE; font-size: 13px; }
-    .logout-btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #B2BFBE;
-      padding: 8px 16px;
-      font-size: 12px;
-      cursor: pointer;
-      border-radius: 4px;
+    .portal-header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
     }
-    .logout-btn:hover { border-color: rgba(255,255,255,0.4); color: #F0EEE9; }
-    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .section-title { font-size: 20px; font-weight: 600; }
-    .section-subtitle { color: #B2BFBE; font-size: 13px; margin-top: 4px; }
-    .search-bar { margin-bottom: 16px; }
-    .search-bar input {
-      width: 100%;
-      max-width: 400px;
-      padding: 10px 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+    .portal-header .subtitle { color: #c9a227; font-size: 12px; margin-top: 2px; }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .btn {
+      padding: 10px 20px;
+      border: none;
       border-radius: 6px;
-      color: #F0EEE9;
-      font-size: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .search-bar input::placeholder { color: #666; }
-    .search-bar input:focus { outline: none; border-color: rgba(255,255,255,0.3); }
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
+    .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #B2BFBE; }
+    .btn-outline:hover { border-color: #F0EEE9; color: #F0EEE9; }
+
+    .portal-body { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+    .main-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
       margin-bottom: 24px;
     }
-    .stat-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 16px;
+    .main-tab {
+      padding: 14px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #B2BFBE;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
-    .stat-value { font-size: 24px; font-weight: 600; margin-bottom: 2px; }
-    .stat-label { color: #B2BFBE; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .table-container {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      overflow: hidden;
+    .main-tab:hover { color: #F0EEE9; }
+    .main-tab.active { color: #c9a227; border-bottom-color: #c9a227; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
       margin-bottom: 32px;
     }
-    .table-scroll { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 800px; }
-    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    th {
-      background: rgba(0,0,0,0.2);
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .stat-card .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      margin-bottom: 8px;
+    }
+    .stat-card .value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    .stat-card .subvalue {
+      font-size: 12px;
+      color: #B2BFBE;
+      margin-top: 4px;
+    }
+
+    .section {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+
+    .period-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .period-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #B2BFBE;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .period-btn:hover { border-color: rgba(255,255,255,0.3); color: #F0EEE9; }
+    .period-btn.active { background: rgba(201,162,39,0.15); border-color: #c9a227; color: #c9a227; }
+
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #B2BFBE;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-weight: 500;
+    }
+    .data-table td {
+      padding: 12px 14px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .data-table .amount { font-family: 'Oswald', sans-serif; font-weight: 500; }
+    .data-table .positive { color: #51cf66; }
+    .data-table .negative { color: #ff6b6b; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .summary-item {
+      padding: 16px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 6px;
+    }
+    .summary-item .label {
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #B2BFBE;
+      margin-bottom: 4px;
+    }
+    .summary-item .value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
       font-weight: 600;
-      cursor: pointer;
-      user-select: none;
-      white-space: nowrap;
     }
-    th:hover { color: #F0EEE9; }
-    th .sort-icon { margin-left: 4px; opacity: 0.5; }
-    th.sorted .sort-icon { opacity: 1; }
-    td { font-size: 13px; }
-    tr:hover td { background: rgba(255,255,255,0.02); }
-    .clickable-row { cursor: pointer; }
-    .partner-link { color: #F0EEE9; text-decoration: none; font-weight: 500; }
-    .partner-link:hover { text-decoration: underline; }
-    .status-dot {
+
+    .spinner {
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #c9a227;
       border-radius: 50%;
-      margin-right: 6px;
+      animation: spin 0.6s linear infinite;
     }
-    .status-dot.green { background: #4ade80; }
-    .status-dot.red { background: #f87171; }
-    .status-dot.gray { background: #666; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading { text-align: center; padding: 40px; color: #B2BFBE; }
+
     .badge {
       display: inline-block;
       padding: 3px 8px;
       border-radius: 4px;
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
     }
-    .badge-green { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
-    .badge-gray { background: rgba(255,255,255,0.08); color: #888; }
-    .slug-link { color: #B2BFBE; font-size: 12px; text-decoration: none; }
-    .slug-link:hover { color: #F0EEE9; }
-    .muted { color: #666; }
-    .loading { text-align: center; padding: 40px; color: #B2BFBE; }
-    .error-box {
-      background: rgba(220, 53, 69, 0.1);
-      border: 1px solid rgba(220, 53, 69, 0.3);
-      color: #ff6b6b;
-      padding: 16px;
-      border-radius: 6px;
-      margin-bottom: 24px;
+    .badge-success { background: rgba(40,167,69,0.15); color: #51cf66; }
+    .badge-pending { background: rgba(255,193,7,0.15); color: #ffd43b; }
+    .badge-failed { background: rgba(220,53,69,0.15); color: #ff6b6b; }
+
+    .status-indicators {
+      display: flex;
+      gap: 16px;
+      padding: 12px 24px;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .items-cell { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .amount { font-weight: 600; }
-    .text-right { text-align: right; }
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #B2BFBE;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #666;
+    }
+    .status-dot.connected { background: #51cf66; }
+    .status-dot.disconnected { background: #ff6b6b; }
+    .status-dot.checking { background: #ffd43b; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .summary-grid { grid-template-columns: 1fr; }
+      .portal-header { flex-direction: column; gap: 12px; text-align: center; }
+      .main-tabs { overflow-x: auto; }
+    }
   </style>
 </head>
 <body>
-  <header class="header">
-    <h1>Moonshot Admin</h1>
+
+  <div class="portal-header">
+    <div>
+      <h1>Master Admin</h1>
+      <div class="subtitle">Moonshot Medical + Performance</div>
+    </div>
     <div class="header-actions">
-      <span class="user-email" id="userEmail"></span>
-      <button class="logout-btn" id="logoutBtn">Log Out</button>
+      <button class="btn btn-outline" onclick="syncPayments()" id="syncBtn">Sync Payments</button>
+      <a href="/billing/" class="btn btn-outline">Billing Portal</a>
+      <button class="btn btn-outline" onclick="logout()">Log Out</button>
     </div>
-  </header>
+  </div>
 
-  <div class="container">
-    <!-- Stats Row -->
-    <div class="stats-row" id="statsRow">
-      <div class="stat-card">
-        <div class="stat-value" id="totalOrders">-</div>
-        <div class="stat-label">Total Orders</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="totalRevenue">-</div>
-        <div class="stat-label">Total Revenue</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="totalPartners">-</div>
-        <div class="stat-label">Partners</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="connectedPartners">-</div>
-        <div class="stat-label">Stripe Connected</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="billingSetup">-</div>
-        <div class="stat-label">Billing Setup</div>
-      </div>
+  <div class="status-indicators">
+    <div class="status-item">
+      <span class="status-dot checking" id="stripeStatusDot"></span>
+      <span>Stripe API: <strong id="stripeStatusText">Checking...</strong></span>
+    </div>
+    <div class="status-item">
+      <span class="status-dot checking" id="terminalStatusDot"></span>
+      <span>Card Reader: <strong id="terminalStatusText">Checking...</strong></span>
+    </div>
+    <div class="status-item">
+      <span class="status-dot checking" id="dbStatusDot"></span>
+      <span>Database: <strong id="dbStatusText">Checking...</strong></span>
+    </div>
+  </div>
+
+  <div class="portal-body">
+    <div class="main-tabs">
+      <div class="main-tab active" data-tab="billing" onclick="switchMainTab('billing')">Billing & Revenue</div>
+      <div class="main-tab" data-tab="partners" onclick="switchMainTab('partners')">Partners & Orders</div>
     </div>
 
-    <div id="errorBox" class="error-box" style="display:none;"></div>
+    <!-- BILLING TAB -->
+    <div class="tab-panel active" id="panel-billing">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="label">Active Members</div>
+          <div class="value" id="statActive">--</div>
+          <div class="subvalue" id="statActiveRevenue">--/mo recurring</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Total Revenue (All Time)</div>
+          <div class="value" id="statTotalRevenue">--</div>
+          <div class="subvalue" id="statTotalCount">-- payments</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Past Due</div>
+          <div class="value" id="statPastDue">--</div>
+          <div class="subvalue">accounts need attention</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Total Patients</div>
+          <div class="value" id="statPatients">--</div>
+          <div class="subvalue" id="statNewPatients">-- new this month</div>
+        </div>
+      </div>
 
-    <!-- All Orders Section -->
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">All Orders</h2>
-        <p class="section-subtitle">Orders across all partner stores</p>
+      <div class="section">
+        <h2>Revenue by Period</h2>
+        <div class="period-selector">
+          <button class="period-btn active" onclick="setBillingPeriod('month', this)">This Month</button>
+          <button class="period-btn" onclick="setBillingPeriod('quarter', this)">This Quarter</button>
+          <button class="period-btn" onclick="setBillingPeriod('year', this)">This Year</button>
+          <button class="period-btn" onclick="setBillingPeriod('all', this)">All Time</button>
+        </div>
+        <div class="summary-grid" id="billingPeriodSummary">
+          <div class="loading"><span class="spinner"></span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Monthly Breakdown</h2>
+        <div id="billingMonthly">
+          <div class="loading"><span class="spinner"></span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Recent Transactions</h2>
+        <div id="billingRecent">
+          <div class="loading"><span class="spinner"></span></div>
+        </div>
       </div>
     </div>
 
-    <div class="search-bar">
-      <input type="text" id="ordersSearch" placeholder="Search orders by partner, customer, or items...">
-    </div>
-
-    <div class="table-container">
-      <div id="ordersLoading" class="loading">Loading orders...</div>
-      <div class="table-scroll">
-        <table id="ordersTable" style="display:none;">
-          <thead>
-            <tr>
-              <th data-sort="partnerName">Partner <span class="sort-icon">↕</span></th>
-              <th data-sort="created">Date <span class="sort-icon">↕</span></th>
-              <th data-sort="customerName">Customer <span class="sort-icon">↕</span></th>
-              <th data-sort="items">Items <span class="sort-icon">↕</span></th>
-              <th data-sort="amount" class="text-right">Total <span class="sort-icon">↕</span></th>
-              <th data-sort="completed">Status <span class="sort-icon">↕</span></th>
-            </tr>
-          </thead>
-          <tbody id="ordersBody"></tbody>
-        </table>
+    <!-- PARTNERS TAB -->
+    <div class="tab-panel" id="panel-partners">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="label">Total Partners</div>
+          <div class="value" id="statPartners">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Partner Revenue</div>
+          <div class="value" id="statPartnerRevenue">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Total Orders</div>
+          <div class="value" id="statPartnerOrders">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Unique Customers</div>
+          <div class="value" id="statPartnerCustomers">--</div>
+        </div>
       </div>
-      <div id="ordersEmpty" class="loading" style="display:none;">No orders found</div>
-    </div>
 
-    <!-- Partners Section -->
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Partners</h2>
-        <p class="section-subtitle">Manage partner storefronts</p>
+      <div class="section">
+        <h2>Partners</h2>
+        <div id="partnersList">
+          <div class="loading"><span class="spinner"></span></div>
+        </div>
       </div>
-    </div>
 
-    <div class="search-bar">
-      <input type="text" id="partnersSearch" placeholder="Search by name, email, or business...">
-    </div>
-
-    <div class="table-container">
-      <div id="partnersLoading" class="loading">Loading partners...</div>
-      <div class="table-scroll">
-        <table id="partnersTable" style="display:none;">
-          <thead>
-            <tr>
-              <th data-sort="name">Business Name <span class="sort-icon">↕</span></th>
-              <th data-sort="contactName">Contact <span class="sort-icon">↕</span></th>
-              <th data-sort="email">Email <span class="sort-icon">↕</span></th>
-              <th data-sort="stripe">Stripe <span class="sort-icon">↕</span></th>
-              <th data-sort="billing">Billing <span class="sort-icon">↕</span></th>
-              <th data-sort="customers" class="text-right">Customers <span class="sort-icon">↕</span></th>
-              <th data-sort="revenue" class="text-right">Revenue <span class="sort-icon">↕</span></th>
-              <th data-sort="createdAt">Created <span class="sort-icon">↕</span></th>
-            </tr>
-          </thead>
-          <tbody id="partnersBody"></tbody>
-        </table>
+      <div class="section">
+        <h2>Recent Orders</h2>
+        <div id="partnerOrders">
+          <div class="loading"><span class="spinner"></span></div>
+        </div>
       </div>
-      <div id="partnersEmpty" class="loading" style="display:none;">No partners found</div>
     </div>
   </div>
 
   <script>
-    // Data stores
-    let allOrders = [];
-    let partners = [];
-    let stripeStatus = {};
-    let partnerStats = {};
+    const API = '/.netlify/functions';
+    const token = localStorage.getItem('ms_master_token');
 
-    // Sort state
-    let ordersSortCol = 'created';
-    let ordersSortDir = 'desc';
-    let partnersSortCol = 'createdAt';
-    let partnersSortDir = 'desc';
-
-    // Auth
-    function getToken() {
-      return localStorage.getItem('admin_token');
-    }
-
-    async function requireAuth() {
-      const token = getToken();
-      if (!token) {
-        window.location.href = '/admin/login.html';
-        return false;
-      }
-      try {
-        const res = await fetch('/.netlify/functions/admin-verify', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+    if (!token) {
+      window.location.href = '/admin/login.html';
+    } else {
+      fetch(`${API}/admin-master-verify`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => {
         if (!res.ok) {
-          localStorage.removeItem('admin_token');
+          localStorage.removeItem('ms_master_token');
           window.location.href = '/admin/login.html';
-          return false;
         }
-        return true;
-      } catch {
-        localStorage.removeItem('admin_token');
-        window.location.href = '/admin/login.html';
-        return false;
-      }
-    }
-
-    async function adminFetch(endpoint, options = {}) {
-      const token = getToken();
-      if (!token) throw new Error('Not authenticated');
-      const res = await fetch(endpoint, {
-        ...options,
-        headers: {
-          ...options.headers,
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || `Request failed: ${res.status}`);
-      }
-      return res.json();
     }
 
-    // Helpers
-    function formatDate(iso) {
-      if (!iso) return '-';
-      return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    function logout() {
+      localStorage.removeItem('ms_master_token');
+      window.location.href = '/admin/login.html';
     }
 
-    function formatCurrency(cents) {
-      return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    function authHeaders() {
+      return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
     }
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[c]));
-    }
-
-    // Initialize
-    async function init() {
-      const isAuth = await requireAuth();
-      if (!isAuth) return;
-
-      document.getElementById('userEmail').textContent = 'Admin';
-
+    // Sync payments from Stripe
+    async function syncPayments() {
+      const btn = document.getElementById('syncBtn');
+      btn.disabled = true;
+      btn.textContent = 'Syncing...';
       try {
-        // Load partners and orders in parallel
-        const [partnersData, ordersData] = await Promise.all([
-          adminFetch('/.netlify/functions/admin-partners'),
-          adminFetch('/.netlify/functions/admin-all-orders'),
+        const res = await fetch(`${API}/membership-sync-payments`, {
+          method: 'POST',
+          headers: authHeaders()
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        alert(`Sync complete: ${data.synced} payments added, ${data.skipped} already existed`);
+        loadBillingData(); // Refresh the data
+      } catch (err) {
+        alert('Sync failed: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sync Payments';
+      }
+    }
+
+    // Tab switching
+    function switchMainTab(tab) {
+      document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+      document.getElementById(`panel-${tab}`).classList.add('active');
+      
+      if (tab === 'partners' && !partnersLoaded) loadPartnerData();
+    }
+
+    // ========== BILLING DATA ==========
+    let allMemberships = [];
+    let allPayments = [];
+    let allPatients = [];
+    let billingPeriod = 'month';
+
+    async function loadBillingData() {
+      try {
+        const [memRes, payRes, patRes] = await Promise.all([
+          fetch(`${API}/membership-list?status=all`, { headers: authHeaders() }),
+          fetch(`${API}/membership-admin-payments`, { headers: authHeaders() }),
+          fetch(`${API}/membership-admin-stats`, { headers: authHeaders() })
         ]);
 
-        partners = partnersData.partners || [];
+        const memData = await memRes.json();
+        const payData = await payRes.json();
+        const patData = await patRes.json();
+
+        allMemberships = memData.memberships || [];
+        allPayments = payData.payments || [];
+        allPatients = patData.patients || [];
+
+        renderBillingStats();
+        renderBillingPeriodSummary();
+        renderBillingMonthly();
+        renderBillingRecent();
+      } catch (err) {
+        console.error('Failed to load billing data:', err);
+      }
+    }
+
+    function renderBillingStats() {
+      const active = allMemberships.filter(m => m.status === 'active');
+      const pastDue = allMemberships.filter(m => m.status === 'past_due');
+      const activeRevenue = active.reduce((s, m) => s + (m.amount_cents || 0), 0);
+      const totalRevenue = allPayments.filter(p => p.status === 'succeeded').reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const totalCount = allPayments.filter(p => p.status === 'succeeded').length;
+
+      const now = new Date();
+      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      const newThisMonth = allPatients.filter(p => new Date(p.created_at) >= monthStart).length;
+
+      document.getElementById('statActive').textContent = active.length;
+      document.getElementById('statActiveRevenue').textContent = '$' + (activeRevenue / 100).toLocaleString() + '/mo recurring';
+      document.getElementById('statTotalRevenue').textContent = '$' + (totalRevenue / 100).toLocaleString();
+      document.getElementById('statTotalCount').textContent = totalCount + ' payments';
+      document.getElementById('statPastDue').textContent = pastDue.length;
+      document.getElementById('statPatients').textContent = allPatients.length;
+      document.getElementById('statNewPatients').textContent = newThisMonth + ' new this month';
+    }
+
+    function setBillingPeriod(period, btn) {
+      billingPeriod = period;
+      document.querySelectorAll('#panel-billing .period-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderBillingPeriodSummary();
+    }
+
+    function getDateRange(period) {
+      const now = new Date();
+      let start;
+      switch (period) {
+        case 'month': start = new Date(now.getFullYear(), now.getMonth(), 1); break;
+        case 'quarter': const q = Math.floor(now.getMonth() / 3); start = new Date(now.getFullYear(), q * 3, 1); break;
+        case 'year': start = new Date(now.getFullYear(), 0, 1); break;
+        default: start = new Date(0);
+      }
+      return { start, end: now };
+    }
+
+    function renderBillingPeriodSummary() {
+      const { start, end } = getDateRange(billingPeriod);
+      const periodPayments = allPayments.filter(p => {
+        const d = new Date(p.created_at);
+        return d >= start && d <= end;
+      });
+
+      const succeeded = periodPayments.filter(p => p.status === 'succeeded');
+      const failed = periodPayments.filter(p => p.status === 'failed');
+      const refunded = periodPayments.filter(p => p.status === 'refunded' || p.status === 'partially_refunded');
+
+      const totalRevenue = succeeded.reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const membershipRevenue = succeeded.filter(p => p.type?.includes('membership')).reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const labRevenue = succeeded.filter(p => p.type?.includes('lab')).reduce((s, p) => s + (p.amount_cents || 0), 0);
+      const refundedAmount = refunded.reduce((s, p) => s + (p.amount_cents || 0), 0);
+
+      document.getElementById('billingPeriodSummary').innerHTML = `
+        <div class="summary-item"><div class="label">Total Revenue</div><div class="value positive">$${(totalRevenue / 100).toLocaleString()}</div></div>
+        <div class="summary-item"><div class="label">Membership Revenue</div><div class="value">$${(membershipRevenue / 100).toLocaleString()}</div></div>
+        <div class="summary-item"><div class="label">Lab Work Revenue</div><div class="value">$${(labRevenue / 100).toLocaleString()}</div></div>
+        <div class="summary-item"><div class="label">Successful Payments</div><div class="value">${succeeded.length}</div></div>
+        <div class="summary-item"><div class="label">Failed Payments</div><div class="value" style="color:${failed.length > 0 ? '#ff6b6b' : 'inherit'}">${failed.length}</div></div>
+        <div class="summary-item"><div class="label">Refunds Issued</div><div class="value" style="color:${refundedAmount > 0 ? '#ffd43b' : 'inherit'}">$${(refundedAmount / 100).toLocaleString()}</div></div>
+      `;
+    }
+
+    function renderBillingMonthly() {
+      const months = {};
+      allPayments.filter(p => p.status === 'succeeded').forEach(p => {
+        const d = new Date(p.created_at);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        if (!months[key]) months[key] = { revenue: 0, count: 0, membership: 0, labs: 0 };
+        months[key].revenue += p.amount_cents || 0;
+        months[key].count++;
+        if (p.type?.includes('membership')) months[key].membership += p.amount_cents || 0;
+        if (p.type?.includes('lab')) months[key].labs += p.amount_cents || 0;
+      });
+
+      const sortedMonths = Object.entries(months).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 12);
+
+      if (sortedMonths.length === 0) {
+        document.getElementById('billingMonthly').innerHTML = '<div style="color:#B2BFBE;text-align:center;padding:20px;">No payment data yet</div>';
+        return;
+      }
+
+      document.getElementById('billingMonthly').innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Month</th><th>Total Revenue</th><th>Memberships</th><th>Lab Work</th><th>Transactions</th></tr></thead>
+          <tbody>${sortedMonths.map(([month, data]) => {
+            const [y, m] = month.split('-');
+            const monthName = new Date(y, m - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            return `<tr><td>${monthName}</td><td class="amount positive">$${(data.revenue / 100).toLocaleString()}</td><td class="amount">$${(data.membership / 100).toLocaleString()}</td><td class="amount">$${(data.labs / 100).toLocaleString()}</td><td>${data.count}</td></tr>`;
+          }).join('')}</tbody>
+        </table>`;
+    }
+
+    function renderBillingRecent() {
+      const recent = [...allPayments].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 15);
+
+      if (recent.length === 0) {
+        document.getElementById('billingRecent').innerHTML = '<div style="color:#B2BFBE;text-align:center;padding:20px;">No transactions yet</div>';
+        return;
+      }
+
+      document.getElementById('billingRecent').innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Patient</th><th>Description</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>${recent.map(p => {
+            const statusClass = p.status === 'succeeded' ? 'positive' : p.status === 'failed' ? 'negative' : '';
+            const patientName = p.patients ? `${p.patients.first_name} ${p.patients.last_name}` : 'Unknown';
+            return `<tr><td>${new Date(p.created_at).toLocaleDateString()}</td><td>${esc(patientName)}</td><td>${esc(p.description || p.type || 'Payment')}</td><td class="amount ${statusClass}">$${(p.amount_cents / 100).toFixed(2)}</td><td style="text-transform:capitalize;">${p.status}</td></tr>`;
+          }).join('')}</tbody>
+        </table>`;
+    }
+
+    // ========== PARTNER DATA ==========
+    let partnersLoaded = false;
+    let allPartners = [];
+    let allOrders = [];
+    let partnerStats = {};
+
+    async function loadPartnerData() {
+      try {
+        const [partnersRes, ordersRes] = await Promise.all([
+          fetch(`${API}/admin-partners`, { headers: authHeaders() }),
+          fetch(`${API}/admin-all-orders`, { headers: authHeaders() })
+        ]);
+
+        const partnersData = await partnersRes.json();
+        const ordersData = await ordersRes.json();
+
+        allPartners = partnersData.partners || [];
         allOrders = ordersData.orders || [];
         partnerStats = ordersData.partnerStats || {};
 
-        // Get Stripe status for connected partners
-        const accountIds = partners
-          .filter(p => p.stripe?.connectedAccountId)
-          .map(p => p.stripe.connectedAccountId);
-
-        if (accountIds.length > 0) {
-          const statusData = await adminFetch('/.netlify/functions/admin-stripe-status', {
-            method: 'POST',
-            body: JSON.stringify({ accountIds }),
-          });
-          stripeStatus = statusData.status || {};
-        }
-
-        // Update stats
-        document.getElementById('totalOrders').textContent = allOrders.length;
-        const totalRev = allOrders.reduce((sum, o) => sum + (o.amount || 0), 0);
-        document.getElementById('totalRevenue').textContent = formatCurrency(totalRev);
-        document.getElementById('totalPartners').textContent = partners.length;
-
-        const connectedCount = partners.filter(p => {
-          const id = p.stripe?.connectedAccountId;
-          return id && stripeStatus[id]?.charges_enabled;
-        }).length;
-        document.getElementById('connectedPartners').textContent = connectedCount;
-
-        const billingCount = partners.filter(p => p.billing?.cardLast4).length;
-        document.getElementById('billingSetup').textContent = billingCount;
-
-        // Render tables
-        renderOrdersTable(allOrders);
-        renderPartnersTable(partners);
-
-        // Setup sorting
-        setupSorting();
-
+        partnersLoaded = true;
+        renderPartnerStats();
+        renderPartnersList();
+        renderPartnerOrders();
       } catch (err) {
-        console.error(err);
-        document.getElementById('errorBox').textContent = err.message;
-        document.getElementById('errorBox').style.display = 'block';
-        document.getElementById('ordersLoading').style.display = 'none';
-        document.getElementById('partnersLoading').style.display = 'none';
+        console.error('Failed to load partner data:', err);
       }
     }
 
-    // Orders table
-    function renderOrdersTable(orders) {
-      const tbody = document.getElementById('ordersBody');
-      const table = document.getElementById('ordersTable');
-      const loading = document.getElementById('ordersLoading');
-      const empty = document.getElementById('ordersEmpty');
+    function renderPartnerStats() {
+      const totalRevenue = Object.values(partnerStats).reduce((s, p) => s + (p.totalRevenue || 0), 0);
+      const totalCustomers = Object.values(partnerStats).reduce((s, p) => s + (p.uniqueCustomers || 0), 0);
 
-      loading.style.display = 'none';
+      document.getElementById('statPartners').textContent = allPartners.length;
+      document.getElementById('statPartnerRevenue').textContent = '$' + (totalRevenue / 100).toLocaleString();
+      document.getElementById('statPartnerOrders').textContent = allOrders.length;
+      document.getElementById('statPartnerCustomers').textContent = totalCustomers;
+    }
 
-      if (orders.length === 0) {
-        empty.style.display = 'block';
-        table.style.display = 'none';
+    function renderPartnersList() {
+      if (allPartners.length === 0) {
+        document.getElementById('partnersList').innerHTML = '<div style="color:#B2BFBE;text-align:center;padding:20px;">No partners yet</div>';
         return;
       }
 
-      empty.style.display = 'none';
-
-      tbody.innerHTML = orders.map(o => {
-        const items = (o.items || []).map(i => `${i.name} x${i.quantity}`).join(', ') || '-';
-        const statusBadge = o.completed
-          ? '<span class="badge badge-green">Complete</span>'
-          : '<span class="badge badge-gray">Pending</span>';
-
-        return `
-          <tr class="clickable-row" onclick="window.location.href='/admin/partner.html?slug=${encodeURIComponent(o.partnerSlug)}'">
-            <td><span class="partner-link">${escapeHtml(o.partnerName)}</span></td>
-            <td>${formatDate(o.created)}</td>
-            <td>${escapeHtml(o.customerName || 'Unknown')}</td>
-            <td class="items-cell" title="${escapeHtml(items)}">${escapeHtml(items)}</td>
-            <td class="text-right amount">${formatCurrency(o.amount)}</td>
-            <td>${statusBadge}</td>
-          </tr>
-        `;
-      }).join('');
-
-      table.style.display = 'table';
+      document.getElementById('partnersList').innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Partner</th><th>Slug</th><th>Revenue</th><th>Customers</th><th>Created</th></tr></thead>
+          <tbody>${allPartners.map(p => {
+            const stats = partnerStats[p.slug] || { totalRevenue: 0, uniqueCustomers: 0 };
+            return `<tr><td><strong>${esc(p.name || p.slug)}</strong></td><td>${esc(p.slug)}</td><td class="amount positive">$${(stats.totalRevenue / 100).toLocaleString()}</td><td>${stats.uniqueCustomers}</td><td>${p.createdAt ? new Date(p.createdAt).toLocaleDateString() : '--'}</td></tr>`;
+          }).join('')}</tbody>
+        </table>`;
     }
 
-    // Partners table
-    function renderPartnersTable(list) {
-      const tbody = document.getElementById('partnersBody');
-      const table = document.getElementById('partnersTable');
-      const loading = document.getElementById('partnersLoading');
-      const empty = document.getElementById('partnersEmpty');
+    function renderPartnerOrders() {
+      const recent = allOrders.slice(0, 20);
 
-      loading.style.display = 'none';
-
-      if (list.length === 0) {
-        empty.style.display = 'block';
-        table.style.display = 'none';
+      if (recent.length === 0) {
+        document.getElementById('partnerOrders').innerHTML = '<div style="color:#B2BFBE;text-align:center;padding:20px;">No orders yet</div>';
         return;
       }
 
-      empty.style.display = 'none';
-
-      tbody.innerHTML = list.map(p => {
-        const accountId = p.stripe?.connectedAccountId;
-        const status = accountId ? stripeStatus[accountId] : null;
-        const isConnected = status?.charges_enabled === true;
-        const stripeDot = accountId ? (isConnected ? 'green' : 'red') : 'gray';
-        const stripeText = accountId ? (isConnected ? 'Connected' : 'Pending') : 'Not connected';
-
-        const hasBilling = !!p.billing?.cardLast4;
-        const billingDot = hasBilling ? 'green' : 'gray';
-        const billingText = hasBilling ? `****${p.billing.cardLast4}` : 'None';
-
-        const stats = partnerStats[p.slug] || { uniqueCustomers: 0, totalRevenue: 0 };
-
-        return `
-          <tr class="clickable-row" onclick="window.location.href='/admin/partner.html?slug=${encodeURIComponent(p.slug)}'">
-            <td>
-              <a href="/admin/partner.html?slug=${encodeURIComponent(p.slug)}" class="partner-link" onclick="event.stopPropagation();">
-                ${escapeHtml(p.name || p.slug)}
-              </a>
-            </td>
-            <td>${escapeHtml(p.contactName || '-')}</td>
-            <td>${escapeHtml(p.email || '-')}</td>
-            <td><span class="status-dot ${stripeDot}"></span>${stripeText}</td>
-            <td><span class="status-dot ${billingDot}"></span>${billingText}</td>
-            <td class="text-right">${stats.uniqueCustomers}</td>
-            <td class="text-right amount">${formatCurrency(stats.totalRevenue)}</td>
-            <td class="muted">${formatDate(p.createdAt)}</td>
-          </tr>
-        `;
-      }).join('');
-
-      table.style.display = 'table';
+      document.getElementById('partnerOrders').innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Partner</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>${recent.map(o => {
+            const statusBadge = o.completed 
+              ? '<span class="badge badge-success">Completed</span>' 
+              : '<span class="badge badge-pending">Pending</span>';
+            return `<tr><td>${o.created ? new Date(o.created).toLocaleDateString() : '--'}</td><td>${esc(o.partnerName)}</td><td>${esc(o.customerName || o.customerEmail || 'Unknown')}</td><td class="amount positive">$${(o.amount / 100).toFixed(2)}</td><td>${statusBadge}</td></tr>`;
+          }).join('')}</tbody>
+        </table>`;
     }
 
-    // Sorting
-    function setupSorting() {
-      // Orders table sorting
-      document.querySelectorAll('#ordersTable th[data-sort]').forEach(th => {
-        th.addEventListener('click', () => {
-          const col = th.dataset.sort;
-          if (ordersSortCol === col) {
-            ordersSortDir = ordersSortDir === 'asc' ? 'desc' : 'asc';
-          } else {
-            ordersSortCol = col;
-            ordersSortDir = 'desc';
-          }
-          updateSortIndicators('#ordersTable', ordersSortCol, ordersSortDir);
-          const sorted = sortOrders([...allOrders], ordersSortCol, ordersSortDir);
-          const q = document.getElementById('ordersSearch').value.toLowerCase().trim();
-          renderOrdersTable(q ? filterOrders(sorted, q) : sorted);
-        });
-      });
-
-      // Partners table sorting
-      document.querySelectorAll('#partnersTable th[data-sort]').forEach(th => {
-        th.addEventListener('click', () => {
-          const col = th.dataset.sort;
-          if (partnersSortCol === col) {
-            partnersSortDir = partnersSortDir === 'asc' ? 'desc' : 'asc';
-          } else {
-            partnersSortCol = col;
-            partnersSortDir = 'desc';
-          }
-          updateSortIndicators('#partnersTable', partnersSortCol, partnersSortDir);
-          const sorted = sortPartners([...partners], partnersSortCol, partnersSortDir);
-          const q = document.getElementById('partnersSearch').value.toLowerCase().trim();
-          renderPartnersTable(q ? filterPartners(sorted, q) : sorted);
-        });
-      });
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
     }
 
-    function updateSortIndicators(tableSelector, col, dir) {
-      document.querySelectorAll(`${tableSelector} th`).forEach(th => {
-        th.classList.remove('sorted');
-        const icon = th.querySelector('.sort-icon');
-        if (icon) icon.textContent = '↕';
-      });
-      const activeTh = document.querySelector(`${tableSelector} th[data-sort="${col}"]`);
-      if (activeTh) {
-        activeTh.classList.add('sorted');
-        const icon = activeTh.querySelector('.sort-icon');
-        if (icon) icon.textContent = dir === 'asc' ? '↑' : '↓';
+    // ========== STATUS CHECKS ==========
+    async function checkSystemStatus() {
+      // Check Stripe API
+      try {
+        const res = await fetch(`${API}/membership-config`);
+        const data = await res.json();
+        if (data.stripe_publishable_key) {
+          setStatus('stripe', 'connected', 'Connected');
+        } else {
+          setStatus('stripe', 'disconnected', 'Not Configured');
+        }
+      } catch (err) {
+        setStatus('stripe', 'disconnected', 'Error');
+      }
+
+      // Check Terminal/Reader
+      try {
+        const res = await fetch(`${API}/membership-terminal-connection`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({ action: 'list_readers' })
+        });
+        const data = await res.json();
+        if (data.readers && data.readers.length > 0) {
+          const onlineReaders = data.readers.filter(r => r.status === 'online');
+          if (onlineReaders.length > 0) {
+            setStatus('terminal', 'connected', `${onlineReaders.length} Online`);
+          } else {
+            setStatus('terminal', 'disconnected', `${data.readers.length} Offline`);
+          }
+        } else {
+          setStatus('terminal', 'disconnected', 'No Readers');
+        }
+      } catch (err) {
+        setStatus('terminal', 'disconnected', 'Error');
+      }
+
+      // Check Database
+      try {
+        const res = await fetch(`${API}/membership-admin-stats`, { headers: authHeaders() });
+        if (res.ok) {
+          setStatus('db', 'connected', 'Connected');
+        } else {
+          setStatus('db', 'disconnected', 'Error');
+        }
+      } catch (err) {
+        setStatus('db', 'disconnected', 'Error');
       }
     }
 
-    function sortOrders(orders, col, dir) {
-      const mult = dir === 'asc' ? 1 : -1;
-      return orders.sort((a, b) => {
-        let aVal, bVal;
-        switch (col) {
-          case 'partnerName':
-            aVal = (a.partnerName || '').toLowerCase();
-            bVal = (b.partnerName || '').toLowerCase();
-            break;
-          case 'created':
-            aVal = new Date(a.created || 0).getTime();
-            bVal = new Date(b.created || 0).getTime();
-            break;
-          case 'customerName':
-            aVal = (a.customerName || '').toLowerCase();
-            bVal = (b.customerName || '').toLowerCase();
-            break;
-          case 'items':
-            aVal = (a.items || []).map(i => i.name).join(' ').toLowerCase();
-            bVal = (b.items || []).map(i => i.name).join(' ').toLowerCase();
-            break;
-          case 'amount':
-            aVal = a.amount || 0;
-            bVal = b.amount || 0;
-            break;
-          case 'completed':
-            aVal = a.completed ? 1 : 0;
-            bVal = b.completed ? 1 : 0;
-            break;
-          default:
-            aVal = 0; bVal = 0;
-        }
-        if (aVal < bVal) return -1 * mult;
-        if (aVal > bVal) return 1 * mult;
-        return 0;
-      });
+    function setStatus(service, state, text) {
+      const dot = document.getElementById(`${service}StatusDot`);
+      const textEl = document.getElementById(`${service}StatusText`);
+      dot.className = `status-dot ${state}`;
+      textEl.textContent = text;
     }
 
-    function sortPartners(list, col, dir) {
-      const mult = dir === 'asc' ? 1 : -1;
-      return list.sort((a, b) => {
-        let aVal, bVal;
-        switch (col) {
-          case 'name':
-            aVal = (a.name || a.slug || '').toLowerCase();
-            bVal = (b.name || b.slug || '').toLowerCase();
-            break;
-          case 'contactName':
-            aVal = (a.contactName || '').toLowerCase();
-            bVal = (b.contactName || '').toLowerCase();
-            break;
-          case 'email':
-            aVal = (a.email || '').toLowerCase();
-            bVal = (b.email || '').toLowerCase();
-            break;
-          case 'stripe':
-            const aConn = a.stripe?.connectedAccountId && stripeStatus[a.stripe.connectedAccountId]?.charges_enabled;
-            const bConn = b.stripe?.connectedAccountId && stripeStatus[b.stripe.connectedAccountId]?.charges_enabled;
-            aVal = aConn ? 2 : (a.stripe?.connectedAccountId ? 1 : 0);
-            bVal = bConn ? 2 : (b.stripe?.connectedAccountId ? 1 : 0);
-            break;
-          case 'billing':
-            aVal = a.billing?.cardLast4 ? 1 : 0;
-            bVal = b.billing?.cardLast4 ? 1 : 0;
-            break;
-          case 'customers':
-            aVal = partnerStats[a.slug]?.uniqueCustomers || 0;
-            bVal = partnerStats[b.slug]?.uniqueCustomers || 0;
-            break;
-          case 'revenue':
-            aVal = partnerStats[a.slug]?.totalRevenue || 0;
-            bVal = partnerStats[b.slug]?.totalRevenue || 0;
-            break;
-          case 'createdAt':
-            aVal = new Date(a.createdAt || 0).getTime();
-            bVal = new Date(b.createdAt || 0).getTime();
-            break;
-          default:
-            aVal = 0; bVal = 0;
-        }
-        if (aVal < bVal) return -1 * mult;
-        if (aVal > bVal) return 1 * mult;
-        return 0;
-      });
-    }
-
-    // Filtering
-    function filterOrders(orders, q) {
-      return orders.filter(o =>
-        (o.partnerName || '').toLowerCase().includes(q) ||
-        (o.customerName || '').toLowerCase().includes(q) ||
-        (o.customerEmail || '').toLowerCase().includes(q) ||
-        (o.items || []).some(i => (i.name || '').toLowerCase().includes(q))
-      );
-    }
-
-    function filterPartners(list, q) {
-      return list.filter(p =>
-        (p.name || '').toLowerCase().includes(q) ||
-        (p.email || '').toLowerCase().includes(q) ||
-        (p.slug || '').toLowerCase().includes(q) ||
-        (p.contactName || '').toLowerCase().includes(q)
-      );
-    }
-
-    // Search handlers
-    document.getElementById('ordersSearch').addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      const sorted = sortOrders([...allOrders], ordersSortCol, ordersSortDir);
-      renderOrdersTable(q ? filterOrders(sorted, q) : sorted);
-    });
-
-    document.getElementById('partnersSearch').addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      const sorted = sortPartners([...partners], partnersSortCol, partnersSortDir);
-      renderPartnersTable(q ? filterPartners(sorted, q) : sorted);
-    });
-
-    // Logout
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('admin_token');
-      window.location.href = '/admin/login.html';
-    });
-
-    // Start
-    init();
+    // Load billing data on start
+    loadBillingData();
+    checkSystemStatus();
   </script>
 </body>
 </html>
