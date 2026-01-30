@@ -88,8 +88,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute right-0 mt-2 w-[540px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
-                <div class="p-6 grid grid-cols-3 gap-6">
+              <div class="absolute right-0 mt-2 w-[700px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
+                <div class="p-6 grid grid-cols-4 gap-6">
                   <!-- Men Column -->
                   <div>
                     <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Men</span>
@@ -107,9 +107,17 @@
                     <a href="/learn/pcos/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">PCOS</a>
                     <a href="/learn/whi-study-hrt-truth/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">HRT: Myths vs Facts</a>
                   </div>
+                  <!-- Weight Loss & Peptides Column -->
+                  <div>
+                    <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Weight Loss & Peptides</span>
+                    <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Semaglutide vs Tirzepatide</a>
+                    <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">GLP-1 vs Other Methods</a>
+                    <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptides Explained</a>
+                  </div>
                   <!-- Diagnostics Column -->
                   <div>
                     <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Diagnostics</span>
+                    <a href="/learn/optimal-vs-normal/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Optimal vs Normal Ranges</a>
                     <a href="/learn/understanding-blood-results/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Understanding Blood Results</a>
                     <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">DEXA vs InBody</a>
                     <a href="/learn/first-visit/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Your First Visit</a>
@@ -217,7 +225,12 @@
               <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone</a>
               <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS</a>
               <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
+              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Weight Loss & Peptides —</span>
+              <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
+              <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
+              <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides Explained</a>
               <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Diagnostics —</span>
+              <a href="/learn/optimal-vs-normal/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Optimal vs Normal Ranges</a>
               <a href="/learn/understanding-blood-results/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Understanding Blood Results</a>
               <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA vs InBody</a>
               <a href="/learn/first-visit/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Your First Visit</a>
