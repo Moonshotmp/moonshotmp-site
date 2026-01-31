@@ -292,12 +292,18 @@
 
   let savedScrollY = 0;
 
+  // Block touch scroll on everything except the messages area
+  function blockTouch(e) {
+    if (messagesEl.contains(e.target)) return;
+    e.preventDefault();
+  }
+
   function togglePanel() {
     isOpen = !isOpen;
     panel.classList.toggle("ms-hidden", !isOpen);
     btn.classList.remove("ms-chat-pulse");
 
-    // Mobile: hide button, lock body scroll
+    // Mobile: hide button, lock body scroll, block touch
     if (window.innerWidth < 480) {
       btn.style.display = isOpen ? "none" : "";
       if (isOpen) {
@@ -307,12 +313,14 @@
         document.body.style.left = "0";
         document.body.style.right = "0";
         document.body.style.overflow = "hidden";
+        document.addEventListener("touchmove", blockTouch, { passive: false });
       } else {
         document.body.style.position = "";
         document.body.style.top = "";
         document.body.style.left = "";
         document.body.style.right = "";
         document.body.style.overflow = "";
+        document.removeEventListener("touchmove", blockTouch);
         window.scrollTo(0, savedScrollY);
       }
     }
@@ -370,14 +378,4 @@
 
   adjustLayout();
   window.addEventListener("resize", adjustLayout);
-
-  // On mobile, use visualViewport to resize when keyboard opens
-  if (window.visualViewport && window.innerWidth < 480) {
-    window.visualViewport.addEventListener("resize", () => {
-      if (!isOpen) return;
-      const vv = window.visualViewport;
-      panel.style.height = vv.height + "px";
-      panel.style.top = vv.offsetTop + "px";
-    });
-  }
 })();
