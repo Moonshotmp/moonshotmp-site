@@ -531,17 +531,24 @@ export default async (req) => {
     // 7. Get completion
     const reply = await getChatCompletion(messages);
 
-    // 8. Log query (fire-and-forget)
+    // 8. Override sources for booking/appointment questions — only show booking link
+    const bookingPattern = /\bbook(ing)?\b|schedul|appointment/i;
+    const finalSources =
+      bookingPattern.test(message) || bookingPattern.test(reply)
+        ? [{ title: "Book an Appointment", url: "/booking/" }]
+        : sources;
+
+    // 9. Log query (fire-and-forget)
     const topSimilarity = chunks.length > 0 ? chunks[0].similarity : 0;
     logQuery({
       query: message.trim(),
       rewrittenQuery: searchQuery,
       reply,
       topSimilarity,
-      sources,
+      sources: finalSources,
     });
 
-    return json(200, { reply, sources });
+    return json(200, { reply, sources: finalSources });
   } catch (err) {
     console.error("[chat] failed:", err);
     return json(500, { error: "Server error" });
