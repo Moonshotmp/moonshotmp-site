@@ -45,7 +45,7 @@ Moonshot Medical and Performance is a performance medicine clinic combining medi
 - Rehab Phone: 224-435-4280
 - Email: hello@moonshotmp.com
 - Website: https://moonshotmp.com
-- Hours: Monday–Friday 9am–5pm, Saturday by appointment
+- Hours: Monday 7am–3pm, Wednesday 3–7pm, Friday 7am–5pm, Saturday 8am–2pm
 
 ## Our Team
 
