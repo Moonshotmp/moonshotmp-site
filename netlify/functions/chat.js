@@ -402,11 +402,11 @@ export default async (req) => {
     const chunks = await searchChunksHybrid(embedding, searchQuery, 5);
     console.log("[chat] found", chunks.length, "chunks");
 
-    // 4. Build deduplicated sources array
+    // 4. Build deduplicated sources array (exclude llms.txt — it's base context, not a page)
     const seenUrls = new Set();
     const sources = [];
     for (const c of chunks) {
-      if (c.page_url && !seenUrls.has(c.page_url)) {
+      if (c.page_url && !seenUrls.has(c.page_url) && c.page_url !== "/llms.txt") {
         seenUrls.add(c.page_url);
         sources.push({ title: c.page_title, url: c.page_url });
       }
