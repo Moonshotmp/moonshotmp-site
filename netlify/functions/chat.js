@@ -36,20 +36,29 @@ Rules:
 - Never provide specific medical diagnoses or treatment recommendations for the user's personal health.
 - If asked about topics unrelated to Moonshot Medical, politely redirect to clinic-related topics.`;
 
-// Full llms.txt content — the base knowledge layer for every query
-const BASE_CONTEXT = `# Moonshot Medical and Performance
-> Medical optimization and physical rehabilitation clinic in Park Ridge, IL
+// Curated source of truth — the authoritative knowledge base for every query.
+// This is NOT auto-generated. Edit manually when services/pricing change.
+const BASE_CONTEXT = `# Moonshot Medical and Performance — Source of Truth
 
 ## Quick Summary
-Moonshot Medical and Performance is a performance medicine clinic combining medical optimization with physical rehabilitation. We focus on taking people from "normal" to optimal—not waiting until something is broken to act. Data-driven, proactive, and evidence-based.
+Moonshot Medical and Performance is a performance medicine clinic combining medical optimization with physical rehabilitation in Park Ridge, IL. We focus on taking people from "normal" to optimal — not waiting until something is broken to act. Data-driven, proactive, and evidence-based.
 
 ## Location & Contact
 - Address: 542 Busse Hwy, Park Ridge, IL 60068
 - Medical Phone: 847-499-1266
+- Medical Email: hello@moonshotmp.com
 - Rehab Phone: 224-435-4280
-- Email: hello@moonshotmp.com
+- Rehab Email: support@principleperformancehealth.com
 - Website: https://moonshotmp.com
-- Hours: Monday 7am–3pm, Wednesday 3–7pm, Friday 7am–5pm, Saturday 8am–2pm
+
+## Hours
+- Monday: 7am–3pm (Medical)
+- Tuesday: 8am–1pm, 3pm–6pm (Rehab)
+- Wednesday: 3pm–7pm (Medical), 8am–1pm, 3pm–6pm (Rehab)
+- Thursday: 8am–1pm (Rehab)
+- Friday: 7am–5pm (Medical), 8am–1pm, 3pm–5pm (Rehab)
+- Saturday: 8am–2pm (Medical by appointment)
+- Sunday: Closed
 
 ## Our Team
 
@@ -58,15 +67,13 @@ Moonshot Medical and Performance is a performance medicine clinic combining medi
 - Leads all medical optimization services
 - Specializes in hormone optimization for men and women
 - Expertise in metabolic health, GLP-1 weight loss, and peptide therapy
-- Takes a data-driven, individualized approach to patient care
 
-### Dr. Michael — Partner, Physical Medicine
+### Dr. Michael Gontarek — Partner, Physical Medicine
 - Doctor of Chiropractic (DC)
 - Master's in Clinical Nutrition (MSc)
 - Diplomate of the American Clinical Board of Nutrition (DACBN)
 - McKenzie Method certified (MDT)
 - Evidence-based approach to spine and musculoskeletal care
-- Focus on patient education and self-treatment
 
 ### Supporting Team
 - Sarah (RN, MSN): Registered Nurse supporting medical services
@@ -77,91 +84,125 @@ Moonshot Medical and Performance is a performance medicine clinic combining medi
 
 ## Medical Services
 
-### Comprehensive Blood Panels — $285
-60+ biomarkers analyzed including:
+### Comprehensive Blood Panel — $285
+60+ biomarkers including:
 - Hormones: Total testosterone, free testosterone, estradiol, progesterone, DHEA-S, thyroid panel (TSH, free T3, free T4)
 - Metabolic: Fasting glucose, HbA1c, insulin, lipid panel, ApoB
 - Inflammation: CRP, homocysteine
 - Nutrients: Vitamin D, B12, ferritin, iron panel, magnesium
 - Organ function: Complete metabolic panel, liver enzymes, kidney function
 
-Why it matters: Standard primary care panels test 10-15 markers. We test 60+ because optimization requires seeing the full picture—not just checking for disease.
+Fasting: Minimum 8 hours (ideal 10-12). Water and black coffee allowed. Results in 3-5 business days.
 
 ### DEXA Body Composition Scan — $150
-Medical-grade body composition analysis measuring:
+Medical-grade body composition analysis:
 - Total body fat percentage and distribution
 - Lean muscle mass by region (arms, legs, trunk)
 - Bone mineral density (osteoporosis screening)
-- Visceral adipose tissue (VAT) — the dangerous fat around organs
+- Visceral adipose tissue (VAT)
 - Android/gynoid fat ratio
 
-Equipment: Hologic Horizon scanner (gold standard in research and clinical settings)
+Equipment: Hologic Horizon scanner (gold standard). Scan takes under 3 minutes. Supports patients up to 500 lbs.
+
+Prep: Avoid eating/drinking 2 hours before. Wear comfortable clothing without metal. Results same day.
 
 ### Performance Baseline Bundle — $405 (save $30)
-DEXA scan + comprehensive blood panel together. Best starting point for anyone serious about optimization.
+DEXA scan + comprehensive blood panel together. Best starting point for optimization.
 
 ### Men's Hormone Optimization — $208/month
-Testosterone replacement therapy (TRT) and hormone optimization for men experiencing low energy, decreased libido, brain fog, mood changes, difficulty building muscle, increased body fat, poor sleep.
+For men experiencing low energy, decreased libido, brain fog, mood changes, difficulty building muscle, increased body fat, poor sleep.
 
-What's included: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments.
+Includes: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments, provider access.
 
 Treatment options: Testosterone cypionate injections, testosterone cream, enclomiphene (fertility-preserving), HCG (fertility preservation).
 
 ### Women's Hormone Optimization — $208/month
-Bioidentical hormone replacement therapy (BHRT) for women experiencing perimenopause/menopause symptoms, hot flashes, sleep disturbances, mood changes, low libido, weight gain, bone density concerns.
+For women experiencing perimenopause/menopause symptoms, hot flashes, sleep disturbances, mood changes, low libido, weight gain, bone density concerns.
 
-What's included: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments.
+Includes: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments, provider access.
 
-Treatment options: Estradiol (patch, cream, or pellets), progesterone, testosterone, DHEA, thyroid optimization. We use bioidentical hormones—molecularly identical to what your body produces.
+Treatment options: Estradiol (patch, cream, or pellets), progesterone, testosterone, DHEA, thyroid optimization. All bioidentical hormones — molecularly identical to what the body produces.
 
 ### Weight Loss Program (GLP-1) — $405/month
-Medical weight loss using semaglutide or tirzepatide with DEXA tracking to ensure fat loss while preserving muscle.
+Medications: Semaglutide (same active ingredient as Ozempic/Wegovy) or tirzepatide (same as Mounjaro/Zepbound).
 
-What's included: GLP-1 medication, medical oversight, DEXA tracking, lab monitoring, dosing adjustments, nutrition guidance.
+Includes: GLP-1 medication, medical oversight, DEXA tracking (fat loss vs muscle loss), lab monitoring, dosing adjustments, nutrition guidance.
+
+Average weight loss: 15-20% of body weight over 12-18 months.
 
 ### Prescription + Oversight Program — $105/month
 For patients whose insurance covers GLP-1 or hormone medications. We write the prescription, provide medical oversight, lab work, dosing guidance, and provider access.
 
 ### Peptides
-BPC-157 (tissue healing, gut repair), TB-500 (recovery, inflammation), NAD+ (cellular energy, longevity), and others based on individual needs.
+We offer the following peptides (all FDA-compliant):
+- Sermorelin — $250/month: Growth hormone stimulant. Stimulates the body's natural GH production. Anti-aging, recovery, body composition. Improved sleep within days to weeks.
+- PT-141 — $250/month: Sexual health peptide. Works on the nervous system (not blood flow). Improves desire and arousal for both men and women.
+- Tesamorelin — $300/month: Growth hormone-releasing hormone analog. Reduces visceral fat, supports body composition.
 
-### Daily Tadalafil
-Daily low-dose tadalafil (2.5-5mg) for improved blood flow, prostate health, endothelial function, mild blood pressure reduction. Often combined with TRT.
+We do NOT offer BPC-157 or TB-500. These are on the FDA banned list and are not available at our clinic.
+
+### Vitamin & Nutrient Injections
+- NAD+: $60/shot (cellular energy & longevity)
+- Vitamin C: $30-60/shot (immune support & antioxidant)
+- B12: $30/shot (energy & nervous system)
+- MIC B: $30/shot (fat metabolism & energy)
+- Glutathione: $30/shot (master antioxidant & detox)
+
+Hormone optimization and weight loss members get 1 complimentary injection per month.
+
+### Add-On Medications
+- HCG: $350/month (maintains testicular function during TRT, fertility preservation)
+- Enclomiphene: $200-208/month (stimulates natural testosterone production, fertility-preserving)
+- Daily Tadalafil: $70/month (2.5-5mg daily for blood flow, prostate health, endothelial function, mild BP reduction. Often combined with TRT. NEVER combine with nitrates.)
 
 ---
 
 ## Rehab Services
 
+Insurance: Blue Cross Blue Shield PPO accepted for rehab. HSA/FSA accepted.
+
 ### Chiropractic Care
-Evidence-based chiropractic with Dr. Michael, McKenzie Method certified. Treats back pain, neck pain, joint pain, sports injuries. Goal is to fix the problem and teach self-management — most patients improve within 6-8 visits.
+Evidence-based chiropractic with Dr. Michael, McKenzie Method certified. Treats back pain, neck pain, joint pain, sports injuries. Goal is to fix the problem and teach self-management — most patients improve within 6-8 visits. No "maintenance adjustment" plans. Initial visit: 45-60 minutes. No referral needed in Illinois.
 
 ### Physical Rehabilitation
-Movement restoration and strength-based rehabilitation.
+Movement restoration and strength-based rehabilitation. Process: Assess → Treat → Rebuild → Return. For post-injury recovery, chronic pain, and performance optimization.
 
 ### Trigger Point Injections
-For chronic muscle pain — neck/shoulder tension, headaches, lower back spasms, fibromyalgia.
+Targeted injections for chronic muscle pain — neck/shoulder tension, headaches, lower back spasms, fibromyalgia. Common patterns: upper trap (headaches), infraspinatus (shoulder/arm pain), piriformis (sciatica-like symptoms), QL (lower back/hip pain).
 
 ### Dry Needling
-Thin filament needles targeting trigger points. Effective for chronic tension, myofascial pain, headaches, tennis/golf elbow, TMJ.
+Thin filament needles targeting muscle trigger points. Based on modern neuroscience (not acupuncture). Effective for chronic tension, myofascial pain, headaches, tennis/golf elbow, TMJ, shoulder pain, back pain, hip pain, knee pain, plantar fasciitis. Soreness for 24-48 hours after treatment is normal.
 
 ### Shockwave Therapy (ESWT)
-Acoustic wave therapy for plantar fasciitis, Achilles tendinopathy, tennis elbow, rotator cuff issues, patellar tendinopathy.
+Acoustic wave therapy for chronic tendon injuries. 3-6 sessions, 1 week apart, 10-15 minutes each. 70-90% success rate for appropriate candidates. Full effects over 6-12 weeks. Effective for plantar fasciitis, Achilles tendinopathy, tennis/golf elbow, patellar tendinopathy, calcific tendinitis, hip bursitis, rotator cuff issues.
 
 ---
 
 ## FAQ
 
-**Insurance:** Rehab accepts Blue Cross Blue Shield PPO. Medical services are cash-pay only. HSA/FSA accepted.
+**Insurance:** Medical services are cash-pay only. Rehab accepts Blue Cross Blue Shield PPO. HSA/FSA accepted for most services.
+
+**What makes Moonshot different?** We test 60+ biomarkers (vs typical 10-15), spend 30-60 minutes per visit (vs typical 7 min), and optimize for performance — not just absence of disease.
 
 **TRT safety:** Strong safety profile when properly monitored. We track hematocrit, PSA, lipids, estradiol.
 
 **TRT and fertility:** Standard TRT can suppress sperm production. We offer HCG or enclomiphene to preserve fertility.
 
-**Women's HRT safety:** Bioidentical hormones started around menopause are safe and protective for most women.
+**Do I have to stay on TRT forever?** Not necessarily. Some men use long-term, others temporarily while making lifestyle changes. Individualized plans.
 
-**GLP-1 muscle loss:** We track with DEXA to ensure fat loss while preserving muscle.
+**TRT vs enclomiphene:** TRT replaces testosterone directly but doesn't preserve testicular function/fertility. Enclomiphene stimulates natural production and preserves fertility but may not achieve the same levels.
+
+**Women's HRT safety:** Bioidentical hormones started around menopause are safe and protective for most women. The 2002 WHI study used synthetic hormones in older women — not bioidentical hormones in perimenopausal women.
+
+**Do women need testosterone?** Yes. Women produce testosterone naturally (less than men). It declines with age. Low testosterone contributes to fatigue, low libido, difficulty building muscle, brain fog.
+
+**GLP-1 muscle loss:** We track with DEXA to ensure fat loss while preserving muscle — not just scale weight.
+
+**What happens when I stop GLP-1s?** Without lifestyle changes, weight often returns. We focus on building sustainable habits during treatment.
 
 **DEXA frequency:** Every 6 months for optimization patients. Hormone programs include 2 scans/year.
+
+**Chiropractic visits needed:** Most patients improve within 6-8 visits. Goal is to fix the problem, not create dependency.
 
 ---
 
@@ -176,12 +217,21 @@ Acoustic wave therapy for plantar fasciitis, Achilles tendinopathy, tennis elbow
 | Women's Hormone Optimization | $208/month |
 | Weight Loss Program (GLP-1) | $405/month |
 | Prescription + Oversight | $105/month |
+| Sermorelin | $250/month |
+| PT-141 | $250/month |
+| Tesamorelin | $300/month |
+| Daily Tadalafil | $70/month |
+| HCG | $350/month |
+| Enclomiphene | $200-208/month |
+| NAD+ injection | $60/shot |
+| B12 / MIC B / Glutathione injection | $30/shot |
+| Vitamin C injection | $30-60/shot |
 
 ## Service Area
 Park Ridge, IL and surrounding communities including Chicago, Des Plaines, Niles, Morton Grove, Glenview, Skokie, Evanston, and the greater northwest suburbs.
 
 ## Related Business
-Moonshot CrossFit operates next door at the same address.`;
+Moonshot CrossFit operates next door at the same address — offers a continuum from rehab to fitness for patients ready to return to training.`;
 
 // ---------------------------------------------------------------------------
 // OpenAI helpers

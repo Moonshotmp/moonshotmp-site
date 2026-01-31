@@ -147,11 +147,12 @@ For patients whose insurance covers GLP-1 or hormone medications:
 - Provider access for questions
 
 ### Peptides
-Therapeutic peptides guided by labs and goals:
-- BPC-157: Tissue healing, gut repair
-- TB-500: Recovery, inflammation
-- NAD+: Cellular energy, longevity
-- Other peptides based on individual needs
+Therapeutic peptides guided by labs and goals (all FDA-compliant):
+- Sermorelin ($250/month): Growth hormone stimulant. Anti-aging, recovery, body composition.
+- PT-141 ($250/month): Sexual health peptide. Improves desire and arousal for men and women.
+- Tesamorelin ($300/month): Growth hormone-releasing hormone analog. Reduces visceral fat.
+
+We do NOT offer BPC-157 or TB-500 (FDA banned).
 
 ### Daily Tadalafil
 Daily low-dose tadalafil (2.5-5mg) for benefits beyond erectile dysfunction:
