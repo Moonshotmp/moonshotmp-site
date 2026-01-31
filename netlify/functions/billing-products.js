@@ -32,6 +32,7 @@ export default async (req) => {
       percent: d.percent,
       appliesToRecurring: d.appliesToRecurring,
       appliesToOneTime: d.appliesToOneTime,
+      appliesToCodes: d.appliesToCodes || [],
     })),
   });
 };

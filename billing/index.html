@@ -305,6 +305,54 @@
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast-success { background: rgba(40,167,69,0.9); color: white; }
     .toast-error { background: rgba(220,53,69,0.9); color: white; }
+    .toast-warning { background: rgba(255,193,7,0.9); color: #333; }
+
+    /* System Status Indicator */
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 6px 12px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.05);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    .status-ok .status-dot { background: #51cf66; }
+    .status-warning .status-dot { background: #ffd43b; animation: none; }
+    .status-error .status-dot { background: #ff6b6b; animation: none; }
+    .status-checking .status-dot { background: #B2BFBE; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .offline-banner {
+      background: rgba(255,193,7,0.15);
+      border-bottom: 1px solid rgba(255,193,7,0.3);
+      color: #ffd43b;
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+      display: none;
+    }
+    .offline-banner.show { display: block; }
+    .error-recovery {
+      background: rgba(220,53,69,0.1);
+      border: 1px solid rgba(220,53,69,0.3);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+    .error-recovery h3 { color: #ff6b6b; margin-bottom: 12px; }
+    .error-recovery p { color: #B2BFBE; margin-bottom: 16px; font-size: 14px; }
+    .error-recovery .btn { margin: 0 6px; }
 
     @media (max-width: 768px) {
       .stats-row { grid-template-columns: repeat(2, 1fr); }
@@ -523,13 +571,22 @@
 </head>
 <body>
 
+  <!-- Offline Warning Banner -->
+  <div class="offline-banner" id="offlineBanner">
+    You appear to be offline. Some features may not work. <button onclick="checkSystemHealth()" style="background:none;border:none;color:#ffd43b;text-decoration:underline;cursor:pointer;">Retry connection</button>
+  </div>
+
   <div class="portal-header">
     <div>
       <h1>Billing Portal</h1>
       <div class="subtitle">Moonshot Medical + Performance</div>
     </div>
     <div class="header-actions">
-            <button class="btn btn-primary" onclick="openNewPatientModal()">+ New Patient</button>
+      <div class="status-indicator status-checking" id="systemStatus" title="Checking system status...">
+        <span class="status-dot"></span>
+        <span class="status-text">Checking...</span>
+      </div>
+      <button class="btn btn-primary" onclick="openNewPatientModal()">+ New Patient</button>
       <button class="btn btn-outline" onclick="logout()">Log Out</button>
     </div>
   </div>
@@ -752,20 +809,143 @@
   <script>
     const API = '/.netlify/functions';
     let token = localStorage.getItem('ms_membership_token');
+    let isOnline = navigator.onLine;
+    let systemHealthy = false;
 
-    // Auth guard
+    // ===== ROBUSTNESS UTILITIES =====
+
+    // Retry with exponential backoff
+    async function fetchWithRetry(url, options = {}, maxRetries = 3) {
+      let lastError;
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          const response = await fetch(url, {
+            ...options,
+            signal: AbortSignal.timeout(15000) // 15 second timeout
+          });
+          if (response.ok || response.status < 500) {
+            return response;
+          }
+          throw new Error(`HTTP ${response.status}`);
+        } catch (err) {
+          lastError = err;
+          console.warn(`Fetch attempt ${attempt + 1} failed:`, err.message);
+          if (attempt < maxRetries - 1) {
+            // Exponential backoff: 1s, 2s, 4s
+            await new Promise(r => setTimeout(r, Math.pow(2, attempt) * 1000));
+          }
+        }
+      }
+      throw lastError;
+    }
+
+    // Offline detection
+    window.addEventListener('online', () => {
+      isOnline = true;
+      document.getElementById('offlineBanner').classList.remove('show');
+      checkSystemHealth();
+    });
+    window.addEventListener('offline', () => {
+      isOnline = false;
+      document.getElementById('offlineBanner').classList.add('show');
+      updateSystemStatus('error', 'Offline');
+    });
+
+    // System health check
+    async function checkSystemHealth() {
+      const statusEl = document.getElementById('systemStatus');
+      statusEl.className = 'status-indicator status-checking';
+      statusEl.querySelector('.status-text').textContent = 'Checking...';
+
+      if (!navigator.onLine) {
+        updateSystemStatus('error', 'Offline');
+        return false;
+      }
+
+      try {
+        // Check auth
+        const authRes = await fetchWithRetry(`${API}/admin-verify`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }, 2);
+        if (!authRes.ok) throw new Error('Auth failed');
+
+        // Check products endpoint
+        const prodRes = await fetchWithRetry(`${API}/billing-products?_=${Date.now()}`, {
+          cache: 'no-store'
+        }, 2);
+        if (!prodRes.ok) throw new Error('Products API down');
+
+        updateSystemStatus('ok', 'Connected');
+        systemHealthy = true;
+        return true;
+      } catch (err) {
+        console.error('Health check failed:', err);
+        updateSystemStatus('warning', 'Degraded');
+        systemHealthy = false;
+        return false;
+      }
+    }
+
+    function updateSystemStatus(status, text) {
+      const el = document.getElementById('systemStatus');
+      el.className = `status-indicator status-${status}`;
+      el.querySelector('.status-text').textContent = text;
+      el.title = status === 'ok' ? 'All systems operational' :
+                 status === 'warning' ? 'Some services may be slow' :
+                 'Connection issues detected';
+    }
+
+    // LocalStorage cache for products (fallback)
+    function cacheProducts(data) {
+      try {
+        localStorage.setItem('ms_products_cache', JSON.stringify({
+          data,
+          timestamp: Date.now()
+        }));
+      } catch (e) { console.warn('Failed to cache products:', e); }
+    }
+
+    function getCachedProducts() {
+      try {
+        const cached = localStorage.getItem('ms_products_cache');
+        if (!cached) return null;
+        const { data, timestamp } = JSON.parse(cached);
+        // Cache valid for 24 hours
+        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+          return data;
+        }
+      } catch (e) { console.warn('Failed to read product cache:', e); }
+      return null;
+    }
+
+    // Auth guard with better error handling
     if (!token) {
       window.location.href = '/billing/login.html';
     } else {
-      fetch(`${API}/admin-verify`, {
+      fetchWithRetry(`${API}/admin-verify`, {
         headers: { 'Authorization': `Bearer ${token}` }
-      }).then(res => {
+      }, 2).then(res => {
         if (!res.ok) {
           localStorage.removeItem('ms_membership_token');
           window.location.href = '/billing/login.html';
         }
-      }).catch(() => {
-        window.location.href = '/billing/login.html';
+      }).catch((err) => {
+        console.error('Auth check failed:', err);
+        // Don't immediately redirect - might be temporary network issue
+        showToast('Connection issue. Will retry...', 'warning');
+        setTimeout(() => {
+          fetch(`${API}/admin-verify`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          }).then(res => {
+            if (!res.ok) {
+              localStorage.removeItem('ms_membership_token');
+              window.location.href = '/billing/login.html';
+            }
+          }).catch(() => {
+            localStorage.removeItem('ms_membership_token');
+            window.location.href = '/billing/login.html';
+          });
+        }, 3000);
       });
     }
 
@@ -782,7 +962,19 @@
       const el = document.getElementById('toast');
       el.textContent = msg;
       el.className = `toast toast-${type} show`;
-      setTimeout(() => el.classList.remove('show'), 3000);
+      setTimeout(() => el.classList.remove('show'), type === 'error' ? 5000 : 3000);
+    }
+
+    // Show error with recovery option
+    function showErrorWithRecovery(container, message, retryFn) {
+      container.innerHTML = `
+        <div class="error-recovery">
+          <h3>Something went wrong</h3>
+          <p>${message}</p>
+          <button class="btn btn-primary" onclick="${retryFn}">Try Again</button>
+          <button class="btn btn-outline" onclick="checkSystemHealth()">Check Connection</button>
+        </div>
+      `;
     }
 
     // Date input auto-formatting (MM/DD/YYYY)
@@ -845,7 +1037,7 @@
       if (tab === 'all') loadAllPatients();
     }
 
-    // Search
+    // Search with retry logic
     async function searchPatient(e) {
       e.preventDefault();
       const first = document.getElementById('searchFirst').value.trim();
@@ -853,15 +1045,27 @@
       const dob = toIsoDate(document.getElementById('searchDob').value);
       if (!first && !last) { showToast('Enter at least a name', 'error'); return; }
 
-      document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      const resultsEl = document.getElementById('searchResults');
+      resultsEl.innerHTML = '<div class="no-results"><span class="spinner"></span> Searching...</div>';
+
       try {
-        const res = await fetch(`${API}/membership-patient-search`, {
+        const res = await fetchWithRetry(`${API}/membership-patient-search`, {
           method: 'POST', headers: authHeaders(),
           body: JSON.stringify({ first_name: first, last_name: last, dob: dob || undefined })
-        });
+        }, 3);
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Server error (${res.status})`);
+        }
+
         const data = await res.json();
         renderSearchResults(data.patients || []);
-      } catch (err) { showToast('Search failed: ' + err.message, 'error'); }
+      } catch (err) {
+        console.error('Search failed:', err);
+        showErrorWithRecovery(resultsEl, 'Could not search patients: ' + err.message, 'searchPatient(event)');
+        showToast('Search failed. Please try again.', 'error');
+      }
     }
 
     async function searchPatientFallback(e) {
@@ -870,15 +1074,27 @@
       const phone = document.getElementById('searchPhone').value.trim();
       if (!email && !phone) { showToast('Enter email or phone', 'error'); return; }
 
-      document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      const resultsEl = document.getElementById('searchResults');
+      resultsEl.innerHTML = '<div class="no-results"><span class="spinner"></span> Searching...</div>';
+
       try {
-        const res = await fetch(`${API}/membership-patient-search`, {
+        const res = await fetchWithRetry(`${API}/membership-patient-search`, {
           method: 'POST', headers: authHeaders(),
           body: JSON.stringify({ email, phone })
-        });
+        }, 3);
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Server error (${res.status})`);
+        }
+
         const data = await res.json();
         renderSearchResults(data.patients || []);
-      } catch (err) { showToast('Search failed: ' + err.message, 'error'); }
+      } catch (err) {
+        console.error('Fallback search failed:', err);
+        showErrorWithRecovery(resultsEl, 'Could not search patients: ' + err.message, 'searchPatientFallback(event)');
+        showToast('Search failed. Please try again.', 'error');
+      }
     }
 
     function renderSearchResults(patients) {
@@ -1021,7 +1237,7 @@
       const reason = document.getElementById('refundReason').value;
 
       try {
-        const res = await fetch(`${API}/membership-refund`, {
+        const res = await fetchWithRetry(`${API}/membership-refund`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({
@@ -1031,9 +1247,9 @@
             amount_dollars: amount,
             reason: reason || undefined,
           })
-        });
+        }, 2);
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
+        if (!res.ok) throw new Error(data.error || 'Refund failed');
 
         closeModal('refundModal');
         showToast(`Refunded $${amount.toFixed(2)} successfully`);
@@ -1041,6 +1257,7 @@
         // Re-run search to refresh data
         document.getElementById('searchForm').dispatchEvent(new Event('submit'));
       } catch (err) {
+        console.error('Refund failed:', err);
         showToast(err.message || 'Refund failed', 'error');
       } finally {
         btn.disabled = false;
@@ -1052,9 +1269,11 @@
     async function createPatient(e) {
       e.preventDefault();
       const btn = document.getElementById('npSubmitBtn');
-      btn.disabled = true; btn.textContent = 'Saving...';
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
       try {
-        const res = await fetch(`${API}/membership-create-patient`, {
+        const res = await fetchWithRetry(`${API}/membership-create-patient`, {
           method: 'POST', headers: authHeaders(),
           body: JSON.stringify({
             first_name: document.getElementById('npFirst').value,
@@ -1063,9 +1282,10 @@
             email: document.getElementById('npEmail').value,
             phone: document.getElementById('npPhone').value,
           })
-        });
+        }, 2);
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
+        if (!res.ok) throw new Error(data.error || 'Failed to create patient');
+
         closeModal('newPatientModal');
         showToast('Patient added');
         document.getElementById('newPatientForm').reset();
@@ -1074,9 +1294,11 @@
         document.getElementById('searchDob').value = fromIsoDate(data.patient.dob);
         renderSearchResults([{ ...data.patient, memberships: [], payments: [] }]);
       } catch (err) {
+        console.error('Failed to create patient:', err);
         showToast(err.message || 'Failed to create patient', 'error');
       } finally {
-        btn.disabled = false; btn.textContent = 'Add Patient';
+        btn.disabled = false;
+        btn.textContent = 'Add Patient';
       }
     }
 
@@ -1086,16 +1308,23 @@
 
     async function cancelMembership(membershipId, patientName) {
       if (!confirm(`Cancel membership for ${patientName}? This will stop future billing.`)) return;
+
+      showToast('Canceling...', 'warning');
+
       try {
-        const res = await fetch(`${API}/membership-cancel`, {
+        const res = await fetchWithRetry(`${API}/membership-cancel`, {
           method: 'POST', headers: authHeaders(),
           body: JSON.stringify({ membership_id: membershipId })
-        });
+        }, 2);
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
+        if (!res.ok) throw new Error(data.error || 'Failed to cancel membership');
+
         showToast('Membership canceled');
         document.getElementById('searchForm').dispatchEvent(new Event('submit'));
-      } catch (err) { showToast(err.message || 'Cancel failed', 'error'); }
+      } catch (err) {
+        console.error('Cancel failed:', err);
+        showToast(err.message || 'Cancel failed', 'error');
+      }
     }
 
     // Members list
@@ -1105,16 +1334,24 @@
 
     async function loadMembers(status) {
       const el = document.getElementById('activeMembersList');
-      el.innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      el.innerHTML = '<div class="no-results"><span class="spinner"></span> Loading members...</div>';
+
       try {
-        const res = await fetch(`${API}/membership-list?status=${status}`, {
+        const res = await fetchWithRetry(`${API}/membership-list?status=${status}`, {
           headers: { 'Authorization': `Bearer ${token}` }
-        });
+        }, 3);
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Server error (${res.status})`);
+        }
+
         const data = await res.json();
         allMemberships = data.memberships || [];
         filterMembers();
       } catch (err) {
-        el.innerHTML = `<div class="no-results">Failed to load: ${err.message}</div>`;
+        console.error('Failed to load members:', err);
+        showErrorWithRecovery(el, 'Could not load members: ' + err.message, "loadMembers('active')");
       }
     }
 
@@ -1177,16 +1414,24 @@
     // Failed Payments
     async function loadFailedPayments() {
       const el = document.getElementById('failedPaymentsList');
-      el.innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      el.innerHTML = '<div class="no-results"><span class="spinner"></span> Loading failed payments...</div>';
+
       try {
-        const res = await fetch(`${API}/membership-admin-payments?status=failed`, {
+        const res = await fetchWithRetry(`${API}/membership-admin-payments?status=failed`, {
           headers: authHeaders()
-        });
+        }, 3);
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Server error (${res.status})`);
+        }
+
         const data = await res.json();
         failedPaymentsData = (data.payments || []).filter(p => p.status === 'failed');
         renderFailedPayments(el, failedPaymentsData);
       } catch (err) {
-        el.innerHTML = `<div class="no-results">Failed to load: ${err.message}</div>`;
+        console.error('Failed to load failed payments:', err);
+        showErrorWithRecovery(el, 'Could not load failed payments: ' + err.message, 'loadFailedPayments()');
       }
     }
 
@@ -1221,16 +1466,24 @@
     // All Patients
     async function loadAllPatients() {
       const el = document.getElementById('allPatientsList');
-      el.innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      el.innerHTML = '<div class="no-results"><span class="spinner"></span> Loading patients...</div>';
+
       try {
-        const res = await fetch(`${API}/membership-admin-stats`, {
+        const res = await fetchWithRetry(`${API}/membership-admin-stats`, {
           headers: authHeaders()
-        });
+        }, 3);
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Server error (${res.status})`);
+        }
+
         const data = await res.json();
         allPatientsData = data.patients || [];
         filterPatients();
       } catch (err) {
-        el.innerHTML = `<div class="no-results">Failed to load: ${err.message}</div>`;
+        console.error('Failed to load patients:', err);
+        showErrorWithRecovery(el, 'Could not load patients: ' + err.message, 'loadAllPatients()');
       }
     }
 
@@ -1289,13 +1542,19 @@
 
       // Initialize Stripe if not already
       if (!stripe) {
-        const res = await fetch(`${API}/membership-config`);
-        const data = await res.json();
-        if (!data.stripe_publishable_key) {
-          showToast('Stripe not configured', 'error');
+        try {
+          const res = await fetchWithRetry(`${API}/membership-config`, {}, 2);
+          const data = await res.json();
+          if (!data.stripe_publishable_key) {
+            showToast('Stripe not configured', 'error');
+            return;
+          }
+          stripe = Stripe(data.stripe_publishable_key);
+        } catch (err) {
+          console.error('Failed to load Stripe config:', err);
+          showToast('Could not initialize payment system. Please try again.', 'error');
           return;
         }
-        stripe = Stripe(data.stripe_publishable_key);
       }
 
       // Mount card element
@@ -1322,37 +1581,47 @@
 
     async function processCardUpdate() {
       const btn = document.getElementById('processPaymentBtn');
+      const errorsEl = document.getElementById('card-errors');
       btn.disabled = true;
       btn.textContent = 'Updating...';
+      errorsEl.textContent = '';
 
       try {
-        const setupRes = await fetch(`${API}/membership-setup-intent`, {
+        const setupRes = await fetchWithRetry(`${API}/membership-setup-intent`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({ patient_id: currentPatientId })
-        });
+        }, 2);
         const setupData = await setupRes.json();
-        if (!setupRes.ok) throw new Error(setupData.error);
+        if (!setupRes.ok) throw new Error(setupData.error || 'Failed to initialize card update');
 
+        btn.textContent = 'Verifying card...';
         const { setupIntent, error } = await stripe.confirmCardSetup(setupData.client_secret, {
           payment_method: { card: cardElement }
         });
         if (error) throw new Error(error.message);
 
         // Set as default payment method
-        await fetch(`${API}/membership-update-default-payment`, {
+        btn.textContent = 'Saving...';
+        const updateRes = await fetchWithRetry(`${API}/membership-update-default-payment`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({
             patient_id: currentPatientId,
             payment_method_id: setupIntent.payment_method
           })
-        });
+        }, 2);
+
+        if (!updateRes.ok) {
+          const updateData = await updateRes.json().catch(() => ({}));
+          throw new Error(updateData.error || 'Failed to save card');
+        }
 
         closeCardEntryModal();
         showToast('Card updated successfully');
       } catch (err) {
-        document.getElementById('card-errors').textContent = err.message;
+        console.error('Card update error:', err);
+        errorsEl.textContent = err.message;
         showToast(err.message, 'error');
       } finally {
         btn.disabled = false;
@@ -1375,16 +1644,26 @@
         return;
       }
       switchTab('search');
-      document.getElementById('searchResults').innerHTML = '<div class="no-results"><span class="spinner"></span></div>';
+      const resultsEl = document.getElementById('searchResults');
+      resultsEl.innerHTML = '<div class="no-results"><span class="spinner"></span> Loading patient...</div>';
+
       try {
-        const res = await fetch(`${API}/membership-patient-search`, {
+        const res = await fetchWithRetry(`${API}/membership-patient-search`, {
           method: 'POST', headers: authHeaders(),
           body: JSON.stringify({ patient_id: patientId })
-        });
+        }, 3);
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Server error (${res.status})`);
+        }
+
         const data = await res.json();
         renderSearchResults(data.patients || []);
       } catch (err) {
-        showToast('Failed to load patient: ' + err.message, 'error');
+        console.error('Failed to load patient:', err);
+        showErrorWithRecovery(resultsEl, 'Could not load patient: ' + err.message, `viewPatientDetails('${patientId}')`);
+        showToast('Failed to load patient', 'error');
       }
     }
 
@@ -1399,31 +1678,56 @@
     let stripe = null;
     let cardElement = null;
 
-    // Initialize Stripe
+    // Initialize on page load
     document.addEventListener('DOMContentLoaded', async () => {
-      // Load products on page load
+      // Check system health
+      await checkSystemHealth();
+
+      // Load products with fallback to cache
       await loadProducts();
+
+      // Periodic health check every 2 minutes
+      setInterval(checkSystemHealth, 120000);
     });
 
     async function loadProducts() {
       try {
         // Add cache-busting parameter to prevent Safari caching issues
         const cacheBust = Date.now();
-        const res = await fetch(`${API}/billing-products?_=${cacheBust}`, {
+        const res = await fetchWithRetry(`${API}/billing-products?_=${cacheBust}`, {
           cache: 'no-store',
           headers: { 'Cache-Control': 'no-cache' }
-        });
+        }, 3);
+
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
         }
+
         const data = await res.json();
         products = data.products || [];
         categories = data.categories || [];
         discounts = data.discounts || [];
+
+        // Cache for offline fallback
+        cacheProducts(data);
         console.log('Products loaded:', products.length);
+
       } catch (err) {
         console.error('Failed to load products:', err);
-        showToast('Failed to load products. Please refresh.', 'error');
+
+        // Try to use cached products
+        const cached = getCachedProducts();
+        if (cached) {
+          products = cached.products || [];
+          categories = cached.categories || [];
+          discounts = cached.discounts || [];
+          console.log('Using cached products:', products.length);
+          showToast('Using cached products. Some data may be outdated.', 'warning');
+          updateSystemStatus('warning', 'Using Cache');
+        } else {
+          showToast('Failed to load products. Please check your connection.', 'error');
+          updateSystemStatus('error', 'Products Unavailable');
+        }
       }
     }
 
@@ -1443,7 +1747,11 @@
       const discount = discounts.find(d => d.code.toLowerCase() === code);
       if (discount) {
         appliedDiscount = discount;
-        statusEl.textContent = `${discount.percent}% discount applied to ${discount.appliesToRecurring ? 'memberships' : 'one-time items'}`;
+        const targets = [];
+        if (discount.appliesToRecurring) targets.push('memberships');
+        if (discount.appliesToOneTime) targets.push('one-time items');
+        if (discount.appliesToCodes?.length) targets.push('blood panels');
+        statusEl.textContent = `${discount.percent}% discount applied to ${targets.join(' & ')}`;
         statusEl.style.color = '#51cf66';
       } else {
         appliedDiscount = null;
@@ -1601,6 +1909,7 @@
         if (!product) return;
 
         const amount = product.price * item.quantity;
+        const codeMatch = appliedDiscount && Array.isArray(appliedDiscount.appliesToCodes) && appliedDiscount.appliesToCodes.includes(product.code);
 
         if (product.recurring) {
           if (appliedDiscount && appliedDiscount.appliesToRecurring) {
@@ -1611,7 +1920,7 @@
             recurringTotal += amount;
           }
         } else {
-          if (appliedDiscount && appliedDiscount.appliesToOneTime) {
+          if (codeMatch || (appliedDiscount && appliedDiscount.appliesToOneTime)) {
             const discount = Math.round(amount * (appliedDiscount.percent / 100));
             totalDiscount += discount;
             oneTimeTotal += (amount - discount);
@@ -1649,12 +1958,18 @@
 
       // Initialize Stripe if not already
       if (!stripe) {
-        const res = await fetch(`${API}/membership-config`);
-        const data = await res.json();
-        if (!data.stripe_publishable_key) {
-          throw new Error('Stripe not configured');
+        try {
+          const res = await fetchWithRetry(`${API}/membership-config`, {}, 2);
+          const data = await res.json();
+          if (!data.stripe_publishable_key) {
+            throw new Error('Stripe not configured');
+          }
+          stripe = Stripe(data.stripe_publishable_key);
+        } catch (err) {
+          console.error('Failed to load Stripe config:', err);
+          showToast('Could not initialize payment system. Please try again.', 'error');
+          return;
         }
-        stripe = Stripe(data.stripe_publishable_key);
       }
 
       // Mount card element
@@ -1691,29 +2006,33 @@
 
     async function processCartPayment() {
       const btn = document.getElementById('processPaymentBtn');
+      const errorsEl = document.getElementById('card-errors');
       btn.disabled = true;
       btn.textContent = 'Processing...';
+      errorsEl.textContent = '';
 
       try {
-        // Create SetupIntent to collect payment method
-        const setupRes = await fetch(`${API}/membership-setup-intent`, {
+        // Create SetupIntent to collect payment method (with retry)
+        const setupRes = await fetchWithRetry(`${API}/membership-setup-intent`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({ patient_id: currentPatientId })
-        });
+        }, 2);
         const setupData = await setupRes.json();
-        if (!setupRes.ok) throw new Error(setupData.error);
+        if (!setupRes.ok) throw new Error(setupData.error || 'Failed to initialize payment');
 
-        // Confirm card setup
+        // Confirm card setup with Stripe (no retry - Stripe handles this)
+        btn.textContent = 'Verifying card...';
         const { setupIntent, error } = await stripe.confirmCardSetup(setupData.client_secret, {
           payment_method: { card: cardElement }
         });
         if (error) throw new Error(error.message);
 
-        // Process cart checkout with payment method
+        // Process cart checkout with payment method (with retry)
+        btn.textContent = 'Completing payment...';
         const cartData = cart.map(item => ({ code: item.code, quantity: item.quantity }));
 
-        const checkoutRes = await fetch(`${API}/billing-cart-checkout`, {
+        const checkoutRes = await fetchWithRetry(`${API}/billing-cart-checkout`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({
@@ -1722,9 +2041,9 @@
             cart: cartData,
             discount_code: appliedDiscount ? appliedDiscount.code : null
           })
-        });
+        }, 2);
         const checkoutData = await checkoutRes.json();
-        if (!checkoutRes.ok) throw new Error(checkoutData.error);
+        if (!checkoutRes.ok) throw new Error(checkoutData.error || 'Payment processing failed');
 
         // Success!
         closeCardEntryModal();
@@ -1744,8 +2063,16 @@
         document.getElementById('searchForm').dispatchEvent(new Event('submit'));
 
       } catch (err) {
-        document.getElementById('card-errors').textContent = err.message;
+        console.error('Payment error:', err);
+        errorsEl.textContent = err.message;
         showToast(err.message, 'error');
+
+        // Specific guidance for common errors
+        if (err.message.includes('card')) {
+          errorsEl.textContent += ' Please check your card details.';
+        } else if (err.message.includes('network') || err.message.includes('timeout')) {
+          errorsEl.textContent += ' Please check your internet connection and try again.';
+        }
       } finally {
         btn.disabled = false;
         btn.textContent = 'Process Payment';

@@ -32,7 +32,7 @@ export const PRODUCTS = {
 };
 
 export const DISCOUNTS = {
-  family: { code: 'family', percent: 40, appliesToRecurring: true, appliesToOneTime: false },
+  family: { code: 'family', percent: 40, appliesToRecurring: true, appliesToOneTime: false, appliesToCodes: ['blood_panel'] },
 };
 
 // Get all products as flat array
@@ -70,7 +70,10 @@ export function calculateCartTotals(cartItems, discountCode = null) {
 
     let discountAmount = 0;
     if (discount) {
-      if (product.recurring && discount.appliesToRecurring) {
+      const codeMatch = Array.isArray(discount.appliesToCodes) && discount.appliesToCodes.includes(product.code);
+      if (codeMatch) {
+        discountAmount = Math.round(baseAmount * (discount.percent / 100));
+      } else if (product.recurring && discount.appliesToRecurring) {
         discountAmount = Math.round(baseAmount * (discount.percent / 100));
       } else if (!product.recurring && discount.appliesToOneTime) {
         discountAmount = Math.round(baseAmount * (discount.percent / 100));
