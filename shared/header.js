@@ -88,8 +88,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute right-0 mt-2 w-[700px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
-                <div class="p-6 grid grid-cols-4 gap-6">
+              <div class="absolute right-0 mt-2 w-[850px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
+                <div class="p-6 grid grid-cols-5 gap-6">
                   <!-- Men Column -->
                   <div>
                     <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Men</span>
@@ -113,6 +113,13 @@
                     <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Semaglutide vs Tirzepatide</a>
                     <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">GLP-1 vs Other Methods</a>
                     <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptides Explained</a>
+                  </div>
+                  <!-- Rehab Column -->
+                  <div>
+                    <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Rehab</span>
+                    <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Dry Needling</a>
+                    <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Trigger Point Injections</a>
+                    <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Shockwave Therapy</a>
                   </div>
                   <!-- Diagnostics Column -->
                   <div>
@@ -229,6 +236,10 @@
               <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
               <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
               <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides Explained</a>
+              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Rehab —</span>
+              <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
+              <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Injections</a>
+              <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
               <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Diagnostics —</span>
               <a href="/learn/optimal-vs-normal/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Optimal vs Normal Ranges</a>
               <a href="/learn/understanding-blood-results/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Understanding Blood Results</a>
