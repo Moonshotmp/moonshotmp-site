@@ -75,4 +75,9 @@
         // Append to body if no container found
         document.body.insertAdjacentHTML('beforeend', footerHTML);
     }
+
+    // Load chat widget
+    const chatScript = document.createElement('script');
+    chatScript.src = '/shared/chat-widget.js';
+    document.body.appendChild(chatScript);
 })();
