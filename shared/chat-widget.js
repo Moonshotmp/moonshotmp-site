@@ -80,7 +80,7 @@
   panel.id = "ms-chat-panel";
   panel.className =
     "fixed bottom-24 right-5 z-[90] w-[370px] max-w-[calc(100vw-2.5rem)] bg-brand-dark border border-white/10 rounded-lg shadow-2xl flex flex-col ms-hidden";
-  panel.style.height = "min(520px, calc(100vh - 8rem))";
+  panel.style.height = "min(520px, calc(100dvh - 8rem))";
 
   panel.innerHTML = `
     <!-- Header -->
@@ -295,6 +295,11 @@
     panel.classList.toggle("ms-hidden", !isOpen);
     btn.classList.remove("ms-chat-pulse");
 
+    // Hide button on mobile when panel is open
+    if (window.innerWidth < 480) {
+      btn.style.display = isOpen ? "none" : "";
+    }
+
     if (isOpen) {
       // Show disclaimer on first open
       if (messagesEl.children.length === 0) {
@@ -320,18 +325,24 @@
     if (e.key === "Escape" && isOpen) togglePanel();
   });
 
-  // Mobile: make panel full-width on small screens
+  // Mobile: make panel full-width and properly sized on small screens
   function adjustMobile() {
     if (window.innerWidth < 480) {
-      panel.style.left = "0.625rem";
-      panel.style.right = "0.625rem";
+      panel.style.left = "0";
+      panel.style.right = "0";
       panel.style.width = "auto";
-      panel.style.bottom = "5.5rem";
+      panel.style.bottom = "0";
+      panel.style.borderRadius = "0";
+      panel.style.height = "70dvh";
+      panel.style.maxHeight = "none";
     } else {
       panel.style.left = "";
       panel.style.right = "1.25rem";
       panel.style.width = "370px";
       panel.style.bottom = "6rem";
+      panel.style.borderRadius = "";
+      panel.style.height = "min(520px, calc(100dvh - 8rem))";
+      panel.style.maxHeight = "";
     }
   }
 
