@@ -462,7 +462,7 @@ export default async (req) => {
     const chunks = await searchChunksHybrid(embedding, searchQuery, 5);
     console.log("[chat] found", chunks.length, "chunks");
 
-    // 4. Build deduplicated sources array (by URL and title, exclude llms.txt)
+    // 4. Build deduplicated sources array (by URL and title, exclude llms.txt, pricing last)
     const seenUrls = new Set();
     const seenTitles = new Set();
     const sources = [];
@@ -478,6 +478,11 @@ export default async (req) => {
         sources.push({ title: c.page_title, url: c.page_url });
       }
     }
+    sources.sort((a, b) => {
+      const aIsPricing = a.url.startsWith("/pricing") ? 1 : 0;
+      const bIsPricing = b.url.startsWith("/pricing") ? 1 : 0;
+      return aIsPricing - bIsPricing;
+    });
 
     // 5. Build RAG context from retrieved chunks
     let ragContext = "";
