@@ -3,6 +3,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://moonshotmp.com/</loc>
+    <lastmod>2025-01-31</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -10,21 +11,25 @@
   <!-- Main Pages -->
   <url>
     <loc>https://moonshotmp.com/about/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/ourstory/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/contact/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/privacy/</loc>
+    <lastmod>2025-01-01</lastmod>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
   </url>
@@ -32,16 +37,19 @@
   <!-- Booking -->
   <url>
     <loc>https://moonshotmp.com/booking/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/booking/medical/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/booking/rehab/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -49,61 +57,73 @@
   <!-- Medical Services -->
   <url>
     <loc>https://moonshotmp.com/medical/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/blood-panels/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/dexa-scan/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/dexa-scan/dexa-vs-inbody/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/mens-hormones/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/womens-hormones/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/weight-loss/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/peptides/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/trt-vs-enclomiphene/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/glp1-vs-other-weight-loss/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/moonshot-vs-typical-clinic/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/tadalafil/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -111,31 +131,37 @@
   <!-- Rehab Services -->
   <url>
     <loc>https://moonshotmp.com/rehab/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/rehab/chiropractic/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/rehab/physical-rehab/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/rehab/dry-needling/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/rehab/trigger-point/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/rehab/shockwave/</loc>
+    <lastmod>2025-01-28</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -143,51 +169,97 @@
   <!-- Learn / Educational Content -->
   <url>
     <loc>https://moonshotmp.com/learn/</loc>
+    <lastmod>2025-01-31</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/first-visit/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/understanding-blood-results/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/testosterone-for-women/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/menopause-perimenopause/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/progesterone/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/pcos/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/whi-study-hrt-truth/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/low-testosterone-symptoms/</loc>
+    <lastmod>2025-01-15</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/trt-vs-steroids/</loc>
+    <lastmod>2025-01-15</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/peptides/</loc>
+    <lastmod>2025-01-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/semaglutide-vs-tirzepatide/</loc>
+    <lastmod>2025-01-28</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/optimal-vs-normal/</loc>
+    <lastmod>2025-01-15</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/dry-needling/</loc>
+    <lastmod>2025-01-31</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/trigger-point-injections/</loc>
+    <lastmod>2025-01-31</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/shockwave-therapy/</loc>
+    <lastmod>2025-01-31</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
