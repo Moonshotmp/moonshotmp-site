@@ -462,12 +462,19 @@ export default async (req) => {
     const chunks = await searchChunksHybrid(embedding, searchQuery, 5);
     console.log("[chat] found", chunks.length, "chunks");
 
-    // 4. Build deduplicated sources array (exclude llms.txt — it's base context, not a page)
+    // 4. Build deduplicated sources array (by URL and title, exclude llms.txt)
     const seenUrls = new Set();
+    const seenTitles = new Set();
     const sources = [];
     for (const c of chunks) {
-      if (c.page_url && !seenUrls.has(c.page_url) && c.page_url !== "/llms.txt") {
+      if (
+        c.page_url &&
+        !seenUrls.has(c.page_url) &&
+        !seenTitles.has(c.page_title) &&
+        c.page_url !== "/llms.txt"
+      ) {
         seenUrls.add(c.page_url);
+        seenTitles.add(c.page_title);
         sources.push({ title: c.page_title, url: c.page_url });
       }
     }
