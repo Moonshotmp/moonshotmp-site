@@ -201,7 +201,7 @@ async function getEmbedding(text) {
 async function searchChunks(embedding, count = 5) {
   const supabase = getSupabase();
   const { data, error } = await supabase.rpc("match_chunks", {
-    query_embedding: JSON.stringify(embedding),
+    query_embedding: embedding,
     match_count: count,
   });
 
@@ -250,10 +250,13 @@ export default async (req) => {
     }
 
     // 1. Embed the user's question
+    console.log("[chat] embedding question...");
     const embedding = await getEmbedding(message.trim());
 
     // 2. Search for relevant chunks
+    console.log("[chat] searching chunks...");
     const chunks = await searchChunks(embedding, 5);
+    console.log("[chat] found", chunks.length, "chunks");
 
     // 3. Build RAG context from retrieved chunks
     let ragContext = "";
