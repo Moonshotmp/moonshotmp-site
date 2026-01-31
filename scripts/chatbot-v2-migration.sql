@@ -121,3 +121,72 @@ CREATE TABLE IF NOT EXISTS chat_logs (
   flag_reason TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- ---------------------------------------------------------------------------
+-- 6. Rate limiting table + atomic check function
+-- ---------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS chat_rate_limits (
+  ip TEXT PRIMARY KEY,
+  request_count INT DEFAULT 1,
+  window_start TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_chat_rate_limits_window
+  ON chat_rate_limits (window_start);
+
+CREATE OR REPLACE FUNCTION check_rate_limit(
+  client_ip TEXT,
+  max_requests INT DEFAULT 20,
+  window_seconds INT DEFAULT 600
+)
+RETURNS TABLE (allowed BOOLEAN, current_count INT)
+LANGUAGE plpgsql AS $$
+DECLARE
+  v_count INT;
+  v_window_start TIMESTAMPTZ;
+BEGIN
+  -- Try to get existing record
+  SELECT rl.request_count, rl.window_start
+    INTO v_count, v_window_start
+    FROM chat_rate_limits rl
+   WHERE rl.ip = client_ip
+   FOR UPDATE;
+
+  IF NOT FOUND THEN
+    -- First request from this IP
+    INSERT INTO chat_rate_limits (ip, request_count, window_start)
+    VALUES (client_ip, 1, NOW());
+    allowed := TRUE;
+    current_count := 1;
+    RETURN NEXT;
+    RETURN;
+  END IF;
+
+  -- Check if window has expired
+  IF v_window_start + (window_seconds || ' seconds')::INTERVAL < NOW() THEN
+    -- Reset window
+    UPDATE chat_rate_limits
+       SET request_count = 1, window_start = NOW()
+     WHERE ip = client_ip;
+    allowed := TRUE;
+    current_count := 1;
+    RETURN NEXT;
+    RETURN;
+  END IF;
+
+  -- Window still active — increment and check
+  v_count := v_count + 1;
+  UPDATE chat_rate_limits SET request_count = v_count WHERE ip = client_ip;
+
+  IF v_count > max_requests THEN
+    allowed := FALSE;
+  ELSE
+    allowed := TRUE;
+  END IF;
+
+  current_count := v_count;
+  RETURN NEXT;
+  RETURN;
+END;
+$$;

@@ -263,15 +263,16 @@
 
       removeTypingIndicator();
 
+      const data = await resp.json();
+
       if (!resp.ok) {
         addMessage(
           "assistant",
-          "Sorry, something went wrong. Please try again or contact us at 847-499-1266."
+          data.reply || "Sorry, something went wrong. Please try again or contact us at 847-499-1266."
         );
         return;
       }
 
-      const data = await resp.json();
       const reply = data.reply || "Sorry, I couldn't generate a response.";
       const sources = data.sources || [];
       addMessage("assistant", reply, sources);

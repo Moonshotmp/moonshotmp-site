@@ -22,6 +22,8 @@ const MAX_HISTORY = 10;
 const LOW_SIMILARITY_THRESHOLD = 0.3;
 const HEDGING_PATTERN =
   /i('m| am) not sure|don't have.*information|contact (the|our) (clinic|team)/i;
+const RATE_LIMIT_MAX = 20; // max requests per window
+const RATE_LIMIT_WINDOW = 600; // window in seconds (10 minutes)
 
 const SYSTEM_PROMPT = `You are the Moonshot Medical and Performance AI assistant. You help prospective and current patients learn about the clinic's services, pricing, team, and programs.
 
@@ -246,6 +248,36 @@ Park Ridge, IL and surrounding communities including Chicago, Des Plaines, Niles
 Moonshot CrossFit operates next door at the same address — offers a continuum from rehab to fitness for patients ready to return to training.`;
 
 // ---------------------------------------------------------------------------
+// Rate limiting
+// ---------------------------------------------------------------------------
+
+function getClientIp(req) {
+  // Netlify provides the real client IP in these headers
+  return (
+    req.headers.get("x-nf-client-connection-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown"
+  );
+}
+
+async function checkRateLimit(ip) {
+  const supabase = getSupabase();
+  const { data, error } = await supabase.rpc("check_rate_limit", {
+    client_ip: ip,
+    max_requests: RATE_LIMIT_MAX,
+    window_seconds: RATE_LIMIT_WINDOW,
+  });
+
+  if (error) {
+    // If rate limit check fails, allow the request (fail open)
+    console.warn("[chat] rate limit check failed:", error.message);
+    return { allowed: true, current_count: 0 };
+  }
+
+  return data?.[0] || { allowed: true, current_count: 0 };
+}
+
+// ---------------------------------------------------------------------------
 // OpenAI helpers
 // ---------------------------------------------------------------------------
 
@@ -449,6 +481,17 @@ export default async (req) => {
 
     if (!message || typeof message !== "string" || !message.trim()) {
       return json(400, { error: "message is required" });
+    }
+
+    // 0. Rate limit check — before any OpenAI calls
+    const clientIp = getClientIp(req);
+    const rateCheck = await checkRateLimit(clientIp);
+    if (!rateCheck.allowed) {
+      console.warn(`[chat] rate limited IP ${clientIp} (${rateCheck.current_count} requests)`);
+      return json(429, {
+        reply: "You're sending messages too quickly. Please wait a few minutes and try again, or call us at 847-499-1266.",
+        sources: [],
+      });
     }
 
     // 1. Rewrite query for better search
