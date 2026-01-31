@@ -17,6 +17,9 @@
   let isOpen = false;
   let isWaiting = false;
   let history = []; // { role: 'user'|'assistant', content: string }
+  let savedScrollY = 0;
+  let vpResizeRAF = null;
+  const isMobile = () => window.innerWidth < 480;
 
   // ---------------------------------------------------------------------------
   // DOM
@@ -24,7 +27,7 @@
 
   const CHAT_API = "/.netlify/functions/chat";
 
-  // Inject styles (minimal — mostly Tailwind, but we need a few custom bits)
+  // Inject styles
   const style = document.createElement("style");
   style.textContent = `
     @keyframes ms-chat-pulse {
@@ -287,10 +290,8 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Events
+  // Mobile viewport / keyboard handling
   // ---------------------------------------------------------------------------
-
-  let savedScrollY = 0;
 
   // Block touch scroll on everything except the messages area
   function blockTouch(e) {
@@ -298,23 +299,51 @@
     e.preventDefault();
   }
 
+  // Resize panel to match visual viewport (keyboard-aware)
+  function syncViewportHeight() {
+    if (vpResizeRAF) return;
+    vpResizeRAF = requestAnimationFrame(() => {
+      vpResizeRAF = null;
+      if (!isMobile() || !isOpen) return;
+
+      const vv = window.visualViewport;
+      if (!vv) return;
+
+      // Set panel height to visual viewport height and offset from top
+      panel.style.height = vv.height + "px";
+      panel.style.top = vv.offsetTop + "px";
+
+      // Keep messages scrolled to bottom
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Events
+  // ---------------------------------------------------------------------------
+
   function togglePanel() {
     isOpen = !isOpen;
     panel.classList.toggle("ms-hidden", !isOpen);
     btn.classList.remove("ms-chat-pulse");
 
     // Mobile: hide button, lock body scroll, block touch
-    if (window.innerWidth < 480) {
+    if (isMobile()) {
       btn.style.display = isOpen ? "none" : "";
       if (isOpen) {
         savedScrollY = window.scrollY;
+        document.documentElement.style.overflow = "hidden";
         document.body.style.position = "fixed";
         document.body.style.top = -savedScrollY + "px";
         document.body.style.left = "0";
         document.body.style.right = "0";
         document.body.style.overflow = "hidden";
         document.addEventListener("touchmove", blockTouch, { passive: false });
+
+        // Set initial height from visual viewport
+        syncViewportHeight();
       } else {
+        document.documentElement.style.overflow = "";
         document.body.style.position = "";
         document.body.style.top = "";
         document.body.style.left = "";
@@ -331,7 +360,7 @@
         showDisclaimer();
       }
       // Delay focus on mobile to avoid jarring keyboard pop
-      if (window.innerWidth >= 480) {
+      if (!isMobile()) {
         inputEl.focus();
       }
     }
@@ -353,17 +382,30 @@
     if (e.key === "Escape" && isOpen) togglePanel();
   });
 
-  // Mobile: full-screen bottom sheet that adapts to keyboard
+  // iOS: reset viewport height after keyboard dismissal
+  inputEl.addEventListener("blur", () => {
+    if (!isMobile()) return;
+    setTimeout(() => syncViewportHeight(), 150);
+  });
+
+  // ---------------------------------------------------------------------------
+  // Layout
+  // ---------------------------------------------------------------------------
+
   function adjustLayout() {
-    if (window.innerWidth < 480) {
+    if (isMobile()) {
       panel.style.left = "0";
       panel.style.right = "0";
       panel.style.width = "auto";
       panel.style.bottom = "0";
       panel.style.top = "0";
       panel.style.borderRadius = "0";
-      panel.style.height = "100%";
       panel.style.maxHeight = "none";
+
+      // Set height from visual viewport
+      const vv = window.visualViewport;
+      const h = vv ? vv.height : window.innerHeight;
+      panel.style.height = h + "px";
     } else {
       panel.style.left = "";
       panel.style.right = "1.25rem";
@@ -378,4 +420,12 @@
 
   adjustLayout();
   window.addEventListener("resize", adjustLayout);
+
+  // Attach visualViewport listeners — this is the only reliable way
+  // to track iOS Safari keyboard open/close
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", syncViewportHeight);
+    window.visualViewport.addEventListener("scroll", syncViewportHeight);
+  }
+
 })();
