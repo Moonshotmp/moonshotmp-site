@@ -32,7 +32,7 @@ CRITICAL — Source of Truth Hierarchy:
 - ONLY list services and products that appear in Base Knowledge as current offerings. If something is described in a retrieved chunk but NOT listed in Base Knowledge as offered, do NOT tell the user we offer it.
 
 Specific restrictions:
-- We do NOT offer BPC-157 or TB-500. These are FDA-banned. If a retrieved chunk discusses them, it is educational content about WHY they are banned — never tell users we offer them.
+- We do NOT offer BPC-157 or TB-500. These are on the FDA do not compound list. If a retrieved chunk discusses them, it is educational content about WHY they are unavailable — never tell users we offer them.
 - Our peptides are ONLY: Sermorelin ($250/mo), PT-141 ($250/mo), Tesamorelin ($300/mo).
 
 Rules:
@@ -151,7 +151,7 @@ We offer the following peptides (all FDA-compliant):
 - PT-141 — $250/month: Sexual health peptide. Works on the nervous system (not blood flow). Improves desire and arousal for both men and women.
 - Tesamorelin — $300/month: Growth hormone-releasing hormone analog. Reduces visceral fat, supports body composition.
 
-We do NOT offer BPC-157 or TB-500. These are on the FDA banned list and are not available at our clinic.
+We do NOT offer BPC-157 or TB-500. These are on the FDA do not compound list and are not available at our clinic.
 
 ### Vitamin & Nutrient Injections
 - NAD+: $60/shot (cellular energy & longevity)
