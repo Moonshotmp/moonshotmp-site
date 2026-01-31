@@ -263,4 +263,22 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/chiropractic/</loc>
+    <lastmod>2025-01-31</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/thyroid-optimization/</loc>
+    <lastmod>2025-01-31</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/nad-vitamin-injections/</loc>
+    <lastmod>2025-01-31</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
