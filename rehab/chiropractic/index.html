@@ -17,10 +17,8 @@
     <meta name="twitter:description" content="Evidence-based chiropractic care with McKenzie Method certification.">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preload" href="/images/rehab/michaeladjustment.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -62,7 +60,7 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
 
@@ -79,7 +77,7 @@
                         <a href="/booking/rehab/" class="btn-primary">Book Appointment</a>
                     </div>
                     <div class="aspect-square bg-brand-slate rounded-sm overflow-hidden">
-                        <img src="/images/rehab/michaeladjustment.webp" alt="Dr. Michael performing chiropractic adjustment" class="w-full h-full object-cover" loading="lazy">
+                        <img src="/images/rehab/michaeladjustment.webp" alt="Dr. Michael performing chiropractic adjustment" class="w-full h-full object-cover" width="965" height="551" fetchpriority="high">
                     </div>
                 </div>
             </div>
@@ -116,7 +114,7 @@
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="order-2 md:order-1 aspect-video bg-brand-slate rounded-sm overflow-hidden">
-                        <img src="/images/michael.webp" alt="Dr. Michael chiropractic treatment" class="w-full h-full object-cover" loading="lazy">
+                        <img src="/images/michael.webp" alt="Dr. Michael chiropractic treatment" class="w-full h-full object-cover" width="1080" height="1350" loading="lazy">
                     </div>
                     <div class="order-1 md:order-2">
                         <h2 class="text-3xl font-bold text-brand-light mb-6">OUR APPROACH</h2>

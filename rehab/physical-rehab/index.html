@@ -17,10 +17,8 @@
     <meta name="twitter:description" content="Comprehensive rehab to get you back to doing what you love.">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preload" href="/images/rehab/michaelstretching.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -57,7 +55,7 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
 
@@ -74,7 +72,7 @@
                         <a href="/booking/rehab/" class="btn-primary">Book Evaluation</a>
                     </div>
                     <div class="aspect-square bg-brand-slate rounded-sm overflow-hidden">
-                        <img src="/images/rehab/michaelstretching.webp" alt="Dr. Michael guiding patient through stretching exercise" class="w-full h-full object-cover" loading="lazy">
+                        <img src="/images/rehab/michaelstretching.webp" alt="Dr. Michael guiding patient through stretching exercise" class="w-full h-full object-cover" width="751" height="551" fetchpriority="high">
                     </div>
                 </div>
             </div>
@@ -156,7 +154,7 @@
                         </div>
                     </div>
                     <div class="aspect-square bg-brand-slate rounded-sm overflow-hidden">
-                        <img src="/images/rehab/michaelstretch2.webp" alt="Patient performing corrective exercise" class="w-full h-full object-cover" loading="lazy">
+                        <img src="/images/rehab/michaelstretch2.webp" alt="Patient performing corrective exercise" class="w-full h-full object-cover" width="605" height="686" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -216,7 +214,7 @@
                 <div class="max-w-md mx-auto">
                     <div class="bg-brand-dark p-6 rounded-sm flex gap-6">
                         <div class="w-24 h-24 bg-brand-slate rounded-sm flex-shrink-0 overflow-hidden">
-                            <img src="/images/Michaelblack.webp" alt="Dr. Michael" class="w-full h-full object-cover">
+                            <img src="/images/Michaelblack.webp" alt="Dr. Michael" class="w-full h-full object-cover" width="1333" height="2000" loading="lazy">
                         </div>
                         <div>
                             <h3 class="font-bold text-brand-light">Dr. Michael</h3>

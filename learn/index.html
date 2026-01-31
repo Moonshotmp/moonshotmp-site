@@ -19,10 +19,8 @@
     <meta name="twitter:image" content="https://moonshotmp.com/images/moonshotmedical_cloud.png">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preload" href="/images/menopausehappy.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -81,7 +79,7 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
 
@@ -103,7 +101,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <a href="/learn/menopause-perimenopause/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/menopausehappy.webp" alt="Menopause guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/menopausehappy.webp" alt="Menopause guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1333" fetchpriority="high">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">Menopause & Perimenopause Guide</h3>
@@ -113,7 +111,7 @@
 
                     <a href="/learn/testosterone-for-women/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/testosterone.webp" alt="Testosterone for women" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/testosterone.webp" alt="Testosterone for women" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1050" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">Testosterone for Women</h3>
@@ -123,7 +121,7 @@
 
                     <a href="/learn/whi-study-hrt-truth/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/hrt-plan.webp" alt="HRT myths vs facts" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/hrt-plan.webp" alt="HRT myths vs facts" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1155" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">HRT: Myths vs Facts</h3>
@@ -133,7 +131,7 @@
 
                     <a href="/learn/progesterone/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/progesterone.webp" alt="Progesterone guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/progesterone.webp" alt="Progesterone guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1050" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">Progesterone: The Forgotten Hormone</h3>
@@ -143,7 +141,7 @@
 
                     <a href="/learn/pcos/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/womenshormones1.webp" alt="PCOS guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/womenshormones1.webp" alt="PCOS guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="3000" height="2000" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">PCOS: Beyond the Diagnosis</h3>
@@ -162,7 +160,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <a href="/learn/low-testosterone-symptoms/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/mensh.webp" alt="Low testosterone symptoms" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/mensh.webp" alt="Low testosterone symptoms" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="3000" height="2003" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Low Testosterone Symptoms</h3>
@@ -172,7 +170,7 @@
 
                     <a href="/learn/trt-vs-steroids/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/healthy-male.webp" alt="TRT vs Steroids" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/healthy-male.webp" alt="TRT vs Steroids" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="1920" height="1282" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">TRT vs Steroids: Know the Difference</h3>
@@ -182,7 +180,7 @@
 
                     <a href="/medical/trt-vs-enclomiphene/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/battleropes.webp" alt="TRT vs Enclomiphene" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/battleropes.webp" alt="TRT vs Enclomiphene" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1500" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">TRT vs Enclomiphene</h3>
@@ -201,7 +199,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <a href="/learn/semaglutide-vs-tirzepatide/" class="group block bg-brand-dark border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/glp1-injection.webp" alt="Semaglutide vs Tirzepatide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/glp1-injection.webp" alt="Semaglutide vs Tirzepatide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1334" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Semaglutide vs Tirzepatide</h3>
@@ -211,7 +209,7 @@
 
                     <a href="/medical/glp1-vs-other-weight-loss/" class="group block bg-brand-dark border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/weighloss.webp" alt="GLP-1 vs other methods" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/weighloss.webp" alt="GLP-1 vs other methods" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="1200" height="800" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">GLP-1 vs Other Weight Loss Methods</h3>
@@ -230,7 +228,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <a href="/learn/peptides/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/peptide-vial.webp" alt="Peptides explained" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/peptide-vial.webp" alt="Peptides explained" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1499" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Peptides Explained</h3>
@@ -240,7 +238,7 @@
 
                     <a href="/learn/nad-vitamin-injections/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/nad-vitamin-injections.webp" alt="NAD+ and vitamin injections" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/nad-vitamin-injections.webp" alt="NAD+ and vitamin injections" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="1200" height="675" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">NAD+ & Vitamin Injections</h3>
@@ -259,7 +257,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <a href="/learn/chiropractic/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/michael.webp" alt="Chiropractic care and McKenzie Method" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/michael.webp" alt="Chiropractic care and McKenzie Method" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="1080" height="1350" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">Chiropractic & the McKenzie Method</h3>
@@ -269,7 +267,7 @@
 
                     <a href="/learn/dry-needling/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/dry-needling.webp" alt="Dry needling guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/dry-needling.webp" alt="Dry needling guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="1200" height="632" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">Dry Needling</h3>
@@ -279,7 +277,7 @@
 
                     <a href="/learn/trigger-point-injections/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/triggerpoint.webp" alt="Trigger point injections guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/triggerpoint.webp" alt="Trigger point injections guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="3000" height="1687" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">Trigger Point Injections</h3>
@@ -289,7 +287,7 @@
 
                     <a href="/learn/shockwave-therapy/" class="group block bg-white border border-brand-slate/10 hover:border-brand-slate/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate/10 overflow-hidden">
-                            <img src="/images/shockwave-therapy.webp" alt="Shockwave therapy guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/shockwave-therapy.webp" alt="Shockwave therapy guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="1200" height="800" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg mb-2 group-hover:text-brand-slate transition">Shockwave Therapy (ESWT)</h3>
@@ -308,7 +306,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <a href="/learn/thyroid-optimization/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/thyroid-optimization.webp" alt="Thyroid optimization guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/thyroid-optimization.webp" alt="Thyroid optimization guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="1200" height="675" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Thyroid Optimization</h3>
@@ -318,7 +316,7 @@
 
                     <a href="/learn/optimal-vs-normal/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/hormoneblood.webp" alt="Optimal vs normal lab ranges" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/hormoneblood.webp" alt="Optimal vs normal lab ranges" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1333" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Optimal vs Normal Lab Ranges</h3>
@@ -328,7 +326,7 @@
 
                     <a href="/medical/dexa-scan/dexa-vs-inbody/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/dexamachine.webp" alt="DEXA vs InBody" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/dexamachine.webp" alt="DEXA vs InBody" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2223" height="1572" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">DEXA vs InBody vs Calipers</h3>
@@ -338,7 +336,7 @@
 
                     <a href="/learn/understanding-blood-results/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/bloodresults.webp" alt="Understanding blood results" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/bloodresults.webp" alt="Understanding blood results" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1333" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Understanding Your Blood Results</h3>
@@ -348,7 +346,7 @@
 
                     <a href="/learn/first-visit/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/blood.webp" alt="First visit" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/blood.webp" alt="First visit" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="3000" height="2000" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">What to Expect: Your First Visit</h3>
@@ -367,7 +365,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <a href="/medical/moonshot-vs-typical-clinic/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/bloodvials.webp" alt="Moonshot vs typical clinic" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/bloodvials.webp" alt="Moonshot vs typical clinic" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2000" height="1333" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Moonshot vs Typical Clinics</h3>
@@ -377,7 +375,7 @@
 
                     <a href="/ourstory/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/Beforeafter.webp" alt="Tom's story" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/Beforeafter.webp" alt="Tom's story" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="3000" height="1387" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">Tom's Story</h3>

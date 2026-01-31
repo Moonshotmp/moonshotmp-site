@@ -19,10 +19,8 @@
     <meta name="twitter:description" content="Meet the team behind Moonshot Medical and Performance.">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preload" href="/images/Missyblack.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -169,7 +167,7 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
 
@@ -267,7 +265,7 @@
                     <!-- Missy -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/Missyblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MISSY'" alt="Missy - NP" class="w-full h-full object-cover object-top">
+                            <img src="/images/Missyblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MISSY'" alt="Missy - NP" class="w-full h-full object-cover object-top" width="1333" height="2000" fetchpriority="high">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">MISSY</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Medical Director / NP</p>
@@ -280,7 +278,7 @@
                     <!-- Dr. Michael -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/Michaelblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MICHAEL'" alt="Dr. Michael" class="w-full h-full object-cover object-top">
+                            <img src="/images/Michaelblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MICHAEL'" alt="Dr. Michael" class="w-full h-full object-cover object-top" width="1333" height="2000" loading="lazy">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">DR. MICHAEL</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">DC, MSc, DACBN</p>
@@ -293,7 +291,7 @@
                     <!-- Sarah RN -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/Sarahblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=SARAH'" alt="Sarah - RN" class="w-full h-full object-cover object-top">
+                            <img src="/images/Sarahblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=SARAH'" alt="Sarah - RN" class="w-full h-full object-cover object-top" width="1333" height="2000" loading="lazy">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">SARAH</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">RN, MSN</p>
@@ -306,7 +304,7 @@
                     <!-- Melissa -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/MelissaBlack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MELISSA'" alt="Melissa" class="w-full h-full object-cover object-top">
+                            <img src="/images/MelissaBlack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MELISSA'" alt="Melissa" class="w-full h-full object-cover object-top" width="1333" height="2000" loading="lazy">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">MELISSA</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Medical Assistant</p>
@@ -319,7 +317,7 @@
                     <!-- Sarah Performance -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/Sarah2black.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=SARAH'" alt="Sarah - Performance" class="w-full h-full object-cover object-top">
+                            <img src="/images/Sarah2black.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=SARAH'" alt="Sarah - Performance" class="w-full h-full object-cover object-top" width="1333" height="2000" loading="lazy">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">SARAH</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Performance Specialist</p>
@@ -332,7 +330,7 @@
                     <!-- Maria -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/Mariablack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MARIA'" alt="Maria" class="w-full h-full object-cover object-top">
+                            <img src="/images/Mariablack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=MARIA'" alt="Maria" class="w-full h-full object-cover object-top" width="1333" height="2000" loading="lazy">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">MARIA</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Patient Experience & Brand Lead</p>
@@ -344,7 +342,7 @@
                     <!-- Niko -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/NikoBlack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=NIKO'" alt="Niko" class="w-full h-full object-cover object-top">
+                            <img src="/images/NikoBlack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=NIKO'" alt="Niko" class="w-full h-full object-cover object-top" width="1333" height="2000" loading="lazy">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">NIKO</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Partner, Growth & Partnerships</p>
@@ -356,7 +354,7 @@
                     <!-- Tom -->
                     <div class="bg-white/5 border border-white/5 p-6 hover:border-brand-gray/30 transition duration-300 group text-center">
                         <div class="aspect-square bg-brand-slate mb-6 overflow-hidden grayscale group-hover:grayscale-0 transition duration-500">
-                            <img src="/images/Tomblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=TOM'" alt="Tom" class="w-full h-full object-cover object-top">
+                            <img src="/images/Tomblack.webp" onerror="this.src='https://placehold.co/400x400/2C353E/B2BFBE?text=TOM'" alt="Tom" class="w-full h-full object-cover object-top" width="1333" height="2000" loading="lazy">
                         </div>
                         <h3 class="text-xl font-bold text-brand-light">TOM</h3>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mt-1">Partner, Strategy & Vision</p>

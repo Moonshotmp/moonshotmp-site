@@ -19,10 +19,8 @@
     <meta name="twitter:image" content="https://moonshotmp.com/images/tired-man.webp">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preload" href="/images/tired-man.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -121,7 +119,7 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
 
@@ -138,7 +136,7 @@
                         </p>
                     </div>
                     <div class="aspect-[4/3] bg-brand-slate rounded-sm overflow-hidden">
-                        <img src="/images/tired-man.webp" alt="Tired man resting - a common sign of low testosterone" class="w-full h-full object-cover">
+                        <img src="/images/tired-man.webp" alt="Tired man resting - a common sign of low testosterone" class="w-full h-full object-cover" width="1920" height="1110" fetchpriority="high">
                     </div>
                 </div>
             </div>
@@ -177,7 +175,7 @@
 
                 <!-- Brain Fog Image -->
                 <div class="mb-12 rounded-sm overflow-hidden">
-                    <img src="/images/brain-fog.webp" alt="Man experiencing brain fog and difficulty concentrating at work" class="w-full h-64 md:h-80 object-cover">
+                    <img src="/images/brain-fog.webp" alt="Man experiencing brain fog and difficulty concentrating at work" class="w-full h-64 md:h-80 object-cover" width="1920" height="1282" loading="lazy">
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
@@ -317,7 +315,7 @@
                         </p>
                     </div>
                     <div class="rounded-sm overflow-hidden">
-                        <img src="/images/gym-fatigue.webp" alt="Man fatigued at the gym" class="w-full h-64 object-cover">
+                        <img src="/images/gym-fatigue.webp" alt="Man fatigued at the gym" class="w-full h-64 object-cover" width="1920" height="1281" loading="lazy">
                     </div>
                 </div>
 

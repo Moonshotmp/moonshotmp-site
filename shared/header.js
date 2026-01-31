@@ -12,16 +12,18 @@
  */
 
 (function() {
-    // Google Analytics 4
-    const gtagScript = document.createElement('script');
-    gtagScript.async = true;
-    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-TVYS826RW0';
-    document.head.appendChild(gtagScript);
+    // Google Analytics 4 — deferred to avoid competing with critical resources
+    setTimeout(function() {
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-TVYS826RW0';
+        document.head.appendChild(gtagScript);
 
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-TVYS826RW0');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TVYS826RW0');
+    }, 0);
 
     const headerHTML = `
     <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">

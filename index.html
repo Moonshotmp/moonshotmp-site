@@ -30,12 +30,6 @@
 
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/moonshotmptan.png" as="image">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="/shared/tailwind.css">
@@ -104,12 +98,6 @@
                 "longitude": -87.8441
             },
             "geoRadius": "30 mi"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "5.0",
-            "reviewCount": "70",
-            "bestRating": "5"
         },
         "sameAs": [
             "https://www.instagram.com/moonshotmp/"
@@ -304,7 +292,7 @@
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
     <!-- Header (auto-injected) -->
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <!-- Main Content Area -->
     <main class="flex-grow pt-20">

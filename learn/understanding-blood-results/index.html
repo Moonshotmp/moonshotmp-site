@@ -19,10 +19,8 @@
     <meta name="twitter:image" content="https://moonshotmp.com/images/bloodresults.webp">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preload" href="/images/bloodresults.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -65,14 +63,14 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
 
         <!-- Hero -->
         <section class="relative py-20 bg-brand-dark">
             <div class="absolute inset-0 opacity-20">
-                <img src="/images/bloodresults.webp" alt="" class="w-full h-full object-cover">
+                <img src="/images/bloodresults.webp" alt="" class="w-full h-full object-cover" width="2000" height="1333" fetchpriority="high">
             </div>
             <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <span class="inline-block px-4 py-1 bg-white/10 text-brand-gray text-sm font-light tracking-wider mb-6">DIAGNOSTICS</span>
@@ -541,7 +539,7 @@
                 <div class="grid md:grid-cols-3 gap-6">
                     <a href="/learn/first-visit/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/blood.webp" alt="First visit" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/blood.webp" alt="First visit" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="3000" height="2000" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">What to Expect: Your First Visit</h3>
@@ -551,7 +549,7 @@
 
                     <a href="/medical/dexa-scan/dexa-vs-inbody/" class="group block bg-white/5 border border-white/10 hover:border-white/30 transition overflow-hidden">
                         <div class="aspect-[16/9] bg-brand-slate overflow-hidden">
-                            <img src="/images/dexamachine.webp" alt="DEXA vs InBody" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="/images/dexamachine.webp" alt="DEXA vs InBody" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" width="2223" height="1572" loading="lazy">
                         </div>
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-brand-light mb-2 group-hover:text-white transition">DEXA vs InBody vs Calipers</h3>

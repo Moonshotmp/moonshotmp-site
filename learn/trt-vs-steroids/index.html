@@ -19,10 +19,8 @@
     <meta name="twitter:image" content="https://moonshotmp.com/images/healthy-male.webp">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preload" href="/images/healthy-male.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -113,7 +111,7 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
 
@@ -130,7 +128,7 @@
                         </p>
                     </div>
                     <div class="rounded-sm overflow-hidden">
-                        <img src="/images/healthy-male.webp" alt="Fit healthy man outdoors checking fitness watch" class="w-full h-auto">
+                        <img src="/images/healthy-male.webp" alt="Fit healthy man outdoors checking fitness watch" class="w-full h-auto" width="1920" height="1282" fetchpriority="high">
                     </div>
                 </div>
             </div>
@@ -281,7 +279,7 @@
                         <h2 class="text-3xl font-bold text-brand-light mb-8">WHY STEROIDS DAMAGE THE HEART</h2>
                     </div>
                     <div class="rounded-sm overflow-hidden">
-                        <img src="/images/ekg-heart.webp" alt="EKG heart rhythm monitor" class="w-full h-auto">
+                        <img src="/images/ekg-heart.webp" alt="EKG heart rhythm monitor" class="w-full h-auto" width="1920" height="1280" loading="lazy">
                     </div>
                 </div>
 

@@ -25,12 +25,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
+    <link rel="preload" href="/images/Tomblack.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -233,7 +230,7 @@
 </head>
 <body class="bg-brand-light antialiased">
 
-    <script src="/shared/header.js"></script>
+    <script src="/shared/header.js" defer></script>
 
     <!-- MAIN CONTENT (Added pt-20 to clear fixed header) -->
     <main class="pt-20">
@@ -261,7 +258,7 @@
                     <!-- Headshot -->
                     <div class="w-full md:w-2/5 flex justify-center md:justify-end">
                         <div class="relative w-64 h-80 md:w-80 md:h-96 rounded-lg overflow-hidden border-4 border-brand-gray/20 shadow-2xl">
-                            <img src="/images/Tomblack.webp" alt="Tom, Co-Founder of Moonshot Medical & Performance" class="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition duration-500" loading="lazy">
+                            <img src="/images/Tomblack.webp" alt="Tom, Co-Founder of Moonshot Medical & Performance" class="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition duration-500" width="1333" height="2000" fetchpriority="high">
                         </div>
                     </div>
                 </div>
@@ -370,10 +367,10 @@
                     <div class="bg-white p-6 rounded-sm shadow-sm border-t-4 border-brand-slate">
                         <h4 class="font-heading font-bold text-brand-dark mb-4 uppercase tracking-wide">The Bloodwork</h4>
                         <div class="grid grid-cols-2 gap-2 mb-4">
-                            <img src="/images/cholesterol.png" alt="Cholesterol results" class="w-full h-auto rounded-sm border border-brand-gray/20" loading="lazy">
-                            <img src="/images/HDL.png" alt="HDL results" class="w-full h-auto rounded-sm border border-brand-gray/20" loading="lazy">
-                            <img src="/images/LDL.png" alt="LDL results" class="w-full h-auto rounded-sm border border-brand-gray/20" loading="lazy">
-                            <img src="/images/APOB.png" alt="ApoB results" class="w-full h-auto rounded-sm border border-brand-gray/20" loading="lazy">
+                            <img src="/images/cholesterol.png" alt="Cholesterol results" class="w-full h-auto rounded-sm border border-brand-gray/20" width="712" height="532" loading="lazy">
+                            <img src="/images/HDL.png" alt="HDL results" class="w-full h-auto rounded-sm border border-brand-gray/20" width="712" height="522" loading="lazy">
+                            <img src="/images/LDL.png" alt="LDL results" class="w-full h-auto rounded-sm border border-brand-gray/20" width="710" height="524" loading="lazy">
+                            <img src="/images/APOB.png" alt="ApoB results" class="w-full h-auto rounded-sm border border-brand-gray/20" width="712" height="528" loading="lazy">
                         </div>
                         <p class="text-sm text-brand-slate leading-relaxed">
                             We look at trends, not just snapshots. This data allowed us to dial in the protocol safely, ensuring that while performance went up, risk markers (like hematocrit or lipids) stayed managed.
@@ -384,7 +381,7 @@
                     <div class="bg-white p-6 rounded-sm shadow-sm border-t-4 border-brand-slate">
                         <h4 class="font-heading font-bold text-brand-dark mb-4 uppercase tracking-wide">Body Composition</h4>
                         <div class="border border-brand-gray/20 rounded-sm overflow-hidden mb-4">
-                            <img src="/images/Beforeafter.webp" alt="Body composition comparison" class="w-full h-auto" loading="lazy">
+                            <img src="/images/Beforeafter.webp" alt="Body composition comparison" class="w-full h-auto" width="3000" height="1387" loading="lazy">
                         </div>
                         <p class="text-sm text-brand-slate leading-relaxed">
                             This is the nuance the scale misses. We tracked Skeletal Muscle Mass vs. Body Fat Mass to ensure weight loss was actually fat loss, not muscle degradation.
@@ -505,13 +502,13 @@
                          <h4 class="text-sm font-bold text-brand-gray uppercase tracking-widest mb-4 border-l-2 border-brand-gray pl-3">July 21, 2025</h4>
                          <div class="grid grid-cols-3 gap-4">
                             <div class="bg-black/50 aspect-[3/4]">
-                                <img src="/images/beforefrontfullbody.webp" alt="Earlier phase front view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                                <img src="/images/beforefrontfullbody.webp" alt="Earlier phase front view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition" width="900" height="1200">
                             </div>
                             <div class="bg-black/50 aspect-[3/4]">
-                                <img src="/images/beforeside.webp" alt="Earlier phase side view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                                <img src="/images/beforeside.webp" alt="Earlier phase side view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition" width="900" height="1200">
                             </div>
                             <div class="bg-black/50 aspect-[3/4]">
-                                <img src="/images/beforeback.webp" alt="Earlier phase back view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                                <img src="/images/beforeback.webp" alt="Earlier phase back view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition" width="2250" height="3000">
                             </div>
                          </div>
                      </div>
@@ -521,13 +518,13 @@
                         <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-4 border-l-2 border-white pl-3">November 2, 2025</h4>
                         <div class="grid grid-cols-3 gap-4">
                            <div class="bg-black/50 aspect-[3/4]">
-                               <img src="/images/afterfrontfullbody.webp" alt="Later phase front view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                               <img src="/images/afterfrontfullbody.webp" alt="Later phase front view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition" width="2250" height="3000">
                            </div>
                            <div class="bg-black/50 aspect-[3/4]">
-                               <img src="/images/afterside.webp" alt="Later phase side view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                               <img src="/images/afterside.webp" alt="Later phase side view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition" width="2250" height="3000">
                            </div>
                            <div class="bg-black/50 aspect-[3/4]">
-                               <img src="/images/afterback.webp" alt="Later phase back view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                               <img src="/images/afterback.webp" alt="Later phase back view" loading="lazy" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition" width="2250" height="3000">
                            </div>
                         </div>
                     </div>
@@ -619,7 +616,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                 <div>
                     <a href="/" class="flex items-center gap-2 mb-2">
-                         <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain" loading="lazy">
+                         <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain" width="2370" height="1996" loading="lazy">
                     </a>
                     <div class="text-brand-light font-heading font-bold text-xl tracking-widest">Moonshot Medical and Performance</div>
                     <p class="text-brand-gray text-xs mt-2 max-w-xs">
