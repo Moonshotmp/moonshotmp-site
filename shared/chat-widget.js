@@ -1,6 +1,6 @@
 /*
- * Moonshot Chat Widget
- * ====================
+ * Moonshot Chat Widget (v2)
+ * =========================
  * Floating AI assistant powered by RAG.
  * Loaded dynamically by footer.js on all public pages.
  */
@@ -41,6 +41,28 @@
     .ms-typing-dot:nth-child(3) { animation-delay: 0.4s; }
     #ms-chat-panel { transition: opacity 0.2s, transform 0.2s; }
     #ms-chat-panel.ms-hidden { opacity: 0; transform: translateY(12px) scale(0.95); pointer-events: none; }
+    .ms-source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px 8px;
+      font-size: 11px;
+      line-height: 1.4;
+      color: rgba(178, 191, 190, 0.8);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ms-source-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
+    }
   `;
   document.head.appendChild(style);
 
@@ -109,16 +131,19 @@
   // Message rendering
   // ---------------------------------------------------------------------------
 
-  function addMessage(role, text) {
+  function addMessage(role, text, sources) {
     const wrapper = document.createElement("div");
     wrapper.className =
       role === "user" ? "flex justify-end" : "flex justify-start";
 
+    const container = document.createElement("div");
+    container.className = "max-w-[85%]";
+
     const bubble = document.createElement("div");
     bubble.className =
       role === "user"
-        ? "max-w-[85%] bg-brand-slate text-brand-light text-sm px-3 py-2 rounded-lg rounded-br-sm"
-        : "max-w-[85%] bg-white/5 text-brand-light text-sm px-3 py-2 rounded-lg rounded-bl-sm";
+        ? "bg-brand-slate text-brand-light text-sm px-3 py-2 rounded-lg rounded-br-sm"
+        : "bg-white/5 text-brand-light text-sm px-3 py-2 rounded-lg rounded-bl-sm";
 
     // Simple markdown-like rendering for assistant messages
     if (role === "assistant") {
@@ -127,7 +152,27 @@
       bubble.textContent = text;
     }
 
-    wrapper.appendChild(bubble);
+    container.appendChild(bubble);
+
+    // Render source pills below assistant messages
+    if (role === "assistant" && sources && sources.length > 0) {
+      const sourcesEl = document.createElement("div");
+      sourcesEl.className = "flex flex-wrap gap-1 mt-1.5";
+
+      for (const src of sources) {
+        const pill = document.createElement("a");
+        pill.href = "https://moonshotmp.com" + src.url;
+        pill.target = "_blank";
+        pill.rel = "noopener";
+        pill.className = "ms-source-pill";
+        pill.textContent = (src.title || src.url) + " \u2192";
+        sourcesEl.appendChild(pill);
+      }
+
+      container.appendChild(sourcesEl);
+    }
+
+    wrapper.appendChild(container);
     messagesEl.appendChild(wrapper);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
@@ -225,7 +270,8 @@
 
       const data = await resp.json();
       const reply = data.reply || "Sorry, I couldn't generate a response.";
-      addMessage("assistant", reply);
+      const sources = data.sources || [];
+      addMessage("assistant", reply, sources);
       history.push({ role: "assistant", content: reply });
     } catch (err) {
       removeTypingIndicator();

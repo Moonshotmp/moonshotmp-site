@@ -1,6 +1,6 @@
-// RAG Chat API — Moonshot Medical AI Assistant
+// RAG Chat API — Moonshot Medical AI Assistant (v2)
 // POST { message: string, history?: [{ role, content }] }
-// Returns { reply: string }
+// Returns { reply: string, sources: [{ title, url }] }
 
 import { getSupabase } from "./shared/supabase.js";
 
@@ -17,7 +17,11 @@ const json = (status, body) =>
 
 const EMBEDDING_MODEL = "text-embedding-3-small";
 const CHAT_MODEL = "gpt-4o-mini";
+const REWRITE_MODEL = "gpt-4o-mini";
 const MAX_HISTORY = 10;
+const LOW_SIMILARITY_THRESHOLD = 0.3;
+const HEDGING_PATTERN =
+  /i('m| am) not sure|don't have.*information|contact (the|our) (clinic|team)/i;
 
 const SYSTEM_PROMPT = `You are the Moonshot Medical and Performance AI assistant. You help prospective and current patients learn about the clinic's services, pricing, team, and programs.
 
@@ -27,11 +31,7 @@ Rules:
 - Be friendly, direct, and helpful. Match the clinic's tone: confident, no-BS, evidence-based.
 - Keep answers concise — 2-4 sentences for simple questions, more for detailed clinical questions.
 - When discussing pricing, always mention exact prices from the context.
-- LINKING RULES (CRITICAL — follow exactly):
-  - When your answer uses information from a retrieved content chunk, include a link using ONLY the exact page_url from the [From: ...] tag. NEVER invent or guess URLs.
-  - Format: "Learn more: [Page Title](https://moonshotmp.com{exact_page_url_from_context})"
-  - Example: If context says [From: Blood Panels (/medical/blood-panels/)], link to https://moonshotmp.com/medical/blood-panels/ — NOT /medical/comprehensive-blood-panels/ or any other made-up path.
-  - Only link to URLs that appear explicitly in the provided context. If no URL is available, don't link.
+- Do NOT include any links or URLs in your response. The chat interface will automatically display source links below your answer. Never generate markdown links.
 - Always end clinical/medical answers with: "This is general information — for personalized guidance, book a consultation with our team."
 - Never provide specific medical diagnoses or treatment recommendations for the user's personal health.
 - If asked about topics unrelated to Moonshot Medical, politely redirect to clinic-related topics.`;
@@ -183,6 +183,10 @@ Park Ridge, IL and surrounding communities including Chicago, Des Plaines, Niles
 ## Related Business
 Moonshot CrossFit operates next door at the same address.`;
 
+// ---------------------------------------------------------------------------
+// OpenAI helpers
+// ---------------------------------------------------------------------------
+
 async function getEmbedding(text) {
   const resp = await fetch("https://api.openai.com/v1/embeddings", {
     method: "POST",
@@ -202,7 +206,89 @@ async function getEmbedding(text) {
   return data.data[0].embedding;
 }
 
-async function searchChunks(embedding, count = 5) {
+async function rewriteQuery(message, history) {
+  const contextMessages = [];
+  if (Array.isArray(history)) {
+    const recent = history.slice(-2);
+    for (const msg of recent) {
+      if (msg && typeof msg.content === "string") {
+        contextMessages.push(`${msg.role}: ${msg.content}`);
+      }
+    }
+  }
+
+  const contextBlock = contextMessages.length
+    ? `\nRecent conversation:\n${contextMessages.join("\n")}\n`
+    : "";
+
+  try {
+    const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: REWRITE_MODEL,
+        messages: [
+          {
+            role: "system",
+            content:
+              "Rewrite the user's question into a clear, specific search query for a medical clinic's knowledge base. Include relevant medical/clinical terms. Resolve pronouns using conversation context. Return ONLY the rewritten query, nothing else.",
+          },
+          {
+            role: "user",
+            content: `${contextBlock}User question: ${message}`,
+          },
+        ],
+        temperature: 0,
+        max_tokens: 100,
+      }),
+    });
+
+    if (!resp.ok) {
+      console.warn("[chat] query rewrite failed, using original message");
+      return message;
+    }
+
+    const data = await resp.json();
+    const rewritten = data.choices[0].message.content.trim();
+    console.log(`[chat] rewritten query: "${rewritten}"`);
+    return rewritten;
+  } catch (err) {
+    console.warn("[chat] query rewrite error:", err.message);
+    return message;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Search
+// ---------------------------------------------------------------------------
+
+async function searchChunksHybrid(embedding, queryText, count = 5) {
+  const supabase = getSupabase();
+
+  // Try hybrid search first
+  const { data, error } = await supabase.rpc("match_chunks_hybrid", {
+    query_embedding: embedding,
+    query_text: queryText,
+    match_count: count,
+  });
+
+  if (!error && data?.length) return data;
+
+  if (error) {
+    console.warn(
+      "[chat] hybrid search failed, falling back to vector-only:",
+      error.message
+    );
+  }
+
+  // Fallback to vector-only search
+  return searchChunksVector(embedding, count);
+}
+
+async function searchChunksVector(embedding, count = 5) {
   const supabase = getSupabase();
   const { data, error } = await supabase.rpc("match_chunks", {
     query_embedding: embedding,
@@ -216,6 +302,10 @@ async function searchChunks(embedding, count = 5) {
 
   return data || [];
 }
+
+// ---------------------------------------------------------------------------
+// Chat completion
+// ---------------------------------------------------------------------------
 
 async function getChatCompletion(messages) {
   const resp = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -241,6 +331,52 @@ async function getChatCompletion(messages) {
   return data.choices[0].message.content;
 }
 
+// ---------------------------------------------------------------------------
+// Logging
+// ---------------------------------------------------------------------------
+
+function logQuery({
+  query,
+  rewrittenQuery,
+  reply,
+  topSimilarity,
+  sources,
+}) {
+  const flagged =
+    topSimilarity < LOW_SIMILARITY_THRESHOLD ||
+    HEDGING_PATTERN.test(reply);
+
+  const flagReason = [];
+  if (topSimilarity < LOW_SIMILARITY_THRESHOLD) {
+    flagReason.push(`low_similarity:${topSimilarity.toFixed(3)}`);
+  }
+  if (HEDGING_PATTERN.test(reply)) {
+    flagReason.push("hedging_language");
+  }
+
+  const supabase = getSupabase();
+
+  // Fire-and-forget — don't block the response
+  supabase
+    .from("chat_logs")
+    .insert({
+      query,
+      rewritten_query: rewrittenQuery,
+      reply,
+      top_similarity: topSimilarity,
+      sources: JSON.stringify(sources),
+      flagged,
+      flag_reason: flagReason.length ? flagReason.join(", ") : null,
+    })
+    .then(({ error }) => {
+      if (error) console.warn("[chat] log insert failed:", error.message);
+    });
+}
+
+// ---------------------------------------------------------------------------
+// Handler
+// ---------------------------------------------------------------------------
+
 export default async (req) => {
   if (req.method === "OPTIONS") return json(204, {});
   if (req.method !== "POST") return json(405, { error: "Method Not Allowed" });
@@ -253,16 +389,30 @@ export default async (req) => {
       return json(400, { error: "message is required" });
     }
 
-    // 1. Embed the user's question
-    console.log("[chat] embedding question...");
-    const embedding = await getEmbedding(message.trim());
+    // 1. Rewrite query for better search
+    console.log("[chat] rewriting query...");
+    const searchQuery = await rewriteQuery(message.trim(), history);
 
-    // 2. Search for relevant chunks
-    console.log("[chat] searching chunks...");
-    const chunks = await searchChunks(embedding, 5);
+    // 2. Embed the rewritten query
+    console.log("[chat] embedding query...");
+    const embedding = await getEmbedding(searchQuery);
+
+    // 3. Hybrid search for relevant chunks
+    console.log("[chat] searching chunks (hybrid)...");
+    const chunks = await searchChunksHybrid(embedding, searchQuery, 5);
     console.log("[chat] found", chunks.length, "chunks");
 
-    // 3. Build RAG context from retrieved chunks
+    // 4. Build deduplicated sources array
+    const seenUrls = new Set();
+    const sources = [];
+    for (const c of chunks) {
+      if (c.page_url && !seenUrls.has(c.page_url)) {
+        seenUrls.add(c.page_url);
+        sources.push({ title: c.page_title, url: c.page_url });
+      }
+    }
+
+    // 5. Build RAG context from retrieved chunks
     let ragContext = "";
     if (chunks.length > 0) {
       ragContext =
@@ -275,7 +425,7 @@ export default async (req) => {
           .join("\n\n");
     }
 
-    // 4. Build messages array
+    // 6. Build messages array
     const messages = [
       {
         role: "system",
@@ -301,13 +451,23 @@ export default async (req) => {
       }
     }
 
-    // Add current message
+    // Add current message (original, not rewritten)
     messages.push({ role: "user", content: message.trim() });
 
-    // 5. Get completion
+    // 7. Get completion
     const reply = await getChatCompletion(messages);
 
-    return json(200, { reply });
+    // 8. Log query (fire-and-forget)
+    const topSimilarity = chunks.length > 0 ? chunks[0].similarity : 0;
+    logQuery({
+      query: message.trim(),
+      rewrittenQuery: searchQuery,
+      reply,
+      topSimilarity,
+      sources,
+    });
+
+    return json(200, { reply, sources });
   } catch (err) {
     console.error("[chat] failed:", err);
     return json(500, { error: "Server error" });
