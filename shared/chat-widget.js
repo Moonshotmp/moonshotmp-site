@@ -305,7 +305,10 @@
       if (messagesEl.children.length === 0) {
         showDisclaimer();
       }
-      inputEl.focus();
+      // Delay focus on mobile to avoid jarring keyboard pop
+      if (window.innerWidth >= 480) {
+        inputEl.focus();
+      }
     }
   }
 
@@ -325,27 +328,39 @@
     if (e.key === "Escape" && isOpen) togglePanel();
   });
 
-  // Mobile: make panel full-width and properly sized on small screens
-  function adjustMobile() {
+  // Mobile: full-screen bottom sheet that adapts to keyboard
+  function adjustLayout() {
     if (window.innerWidth < 480) {
       panel.style.left = "0";
       panel.style.right = "0";
       panel.style.width = "auto";
       panel.style.bottom = "0";
+      panel.style.top = "0";
       panel.style.borderRadius = "0";
-      panel.style.height = "70dvh";
+      panel.style.height = "100%";
       panel.style.maxHeight = "none";
     } else {
       panel.style.left = "";
       panel.style.right = "1.25rem";
       panel.style.width = "370px";
       panel.style.bottom = "6rem";
+      panel.style.top = "";
       panel.style.borderRadius = "";
       panel.style.height = "min(520px, calc(100dvh - 8rem))";
       panel.style.maxHeight = "";
     }
   }
 
-  adjustMobile();
-  window.addEventListener("resize", adjustMobile);
+  adjustLayout();
+  window.addEventListener("resize", adjustLayout);
+
+  // On mobile, use visualViewport to resize when keyboard opens
+  if (window.visualViewport && window.innerWidth < 480) {
+    window.visualViewport.addEventListener("resize", () => {
+      if (!isOpen) return;
+      const vv = window.visualViewport;
+      panel.style.height = vv.height + "px";
+      panel.style.top = vv.offsetTop + "px";
+    });
+  }
 })();
