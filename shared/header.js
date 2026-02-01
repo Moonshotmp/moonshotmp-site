@@ -12,6 +12,10 @@
  */
 
 (function() {
+    // GA4 dataLayer queue — available immediately so events fire before gtag loads
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){dataLayer.push(arguments);};
+
     // Google Analytics 4 — deferred to avoid competing with critical resources
     setTimeout(function() {
         const gtagScript = document.createElement('script');
@@ -19,13 +23,12 @@
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-TVYS826RW0';
         document.head.appendChild(gtagScript);
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-TVYS826RW0');
     }, 0);
 
     const headerHTML = `
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand-dark focus:text-brand-light focus:px-4 focus:py-2 focus:border focus:border-white/20">Skip to content</a>
     <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
@@ -94,7 +97,7 @@
                 <div class="p-6 grid grid-cols-5 gap-6">
                   <!-- Men Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Men</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Men</span>
                     <a href="/learn/low-testosterone-symptoms/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Low T Symptoms</a>
                     <a href="/learn/trt-vs-steroids/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT vs Steroids</a>
                     <a href="/medical/trt-vs-enclomiphene/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT vs Enclomiphene</a>
@@ -102,7 +105,7 @@
                   </div>
                   <!-- Women Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Women</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Women</span>
                     <a href="/learn/menopause-perimenopause/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Menopause Guide</a>
                     <a href="/learn/testosterone-for-women/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Testosterone for Women</a>
                     <a href="/learn/progesterone/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Progesterone</a>
@@ -111,21 +114,21 @@
                   </div>
                   <!-- Weight Loss & Peptides Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Weight Loss & Peptides</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Weight Loss & Peptides</span>
                     <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Semaglutide vs Tirzepatide</a>
                     <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">GLP-1 vs Other Methods</a>
                     <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptides Explained</a>
                   </div>
                   <!-- Rehab Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Rehab</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Rehab</span>
                     <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Dry Needling</a>
                     <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Trigger Point Injections</a>
                     <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Shockwave Therapy</a>
                   </div>
                   <!-- Diagnostics Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray/60 uppercase tracking-widest mb-3 font-medium">Diagnostics</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Diagnostics</span>
                     <a href="/learn/optimal-vs-normal/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Optimal vs Normal Ranges</a>
                     <a href="/learn/understanding-blood-results/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Understanding Blood Results</a>
                     <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">DEXA vs InBody</a>
@@ -161,7 +164,7 @@
           </div>
 
           <div class="lg:hidden flex items-center">
-            <button id="mobile-menu-btn" class="text-brand-light hover:text-white focus:outline-none">
+            <button id="mobile-menu-btn" aria-label="Open menu" class="text-brand-light hover:text-white focus:outline-none">
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
               </svg>
@@ -223,26 +226,26 @@
               </svg>
             </button>
             <div id="mobile-learn-submenu" class="bg-black/20 hidden">
-              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide">— Men —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide">— Men —</span>
               <a href="/learn/low-testosterone-symptoms/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Low T Symptoms</a>
               <a href="/learn/trt-vs-steroids/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Steroids</a>
               <a href="/medical/trt-vs-enclomiphene/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Enclomiphene</a>
               <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
-              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Women —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Women —</span>
               <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Menopause Guide</a>
               <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Testosterone for Women</a>
               <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone</a>
               <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS</a>
               <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
-              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Weight Loss & Peptides —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Weight Loss & Peptides —</span>
               <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
               <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
               <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides Explained</a>
-              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Rehab —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Rehab —</span>
               <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
               <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Injections</a>
               <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
-              <span class="block w-full text-brand-gray/50 py-2 text-xs uppercase tracking-wide mt-2">— Diagnostics —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Diagnostics —</span>
               <a href="/learn/optimal-vs-normal/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Optimal vs Normal Ranges</a>
               <a href="/learn/understanding-blood-results/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Understanding Blood Results</a>
               <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA vs InBody</a>
@@ -292,8 +295,10 @@
         if (mobileMenuBtn && mobileMenu) {
             mobileMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
+                const isNowOpen = !mobileMenu.classList.contains('hidden');
+                mobileMenuBtn.setAttribute('aria-label', isNowOpen ? 'Close menu' : 'Open menu');
                 // Close all submenus when closing main menu
-                if (mobileMenu.classList.contains('hidden')) {
+                if (!isNowOpen) {
                     document.querySelectorAll('#mobile-menu [id$="-submenu"]').forEach(el => el.classList.add('hidden'));
                     document.querySelectorAll('#mobile-menu [id$="-arrow"]').forEach(el => el.classList.remove('rotate-180'));
                 }
@@ -375,6 +380,10 @@
                 document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
             }
         });
+
+        // Ensure <main> has id for skip-to-content link
+        const mainEl = document.querySelector('main');
+        if (mainEl && !mainEl.id) mainEl.id = 'main-content';
     }
 
     // Booking Modal HTML
@@ -413,6 +422,7 @@
     window.openBookingModal = function() {
         document.getElementById('booking-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        gtag('event', 'cta_click', {cta_name: 'book_now', page: location.pathname});
     };
 
     window.closeBookingModal = function() {

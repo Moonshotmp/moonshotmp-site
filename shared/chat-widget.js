@@ -356,6 +356,7 @@
     }
 
     if (isOpen) {
+      if (typeof gtag === 'function') gtag('event', 'chat_open');
       // Show disclaimer on first open
       if (messagesEl.children.length === 0) {
         showDisclaimer();
