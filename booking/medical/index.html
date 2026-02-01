@@ -22,6 +22,48 @@
 
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "url": "https://moonshotmp.com/",
+        "telephone": "+1-847-499-1266",
+        "email": "hello@moonshotmp.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "potentialAction": {
+            "@type": "ReserveAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://moonshotmp.com/booking/medical/",
+                "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+            },
+            "result": {
+                "@type": "Reservation",
+                "name": "Medical Optimization Appointment"
+            }
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://moonshotmp.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Booking", "item": "https://moonshotmp.com/booking/"},
+            {"@type": "ListItem", "position": 3, "name": "Book Medical", "item": "https://moonshotmp.com/booking/medical/"}
+        ]
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
