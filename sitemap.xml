@@ -169,7 +169,7 @@
   <!-- Learn / Educational Content -->
   <url>
     <loc>https://moonshotmp.com/learn/</loc>
-    <lastmod>2025-01-31</lastmod>
+    <lastmod>2025-02-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -278,6 +278,36 @@
   <url>
     <loc>https://moonshotmp.com/learn/nad-vitamin-injections/</loc>
     <lastmod>2025-01-31</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/cardiovascular-lipid-optimization/</loc>
+    <lastmod>2025-02-01</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/estrogen-dominance/</loc>
+    <lastmod>2025-02-01</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/hashimotos-thyroiditis/</loc>
+    <lastmod>2025-02-01</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/sleep-optimization/</loc>
+    <lastmod>2025-02-01</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/vitamin-d-micronutrients/</loc>
+    <lastmod>2025-02-01</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
