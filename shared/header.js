@@ -30,7 +30,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
           <a href="/" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-            <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain">
+            <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain" width="237" height="200">
             <div class="hidden sm:block text-brand-light font-heading text-sm tracking-wide leading-tight ml-3">
               MOONSHOT<br>MEDICAL AND PERFORMANCE
             </div>
