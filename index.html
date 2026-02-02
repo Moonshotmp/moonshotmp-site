@@ -30,7 +30,6 @@
 
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/moonshotmptan.png" as="image">
-    <link rel="preload" href="/images/lobby.webp" as="image">
 
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="/shared/tailwind.css">
@@ -299,9 +298,8 @@
     <main class="flex-grow pt-20">
 
         <!-- Hero Section: Router Style -->
-        <section class="relative min-h-[90vh] flex items-center bg-brand-dark py-16 overflow-hidden">
-            <img src="/images/lobby.webp" alt="" class="absolute inset-0 w-full h-full object-cover opacity-[0.15]" aria-hidden="true" loading="eager" width="2356" height="1768">
-            <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-brand-dark/70 to-brand-dark z-0"></div>
+        <section class="relative min-h-[90vh] flex items-center bg-brand-dark bg-texture-concrete bg-fixed py-16">
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/50 via-brand-dark/80 to-brand-dark z-0"></div>
             <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
                 <!-- Logo & Tagline -->
@@ -590,14 +588,21 @@
         </section>
 
         <!-- Why We Built This -->
-        <section class="py-16 bg-brand-light text-brand-dark">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Real Results</p>
-                <h2 class="text-3xl font-bold mb-6">WHY WE BUILT THIS</h2>
-                <p class="text-brand-slate font-light max-w-2xl mx-auto mb-8">
-                    Moonshot exists because one of our partners hit a wall. Training harder wasn't working. The answer was in the data—blood panels, DEXA scans, and targeted interventions. See the actual results.
-                </p>
-                <a href="/ourstory/" class="btn-primary">See Tom's Results →</a>
+        <section class="py-20 bg-brand-light text-brand-dark">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Real Results</p>
+                        <h2 class="text-3xl font-bold mb-6">WHY WE BUILT THIS</h2>
+                        <p class="text-brand-slate font-light mb-8">
+                            Moonshot exists because one of our partners hit a wall. Training harder wasn't working. The answer was in the data—blood panels, DEXA scans, and targeted interventions. See the actual results.
+                        </p>
+                        <a href="/ourstory/" class="btn-primary">See Tom's Results →</a>
+                    </div>
+                    <div class="rounded-sm overflow-hidden shadow-lg">
+                        <img src="/images/lobby.webp" alt="Moonshot Medical and Performance lobby in Park Ridge, IL" class="w-full h-full object-cover" loading="lazy" width="2356" height="1768">
+                    </div>
+                </div>
             </div>
         </section>
 
