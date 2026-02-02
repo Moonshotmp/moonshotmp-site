@@ -1,0 +1,65 @@
+# Netlify 301 Redirect Map — Principle Performance Health → Moonshot Medical & Performance
+# Deploy this file at the root of principleperformancehealth.com
+
+# Services
+/services/chiropractic-services/                          https://moonshotmp.com/rehab/chiropractic/          301
+/services/dry-needling/                                    https://moonshotmp.com/learn/dry-needling/           301
+/services/shockwave-therapy/                               https://moonshotmp.com/learn/shockwave-therapy/      301
+/services/spinal-manipulation/                             https://moonshotmp.com/rehab/chiropractic/          301
+/services/sports-rehab/                                    https://moonshotmp.com/rehab/physical-rehab/        301
+/services/massage-therapy/                                 https://moonshotmp.com/rehab/                       301
+/services/manual-therapy/                                  https://moonshotmp.com/rehab/                       301
+/services/nutrition-counseling/                            https://moonshotmp.com/medical/                     301
+/services/fitness-training/                                https://moonshotmp.com/rehab/                       301
+/services/iastm/                                           https://moonshotmp.com/rehab/                       301
+/services/graston-technique/                               https://moonshotmp.com/rehab/                       301
+/services/pre-post-surgery/                                https://moonshotmp.com/rehab/physical-rehab/        301
+/services/lymphatic-drainage-massage-in-illinois/          https://moonshotmp.com/rehab/                       301
+/services/                                                 https://moonshotmp.com/rehab/                       301
+
+# What We Treat
+/what-we-treat/back-pain-relief-sciatica-pain-relief/     https://moonshotmp.com/rehab/chiropractic/          301
+/what-we-treat/neck-pain/                                  https://moonshotmp.com/rehab/chiropractic/          301
+/what-we-treat/shoulder-pain/                              https://moonshotmp.com/rehab/                       301
+/what-we-treat/hip-and-knee-pain/                          https://moonshotmp.com/rehab/                       301
+/what-we-treat/headaches/                                  https://moonshotmp.com/rehab/chiropractic/          301
+/what-we-treat/sports-injuries/                            https://moonshotmp.com/rehab/physical-rehab/        301
+/what-we-treat/plantar-fasciitis/                          https://moonshotmp.com/learn/shockwave-therapy/     301
+/what-we-treat/running-injuries/                           https://moonshotmp.com/rehab/physical-rehab/        301
+/what-we-treat/tendinitis/                                 https://moonshotmp.com/learn/shockwave-therapy/     301
+/what-we-treat/chronic-pain/                               https://moonshotmp.com/learn/trigger-point-injections/ 301
+/what-we-treat/joint-pain/                                 https://moonshotmp.com/rehab/                       301
+/what-we-treat/nerve-pain/                                 https://moonshotmp.com/rehab/chiropractic/          301
+/what-we-treat/arthritis/                                  https://moonshotmp.com/rehab/                       301
+/what-we-treat/fibromyalgia/                               https://moonshotmp.com/learn/trigger-point-injections/ 301
+/what-we-treat/foot-or-ankle-pain/                         https://moonshotmp.com/learn/shockwave-therapy/     301
+/what-we-treat/elbow-wrist-and-hand-pain/                  https://moonshotmp.com/rehab/                       301
+/what-we-treat/golfing-injuries/                           https://moonshotmp.com/rehab/physical-rehab/        301
+/what-we-treat/bladder-bowel-dysfunction/                  https://moonshotmp.com/rehab/                       301
+/what-we-treat/common-conditions-treated/                  https://moonshotmp.com/rehab/                       301
+/what-we-treat/                                            https://moonshotmp.com/rehab/                       301
+
+# Location Pages
+/chiropractor-near-me-northwest-chicago/                   https://moonshotmp.com/rehab/chiropractic/          301
+/chiropractor-in-niles-il/                                 https://moonshotmp.com/rehab/chiropractic/          301
+/chiropractor-in-des-plaines-il/                           https://moonshotmp.com/rehab/chiropractic/          301
+/chiropractor-in-edison-park-il/                           https://moonshotmp.com/rehab/chiropractic/          301
+/chiropractor-in-norridge-il/                              https://moonshotmp.com/rehab/chiropractic/          301
+/neck-pain-chiropractor-chicago/                           https://moonshotmp.com/rehab/chiropractic/          301
+
+# Info Pages
+/what-is-mdt/                                              https://moonshotmp.com/rehab/chiropractic/          301
+/treatment-approach/                                       https://moonshotmp.com/rehab/                       301
+
+# Staff
+/staff/dr-michael-jeremy-gontarek/                         https://moonshotmp.com/about/                       301
+/staff/                                                    https://moonshotmp.com/about/                       301
+
+# Testimonials stay on landing page
+/testimonial/                                              /                                                   301
+
+# Utility Pages
+/faq/                                                      https://moonshotmp.com/rehab/                       301
+/contact-us/                                               https://moonshotmp.com/contact/                     301
+/request-an-appointment/                                   https://moonshotmp.com/booking/rehab/               301
+/insurance/                                                https://moonshotmp.com/rehab/                       301

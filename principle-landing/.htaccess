@@ -1,0 +1,67 @@
+# Apache 301 Redirect Map — Principle Performance Health → Moonshot Medical & Performance
+# Deploy this file at the root of principleperformancehealth.com if using Apache hosting
+
+RewriteEngine On
+
+# Services
+RewriteRule ^services/chiropractic-services/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^services/dry-needling/?$ https://moonshotmp.com/learn/dry-needling/ [R=301,L]
+RewriteRule ^services/shockwave-therapy/?$ https://moonshotmp.com/learn/shockwave-therapy/ [R=301,L]
+RewriteRule ^services/spinal-manipulation/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^services/sports-rehab/?$ https://moonshotmp.com/rehab/physical-rehab/ [R=301,L]
+RewriteRule ^services/massage-therapy/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^services/manual-therapy/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^services/nutrition-counseling/?$ https://moonshotmp.com/medical/ [R=301,L]
+RewriteRule ^services/fitness-training/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^services/iastm/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^services/graston-technique/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^services/pre-post-surgery/?$ https://moonshotmp.com/rehab/physical-rehab/ [R=301,L]
+RewriteRule ^services/lymphatic-drainage-massage-in-illinois/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^services/?$ https://moonshotmp.com/rehab/ [R=301,L]
+
+# What We Treat
+RewriteRule ^what-we-treat/back-pain-relief-sciatica-pain-relief/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^what-we-treat/neck-pain/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^what-we-treat/shoulder-pain/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^what-we-treat/hip-and-knee-pain/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^what-we-treat/headaches/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^what-we-treat/sports-injuries/?$ https://moonshotmp.com/rehab/physical-rehab/ [R=301,L]
+RewriteRule ^what-we-treat/plantar-fasciitis/?$ https://moonshotmp.com/learn/shockwave-therapy/ [R=301,L]
+RewriteRule ^what-we-treat/running-injuries/?$ https://moonshotmp.com/rehab/physical-rehab/ [R=301,L]
+RewriteRule ^what-we-treat/tendinitis/?$ https://moonshotmp.com/learn/shockwave-therapy/ [R=301,L]
+RewriteRule ^what-we-treat/chronic-pain/?$ https://moonshotmp.com/learn/trigger-point-injections/ [R=301,L]
+RewriteRule ^what-we-treat/joint-pain/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^what-we-treat/nerve-pain/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^what-we-treat/arthritis/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^what-we-treat/fibromyalgia/?$ https://moonshotmp.com/learn/trigger-point-injections/ [R=301,L]
+RewriteRule ^what-we-treat/foot-or-ankle-pain/?$ https://moonshotmp.com/learn/shockwave-therapy/ [R=301,L]
+RewriteRule ^what-we-treat/elbow-wrist-and-hand-pain/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^what-we-treat/golfing-injuries/?$ https://moonshotmp.com/rehab/physical-rehab/ [R=301,L]
+RewriteRule ^what-we-treat/bladder-bowel-dysfunction/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^what-we-treat/common-conditions-treated/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^what-we-treat/?$ https://moonshotmp.com/rehab/ [R=301,L]
+
+# Location Pages
+RewriteRule ^chiropractor-near-me-northwest-chicago/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^chiropractor-in-niles-il/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^chiropractor-in-des-plaines-il/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^chiropractor-in-edison-park-il/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^chiropractor-in-norridge-il/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^neck-pain-chiropractor-chicago/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+
+# Info Pages
+RewriteRule ^what-is-mdt/?$ https://moonshotmp.com/rehab/chiropractic/ [R=301,L]
+RewriteRule ^treatment-approach/?$ https://moonshotmp.com/rehab/ [R=301,L]
+
+# Staff
+RewriteRule ^staff/dr-michael-jeremy-gontarek/?$ https://moonshotmp.com/about/ [R=301,L]
+RewriteRule ^staff/?$ https://moonshotmp.com/about/ [R=301,L]
+
+# Testimonials — stay on landing page
+RewriteRule ^testimonial/?$ / [R=301,L]
+
+# Utility Pages
+RewriteRule ^faq/?$ https://moonshotmp.com/rehab/ [R=301,L]
+RewriteRule ^contact-us/?$ https://moonshotmp.com/contact/ [R=301,L]
+RewriteRule ^request-an-appointment/?$ https://moonshotmp.com/booking/rehab/ [R=301,L]
+RewriteRule ^insurance/?$ https://moonshotmp.com/rehab/ [R=301,L]
