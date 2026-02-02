@@ -18,6 +18,23 @@
   let isWaiting = false;
   let history = []; // { role: 'user'|'assistant', content: string }
   let savedScrollY = 0;
+
+  // Persistence keys
+  const STORAGE_KEY = "ms-chat-history";
+  const STORAGE_OPEN_KEY = "ms-chat-open";
+
+  function saveState() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    } catch (e) { /* quota exceeded — silently ignore */ }
+  }
+
+  function loadState() {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      if (raw) history = JSON.parse(raw);
+    } catch (e) { history = []; }
+  }
   let vpResizeRAF = null;
   const isMobile = () => window.innerWidth < 480;
 
@@ -123,6 +140,9 @@
   `;
 
   document.body.appendChild(panel);
+
+  // Load any saved conversation from sessionStorage
+  loadState();
 
   // Element refs
   const messagesEl = document.getElementById("ms-chat-messages");
@@ -247,6 +267,7 @@
 
     addMessage("user", text);
     history.push({ role: "user", content: text });
+    saveState();
 
     addTypingIndicator();
     inputEl.disabled = true;
@@ -277,6 +298,7 @@
       const sources = data.sources || [];
       addMessage("assistant", reply, sources);
       history.push({ role: "assistant", content: reply });
+      saveState();
     } catch (err) {
       removeTypingIndicator();
       addMessage(
@@ -357,9 +379,13 @@
 
     if (isOpen) {
       if (typeof gtag === 'function') gtag('event', 'chat_open');
-      // Show disclaimer on first open
+      // Show disclaimer + restore history on first open
       if (messagesEl.children.length === 0) {
         showDisclaimer();
+        // Replay any saved messages from previous pages
+        for (const msg of history) {
+          addMessage(msg.role, msg.content);
+        }
       }
       // Delay focus on mobile to avoid jarring keyboard pop
       if (!isMobile()) {
