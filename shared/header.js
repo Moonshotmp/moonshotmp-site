@@ -86,13 +86,13 @@
 
             <!-- Learn Mega Menu -->
             <div class="relative inline-block" id="learn-menu-wrapper">
-              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <a href="/learn/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="learn-menu-button" aria-expanded="false" aria-haspopup="true">
                 Learn
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
-              </button>
+              </a>
               <div class="absolute right-0 mt-2 w-[850px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
                 <div class="p-6 grid grid-cols-5 gap-6">
                   <!-- Men Column -->
