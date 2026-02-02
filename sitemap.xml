@@ -311,4 +311,35 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <!-- Local SEO Articles -->
+  <url>
+    <loc>https://moonshotmp.com/learn/trt-park-ridge/</loc>
+    <lastmod>2026-02-02</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/blood-work-park-ridge/</loc>
+    <lastmod>2026-02-02</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/dexa-scan-park-ridge/</loc>
+    <lastmod>2026-02-02</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/glp1-weight-loss-park-ridge/</loc>
+    <lastmod>2026-02-02</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/womens-hormones-park-ridge/</loc>
+    <lastmod>2026-02-02</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
