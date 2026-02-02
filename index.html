@@ -30,6 +30,7 @@
 
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/moonshotmptan.png" as="image">
+    <link rel="preload" href="/images/lobby.webp" as="image">
 
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="/shared/tailwind.css">
@@ -298,8 +299,9 @@
     <main class="flex-grow pt-20">
 
         <!-- Hero Section: Router Style -->
-        <section class="relative min-h-[90vh] flex items-center bg-brand-dark bg-texture-concrete bg-fixed py-16">
-            <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/50 via-brand-dark/80 to-brand-dark z-0"></div>
+        <section class="relative min-h-[90vh] flex items-center bg-brand-dark py-16 overflow-hidden">
+            <img src="/images/lobby.webp" alt="" class="absolute inset-0 w-full h-full object-cover opacity-[0.15]" aria-hidden="true" loading="eager" width="2356" height="1768">
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-brand-dark/70 to-brand-dark z-0"></div>
             <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
                 <!-- Logo & Tagline -->
