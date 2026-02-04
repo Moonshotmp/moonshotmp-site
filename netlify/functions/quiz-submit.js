@@ -46,17 +46,14 @@ export default async function handler(req) {
   const top3 = sorted.filter(c => c.score > 0).slice(0, 3);
   const BASE = 'https://moonshotmp.com';
 
-  // Level color
-  let levelColor = '#B2BFBE';
-  if (classification === 'Moderate') levelColor = '#ca8a04';
-  else if (classification === 'Elevated') levelColor = '#ea580c';
-  else if (classification === 'High') levelColor = '#dc2626';
+  // Level color — neutral brand tone
+  const levelColor = '#B2BFBE';
 
   // Build category bars HTML for email
   let catBarsHtml = '';
   for (const cat of (categories || [])) {
     const pct = cat.max > 0 ? Math.round((cat.score / cat.max) * 100) : 0;
-    const barColor = pct <= 33 ? '#4b5563' : pct <= 66 ? '#ca8a04' : '#dc2626';
+    const barColor = '#B2BFBE';
     catBarsHtml += `
       <tr>
         <td style="padding: 6px 0; color: #B2BFBE; font-size: 13px;">${cat.label}</td>
