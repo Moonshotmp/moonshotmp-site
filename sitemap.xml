@@ -128,6 +128,14 @@
     <changefreq>monthly</changefreq>
   </url>
 
+  <!-- Quiz -->
+  <url>
+    <loc>https://moonshotmp.com/quiz/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <!-- Rehab Services -->
   <url>
     <loc>https://moonshotmp.com/rehab/</loc>

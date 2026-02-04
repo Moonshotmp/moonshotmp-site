@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hormone Health Quiz | Moonshot Medical and Performance</title>
+    <meta name="description" content="Take a free 2-minute hormone health quiz. Identify symptoms of hormonal imbalance and get personalized insights for men and women.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moonshotmp.com/quiz/">
+
+    <meta property="og:title" content="Hormone Health Quiz | Moonshot Medical">
+    <meta property="og:description" content="Free 2-minute quiz: find out if your hormones are holding you back.">
+    <meta property="og:url" content="https://moonshotmp.com/quiz/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hormone Health Quiz | Moonshot Medical">
+    <meta name="twitter:description" content="Free 2-minute quiz: find out if your hormones are holding you back.">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Quiz",
+        "name": "Hormone Health Quiz",
+        "description": "A 2-minute self-assessment to identify potential symptoms of hormonal imbalance for men and women.",
+        "provider": {
+            "@type": "MedicalBusiness",
+            "name": "Moonshot Medical and Performance",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "542 Busse Hwy",
+                "addressLocality": "Park Ridge",
+                "addressRegion": "IL",
+                "postalCode": "60068"
+            }
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://moonshotmp.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Hormone Health Quiz", "item": "https://moonshotmp.com/quiz/"}
+        ]
+    }
+    </script>
+
+    <style>
+        /* Quiz-specific styles */
+        #quiz-root { min-height: calc(100vh - 5rem); }
+        .quiz-screen { opacity: 0; transform: translateY(12px); transition: opacity 0.3s ease, transform 0.3s ease; position: absolute; inset: 0; pointer-events: none; }
+        .quiz-screen.active { opacity: 1; transform: translateY(0); pointer-events: auto; position: relative; }
+        .quiz-progress { height: 3px; transition: width 0.4s ease; }
+        .severity-pill { transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+        .severity-pill[data-selected="true"] { color: #F0EEE9; }
+        .severity-pill[data-level="0"][data-selected="true"] { background-color: #4b5563; border-color: #4b5563; }
+        .severity-pill[data-level="1"][data-selected="true"] { background-color: #ca8a04; border-color: #ca8a04; }
+        .severity-pill[data-level="2"][data-selected="true"] { background-color: #ea580c; border-color: #ea580c; }
+        .severity-pill[data-level="3"][data-selected="true"] { background-color: #dc2626; border-color: #dc2626; }
+        .quiz-card { cursor: pointer; transition: border-color 0.15s ease, background-color 0.15s ease; }
+        .quiz-card:hover { border-color: rgba(178, 191, 190, 0.4); background-color: rgba(255, 255, 255, 0.03); }
+        .quiz-card.selected { border-color: #B2BFBE; background-color: rgba(178, 191, 190, 0.1); }
+        .toggle-track { width: 44px; height: 24px; border-radius: 12px; background: #4b5563; transition: background-color 0.2s ease; cursor: pointer; position: relative; }
+        .toggle-track.on { background: #B2BFBE; }
+        .toggle-knob { width: 20px; height: 20px; border-radius: 50%; background: #F0EEE9; position: absolute; top: 2px; left: 2px; transition: transform 0.2s ease; }
+        .toggle-track.on .toggle-knob { transform: translateX(20px); }
+        .result-bar { height: 8px; border-radius: 4px; transition: width 0.6s ease; }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <script src="/shared/header.js" defer></script>
+
+    <main class="flex-grow pt-20">
+        <!-- Progress bar -->
+        <div class="fixed top-20 left-0 right-0 z-40 bg-brand-slate/50">
+            <div id="quiz-progress-bar" class="quiz-progress bg-brand-gray" style="width: 0%"></div>
+        </div>
+
+        <div id="quiz-root" class="bg-brand-dark relative overflow-hidden"></div>
+    </main>
+
+    <script src="/shared/footer.js"></script>
+    <script src="/quiz/quiz-engine.js"></script>
+
+</body>
+</html>
