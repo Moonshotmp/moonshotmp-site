@@ -209,6 +209,29 @@
         bladder:     { text: 'Estrogen maintains urinary tract tissues and pelvic floor. Declining levels lead to urgency, frequency, and incontinence. Heart palpitations can also be estrogen-mediated.', link: '/learn/menopause-perimenopause/' }
     };
 
+    // Result page mapping
+    var maleResultPages = {
+        energy: '/quiz/results/low-testosterone-fatigue/',
+        recovery: '/quiz/results/low-testosterone-fatigue/',
+        mental: '/quiz/results/low-testosterone-brain-fog/',
+        mood: '/quiz/results/low-testosterone-brain-fog/',
+        sleep: '/quiz/results/testosterone-sleep-problems/',
+        body: '/quiz/results/low-testosterone-body-changes/',
+        physical: '/quiz/results/low-testosterone-body-changes/',
+        sexual: '/quiz/results/low-testosterone-sexual-health/'
+    };
+
+    var femaleResultPages = {
+        energy: '/quiz/results/hormone-imbalance-fatigue-women/',
+        temperature: '/quiz/results/menopause-hot-flashes/',
+        sleep: '/quiz/results/hormone-sleep-mood-women/',
+        mood: '/quiz/results/hormone-sleep-mood-women/',
+        mental: '/quiz/results/hormone-brain-fog-women/',
+        body: '/quiz/results/hormone-body-changes-women/',
+        sexual: '/quiz/results/hormone-body-changes-women/',
+        bladder: '/quiz/results/hormone-body-changes-women/'
+    };
+
     // Score classifications
     function classify(score) {
         if (score <= 10) return { level: 'Low', summary: 'Minimal hormonal impact. Baseline testing is still valuable for prevention and establishing your personal benchmarks.' };
@@ -486,6 +509,19 @@
             '</div>';
         }
         html += '</div>';
+
+        // Result page link based on top category
+        if (sorted.length > 0) {
+            var resultPages = state.gender === 'female' ? femaleResultPages : maleResultPages;
+            var topKey = sorted[0].key;
+            var resultPageUrl = resultPages[topKey];
+            if (resultPageUrl) {
+                html += '<div class="mb-8 text-center">' +
+                    '<a href="' + resultPageUrl + '" class="inline-block bg-brand-slate px-6 py-3 rounded-sm text-brand-light text-sm font-medium hover:bg-white/10 transition quiz-cta" data-cta="result_page">' +
+                    'See your full results breakdown \u2192</a>' +
+                '</div>';
+            }
+        }
 
         // Top category insights
         if (top3.length > 0) {

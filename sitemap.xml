@@ -136,6 +136,77 @@
     <changefreq>monthly</changefreq>
   </url>
 
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Quiz Result Pages — Male -->
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/low-testosterone-fatigue/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/low-testosterone-brain-fog/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/testosterone-sleep-problems/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/low-testosterone-body-changes/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/low-testosterone-sexual-health/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Quiz Result Pages — Female -->
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/hormone-imbalance-fatigue-women/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/menopause-hot-flashes/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/hormone-sleep-mood-women/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/hormone-brain-fog-women/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/results/hormone-body-changes-women/</loc>
+    <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <!-- Rehab Services -->
   <url>
     <loc>https://moonshotmp.com/rehab/</loc>
@@ -390,6 +461,12 @@
   <url>
     <loc>https://moonshotmp.com/learn/physical-rehab-park-ridge/</loc>
     <lastmod>2026-02-02</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/hormone-quiz-park-ridge/</loc>
+    <lastmod>2026-02-04</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
