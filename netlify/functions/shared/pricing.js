@@ -10,11 +10,11 @@ export const PRODUCTS = {
 
   // Memberships (recurring monthly)
   memberships: [
-    { code: 'hrt_membership', name: 'HRT Membership', price: 20800, recurring: true, category: 'memberships' },
+    { code: 'hrt_membership', name: 'HRT Membership', price: 23500, recurring: true, category: 'memberships' },
     { code: 'weight_loss', name: 'Complete Weight Loss', price: 40500, recurring: true, category: 'memberships' },
     { code: 'rx_oversight', name: 'Prescription + Oversight', price: 10500, recurring: true, category: 'memberships' },
     { code: 'addon_hcg', name: 'HCG Add-on', price: 35000, recurring: true, category: 'memberships' },
-    { code: 'addon_enclomiphene', name: 'Enclomiphene Add-on', price: 20800, recurring: true, category: 'memberships' },
+    { code: 'addon_enclomiphene', name: 'Enclomiphene Add-on', price: 23500, recurring: true, category: 'memberships' },
     { code: 'addon_tadalafil', name: 'Tadalafil Add-on', price: 7000, recurring: true, category: 'memberships' },
   ],
 

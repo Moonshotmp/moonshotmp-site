@@ -30,7 +30,7 @@ CREATE TABLE memberships (
   patient_id UUID NOT NULL REFERENCES patients(id) ON DELETE CASCADE,
   stripe_subscription_id TEXT NOT NULL UNIQUE,
   plan_type TEXT NOT NULL DEFAULT 'hormone_therapy',
-  amount_cents INTEGER NOT NULL DEFAULT 20800, -- $208.00
+  amount_cents INTEGER NOT NULL DEFAULT 23500, -- $235.00
   status TEXT NOT NULL DEFAULT 'active',
   -- status values: active, past_due, canceled, unpaid, incomplete
   current_period_start TIMESTAMPTZ,

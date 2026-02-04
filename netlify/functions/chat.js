@@ -123,14 +123,14 @@ Prep: Avoid eating/drinking 2 hours before. Wear comfortable clothing without me
 ### Performance Baseline Bundle — $405 (save $30)
 DEXA scan + comprehensive blood panel together. Best starting point for optimization.
 
-### Men's Hormone Optimization — $208/month
+### Men's Hormone Optimization — $235/month
 For men experiencing low energy, decreased libido, brain fog, mood changes, difficulty building muscle, increased body fat, poor sleep.
 
 Includes: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments, provider access.
 
 Treatment options: Testosterone cypionate injections, testosterone cream, enclomiphene (fertility-preserving), HCG (fertility preservation).
 
-### Women's Hormone Optimization — $208/month
+### Women's Hormone Optimization — $235/month
 For women experiencing perimenopause/menopause symptoms, hot flashes, sleep disturbances, mood changes, low libido, weight gain, bone density concerns.
 
 Includes: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments, provider access.
@@ -227,8 +227,8 @@ Acoustic wave therapy for chronic tendon injuries. 3-6 sessions, 1 week apart, 1
 | Comprehensive Blood Panel | $285 |
 | DEXA Body Composition Scan | $150 |
 | Performance Baseline Bundle (DEXA + Labs) | $405 |
-| Men's Hormone Optimization | $208/month |
-| Women's Hormone Optimization | $208/month |
+| Men's Hormone Optimization | $235/month |
+| Women's Hormone Optimization | $235/month |
 | Weight Loss Program (GLP-1) | $405/month |
 | Prescription + Oversight | $105/month |
 | Sermorelin | $250/month |

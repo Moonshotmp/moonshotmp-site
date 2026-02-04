@@ -1,4 +1,4 @@
-// Create a Stripe subscription ($208/mo HRT membership)
+// Create a Stripe subscription ($235/mo HRT membership)
 import Stripe from "stripe";
 import { getSupabase } from "./shared/supabase.js";
 import { verifyToken } from "./admin-verify.js";

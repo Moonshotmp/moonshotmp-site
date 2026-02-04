@@ -68,7 +68,7 @@ Why DEXA over InBody or home scales: DEXA is the only method that directly measu
 ### Performance Baseline Bundle — $405 (save $30)
 DEXA scan + comprehensive blood panel together. Best starting point for anyone serious about optimization.
 
-### Men's Hormone Optimization — $208/month
+### Men's Hormone Optimization — $235/month
 Testosterone replacement therapy (TRT) and hormone optimization for men experiencing:
 - Low energy and fatigue
 - Decreased libido
@@ -94,7 +94,7 @@ Treatment options:
 
 Safety monitoring: We track hematocrit, PSA, lipids, and estradiol regularly to ensure treatment remains safe.
 
-### Women's Hormone Optimization — $208/month
+### Women's Hormone Optimization — $235/month
 Bioidentical hormone replacement therapy (BHRT) for women experiencing:
 - Perimenopause and menopause symptoms
 - Hot flashes, night sweats
@@ -314,8 +314,8 @@ Standard panels are designed to detect disease, not optimize health. You can be 
 | Comprehensive Blood Panel | $285 |
 | DEXA Body Composition Scan | $150 |
 | Performance Baseline Bundle (DEXA + Labs) | $405 |
-| Men's Hormone Optimization | $208/month |
-| Women's Hormone Optimization | $208/month |
+| Men's Hormone Optimization | $235/month |
+| Women's Hormone Optimization | $235/month |
 | Weight Loss Program (GLP-1) | $405/month |
 | Prescription + Oversight (bring your own Rx) | $105/month |
 
@@ -4821,13 +4821,13 @@ Some men are good candidates for Enclomiphene. Others need TRT. Some start with 
 
 TRT Program 
 
-$208/mo 
+$235/mo 
 
 Hormone optimization program + medication 
 
 Enclomiphene Add-On 
 
-$208/mo 
+$235/mo 
 
 Can be standalone or with other protocols 
 ### COMMON QUESTIONS 
@@ -5022,7 +5022,7 @@ Telehealth clinics often look cheaper until you add up what's actually included.
 - True annual cost $2,500+ 
 #### Moonshot 
 
-- Monthly program $208 
+- Monthly program $235 
 - Comprehensive labs (2x/year) Included 
 - DEXA scans (2x/year) Included 
 - Vitamin injection (monthly) Included 
