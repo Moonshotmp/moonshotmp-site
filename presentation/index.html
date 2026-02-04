@@ -315,6 +315,9 @@
     <!-- Notes Toggle -->
     <button class="notes-toggle" id="notesToggle">Notes</button>
 
+    <!-- Fullscreen Toggle -->
+    <button class="notes-toggle" id="fullscreenToggle" style="left:auto; right:3rem; bottom:3.5rem; opacity:0.3;">Press F for Fullscreen</button>
+
     <!-- Speaker Notes Panel -->
     <div class="speaker-notes" id="speakerNotes"></div>
 
@@ -722,8 +725,39 @@
                     speakerNotes.classList.toggle('visible', notesVisible);
                     notesToggle.textContent = notesVisible ? 'Hide Notes' : 'Notes';
                     break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    break;
+                case 'Escape':
+                    // browser handles exiting fullscreen natively
+                    break;
             }
         });
+
+        // Fullscreen API
+        var fullscreenToggle = document.getElementById('fullscreenToggle');
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                var el = document.documentElement;
+                if (el.requestFullscreen) el.requestFullscreen();
+                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen(); // Safari
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            }
+        }
+
+        function updateFullscreenBtn() {
+            var isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+            fullscreenToggle.textContent = isFs ? 'Exit Fullscreen (F)' : 'Press F for Fullscreen';
+        }
+
+        document.addEventListener('fullscreenchange', updateFullscreenBtn);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenBtn);
+
+        fullscreenToggle.addEventListener('click', toggleFullscreen);
 
         // Click navigation
         prevBtn.addEventListener('click', prev);
