@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women's Hormone Health Night | Moonshot Medical and Performance</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <style>
+        /* Presentation overrides */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            background-color: #101921;
+        }
+
+        /* Slide container */
+        .slide-deck {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 3rem 4rem;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-inner {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background-color: #B2BFBE;
+            transition: width 0.4s ease;
+            z-index: 100;
+        }
+
+        /* Slide counter */
+        .slide-counter {
+            position: fixed;
+            bottom: 2rem;
+            right: 3rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.875rem;
+            color: #B2BFBE;
+            opacity: 0.6;
+            z-index: 100;
+        }
+
+        /* Navigation arrows */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #B2BFBE;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+            z-index: 100;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+        }
+
+        .nav-arrow:hover {
+            opacity: 0.8;
+        }
+
+        .nav-arrow.prev { left: 1.5rem; }
+        .nav-arrow.next { right: 1.5rem; }
+
+        /* Speaker notes toggle */
+        .notes-toggle {
+            position: fixed;
+            bottom: 2rem;
+            left: 3rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            color: #B2BFBE;
+            opacity: 0.4;
+            cursor: pointer;
+            z-index: 100;
+            background: none;
+            border: 1px solid rgba(178,191,190,0.2);
+            padding: 0.375rem 0.75rem;
+            transition: opacity 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .notes-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .speaker-notes {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(16, 25, 33, 0.97);
+            border-top: 1px solid rgba(178,191,190,0.15);
+            padding: 1.5rem 3rem;
+            max-height: 35vh;
+            overflow-y: auto;
+            z-index: 99;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: #B2BFBE;
+            line-height: 1.7;
+        }
+
+        .speaker-notes.visible {
+            display: block;
+        }
+
+        .speaker-notes p {
+            margin-bottom: 0.75rem;
+        }
+
+        .speaker-notes strong {
+            color: #F0EEE9;
+        }
+
+        /* Table styles within slides */
+        .slide-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .slide-table th {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #F0EEE9;
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(178,191,190,0.2);
+        }
+
+        .slide-table td {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            color: #B2BFBE;
+            padding: 0.625rem 1.25rem;
+            vertical-align: top;
+        }
+
+        .slide-table tr:last-child td {
+            padding-bottom: 0;
+        }
+
+        /* Comparison table variant */
+        .compare-table th {
+            width: 50%;
+        }
+
+        .compare-table td {
+            width: 50%;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid rgba(178,191,190,0.2);
+        }
+
+        .timeline-item:last-child {
+            border-left-color: transparent;
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            background: #B2BFBE;
+            border-radius: 50%;
+        }
+
+        /* Stat contrast */
+        .stat-big {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        /* Bullet list */
+        .slide-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .slide-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            color: #B2BFBE;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .slide-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.65rem;
+            width: 6px;
+            height: 6px;
+            background: #B2BFBE;
+            border-radius: 50%;
+        }
+
+        /* QR code placeholder */
+        .qr-frame {
+            width: 280px;
+            height: 280px;
+            background: #F0EEE9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .qr-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Resource list */
+        .resource-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(178,191,190,0.1);
+        }
+
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive adjustments for projector/TV */
+        @media (min-width: 1400px) {
+            .slide { padding: 4rem 6rem; }
+            .slide-table th { font-size: 1.4rem; }
+            .slide-table td { font-size: 1.1rem; }
+            .slide-list li { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body class="font-body">
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow prev" id="prevBtn" aria-label="Previous slide">&#8592;</button>
+    <button class="nav-arrow next" id="nextBtn" aria-label="Next slide">&#8594;</button>
+
+    <!-- Slide Counter -->
+    <div class="slide-counter" id="slideCounter"></div>
+
+    <!-- Notes Toggle -->
+    <button class="notes-toggle" id="notesToggle">Notes</button>
+
+    <!-- Speaker Notes Panel -->
+    <div class="speaker-notes" id="speakerNotes"></div>
+
+    <!-- ==================== SLIDES ==================== -->
+    <div class="slide-deck" id="slideDeck">
+
+        <!-- SLIDE 1: Title / Opener -->
+        <div class="slide active" data-notes="&lt;p&gt;&quot;Thanks for coming out. Quick context on why I'm the one up here tonight. Last time we did this, we brought in an outside vendor and it turned into a sales pitch. That's not what tonight is. Tonight is education. I run the gym and the medical side, and I want you to leave here actually understanding what's going on with your hormones — whether you ever come to Moonshot Medical or not. If you learn something tonight you can take to your own doctor, that's a win.&quot;&lt;/p&gt;">
+            <div class="slide-inner text-center">
+                <p class="text-brand-gray font-light text-sm uppercase tracking-widest mb-8">Moonshot Medical + Performance</p>
+                <h1 class="text-5xl md:text-7xl font-bold text-brand-light mb-6" style="line-height:1.1;">Women's Hormone<br>Health Night</h1>
+                <div class="divider mx-auto mt-8"></div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: What Moonshot Medical Is -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;Very quick — Moonshot Medical is the clinical side of what we do here. We run comprehensive blood work — 60-plus markers, not the basic panel your PCP orders once a year. We do DEXA scans so you can actually see what's muscle vs fat vs bone. And we do hormone optimization for men and women. That's the 30-second version. Now let me tell you why this matters for you specifically.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-12">What Moonshot Medical Is</h2>
+                <div class="space-y-8">
+                    <div class="flex items-start gap-6">
+                        <div class="text-4xl font-bold text-brand-gray font-heading opacity-30 flex-shrink-0 w-12 text-right">01</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-light mb-1 font-heading uppercase tracking-wide">60+ Biomarker Blood Panels</h3>
+                            <p class="text-brand-gray font-light">Not the standard 5 your doctor runs</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6">
+                        <div class="text-4xl font-bold text-brand-gray font-heading opacity-30 flex-shrink-0 w-12 text-right">02</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-light mb-1 font-heading uppercase tracking-wide">DEXA Body Composition Scans</h3>
+                            <p class="text-brand-gray font-light">See exactly what's muscle, fat, and bone</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6">
+                        <div class="text-4xl font-bold text-brand-gray font-heading opacity-30 flex-shrink-0 w-12 text-right">03</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-light mb-1 font-heading uppercase tracking-wide">Hormone Optimization</h3>
+                            <p class="text-brand-gray font-light">Men's and women's — individualized, lab-driven</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: The Three Hormones You Need to Know -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;When people say 'women's hormones' they usually mean estrogen. But there are three that matter and most doctors only look at one — if they look at all.&quot;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Estradiol&lt;/strong&gt; — the form of estrogen that matters most. Keeps you from having hot flashes, keeps mood stable, keeps bones strong, affects where your body stores fat.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Progesterone&lt;/strong&gt; — the forgotten one. Most people think it's just about pregnancy. It's not. Progesterone breaks down into something called allopregnanolone, which acts on the same brain receptors as anti-anxiety medication. Same receptor class. That's why when progesterone drops, you get sleep problems, anxiety, feeling on edge — and nobody connects it to hormones. They hand you an SSRI instead.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Testosterone&lt;/strong&gt; — yes, women make testosterone. About a tenth to a twentieth of what men make. But it drives your libido, energy, ability to build and keep muscle, and motivation. And here's the thing: there is NO FDA-approved testosterone product for women in the US. Not because it doesn't work — because nobody has funded the trials. So most doctors don't even test for it.&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-10">The Three Hormones You Need to Know</h2>
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>Estradiol</th>
+                            <th>Progesterone</th>
+                            <th>Testosterone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Thermoregulation</td>
+                            <td>Sleep & calm</td>
+                            <td>Energy & drive</td>
+                        </tr>
+                        <tr>
+                            <td>Mood & cognition</td>
+                            <td>Anxiety regulation</td>
+                            <td>Libido</td>
+                        </tr>
+                        <tr>
+                            <td>Bone density</td>
+                            <td>Uterine protection</td>
+                            <td>Muscle & body comp</td>
+                        </tr>
+                        <tr>
+                            <td>Fat distribution</td>
+                            <td>Mood stability</td>
+                            <td>Mood & motivation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: The Timeline Nobody Tells You -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;Here's the part that surprises most women. Perimenopause is not a quick thing. It can last four to ten years. And it can start in your late 30s.&quot;&lt;/p&gt;&lt;p&gt;&quot;The key thing: &lt;strong&gt;progesterone drops first.&lt;/strong&gt; Often years before estrogen does. So you're in your early 40s, estrogen looks fine on paper, but progesterone has fallen off a cliff. That's why the first symptoms are usually sleep problems, anxiety, mood swings, heavier periods — not hot flashes. Hot flashes come later when estrogen drops.&quot;&lt;/p&gt;&lt;p&gt;&quot;This is also why your doctor says 'your labs look normal.' They checked estrogen. It IS normal. But the ratio of estrogen to progesterone is completely off. This is called &lt;strong&gt;estrogen dominance&lt;/strong&gt; — and it doesn't mean you have too much estrogen. It means you don't have enough progesterone to balance it. It's a ratio problem, not an absolute number.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-12">The Timeline Nobody Tells You</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-brand-light mb-2 font-heading uppercase tracking-wide">Perimenopause</h3>
+                        <p class="text-brand-gray font-light text-lg mb-1">4-10 years. Can start late 30s, typically mid-40s.</p>
+                        <p class="text-brand-light font-medium">Progesterone drops FIRST.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-brand-light mb-2 font-heading uppercase tracking-wide">Menopause</h3>
+                        <p class="text-brand-gray font-light text-lg mb-1">12 months without a period. Average age 51.</p>
+                        <p class="text-brand-light font-medium">Estrogen at 10-20% of peak.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-brand-light mb-2 font-heading uppercase tracking-wide">Postmenopause</h3>
+                        <p class="text-brand-gray font-light text-lg">Everything after. Ongoing management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Sound Familiar? -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;Look at the left column. How many of you have experienced three or more of these?&quot; [Pause for recognition.]&lt;/p&gt;&lt;p&gt;&quot;These get attributed to 'stress' or 'getting older.' In a lot of cases, they have a measurable hormonal driver. It's not in your head. It can be tested, and it can be addressed.&quot;&lt;/p&gt;&lt;p&gt;&quot;Hot flashes — which get all the attention — affect 75-80% of women and can last seven-plus years untreated. But the stuff on the left? That starts earlier and often gets missed entirely.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-10">Sound Familiar?</h2>
+                <table class="slide-table compare-table">
+                    <thead>
+                        <tr>
+                            <th>Earlier (Peri)</th>
+                            <th>Later (Meno / Post)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sleep problems</td>
+                            <td>Hot flashes / night sweats</td>
+                        </tr>
+                        <tr>
+                            <td>Anxiety for no reason</td>
+                            <td>Vaginal dryness</td>
+                        </tr>
+                        <tr>
+                            <td>Brain fog</td>
+                            <td>Bone density loss</td>
+                        </tr>
+                        <tr>
+                            <td>Mood swings / irritability</td>
+                            <td>Cardiovascular risk</td>
+                        </tr>
+                        <tr>
+                            <td>Midsection weight gain</td>
+                            <td>Hair thinning / skin changes</td>
+                        </tr>
+                        <tr>
+                            <td>Low libido</td>
+                            <td>Joint pain</td>
+                        </tr>
+                        <tr>
+                            <td>Heavier periods</td>
+                            <td>Persistent fatigue</td>
+                        </tr>
+                        <tr>
+                            <td>PMS getting worse</td>
+                            <td>Difficulty maintaining muscle</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Why Your Doctor Says "You're Fine" -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;I'm not here to bash your doctor. Most are good people inside a broken system. But here's what typically happens.&quot;&lt;/p&gt;&lt;p&gt;&quot;You go in. You say 'I'm exhausted, I can't sleep, I feel anxious, I'm gaining weight.' They run a basic panel. Maybe TSH — one marker, which misses the vast majority of thyroid dysfunction. Maybe estradiol. Almost certainly not progesterone timed correctly. Definitely not testosterone.&quot;&lt;/p&gt;&lt;p&gt;&quot;Labs come back 'normal.' But 'normal' means you fall within the reference range — which is built from everyone who walks into a lab. That includes people who are overweight, sedentary, sick, elderly. The gap between 'not clinically diseased' and 'actually feeling good' is enormous.&quot;&lt;/p&gt;&lt;p&gt;&quot;So you get an SSRI for the anxiety. Birth control for the heavy periods. And the underlying hormone picture never gets evaluated.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-10">Why Your Doctor Says "You're Fine"</h2>
+                <ul class="slide-list" style="font-size:1.1rem;">
+                    <li><strong class="text-brand-light">Standard testing:</strong> TSH only (misses 95% of thyroid dysfunction). Maybe estrogen. Rarely progesterone. Almost never testosterone.</li>
+                    <li><strong class="text-brand-light">"Normal" ranges</strong> include sick, sedentary, and elderly populations</li>
+                    <li><strong class="text-brand-light">Default treatment:</strong> SSRIs, birth control, "live with it"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: The Study That Changed Everything -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;In 2002, the Women's Health Initiative made international headlines. 'HRT causes breast cancer and heart attacks.' Within months, millions of women stopped hormones. Prescriptions dropped by half. Women suffering through menopause were told to tough it out.&quot;&lt;/p&gt;&lt;p&gt;&quot;Here's what actually happened. The study used the wrong population — average age 63, most 10-20 years past menopause. Wrong hormones — Premarin, made from pregnant horse urine, plus Provera, a synthetic progestin. Not bioidentical. And the wrong delivery route — oral, which passes through the liver and increases clotting factors.&quot;&lt;/p&gt;&lt;p&gt;&quot;The headlines said '26% increased breast cancer risk.' That's the relative risk. The absolute risk? 8 additional cases per 10,000 women per year. Zero point zero eight percent. Lower than the risk increase from obesity.&quot;&lt;/p&gt;&lt;p&gt;&quot;And the part most people never heard: the estrogen-only arm — women who took estrogen without synthetic progestin — showed NO increased breast cancer risk. The risk appears to have been from the synthetic progestin, not the estrogen.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-10">The Study That Changed Everything</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-12 mb-10">
+                    <div class="text-center">
+                        <p class="text-brand-gray font-light text-sm uppercase tracking-widest mb-2">The Headline (2002)</p>
+                        <p class="stat-big text-6xl md:text-8xl text-brand-light">26%</p>
+                        <p class="text-brand-gray font-light mt-2">"increased breast cancer risk"</p>
+                    </div>
+                    <div class="text-brand-gray text-4xl opacity-30 hidden md:block">vs</div>
+                    <div class="text-center">
+                        <p class="text-brand-gray font-light text-sm uppercase tracking-widest mb-2">The Actual Number</p>
+                        <p class="stat-big text-6xl md:text-8xl text-brand-gray">0.08%</p>
+                        <p class="text-brand-gray font-light mt-2">8 additional cases per 10,000/year</p>
+                    </div>
+                </div>
+                <div class="border-t border-white/10 pt-6">
+                    <p class="text-brand-gray font-light text-center text-sm md:text-base">Three problems: <strong class="text-brand-light">Wrong population</strong> (avg age 63) &middot; <strong class="text-brand-light">Wrong hormones</strong> (horse estrogen + synthetic progestin) &middot; <strong class="text-brand-light">Wrong route</strong> (oral, not transdermal)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: The Science Has Moved On -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;2017, JAMA published the 18-year follow-up. No significant difference in all-cause mortality.&quot;&lt;/p&gt;&lt;p&gt;&quot;We now have the timing hypothesis. Starting within 10 years of menopause or before 60 is associated with cardiovascular benefit — not harm.&quot;&lt;/p&gt;&lt;p&gt;&quot;The North American Menopause Society, the Endocrine Society — they've updated their positions. They endorse HRT for symptomatic women under 60. The FDA has softened its warnings. This is not fringe medicine. The mainstream science caught up.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-12">The Science Has Moved On</h2>
+                <div class="space-y-8">
+                    <div class="flex items-start gap-6">
+                        <div class="text-3xl font-bold text-brand-gray font-heading opacity-30 flex-shrink-0 w-10 text-right">1</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-brand-light mb-1 font-heading uppercase tracking-wide">18-Year JAMA Follow-Up (2017)</h3>
+                            <p class="text-brand-gray font-light text-lg">No significant mortality difference</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6">
+                        <div class="text-3xl font-bold text-brand-gray font-heading opacity-30 flex-shrink-0 w-10 text-right">2</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-brand-light mb-1 font-heading uppercase tracking-wide">Timing Hypothesis</h3>
+                            <p class="text-brand-gray font-light text-lg">Starting HRT within 10 years of menopause or before 60 = cardiovascular <strong class="text-brand-light">benefit</strong></p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6">
+                        <div class="text-3xl font-bold text-brand-gray font-heading opacity-30 flex-shrink-0 w-10 text-right">3</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-brand-light mb-1 font-heading uppercase tracking-wide">Major Medical Societies Endorse HRT</h3>
+                            <p class="text-brand-gray font-light text-lg">NAMS, Endocrine Society now endorse HRT for symptomatic women under 60</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Bioidentical vs What the WHI Used -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;Bioidentical hormones are structurally identical to what your body already makes. Plant-derived, processed to match the exact molecular structure. Not synthetic. Not horse urine. The same molecules your body produced when you were 30.&quot;&lt;/p&gt;&lt;p&gt;&quot;Transdermal delivery — patches, creams, pellets — bypasses the liver entirely. No increase in clotting factors, no blood clot risk. Fundamentally different safety profile than what was studied in the WHI.&quot;&lt;/p&gt;&lt;p&gt;&quot;Oral progesterone at bedtime is actually a sleep aid — when it metabolizes into allopregnanolone, it calms the GABA receptors. Women often report better sleep on progesterone before they notice anything else.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-10">Bioidentical vs What the WHI Used</h2>
+                <table class="slide-table compare-table">
+                    <thead>
+                        <tr>
+                            <th>WHI Used</th>
+                            <th>Modern BHRT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Premarin (horse-derived)</td>
+                            <td>Bioidentical estradiol (identical to human)</td>
+                        </tr>
+                        <tr>
+                            <td>Provera (synthetic progestin)</td>
+                            <td>Micronized progesterone (plant-derived)</td>
+                        </tr>
+                        <tr>
+                            <td>Oral route (liver first-pass)</td>
+                            <td>Transdermal (bypasses liver)</td>
+                        </tr>
+                        <tr>
+                            <td>One-size-fits-all dosing</td>
+                            <td>Individualized based on labs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Delivery Methods Overview -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;No one-size-fits-all delivery method. Quick overview...&quot; [Walk through each briefly.]&lt;/p&gt;&lt;p&gt;[If Evexias presenting after:] &quot;Our partners from Evexias are going to go deeper on pellet therapy specifically after I wrap up. Pellets are one option — they'll walk you through how that works.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-10">Delivery Methods</h2>
+                <div class="space-y-6">
+                    <div class="card p-5 flex items-start gap-5">
+                        <div class="text-brand-gray font-heading text-sm uppercase tracking-widest flex-shrink-0 w-36 pt-1">Transdermal Estradiol</div>
+                        <p class="text-brand-gray font-light">Patches, creams, gels. Most common starting point.</p>
+                    </div>
+                    <div class="card p-5 flex items-start gap-5">
+                        <div class="text-brand-gray font-heading text-sm uppercase tracking-widest flex-shrink-0 w-36 pt-1">Oral Progesterone</div>
+                        <p class="text-brand-gray font-light">Bedtime dosing. Sleep-promoting via GABA pathway.</p>
+                    </div>
+                    <div class="card p-5 flex items-start gap-5">
+                        <div class="text-brand-gray font-heading text-sm uppercase tracking-widest flex-shrink-0 w-36 pt-1">Testosterone Cream</div>
+                        <p class="text-brand-gray font-light">Small daily dose. Energy, libido, body composition.</p>
+                    </div>
+                    <div class="card p-5 flex items-start gap-5">
+                        <div class="text-brand-gray font-heading text-sm uppercase tracking-widest flex-shrink-0 w-36 pt-1">Pellets</div>
+                        <p class="text-brand-gray font-light">Subcutaneous implant. 3-5 month steady release. No daily dosing.</p>
+                    </div>
+                    <div class="card p-5 flex items-start gap-5">
+                        <div class="text-brand-gray font-heading text-sm uppercase tracking-widest flex-shrink-0 w-36 pt-1">Vaginal Estrogen</div>
+                        <p class="text-brand-gray font-light">Local treatment for urogenital symptoms.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Trusted Resources -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;Don't take my word for any of this. Here are the people and books I trust.&quot; [Quick run-through.] &quot;We also have detailed articles on every topic I covered tonight at moonshotmp.com/learn. Free. Go read them.&quot;&lt;/p&gt;">
+            <div class="slide-inner">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-10">Trusted Resources</h2>
+                <div class="space-y-1">
+                    <div class="resource-item">
+                        <p class="text-brand-light font-medium text-lg">Dr. Mary Claire Haver</p>
+                        <p class="text-brand-gray font-light italic">The New Menopause</p>
+                    </div>
+                    <div class="resource-item">
+                        <p class="text-brand-light font-medium text-lg">Dr. Avrum Bluming & Carol Tavris</p>
+                        <p class="text-brand-gray font-light italic">Estrogen Matters</p>
+                    </div>
+                    <div class="resource-item">
+                        <p class="text-brand-light font-medium text-lg">Peter Attia</p>
+                        <p class="text-brand-gray font-light italic">Outlive</p>
+                    </div>
+                    <div class="resource-item">
+                        <p class="text-brand-light font-medium text-lg">The Menopause Society</p>
+                        <p class="text-brand-gray font-light">menopause.org</p>
+                    </div>
+                    <div class="resource-item">
+                        <p class="text-brand-light font-medium text-lg">Moonshot Medical</p>
+                        <p class="text-brand-gray font-light">moonshotmp.com/learn — free articles on all of these topics</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Next Steps / CTA -->
+        <div class="slide" data-notes="&lt;p&gt;&quot;Last thing. If any of this resonated — if you heard symptoms tonight that made you think 'that's me' — here's where to start.&quot;&lt;/p&gt;&lt;p&gt;&quot;We built a free hormone health quiz on our site. Two minutes. Not a diagnosis, but it gives you a snapshot of where you might have something worth investigating. Scan that QR code, do it on your phone right now, or do it when you get home.&quot;&lt;/p&gt;&lt;p&gt;&quot;If you want to go further, the next step is comprehensive blood work. 60-plus markers. All three sex hormones, full thyroid, metabolic markers, inflammatory markers, nutrients. We aim for optimal, not just 'normal.'&quot;&lt;/p&gt;&lt;p&gt;&quot;That's it. Thank you for your time. I'll be here — come grab me if you have questions.&quot;&lt;/p&gt;">
+            <div class="slide-inner text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-4">Next Steps</h2>
+                <p class="text-brand-gray font-light text-lg mb-8">Take the free hormone health quiz — 2 minutes</p>
+
+                <!-- QR Code -->
+                <div class="qr-frame mb-6" id="qrCode">
+                    <p class="text-brand-dark font-heading text-sm uppercase tracking-widest p-4 text-center">QR Code<br>moonshotmp.com/quiz</p>
+                </div>
+
+                <p class="text-brand-light font-heading text-xl uppercase tracking-widest mb-8">moonshotmp.com/quiz</p>
+
+                <div class="divider mx-auto mb-8"></div>
+
+                <p class="text-brand-gray font-light">Get comprehensive blood work: 60+ biomarkers</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+    (function() {
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slideCounter');
+        const speakerNotes = document.getElementById('speakerNotes');
+        const notesToggle = document.getElementById('notesToggle');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let current = 0;
+        let notesVisible = false;
+
+        function showSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+
+            slides[current].classList.remove('active');
+            current = index;
+            slides[current].classList.add('active');
+
+            // Update progress bar
+            const progress = ((current + 1) / slides.length) * 100;
+            progressBar.style.width = progress + '%';
+
+            // Update counter
+            slideCounter.textContent = (current + 1) + ' / ' + slides.length;
+
+            // Update speaker notes
+            const notes = slides[current].getAttribute('data-notes') || '';
+            speakerNotes.innerHTML = notes;
+
+            // Update arrow visibility
+            prevBtn.style.opacity = current === 0 ? '0.1' : '0.3';
+            nextBtn.style.opacity = current === slides.length - 1 ? '0.1' : '0.3';
+        }
+
+        function next() {
+            if (current < slides.length - 1) showSlide(current + 1);
+        }
+
+        function prev() {
+            if (current > 0) showSlide(current - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case ' ':
+                case 'PageDown':
+                    e.preventDefault();
+                    next();
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                case 'PageUp':
+                    e.preventDefault();
+                    prev();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    showSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    showSlide(slides.length - 1);
+                    break;
+                case 'n':
+                case 'N':
+                    notesVisible = !notesVisible;
+                    speakerNotes.classList.toggle('visible', notesVisible);
+                    notesToggle.textContent = notesVisible ? 'Hide Notes' : 'Notes';
+                    break;
+            }
+        });
+
+        // Click navigation
+        prevBtn.addEventListener('click', prev);
+        nextBtn.addEventListener('click', next);
+
+        // Notes toggle
+        notesToggle.addEventListener('click', function() {
+            notesVisible = !notesVisible;
+            speakerNotes.classList.toggle('visible', notesVisible);
+            notesToggle.textContent = notesVisible ? 'Hide Notes' : 'Notes';
+        });
+
+        // Touch / swipe support
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            const dx = e.changedTouches[0].screenX - touchStartX;
+            const dy = e.changedTouches[0].screenY - touchStartY;
+
+            // Only register horizontal swipes (dx > dy)
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+                if (dx < 0) next();
+                else prev();
+            }
+        }, { passive: true });
+
+        // Initialize
+        showSlide(0);
+
+        // Generate QR code via API
+        var qrEl = document.getElementById('qrCode');
+        var img = new Image();
+        img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https://moonshotmp.com/quiz/&bgcolor=F0EEE9&color=101921&margin=10';
+        img.alt = 'Scan to take the hormone health quiz at moonshotmp.com/quiz';
+        img.onload = function() {
+            qrEl.innerHTML = '';
+            qrEl.appendChild(img);
+        };
+    })();
+    </script>
+
+</body>
+</html>
