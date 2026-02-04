@@ -507,7 +507,7 @@
             '<div class="space-y-4">' +
                 '<a href="/medical/blood-panels/" class="block bg-brand-dark p-4 rounded-sm hover:bg-white/5 transition quiz-cta" data-cta="blood_panels">' +
                     '<span class="text-brand-light font-bold text-sm block">1. Get Comprehensive Blood Work</span>' +
-                    '<span class="text-brand-gray text-xs">$285 panel \u2014 60+ biomarkers including full hormone, thyroid, metabolic, and nutrient panels.</span>' +
+                    '<span class="text-brand-gray text-xs">60+ biomarkers including full hormone, thyroid, metabolic, and nutrient panels.</span>' +
                 '</a>' +
                 '<a href="/booking/" class="block bg-brand-dark p-4 rounded-sm hover:bg-white/5 transition quiz-cta" data-cta="book_consultation">' +
                     '<span class="text-brand-light font-bold text-sm block">2. Book a Consultation</span>' +

@@ -141,7 +141,7 @@ export default async function handler(req) {
       <!-- CTA -->
       <div style="text-align: center; padding: 24px 0;">
         <p style="color: #B2BFBE; font-size: 14px; margin: 0 0 16px;">Ready to find out what\u2019s really going on?</p>
-        <a href="${BASE}/medical/blood-panels/" style="display: inline-block; background: #B2BFBE; color: #101921; padding: 14px 32px; font-weight: 700; font-size: 14px; text-decoration: none; border-radius: 4px;">Book Blood Work \u2014 $285</a>
+        <a href="${BASE}/medical/blood-panels/" style="display: inline-block; background: #B2BFBE; color: #101921; padding: 14px 32px; font-weight: 700; font-size: 14px; text-decoration: none; border-radius: 4px;">Book Blood Work</a>
       </div>
 
     </div>
