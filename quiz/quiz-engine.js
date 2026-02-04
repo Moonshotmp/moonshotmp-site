@@ -447,8 +447,11 @@
         var sorted = catScores.slice().sort(function(a, b) { return b.score - a.score; });
         var top3 = sorted.filter(function(c) { return c.score > 0; }).slice(0, 3);
 
-        // Level color — neutral brand tones, not alarm colors
+        // Level color for results
         var levelColor = '#B2BFBE';
+        if (result.level === 'Moderate') levelColor = '#ca8a04';
+        else if (result.level === 'Elevated') levelColor = '#ea580c';
+        else if (result.level === 'High') levelColor = '#dc2626';
 
         // Build HTML
         var html = '';
@@ -471,7 +474,7 @@
         for (var b = 0; b < catScores.length; b++) {
             var cs = catScores[b];
             var pct = cs.max > 0 ? Math.round((cs.score / cs.max) * 100) : 0;
-            var barColor = '#B2BFBE';
+            var barColor = pct <= 33 ? '#4b5563' : pct <= 66 ? '#ca8a04' : '#dc2626';
             html += '<div class="mb-3">' +
                 '<div class="flex justify-between text-sm mb-1">' +
                     '<span class="text-brand-gray">' + cs.label + '</span>' +
