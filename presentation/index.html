@@ -298,6 +298,65 @@
             .slide-table td { font-size: 1.1rem; }
             .slide-list li { font-size: 1.15rem; }
         }
+
+        /* Image modal overlay */
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 25, 33, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            cursor: pointer;
+        }
+
+        .image-modal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .image-modal img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border: 1px solid rgba(178,191,190,0.2);
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: #B2BFBE;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-modal-close:hover {
+            opacity: 1;
+        }
+
+        /* Show example link */
+        .show-example {
+            color: #B2BFBE;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            margin-left: 0.5rem;
+            border-bottom: 1px solid rgba(178,191,190,0.4);
+        }
+
+        .show-example:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="font-body">
@@ -356,7 +415,7 @@
                         <div class="text-4xl font-bold text-brand-gray font-heading opacity-30 flex-shrink-0 w-12 text-right">03</div>
                         <div>
                             <h3 class="text-xl font-bold text-brand-light mb-1 font-heading uppercase tracking-wide">DEXA Body Composition Scans</h3>
-                            <p class="text-brand-gray font-light">See exactly what's muscle, fat, and bone</p>
+                            <p class="text-brand-gray font-light">See exactly what's muscle, fat, and bone <span class="show-example" data-modal="dexaModal">[Show Example]</span></p>
                         </div>
                     </div>
                     <div class="flex items-start gap-6">
@@ -662,6 +721,12 @@
 
     </div>
 
+    <!-- DEXA Report Modal -->
+    <div class="image-modal" id="dexaModal">
+        <span class="image-modal-close">&times;</span>
+        <img src="/images/dexareport.webp" alt="DEXA body composition scan report example">
+    </div>
+
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
     (function() {
@@ -804,6 +869,25 @@
 
         // Initialize
         showSlide(0);
+
+        // Image modal logic
+        document.querySelectorAll('.show-example').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var modalId = el.getAttribute('data-modal');
+                var modal = document.getElementById(modalId);
+                if (modal) modal.classList.add('visible');
+            });
+        });
+
+        document.querySelectorAll('.image-modal').forEach(function(modal) {
+            modal.addEventListener('click', function() {
+                modal.classList.remove('visible');
+            });
+            modal.querySelector('.image-modal-close').addEventListener('click', function() {
+                modal.classList.remove('visible');
+            });
+        });
 
         // Generate QR code via API
         var qrEl = document.getElementById('qrCode');
