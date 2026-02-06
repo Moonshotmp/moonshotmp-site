@@ -25,6 +25,7 @@
             height: 100%;
             width: 100%;
             background-color: #101921;
+            font-size: 24px; /* Base size increase for projection */
         }
 
         /* Slide container */
@@ -43,7 +44,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
-            padding: 3rem 4rem;
+            padding: 2rem 3rem;
         }
 
         .slide.active {
@@ -53,8 +54,29 @@
 
         .slide-inner {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
+        }
+
+        /* Slide headings - much larger */
+        .slide h2 {
+            font-size: 3.5rem !important;
+            margin-bottom: 2rem !important;
+        }
+
+        .slide h3 {
+            font-size: 1.75rem !important;
+        }
+
+        /* Body text larger */
+        .slide p, .slide li, .slide td {
+            font-size: 1.4rem !important;
+            line-height: 1.5 !important;
+        }
+
+        /* Table headers */
+        .slide th {
+            font-size: 1.75rem !important;
         }
 
         /* Progress bar */
