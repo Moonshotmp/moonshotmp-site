@@ -224,6 +224,22 @@ export default async function handler(req) {
       sendEmail({ to: 'hello@moonshotmp.com', subject: internalSubject, html: internalHtml })
     ]);
 
+    // Sync lead to clinic app (non-blocking)
+    try {
+      const clinicApi = process.env.CLINIC_API_BASE || 'https://qy1se3awb8.execute-api.us-east-1.amazonaws.com';
+      await fetch(clinicApi + '/api/leads/webhook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Tenant-Slug': 'moonshot-med',
+          'X-Webhook-Key': process.env.CLINIC_LEAD_WEBHOOK_KEY || ''
+        },
+        body: JSON.stringify({ name, email, gender, age, totalScore, maxScore, classification, categories, lifestyle })
+      });
+    } catch (err) {
+      console.error('[quiz-submit] Clinic sync error:', err.message);
+    }
+
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }

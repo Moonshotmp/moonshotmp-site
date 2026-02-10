@@ -259,6 +259,44 @@
     var root = document.getElementById('quiz-root');
     var progressBar = document.getElementById('quiz-progress-bar');
 
+    // ── State Persistence ──────────────────────────────────────────────
+
+    var STORAGE_KEY = 'mmp_quiz_state';
+    var STORAGE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+    function saveState() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                currentScreen: state.currentScreen,
+                gender: state.gender,
+                age: state.age,
+                answers: state.answers,
+                lifestyle: state.lifestyle,
+                name: state.name,
+                email: state.email,
+                savedAt: Date.now()
+            }));
+        } catch(e) {}
+    }
+
+    function clearSavedState() {
+        try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+    }
+
+    function loadSavedState() {
+        try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return null;
+            var saved = JSON.parse(raw);
+            if (!saved || !saved.savedAt) return null;
+            if (Date.now() - saved.savedAt > STORAGE_MAX_AGE) {
+                clearSavedState();
+                return null;
+            }
+            return saved;
+        } catch(e) { return null; }
+    }
+
     // ── Helpers ──────────────────────────────────────────────────────────
 
     function ga(event, params) {
@@ -283,6 +321,7 @@
     function show(screenIndex) {
         state.currentScreen = screenIndex;
         updateProgress();
+        saveState();
         var screens = root.querySelectorAll('.quiz-screen');
         for (var i = 0; i < screens.length; i++) {
             screens[i].classList.remove('active');
@@ -840,19 +879,111 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         }).then(function() {
+            clearSavedState();
             if (callback) callback();
         }).catch(function() {
             // Still show results even if email fails
+            clearSavedState();
             if (callback) callback();
         });
+    }
+
+    // ── Restore from saved state ─────────────────────────────────────────
+
+    function restoreQuiz() {
+        var saved = loadSavedState();
+        if (!saved || !saved.gender) {
+            buildQuiz();
+            return;
+        }
+
+        // Restore state
+        state.gender = saved.gender;
+        state.age = saved.age;
+        state.answers = saved.answers || {};
+        state.lifestyle = saved.lifestyle || { exercise: false, sleep: false, tested: false };
+        state.name = saved.name || '';
+        state.email = saved.email || '';
+
+        // Build the full quiz with all screens
+        root.innerHTML = buildWelcome() + buildGender() + buildAge();
+        bindWelcome();
+        bindGender();
+        bindAge();
+
+        // Build remaining screens since gender is set
+        buildSymptomAndRemainingScreens();
+
+        // Rehydrate UI: gender selection
+        var genderCard = root.querySelector('[data-gender="' + state.gender + '"]');
+        if (genderCard) genderCard.classList.add('selected');
+
+        // Rehydrate UI: age selection
+        if (state.age) {
+            var ageCard = root.querySelector('[data-age="' + state.age + '"]');
+            if (ageCard) ageCard.classList.add('selected');
+        }
+
+        // Rehydrate UI: symptom pills
+        for (var key in state.answers) {
+            if (!state.answers.hasOwnProperty(key)) continue;
+            var val = state.answers[key];
+            var parts = key.split('_');
+            var catKey = parts.slice(0, -1).join('_');
+            var itemIdx = parts[parts.length - 1];
+            var pill = root.querySelector('.severity-pill[data-cat="' + catKey + '"][data-item="' + itemIdx + '"][data-level="' + val + '"]');
+            if (pill) pill.setAttribute('data-selected', 'true');
+        }
+
+        // Enable next buttons for completed categories
+        var cats = getCategories();
+        for (var c = 0; c < cats.length; c++) {
+            if (allItemsAnswered(c)) {
+                var screenIdx = c + 3;
+                var screen = root.querySelector('[data-screen="' + screenIdx + '"]');
+                if (screen) {
+                    var nextBtn = screen.querySelector('.quiz-next-btn');
+                    if (nextBtn) {
+                        nextBtn.classList.remove('opacity-40', 'pointer-events-none');
+                        nextBtn.disabled = false;
+                    }
+                }
+            }
+        }
+
+        // Rehydrate lifestyle toggles
+        for (var lk in state.lifestyle) {
+            if (state.lifestyle[lk]) {
+                var track = root.querySelector('.toggle-track[data-toggle="' + lk + '"]');
+                if (track) track.classList.add('on');
+            }
+        }
+
+        // Rehydrate name/email inputs
+        if (state.name) {
+            var nameInput = document.getElementById('quiz-name');
+            if (nameInput) nameInput.value = state.name;
+        }
+        if (state.email) {
+            var emailInput = document.getElementById('quiz-email');
+            if (emailInput) emailInput.value = state.email;
+        }
+
+        // If on results screen, re-render results
+        var targetScreen = saved.currentScreen || 0;
+        if (targetScreen === 13) {
+            renderResults();
+        }
+
+        show(targetScreen);
     }
 
     // ── Init ─────────────────────────────────────────────────────────────
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', buildQuiz);
+        document.addEventListener('DOMContentLoaded', restoreQuiz);
     } else {
-        buildQuiz();
+        restoreQuiz();
     }
 
 })();
