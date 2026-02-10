@@ -231,7 +231,7 @@ export default async function handler(req) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Tenant-Slug': 'moonshot-med',
+          'X-Tenant-Slug': 'moonshot',
           'X-Webhook-Key': process.env.CLINIC_LEAD_WEBHOOK_KEY || ''
         },
         body: JSON.stringify({ name, email, gender, age, totalScore, maxScore, classification, categories, lifestyle })
