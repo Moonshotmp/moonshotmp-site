@@ -402,7 +402,7 @@
                 <h3 class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an Appointment</h3>
                 <p class="text-brand-gray text-sm mb-8">Which service are you looking for?</p>
                 <div class="space-y-4">
-                    <a href="/booking/" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">
+                    <a href="#" onclick="event.preventDefault(); closeBookingModal(); openClinicBooking();" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">
                         <span class="font-bold block">Medical</span>
                         <span class="text-brand-gray text-sm">Labs, DEXA, hormones, weight loss, peptides</span>
                     </a>
@@ -420,6 +420,28 @@
     // Inject booking modal
     document.body.insertAdjacentHTML('beforeend', bookingModalHTML);
 
+    // Clinic booking iframe modal HTML
+    const clinicBookingModalHTML = `
+    <div id="clinic-booking-modal" class="fixed inset-0 z-[110] hidden">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" onclick="closeClinicBooking()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="relative w-full max-w-xl" style="max-height:90vh;display:flex;flex-direction:column">
+                <button onclick="closeClinicBooking()" class="absolute -top-10 right-0 text-white/70 hover:text-white z-10" aria-label="Close booking">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div style="overflow-y:auto;max-height:90vh;border-radius:14px">
+                    <iframe id="clinic-booking-iframe" src="about:blank" title="Book an appointment"
+                            style="width:100%;border:none;display:block;min-height:500px"
+                            allow="payment"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', clinicBookingModalHTML);
+
     // Global booking modal functions
     window.openBookingModal = function() {
         document.getElementById('booking-modal').classList.remove('hidden');
@@ -432,9 +454,40 @@
         document.body.style.overflow = '';
     };
 
-    // Close modal on escape
+    // Clinic booking iframe modal functions
+    window.openClinicBooking = function() {
+        const iframe = document.getElementById('clinic-booking-iframe');
+        iframe.src = 'https://moonshotclinic.com/book/?embed=true&flow=new-patient&slug=moonshot';
+        document.getElementById('clinic-booking-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        gtag('event', 'cta_click', {cta_name: 'book_medical_embed', page: location.pathname});
+    };
+
+    window.closeClinicBooking = function() {
+        document.getElementById('clinic-booking-modal').classList.add('hidden');
+        document.body.style.overflow = '';
+        document.getElementById('clinic-booking-iframe').src = 'about:blank';
+    };
+
+    // Listen for postMessage from booking iframe
+    window.addEventListener('message', function(e) {
+        if (!e.data || typeof e.data.type !== 'string') return;
+        if (e.data.type === 'moonshot-book-height') {
+            const iframe = document.getElementById('clinic-booking-iframe');
+            if (iframe) iframe.style.height = e.data.height + 'px';
+        } else if (e.data.type === 'moonshot-book-done') {
+            gtag('event', 'booking_completed', {page: location.pathname});
+        } else if (e.data.type === 'moonshot-book-close') {
+            closeClinicBooking();
+        }
+    });
+
+    // Close modals on escape
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeBookingModal();
+        if (e.key === 'Escape') {
+            closeBookingModal();
+            closeClinicBooking();
+        }
     });
 
     // Run when DOM is ready
