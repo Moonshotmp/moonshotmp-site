@@ -431,7 +431,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <div style="overflow-y:auto;max-height:90vh;border-radius:14px">
+                <div style="overflow-y:auto;max-height:90vh;border-radius:14px;background:#101921">
                     <iframe id="clinic-booking-iframe" src="about:blank" title="Book an appointment"
                             style="width:100%;border:none;display:block;min-height:500px"
                             allow="payment"></iframe>
