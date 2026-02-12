@@ -5,8 +5,17 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 # Admin dashboard - protected by Netlify Identity (client-side + function auth)
 # Login page is public, dashboard pages check auth on load
 
+# Legacy URL redirects
+/services /medical/ 301
+/services/ /medical/ 301
+/services/womens-hormone-optimization/ /medical/womens-hormones/ 301
+/services/womens-hormones/ /medical/womens-hormones/ 301
+/services/mens-hormone-optimization/ /medical/mens-hormones/ 301
+/services/performance-medicine/ /medical/ 301
+/membership/ /booking/ 301
+/learn/menopause-guide/ /learn/menopause-perimenopause/ 301
+
 # 404 catch-all (must be last)
 /*    /404.html   404
-
 
 

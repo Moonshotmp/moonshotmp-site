@@ -27,12 +27,6 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
-  <url>
-    <loc>https://moonshotmp.com/privacy/</loc>
-    <lastmod>2025-01-01</lastmod>
-    <priority>0.3</priority>
-    <changefreq>yearly</changefreq>
-  </url>
 
   <!-- Booking -->
   <url>
@@ -494,6 +488,32 @@
     <loc>https://moonshotmp.com/learn/best-hormone-clinic-near-me/</loc>
     <lastmod>2026-02-08</lastmod>
     <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/function-health-results-next-steps/</loc>
+    <lastmod>2026-02-09</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/insidetracker-results-next-steps/</loc>
+    <lastmod>2026-02-09</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Additional Public Pages -->
+  <url>
+    <loc>https://moonshotmp.com/partners/</loc>
+    <lastmod>2026-02-01</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/principle-landing/</loc>
+    <lastmod>2026-02-02</lastmod>
+    <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
