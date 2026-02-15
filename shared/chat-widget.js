@@ -289,7 +289,7 @@
       if (!resp.ok) {
         addMessage(
           "assistant",
-          data.reply || "Sorry, something went wrong. Please try again or contact us at 847-499-1266."
+          data.reply || "Sorry, something went wrong. Please try again or contact us at 224-435-4280."
         );
         return;
       }
@@ -303,7 +303,7 @@
       removeTypingIndicator();
       addMessage(
         "assistant",
-        "Sorry, I'm having trouble connecting. Please try again or call us at 847-499-1266."
+        "Sorry, I'm having trouble connecting. Please try again or call us at 224-435-4280."
       );
     } finally {
       isWaiting = false;

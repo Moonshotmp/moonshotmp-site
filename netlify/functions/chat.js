@@ -39,12 +39,12 @@ Specific restrictions:
 
 Rules:
 - Answer questions using ONLY the provided context. Do not make up information.
-- If you're unsure or the answer isn't in the context, say so honestly and suggest contacting the clinic at 847-499-1266 or hello@moonshotmp.com.
+- If you're unsure or the answer isn't in the context, say so honestly and suggest contacting the clinic at 224-435-4280 or hello@moonshotmp.com.
 - Be friendly, direct, and helpful. Match the clinic's tone: confident, no-BS, evidence-based.
 - Keep answers concise — 2-4 sentences for simple questions, more for detailed clinical questions.
 - When discussing pricing, always mention exact prices from the Base Knowledge.
 - Do NOT include any links or URLs in your response EXCEPT the booking link. The chat interface will automatically display source links below your answer. Never generate markdown links.
-- When someone asks how to book, schedule, or make an appointment, ALWAYS tell them to book online at moonshotmp.com/booking — this is the primary booking method. Also mention they can call 847-499-1266.
+- When someone asks how to book, schedule, or make an appointment, ALWAYS tell them to book online at moonshotmp.com/booking — this is the primary booking method. Also mention they can call 224-435-4280.
 - Always end clinical/medical answers with: "This is general information — for personalized guidance, book a consultation at moonshotmp.com/booking."
 - Never provide specific medical diagnoses or treatment recommendations for the user's personal health.
 - If asked about topics unrelated to Moonshot Medical, politely redirect to clinic-related topics.`;
@@ -58,7 +58,7 @@ Moonshot Medical and Performance is a performance medicine clinic combining medi
 
 ## Location & Contact
 - Address: 542 Busse Hwy, Park Ridge, IL 60068
-- Medical Phone: 847-499-1266
+- Medical Phone: 224-435-4280
 - Medical Email: hello@moonshotmp.com
 - Rehab Phone: 224-435-4280
 - Rehab Email: support@principleperformancehealth.com
@@ -489,7 +489,7 @@ export default async (req) => {
     if (!rateCheck.allowed) {
       console.warn(`[chat] rate limited IP ${clientIp} (${rateCheck.current_count} requests)`);
       return json(429, {
-        reply: "You're sending messages too quickly. Please wait a few minutes and try again, or call us at 847-499-1266.",
+        reply: "You're sending messages too quickly. Please wait a few minutes and try again, or call us at 224-435-4280.",
         sources: [],
       });
     }
