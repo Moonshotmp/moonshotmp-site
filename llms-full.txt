@@ -138,11 +138,13 @@ What's included:
 
 Why we track body composition: The scale doesn't tell the whole story. Rapid weight loss often includes muscle loss, which hurts metabolism and long-term health. We use DEXA to ensure you're losing fat and preserving (or building) muscle.
 
-### Prescription + Oversight Program — $105/month
+### Medical Oversight Program — $150/month
 For patients whose insurance covers GLP-1 or hormone medications:
-- We write the prescription and send to your pharmacy
+- We write the prescription and send it to your pharmacy of choice
 - Medical oversight and monitoring
-- Lab work as needed
+- 2 DEXA scans per year
+- 2 comprehensive blood panels per year (every 6 months)
+- 1 vitamin shot per month
 - Dosing guidance
 - Provider access for questions
 
@@ -317,7 +319,7 @@ Standard panels are designed to detect disease, not optimize health. You can be 
 | Men's Hormone Optimization | $235/month |
 | Women's Hormone Optimization | $235/month |
 | Weight Loss Program (GLP-1) | $405/month |
-| Prescription + Oversight (bring your own Rx) | $105/month |
+| Medical Oversight (bring your own Rx) | $150/month |
 
 Rehab pricing varies by service. Contact us for details.
 
@@ -2291,7 +2293,7 @@ Yes. Both are weekly subcutaneous injections using a pre-filled pen—similar to
 There's no strict prohibition, but many patients report lower alcohol tolerance and increased nausea with alcohol. GLP-1s slow gastric emptying, so alcohol absorption patterns may change. Many patients naturally drink less because they just don't want it. Excessive alcohol should be avoided as it adds empty calories and can worsen GI side effects. 
 #### How much does it cost at Moonshot? 
 
-Our full Weight Loss program is $405/month (includes medication, medical oversight, labs, DEXA tracking, and dose management). If your insurance covers the GLP-1 medication, we offer a Prescription Program at $105/month for oversight and monitoring. 
+Our full Weight Loss program is $405/month (includes medication, medical oversight, labs, DEXA tracking, and dose management). If your insurance covers the GLP-1 medication, we offer a Medical Oversight program at $150/month which includes prescriptions sent to your pharmacy, 2 DEXA scans per year, comprehensive blood panels every 6 months, and 1 vitamin shot per month.
 #### References 
 
 - 1. Wilding JPH, et al. "Once-Weekly Semaglutide in Adults with Overweight or Obesity." N Engl J Med. 2021;384(11):989-1002. (STEP 1) 
@@ -4942,15 +4944,16 @@ $405/mo
 - DEXA body composition tracking 
 - Dosing adjustments 
 
-Prescription Only 
+Medical Oversight
 
-$105/mo 
+$150/mo
 
-- Medical oversight 
-- Rx sent to your pharmacy 
-- Good if insurance covers GLP-1 
-- Required labs & check-ins 
-- Dosing guidance 
+- Medical oversight & monitoring
+- Rx sent to your pharmacy of choice
+- 2 DEXA scans per year
+- Comprehensive blood panels every 6 months
+- 1 vitamin shot per month
+- Dosing guidance
 ### COMMON QUESTIONS 
 #### Who is a good candidate for GLP-1 medications? 
 
