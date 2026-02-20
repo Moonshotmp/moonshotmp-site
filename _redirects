@@ -15,6 +15,11 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 /membership/ /booking/ 301
 /learn/menopause-guide/ /learn/menopause-perimenopause/ 301
 
+# Billing redirect to clinic app
+/billing https://moonshot.moonshotclinic.com/billing/ 301!
+/billing/ https://moonshot.moonshotclinic.com/billing/ 301!
+/billing/* https://moonshot.moonshotclinic.com/billing/:splat 301!
+
 # 404 catch-all (must be last)
 /*    /404.html   404
 
