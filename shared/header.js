@@ -161,7 +161,7 @@
               </div>
             </div>
 
-            <a href="https://moonshotclinic.com" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Login</a>
+            <a href="https://moonshot.moonshotclinic.com/portal" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Login</a>
             <a href="/booking/medical/" class="btn-primary text-xs tracking-widest" onclick="event.preventDefault(); openBookingModal();">Book Now</a>
           </div>
 
@@ -274,7 +274,7 @@
             </div>
           </div>
 
-          <a href="https://moonshotclinic.com" class="block w-full text-brand-gray hover:text-brand-light py-3 text-sm uppercase tracking-widest mt-2">Login</a>
+          <a href="https://moonshot.moonshotclinic.com/portal" class="block w-full text-brand-gray hover:text-brand-light py-3 text-sm uppercase tracking-widest mt-2">Login</a>
           <a href="#" onclick="event.preventDefault(); openBookingModal();" class="block w-full text-brand-light bg-brand-gray/10 hover:bg-brand-gray/20 py-3 text-sm uppercase tracking-widest mt-2 font-bold">Book Now</a>
         </div>
       </div>
