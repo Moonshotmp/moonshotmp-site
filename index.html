@@ -305,6 +305,11 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
+    <!-- Hidden form for Netlify Forms detection (JS-injected footer form) -->
+    <form name="email-signup" netlify netlify-honeypot="bot-field" hidden>
+        <input type="email" name="email">
+    </form>
+
     <!-- Header (auto-injected) -->
     <script src="/shared/header.js" defer></script>
 
