@@ -31,6 +31,7 @@
     </div>
   </section>
 
+  <script src="/partners/api.js"></script>
   <script>
     const slugEl = document.getElementById("slug");
     const statusEl = document.getElementById("status");
@@ -47,19 +48,10 @@
       return (url.searchParams.get("slug") || "").trim().toLowerCase();
     }
 
-    async function loadPartner(slug) {
-      const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`, {
-        method: "GET",
-      });
-
-      const raw = await res.text();
-      let data = null;
-      try { data = JSON.parse(raw); } catch {}
-      if (!res.ok) {
-        throw new Error((data && (data.error || data.message)) || "Failed to load partner");
-      }
-      // partner-get returns { ok:true, partner: {...} } in some versions, or partner directly in others.
-      return data?.partner || data;
+    async function loadConnectStatus(slug) {
+      const res = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(slug)}`, { skipAuthRedirect: true });
+      if (!res.ok) throw new Error("Failed to load partner status");
+      return await res.json();
     }
 
     function setConnectMode({ connected, onboarded, hasBilling }) {
@@ -73,7 +65,7 @@
       }
 
       if (onboarded) {
-        showBadge("Stripe: connected ✅");
+        showBadge("Stripe: connected");
         connectBtn.style.display = "none";
 
         if (hasBilling) {
@@ -85,7 +77,7 @@
         return;
       }
 
-      showBadge("Stripe: setup incomplete ⚠️");
+      showBadge("Stripe: setup incomplete");
       connectBtn.textContent = "Finish Stripe Setup";
       connectBtn.style.display = "inline-block";
       setStatus("Stripe is connected, but onboarding is not complete. Click to finish setup.");
@@ -107,32 +99,47 @@
       billingEl.href = `/partners/billing.html?slug=${encodeURIComponent(slug)}`;
 
       try {
-        const partner = await loadPartner(slug);
-        const connected = !!partner?.stripe?.connectedAccountId;
-        const onboarded = !!partner?.stripe?.onboarded;
-        const hasBilling = !!partner?.billing?.cardLast4;
-
-        setConnectMode({ connected, onboarded, hasBilling });
+        const data = await loadConnectStatus(slug);
+        setConnectMode({ connected: data.connected, onboarded: data.onboarded, hasBilling: data.hasBilling });
       } catch (err) {
         setStatus(err?.message || String(err));
-        // still allow connect attempt if partner exists but status call failed
       }
     })();
 
-    connectBtn.addEventListener("click", () => {
+    connectBtn.addEventListener("click", async () => {
       if (!slug) return;
-      window.location.href = `/.netlify/functions/stripe-connect-start?slug=${encodeURIComponent(slug)}`;
+
+      // If logged in, use the authenticated connect endpoint
+      if (PartnerAPI.isLoggedIn()) {
+        try {
+          connectBtn.disabled = true;
+          connectBtn.textContent = "Redirecting to Stripe...";
+          const res = await PartnerAPI.apiPost("/api/partners/me/connect", {});
+          const data = await res.json();
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            setStatus("Failed to start Stripe Connect");
+            connectBtn.disabled = false;
+            connectBtn.textContent = "Connect Stripe";
+          }
+        } catch (err) {
+          setStatus("Error: " + err.message);
+          connectBtn.disabled = false;
+          connectBtn.textContent = "Connect Stripe";
+        }
+      } else {
+        // Not logged in — redirect to login first
+        window.location.href = `/partners/login.html?slug=${encodeURIComponent(slug)}`;
+      }
     });
 
-    // If coming back from Stripe, re-check partner status (no reliance on URL params)
+    // If coming back from Stripe, re-check partner status
     window.addEventListener("focus", async () => {
       if (!slug) return;
       try {
-        const partner = await loadPartner(slug);
-        const connected = !!partner?.stripe?.connectedAccountId;
-        const onboarded = !!partner?.stripe?.onboarded;
-        const hasBilling = !!partner?.billing?.cardLast4;
-        setConnectMode({ connected, onboarded, hasBilling });
+        const data = await loadConnectStatus(slug);
+        setConnectMode({ connected: data.connected, onboarded: data.onboarded, hasBilling: data.hasBilling });
       } catch {}
     });
   </script>

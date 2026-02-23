@@ -107,6 +107,7 @@
     </div>
   </section>
 
+  <script src="/partners/api.js"></script>
   <script>
     const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SpXEHDcqzZ9bg0mF4sWL7LaFPH5Qg1LjSoXUSzcV75kvrdJvrKUROSCAecTeADYJRFoY8li9BJwMbblcKvQNC5200gb9NXcJ2';
 
@@ -127,20 +128,13 @@
       return (url.searchParams.get("slug") || "").trim().toLowerCase();
     }
 
-    async function loadPartner(slug) {
-      const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load partner");
-      return data?.partner || data;
-    }
-
     const slug = getSlug();
     let stripe, elements, cardElement;
     let clientSecret = null;
 
-    function showExistingCard(billing) {
-      cardBrandEl.textContent = (billing.cardBrand || "card").toUpperCase();
-      cardLast4El.textContent = billing.cardLast4;
+    function showExistingCard(cardBrand, cardLast4) {
+      cardBrandEl.textContent = (cardBrand || "card").toUpperCase();
+      cardLast4El.textContent = cardLast4;
       existingCardEl.style.display = "block";
       cardFormEl.style.display = "none";
     }
@@ -174,26 +168,9 @@
       });
     }
 
-    async function createSetupIntent() {
-      const res = await fetch("/.netlify/functions/stripe-setup-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to create setup intent");
-      return data.clientSecret;
-    }
-
-    async function savePaymentMethod(paymentMethodId) {
-      const res = await fetch("/.netlify/functions/stripe-save-payment-method", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, paymentMethodId }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to save payment method");
-      return data;
+    // Redirect to login if not authenticated
+    if (!PartnerAPI.isLoggedIn()) {
+      window.location.href = `/partners/login.html${slug ? '?slug=' + encodeURIComponent(slug) : ''}`;
     }
 
     (async () => {
@@ -207,12 +184,17 @@
       storeLinkEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
 
       try {
-        const partner = await loadPartner(slug);
-        partnerNameEl.textContent = partner.name || slug;
+        // Load partner info using authenticated endpoint
+        const res = await PartnerAPI.apiGet('/api/partners/me');
+        if (!res.ok) throw new Error("Failed to load partner");
+        const data = await res.json();
+        const partner = data.partner;
+
+        partnerNameEl.textContent = partner.businessName || partner.name || slug;
 
         // Check if card already on file
-        if (partner.billing?.cardLast4) {
-          showExistingCard(partner.billing);
+        if (partner.billingCardLast4) {
+          showExistingCard(partner.billingCardBrand, partner.billingCardLast4);
         } else {
           showCardForm();
         }
@@ -235,9 +217,12 @@
       setStatus("");
 
       try {
-        // Create SetupIntent if we don't have one
+        // Create SetupIntent
         if (!clientSecret) {
-          clientSecret = await createSetupIntent();
+          const res = await PartnerAPI.apiPost("/api/partners/billing/setup-intent", {});
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Failed to create setup intent");
+          clientSecret = data.clientSecret;
         }
 
         // Confirm SetupIntent with card
@@ -250,20 +235,20 @@
         }
 
         // Save payment method to partner
-        const result = await savePaymentMethod(setupIntent.payment_method);
+        const saveRes = await PartnerAPI.apiPost("/api/partners/billing/save-method", {
+          paymentMethodId: setupIntent.payment_method
+        });
+        const result = await saveRes.json();
+        if (!saveRes.ok) throw new Error(result.error || "Failed to save payment method");
 
         // Show success
-        showExistingCard({
-          cardBrand: result.cardBrand,
-          cardLast4: result.cardLast4,
-        });
-
+        showExistingCard(result.cardBrand, result.cardLast4);
         setStatus("Payment method saved successfully!");
-        clientSecret = null; // Reset for next time
+        clientSecret = null;
 
       } catch (err) {
         setStatus(err?.message || "Failed to save card");
-        clientSecret = null; // Reset on error
+        clientSecret = null;
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = "Save Payment Method";

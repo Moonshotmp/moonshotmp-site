@@ -632,6 +632,98 @@
       }
     }
 
+    /* Featured Hero Product */
+    .mp-featured {
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .mp-featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #4ade80;
+      color: #101921;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+    .mp-featured-info { flex: 1; }
+    .mp-featured-name {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .mp-featured-desc {
+      font-size: 16px;
+      color: var(--color-brand-gray);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .mp-featured-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
+    }
+    .mp-featured-bullets li {
+      font-size: 14px;
+      color: var(--color-brand-gray);
+      padding-left: 22px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .mp-featured-bullets li::before {
+      content: "\2713";
+      position: absolute;
+      left: 0;
+      color: #6c9;
+    }
+    .mp-featured-footer {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .mp-featured-price {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 600;
+    }
+    .mp-featured-btn {
+      background: var(--color-brand-gray);
+      color: var(--color-brand-dark);
+      border: none;
+      border-radius: 8px;
+      padding: 14px 28px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mp-featured-btn:hover {
+      background: var(--color-brand-light);
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      .mp-featured { flex-direction: column; padding: 24px; }
+      .mp-featured-name { font-size: 22px; }
+    }
+
     /* Loading & Error States */
     .mp-loading {
       text-align: center;
@@ -775,6 +867,7 @@
       </div>
       <div id="loadingState" class="mp-loading">Loading diagnostics...</div>
       <div id="errorState" class="mp-error" style="display:none;"></div>
+      <div id="featuredProduct" style="display:none;"></div>
       <div class="mp-products" id="productsGrid"></div>
     </section>
 
@@ -911,6 +1004,7 @@
   </div>
 
   <!-- Cart Module -->
+  <script src="/partners/api.js"></script>
   <script src="/partners/cart.js"></script>
 
   <script>
@@ -938,21 +1032,22 @@
       return new URL(window.location.href).searchParams.get('slug')?.trim().toLowerCase() || '';
     }
 
-    // Load partner data
+    // Load partner data from clinic API
     async function loadPartner(slug) {
       if (!slug) return null;
       try {
-        const res = await fetch(`/.netlify/functions/partner-get?slug=${encodeURIComponent(slug)}`);
+        const res = await PartnerAPI.apiGet(`/api/partners/store/${encodeURIComponent(slug)}`, { skipAuthRedirect: true });
         if (!res.ok) return null;
-        return await res.json();
+        const data = await res.json();
+        return data.partner || null;
       } catch {
         return null;
       }
     }
 
-    // Load catalog
+    // Load catalog from clinic API
     async function loadCatalog() {
-      const res = await fetch('/partners/catalog.json', { cache: 'no-store' });
+      const res = await PartnerAPI.apiGet('/api/partners/catalog', { skipAuthRedirect: true });
       const data = await res.json();
       return (data.products || data).filter(p => p.active !== false);
     }
@@ -974,15 +1069,40 @@
     // Render products
     function renderProducts(filter = 'all') {
       const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+      const featuredEl = document.getElementById('featuredProduct');
 
       if (filtered.length === 0) {
         gridEl.innerHTML = '<div class="mp-loading">No diagnostics in this category</div>';
+        featuredEl.style.display = 'none';
         return;
       }
 
-      gridEl.innerHTML = filtered.map(p => {
+      // Show DEXA as featured hero when viewing all products
+      const dexa = filter === 'all' ? filtered.find(p => p.category === 'dexa') : null;
+      const rest = dexa ? filtered.filter(p => p !== dexa) : filtered;
+
+      if (dexa) {
+        const dexaBullets = (dexa.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
+        featuredEl.style.display = 'block';
+        featuredEl.innerHTML = `
+          <div class="mp-featured">
+            <div class="mp-featured-info">
+              <div class="mp-featured-name">${escapeHtml(dexa.name)}</div>
+              <div class="mp-featured-desc">${escapeHtml(dexa.description)}</div>
+              ${dexaBullets ? `<ul class="mp-featured-bullets">${dexaBullets}</ul>` : ''}
+              ${dexa.duration ? `<div class="mp-product-duration">${escapeHtml(dexa.duration)}</div>` : ''}
+              <div class="mp-featured-footer">
+                <div class="mp-featured-price">$${dexa.price}</div>
+                <button class="mp-featured-btn" onclick="addToCart('${dexa.id}')">Add to Cart</button>
+              </div>
+            </div>
+          </div>`;
+      } else {
+        featuredEl.style.display = 'none';
+      }
+
+      gridEl.innerHTML = rest.map(p => {
         const bullets = (p.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('');
-        const isDEXA = p.category === 'dexa';
         return `
           <div class="mp-product" data-id="${p.id}">
             ${p.badge ? `<span class="mp-product-badge">${escapeHtml(p.badge)}</span>` : ''}
@@ -991,7 +1111,6 @@
               <div class="mp-product-desc">${escapeHtml(p.description)}</div>
               ${bullets ? `<ul class="mp-product-bullets">${bullets}</ul>` : ''}
               ${p.duration ? `<div class="mp-product-duration">${escapeHtml(p.duration)}</div>` : ''}
-              ${isDEXA ? `<div class="mp-product-availability">DEXA appointments begin Feb 25 — purchase now to reserve your spot.</div>` : ''}
               <div class="mp-product-footer">
                 <div class="mp-product-price">$${p.price}</div>
                 <button class="mp-add-btn" onclick="addToCart('${p.id}')">Add to Cart</button>
@@ -1077,14 +1196,12 @@
       checkoutBtn.textContent = 'Processing...';
 
       try {
-        const res = await fetch('/.netlify/functions/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            slug,
-            items: items.map(i => ({ id: i.id, quantity: i.quantity }))
-          })
-        });
+        const res = await PartnerAPI.apiPost('/api/partners/checkout', {
+          slug,
+          items: items.map(i => ({ id: i.id, quantity: i.quantity })),
+          success_url: `${window.location.origin}/partners/success.html?slug=${slug}&session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${window.location.origin}/partners/store.html?slug=${slug}`,
+        }, { skipAuthRedirect: true });
 
         const data = await res.json();
 
@@ -1126,42 +1243,25 @@
         if (partner) {
           document.getElementById('partnerName').textContent = partner.name;
 
-          // Show partner block with logo
+          // Show partner block with logo (from S3 URL)
           const partnerBlock = document.getElementById('partnerBlock');
           const partnerLogo = document.getElementById('partnerLogo');
 
-          // Try to load partner logo
-          const logoKey = `logos/${slug}`;
-          partnerLogo.src = `/.netlify/functions/logo-get?key=${encodeURIComponent(logoKey)}`;
-          partnerLogo.onload = () => { partnerBlock.style.display = 'inline-flex'; };
-          partnerLogo.onerror = () => {
-            // Show partner block without logo if no logo exists
+          if (partner.logoUrl) {
+            partnerLogo.src = partner.logoUrl;
+            partnerLogo.onload = () => { partnerBlock.style.display = 'inline-flex'; };
+            partnerLogo.onerror = () => {
+              partnerLogo.style.display = 'none';
+              partnerBlock.style.display = 'inline-flex';
+            };
+          } else {
             partnerLogo.style.display = 'none';
             partnerBlock.style.display = 'inline-flex';
-          };
+          }
 
-          // Try to load partner hero image
+          // Hero image section (hidden unless partner has heroUrl)
           const partnerHeroSection = document.getElementById('partnerHeroSection');
-          const partnerHeroImg = document.getElementById('partnerHeroImg');
-          const partnerHeroLabel = document.getElementById('partnerHeroLabel');
-          const partnerHeroTagline = document.getElementById('partnerHeroTagline');
-          const mainHero = document.getElementById('mainHero');
-
-          const heroKey = `heroes/${slug}`;
-          partnerHeroImg.src = `/.netlify/functions/logo-get?key=${encodeURIComponent(heroKey)}`;
-          partnerHeroImg.onload = () => {
-            // Show partner hero section
-            partnerHeroSection.style.display = 'block';
-            // Update caption
-            partnerHeroLabel.textContent = `Recommended by ${partner.name}`;
-            partnerHeroTagline.textContent = partner.tagline || 'Trusted diagnostic partner';
-            // Reduce main hero padding since partner hero provides spacing
-            mainHero.style.paddingTop = '60px';
-          };
-          partnerHeroImg.onerror = () => {
-            // No hero image - keep section hidden, main hero keeps full padding
-            partnerHeroSection.style.display = 'none';
-          };
+          partnerHeroSection.style.display = 'none';
         }
 
         // Render products

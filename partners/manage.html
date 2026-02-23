@@ -41,6 +41,10 @@
     .status-dot.red { background: #f87171; }
     .status-dot.gray { background: #666; }
     .status-row { display: flex; align-items: center; margin-bottom: 12px; font-size: 14px; }
+    .margin-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    .margin-table th, .margin-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .margin-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; font-weight: 600; }
+    .margin-highlight { color: #4ade80; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -128,6 +132,14 @@
         <button class="btn-outline" id="viewStoreBtn">VIEW STORE</button>
       </div>
 
+      <!-- Your Margins Section -->
+      <h3 class="section-title">Your Margins</h3>
+      <div id="marginsSection">
+        <div id="marginsLoading" style="color: #888; font-size: 14px;">Loading catalog...</div>
+        <div id="marginsTable" style="display:none;"></div>
+        <p style="font-size: 12px; color: #888; margin-top: 8px;">If we run a promo, your wholesale cost drops proportionally — your margin stays the same.</p>
+      </div>
+
       <!-- Billing Section -->
       <h3 class="section-title">Billing</h3>
       <div class="billing-info">
@@ -169,8 +181,8 @@
           <div class="stat-label">Total Revenue</div>
         </div>
         <div class="stat-box">
-          <div class="stat-value" id="avgOrder">$0</div>
-          <div class="stat-label">Avg Order</div>
+          <div class="stat-value" id="totalCommission">$0</div>
+          <div class="stat-label">Your Earnings</div>
         </div>
       </div>
 
@@ -181,9 +193,10 @@
           <thead>
             <tr>
               <th>Date</th>
-              <th>Customer</th>
-              <th>Items</th>
-              <th>Total</th>
+              <th>Product</th>
+              <th>Amount</th>
+              <th>Your Earnings</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody id="ordersBody"></tbody>
@@ -197,23 +210,22 @@
     </div>
   </div>
 
+<script src="/partners/api.js"></script>
 <script>
 (function() {
   let currentPartner = null;
 
-  // Load partner data on page load
+  // Redirect to login if not authenticated
+  if (!PartnerAPI.isLoggedIn()) {
+    window.location.href = '/partners/login.html';
+    return;
+  }
+
   loadPartner();
 
   async function loadPartner() {
     try {
-      const res = await fetch('/.netlify/functions/partner-me', {
-        credentials: 'include'
-      });
-
-      if (res.status === 401) {
-        window.location.href = '/partners/login.html';
-        return;
-      }
+      const res = await PartnerAPI.apiGet('/api/partners/me');
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -225,8 +237,10 @@
       currentPartner = data.partner;
       renderPartner(currentPartner);
       loadOrders();
+      loadMargins();
 
     } catch (err) {
+      if (err.message === 'Session expired') return;
       console.error('[manage] error:', err);
       showError('Network error. Please refresh.');
     }
@@ -249,7 +263,7 @@
     document.getElementById('storeCard').style.display = 'block';
 
     // Basic info
-    document.getElementById('partnerName').value = p.name || '';
+    document.getElementById('partnerName').value = p.businessName || p.name || '';
     document.getElementById('contactName').value = p.contactName || '';
     document.getElementById('phone').value = p.phone || '';
     document.getElementById('partnerEmail').value = p.email || '';
@@ -262,12 +276,12 @@
 
     document.getElementById('storeUrl').value = location.origin + '/partners/store.html?slug=' + p.slug;
 
-    // Stripe status (badge + dot)
+    // Stripe status
     const stripeBadge = document.getElementById('stripeBadge');
     const stripeBtn = document.getElementById('stripeBtn');
     const stripeDot = document.getElementById('stripeDot');
     const stripeStatusText = document.getElementById('stripeStatusText');
-    if (p.stripe && p.stripe.connectedAccountId) {
+    if (p.stripeAccountId && p.stripeOnboarded) {
       stripeBadge.className = 'badge badge-green';
       stripeBadge.textContent = 'Stripe Connected';
       stripeDot.className = 'status-dot green';
@@ -283,7 +297,7 @@
       stripeBtn.textContent = 'CONNECT STRIPE';
     }
 
-    // Billing status (badge + dot)
+    // Billing status
     const billingBadge = document.getElementById('billingBadge');
     const billingDot = document.getElementById('billingDot');
     const cardDisplay = document.getElementById('cardDisplay');
@@ -292,12 +306,12 @@
 
     manageBillingBtn.href = '/partners/billing.html?slug=' + p.slug;
 
-    if (p.billing && p.billing.cardLast4) {
+    if (p.billingCardLast4) {
       billingBadge.className = 'badge badge-green';
       billingBadge.textContent = 'Billing Active';
       billingDot.className = 'status-dot green';
-      document.getElementById('cardBrand').textContent = (p.billing.cardBrand || 'Card').toUpperCase();
-      document.getElementById('cardLast4').textContent = p.billing.cardLast4;
+      document.getElementById('cardBrand').textContent = (p.billingCardBrand || 'Card').toUpperCase();
+      document.getElementById('cardLast4').textContent = p.billingCardLast4;
       cardDisplay.style.display = 'inline';
       noCard.style.display = 'none';
     } else {
@@ -308,14 +322,13 @@
       noCard.style.display = 'inline';
     }
 
-    // Logo preview
-    if (p.branding && p.branding.logoKey) {
+    // Logo preview from S3
+    if (p.logoUrl) {
       const logoImg = document.getElementById('logoPreview');
-      logoImg.src = '/.netlify/functions/logo-get?key=' + encodeURIComponent(p.branding.logoKey);
+      logoImg.src = p.logoUrl;
       logoImg.style.display = 'block';
     }
 
-    // Wire up buttons
     wireUpButtons(p);
   }
 
@@ -326,23 +339,19 @@
     const ordersStats = document.getElementById('ordersStats');
 
     try {
-      const res = await fetch('/.netlify/functions/partner-orders', {
-        credentials: 'include'
-      });
+      const res = await PartnerAPI.apiGet('/api/partners/me/orders');
 
       ordersLoading.style.display = 'none';
 
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        if (err.message === 'Stripe not connected') {
-          ordersEmpty.textContent = 'Connect Stripe to start receiving orders.';
-        }
+        ordersEmpty.textContent = 'Failed to load orders.';
         ordersEmpty.style.display = 'block';
         return;
       }
 
       const data = await res.json();
       const orders = data.orders || [];
+      const stats = data.stats || {};
 
       if (orders.length === 0) {
         ordersEmpty.style.display = 'block';
@@ -350,25 +359,26 @@
       }
 
       // Show stats
-      const totalRevenue = orders.reduce((sum, o) => sum + (o.amount || 0), 0);
-      document.getElementById('totalOrders').textContent = orders.length;
-      document.getElementById('totalRevenue').textContent = '$' + (totalRevenue / 100).toFixed(0);
-      document.getElementById('avgOrder').textContent = '$' + Math.round(totalRevenue / orders.length / 100);
+      document.getElementById('totalOrders').textContent = stats.totalOrders || orders.length;
+      document.getElementById('totalRevenue').textContent = '$' + Math.floor((stats.totalRevenue || 0) / 100);
+      document.getElementById('totalCommission').textContent = '$' + Math.floor((stats.totalCommission || 0) / 100);
       ordersStats.style.display = 'grid';
 
       // Render table
       const tbody = document.getElementById('ordersBody');
       tbody.innerHTML = orders.map(o => {
-        const date = o.created ? new Date(o.created).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '-';
-        const items = (o.items || []).map(i => `${i.name} x${i.quantity}`).join(', ') || '-';
-        const total = '$' + ((o.amount || 0) / 100).toFixed(2);
+        const date = o.created_at ? new Date(o.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '-';
+        const amount = '$' + ((o.amount_cents || 0) / 100).toFixed(2);
+        const commission = o.commission_cents ? '$' + ((o.commission_cents || 0) / 100).toFixed(2) : '-';
+        const statusClass = o.status === 'paid' ? 'color: #4ade80' : o.status === 'pending' ? 'color: #facc15' : '';
 
         return `
           <tr>
             <td>${date}</td>
-            <td>${escapeHtml(o.customerName || 'Unknown')}</td>
-            <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(items)}</td>
-            <td style="font-weight: 600;">${total}</td>
+            <td>${escapeHtml(o.product_name || '-')}</td>
+            <td>${amount}</td>
+            <td style="font-weight: 600; color: #4ade80;">${commission}</td>
+            <td style="${statusClass}; text-transform: capitalize;">${o.status || '-'}</td>
           </tr>
         `;
       }).join('');
@@ -380,6 +390,43 @@
       ordersLoading.style.display = 'none';
       ordersEmpty.textContent = 'Failed to load orders.';
       ordersEmpty.style.display = 'block';
+    }
+  }
+
+  async function loadMargins() {
+    const marginsLoading = document.getElementById('marginsLoading');
+    const marginsTable = document.getElementById('marginsTable');
+
+    try {
+      const res = await PartnerAPI.apiGet('/api/partners/catalog', { skipAuthRedirect: true });
+      if (!res.ok) { marginsLoading.textContent = 'Failed to load catalog.'; return; }
+
+      const data = await res.json();
+      const products = (data.products || []).filter(p => p.wholesalePriceCents);
+
+      if (products.length === 0) {
+        marginsLoading.textContent = 'No margin data available yet.';
+        return;
+      }
+
+      marginsLoading.style.display = 'none';
+      marginsTable.style.display = 'block';
+      marginsTable.innerHTML = `
+        <table class="margin-table">
+          <thead>
+            <tr><th>Product</th><th>Retail Price</th><th>Your Wholesale Cost</th><th>Your Margin</th></tr>
+          </thead>
+          <tbody>
+            ${products.map(p => {
+              const retail = (p.priceCents / 100).toFixed(0);
+              const wholesale = (p.wholesalePriceCents / 100).toFixed(0);
+              const margin = ((p.priceCents - p.wholesalePriceCents) / 100).toFixed(0);
+              return `<tr><td>${escapeHtml(p.name)}</td><td>$${retail}</td><td>$${wholesale}</td><td class="margin-highlight">$${margin}</td></tr>`;
+            }).join('')}
+          </tbody>
+        </table>`;
+    } catch {
+      marginsLoading.textContent = 'Failed to load catalog.';
     }
   }
 
@@ -399,24 +446,32 @@
     // Sign Out
     document.getElementById('signOutBtn').onclick = async function() {
       try {
-        await fetch('/.netlify/functions/auth-logout', {
-          method: 'POST',
-          credentials: 'include'
-        });
+        await PartnerAPI.apiPost('/api/partners/auth/logout', {});
       } catch (e) {}
+      PartnerAPI.clearToken();
       window.location.href = '/partners/login.html';
     };
 
     // Stripe Connect
-    document.getElementById('stripeBtn').onclick = function() {
-      window.location.href = '/.netlify/functions/stripe-connect-start?slug=' + p.slug;
+    document.getElementById('stripeBtn').onclick = async function() {
+      try {
+        const res = await PartnerAPI.apiPost('/api/partners/me/connect', {});
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          setStatus('Failed to start Stripe Connect', true);
+        }
+      } catch (err) {
+        setStatus('Failed to connect Stripe: ' + err.message, true);
+      }
     };
 
     // Save Changes
     document.getElementById('saveBtn').onclick = async function() {
       const updates = {
         name: document.getElementById('partnerName').value.trim(),
-        contactName: document.getElementById('contactName').value.trim(),
+        contact_name: document.getElementById('contactName').value.trim(),
         phone: document.getElementById('phone').value.trim(),
         email: document.getElementById('partnerEmail').value.trim(),
         address: {
@@ -430,12 +485,7 @@
       setStatus('Saving...', false);
 
       try {
-        const res = await fetch('/.netlify/functions/partner-update', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updates)
-        });
+        const res = await PartnerAPI.apiPost('/api/partners/me/update', updates);
 
         if (res.ok) {
           setStatus('Saved!', false);
@@ -449,7 +499,7 @@
     };
 
     // Logo Upload with compression
-    const MAX_INPUT_SIZE = 50 * 1024 * 1024; // 50MB input allowed
+    const MAX_INPUT_SIZE = 50 * 1024 * 1024;
     const MAX_DIMENSION = 800;
     const JPEG_QUALITY = 0.85;
 
@@ -502,21 +552,15 @@
       try {
         const compressedDataUrl = await compressImage(file);
 
-        const res = await fetch('/.netlify/functions/logo-upload', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            slug: p.slug,
-            dataUrl: compressedDataUrl
-          })
+        const res = await PartnerAPI.apiPost('/api/partners/me/logo', {
+          logo_data_url: compressedDataUrl
         });
 
         if (res.ok) {
           const data = await res.json();
           setStatus('Logo uploaded!', false);
           const logoImg = document.getElementById('logoPreview');
-          logoImg.src = compressedDataUrl;
+          logoImg.src = data.logoUrl || compressedDataUrl;
           logoImg.style.display = 'block';
         } else {
           const err = await res.json().catch(() => ({}));

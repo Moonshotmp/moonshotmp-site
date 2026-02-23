@@ -85,6 +85,36 @@
     .success-step-text strong {
       color: var(--color-brand-light);
     }
+    .prep-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .prep-box h3 {
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+    .prep-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .prep-list li {
+      font-size: 13px;
+      color: var(--color-brand-gray);
+      padding: 6px 0 6px 22px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .prep-list li::before {
+      content: "\2713";
+      position: absolute;
+      left: 0;
+      color: #6c9;
+    }
     .success-contact {
       font-size: 14px;
       color: var(--color-brand-gray);
@@ -136,7 +166,7 @@
       </div>
 
       <h1 class="success-title">Order Confirmed!</h1>
-      <p class="success-subtitle">Next step: book your appointment.</p>
+      <p class="success-subtitle">Your diagnostic is confirmed. Book your appointment below.</p>
 
       <div class="success-steps">
         <h3>What Happens Next</h3>
@@ -149,25 +179,31 @@
         <div class="success-step">
           <div class="success-step-num">2</div>
           <div class="success-step-text">
-            <strong>Book your appointment</strong> — Use the button below to schedule your visit with our clinical team.
+            <strong>Book your appointment</strong> — Use the button below to schedule your visit. Most people book in under 2 minutes.
           </div>
         </div>
         <div class="success-step">
           <div class="success-step-num">3</div>
           <div class="success-step-text">
-            <strong>Complete your diagnostic</strong> — Come to your appointment and we'll take care of the rest.
+            <strong>Show up and we handle the rest</strong> — Come to your appointment at our clinic and our team takes care of everything.
           </div>
         </div>
       </div>
 
       <a href="https://moonshotclinic.com/book/" class="success-btn success-btn-primary" target="_blank" rel="noopener">Book Your Appointment</a>
 
-      <div class="success-contact" style="margin-bottom: 16px;">
-        <strong>Note:</strong> DEXA appointments begin Feb 25. Booking will open accordingly.
+      <div class="prep-box">
+        <h3>What to Expect</h3>
+        <ul class="prep-list">
+          <li>DEXA scans take about 10 minutes — wear lightweight, metal-free clothing</li>
+          <li>Blood draws are quick — fasting recommended for best results</li>
+          <li>Results are reviewed by a medical professional and shared securely</li>
+          <li>Location: 542 Busse Hwy, Park Ridge, IL 60068</li>
+        </ul>
       </div>
 
       <div class="success-contact">
-        Can't find a time that works? Email <a href="mailto:hello@moonshotmp.com">hello@moonshotmp.com</a> and we'll help you schedule.
+        Questions or need to reschedule? Email <a href="mailto:hello@moonshotmp.com">hello@moonshotmp.com</a> or call <a href="tel:+12244354280">224-435-4280</a>.
       </div>
 
       <a href="/" class="success-btn success-btn-secondary">Back to Moonshot</a>

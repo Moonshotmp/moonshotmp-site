@@ -7,141 +7,241 @@
   <link rel="canonical" href="https://moonshotmp.com/partners/setup.html" />
   <title>Partner Store Setup</title>
   <link rel="stylesheet" href="/partners/styles.css" />
+  <style>
+    .stepper { display: flex; gap: 0; margin-bottom: 2rem; overflow: hidden; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+    .step-item { flex: 1; padding: 14px 12px; text-align: center; font-size: 13px; font-weight: 500; background: rgba(255,255,255,0.02); color: #666; border-right: 1px solid rgba(255,255,255,0.08); position: relative; transition: all 0.3s; }
+    .step-item:last-child { border-right: none; }
+    .step-item.active { background: rgba(255,255,255,0.06); color: var(--color-brand-light, #F0EEE9); }
+    .step-item.done { background: rgba(74, 222, 128, 0.08); color: #4ade80; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.1); font-size: 11px; font-weight: 700; margin-right: 6px; }
+    .step-item.active .step-num { background: rgba(255,255,255,0.15); }
+    .step-item.done .step-num { background: rgba(74, 222, 128, 0.2); }
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+    .terms-check { display: flex; align-items: flex-start; gap: 10px; margin: 1rem 0; padding: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; }
+    .terms-check input[type="checkbox"] { margin-top: 3px; width: 18px; height: 18px; accent-color: #4ade80; }
+    .terms-check label { font-size: 14px; color: var(--muted, #999); cursor: pointer; }
+    .terms-check a { color: var(--color-brand-light, #F0EEE9); text-decoration: underline; }
+    .connect-status { padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; margin: 1rem 0; }
+    .connect-waiting { color: #facc15; font-size: 14px; }
+    .connect-done { color: #4ade80; font-size: 14px; }
+  </style>
 </head>
 <body>
   <section class="section section-dark bg-texture">
     <div class="container" style="max-width: 720px;">
       <h1>Partner Store Setup</h1>
-      <p class="lead">Create your partner storefront first. Stripe connection happens on the next step.</p>
+      <p class="lead">Set up your partner storefront in 4 steps.</p>
 
-      <form id="partner-form" class="card" style="padding: 1.5rem;">
-        <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Business Information</h3>
+      <!-- Progress Stepper -->
+      <div class="stepper" id="stepper">
+        <div class="step-item active" data-step="1"><span class="step-num">1</span>Business Info</div>
+        <div class="step-item" data-step="2"><span class="step-num">2</span>Connect Stripe</div>
+        <div class="step-item" data-step="3"><span class="step-num">3</span>Add Billing Card</div>
+        <div class="step-item" data-step="4"><span class="step-num">4</span>Done</div>
+      </div>
 
-        <label>
-          Business name
-          <input id="name" name="name" placeholder="e.g. Acme Wellness Clinic" required />
-        </label>
+      <!-- Step 1: Business Info -->
+      <div class="step-panel active" id="step1">
+        <form id="partner-form" class="card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Business Information</h3>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <label>
-            Contact name
-            <input id="contactName" name="contactName" placeholder="Dr. Jane Smith" required />
+            Business name
+            <input id="name" name="name" placeholder="e.g. Acme Wellness Clinic" required />
           </label>
-          <label>
-            Phone number
-            <input id="phone" name="phone" type="tel" placeholder="(555) 123-4567" required />
-          </label>
-        </div>
 
-        <label>
-          Contact email
-          <input id="email" name="email" type="email" placeholder="jane@acmewellness.com" required />
-        </label>
-
-        <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Business Address</h3>
-
-        <label>
-          Street address
-          <input id="street" name="street" placeholder="123 Main Street, Suite 100" required />
-        </label>
-
-        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
-          <label>
-            City
-            <input id="city" name="city" placeholder="Austin" required />
-          </label>
-          <label>
-            State
-            <input id="state" name="state" placeholder="TX" maxlength="2" required style="text-transform: uppercase;" />
-          </label>
-          <label>
-            ZIP
-            <input id="zip" name="zip" placeholder="78701" required />
-          </label>
-        </div>
-
-        <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Business Logo or Profile Picture <span style="font-weight: normal; opacity: 0.6;">(optional)</span></h3>
-        <div style="display: flex; align-items: flex-start; gap: 1rem;">
-          <div style="flex: 1;">
-            <label style="margin-bottom: 0;">
-              Upload your business logo
-              <input id="logo" name="logo" type="file" accept="image/*" style="padding: 0.75rem; background: rgba(255,255,255,0.05);" />
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <label>
+              Contact name
+              <input id="contactName" name="contactName" placeholder="Dr. Jane Smith" required />
             </label>
-            <div class="muted" style="margin-top: 0.5rem; font-size: 0.85rem;">
-              Any image format. Will be automatically resized. You can also change this later.
+            <label>
+              Phone number
+              <input id="phone" name="phone" type="tel" placeholder="(555) 123-4567" required />
+            </label>
+          </div>
+
+          <label>
+            Contact email
+            <input id="email" name="email" type="email" placeholder="jane@acmewellness.com" required />
+          </label>
+
+          <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Business Address</h3>
+
+          <label>
+            Street address
+            <input id="street" name="street" placeholder="123 Main Street, Suite 100" required />
+          </label>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
+            <label>
+              City
+              <input id="city" name="city" placeholder="Austin" required />
+            </label>
+            <label>
+              State
+              <input id="state" name="state" placeholder="TX" maxlength="2" required style="text-transform: uppercase;" />
+            </label>
+            <label>
+              ZIP
+              <input id="zip" name="zip" placeholder="78701" required />
+            </label>
+          </div>
+
+          <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Business Logo <span style="font-weight: normal; opacity: 0.6;">(optional)</span></h3>
+          <div style="display: flex; align-items: flex-start; gap: 1rem;">
+            <div style="flex: 1;">
+              <label style="margin-bottom: 0;">
+                Upload your business logo
+                <input id="logo" name="logo" type="file" accept="image/*" style="padding: 0.75rem; background: rgba(255,255,255,0.05);" />
+              </label>
+              <div class="muted" style="margin-top: 0.5rem; font-size: 0.85rem;">
+                Any image format. Will be automatically resized.
+              </div>
+            </div>
+            <div id="logo-preview" style="display: none; width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.1); flex-shrink: 0;">
+              <img id="logo-preview-img" style="width: 100%; height: 100%; object-fit: contain;" alt="Logo preview" />
             </div>
           </div>
-          <div id="logo-preview" style="display: none; width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.1); flex-shrink: 0;">
-            <img id="logo-preview-img" style="width: 100%; height: 100%; object-fit: contain;" alt="Logo preview" />
+
+          <div class="terms-check">
+            <input type="checkbox" id="termsCheck" />
+            <label for="termsCheck">I agree to the <a href="/partners/terms.html" target="_blank">Wholesale Partner Terms</a></label>
+          </div>
+
+          <div style="margin-top: 0.5rem; opacity: 0.9;">
+            Store link: <span id="store-link-preview"></span>
+          </div>
+
+          <div style="display:flex; gap: 10px; margin-top: 1.25rem; align-items:center;">
+            <button type="submit" class="btn-primary" id="createBtn">Create Store</button>
+          </div>
+
+          <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+        </form>
+      </div>
+
+      <!-- Step 2: Connect Stripe -->
+      <div class="step-panel" id="step2">
+        <div class="card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Connect Stripe</h3>
+          <p class="muted" style="margin-bottom: 1rem;">Connect your Stripe account to accept payments from customers on your store.</p>
+
+          <div class="connect-status" id="stripeStatus">
+            <div class="connect-waiting">Stripe not yet connected</div>
+          </div>
+
+          <button class="btn-primary" id="connectStripeBtn" type="button">Connect Stripe</button>
+          <button class="btn-outline" id="skipStripeBtn" type="button" style="margin-left: 8px;">Skip for now</button>
+
+          <pre id="step2Status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+        </div>
+      </div>
+
+      <!-- Step 3: Add Billing Card -->
+      <div class="step-panel" id="step3">
+        <div class="card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Add Billing Card</h3>
+          <div class="muted" style="margin-bottom: 1rem;">
+            Add a card for wholesale diagnostic costs. When a patient buys through your store, we charge your card the wholesale cost — you keep the retail margin.
+          </div>
+
+          <div id="billingCardForm">
+            <div id="card-element" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 14px 16px; margin-bottom: 1rem;"></div>
+            <div id="card-errors" style="color: #f87171; font-size: 0.875rem; margin-bottom: 1rem; min-height: 1.25rem;"></div>
+            <button class="btn-primary" id="saveBillingBtn" type="button" style="width: 100%;">Save Payment Method</button>
+          </div>
+
+          <button class="btn-outline" id="skipBillingBtn" type="button" style="margin-top: 8px;">Skip for now</button>
+
+          <pre id="step3Status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+        </div>
+      </div>
+
+      <!-- Step 4: Done -->
+      <div class="step-panel" id="step4">
+        <div class="card" style="padding: 1.5rem; text-align: center;">
+          <div style="font-size: 48px; margin-bottom: 16px;">&#10003;</div>
+          <h3 style="margin-bottom: 1rem; color: #4ade80;">Your store is set up!</h3>
+          <p class="muted" style="margin-bottom: 1.5rem;">Share your store link with clients to start earning.</p>
+
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 16px; margin-bottom: 1.5rem;">
+            <div class="muted" style="font-size: 12px; margin-bottom: 4px;">Your Store URL</div>
+            <div id="finalStoreUrl" style="font-family: var(--font-heading); font-size: 14px; word-break: break-all;"></div>
+          </div>
+
+          <div id="marginPreview" style="margin-bottom: 1.5rem;"></div>
+
+          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <a id="viewStoreLink" class="btn-primary" href="#" target="_blank" style="text-decoration: none;">View Store</a>
+            <a id="manageDashLink" class="btn-outline" href="/partners/manage.html" style="text-decoration: none;">Go to Dashboard</a>
           </div>
         </div>
-
-        <div style="margin-top: 1rem; opacity: 0.9;">
-          Store link: <span id="store-link-preview"></span>
-        </div>
-
-        <div style="display:flex; gap: 10px; margin-top: 1.25rem; align-items:center;">
-          <button type="submit" class="btn-primary">Create Store</button>
-          <a id="go-connect" class="btn-outline" href="#" style="display:none;">Continue to Stripe</a>
-        </div>
-
-        <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
-      </form>
+      </div>
     </div>
   </section>
 
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="/partners/api.js"></script>
   <script>
-    const statusEl = document.getElementById("status");
-    const nameEl = document.getElementById("name");
-    const contactNameEl = document.getElementById("contactName");
-    const phoneEl = document.getElementById("phone");
-    const emailEl = document.getElementById("email");
-    const streetEl = document.getElementById("street");
-    const cityEl = document.getElementById("city");
-    const stateEl = document.getElementById("state");
-    const zipEl = document.getElementById("zip");
-    const linkPreviewEl = document.getElementById("store-link-preview");
-    const goConnectEl = document.getElementById("go-connect");
-    const logoEl = document.getElementById("logo");
-    const logoPreviewEl = document.getElementById("logo-preview");
-    const logoPreviewImg = document.getElementById("logo-preview-img");
+    const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SpXEHDcqzZ9bg0mF4sWL7LaFPH5Qg1LjSoXUSzcV75kvrdJvrKUROSCAecTeADYJRFoY8li9BJwMbblcKvQNC5200gb9NXcJ2';
 
+    let currentStep = 1;
+    let createdSlug = null;
+    let stripeInstance = null;
+    let stripeElements = null;
+    let cardElement = null;
+    let billingClientSecret = null;
     let logoDataUrl = null;
 
-    function setStatus(msg) { statusEl.textContent = msg; }
+    // --- Stepper ---
+    function goToStep(step) {
+      currentStep = step;
+      document.querySelectorAll('.step-item').forEach(el => {
+        const s = parseInt(el.dataset.step);
+        el.classList.toggle('active', s === step);
+        el.classList.toggle('done', s < step);
+      });
+      document.querySelectorAll('.step-panel').forEach(el => {
+        el.classList.toggle('active', el.id === 'step' + step);
+      });
+    }
 
-    // Compress image using Canvas
+    // --- Step 1: Business Info ---
+    const nameEl = document.getElementById("name");
+    const linkPreviewEl = document.getElementById("store-link-preview");
+
+    function slugify(input) {
+      return String(input || "").trim().toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 64);
+    }
+
+    nameEl.addEventListener("input", () => {
+      const slug = slugify(nameEl.value);
+      linkPreviewEl.textContent = slug ? `${window.location.origin}/partners/store.html?slug=${slug}` : "";
+    });
+
+    // Logo compression
     function compressImage(file) {
       return new Promise(function(resolve, reject) {
-        var maxDim = 800;
-        var quality = 0.85;
+        var maxDim = 800, quality = 0.85;
         var img = new Image();
         var reader = new FileReader();
-
         reader.onload = function(e) {
           img.onload = function() {
-            var width = img.width;
-            var height = img.height;
-
-            if (width > maxDim || height > maxDim) {
-              if (width > height) {
-                height = Math.round((height * maxDim) / width);
-                width = maxDim;
-              } else {
-                width = Math.round((width * maxDim) / height);
-                height = maxDim;
-              }
+            var w = img.width, h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+              else { w = Math.round(w * maxDim / h); h = maxDim; }
             }
-
-            var canvas = document.createElement("canvas");
-            canvas.width = width;
-            canvas.height = height;
-            var ctx = canvas.getContext("2d");
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(0, 0, width, height);
-            ctx.drawImage(img, 0, 0, width, height);
-
-            resolve(canvas.toDataURL("image/jpeg", quality));
+            var c = document.createElement("canvas"); c.width = w; c.height = h;
+            var ctx = c.getContext("2d"); ctx.fillStyle = "#FFF"; ctx.fillRect(0,0,w,h);
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(c.toDataURL("image/jpeg", quality));
           };
           img.onerror = function() { reject(new Error("Failed to load image")); };
           img.src = e.target.result;
@@ -151,119 +251,258 @@
       });
     }
 
-    // Handle logo file selection
-    logoEl.addEventListener("change", function(e) {
+    document.getElementById("logo").addEventListener("change", function(e) {
       var file = e.target.files[0];
       logoDataUrl = null;
-      logoPreviewEl.style.display = "none";
-
+      document.getElementById("logo-preview").style.display = "none";
       if (!file) return;
-
-      if (!file.type.startsWith("image/")) {
-        alert("Please select an image file.");
-        logoEl.value = "";
-        return;
-      }
-
-      setStatus("Processing image...");
+      if (!file.type.startsWith("image/")) { alert("Please select an image file."); e.target.value = ""; return; }
       compressImage(file).then(function(result) {
         logoDataUrl = result;
-        logoPreviewImg.src = result;
-        logoPreviewEl.style.display = "block";
-        setStatus("");
-      }).catch(function(err) {
-        alert("Failed to process image. Try another file.");
-        logoEl.value = "";
-        setStatus("");
-      });
+        document.getElementById("logo-preview-img").src = result;
+        document.getElementById("logo-preview").style.display = "block";
+      }).catch(function() { alert("Failed to process image."); e.target.value = ""; });
     });
 
-    function slugify(input) {
-      return String(input || "")
-        .trim()
-        .toLowerCase()
-        .replace(/&/g, " and ")
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-        .slice(0, 64);
-    }
-
-    function updateStoreLink(slug, showButton) {
-      const href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
-      linkPreviewEl.textContent = slug ? `${window.location.origin}${href}` : "";
-      goConnectEl.href = `/partners/connect.html?slug=${encodeURIComponent(slug)}`;
-      // Only show button when explicitly requested (after store is created)
-      goConnectEl.style.display = showButton ? "inline-flex" : "none";
-    }
-
-    nameEl.addEventListener("input", () => {
-      updateStoreLink(slugify(nameEl.value), false);
-    });
-
-    async function createStore(partner) {
-      const res = await fetch("/.netlify/functions/partner-save", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(partner),
-      });
-
-      const raw = await res.text();
-      let data = null;
-      try { data = JSON.parse(raw); } catch {}
-
-      if (!res.ok) {
-        if (res.status === 409) throw new Error("That store already exists. Ask us to invite you to it, or choose a different name.");
-        throw new Error((data && (data.error || data.message)) || "Failed to create store");
-      }
-      return data;
-    }
+    const statusEl = document.getElementById("status");
 
     document.getElementById("partner-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      setStatus("");
+      statusEl.textContent = "";
 
-      const slug = slugify(nameEl.value);
-      if (!slug) {
-        alert("Enter a partner name.");
+      if (!document.getElementById("termsCheck").checked) {
+        statusEl.textContent = "Please accept the Wholesale Partner Terms.";
         return;
       }
 
-      const partner = {
-        createOnly: true,
+      const slug = slugify(nameEl.value);
+      if (!slug) { alert("Enter a business name."); return; }
+
+      const payload = {
         slug,
         name: nameEl.value.trim(),
-        contactName: contactNameEl.value.trim(),
-        phone: phoneEl.value.trim(),
-        email: emailEl.value.trim(),
+        contact_name: document.getElementById("contactName").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
         address: {
-          street: streetEl.value.trim(),
-          city: cityEl.value.trim(),
-          state: stateEl.value.trim().toUpperCase(),
-          zip: zipEl.value.trim(),
+          street: document.getElementById("street").value.trim(),
+          city: document.getElementById("city").value.trim(),
+          state: document.getElementById("state").value.trim().toUpperCase(),
+          zip: document.getElementById("zip").value.trim(),
         },
       };
 
-      if (logoDataUrl) {
-        partner.logoDataUrl = logoDataUrl;
-      }
+      if (logoDataUrl) payload.logo_data_url = logoDataUrl;
 
       try {
-        setStatus("Creating store...");
-        const saved = await createStore(partner);
-        updateStoreLink(saved.slug, true);
-        setStatus(
-          "Store created ✅\n\n" +
-          `Slug: ${saved.slug}\n` +
-          "Next: click 'Continue to Stripe'."
-        );
+        statusEl.textContent = "Creating store...";
+        document.getElementById("createBtn").disabled = true;
+
+        const res = await PartnerAPI.apiPost("/api/partners/setup", payload, { skipAuthRedirect: true });
+        const data = await res.json();
+
+        if (!res.ok) {
+          statusEl.textContent = data.error || "Failed to create store";
+          document.getElementById("createBtn").disabled = false;
+          return;
+        }
+
+        createdSlug = data.slug;
+
+        // Now request a magic link so the partner gets a login token
+        await PartnerAPI.apiPost("/api/partners/auth/request", {
+          slug: createdSlug,
+          email: payload.email
+        }, { skipAuthRedirect: true });
+
+        statusEl.textContent = "Store created! Check your email for a login link, then proceed to Step 2.";
+        goToStep(2);
+
       } catch (err) {
-        console.error(err);
-        setStatus(String(err && err.message ? err.message : err));
+        statusEl.textContent = err.message || "Failed to create store";
+        document.getElementById("createBtn").disabled = false;
       }
     });
 
-    // Initialize preview
-    updateStoreLink("");
+    // --- Step 2: Connect Stripe ---
+    document.getElementById("connectStripeBtn").addEventListener("click", async () => {
+      if (!PartnerAPI.isLoggedIn()) {
+        document.getElementById("step2Status").textContent = "Please check your email for the login link first, then come back to this page.";
+        return;
+      }
+
+      try {
+        document.getElementById("connectStripeBtn").disabled = true;
+        document.getElementById("connectStripeBtn").textContent = "Redirecting to Stripe...";
+
+        const res = await PartnerAPI.apiPost("/api/partners/me/connect", {});
+        const data = await res.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          document.getElementById("step2Status").textContent = "Failed to start Stripe Connect.";
+          document.getElementById("connectStripeBtn").disabled = false;
+          document.getElementById("connectStripeBtn").textContent = "Connect Stripe";
+        }
+      } catch (err) {
+        document.getElementById("step2Status").textContent = "Error: " + err.message;
+        document.getElementById("connectStripeBtn").disabled = false;
+        document.getElementById("connectStripeBtn").textContent = "Connect Stripe";
+      }
+    });
+
+    document.getElementById("skipStripeBtn").addEventListener("click", () => goToStep(3));
+
+    // Check Stripe status on return from onboarding
+    async function checkStripeStatus() {
+      if (!createdSlug) return;
+      try {
+        const res = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(createdSlug)}`, { skipAuthRedirect: true });
+        const data = await res.json();
+        if (data.onboarded) {
+          document.getElementById("stripeStatus").innerHTML = '<div class="connect-done">Stripe connected!</div>';
+          document.getElementById("connectStripeBtn").style.display = "none";
+          goToStep(3);
+        }
+      } catch {}
+    }
+
+    window.addEventListener("focus", checkStripeStatus);
+
+    // --- Step 3: Billing Card ---
+    async function initBillingStripe() {
+      if (stripeInstance) return;
+      stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
+      stripeElements = stripeInstance.elements();
+      cardElement = stripeElements.create("card", {
+        style: {
+          base: { color: "#F0EEE9", fontFamily: '-apple-system, sans-serif', fontSize: "16px", "::placeholder": { color: "#666" } },
+          invalid: { color: "#f87171" },
+        },
+      });
+      cardElement.mount("#card-element");
+      cardElement.on("change", (ev) => {
+        document.getElementById("card-errors").textContent = ev.error ? ev.error.message : "";
+      });
+    }
+
+    document.getElementById("saveBillingBtn").addEventListener("click", async () => {
+      if (!PartnerAPI.isLoggedIn()) {
+        document.getElementById("step3Status").textContent = "Please log in first.";
+        return;
+      }
+
+      const btn = document.getElementById("saveBillingBtn");
+      btn.disabled = true;
+      btn.textContent = "Processing...";
+      document.getElementById("step3Status").textContent = "";
+
+      try {
+        if (!billingClientSecret) {
+          const res = await PartnerAPI.apiPost("/api/partners/billing/setup-intent", {});
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Failed to create setup intent");
+          billingClientSecret = data.clientSecret;
+        }
+
+        const { setupIntent, error } = await stripeInstance.confirmCardSetup(billingClientSecret, {
+          payment_method: { card: cardElement },
+        });
+
+        if (error) throw new Error(error.message);
+
+        const saveRes = await PartnerAPI.apiPost("/api/partners/billing/save-method", {
+          paymentMethodId: setupIntent.payment_method
+        });
+        if (!saveRes.ok) { const d = await saveRes.json(); throw new Error(d.error || "Failed to save"); }
+
+        billingClientSecret = null;
+        goToStep(4);
+        showFinalStep();
+
+      } catch (err) {
+        document.getElementById("step3Status").textContent = err.message || "Failed to save card";
+        billingClientSecret = null;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Save Payment Method";
+      }
+    });
+
+    document.getElementById("skipBillingBtn").addEventListener("click", () => {
+      goToStep(4);
+      showFinalStep();
+    });
+
+    // --- Step 4: Done ---
+    async function showFinalStep() {
+      const slug = createdSlug || '';
+      const storeUrl = `${window.location.origin}/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      document.getElementById("finalStoreUrl").textContent = storeUrl;
+      document.getElementById("viewStoreLink").href = storeUrl;
+
+      // Load margin preview
+      try {
+        const res = await PartnerAPI.apiGet('/api/partners/catalog', { skipAuthRedirect: true });
+        if (res.ok) {
+          const data = await res.json();
+          const products = (data.products || []).filter(p => p.wholesalePriceCents);
+          if (products.length > 0) {
+            document.getElementById("marginPreview").innerHTML = `
+              <h4 style="font-size: 14px; margin-bottom: 8px;">Your Margins</h4>
+              <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">PRODUCT</th><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">RETAIL</th><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">WHOLESALE</th><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">YOUR MARGIN</th></tr>
+                ${products.map(p => `<tr><td style="padding:6px 8px;">${p.name}</td><td style="padding:6px 8px;">$${(p.priceCents/100).toFixed(0)}</td><td style="padding:6px 8px;">$${(p.wholesalePriceCents/100).toFixed(0)}</td><td style="padding:6px 8px;color:#4ade80;font-weight:600;">$${((p.priceCents-p.wholesalePriceCents)/100).toFixed(0)}</td></tr>`).join('')}
+              </table>
+              <p style="font-size:11px;color:#888;margin-top:6px;">Your margin stays the same even if we run promos.</p>`;
+          }
+        }
+      } catch {}
+    }
+
+    // --- Init: check URL params to resume flow ---
+    (async () => {
+      const qs = new URL(window.location.href).searchParams;
+      const returnSlug = qs.get("slug");
+      const isReturn = qs.get("return") === "true";
+
+      if (returnSlug) {
+        createdSlug = returnSlug;
+
+        // Check if Stripe is connected (return from Stripe onboarding)
+        if (isReturn) {
+          try {
+            const res = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(returnSlug)}`, { skipAuthRedirect: true });
+            const data = await res.json();
+            if (data.onboarded) {
+              if (data.hasBilling) {
+                goToStep(4);
+                showFinalStep();
+              } else {
+                goToStep(3);
+                initBillingStripe();
+              }
+              return;
+            }
+          } catch {}
+          goToStep(2);
+          return;
+        }
+      }
+
+      // If step 3 will be needed, init Stripe elements
+      // (deferred until step 3 is reached)
+    })();
+
+    // Init billing Stripe when step 3 becomes active
+    const observer = new MutationObserver(() => {
+      if (document.getElementById('step3').classList.contains('active')) {
+        initBillingStripe();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.getElementById('step3'), { attributes: true, attributeFilter: ['class'] });
   </script>
 </body>
 </html>
