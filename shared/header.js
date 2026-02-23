@@ -161,6 +161,23 @@
               </div>
             </div>
 
+            <!-- Quiz Dropdown -->
+            <div class="relative inline-block" id="quiz-menu-wrapper">
+              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+                      id="quiz-menu-button" aria-expanded="false" aria-haspopup="true">
+                Quiz
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="quiz-dropdown">
+                <div class="py-2">
+                  <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Hormone Health Quiz</a>
+                  <a href="/quiz/body-comp/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Body Comp IQ Quiz</a>
+                </div>
+              </div>
+            </div>
+
             <a href="https://moonshot.moonshotclinic.com/portal" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Login</a>
             <a href="/booking/medical/" class="btn-primary text-xs tracking-widest" onclick="event.preventDefault(); openBookingModal();">Book Now</a>
           </div>
@@ -274,6 +291,21 @@
             </div>
           </div>
 
+          <!-- Quiz Mobile -->
+          <div>
+            <button id="mobile-quiz-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+              <span class="w-4"></span>
+              <span class="flex-1 text-center font-bold">Quiz</span>
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-quiz-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div id="mobile-quiz-submenu" class="bg-black/20 hidden">
+              <a href="/quiz/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Hormone Health Quiz</a>
+              <a href="/quiz/body-comp/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Comp IQ Quiz</a>
+            </div>
+          </div>
+
           <a href="https://moonshot.moonshotclinic.com/portal" class="block w-full text-brand-gray hover:text-brand-light py-3 text-sm uppercase tracking-widest mt-2">Login</a>
           <a href="#" onclick="event.preventDefault(); openBookingModal();" class="block w-full text-brand-light bg-brand-gray/10 hover:bg-brand-gray/20 py-3 text-sm uppercase tracking-widest mt-2 font-bold">Book Now</a>
         </div>
@@ -310,7 +342,7 @@
         }
 
         // Mobile submenu toggles (accordion - only one open at a time)
-        const mobileSubmenus = ['medical', 'rehab', 'learn', 'about'];
+        const mobileSubmenus = ['medical', 'rehab', 'learn', 'about', 'quiz'];
 
         function setupMobileSubmenu(btnId, submenuId, arrowId, menuName) {
             const btn = document.getElementById(btnId);
@@ -340,6 +372,7 @@
         setupMobileSubmenu('mobile-rehab-btn', 'mobile-rehab-submenu', 'mobile-rehab-arrow', 'rehab');
         setupMobileSubmenu('mobile-learn-btn', 'mobile-learn-submenu', 'mobile-learn-arrow', 'learn');
         setupMobileSubmenu('mobile-about-btn', 'mobile-about-submenu', 'mobile-about-arrow', 'about');
+        setupMobileSubmenu('mobile-quiz-btn', 'mobile-quiz-submenu', 'mobile-quiz-arrow', 'quiz');
 
         // Desktop dropdown menus
         function setupDesktopDropdown(wrapperId, buttonId, dropdownId) {
@@ -377,6 +410,7 @@
         setupDesktopDropdown('rehab-menu-wrapper', 'rehab-menu-button', 'rehab-dropdown');
         setupDesktopDropdown('learn-menu-wrapper', 'learn-menu-button', 'learn-dropdown');
         setupDesktopDropdown('about-menu-wrapper', 'about-menu-button', 'about-dropdown');
+        setupDesktopDropdown('quiz-menu-wrapper', 'quiz-menu-button', 'quiz-dropdown');
 
         // Close dropdowns on escape
         document.addEventListener('keydown', (e) => {
