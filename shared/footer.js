@@ -54,7 +54,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                             Facebook
                         </a>
-                        <a href="https://www.linkedin.com/company/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
+                        <a href="https://www.linkedin.com/company/moonshot-medical-and-performance" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                             LinkedIn
                         </a>
@@ -106,7 +106,8 @@
             cta.className = 'my-12 bg-brand-slate text-brand-light p-6 md:p-8 text-center';
             cta.innerHTML = '<p class="font-heading font-bold text-lg uppercase tracking-wide mb-2">Ready to take the next step?</p>' +
                 '<p class="text-brand-gray text-sm font-light mb-4">Book a free consultation and get a personalized plan.</p>' +
-                '<a href="#" onclick="event.preventDefault(); openBookingModal();" class="btn-primary text-xs tracking-widest">Book a Free Consultation</a>';
+                '<a href="#" onclick="event.preventDefault(); openBookingModal();" class="btn-primary text-xs tracking-widest">Book a Free Consultation</a>' +
+                '<p class="text-brand-gray text-xs mt-4">Not ready to book? <a href="/quiz/" class="text-brand-light hover:text-white underline transition">Take the Hormone Health Quiz</a> or <a href="/quiz/body-comp/" class="text-brand-light hover:text-white underline transition">Test Your Body Comp IQ</a></p>';
             section.parentNode.insertBefore(cta, section);
         }
     }
@@ -141,6 +142,51 @@
                 }
             }, {passive: true});
         });
+    }
+
+    // "Not ready to book?" quiz CTA on service pages (medical, rehab, DEXA)
+    if (/^\/(medical|rehab)\/(index\.html)?$/.test(path) || path === '/medical/dexa-scan/' || path === '/medical/dexa-scan/index.html') {
+        var lastCta = document.querySelector('main > section:last-of-type');
+        if (lastCta) {
+            var quizNudge = document.createElement('div');
+            quizNudge.className = 'bg-brand-dark border-t border-white/5 py-8 text-center';
+            quizNudge.innerHTML = '<p class="text-brand-gray text-sm mb-3">Not ready to book? Start with a free quiz.</p>' +
+                '<div class="flex justify-center gap-4 flex-wrap">' +
+                '<a href="/quiz/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Hormone Health Quiz</a>' +
+                '<a href="/quiz/body-comp/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Body Comp IQ Quiz</a>' +
+                '</div>';
+            lastCta.insertAdjacentElement('afterend', quizNudge);
+        }
+    }
+
+    // Scroll-depth quiz prompt on content pages (60%+ scroll, once per session)
+    if (/^\/(learn|medical|rehab)\//.test(path) && !/^\/quiz\//.test(path) && !sessionStorage.getItem('quiz_prompt_shown')) {
+        var promptShown = false;
+        window.addEventListener('scroll', function() {
+            if (promptShown) return;
+            var scrollPct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+            if (scrollPct >= 0.6) {
+                promptShown = true;
+                sessionStorage.setItem('quiz_prompt_shown', '1');
+                var prompt = document.createElement('div');
+                prompt.id = 'quiz-scroll-prompt';
+                prompt.className = 'fixed bottom-4 right-4 z-[70] bg-brand-dark border border-white/10 rounded-sm p-5 shadow-2xl max-w-xs transition-all duration-300 translate-y-4 opacity-0 hidden md:block';
+                prompt.innerHTML = '<button onclick="this.parentElement.remove()" class="absolute top-2 right-3 text-brand-gray hover:text-white text-lg leading-none">&times;</button>' +
+                    '<p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-1">CURIOUS?</p>' +
+                    '<p class="text-brand-gray text-xs mb-3">Take a free 2-min quiz and get personalized insights.</p>' +
+                    '<div class="space-y-2">' +
+                    '<a href="/quiz/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Hormone Health Quiz</a>' +
+                    '<a href="/quiz/body-comp/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Body Comp IQ Quiz</a>' +
+                    '</div>';
+                document.body.appendChild(prompt);
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        prompt.style.opacity = '1';
+                        prompt.style.transform = 'translateY(0)';
+                    });
+                });
+            }
+        }, {passive: true});
     }
 
     // Load chat widget
