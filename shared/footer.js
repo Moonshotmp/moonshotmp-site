@@ -96,20 +96,11 @@
         document.body.insertAdjacentHTML('beforeend', footerHTML);
     }
 
-    // Mid-article CTA banner on learn articles
+    // Contextual lead magnet CTA on learn articles (replaces generic booking CTA)
     if (/^\/learn\/[^/]+\//.test(location.pathname)) {
-        var articleH2s = document.querySelectorAll('article h2');
-        if (articleH2s.length >= 4) {
-            var target = articleH2s[3];
-            var section = target.closest('section') || target.parentElement;
-            var cta = document.createElement('div');
-            cta.className = 'my-12 bg-brand-slate text-brand-light p-6 md:p-8 text-center';
-            cta.innerHTML = '<p class="font-heading font-bold text-lg uppercase tracking-wide mb-2">Ready to take the next step?</p>' +
-                '<p class="text-brand-gray text-sm font-light mb-4">Book a free consultation and get a personalized plan.</p>' +
-                '<a href="#" onclick="event.preventDefault(); openBookingModal();" class="btn-primary text-xs tracking-widest">Book a Free Consultation</a>' +
-                '<p class="text-brand-gray text-xs mt-4">Not ready to book? <a href="/quiz/" class="text-brand-light hover:text-white underline transition">Take the Hormone Health Quiz</a> or <a href="/quiz/body-comp/" class="text-brand-light hover:text-white underline transition">Test Your Body Comp IQ</a></p>';
-            section.parentNode.insertBefore(cta, section);
-        }
+        var magnetScript = document.createElement('script');
+        magnetScript.src = '/shared/lead-magnets.js';
+        document.body.appendChild(magnetScript);
     }
 
     // GA4: track phone link clicks
