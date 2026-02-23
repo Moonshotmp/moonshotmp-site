@@ -65,13 +65,13 @@
             <div class="mt-8 pt-8 border-t border-white/5">
                 <p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">FREE QUIZZES</p>
                 <div class="grid sm:grid-cols-2 gap-4">
-                    <a href="/quiz/" class="block border border-white/10 rounded-sm p-5 hover:border-brand-gray/40 hover:bg-white/[0.02] transition group">
-                        <p class="text-brand-light font-heading font-bold text-sm tracking-widest group-hover:text-white transition">HORMONE HEALTH QUIZ</p>
-                        <p class="text-brand-gray text-xs mt-1">Are your hormones holding you back? 2-min assessment with personalized results.</p>
+                    <a href="/quiz/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-5 bg-white/[0.06] hover:bg-white/[0.10] hover:border-white/25 transition-all duration-300 group">
+                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">HORMONE HEALTH QUIZ</p>
+                        <p class="text-brand-light/70 text-xs mt-1">Are your hormones holding you back? 2-min assessment with personalized results.</p>
                     </a>
-                    <a href="/quiz/body-comp/" class="block border border-white/10 rounded-sm p-5 hover:border-brand-gray/40 hover:bg-white/[0.02] transition group">
-                        <p class="text-brand-light font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BODY COMP IQ QUIZ</p>
-                        <p class="text-brand-gray text-xs mt-1">Test what you know about body fat, DEXA scans, and metabolic health.</p>
+                    <a href="/quiz/body-comp/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-5 bg-white/[0.06] hover:bg-white/[0.10] hover:border-white/25 transition-all duration-300 group">
+                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BODY COMP IQ QUIZ</p>
+                        <p class="text-brand-light/70 text-xs mt-1">Test what you know about body fat, DEXA scans, and metabolic health.</p>
                     </a>
                 </div>
             </div>
