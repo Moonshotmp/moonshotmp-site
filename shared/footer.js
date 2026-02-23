@@ -34,14 +34,9 @@
                     <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">CONTACT</h3>
                     <div class="space-y-2 text-sm">
                         <p class="text-brand-gray">
-                            <span class="text-brand-light font-medium">Medical:</span>
                             <a href="tel:+12244354280" class="hover:text-brand-light transition py-2 inline-block">224-435-4280</a>
                         </p>
                         <p class="text-brand-gray">
-                            <span class="text-brand-light font-medium">Rehab:</span>
-                            <a href="tel:+12244354280" class="hover:text-brand-light transition py-2 inline-block">224-435-4280</a>
-                        </p>
-                        <p class="text-brand-gray mt-3">
                             <a href="mailto:hello@moonshotmp.com" class="hover:text-brand-light transition py-2 inline-block">hello@moonshotmp.com</a>
                         </p>
                     </div>
@@ -50,23 +45,34 @@
                 <!-- Social -->
                 <div>
                     <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">FOLLOW</h3>
-                    <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        Instagram
-                    </a>
+                    <div class="space-y-2">
+                        <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            Instagram
+                        </a>
+                        <a href="https://www.facebook.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                            Facebook
+                        </a>
+                        <a href="https://www.linkedin.com/company/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            LinkedIn
+                        </a>
+                    </div>
                 </div>
             </div>
             <!-- Quiz CTAs -->
             <div class="mt-8 pt-8 border-t border-white/5">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div>
-                        <p class="text-brand-light font-heading font-bold text-sm tracking-widest">FREE HEALTH QUIZZES</p>
-                        <p class="text-brand-gray text-xs mt-1">Get personalized insights in 2 minutes. No account needed.</p>
-                    </div>
-                    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                        <a href="/quiz/" class="btn-primary text-xs tracking-widest whitespace-nowrap px-6 py-3 text-center">Hormone Health Quiz</a>
-                        <a href="/quiz/body-comp/" class="border border-white/20 text-brand-light text-xs tracking-widest whitespace-nowrap px-6 py-3 text-center rounded-sm hover:bg-white/5 transition font-bold uppercase">Body Comp IQ Quiz</a>
-                    </div>
+                <p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">FREE QUIZZES</p>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <a href="/quiz/" class="block border border-white/10 rounded-sm p-5 hover:border-brand-gray/40 hover:bg-white/[0.02] transition group">
+                        <p class="text-brand-light font-heading font-bold text-sm tracking-widest group-hover:text-white transition">HORMONE HEALTH QUIZ</p>
+                        <p class="text-brand-gray text-xs mt-1">Are your hormones holding you back? 2-min assessment with personalized results.</p>
+                    </a>
+                    <a href="/quiz/body-comp/" class="block border border-white/10 rounded-sm p-5 hover:border-brand-gray/40 hover:bg-white/[0.02] transition group">
+                        <p class="text-brand-light font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BODY COMP IQ QUIZ</p>
+                        <p class="text-brand-gray text-xs mt-1">Test what you know about body fat, DEXA scans, and metabolic health.</p>
+                    </a>
                 </div>
             </div>
 
