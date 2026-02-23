@@ -56,19 +56,18 @@
                     </a>
                 </div>
             </div>
-            <!-- Email Signup -->
+            <!-- Quiz CTAs -->
             <div class="mt-8 pt-8 border-t border-white/5">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
-                        <p class="text-brand-light font-heading font-bold text-sm tracking-widest">GET OPTIMIZATION INSIGHTS</p>
-                        <p class="text-brand-gray text-xs mt-1">Evidence-based tips on hormones, performance, and longevity. No spam.</p>
+                        <p class="text-brand-light font-heading font-bold text-sm tracking-widest">FREE HEALTH QUIZZES</p>
+                        <p class="text-brand-gray text-xs mt-1">Get personalized insights in 2 minutes. No account needed.</p>
                     </div>
-                    <form name="email-signup" method="POST" data-netlify="true" class="flex gap-2 w-full md:w-auto" onsubmit="return handleFooterSignup(event)">
-                        <input type="email" name="email" required placeholder="Your email" class="input-field text-sm px-4 py-2 w-full md:w-64">
-                        <button type="submit" class="btn-primary text-xs tracking-widest whitespace-nowrap px-6 py-2">Subscribe</button>
-                    </form>
+                    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                        <a href="/quiz/" class="btn-primary text-xs tracking-widest whitespace-nowrap px-6 py-3 text-center">Hormone Health Quiz</a>
+                        <a href="/quiz/body-comp/" class="border border-white/20 text-brand-light text-xs tracking-widest whitespace-nowrap px-6 py-3 text-center rounded-sm hover:bg-white/5 transition font-bold uppercase">Body Comp IQ Quiz</a>
+                    </div>
                 </div>
-                <p id="footer-signup-msg" class="text-brand-gray text-xs mt-2 text-center md:text-right" style="display:none"></p>
             </div>
 
             <div class="mt-6 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-brand-gray">
@@ -105,40 +104,6 @@
             section.parentNode.insertBefore(cta, section);
         }
     }
-
-    // Footer email signup handler
-    window.handleFooterSignup = function(e) {
-        e.preventDefault();
-        var form = e.target;
-        var email = form.querySelector('input[name="email"]').value;
-        var msg = document.getElementById('footer-signup-msg');
-        var btn = form.querySelector('button');
-        btn.textContent = 'SENDING...';
-        btn.disabled = true;
-        fetch('/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: 'form-name=email-signup&email=' + encodeURIComponent(email)
-        }).then(function(r) {
-            if (r.ok) {
-                msg.textContent = "You're in. Watch your inbox.";
-                msg.style.display = 'block';
-                form.style.display = 'none';
-                if (typeof gtag === 'function') gtag('event', 'email_signup', {method: 'footer'});
-            } else {
-                msg.textContent = 'Something went wrong. Try again.';
-                msg.style.display = 'block';
-                btn.textContent = 'SUBSCRIBE';
-                btn.disabled = false;
-            }
-        }).catch(function() {
-            msg.textContent = 'Something went wrong. Try again.';
-            msg.style.display = 'block';
-            btn.textContent = 'SUBSCRIBE';
-            btn.disabled = false;
-        });
-        return false;
-    };
 
     // GA4: track phone link clicks
     document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {

@@ -225,19 +225,43 @@ export default async function handler(req) {
     ]);
 
     // Sync lead to clinic app (non-blocking)
+    const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
+    const webhookHeaders = {
+      'Content-Type': 'application/json',
+      'X-Tenant-Slug': 'moonshot',
+      'X-Webhook-Key': process.env.CLINIC_LEAD_WEBHOOK_KEY || ''
+    };
+
     try {
-      const clinicApi = process.env.CLINIC_API_BASE || 'https://qy1se3awb8.execute-api.us-east-1.amazonaws.com';
       await fetch(clinicApi + '/api/leads/webhook', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Tenant-Slug': 'moonshot',
-          'X-Webhook-Key': process.env.CLINIC_LEAD_WEBHOOK_KEY || ''
-        },
+        headers: webhookHeaders,
         body: JSON.stringify({ name, email, gender, age, totalScore, maxScore, classification, categories, lifestyle })
       });
     } catch (err) {
-      console.error('[quiz-submit] Clinic sync error:', err.message);
+      console.error('[quiz-submit] Clinic lead sync error:', err.message);
+    }
+
+    // Sync to marketing drip (non-blocking)
+    try {
+      const sorted = (categories || []).slice().sort((a, b) => b.score - a.score);
+      await fetch(clinicApi + '/api/marketing/quiz-complete', {
+        method: 'POST',
+        headers: webhookHeaders,
+        body: JSON.stringify({
+          email,
+          name,
+          quiz_type: 'hormone',
+          gender,
+          score: totalScore,
+          max_score: maxScore,
+          classification,
+          categories: sorted,
+          quiz_data: { totalScore, maxScore, classification, categories, lifestyle, age, gender }
+        })
+      });
+    } catch (err) {
+      console.error('[quiz-submit] Marketing drip sync error:', err.message);
     }
 
     return new Response(JSON.stringify({ ok: true }), {
