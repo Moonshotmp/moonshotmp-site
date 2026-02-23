@@ -63,13 +63,13 @@
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/dexa-scan/</loc>
-    <lastmod>2025-01-15</lastmod>
+    <lastmod>2026-02-22</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/dexa-scan/dexa-vs-inbody/</loc>
-    <lastmod>2025-01-15</lastmod>
+    <lastmod>2026-02-22</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -412,7 +412,7 @@
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/dexa-scan-park-ridge/</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-22</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -461,6 +461,26 @@
   <url>
     <loc>https://moonshotmp.com/learn/hormone-quiz-park-ridge/</loc>
     <lastmod>2026-02-04</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- DEXA Content Stack — Feb 2026 -->
+  <url>
+    <loc>https://moonshotmp.com/learn/dexa-scan-vs-bod-pod/</loc>
+    <lastmod>2026-02-22</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/how-to-read-dexa-scan-results/</loc>
+    <lastmod>2026-02-22</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/dexa-scan-for-weight-loss/</loc>
+    <lastmod>2026-02-22</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>

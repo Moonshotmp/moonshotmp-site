@@ -25,20 +25,76 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "MedicalTest",
-        "name": "DEXA Body Composition Scan",
-        "description": "Dual-energy X-ray absorptiometry for precise body composition and bone density measurement",
-        "usedToDiagnose": ["Body fat percentage", "Lean muscle mass", "Bone density", "Visceral fat"],
-        "provider": {
-            "@type": "MedicalBusiness",
-            "name": "Moonshot Medical and Performance",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "542 Busse Hwy",
-                "addressLocality": "Park Ridge",
-                "addressRegion": "IL",
-                "postalCode": "60068"
-            }
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "description": "DEXA body composition scans, hormone optimization, and performance medicine in Park Ridge, IL. Medical-grade Hologic Horizon DEXA scanner on-site.",
+        "url": "https://moonshotmp.com/",
+        "telephone": "224-435-4280",
+        "email": "hello@moonshotmp.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0111,
+            "longitude": -87.8406
+        },
+        "openingHoursSpecification": [
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "07:00", "closes": "16:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "11:00", "closes": "18:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "09:00", "closes": "19:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "11:00", "closes": "18:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "15:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "14:00"}
+        ],
+        "priceRange": "$150-$405",
+        "areaServed": [
+            {"@type": "City", "name": "Park Ridge", "containedInPlace": {"@type": "State", "name": "Illinois"}},
+            {"@type": "City", "name": "Des Plaines"},
+            {"@type": "City", "name": "Niles"},
+            {"@type": "City", "name": "Chicago"},
+            {"@type": "City", "name": "Morton Grove"},
+            {"@type": "City", "name": "Glenview"},
+            {"@type": "City", "name": "Skokie"},
+            {"@type": "City", "name": "Edison Park"},
+            {"@type": "City", "name": "Norwood Park"},
+            {"@type": "City", "name": "Rosemont"},
+            {"@type": "City", "name": "Mount Prospect"},
+            {"@type": "City", "name": "Arlington Heights"}
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "DEXA Scan Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "MedicalTest",
+                        "name": "DEXA Body Composition Scan",
+                        "description": "Dual-energy X-ray absorptiometry for precise body fat, lean muscle mass, bone density, and visceral fat measurement using Hologic Horizon scanner",
+                        "usedToDiagnose": ["Body fat percentage", "Lean muscle mass", "Bone mineral density", "Visceral adipose tissue", "Regional body composition", "Muscle symmetry"]
+                    },
+                    "price": "150",
+                    "priceCurrency": "USD",
+                    "name": "DEXA Body Composition Scan"
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "MedicalTest",
+                        "name": "Performance Baseline Bundle",
+                        "description": "DEXA body composition scan plus comprehensive 60+ biomarker blood panel"
+                    },
+                    "price": "405",
+                    "priceCurrency": "USD",
+                    "name": "Performance Baseline Bundle (DEXA + Blood Panel)"
+                }
+            ]
         }
     }
     </script>
@@ -122,9 +178,11 @@
                             <a href="/booking/" class="btn-primary">Book DEXA Scan</a>
                             <span class="text-brand-gray text-lg font-bold self-center">$150</span>
                         </div>
-                        <a href="/medical/dexa-scan/dexa-vs-inbody/" class="text-brand-gray text-sm hover:text-brand-light transition">
-                            Compare: DEXA vs InBody vs Calipers →
-                        </a>
+                        <div class="flex flex-wrap gap-x-4 gap-y-1">
+                            <a href="/medical/dexa-scan/dexa-vs-inbody/" class="text-brand-gray text-sm hover:text-brand-light transition">DEXA vs InBody &rarr;</a>
+                            <a href="/learn/dexa-scan-vs-bod-pod/" class="text-brand-gray text-sm hover:text-brand-light transition">DEXA vs Bod Pod &rarr;</a>
+                            <a href="/learn/how-to-read-dexa-scan-results/" class="text-brand-gray text-sm hover:text-brand-light transition">Reading Your Results &rarr;</a>
+                        </div>
                     </div>
                     <div class="aspect-square bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/dexamachine.webp" alt="DEXA body composition scanner" class="w-full h-full object-cover" width="2223" height="1572" fetchpriority="high">
