@@ -182,10 +182,10 @@
     </div>
   </section>
 
-  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://js.stripe.com/v3/" async></script>
   <script src="/partners/api.js"></script>
   <script>
-    const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SpXEHDcqzZ9bg0mF4sWL7LaFPH5Qg1LjSoXUSzcV75kvrdJvrKUROSCAecTeADYJRFoY8li9BJwMbblcKvQNC5200gb9NXcJ2';
+    let STRIPE_PUBLISHABLE_KEY = null;
 
     let currentStep = 1;
     let createdSlug = null;
@@ -225,29 +225,20 @@
       linkPreviewEl.textContent = slug ? `${window.location.origin}/partners/store.html?slug=${slug}` : "";
     });
 
-    // Logo compression
+    // Logo compression with EXIF rotation handling
     function compressImage(file) {
-      return new Promise(function(resolve, reject) {
+      return createImageBitmap(file, { imageOrientation: 'from-image' }).then(function(bitmap) {
         var maxDim = 800, quality = 0.85;
-        var img = new Image();
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          img.onload = function() {
-            var w = img.width, h = img.height;
-            if (w > maxDim || h > maxDim) {
-              if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
-              else { w = Math.round(w * maxDim / h); h = maxDim; }
-            }
-            var c = document.createElement("canvas"); c.width = w; c.height = h;
-            var ctx = c.getContext("2d"); ctx.fillStyle = "#FFF"; ctx.fillRect(0,0,w,h);
-            ctx.drawImage(img, 0, 0, w, h);
-            resolve(c.toDataURL("image/jpeg", quality));
-          };
-          img.onerror = function() { reject(new Error("Failed to load image")); };
-          img.src = e.target.result;
-        };
-        reader.onerror = function() { reject(new Error("Failed to read file")); };
-        reader.readAsDataURL(file);
+        var w = bitmap.width, h = bitmap.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+          else { w = Math.round(w * maxDim / h); h = maxDim; }
+        }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        var ctx = c.getContext("2d"); ctx.fillStyle = "#FFF"; ctx.fillRect(0,0,w,h);
+        ctx.drawImage(bitmap, 0, 0, w, h);
+        bitmap.close();
+        return c.toDataURL("image/jpeg", quality);
       });
     }
 
@@ -256,7 +247,8 @@
       logoDataUrl = null;
       document.getElementById("logo-preview").style.display = "none";
       if (!file) return;
-      if (!file.type.startsWith("image/")) { alert("Please select an image file."); e.target.value = ""; return; }
+      if (!file.type.startsWith("image/")) { statusEl.textContent = "Please select an image file."; e.target.value = ""; return; }
+      if (file.size > 10 * 1024 * 1024) { statusEl.textContent = "File too large. Maximum 10MB."; e.target.value = ""; return; }
       compressImage(file).then(function(result) {
         logoDataUrl = result;
         document.getElementById("logo-preview-img").src = result;
@@ -373,6 +365,17 @@
     // --- Step 3: Billing Card ---
     async function initBillingStripe() {
       if (stripeInstance) return;
+      if (!STRIPE_PUBLISHABLE_KEY) {
+        try {
+          const cfgRes = await PartnerAPI.apiGet('/api/partners/config', { skipAuthRedirect: true });
+          const cfgData = await cfgRes.json();
+          STRIPE_PUBLISHABLE_KEY = cfgData.stripePublishableKey;
+        } catch (e) {
+          console.error('Failed to load Stripe config:', e);
+          return;
+        }
+      }
+      if (typeof Stripe === 'undefined' || !STRIPE_PUBLISHABLE_KEY) return;
       stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
       stripeElements = stripeInstance.elements();
       cardElement = stripeElements.create("card", {
@@ -473,10 +476,21 @@
         // Check if Stripe is connected (return from Stripe onboarding)
         if (isReturn) {
           try {
-            const res = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(returnSlug)}`, { skipAuthRedirect: true });
-            const data = await res.json();
-            if (data.onboarded) {
-              if (data.hasBilling) {
+            const statusRes = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(returnSlug)}`, { skipAuthRedirect: true });
+            const statusData = await statusRes.json();
+            if (statusData.onboarded) {
+              // Check billing via authenticated endpoint
+              let hasBilling = false;
+              if (PartnerAPI.isLoggedIn()) {
+                try {
+                  const meRes = await PartnerAPI.apiGet('/api/partners/me');
+                  if (meRes.ok) {
+                    const meData = await meRes.json();
+                    hasBilling = !!meData.partner?.billingCardLast4;
+                  }
+                } catch {}
+              }
+              if (hasBilling) {
                 goToStep(4);
                 showFinalStep();
               } else {

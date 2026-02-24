@@ -375,6 +375,20 @@ outline: 2px solid var(--color-brand-gray);
 outline-offset: 2px;
 }
 
+/* Loading Spinner */
+.mp-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255,255,255,0.15);
+  border-top-color: var(--color-brand-gray);
+  border-radius: 50%;
+  animation: mp-spin 0.7s linear infinite;
+}
+@keyframes mp-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Reduced Motion Preference */
 @media (prefers-reduced-motion: reduce) {
 html {

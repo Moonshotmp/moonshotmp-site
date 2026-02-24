@@ -51,7 +51,21 @@
     async function loadConnectStatus(slug) {
       const res = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(slug)}`, { skipAuthRedirect: true });
       if (!res.ok) throw new Error("Failed to load partner status");
-      return await res.json();
+      const data = await res.json();
+
+      // Check billing via authenticated endpoint if logged in
+      let hasBilling = false;
+      if (PartnerAPI.isLoggedIn()) {
+        try {
+          const meRes = await PartnerAPI.apiGet('/api/partners/me');
+          if (meRes.ok) {
+            const meData = await meRes.json();
+            hasBilling = !!meData.partner?.billingCardLast4;
+          }
+        } catch {}
+      }
+
+      return { ...data, hasBilling };
     }
 
     function setConnectMode({ connected, onboarded, hasBilling }) {

@@ -39,7 +39,7 @@ const MoonshotCart = {
     const existing = items.find(item => item.id === product.id);
 
     if (existing) {
-      existing.quantity += 1;
+      existing.quantity = Math.min(10, existing.quantity + 1);
     } else {
       items.push({
         id: product.id,
@@ -70,7 +70,7 @@ const MoonshotCart = {
       if (quantity <= 0) {
         return this.removeItem(productId);
       }
-      item.quantity = quantity;
+      item.quantity = Math.min(10, quantity);
       this.saveItems(items);
     }
 

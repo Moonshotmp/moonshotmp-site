@@ -365,13 +365,16 @@
   </div>
 
   <script>
-    const API = '/.netlify/functions';
+    const NETLIFY_API = '/.netlify/functions';
+    const CLINIC_API = 'https://api.moonshotclinic.com';
     const token = localStorage.getItem('ms_master_token');
+    let clinicSessionToken = null;
+    let clinicTenantId = null;
 
     if (!token) {
       window.location.href = '/admin/login.html';
     } else {
-      fetch(`${API}/admin-master-verify`, {
+      fetch(`${NETLIFY_API}/admin-master-verify`, {
         headers: { 'Authorization': `Bearer ${token}` }
       }).then(res => {
         if (!res.ok) {
@@ -379,6 +382,34 @@
           window.location.href = '/admin/login.html';
         }
       });
+    }
+
+    // Initialize clinic API session
+    async function initClinicApi() {
+      try {
+        // Log in to clinic API using master credentials
+        const loginRes = await fetch(`${CLINIC_API}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: 'tom@moonshotmp.com', password: token })
+        });
+        if (loginRes.ok) {
+          const loginData = await loginRes.json();
+          clinicSessionToken = loginData.token;
+        }
+
+        // Fetch tenants to get the tenant ID
+        const tenantsRes = await fetch(`${CLINIC_API}/api/admin/tenants`, {
+          headers: clinicAuthHeaders()
+        });
+        if (tenantsRes.ok) {
+          const tenantsData = await tenantsRes.json();
+          const tenants = tenantsData.tenants || [];
+          if (tenants.length > 0) clinicTenantId = tenants[0].id;
+        }
+      } catch (e) {
+        console.warn('Clinic API init failed (partner features may be limited):', e.message);
+      }
     }
 
     function logout() {
@@ -390,13 +421,21 @@
       return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
     }
 
+    function clinicAuthHeaders() {
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${clinicSessionToken || token}`,
+        'X-Master-Token': token,
+      };
+    }
+
     // Sync payments from Stripe
     async function syncPayments() {
       const btn = document.getElementById('syncBtn');
       btn.disabled = true;
       btn.textContent = 'Syncing...';
       try {
-        const res = await fetch(`${API}/membership-sync-payments`, {
+        const res = await fetch(`${NETLIFY_API}/membership-sync-payments`, {
           method: 'POST',
           headers: authHeaders()
         });
@@ -431,9 +470,9 @@
     async function loadBillingData() {
       try {
         const [memRes, payRes, patRes] = await Promise.all([
-          fetch(`${API}/membership-list?status=all`, { headers: authHeaders() }),
-          fetch(`${API}/membership-admin-payments`, { headers: authHeaders() }),
-          fetch(`${API}/membership-admin-stats`, { headers: authHeaders() })
+          fetch(`${NETLIFY_API}/membership-list?status=all`, { headers: authHeaders() }),
+          fetch(`${NETLIFY_API}/membership-admin-payments`, { headers: authHeaders() }),
+          fetch(`${NETLIFY_API}/membership-admin-stats`, { headers: authHeaders() })
         ]);
 
         const memData = await memRes.json();
@@ -575,17 +614,40 @@
 
     async function loadPartnerData() {
       try {
-        const [partnersRes, ordersRes] = await Promise.all([
-          fetch(`${API}/admin-partners`, { headers: authHeaders() }),
-          fetch(`${API}/admin-all-orders`, { headers: authHeaders() })
-        ]);
+        if (!clinicTenantId) await initClinicApi();
 
-        const partnersData = await partnersRes.json();
-        const ordersData = await ordersRes.json();
+        if (!clinicTenantId) {
+          // Fallback to old Netlify if clinic API isn't available
+          const [partnersRes, ordersRes] = await Promise.all([
+            fetch(`${NETLIFY_API}/admin-partners`, { headers: authHeaders() }),
+            fetch(`${NETLIFY_API}/admin-all-orders`, { headers: authHeaders() })
+          ]);
+          const partnersData = await partnersRes.json();
+          const ordersData = await ordersRes.json();
+          allPartners = partnersData.partners || [];
+          allOrders = ordersData.orders || [];
+          partnerStats = ordersData.partnerStats || {};
+        } else {
+          // Use clinic API
+          const partnersRes = await fetch(
+            `${CLINIC_API}/api/admin/tenants/${clinicTenantId}/partners`,
+            { headers: clinicAuthHeaders() }
+          );
+          const partnersData = await partnersRes.json();
+          allPartners = partnersData.partners || [];
 
-        allPartners = partnersData.partners || [];
-        allOrders = ordersData.orders || [];
-        partnerStats = ordersData.partnerStats || {};
+          // Build stats from partner data (clinic API includes order_count, total_revenue)
+          partnerStats = {};
+          for (const p of allPartners) {
+            partnerStats[p.slug] = {
+              totalRevenue: parseInt(p.total_revenue) || 0,
+              uniqueCustomers: parseInt(p.order_count) || 0,
+            };
+          }
+
+          // Orders not yet available via clinic API — keep empty for now
+          allOrders = [];
+        }
 
         partnersLoaded = true;
         renderPartnerStats();
@@ -614,10 +676,24 @@
 
       document.getElementById('partnersList').innerHTML = `
         <table class="data-table">
-          <thead><tr><th>Partner</th><th>Slug</th><th>Revenue</th><th>Customers</th><th>Created</th></tr></thead>
+          <thead><tr><th>Partner</th><th>Slug</th><th>Revenue</th><th>Orders</th><th>Stripe</th><th>Created</th><th></th></tr></thead>
           <tbody>${allPartners.map(p => {
             const stats = partnerStats[p.slug] || { totalRevenue: 0, uniqueCustomers: 0 };
-            return `<tr><td><strong>${esc(p.name || p.slug)}</strong></td><td>${esc(p.slug)}</td><td class="amount positive">$${(stats.totalRevenue / 100).toLocaleString()}</td><td>${stats.uniqueCustomers}</td><td>${p.createdAt ? new Date(p.createdAt).toLocaleDateString() : '--'}</td></tr>`;
+            const stripeBadge = p.stripe_onboarded
+              ? '<span class="badge badge-success">Connected</span>'
+              : p.stripe_account_id
+                ? '<span class="badge badge-pending">Incomplete</span>'
+                : '<span class="badge badge-failed">Not Connected</span>';
+            const created = (p.createdAt || p.created_at) ? new Date(p.createdAt || p.created_at).toLocaleDateString() : '--';
+            return `<tr style="cursor:pointer;" onclick="showPartnerDetail('${p.id}')">
+              <td><strong>${esc(p.business_name || p.name || p.slug)}</strong></td>
+              <td>${esc(p.slug)}</td>
+              <td class="amount positive">$${(stats.totalRevenue / 100).toLocaleString()}</td>
+              <td>${stats.uniqueCustomers}</td>
+              <td>${stripeBadge}</td>
+              <td>${created}</td>
+              <td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px;" onclick="event.stopPropagation();editPartner('${p.id}')">Edit</button></td>
+            </tr>`;
           }).join('')}</tbody>
         </table>`;
     }
@@ -652,7 +728,7 @@
     async function checkSystemStatus() {
       // Check Stripe API
       try {
-        const res = await fetch(`${API}/membership-config`);
+        const res = await fetch(`${NETLIFY_API}/membership-config`);
         const data = await res.json();
         if (data.stripe_publishable_key) {
           setStatus('stripe', 'connected', 'Connected');
@@ -665,7 +741,7 @@
 
       // Check Terminal/Reader
       try {
-        const res = await fetch(`${API}/membership-terminal-connection`, {
+        const res = await fetch(`${NETLIFY_API}/membership-terminal-connection`, {
           method: 'POST',
           headers: authHeaders(),
           body: JSON.stringify({ action: 'list_readers' })
@@ -687,7 +763,7 @@
 
       // Check Database
       try {
-        const res = await fetch(`${API}/membership-admin-stats`, { headers: authHeaders() });
+        const res = await fetch(`${NETLIFY_API}/membership-admin-stats`, { headers: authHeaders() });
         if (res.ok) {
           setStatus('db', 'connected', 'Connected');
         } else {
@@ -703,6 +779,164 @@
       const textEl = document.getElementById(`${service}StatusText`);
       dot.className = `status-dot ${state}`;
       textEl.textContent = text;
+    }
+
+    // ========== PARTNER DETAIL / EDIT / PRICING ==========
+
+    async function showPartnerDetail(partnerId) {
+      if (!clinicTenantId) await initClinicApi();
+      if (!clinicTenantId) return;
+
+      try {
+        const res = await fetch(`${CLINIC_API}/api/admin/partners/${partnerId}`, { headers: clinicAuthHeaders() });
+        if (!res.ok) { alert('Failed to load partner'); return; }
+        const data = await res.json();
+        const p = data.partner;
+
+        // Load pricing overrides
+        let overridesHtml = '<div style="color:#B2BFBE;padding:12px;">Loading pricing...</div>';
+        try {
+          const pricingRes = await fetch(`${CLINIC_API}/api/admin/partners/${partnerId}/pricing`, { headers: clinicAuthHeaders() });
+          if (pricingRes.ok) {
+            const pricingData = await pricingRes.json();
+            const overrides = pricingData.overrides || [];
+            if (overrides.length > 0) {
+              overridesHtml = `<table class="data-table"><thead><tr><th>Product</th><th>Default Price</th><th>Override Price</th><th>Default Wholesale</th><th>Override Wholesale</th><th></th></tr></thead><tbody>${overrides.map(o => `<tr><td>${esc(o.product_name)}</td><td>$${((o.default_price_cents || 0) / 100).toFixed(0)}</td><td>${o.price_cents ? '$' + (o.price_cents / 100).toFixed(0) : '-'}</td><td>$${((o.default_wholesale_price_cents || 0) / 100).toFixed(0)}</td><td>${o.wholesale_price_cents ? '$' + (o.wholesale_price_cents / 100).toFixed(0) : '-'}</td><td><button class="btn btn-outline" style="padding:3px 8px;font-size:10px;" onclick="removeOverride('${partnerId}','${o.product_id}')">Remove</button></td></tr>`).join('')}</tbody></table>`;
+            } else {
+              overridesHtml = '<div style="color:#B2BFBE;font-size:13px;padding:8px 0;">No custom pricing set. Using default catalog prices.</div>';
+            }
+          }
+        } catch {}
+
+        // Load product catalog for pricing form
+        let productsOptions = '';
+        try {
+          const catRes = await fetch(`${CLINIC_API}/api/admin/tenants/${clinicTenantId}/products`, { headers: clinicAuthHeaders() });
+          if (catRes.ok) {
+            const catData = await catRes.json();
+            productsOptions = (catData.products || []).map(pr => `<option value="${pr.id}" data-price="${pr.price_cents}" data-wholesale="${pr.wholesale_price_cents || ''}">${esc(pr.name)} ($${(pr.price_cents / 100).toFixed(0)})</option>`).join('');
+          }
+        } catch {}
+
+        const addr = typeof p.address === 'string' ? JSON.parse(p.address || '{}') : (p.address || {});
+
+        document.getElementById('partnersList').innerHTML = `
+          <div style="margin-bottom:16px;"><button class="btn btn-outline" onclick="loadPartnerData()" style="padding:6px 14px;font-size:12px;">&larr; Back to list</button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div>
+              <h3 style="font-family:'Oswald',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px;">Partner Info</h3>
+              <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Business Name</label><input id="editName" value="${esc(p.business_name || p.name || '')}" style="width:100%;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"/></div>
+              <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Contact Name</label><input id="editContact" value="${esc(p.contact_name || '')}" style="width:100%;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"/></div>
+              <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Email</label><input id="editEmail" value="${esc(p.email || '')}" style="width:100%;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"/></div>
+              <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Phone</label><input id="editPhone" value="${esc(p.phone || '')}" style="width:100%;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"/></div>
+              <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Commission Rate (%)</label><input id="editCommission" type="number" min="0" max="100" value="${p.commission_rate || 10}" style="width:100px;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"/></div>
+              <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Active</label><select id="editActive" style="padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"><option value="true" ${p.active !== false ? 'selected' : ''}>Active</option><option value="false" ${p.active === false ? 'selected' : ''}>Inactive</option></select></div>
+              <button class="btn btn-outline" style="margin-top:8px;" onclick="savePartner('${partnerId}')">Save Changes</button>
+              <div id="editStatus" style="font-size:12px;margin-top:8px;"></div>
+            </div>
+            <div>
+              <h3 style="font-family:'Oswald',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px;">Stats</h3>
+              <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Slug: <strong style="color:#F0EEE9;">${esc(p.slug)}</strong></div>
+              <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Orders: <strong style="color:#F0EEE9;">${p.order_count || 0}</strong></div>
+              <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Revenue: <strong style="color:#51cf66;">$${((parseInt(p.total_revenue) || 0) / 100).toLocaleString()}</strong></div>
+              <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Stripe: ${p.stripe_onboarded ? '<span class="badge badge-success">Connected</span>' : '<span class="badge badge-failed">Not Connected</span>'}</div>
+              <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Store: <a href="https://moonshotmp.com/partners/store.html?slug=${esc(p.slug)}" target="_blank" style="color:#c9a227;text-decoration:underline;">View Store</a></div>
+            </div>
+          </div>
+
+          <div style="margin-top:24px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);">
+            <h3 style="font-family:'Oswald',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px;">Custom Pricing</h3>
+            <div id="pricingOverrides">${overridesHtml}</div>
+            <div style="margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:6px;">
+              <div style="font-size:12px;color:#B2BFBE;margin-bottom:8px;">Add Price Override</div>
+              <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
+                <div><label style="font-size:10px;color:#888;display:block;">Product</label><select id="overrideProduct" style="padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:12px;">${productsOptions}</select></div>
+                <div><label style="font-size:10px;color:#888;display:block;">Price ($)</label><input id="overridePrice" type="number" min="0" step="1" style="width:80px;padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:12px;" placeholder="150"/></div>
+                <div><label style="font-size:10px;color:#888;display:block;">Wholesale ($)</label><input id="overrideWholesale" type="number" min="0" step="1" style="width:80px;padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:12px;" placeholder="100"/></div>
+                <button class="btn btn-outline" style="padding:6px 12px;font-size:11px;" onclick="addOverride('${partnerId}')">Add</button>
+              </div>
+            </div>
+          </div>`;
+      } catch (err) {
+        console.error('Failed to show partner detail:', err);
+        alert('Error loading partner detail');
+      }
+    }
+
+    async function savePartner(partnerId) {
+      const statusEl = document.getElementById('editStatus');
+      statusEl.textContent = 'Saving...';
+      statusEl.style.color = '#B2BFBE';
+      try {
+        const body = {
+          business_name: document.getElementById('editName').value.trim(),
+          name: document.getElementById('editName').value.trim(),
+          contact_name: document.getElementById('editContact').value.trim(),
+          email: document.getElementById('editEmail').value.trim(),
+          phone: document.getElementById('editPhone').value.trim(),
+          commission_rate: parseInt(document.getElementById('editCommission').value) || 10,
+          active: document.getElementById('editActive').value === 'true',
+        };
+        const res = await fetch(`${CLINIC_API}/api/admin/partners/${partnerId}`, {
+          method: 'PUT',
+          headers: clinicAuthHeaders(),
+          body: JSON.stringify(body),
+        });
+        if (res.ok) {
+          statusEl.textContent = 'Saved!';
+          statusEl.style.color = '#51cf66';
+        } else {
+          const err = await res.json().catch(() => ({}));
+          statusEl.textContent = 'Error: ' + (err.error || 'Save failed');
+          statusEl.style.color = '#ff6b6b';
+        }
+      } catch (e) {
+        statusEl.textContent = 'Network error';
+        statusEl.style.color = '#ff6b6b';
+      }
+    }
+
+    function editPartner(partnerId) {
+      showPartnerDetail(partnerId);
+    }
+
+    async function addOverride(partnerId) {
+      const productId = document.getElementById('overrideProduct').value;
+      const priceVal = document.getElementById('overridePrice').value;
+      const wholesaleVal = document.getElementById('overrideWholesale').value;
+
+      if (!productId) return;
+
+      const body = {};
+      if (priceVal) body.price_cents = parseInt(priceVal) * 100;
+      if (wholesaleVal) body.wholesale_price_cents = parseInt(wholesaleVal) * 100;
+
+      try {
+        const res = await fetch(`${CLINIC_API}/api/admin/partners/${partnerId}/pricing/${productId}`, {
+          method: 'PUT',
+          headers: clinicAuthHeaders(),
+          body: JSON.stringify(body),
+        });
+        if (res.ok) {
+          showPartnerDetail(partnerId); // Refresh
+        } else {
+          alert('Failed to add override');
+        }
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    }
+
+    async function removeOverride(partnerId, productId) {
+      try {
+        await fetch(`${CLINIC_API}/api/admin/partners/${partnerId}/pricing/${productId}`, {
+          method: 'DELETE',
+          headers: clinicAuthHeaders(),
+        });
+        showPartnerDetail(partnerId); // Refresh
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
     }
 
     // Load billing data on start

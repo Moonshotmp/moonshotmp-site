@@ -7,7 +7,7 @@
   <link rel="canonical" href="https://moonshotmp.com/partners/billing.html" />
   <title>Billing Setup | Partner Portal</title>
   <link rel="stylesheet" href="/partners/styles.css" />
-  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://js.stripe.com/v3/" async></script>
   <style>
     .card-element {
       background: rgba(255,255,255,0.05);
@@ -109,7 +109,7 @@
 
   <script src="/partners/api.js"></script>
   <script>
-    const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SpXEHDcqzZ9bg0mF4sWL7LaFPH5Qg1LjSoXUSzcV75kvrdJvrKUROSCAecTeADYJRFoY8li9BJwMbblcKvQNC5200gb9NXcJ2';
+    let STRIPE_PUBLISHABLE_KEY = null;
 
     const statusEl = document.getElementById("status");
     const partnerNameEl = document.getElementById("partnerName");
@@ -145,6 +145,17 @@
     }
 
     async function initStripe() {
+      if (!STRIPE_PUBLISHABLE_KEY) {
+        try {
+          const cfgRes = await PartnerAPI.apiGet('/api/partners/config', { skipAuthRedirect: true });
+          const cfgData = await cfgRes.json();
+          STRIPE_PUBLISHABLE_KEY = cfgData.stripePublishableKey;
+        } catch (e) {
+          console.error('Failed to load Stripe config:', e);
+          return;
+        }
+      }
+      if (typeof Stripe === 'undefined' || !STRIPE_PUBLISHABLE_KEY) return;
       stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
       elements = stripe.elements();
 

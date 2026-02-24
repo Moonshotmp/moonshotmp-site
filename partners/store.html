@@ -865,7 +865,7 @@
           <button class="mp-tab" data-cat="bundles">Bundles</button>
         </div>
       </div>
-      <div id="loadingState" class="mp-loading">Loading diagnostics...</div>
+      <div id="loadingState" class="mp-loading"><span class="mp-spinner"></span><div style="margin-top:12px;">Loading diagnostics...</div></div>
       <div id="errorState" class="mp-error" style="display:none;"></div>
       <div id="featuredProduct" style="display:none;"></div>
       <div class="mp-products" id="productsGrid"></div>
@@ -998,6 +998,7 @@
         <span>Total</span>
         <span id="cartTotal">$0</span>
       </div>
+      <div id="cartError" style="display:none; background:rgba(248,113,113,0.15); color:#f87171; padding:10px 14px; border-radius:6px; font-size:13px; margin-bottom:12px;"></div>
       <button class="mp-checkout-btn" id="checkoutBtn" disabled>Proceed to Checkout</button>
       <div class="mp-cart-note">Secure payment via Stripe</div>
     </div>
@@ -1045,9 +1046,11 @@
       }
     }
 
-    // Load catalog from clinic API
+    // Load catalog from clinic API (with per-partner pricing if slug present)
     async function loadCatalog() {
-      const res = await PartnerAPI.apiGet('/api/partners/catalog', { skipAuthRedirect: true });
+      const slug = getSlug();
+      const url = slug ? `/api/partners/catalog?slug=${encodeURIComponent(slug)}` : '/api/partners/catalog';
+      const res = await PartnerAPI.apiGet(url, { skipAuthRedirect: true });
       const data = await res.json();
       return (data.products || data).filter(p => p.active !== false);
     }
@@ -1213,7 +1216,10 @@
         MoonshotCart.clear();
         window.location.href = data.url;
       } catch (err) {
-        alert(err.message || 'Checkout failed. Please try again.');
+        const cartErrorEl = document.getElementById('cartError');
+        cartErrorEl.textContent = err.message || 'Checkout failed. Please try again.';
+        cartErrorEl.style.display = 'block';
+        setTimeout(() => { cartErrorEl.style.display = 'none'; }, 5000);
         checkoutBtn.disabled = false;
         checkoutBtn.textContent = 'Proceed to Checkout';
       }
