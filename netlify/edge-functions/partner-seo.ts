@@ -45,16 +45,25 @@ function escapeHtml(str: string): string {
     .replace(/>/g, "&gt;");
 }
 
-function buildMetaTags(partner: Partner, slug: string): string {
+async function resolveImageUrl(logoKey?: string): Promise<string> {
+  if (!logoKey) return FALLBACK_IMAGE;
+  try {
+    const logos = getStore("logos");
+    const rec = await logos.get(logoKey, { type: "json" }) as { b64?: string; mime?: string } | null;
+    if (rec?.b64 && rec?.mime) {
+      return `${SITE}/.netlify/functions/logo-get?key=${encodeURIComponent(logoKey)}`;
+    }
+  } catch {
+    // logo missing or parse error
+  }
+  return FALLBACK_IMAGE;
+}
+
+function buildMetaTags(partner: Partner, slug: string, imageUrl: string): string {
   const name = escapeHtml(partner.name || partner.contactName || slug);
   const title = `${name} \u00d7 Moonshot Diagnostics \u2014 DEXA Scans & Blood Work`;
   const description = `Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through ${name}. Powered by Moonshot Medical and Performance.`;
   const url = `${SITE}/partners/${slug}`;
-
-  let imageUrl = FALLBACK_IMAGE;
-  if (partner.branding?.logoKey) {
-    imageUrl = `${SITE}/.netlify/functions/logo-get?key=${encodeURIComponent(partner.branding.logoKey)}`;
-  }
 
   return [
     `<title>${title}</title>`,
@@ -126,7 +135,8 @@ export default async (_req: Request, context: Context) => {
     let html = await response.text();
 
     // Build replacement meta tags
-    const metaTags = buildMetaTags(partner, slug);
+    const imageUrl = await resolveImageUrl(partner.branding?.logoKey);
+    const metaTags = buildMetaTags(partner, slug, imageUrl);
 
     // Strip existing tags we're replacing
     html = html.replace(/<title[^>]*>[\s\S]*?<\/title>/i, "");
