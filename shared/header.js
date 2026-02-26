@@ -42,7 +42,7 @@
           <div class="hidden lg:flex space-x-6 items-center">
             <!-- Medical Dropdown -->
             <div class="relative inline-block" id="medical-menu-wrapper">
-              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="medical-menu-button" aria-expanded="false" aria-haspopup="true">
                 Medical
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <!-- Rehab Dropdown -->
             <div class="relative inline-block" id="rehab-menu-wrapper">
-              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="rehab-menu-button" aria-expanded="false" aria-haspopup="true">
                 Rehab
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +144,7 @@
 
             <!-- About Dropdown -->
             <div class="relative inline-block" id="about-menu-wrapper">
-              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="about-menu-button" aria-expanded="false" aria-haspopup="true">
                 About
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -163,7 +163,7 @@
 
             <!-- Quiz Dropdown -->
             <div class="relative inline-block" id="quiz-menu-wrapper">
-              <button class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="quiz-menu-button" aria-expanded="false" aria-haspopup="true">
                 Quiz
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,7 +183,7 @@
           </div>
 
           <div class="lg:hidden flex items-center">
-            <button id="mobile-menu-btn" aria-label="Open menu" class="text-brand-light hover:text-white focus:outline-none">
+            <button type="button" id="mobile-menu-btn" aria-label="Open menu" class="text-brand-light hover:text-white focus:outline-none">
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
               </svg>
@@ -197,7 +197,7 @@
 
           <!-- Medical Mobile -->
           <div>
-            <button id="mobile-medical-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+            <button type="button" id="mobile-medical-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Medical</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-medical-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -219,7 +219,7 @@
 
           <!-- Rehab Mobile -->
           <div>
-            <button id="mobile-rehab-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+            <button type="button" id="mobile-rehab-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Rehab</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-rehab-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -238,7 +238,7 @@
 
           <!-- Learn Mobile -->
           <div>
-            <button id="mobile-learn-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+            <button type="button" id="mobile-learn-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Learn</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-learn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -276,7 +276,7 @@
 
           <!-- About Mobile -->
           <div>
-            <button id="mobile-about-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+            <button type="button" id="mobile-about-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">About</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-about-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -293,7 +293,7 @@
 
           <!-- Quiz Mobile -->
           <div>
-            <button id="mobile-quiz-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
+            <button type="button" id="mobile-quiz-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Quiz</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-quiz-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -430,7 +430,7 @@
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeBookingModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
             <div class="bg-brand-dark border border-white/10 rounded-sm max-w-md w-full p-8 relative">
-                <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-brand-gray hover:text-white">
+                <button type="button" onclick="closeBookingModal()" class="absolute top-4 right-4 text-brand-gray hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>

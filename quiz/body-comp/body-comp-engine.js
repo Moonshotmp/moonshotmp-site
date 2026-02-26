@@ -191,7 +191,7 @@
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free 3-Minute Quiz</p>' +
                 '<h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">BODY COMP IQ</h1>' +
                 '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">How much do you really know about body composition? Test your knowledge with 12 quick questions.</p>' +
-                '<button id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Let\u2019s Go</button>' +
+                '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Let\u2019s Go</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-6">For educational purposes only.</p>' +
             '</div>'
         );
@@ -206,7 +206,7 @@
         var optionsHtml = '';
         var optionLetters = ['A', 'B', 'C', 'D'];
         for (var i = 0; i < q.options.length; i++) {
-            optionsHtml += '<button class="quiz-card border border-white/10 rounded-sm p-4 text-left w-full flex items-start gap-3" ' +
+            optionsHtml += '<button type="button" class="quiz-card border border-white/10 rounded-sm p-4 text-left w-full flex items-start gap-3" ' +
                 'data-question="' + qIndex + '" data-option="' + i + '">' +
                 '<span class="text-brand-gray font-bold text-sm mt-0.5 shrink-0">' + optionLetters[i] + '</span>' +
                 '<span class="text-brand-light text-sm">' + q.options[i] + '</span>' +
@@ -223,8 +223,8 @@
                     '<p class="text-brand-gray text-sm">' + q.explanation + '</p>' +
                 '</div>' +
                 '<div class="flex justify-between items-center mt-8">' +
-                    '<button class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + prevScreen + '">\u2190 Back</button>' +
-                    '<button class="btn-primary quiz-advance-btn opacity-40 pointer-events-none" data-to="' + nextScreen + '" disabled>Next \u2192</button>' +
+                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + prevScreen + '">\u2190 Back</button>' +
+                    '<button type="button" class="btn-primary quiz-advance-btn opacity-40 pointer-events-none" data-to="' + nextScreen + '" disabled>Next \u2192</button>' +
                 '</div>' +
             '</div>'
         );
@@ -240,10 +240,10 @@
                 '<div class="max-w-sm mx-auto space-y-4">' +
                     '<input type="text" id="quiz-name" placeholder="First name" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<input type="email" id="quiz-email" placeholder="Email address" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
-                    '<button id="quiz-submit-email" class="btn-primary w-full py-3">See My Score</button>' +
+                    '<button type="button" id="quiz-submit-email" class="btn-primary w-full py-3">See My Score</button>' +
                 '</div>' +
                 '<div class="flex justify-start mt-6">' +
-                    '<button class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + (screenIdx - 1) + '">\u2190 Back</button>' +
+                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + (screenIdx - 1) + '">\u2190 Back</button>' +
                 '</div>' +
             '</div>'
         );

@@ -4,7 +4,7 @@
 
 Site-wide AI assistant that answers questions about Moonshot Medical using the site's own content. Uses OpenAI for embeddings + chat, Supabase pgvector for vector storage, a Netlify Function for the API, and a floating chat widget on all public pages.
 
-`llms.txt` (376 lines) is included as base context on every query. RAG supplements it with deeper content from learn articles and service pages.
+Base context (`BASE_CONTEXT` in `chat.js`) is embedded inline in every query. RAG supplements it with deeper content from learn articles and service pages.
 
 ## Architecture
 
@@ -16,7 +16,7 @@ User types question
   → Embed rewritten query (OpenAI text-embedding-3-small)
   → Hybrid search: vector similarity + full-text keyword search (Supabase RPC, RRF merge)
   → Results ranked by: (similarity * page_weight) via Reciprocal Rank Fusion
-  → Build prompt: system instructions + llms.txt + RAG chunks + conversation history
+  → Build prompt: system instructions + BASE_CONTEXT + RAG chunks + conversation history
   → OpenAI gpt-4o-mini completion
   → Return { reply, sources[] } to widget
   → Widget renders answer + source link pills
@@ -30,7 +30,7 @@ The API returns a deduplicated `sources` array alongside the reply. The widget r
 
 ### 2. Page Weight Scoring
 Each chunk has a `page_weight` column (default 1.0). Higher-value pages rank higher:
-- `1.5`: `/pricing/`, `/llms.txt`
+- `1.5`: `/pricing/`
 - `1.3`: `/medical/**`
 - `1.2`: `/rehab/**`, `/about/`, `/ourstory/`
 - `1.0`: everything else
@@ -39,7 +39,7 @@ Each chunk has a `page_weight` column (default 1.0). Higher-value pages rank hig
 Queries run both vector similarity search and PostgreSQL full-text search. Results are merged using Reciprocal Rank Fusion (RRF). This ensures exact keyword matches (e.g., "BPC-157", "tirzepatide") surface the right pages even when semantic similarity alone is weak.
 
 ### 4. Header-Based Chunking
-Content is split on `<h2>`/`<h3>` boundaries instead of arbitrary word counts. Each chunk is prefixed with its section heading for better embedding context. Sections exceeding 500 words are sub-chunked with overlap. For markdown files (llms.txt), splits on `## ` headers.
+Content is split on `<h2>`/`<h3>` boundaries instead of arbitrary word counts. Each chunk is prefixed with its section heading for better embedding context. Sections exceeding 500 words are sub-chunked with overlap. For markdown files, splits on `## ` headers.
 
 ### 5. Query Rewriting
 A fast gpt-4o-mini call rewrites vague queries ("what do you guys do", "how much is that?") into precise search queries with medical/clinical terms. Uses last 2 conversation messages for pronoun resolution. Falls back to original message on failure.
@@ -59,7 +59,7 @@ Review flagged queries in Supabase to identify content gaps.
 | `netlify/functions/chat.js` | RAG chat API endpoint |
 | `scripts/index-embeddings.js` | Content indexing script (run locally) |
 | `shared/footer.js` | Loads chat widget on all pages (3 lines added) |
-| `llms.txt` | Base context included in every query |
+| (inline `BASE_CONTEXT`) | Base context embedded in `chat.js`, included in every query |
 | `scripts/chatbot-v2-migration.sql` | SQL migration reference (run in Supabase dashboard) |
 
 ## Supabase Setup
@@ -123,7 +123,7 @@ Add to Netlify dashboard:
 Edit `SYSTEM_PROMPT` in `netlify/functions/chat.js`.
 
 ### Base context
-Edit `BASE_CONTEXT` in `netlify/functions/chat.js`. This is a condensed version of `llms.txt` included in every query.
+Edit `BASE_CONTEXT` in `netlify/functions/chat.js`. This is the authoritative source of truth included in every query.
 
 ### Pages indexed
 Edit `INCLUDE_GLOBS` and `EXCLUDE_PREFIXES` in `scripts/index-embeddings.js`.

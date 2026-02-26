@@ -355,7 +355,7 @@
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free 2-Minute Assessment</p>' +
                 '<h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">HOW ARE YOUR<br>HORMONES?</h1>' +
                 '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Answer a few quick questions and get personalized insights about what your symptoms might mean.</p>' +
-                '<button id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Let\u2019s Go</button>' +
+                '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Let\u2019s Go</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-6">Not a medical diagnosis. For educational purposes only.</p>' +
             '</div>'
         );
@@ -368,11 +368,11 @@
                 '<h2 class="text-3xl font-bold text-brand-light mb-2 font-heading">I AM</h2>' +
                 '<p class="text-brand-gray font-light mb-10">This determines which symptom questions you\u2019ll see.</p>' +
                 '<div class="grid grid-cols-2 gap-4 max-w-md mx-auto">' +
-                    '<button class="quiz-card border border-white/10 rounded-sm p-8 text-center" data-gender="male">' +
+                    '<button type="button" class="quiz-card border border-white/10 rounded-sm p-8 text-center" data-gender="male">' +
                         '<span class="block text-4xl mb-3">&#9794;</span>' +
                         '<span class="text-brand-light font-bold text-lg">Male</span>' +
                     '</button>' +
-                    '<button class="quiz-card border border-white/10 rounded-sm p-8 text-center" data-gender="female">' +
+                    '<button type="button" class="quiz-card border border-white/10 rounded-sm p-8 text-center" data-gender="female">' +
                         '<span class="block text-4xl mb-3">&#9792;</span>' +
                         '<span class="text-brand-light font-bold text-lg">Female</span>' +
                     '</button>' +
@@ -384,7 +384,7 @@
     function buildAge() {
         var btns = '';
         for (var i = 0; i < ageRanges.length; i++) {
-            btns += '<button class="quiz-card border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium hover:border-brand-gray/40" data-age="' + ageRanges[i] + '">' + ageRanges[i] + '</button>';
+            btns += '<button type="button" class="quiz-card border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium hover:border-brand-gray/40" data-age="' + ageRanges[i] + '">' + ageRanges[i] + '</button>';
         }
         return screenWrap(2,
             '<div class="text-center">' +
@@ -406,7 +406,7 @@
             var pills = '';
             for (var s = 0; s < severityOptions.length; s++) {
                 var opt = severityOptions[s];
-                pills += '<button class="severity-pill border border-white/20 rounded-sm px-3 py-2 text-xs text-brand-gray font-medium" ' +
+                pills += '<button type="button" class="severity-pill border border-white/20 rounded-sm px-3 py-2 text-xs text-brand-gray font-medium" ' +
                     'data-cat="' + cat.key + '" data-item="' + i + '" data-level="' + opt.value + '" data-selected="false">' +
                     opt.label + '</button>';
             }
@@ -423,8 +423,8 @@
                 '<p class="text-brand-gray font-light mb-8 italic">\u201C' + cat.intro + '\u201D</p>' +
                 rows +
                 '<div class="flex justify-between items-center mt-8">' +
-                    '<button class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + (screenIdx - 1) + '">\u2190 Back</button>' +
-                    '<button class="btn-primary quiz-next-btn opacity-40 pointer-events-none" data-from-cat="' + catIndex + '" data-to="' + (screenIdx + 1) + '" disabled>Next \u2192</button>' +
+                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + (screenIdx - 1) + '">\u2190 Back</button>' +
+                    '<button type="button" class="btn-primary quiz-next-btn opacity-40 pointer-events-none" data-from-cat="' + catIndex + '" data-to="' + (screenIdx + 1) + '" disabled>Next \u2192</button>' +
                 '</div>' +
             '</div>'
         );
@@ -449,8 +449,8 @@
                     toggle('tested', 'I\u2019ve had my hormones tested before') +
                 '</div>' +
                 '<div class="flex justify-between items-center mt-8">' +
-                    '<button class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="10">\u2190 Back</button>' +
-                    '<button class="btn-primary quiz-lifestyle-next" data-to="12">Next \u2192</button>' +
+                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="10">\u2190 Back</button>' +
+                    '<button type="button" class="btn-primary quiz-lifestyle-next" data-to="12">Next \u2192</button>' +
                 '</div>' +
             '</div>'
         );
@@ -465,11 +465,11 @@
                 '<div class="max-w-sm mx-auto space-y-4">' +
                     '<input type="text" id="quiz-name" placeholder="First name" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<input type="email" id="quiz-email" placeholder="Email address" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
-                    '<button id="quiz-submit-email" class="btn-primary w-full py-3">See My Results</button>' +
+                    '<button type="button" id="quiz-submit-email" class="btn-primary w-full py-3">See My Results</button>' +
                 '</div>' +
-                '<button id="quiz-skip-email" class="text-brand-gray/60 text-sm mt-4 hover:text-brand-gray transition inline-block">Skip & See Results</button>' +
+                '<button type="button" id="quiz-skip-email" class="text-brand-gray/60 text-sm mt-4 hover:text-brand-gray transition inline-block">Skip & See Results</button>' +
                 '<div class="flex justify-start mt-6">' +
-                    '<button class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="11">\u2190 Back</button>' +
+                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="11">\u2190 Back</button>' +
                 '</div>' +
             '</div>'
         );
