@@ -185,7 +185,7 @@
     </div>
     <div class="header-actions">
       <a href="/billing/" class="btn btn-outline">&larr; Back to Billing</a>
-      <button class="btn btn-outline" onclick="logout()">Log Out</button>
+      <button type="button" class="btn btn-outline" onclick="logout()">Log Out</button>
     </div>
   </div>
 
@@ -218,10 +218,10 @@
     <div class="section">
       <h2>Revenue by Period</h2>
       <div class="period-selector">
-        <button class="period-btn active" onclick="setPeriod('month')">This Month</button>
-        <button class="period-btn" onclick="setPeriod('quarter')">This Quarter</button>
-        <button class="period-btn" onclick="setPeriod('year')">This Year</button>
-        <button class="period-btn" onclick="setPeriod('all')">All Time</button>
+        <button type="button" class="period-btn active" onclick="setPeriod('month')">This Month</button>
+        <button type="button" class="period-btn" onclick="setPeriod('quarter')">This Quarter</button>
+        <button type="button" class="period-btn" onclick="setPeriod('year')">This Year</button>
+        <button type="button" class="period-btn" onclick="setPeriod('all')">All Time</button>
       </div>
       <div class="summary-grid" id="periodSummary">
         <div class="loading"><span class="spinner"></span></div>

@@ -261,13 +261,13 @@
       <div id="card-element"></div>
       <div id="card-errors" role="alert"></div>
 
-      <button class="btn btn-primary" id="payBtn" onclick="handlePayment()">
+      <button type="button" class="btn btn-primary" id="payBtn" onclick="handlePayment()">
         Process Payment
       </button>
 
       <div class="or-divider">or</div>
 
-      <button class="terminal-btn" id="terminalBtn" onclick="handleTerminalPayment()">
+      <button type="button" class="terminal-btn" id="terminalBtn" onclick="handleTerminalPayment()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="12" x2="6" y2="12.01"/><line x1="10" y1="12" x2="10" y2="12.01"/>
         </svg>
@@ -284,7 +284,7 @@
       </div>
       <h2 id="successTitle">Payment Successful</h2>
       <p id="successDetail"></p>
-      <button class="btn btn-primary" onclick="window.location.href='/billing/'">Back to Dashboard</button>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='/billing/'">Back to Dashboard</button>
     </div>
   </div>
 
