@@ -507,7 +507,7 @@ export default async (req) => {
     const chunks = await searchChunksHybrid(embedding, searchQuery, 5);
     console.log("[chat] found", chunks.length, "chunks");
 
-    // 4. Build deduplicated sources array (by URL and title, exclude llms.txt, pricing last)
+    // 4. Build deduplicated sources array (by URL and title, pricing last)
     const seenUrls = new Set();
     const seenTitles = new Set();
     const sources = [];
@@ -515,8 +515,7 @@ export default async (req) => {
       if (
         c.page_url &&
         !seenUrls.has(c.page_url) &&
-        !seenTitles.has(c.page_title) &&
-        c.page_url !== "/llms.txt"
+        !seenTitles.has(c.page_title)
       ) {
         seenUrls.add(c.page_url);
         seenTitles.add(c.page_title);

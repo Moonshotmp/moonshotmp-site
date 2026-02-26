@@ -571,7 +571,7 @@
 
   <!-- Offline Warning Banner -->
   <div class="offline-banner" id="offlineBanner">
-    You appear to be offline. Some features may not work. <button onclick="checkSystemHealth()" style="background:none;border:none;color:#ffd43b;text-decoration:underline;cursor:pointer;">Retry connection</button>
+    You appear to be offline. Some features may not work. <button type="button" onclick="checkSystemHealth()" style="background:none;border:none;color:#ffd43b;text-decoration:underline;cursor:pointer;">Retry connection</button>
   </div>
 
   <div class="portal-header">
@@ -584,8 +584,8 @@
         <span class="status-dot"></span>
         <span class="status-text">Checking...</span>
       </div>
-      <button class="btn btn-primary" onclick="openNewPatientModal()">+ New Patient</button>
-      <button class="btn btn-outline" onclick="logout()">Log Out</button>
+      <button type="button" class="btn btn-primary" onclick="openNewPatientModal()">+ New Patient</button>
+      <button type="button" class="btn btn-outline" onclick="logout()">Log Out</button>
     </div>
   </div>
 
@@ -741,7 +741,7 @@
     <div class="cart-modal">
       <div class="cart-header">
         <h2>New Charge</h2>
-        <button class="cart-close" onclick="closeCartModal()">&times;</button>
+        <button type="button" class="cart-close" onclick="closeCartModal()">&times;</button>
       </div>
       <div class="cart-patient" id="cartPatientInfo"></div>
       <div class="cart-body">
@@ -777,7 +777,7 @@
             </div>
           </div>
           <div class="cart-actions">
-            <button class="btn btn-gold" id="checkoutCardBtn" onclick="checkoutWithCard()" disabled>Enter Card to Pay</button>
+            <button type="button" class="btn btn-gold" id="checkoutCardBtn" onclick="checkoutWithCard()" disabled>Enter Card to Pay</button>
           </div>
         </div>
       </div>
@@ -969,8 +969,8 @@
         <div class="error-recovery">
           <h3>Something went wrong</h3>
           <p>${message}</p>
-          <button class="btn btn-primary" onclick="${retryFn}">Try Again</button>
-          <button class="btn btn-outline" onclick="checkSystemHealth()">Check Connection</button>
+          <button type="button" class="btn btn-primary" onclick="${retryFn}">Try Again</button>
+          <button type="button" class="btn btn-outline" onclick="checkSystemHealth()">Check Connection</button>
         </div>
       `;
     }
@@ -1138,7 +1138,7 @@
                                isRefunded ? '<span class="pay-status pay-refunded">REFUNDED</span>' : '';
             const canRefund = pay.status === 'succeeded' && (pay.stripe_payment_intent_id || pay.stripe_invoice_id);
             const refundBtn = canRefund
-              ? `<button class="refund-link" onclick="openRefundModal('${pay.id}', '${pay.stripe_payment_intent_id || ''}', '${pay.stripe_invoice_id || ''}', ${pay.amount_cents}, '${esc(desc)}')">Refund</button>`
+              ? `<button type="button" class="refund-link" onclick="openRefundModal('${pay.id}', '${pay.stripe_payment_intent_id || ''}', '${pay.stripe_invoice_id || ''}', ${pay.amount_cents}, '${esc(desc)}')">Refund</button>`
               : '';
             return `<div class="billing-row" style="${statusStyle}">
               <span>${date}</span>
@@ -1180,9 +1180,9 @@
             ${membershipInfo}
             ${paymentsInfo}
             <div class="patient-actions">
-              <button class="btn btn-gold btn-sm" onclick="openCartModal('${p.id}', '${esc(p.first_name)}', '${esc(p.last_name)}', '${formatDob(p.dob)}')">New Charge</button>
-              <button class="btn btn-outline btn-sm" onclick="updateCard('${p.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Update Card</button>
-              ${activeMem ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${activeMem.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Cancel Membership</button>` : ''}
+              <button type="button" class="btn btn-gold btn-sm" onclick="openCartModal('${p.id}', '${esc(p.first_name)}', '${esc(p.last_name)}', '${formatDob(p.dob)}')">New Charge</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="updateCard('${p.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Update Card</button>
+              ${activeMem ? `<button type="button" class="btn btn-danger btn-sm" onclick="cancelMembership('${activeMem.id}', '${esc(p.first_name)} ${esc(p.last_name)}')">Cancel Membership</button>` : ''}
             </div>
           </div>`;
       }).join('');
@@ -1400,9 +1400,9 @@
               <td style="font-size:13px;">${new Date(m.created_at).toLocaleDateString()}</td>
               <td style="font-size:13px;">${nextBilling}</td>
               <td style="display:flex;gap:6px;flex-wrap:wrap;">
-                <button class="btn btn-gold btn-sm" onclick="openCartModal('${patientId}', '${esc(p?.first_name)}', '${esc(p?.last_name)}', '${formatDob(p?.dob)}')">Charge</button>
-                <button class="btn btn-outline btn-sm" onclick="updateCard('${patientId}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Update Card</button>
-                ${m.status === 'active' ? `<button class="btn btn-danger btn-sm" onclick="cancelMembership('${m.id}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Cancel</button>` : ''}
+                <button type="button" class="btn btn-gold btn-sm" onclick="openCartModal('${patientId}', '${esc(p?.first_name)}', '${esc(p?.last_name)}', '${formatDob(p?.dob)}')">Charge</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="updateCard('${patientId}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Update Card</button>
+                ${m.status === 'active' ? `<button type="button" class="btn btn-danger btn-sm" onclick="cancelMembership('${m.id}', '${esc(p?.first_name)} ${esc(p?.last_name)}')">Cancel</button>` : ''}
               </td>
             </tr>`;
           }).join('')}</tbody>
@@ -1453,8 +1453,8 @@
               <td>${esc(p.description || p.type || 'Payment')}</td>
               <td class="amount" style="color:#ff6b6b;">$${(p.amount_cents / 100).toFixed(2)}</td>
               <td>
-                <button class="btn btn-outline btn-sm" onclick="updateCard('${patientId}', '${esc(patient?.first_name)} ${esc(patient?.last_name)}')">Update Card</button>
-                <button class="btn btn-gold btn-sm" onclick="retryPayment('${patientId}', ${p.amount_cents}, '${esc(p.description || p.type)}')">Retry</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="updateCard('${patientId}', '${esc(patient?.first_name)} ${esc(patient?.last_name)}')">Update Card</button>
+                <button type="button" class="btn btn-gold btn-sm" onclick="retryPayment('${patientId}', ${p.amount_cents}, '${esc(p.description || p.type)}')">Retry</button>
               </td>
             </tr>`;
           }).join('')}</tbody>
@@ -1524,7 +1524,7 @@
               <td style="font-size:13px;">${formatPhone(p.phone) || '--'}</td>
               <td style="font-size:13px;">${new Date(p.created_at).toLocaleDateString()}</td>
               <td>
-                <button class="btn btn-gold btn-sm" onclick="openCartModal('${p.id}', '${esc(p.first_name)}', '${esc(p.last_name)}', '${formatDob(p.dob)}')">New Charge</button>
+                <button type="button" class="btn btn-gold btn-sm" onclick="openCartModal('${p.id}', '${esc(p.first_name)}', '${esc(p.last_name)}', '${formatDob(p.dob)}')">New Charge</button>
               </td>
             </tr>`;
           }).join('')}</tbody>
@@ -1790,7 +1790,7 @@
     function renderCategoryTabs() {
       const container = document.getElementById('categoryTabs');
       container.innerHTML = categories.map(cat => `
-        <button class="category-tab ${cat.id === currentCategory ? 'active' : ''}"
+        <button type="button" class="category-tab ${cat.id === currentCategory ? 'active' : ''}"
                 onclick="selectCategory('${cat.id}')">
           ${esc(cat.name)}
         </button>
@@ -1886,12 +1886,12 @@
             </div>
             ${!product.recurring ? `
               <div class="cart-item-qty">
-                <button class="qty-btn" onclick="changeQuantity('${item.code}', -1)">&minus;</button>
+                <button type="button" class="qty-btn" onclick="changeQuantity('${item.code}', -1)">&minus;</button>
                 <span>${item.quantity}</span>
-                <button class="qty-btn" onclick="changeQuantity('${item.code}', 1)">+</button>
+                <button type="button" class="qty-btn" onclick="changeQuantity('${item.code}', 1)">+</button>
               </div>
             ` : ''}
-            <button class="cart-item-remove" onclick="removeFromCart('${item.code}')">&times;</button>
+            <button type="button" class="cart-item-remove" onclick="removeFromCart('${item.code}')">&times;</button>
           </div>
         `;
       }).join('');

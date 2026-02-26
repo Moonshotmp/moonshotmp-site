@@ -162,7 +162,7 @@
                 var prompt = document.createElement('div');
                 prompt.id = 'quiz-scroll-prompt';
                 prompt.className = 'fixed bottom-4 right-4 z-[70] bg-brand-dark border border-white/10 rounded-sm p-5 shadow-2xl max-w-xs transition-all duration-300 translate-y-4 opacity-0 hidden md:block';
-                prompt.innerHTML = '<button onclick="this.parentElement.remove()" class="absolute top-2 right-3 text-brand-gray hover:text-white text-lg leading-none">&times;</button>' +
+                prompt.innerHTML = '<button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-3 text-brand-gray hover:text-white text-lg leading-none">&times;</button>' +
                     '<p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-1">CURIOUS?</p>' +
                     '<p class="text-brand-gray text-xs mb-3">Take a free 2-min quiz and get personalized insights.</p>' +
                     '<div class="space-y-2">' +
