@@ -247,9 +247,9 @@
       <div class="subtitle">Moonshot Medical + Performance</div>
     </div>
     <div class="header-actions">
-      <button class="btn btn-outline" onclick="syncPayments()" id="syncBtn">Sync Payments</button>
+      <button type="button" class="btn btn-outline" onclick="syncPayments()" id="syncBtn">Sync Payments</button>
       <a href="/billing/" class="btn btn-outline">Billing Portal</a>
-      <button class="btn btn-outline" onclick="logout()">Log Out</button>
+      <button type="button" class="btn btn-outline" onclick="logout()">Log Out</button>
     </div>
   </div>
 
@@ -302,10 +302,10 @@
       <div class="section">
         <h2>Revenue by Period</h2>
         <div class="period-selector">
-          <button class="period-btn active" onclick="setBillingPeriod('month', this)">This Month</button>
-          <button class="period-btn" onclick="setBillingPeriod('quarter', this)">This Quarter</button>
-          <button class="period-btn" onclick="setBillingPeriod('year', this)">This Year</button>
-          <button class="period-btn" onclick="setBillingPeriod('all', this)">All Time</button>
+          <button type="button" class="period-btn active" onclick="setBillingPeriod('month', this)">This Month</button>
+          <button type="button" class="period-btn" onclick="setBillingPeriod('quarter', this)">This Quarter</button>
+          <button type="button" class="period-btn" onclick="setBillingPeriod('year', this)">This Year</button>
+          <button type="button" class="period-btn" onclick="setBillingPeriod('all', this)">All Time</button>
         </div>
         <div class="summary-grid" id="billingPeriodSummary">
           <div class="loading"><span class="spinner"></span></div>
@@ -692,7 +692,7 @@
               <td>${stats.uniqueCustomers}</td>
               <td>${stripeBadge}</td>
               <td>${created}</td>
-              <td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px;" onclick="event.stopPropagation();editPartner('${p.id}')">Edit</button></td>
+              <td><button type="button" class="btn btn-outline" style="padding:4px 10px;font-size:11px;" onclick="event.stopPropagation();editPartner('${p.id}')">Edit</button></td>
             </tr>`;
           }).join('')}</tbody>
         </table>`;
@@ -801,7 +801,7 @@
             const pricingData = await pricingRes.json();
             const overrides = pricingData.overrides || [];
             if (overrides.length > 0) {
-              overridesHtml = `<table class="data-table"><thead><tr><th>Product</th><th>Default Price</th><th>Override Price</th><th>Default Wholesale</th><th>Override Wholesale</th><th></th></tr></thead><tbody>${overrides.map(o => `<tr><td>${esc(o.product_name)}</td><td>$${((o.default_price_cents || 0) / 100).toFixed(0)}</td><td>${o.price_cents ? '$' + (o.price_cents / 100).toFixed(0) : '-'}</td><td>$${((o.default_wholesale_price_cents || 0) / 100).toFixed(0)}</td><td>${o.wholesale_price_cents ? '$' + (o.wholesale_price_cents / 100).toFixed(0) : '-'}</td><td><button class="btn btn-outline" style="padding:3px 8px;font-size:10px;" onclick="removeOverride('${partnerId}','${o.product_id}')">Remove</button></td></tr>`).join('')}</tbody></table>`;
+              overridesHtml = `<table class="data-table"><thead><tr><th>Product</th><th>Default Price</th><th>Override Price</th><th>Default Wholesale</th><th>Override Wholesale</th><th></th></tr></thead><tbody>${overrides.map(o => `<tr><td>${esc(o.product_name)}</td><td>$${((o.default_price_cents || 0) / 100).toFixed(0)}</td><td>${o.price_cents ? '$' + (o.price_cents / 100).toFixed(0) : '-'}</td><td>$${((o.default_wholesale_price_cents || 0) / 100).toFixed(0)}</td><td>${o.wholesale_price_cents ? '$' + (o.wholesale_price_cents / 100).toFixed(0) : '-'}</td><td><button type="button" class="btn btn-outline" style="padding:3px 8px;font-size:10px;" onclick="removeOverride('${partnerId}','${o.product_id}')">Remove</button></td></tr>`).join('')}</tbody></table>`;
             } else {
               overridesHtml = '<div style="color:#B2BFBE;font-size:13px;padding:8px 0;">No custom pricing set. Using default catalog prices.</div>';
             }
@@ -821,7 +821,7 @@
         const addr = typeof p.address === 'string' ? JSON.parse(p.address || '{}') : (p.address || {});
 
         document.getElementById('partnersList').innerHTML = `
-          <div style="margin-bottom:16px;"><button class="btn btn-outline" onclick="loadPartnerData()" style="padding:6px 14px;font-size:12px;">&larr; Back to list</button></div>
+          <div style="margin-bottom:16px;"><button type="button" class="btn btn-outline" onclick="loadPartnerData()" style="padding:6px 14px;font-size:12px;">&larr; Back to list</button></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
             <div>
               <h3 style="font-family:'Oswald',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px;">Partner Info</h3>
@@ -831,7 +831,7 @@
               <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Phone</label><input id="editPhone" value="${esc(p.phone || '')}" style="width:100%;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"/></div>
               <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Commission Rate (%)</label><input id="editCommission" type="number" min="0" max="100" value="${p.commission_rate || 10}" style="width:100px;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"/></div>
               <div style="margin-bottom:8px;"><label style="font-size:11px;color:#B2BFBE;display:block;">Active</label><select id="editActive" style="padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:13px;"><option value="true" ${p.active !== false ? 'selected' : ''}>Active</option><option value="false" ${p.active === false ? 'selected' : ''}>Inactive</option></select></div>
-              <button class="btn btn-outline" style="margin-top:8px;" onclick="savePartner('${partnerId}')">Save Changes</button>
+              <button type="button" class="btn btn-outline" style="margin-top:8px;" onclick="savePartner('${partnerId}')">Save Changes</button>
               <div id="editStatus" style="font-size:12px;margin-top:8px;"></div>
             </div>
             <div>
@@ -853,7 +853,7 @@
                 <div><label style="font-size:10px;color:#888;display:block;">Product</label><select id="overrideProduct" style="padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:12px;">${productsOptions}</select></div>
                 <div><label style="font-size:10px;color:#888;display:block;">Price ($)</label><input id="overridePrice" type="number" min="0" step="1" style="width:80px;padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:12px;" placeholder="150"/></div>
                 <div><label style="font-size:10px;color:#888;display:block;">Wholesale ($)</label><input id="overrideWholesale" type="number" min="0" step="1" style="width:80px;padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#F0EEE9;font-size:12px;" placeholder="100"/></div>
-                <button class="btn btn-outline" style="padding:6px 12px;font-size:11px;" onclick="addOverride('${partnerId}')">Add</button>
+                <button type="button" class="btn btn-outline" style="padding:6px 12px;font-size:11px;" onclick="addOverride('${partnerId}')">Add</button>
               </div>
             </div>
           </div>`;

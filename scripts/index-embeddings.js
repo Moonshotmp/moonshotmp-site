@@ -13,7 +13,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync, existsSync, readdirSync } from "fs";
-import { resolve, join, relative } from "path";
+import { resolve, join, relative, basename } from "path";
 import { createHash } from "crypto";
 
 // ---------------------------------------------------------------------------
@@ -50,7 +50,6 @@ const INCLUDE_GLOBS = [
   "medical/**/index.html",
   "learn/**/index.html",
   "rehab/**/index.html",
-  "llms.txt",
 ];
 
 // Paths to exclude (matched as prefixes against relative path)
@@ -70,7 +69,6 @@ const EXCLUDE_PREFIXES = [
 // Page weight map — higher weight = ranked higher in retrieval
 const PAGE_WEIGHT_RULES = [
   { pattern: /^\/pricing\//, weight: 1.5 },
-  { pattern: /^\/llms\.txt$/, weight: 1.5 },
   { pattern: /^\/medical\//, weight: 1.3 },
   { pattern: /^\/rehab\//, weight: 1.2 },
   { pattern: /^\/about\//, weight: 1.2 },
@@ -193,7 +191,7 @@ function extractSections(html) {
 }
 
 /**
- * Split markdown text (like llms.txt) into sections based on ## headers.
+ * Split markdown text into sections based on ## headers.
  * Returns [{ title: string, text: string }]
  */
 function extractMarkdownSections(text) {
@@ -316,7 +314,7 @@ async function main() {
   for (const filePath of files) {
     const raw = readFileSync(filePath, "utf-8");
     const isHtml = filePath.endsWith(".html");
-    const title = isHtml ? extractPageTitle(raw) : "llms.txt";
+    const title = isHtml ? extractPageTitle(raw) : basename(filePath);
     const pageUrl = pageUrlFromPath(filePath);
     const pageWeight = getPageWeight(pageUrl);
 

@@ -101,6 +101,15 @@
                         if (iframe) iframe.style.height = e.data.height + 'px';
                     }
                 });
+                document.querySelectorAll('iframe').forEach(function(iframe) {
+                    iframe.addEventListener('error', function() {
+                        this.style.display = 'none';
+                        var fallback = document.createElement('div');
+                        fallback.className = 'text-center py-12';
+                        fallback.innerHTML = '<p class="text-brand-slate text-lg mb-4">Booking is temporarily unavailable.</p><p class="text-brand-slate">Please call <a href="tel:+12244354280" class="underline font-bold hover:text-brand-dark">224-435-4280</a> or <a href="/contact/" class="underline font-bold hover:text-brand-dark">use our contact form</a> to schedule.</p>';
+                        this.parentNode.appendChild(fallback);
+                    });
+                });
                 </script>
                 <p class="text-center text-brand-slate/50 text-xs mt-4">
                     Questions? Call or text <a href="tel:+12244354280" class="underline hover:text-brand-dark">224-435-4280</a>
