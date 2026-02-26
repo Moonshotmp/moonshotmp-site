@@ -22,6 +22,10 @@
 # Clean partner storefront URLs: /partners/kickhouse → /partners/store.html
 # Netlify serves static files first, so /partners/setup.html, /partners/login.html, etc. still work.
 # Only unmatched paths (i.e. partner slugs) hit this rewrite.
+[[edge_functions]]
+  function = "partner-seo"
+  path = "/partners/*"
+
 [[redirects]]
   from = "/partners/:slug"
   to = "/partners/store.html"
