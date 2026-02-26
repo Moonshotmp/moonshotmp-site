@@ -20,6 +20,11 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 /billing/ https://moonshot.moonshotclinic.com/billing/ 301!
 /billing/* https://moonshot.moonshotclinic.com/billing/:splat 301!
 
+# Clean partner storefront URLs: /partners/kickhouse → /partners/store.html
+# Netlify serves static files first, so setup.html, login.html, etc. still work.
+# Only unmatched paths (i.e. partner slugs) hit this rewrite.
+/partners/:slug /partners/store.html 200
+
 # 404 catch-all (must be last)
 /*    /404.html   404
 
