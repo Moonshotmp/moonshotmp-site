@@ -274,7 +274,7 @@
     document.getElementById('state').value = p.address?.state || '';
     document.getElementById('zip').value = p.address?.zip || '';
 
-    document.getElementById('storeUrl').value = location.origin + '/partners/store.html?slug=' + p.slug;
+    document.getElementById('storeUrl').value = location.origin + '/partners/' + p.slug;
 
     // Stripe status
     const stripeBadge = document.getElementById('stripeBadge');
@@ -442,7 +442,7 @@
   function wireUpButtons(p) {
     // View Store
     document.getElementById('viewStoreBtn').onclick = function() {
-      window.open('/partners/store.html?slug=' + p.slug, '_blank');
+      window.open('/partners/' + p.slug, '_blank');
     };
 
     // Sign Out

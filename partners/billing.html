@@ -192,7 +192,7 @@
         return;
       }
 
-      storeLinkEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      storeLinkEl.href = `/partners/${encodeURIComponent(slug)}`;
 
       try {
         // Load partner info using authenticated endpoint

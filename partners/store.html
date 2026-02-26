@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="robots" content="noindex, follow" />
-  <link rel="canonical" href="https://moonshotmp.com/partners/store.html" />
-  <title>Moonshot Diagnostics</title>
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" id="canonicalLink" href="https://moonshotmp.com/partners/" />
+  <meta name="description" id="metaDescription" content="Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through our trusted partner network." />
+  <title id="pageTitle">Moonshot Diagnostics — Partner Store</title>
   <link rel="stylesheet" href="/partners/styles.css" />
 
   <!-- Tailwind CSS (for header/footer consistency with main site) -->
@@ -1028,8 +1029,17 @@
     const cartTotalEl = document.getElementById('cartTotal');
     const checkoutBtn = document.getElementById('checkoutBtn');
 
-    // Get slug from URL
+    // Get slug from URL path (/partners/kickhouse) or fallback to ?slug= query param
     function getSlug() {
+      const path = window.location.pathname.replace(/\/$/, '');
+      const parts = path.split('/');
+      // Path format: /partners/{slug} — last segment is slug if not a known page
+      const knownPages = ['store.html', 'setup.html', 'login.html', 'manage.html', 'billing.html', 'connect.html', 'success.html', 'cancel.html', 'checkout-success.html', 'terms.html'];
+      const lastSegment = parts[parts.length - 1];
+      if (parts.length >= 3 && parts[1] === 'partners' && lastSegment && !knownPages.includes(lastSegment)) {
+        return lastSegment.trim().toLowerCase();
+      }
+      // Fallback to query param for backwards compatibility
       return new URL(window.location.href).searchParams.get('slug')?.trim().toLowerCase() || '';
     }
 
@@ -1203,7 +1213,7 @@
           slug,
           items: items.map(i => ({ id: i.id, quantity: i.quantity })),
           success_url: `${window.location.origin}/partners/success.html?slug=${slug}&session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${window.location.origin}/partners/store.html?slug=${slug}`,
+          cancel_url: `${window.location.origin}/partners/${encodeURIComponent(slug)}`,
         }, { skipAuthRedirect: true });
 
         const data = await res.json();
@@ -1233,6 +1243,13 @@
       // Update partner login link
       if (slug) {
         document.getElementById('partnerLoginLink').href = `/partners/login.html?slug=${encodeURIComponent(slug)}`;
+
+        // Update SEO meta tags with partner-specific info
+        document.getElementById('canonicalLink').href = `https://moonshotmp.com/partners/${encodeURIComponent(slug)}`;
+        document.getElementById('pageTitle').textContent = `${partner ? partner.name + ' × ' : ''}Moonshot Diagnostics — DEXA Scans & Blood Work`;
+        if (partner) {
+          document.getElementById('metaDescription').content = `Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through ${partner.name}. Powered by Moonshot Medical Performance.`;
+        }
       }
 
       try {

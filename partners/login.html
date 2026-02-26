@@ -37,7 +37,7 @@
               <span id="sendLabel">Email sign-in link</span>
             </span>
           </button>
-          <a class="btn-outline" id="backToStore" href="/partners/store.html">Back to store</a>
+          <a class="btn-outline" id="backToStore" href="/partners/">Back to store</a>
         </div>
 
         <div class="muted" style="font-size:13px; margin-top:10px;">
@@ -98,7 +98,7 @@
   // Prefill slug
   const slugPrefill = (qs.get("slug") || "").trim().toLowerCase();
   if (slugPrefill) slugEl.value = slugPrefill;
-  if (slugPrefill) backToStore.href = `/partners/store.html?slug=${encodeURIComponent(slugPrefill)}`;
+  if (slugPrefill) backToStore.href = `/partners/${encodeURIComponent(slugPrefill)}`;
 
   const EMAIL_KEY = "ms_partner_last_email";
   const rememberedEmail = (localStorage.getItem(EMAIL_KEY) || "").trim();

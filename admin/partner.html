@@ -373,7 +373,7 @@
         document.getElementById('partnerContact').textContent = partner.contactName || '-';
         document.getElementById('partnerEmail').textContent = partner.email || '-';
         document.getElementById('partnerPhone').textContent = partner.phone || '-';
-        document.getElementById('storefrontLink').href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+        document.getElementById('storefrontLink').href = `/partners/${encodeURIComponent(slug)}`;
 
         // Address
         const addr = partner.address;

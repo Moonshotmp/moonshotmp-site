@@ -222,7 +222,7 @@
 
     nameEl.addEventListener("input", () => {
       const slug = slugify(nameEl.value);
-      linkPreviewEl.textContent = slug ? `${window.location.origin}/partners/store.html?slug=${slug}` : "";
+      linkPreviewEl.textContent = slug ? `${window.location.origin}/partners/${slug}` : "";
     });
 
     // Logo compression with EXIF rotation handling
@@ -441,7 +441,7 @@
     // --- Step 4: Done ---
     async function showFinalStep() {
       const slug = createdSlug || '';
-      const storeUrl = `${window.location.origin}/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      const storeUrl = `${window.location.origin}/partners/${encodeURIComponent(slug)}`;
       document.getElementById("finalStoreUrl").textContent = storeUrl;
       document.getElementById("viewStoreLink").href = storeUrl;
 

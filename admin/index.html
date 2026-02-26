@@ -840,7 +840,7 @@
               <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Orders: <strong style="color:#F0EEE9;">${p.order_count || 0}</strong></div>
               <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Revenue: <strong style="color:#51cf66;">$${((parseInt(p.total_revenue) || 0) / 100).toLocaleString()}</strong></div>
               <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Stripe: ${p.stripe_onboarded ? '<span class="badge badge-success">Connected</span>' : '<span class="badge badge-failed">Not Connected</span>'}</div>
-              <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Store: <a href="https://moonshotmp.com/partners/store.html?slug=${esc(p.slug)}" target="_blank" style="color:#c9a227;text-decoration:underline;">View Store</a></div>
+              <div style="font-size:13px;color:#B2BFBE;margin-bottom:6px;">Store: <a href="https://moonshotmp.com/partners/${esc(p.slug)}" target="_blank" style="color:#c9a227;text-decoration:underline;">View Store</a></div>
             </div>
           </div>
 

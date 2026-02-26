@@ -108,7 +108,7 @@
       }
 
       slugEl.textContent = slug;
-      storeEl.href = `/partners/store.html?slug=${encodeURIComponent(slug)}`;
+      storeEl.href = `/partners/${encodeURIComponent(slug)}`;
       storeEl.style.display = "inline-flex";
       billingEl.href = `/partners/billing.html?slug=${encodeURIComponent(slug)}`;
 
