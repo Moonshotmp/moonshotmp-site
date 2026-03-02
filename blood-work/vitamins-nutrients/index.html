@@ -29,7 +29,7 @@
     <script type="application/ld+json">
     [{
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "MedicalWebPage"],
         "headline": "Vitamins & Nutrients: Understanding Your Nutrient Levels",
         "description": "Learn what your vitamin D and B12 blood work results mean. A plain-language guide to nutrient levels, deficiency risks, reference ranges, and when supplementation makes sense.",
         "url": "https://moonshotmp.com/blood-work/vitamins-nutrients/",
@@ -47,6 +47,15 @@
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://moonshotmp.com/images/moonshotmptan.png"
+            }
+        },
+        "reviewedBy": {
+            "@type": "Person",
+            "name": "Missy Zammichieli, DNP, APRN, FNP-BC",
+            "jobTitle": "Board-Certified Family Nurse Practitioner",
+            "worksFor": {
+                "@type": "MedicalOrganization",
+                "name": "Moonshot Medical and Performance"
             }
         }
     },
@@ -112,6 +121,36 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "url": "https://moonshotmp.com/",
+        "telephone": "+18474960777",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0111,
+            "longitude": -87.8406
+        },
+        "areaServed": [
+            "Park Ridge, IL", "Des Plaines, IL", "Niles, IL",
+            "Edison Park, Chicago", "Norwood Park, Chicago", "Rosemont, IL",
+            "Morton Grove, IL", "Glenview, IL", "Skokie, IL",
+            "Mount Prospect, IL", "Arlington Heights, IL"
+        ],
+        "medicalSpecialty": "Endocrinology",
+        "priceRange": "$"
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
@@ -130,6 +169,7 @@
                         <p class="text-brand-gray text-lg font-light">
                             Vitamin D and B12 are the two nutrient markers most commonly tested on blood work panels &mdash; and two of the most commonly deficient. Here is what your results mean and when supplementation makes sense.
                         </p>
+                        <p class="text-brand-gray/60 text-xs mt-4">Medically reviewed by Missy Zammichieli, DNP, APRN, FNP-BC · Updated March 2, 2026</p>
                     </div>
                     <div class="aspect-[4/3] bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/bloodresults.webp" alt="Vitamin and nutrient blood work panel results" class="w-full h-full object-cover" width="1200" height="675" fetchpriority="high">

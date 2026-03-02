@@ -25,12 +25,12 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "MedicalWebPage"],
         "headline": "Moonshot Medical vs Typical Hormone and Weight Loss Clinics",
         "description": "An honest comparison of Moonshot Medical's approach to hormone optimization and weight loss versus typical telehealth clinics and weight loss centers.",
         "url": "https://moonshotmp.com/medical/moonshot-vs-typical-clinic/",
         "datePublished": "2025-01-15",
-        "dateModified": "2025-01-15",
+        "dateModified": "2026-03-02",
         "author": {
             "@type": "Person",
             "name": "Moonshot Medical Team",
@@ -42,6 +42,15 @@
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://moonshotmp.com/images/moonshotmptan.png"
+            }
+        },
+        "reviewedBy": {
+            "@type": "Person",
+            "name": "Missy Zammichieli, DNP, APRN, FNP-BC",
+            "jobTitle": "Board-Certified Family Nurse Practitioner",
+            "worksFor": {
+                "@type": "MedicalOrganization",
+                "name": "Moonshot Medical and Performance"
             }
         }
     }
@@ -105,6 +114,36 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "url": "https://moonshotmp.com/",
+        "telephone": "+18474960777",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0111,
+            "longitude": -87.8406
+        },
+        "areaServed": [
+            "Park Ridge, IL", "Des Plaines, IL", "Niles, IL",
+            "Edison Park, Chicago", "Norwood Park, Chicago", "Rosemont, IL",
+            "Morton Grove, IL", "Glenview, IL", "Skokie, IL",
+            "Mount Prospect, IL", "Arlington Heights, IL"
+        ],
+        "medicalSpecialty": "Endocrinology",
+        "priceRange": "$$"
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
@@ -122,6 +161,7 @@
                         <p class="text-brand-gray text-lg font-light">
                             Not all hormone and weight loss clinics are the same. Here's an honest look at how we're different—and where we might not be the right fit.
                         </p>
+                        <p class="text-brand-gray/60 text-xs mt-4">Medically reviewed by Missy Zammichieli, DNP, APRN, FNP-BC · Updated March 2, 2026</p>
                     </div>
                     <div class="aspect-[4/3] bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/bloodvials.webp" alt="Comprehensive lab testing" class="w-full h-full object-cover" width="2000" height="1333" fetchpriority="high">
@@ -166,7 +206,7 @@
                             <tr class="border-b border-brand-slate/20">
                                 <td class="py-4 pr-4 font-medium text-brand-dark">Lab work</td>
                                 <td class="py-4 px-4">Basic panel (10-15 markers)</td>
-                                <td class="py-4 pl-4">Comprehensive (60+ markers)</td>
+                                <td class="py-4 pl-4"><a href="/blood-work/" class="text-brand-slate underline decoration-brand-slate/30 hover:decoration-brand-slate transition-colors">Comprehensive (60+ markers)</a></td>
                             </tr>
                             <tr class="border-b border-brand-slate/20">
                                 <td class="py-4 pr-4 font-medium text-brand-dark">Body composition</td>
@@ -213,7 +253,7 @@
                     <div class="bg-white/5 border border-white/10 p-8">
                         <h3 class="text-xl font-bold text-brand-light mb-4">Comprehensive Labs</h3>
                         <p class="text-brand-gray font-light text-sm mb-4">
-                            We test 60+ biomarkers—not just testosterone or thyroid. Hormones, metabolic markers, inflammation, cardiovascular risk, nutrients. The full picture.
+                            We test <a href="/blood-work/" class="text-brand-gray underline decoration-brand-gray/30 hover:decoration-brand-gray transition-colors">60+ biomarkers</a>—not just testosterone or thyroid. Hormones, metabolic markers, inflammation, cardiovascular risk, nutrients. The full picture.
                         </p>
                         <p class="text-brand-gray font-light text-sm">
                             Why? Because low testosterone might be caused by thyroid dysfunction, or inflammation, or insulin resistance. You can't optimize what you don't understand.

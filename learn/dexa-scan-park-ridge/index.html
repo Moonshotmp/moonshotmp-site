@@ -27,13 +27,13 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "MedicalWebPage"],
         "headline": "DEXA Body Composition Scans in Park Ridge, IL",
         "description": "Where to get a DEXA scan locally in Park Ridge. What DEXA tells you that a scale can't, and how Moonshot uses it to track real progress.",
         "url": "https://moonshotmp.com/learn/dexa-scan-park-ridge/",
         "image": "https://moonshotmp.com/images/dexamachine.webp",
         "datePublished": "2026-02-02",
-        "dateModified": "2026-02-02",
+        "dateModified": "2026-03-02",
         "author": {
             "@type": "Person",
             "name": "Moonshot Medical Team",
@@ -45,6 +45,15 @@
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://moonshotmp.com/images/moonshotmptan.png"
+            }
+        },
+        "reviewedBy": {
+            "@type": "Person",
+            "name": "Missy Zammichieli, DNP, APRN, FNP-BC",
+            "jobTitle": "Board-Certified Family Nurse Practitioner",
+            "worksFor": {
+                "@type": "MedicalOrganization",
+                "name": "Moonshot Medical and Performance"
             }
         }
     }
@@ -116,6 +125,36 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "url": "https://moonshotmp.com/",
+        "telephone": "+18474960777",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0111,
+            "longitude": -87.8406
+        },
+        "areaServed": [
+            "Park Ridge, IL", "Des Plaines, IL", "Niles, IL",
+            "Edison Park, Chicago", "Norwood Park, Chicago", "Rosemont, IL",
+            "Morton Grove, IL", "Glenview, IL", "Skokie, IL",
+            "Mount Prospect, IL", "Arlington Heights, IL"
+        ],
+        "medicalSpecialty": "Endocrinology",
+        "priceRange": "$$"
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
@@ -134,6 +173,7 @@
                         <p class="text-brand-gray text-lg font-light">
                             Know exactly what you're made of. Body fat, lean muscle by region, visceral fat, bone density—measured with medical-grade precision.
                         </p>
+                        <p class="text-brand-gray/60 text-xs mt-4">Medically reviewed by Missy Zammichieli, DNP, APRN, FNP-BC · Updated March 2, 2026</p>
                     </div>
                     <div class="aspect-[4/3] bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/dexamachine.webp" alt="DEXA body composition scanner at Moonshot Medical in Park Ridge" class="w-full h-full object-cover" width="2223" height="1572" fetchpriority="high">
@@ -357,6 +397,7 @@
                     <a href="/learn/dexa-scan-for-weight-loss/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">DEXA for Weight Loss &rarr;</a>
                     <a href="/medical/weight-loss/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Weight Loss Programs &rarr;</a>
                     <a href="/learn/sample-dexa-report/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Sample Report Walkthrough &rarr;</a>
+                    <a href="/blood-work/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Blood Work Overview &rarr;</a>
                 </div>
             </div>
         </section>
