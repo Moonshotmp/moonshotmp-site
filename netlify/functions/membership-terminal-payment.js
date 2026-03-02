@@ -36,7 +36,10 @@ export default async (req) => {
   if (!patient_id || !type) {
     return json(400, { error: "patient_id and type required" });
   }
-  const hasDiscount = discount_code?.toLowerCase() === 'family';
+  const VALID_CODES = { family: 20, employee: 40 };
+  const normalizedCode = discount_code?.toLowerCase();
+  const discountPercent = VALID_CODES[normalizedCode] || 0;
+  const hasDiscount = discountPercent > 0;
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const db = getSupabase();
@@ -66,8 +69,8 @@ export default async (req) => {
     }
 
     const baseAmount = type === "membership" ? 285 : 100; // $2.85 membership, $1 labs for testing
-    const amount = hasDiscount ? Math.round(baseAmount * 0.6) : baseAmount;
-    const discountLabel = hasDiscount ? " (Family Discount)" : "";
+    const amount = hasDiscount ? Math.round(baseAmount * (1 - discountPercent / 100)) : baseAmount;
+    const discountLabel = hasDiscount ? ` (${normalizedCode.charAt(0).toUpperCase() + normalizedCode.slice(1)} Discount)` : "";
     const description = type === "membership"
       ? `Hormone Therapy Membership - First Month${discountLabel}`
       : `Comprehensive Blood Work${discountLabel}`;
@@ -82,7 +85,7 @@ export default async (req) => {
       description: `${description} - Moonshot Medical`,
       metadata: {
         supabase_patient_id: patient.id,
-        type: hasDiscount ? `${type}_family` : type,
+        type: hasDiscount ? `${type}_${normalizedCode}` : type,
       },
     });
 

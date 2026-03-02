@@ -43,8 +43,11 @@ export default async (req) => {
     return json(400, { error: "patient_id and payment_method_id required" });
   }
   const BASE_AMOUNT = 285; // $2.85 for testing
-  const hasDiscount = discount_code?.toLowerCase() === 'family';
-  const amountCents = hasDiscount ? Math.round(BASE_AMOUNT * 0.6) : BASE_AMOUNT;
+  const VALID_CODES = { family: 20, employee: 40 };
+  const normalizedCode = discount_code?.toLowerCase();
+  const discountPercent = VALID_CODES[normalizedCode] || 0;
+  const hasDiscount = discountPercent > 0;
+  const amountCents = hasDiscount ? Math.round(BASE_AMOUNT * (1 - discountPercent / 100)) : BASE_AMOUNT;
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const db = getSupabase();
@@ -101,7 +104,7 @@ export default async (req) => {
       default_payment_method: payment_method_id,
       metadata: {
         supabase_patient_id: patient.id,
-        plan_type: hasDiscount ? "hormone_therapy_family" : "hormone_therapy",
+        plan_type: hasDiscount ? `hormone_therapy_${normalizedCode}` : "hormone_therapy",
       },
     });
 
@@ -116,7 +119,7 @@ export default async (req) => {
     await db.from("memberships").insert({
       patient_id: patient.id,
       stripe_subscription_id: subscription.id,
-      plan_type: hasDiscount ? "hormone_therapy_family" : "hormone_therapy",
+      plan_type: hasDiscount ? `hormone_therapy_${normalizedCode}` : "hormone_therapy",
       amount_cents: amountCents,
       status: subscription.status,
       current_period_start: periodStart,
