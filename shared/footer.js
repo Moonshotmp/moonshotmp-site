@@ -17,7 +17,7 @@
     const footerHTML = `
     <footer class="bg-black border-t border-white/10 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-4 gap-8">
                 <!-- Brand -->
                 <div>
                     <a href="/" class="flex items-center gap-2 mb-2">
@@ -27,6 +27,25 @@
                     <p class="text-brand-gray text-xs mt-2">
                         542 Busse Hwy, Park Ridge, IL 60068
                     </p>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">RESOURCES</h3>
+                    <div class="space-y-2 text-sm">
+                        <p class="text-brand-gray">
+                            <a href="/blood-work/" class="hover:text-brand-light transition py-2 inline-block">Blood Work Guide</a>
+                        </p>
+                        <p class="text-brand-gray">
+                            <a href="/medical/blood-panels/" class="hover:text-brand-light transition py-2 inline-block">Blood Panels</a>
+                        </p>
+                        <p class="text-brand-gray">
+                            <a href="/medical/dexa-scan/" class="hover:text-brand-light transition py-2 inline-block">DEXA Scans</a>
+                        </p>
+                        <p class="text-brand-gray">
+                            <a href="/learn/" class="hover:text-brand-light transition py-2 inline-block">All Articles</a>
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Contact -->

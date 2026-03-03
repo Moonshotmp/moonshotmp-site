@@ -14,6 +14,8 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 /services/performance-medicine/ /medical/ 301
 /membership/ /booking/ 301
 /learn/menopause-guide/ /learn/menopause-perimenopause/ 301
+/learn/understanding-blood-results /blood-work/ 301
+/learn/understanding-blood-results/ /blood-work/ 301
 
 # Billing redirect to clinic app
 /billing https://moonshot.moonshotclinic.com/billing/ 301!

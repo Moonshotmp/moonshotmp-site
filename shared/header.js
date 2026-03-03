@@ -53,6 +53,7 @@
                 <div class="py-2">
                   <a href="/medical/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">Overview</a>
                   <a href="/medical/blood-panels/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Blood Panels</a>
+                  <a href="/blood-work/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Blood Work Guide</a>
                   <a href="/medical/dexa-scan/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">DEXA Scan</a>
                   <a href="/medical/mens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Men's Hormones</a>
                   <a href="/medical/tadalafil/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Daily Tadalafil</a>
@@ -130,6 +131,7 @@
                   <!-- Diagnostics Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Diagnostics</span>
+                    <a href="/blood-work/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Blood Work Guide</a>
                     <a href="/learn/optimal-vs-normal/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Optimal vs Normal Ranges</a>
                     <a href="/learn/understanding-blood-results/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Understanding Blood Results</a>
                     <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">DEXA vs InBody</a>
@@ -207,6 +209,7 @@
             <div id="mobile-medical-submenu" class="bg-black/20 hidden">
               <a href="/medical/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Overview</a>
               <a href="/medical/blood-panels/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Panels</a>
+              <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Work Guide</a>
               <a href="/medical/dexa-scan/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA Scan</a>
               <a href="/medical/mens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Men's Hormones</a>
               <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
@@ -266,6 +269,7 @@
               <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Injections</a>
               <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
               <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Diagnostics —</span>
+              <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Work Guide</a>
               <a href="/learn/optimal-vs-normal/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Optimal vs Normal Ranges</a>
               <a href="/learn/understanding-blood-results/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Understanding Blood Results</a>
               <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA vs InBody</a>
