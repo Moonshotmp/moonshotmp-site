@@ -32,7 +32,8 @@ export const PRODUCTS = {
 };
 
 export const DISCOUNTS = {
-  family: { code: 'family', percent: 40, appliesToRecurring: true, appliesToOneTime: false, appliesToCodes: ['blood_panel'] },
+  family: { code: 'family', percent: 20, appliesToRecurring: true, appliesToOneTime: false, appliesToCodes: ['blood_panel'] },
+  employee: { code: 'employee', percent: 40, appliesToRecurring: true, appliesToOneTime: false, appliesToCodes: ['blood_panel'] },
 };
 
 // Get all products as flat array

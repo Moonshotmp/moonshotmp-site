@@ -37,8 +37,11 @@ export default async (req) => {
     return json(400, { error: "patient_id and payment_method_id required" });
   }
   const BASE_AMOUNT = 100; // $1 for testing
-  const hasDiscount = discount_code?.toLowerCase() === 'family';
-  const amountCents = hasDiscount ? Math.round(BASE_AMOUNT * 0.6) : BASE_AMOUNT;
+  const VALID_CODES = { family: 20, employee: 40 };
+  const normalizedCode = discount_code?.toLowerCase();
+  const discountPercent = VALID_CODES[normalizedCode] || 0;
+  const hasDiscount = discountPercent > 0;
+  const amountCents = hasDiscount ? Math.round(BASE_AMOUNT * (1 - discountPercent / 100)) : BASE_AMOUNT;
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const db = getSupabase();
@@ -86,10 +89,10 @@ export default async (req) => {
         enabled: true,
         allow_redirects: "never",
       },
-      description: hasDiscount ? "Comprehensive Blood Work (Family Discount) - Moonshot Medical" : "Comprehensive Blood Work - Moonshot Medical",
+      description: hasDiscount ? `Comprehensive Blood Work (${normalizedCode.charAt(0).toUpperCase() + normalizedCode.slice(1)} Discount) - Moonshot Medical` : "Comprehensive Blood Work - Moonshot Medical",
       metadata: {
         supabase_patient_id: patient.id,
-        type: hasDiscount ? "lab_work_family" : "lab_work",
+        type: hasDiscount ? `lab_work_${normalizedCode}` : "lab_work",
       },
     });
 
@@ -98,8 +101,8 @@ export default async (req) => {
       await db.from("payments").insert({
         patient_id: patient.id,
         stripe_payment_intent_id: paymentIntent.id,
-        type: hasDiscount ? "lab_work_family" : "lab_work",
-        description: hasDiscount ? "Comprehensive Blood Work (Family Discount)" : "Comprehensive Blood Work",
+        type: hasDiscount ? `lab_work_${normalizedCode}` : "lab_work",
+        description: hasDiscount ? `Comprehensive Blood Work (${normalizedCode.charAt(0).toUpperCase() + normalizedCode.slice(1)} Discount)` : "Comprehensive Blood Work",
         amount_cents: amountCents,
         status: "succeeded",
       });

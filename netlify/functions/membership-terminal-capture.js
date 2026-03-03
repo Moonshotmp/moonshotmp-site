@@ -36,7 +36,10 @@ export default async (req) => {
   if (!payment_intent_id || !patient_id || !type) {
     return json(400, { error: "payment_intent_id, patient_id, and type required" });
   }
-  const hasDiscount = discount_code?.toLowerCase() === 'family';
+  const VALID_CODES = { family: 20, employee: 40 };
+  const normalizedCode = discount_code?.toLowerCase();
+  const discountPercent = VALID_CODES[normalizedCode] || 0;
+  const hasDiscount = discountPercent > 0;
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const db = getSupabase();
@@ -49,9 +52,9 @@ export default async (req) => {
     }
 
     // Record payment
-    const discountLabel = hasDiscount ? " (Family Discount)" : "";
+    const discountLabel = hasDiscount ? ` (${normalizedCode.charAt(0).toUpperCase() + normalizedCode.slice(1)} Discount)` : "";
     const paymentType = hasDiscount
-      ? (type === "membership" ? "membership_family" : "lab_work_family")
+      ? (type === "membership" ? `membership_${normalizedCode}` : `lab_work_${normalizedCode}`)
       : (type === "membership" ? "membership" : "lab_work");
     await db.from("payments").insert({
       patient_id,
@@ -105,9 +108,9 @@ export default async (req) => {
 
             // Get price
             const baseAmount = 285; // $2.85 for testing
-            const amountCents = hasDiscount ? Math.round(baseAmount * 0.6) : baseAmount;
-            const priceId = await getOrCreatePrice(stripe, amountCents, hasDiscount);
-            const planType = hasDiscount ? "hormone_therapy_family" : "hormone_therapy";
+            const amountCents = hasDiscount ? Math.round(baseAmount * (1 - discountPercent / 100)) : baseAmount;
+            const priceId = await getOrCreatePrice(stripe, amountCents, normalizedCode);
+            const planType = hasDiscount ? `hormone_therapy_${normalizedCode}` : "hormone_therapy";
 
             // Create subscription starting next month (first month already paid via terminal)
             const trialEnd = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60; // ~30 days
@@ -152,8 +155,8 @@ export default async (req) => {
   }
 };
 
-async function getOrCreatePrice(stripe, amountCents, hasDiscount) {
-  const productType = hasDiscount ? "hrt_membership_family" : "hrt_membership";
+async function getOrCreatePrice(stripe, amountCents, discountCode) {
+  const productType = discountCode ? `hrt_membership_${discountCode}` : "hrt_membership";
   const products = await stripe.products.search({
     query: `metadata['moonshot_type']:'${productType}'`,
   });
@@ -162,9 +165,10 @@ async function getOrCreatePrice(stripe, amountCents, hasDiscount) {
     const matchingPrice = prices.data.find(p => p.unit_amount === amountCents);
     if (matchingPrice) return matchingPrice.id;
   }
+  const label = discountCode ? discountCode.charAt(0).toUpperCase() + discountCode.slice(1) : null;
   const product = products.data.length > 0 ? products.data[0] : await stripe.products.create({
-    name: hasDiscount ? "Hormone Therapy Membership (Family)" : "Hormone Therapy Membership",
-    description: hasDiscount ? "Family discount membership - Moonshot Medical" : "Monthly membership - Moonshot Medical + Performance",
+    name: label ? `Hormone Therapy Membership (${label})` : "Hormone Therapy Membership",
+    description: label ? `${label} discount membership - Moonshot Medical` : "Monthly membership - Moonshot Medical + Performance",
     metadata: { moonshot_type: productType },
   });
   const price = await stripe.prices.create({

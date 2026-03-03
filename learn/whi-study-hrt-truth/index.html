@@ -27,13 +27,13 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "MedicalWebPage"],
         "headline": "HRT Myths vs Facts: The Women's Health Initiative Study Revisited",
         "description": "An evidence-based look at what the WHI study actually showed about hormone replacement therapy, and how the findings were misinterpreted.",
         "url": "https://moonshotmp.com/learn/whi-study-hrt-truth/",
         "image": "https://moonshotmp.com/images/hrt-plan.webp",
         "datePublished": "2025-01-15",
-        "dateModified": "2025-01-31",
+        "dateModified": "2026-03-02",
         "author": {
             "@type": "Person",
             "name": "Moonshot Medical Team",
@@ -45,6 +45,15 @@
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://moonshotmp.com/images/moonshotmptan.png"
+            }
+        },
+        "reviewedBy": {
+            "@type": "Person",
+            "name": "Missy Zammichieli, DNP, APRN, FNP-BC",
+            "jobTitle": "Board-Certified Family Nurse Practitioner",
+            "worksFor": {
+                "@type": "MedicalOrganization",
+                "name": "Moonshot Medical and Performance"
             }
         }
     }
@@ -108,6 +117,36 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "url": "https://moonshotmp.com/",
+        "telephone": "+18474960777",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0111,
+            "longitude": -87.8406
+        },
+        "areaServed": [
+            "Park Ridge, IL", "Des Plaines, IL", "Niles, IL",
+            "Edison Park, Chicago", "Norwood Park, Chicago", "Rosemont, IL",
+            "Morton Grove, IL", "Glenview, IL", "Skokie, IL",
+            "Mount Prospect, IL", "Arlington Heights, IL"
+        ],
+        "medicalSpecialty": "Endocrinology",
+        "priceRange": "$$"
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
@@ -126,6 +165,7 @@
                         <p class="text-brand-gray text-lg font-light">
                             In 2002, the Women's Health Initiative study created a generation of fear around hormone replacement therapy. Here's what actually happened—and what the science shows now.
                         </p>
+                        <p class="text-brand-gray/60 text-xs mt-4">Medically reviewed by Missy Zammichieli, DNP, APRN, FNP-BC · Updated March 2, 2026</p>
                     </div>
                     <div class="aspect-[4/3] bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/hrt-plan.webp" alt="Hormone therapy plan" class="w-full h-full object-cover" width="2000" height="1155" fetchpriority="high">
@@ -389,6 +429,7 @@
                     <a href="/medical/womens-hormones/" class="bg-white/5 px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Women's Hormone Services →</a>
                     <a href="/learn/estrogen-dominance/" class="bg-white/5 px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Estrogen Dominance →</a>
                     <a href="/learn/progesterone/" class="bg-white/5 px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Progesterone: The Forgotten Hormone →</a>
+                    <a href="/blood-work/hormones-endocrine/" class="bg-white/5 px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Hormones & Endocrine Guide →</a>
                 </div>
             </div>
         </section>
@@ -398,7 +439,7 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-4xl font-bold text-brand-light mb-6">READY TO HAVE AN INFORMED CONVERSATION?</h2>
                 <p class="text-xl text-brand-gray font-light mb-10">
-                    We'll review your symptoms, history, and labs—and discuss whether HRT makes sense for you.
+                    We'll review your symptoms, history, and <a href="/blood-work/" class="text-brand-gray underline decoration-brand-gray/30 hover:decoration-brand-gray transition-colors">labs</a>—and discuss whether HRT makes sense for you.
                 </p>
                 <a href="/booking/" class="btn-primary text-lg px-8 py-4">Book Consultation</a>
             </div>

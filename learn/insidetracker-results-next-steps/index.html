@@ -27,13 +27,13 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "MedicalWebPage"],
         "headline": "You Got Your InsideTracker Results — Now What?",
         "description": "InsideTracker gives you data and an InnerAge score, but not a physician. Here's what to actually do with your blood work results and why supplements alone aren't enough.",
         "url": "https://moonshotmp.com/learn/insidetracker-results-next-steps/",
         "image": "https://moonshotmp.com/images/insidetracker-bloodvials.webp",
         "datePublished": "2026-02-09",
-        "dateModified": "2026-02-09",
+        "dateModified": "2026-03-02",
         "author": {
             "@type": "Person",
             "name": "Tom Kashul",
@@ -45,6 +45,15 @@
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://moonshotmp.com/images/moonshotmptan.png"
+            }
+        },
+        "reviewedBy": {
+            "@type": "Person",
+            "name": "Missy Zammichieli, DNP, APRN, FNP-BC",
+            "jobTitle": "Board-Certified Family Nurse Practitioner",
+            "worksFor": {
+                "@type": "MedicalOrganization",
+                "name": "Moonshot Medical and Performance"
             }
         }
     }
@@ -108,6 +117,36 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "url": "https://moonshotmp.com/",
+        "telephone": "+18474960777",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0111,
+            "longitude": -87.8406
+        },
+        "areaServed": [
+            "Park Ridge, IL", "Des Plaines, IL", "Niles, IL",
+            "Edison Park, Chicago", "Norwood Park, Chicago", "Rosemont, IL",
+            "Morton Grove, IL", "Glenview, IL", "Skokie, IL",
+            "Mount Prospect, IL", "Arlington Heights, IL"
+        ],
+        "medicalSpecialty": "Endocrinology",
+        "priceRange": "$$"
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
@@ -126,6 +165,7 @@
                 <p class="text-brand-gray text-lg md:text-xl font-light max-w-2xl mx-auto">
                     Data without a doctor is just numbers on a screen. Here's what to actually do with your blood work.
                 </p>
+                <p class="text-brand-gray/60 text-xs mt-4">Medically reviewed by Missy Zammichieli, DNP, APRN, FNP-BC · Updated March 2, 2026</p>
             </div>
         </section>
 
@@ -484,6 +524,10 @@
                             <p class="text-brand-gray text-sm font-light">The complete panel we recommend and why each marker matters.</p>
                         </div>
                     </a>
+                </div>
+
+                <div class="flex flex-wrap gap-4 mt-8">
+                    <a href="/blood-work/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Understanding Your Blood Work &rarr;</a>
                 </div>
             </div>
         </section>

@@ -27,13 +27,13 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "MedicalWebPage"],
         "headline": "Sample DEXA Report Walkthrough: Every Page Explained",
         "description": "A page-by-page walkthrough of a Moonshot Medical DEXA body composition report using a sample patient. Learn exactly what you get and what every metric means.",
         "url": "https://moonshotmp.com/learn/sample-dexa-report/",
         "image": "https://moonshotmp.com/images/dexareport.webp",
         "datePublished": "2026-02-26",
-        "dateModified": "2026-02-26",
+        "dateModified": "2026-03-02",
         "author": {
             "@type": "Person",
             "name": "Moonshot Medical Team",
@@ -45,6 +45,15 @@
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://moonshotmp.com/images/moonshotmptan.png"
+            }
+        },
+        "reviewedBy": {
+            "@type": "Person",
+            "name": "Missy Zammichieli, DNP, APRN, FNP-BC",
+            "jobTitle": "Board-Certified Family Nurse Practitioner",
+            "worksFor": {
+                "@type": "MedicalOrganization",
+                "name": "Moonshot Medical and Performance"
             }
         }
     }
@@ -100,6 +109,36 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "url": "https://moonshotmp.com/",
+        "telephone": "+18474960777",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 42.0111,
+            "longitude": -87.8406
+        },
+        "areaServed": [
+            "Park Ridge, IL", "Des Plaines, IL", "Niles, IL",
+            "Edison Park, Chicago", "Norwood Park, Chicago", "Rosemont, IL",
+            "Morton Grove, IL", "Glenview, IL", "Skokie, IL",
+            "Mount Prospect, IL", "Arlington Heights, IL"
+        ],
+        "medicalSpecialty": "Endocrinology",
+        "priceRange": "$$"
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
@@ -118,6 +157,7 @@
                         <p class="text-brand-gray text-lg font-light mb-6">
                             Every page of your Moonshot Medical DEXA report, explained with a real sample patient &mdash; so you know exactly what you'll get and what each number means.
                         </p>
+                        <p class="text-brand-gray/60 text-xs mt-4 mb-6">Medically reviewed by Missy Zammichieli, DNP, APRN, FNP-BC · Updated March 2, 2026</p>
                         <a href="/docs/sample-dexa-report.pdf" target="_blank" class="inline-block bg-white/10 border border-white/20 text-brand-light px-6 py-3 text-sm hover:bg-white/20 transition">Download Sample Report (PDF) &darr;</a>
                     </div>
                     <div class="aspect-[4/3] bg-brand-slate rounded-sm overflow-hidden">
@@ -647,6 +687,7 @@
                     <a href="/learn/dexa-scan-for-weight-loss/" class="bg-white/10 border border-white/20 px-6 py-3 text-brand-light text-sm hover:bg-white/20 transition">DEXA for Weight Loss Tracking &rarr;</a>
                     <a href="/learn/dexa-scan-vs-bod-pod/" class="bg-white/10 border border-white/20 px-6 py-3 text-brand-light text-sm hover:bg-white/20 transition">DEXA vs Bod Pod &rarr;</a>
                     <a href="/docs/sample-dexa-report.pdf" target="_blank" class="bg-white/10 border border-white/20 px-6 py-3 text-brand-light text-sm hover:bg-white/20 transition">Download Sample Report (PDF) &darr;</a>
+                    <a href="/blood-work/" class="bg-white/10 border border-white/20 px-6 py-3 text-brand-light text-sm hover:bg-white/20 transition">Understanding Your Blood Work &rarr;</a>
                 </div>
             </div>
         </section>
