@@ -6,6 +6,9 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://moonshotmp.com/partners/setup.html" />
   <title>Partner Store Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/partners/styles.css" />
   <style>
     .stepper { display: flex; gap: 0; margin-bottom: 2rem; overflow: hidden; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
@@ -38,10 +41,10 @@
 
       <!-- Progress Stepper -->
       <div class="stepper" id="stepper">
-        <div class="step-item active" data-step="1"><span class="step-num">1</span>Business Info</div>
-        <div class="step-item" data-step="2"><span class="step-num">2</span>Connect Stripe</div>
-        <div class="step-item" data-step="3"><span class="step-num">3</span>Add Billing Card</div>
-        <div class="step-item" data-step="4"><span class="step-num">4</span>Done</div>
+        <div class="step-item active" data-step="1"><span class="step-num">1</span><span class="step-label">Business Info</span></div>
+        <div class="step-item" data-step="2"><span class="step-num">2</span><span class="step-label">Set Up Payouts</span></div>
+        <div class="step-item" data-step="3"><span class="step-num">3</span><span class="step-label">Wholesale Card</span></div>
+        <div class="step-item" data-step="4"><span class="step-num">4</span><span class="step-label">Done</span></div>
       </div>
 
       <!-- Step 1: Business Info -->
@@ -53,6 +56,9 @@
             Business name
             <input id="name" name="name" placeholder="e.g. Acme Wellness Clinic" required />
           </label>
+          <div class="store-link-callout" id="storeLinkCallout" style="display: none; margin-bottom: 1rem;">
+            Your store will be at: <code id="store-link-preview"></code>
+          </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
             <label>
@@ -70,7 +76,7 @@
             <input id="email" name="email" type="email" placeholder="jane@acmewellness.com" required />
           </label>
 
-          <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Business Address</h3>
+          <h3 class="form-section-divider" style="font-size: 1.1rem;">Business Address</h3>
 
           <label>
             Street address
@@ -84,51 +90,59 @@
             </label>
             <label>
               State
-              <input id="state" name="state" placeholder="TX" maxlength="2" required style="text-transform: uppercase;" />
+              <select id="state" name="state" required>
+                <option value="" disabled selected>ST</option>
+                <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option>
+                <option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option>
+                <option value="DC">DC</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option>
+                <option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option>
+                <option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option>
+                <option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option>
+                <option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option>
+                <option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option>
+                <option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option>
+                <option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option>
+                <option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option>
+                <option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option>
+                <option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
+              </select>
             </label>
             <label>
               ZIP
-              <input id="zip" name="zip" placeholder="78701" required />
+              <input id="zip" name="zip" placeholder="78701" required inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" />
             </label>
           </div>
 
-          <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Business Logo <span style="font-weight: normal; opacity: 0.6;">(optional)</span></h3>
-          <div style="display: flex; align-items: flex-start; gap: 1rem;">
-            <div style="flex: 1;">
-              <label style="margin-bottom: 0;">
-                Upload your business logo
-                <input id="logo" name="logo" type="file" accept="image/*" style="padding: 0.75rem; background: rgba(255,255,255,0.05);" />
-              </label>
-              <div class="muted" style="margin-top: 0.5rem; font-size: 0.85rem;">
-                Any image format. Will be automatically resized.
-              </div>
+          <h3 class="form-section-divider" style="font-size: 1.1rem;">Business Logo <span style="font-weight: normal; opacity: 0.6;">(optional)</span></h3>
+          <input id="logo" name="logo" type="file" accept="image/*" style="display: none;" />
+          <div class="logo-dropzone" id="logoDropzone">
+            <div id="dropzone-content">
+              <div style="font-size: 24px; margin-bottom: 6px;">&#128247;</div>
+              Click to upload your logo
+              <div class="dropzone-hint">Any image format. Will be automatically resized.</div>
             </div>
-            <div id="logo-preview" style="display: none; width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.1); flex-shrink: 0;">
-              <img id="logo-preview-img" style="width: 100%; height: 100%; object-fit: contain;" alt="Logo preview" />
+            <div id="logo-preview" style="display: none;">
+              <img id="logo-preview-img" style="max-width: 120px; max-height: 120px; object-fit: contain; margin: 0 auto; border-radius: 6px;" alt="Logo preview" />
             </div>
           </div>
 
           <div class="terms-check">
             <input type="checkbox" id="termsCheck" />
-            <label for="termsCheck">I agree to the <a href="/partners/terms.html" target="_blank">Wholesale Partner Terms</a></label>
+            <label for="termsCheck">I agree to the <a href="/partners/terms.html" target="_blank">Wholesale Partner Terms</a> &mdash; no long-term commitment, cancel anytime.</label>
           </div>
 
-          <div style="margin-top: 0.5rem; opacity: 0.9;">
-            Store link: <span id="store-link-preview"></span>
+          <div style="margin-top: 1.25rem;">
+            <button type="submit" class="btn-primary" id="createBtn" style="width: 100%;">Create Store</button>
           </div>
 
-          <div style="display:flex; gap: 10px; margin-top: 1.25rem; align-items:center;">
-            <button type="submit" class="btn-primary" id="createBtn">Create Store</button>
-          </div>
-
-          <pre id="status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+          <div class="form-feedback" id="status" role="alert" aria-live="polite"></div>
         </form>
       </div>
 
       <!-- Step 2: Connect Stripe -->
       <div class="step-panel" id="step2">
         <div class="card" style="padding: 1.5rem;">
-          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Connect Stripe</h3>
+          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Set Up Payouts</h3>
           <p class="muted" style="margin-bottom: 1rem;">Connect your Stripe account to accept payments from customers on your store.</p>
 
           <div class="connect-status" id="stripeStatus">
@@ -140,7 +154,7 @@
             <button class="btn-outline" id="skipStripeBtn" type="button">Skip for now</button>
           </div>
 
-          <pre id="step2Status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+          <div class="form-feedback" id="step2Status" role="alert" aria-live="polite"></div>
           <button class="step-back" id="back2to1" type="button">&larr; Back to Business Info</button>
         </div>
       </div>
@@ -148,7 +162,7 @@
       <!-- Step 3: Add Billing Card -->
       <div class="step-panel" id="step3">
         <div class="card" style="padding: 1.5rem;">
-          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Add Billing Card</h3>
+          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Wholesale Card</h3>
           <div class="muted" style="margin-bottom: 1rem;">
             Add a card for wholesale diagnostic costs. When a patient buys through your store, we charge your card the wholesale cost — you keep the retail margin.
           </div>
@@ -161,8 +175,8 @@
 
           <button class="btn-outline" id="skipBillingBtn" type="button" style="margin-top: 8px;">Skip for now</button>
 
-          <pre id="step3Status" style="white-space:pre-wrap;margin-top:16px;"></pre>
-          <button class="step-back" id="back3to2" type="button">&larr; Back to Stripe</button>
+          <div class="form-feedback" id="step3Status" role="alert" aria-live="polite"></div>
+          <button class="step-back" id="back3to2" type="button">&larr; Back to Set Up Payouts</button>
         </div>
       </div>
 
@@ -173,9 +187,22 @@
           <h3 style="margin-bottom: 1rem; color: #4ade80;">Your store is set up!</h3>
           <p class="muted" style="margin-bottom: 1.5rem;">Share your store link with clients to start earning.</p>
 
+          <div id="stripeWarning" style="display: none; background: rgba(250,204,21,0.08); border: 1px solid rgba(250,204,21,0.25); border-radius: 6px; padding: 12px 16px; margin-bottom: 1rem; color: #facc15; font-size: 13px; text-align: left;">
+            Your store can't accept payments yet. Go back to Set Up Payouts to connect Stripe.
+          </div>
+
           <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 16px; margin-bottom: 1.5rem;">
             <div class="muted" style="font-size: 12px; margin-bottom: 4px;">Your Store URL</div>
-            <div id="finalStoreUrl" style="font-family: var(--font-heading); font-size: 14px; word-break: break-all;"></div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <div id="finalStoreUrl" style="font-family: var(--font-heading); font-size: 14px; word-break: break-all;"></div>
+              <button class="btn-outline" id="copyLinkBtn" type="button" style="font-size: 13px; padding: 6px 16px;">Copy Link</button>
+            </div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 16px; margin-bottom: 1.5rem; text-align: left;">
+            <div class="muted" style="font-size: 12px; margin-bottom: 8px;">Share this with your first client:</div>
+            <div id="smsTemplate" style="font-size: 14px; line-height: 1.5;"></div>
+            <button class="btn-outline" id="copySmsBtn" type="button" style="font-size: 12px; padding: 4px 12px; margin-top: 8px;">Copy Text</button>
           </div>
 
           <div id="marginPreview" style="margin-bottom: 1.5rem;"></div>
@@ -202,6 +229,19 @@
     let cardElement = null;
     let billingClientSecret = null;
     let logoDataUrl = null;
+    let submitting = false;
+
+    // XSS helper
+    function escapeHtml(str) { return String(str||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    // Stripe.js race condition helper
+    async function waitForStripe(maxWait = 5000) {
+      const start = Date.now();
+      while (typeof Stripe === 'undefined' && Date.now() - start < maxWait) {
+        await new Promise(r => setTimeout(r, 200));
+      }
+      return typeof Stripe !== 'undefined';
+    }
 
     const PROGRESS_KEY = 'ms_partner_setup';
 
@@ -237,6 +277,8 @@
         el.classList.toggle('active', el.id === 'step' + step);
       });
       saveProgress();
+      // Focus management for accessibility
+      setTimeout(() => { const h = document.querySelector('#step' + step + ' h3'); if (h) { h.setAttribute('tabindex', '-1'); h.focus(); } }, 100);
     }
 
     // Stepper click navigation — allow clicking completed steps
@@ -271,7 +313,28 @@
 
     nameEl.addEventListener("input", () => {
       const slug = slugify(nameEl.value);
-      linkPreviewEl.textContent = slug ? `${window.location.origin}/partners/${slug}` : "";
+      const callout = document.getElementById("storeLinkCallout");
+      if (slug) {
+        linkPreviewEl.textContent = `${window.location.origin}/partners/${slug}`;
+        callout.style.display = "block";
+      } else {
+        linkPreviewEl.textContent = "";
+        callout.style.display = "none";
+      }
+    });
+
+    // Phone auto-format
+    document.getElementById("phone").addEventListener("input", function(e) {
+      let digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+      if (digits.length >= 7) digits = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+      else if (digits.length >= 4) digits = '(' + digits.slice(0,3) + ') ' + digits.slice(3);
+      else if (digits.length > 0) digits = '(' + digits;
+      e.target.value = digits;
+    });
+
+    // Logo dropzone click handler
+    document.getElementById("logoDropzone").addEventListener("click", () => {
+      document.getElementById("logo").click();
     });
 
     // Logo compression with EXIF rotation handling
@@ -295,6 +358,7 @@
       var file = e.target.files[0];
       logoDataUrl = null;
       document.getElementById("logo-preview").style.display = "none";
+      document.getElementById("dropzone-content").style.display = "block";
       if (!file) return;
       if (!file.type.startsWith("image/")) { statusEl.textContent = "Please select an image file."; e.target.value = ""; return; }
       if (file.size > 10 * 1024 * 1024) { statusEl.textContent = "File too large. Maximum 10MB."; e.target.value = ""; return; }
@@ -302,6 +366,7 @@
         logoDataUrl = result;
         document.getElementById("logo-preview-img").src = result;
         document.getElementById("logo-preview").style.display = "block";
+        document.getElementById("dropzone-content").style.display = "none";
       }).catch(function() { alert("Failed to process image."); e.target.value = ""; });
     });
 
@@ -309,6 +374,7 @@
 
     document.getElementById("partner-form").addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (submitting) return;
       statusEl.textContent = "";
 
       // If store already created, just advance to step 2
@@ -341,6 +407,7 @@
 
       if (logoDataUrl) payload.logo_data_url = logoDataUrl;
 
+      submitting = true;
       try {
         statusEl.textContent = "Creating store...";
         document.getElementById("createBtn").disabled = true;
@@ -367,20 +434,47 @@
       } catch (err) {
         statusEl.textContent = err.message || "Failed to create store";
         document.getElementById("createBtn").disabled = false;
+      } finally {
+        submitting = false;
       }
     });
 
     // Show step 1 in "already created" mode
-    function showStep1Created() {
+    async function showStep1Created() {
       document.getElementById("createBtn").textContent = "Continue to Step 2";
       document.getElementById("termsCheck").checked = true;
       document.getElementById("termsCheck").disabled = true;
       statusEl.textContent = "Store already created (" + createdSlug + "). Click continue or use the steps above to navigate.";
+
+      // Populate form fields from API
+      if (PartnerAPI.isLoggedIn()) {
+        try {
+          const meRes = await PartnerAPI.apiGet('/api/partners/me');
+          if (meRes.ok) {
+            const meData = await meRes.json();
+            const p = meData.partner;
+            if (p) {
+              document.getElementById("name").value = p.businessName || p.name || '';
+              document.getElementById("contactName").value = p.contactName || '';
+              document.getElementById("phone").value = p.phone || '';
+              document.getElementById("email").value = p.email || '';
+              document.getElementById("street").value = p.address?.street || '';
+              document.getElementById("city").value = p.address?.city || '';
+              document.getElementById("state").value = p.address?.state || '';
+              document.getElementById("zip").value = p.address?.zip || '';
+            }
+          }
+        } catch {}
+      }
+
       // Disable form fields since store already exists
       ["name", "contactName", "phone", "email", "street", "city", "state", "zip", "logo"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.disabled = true;
       });
+      // Also disable the dropzone visually
+      const dz = document.getElementById("logoDropzone");
+      if (dz) { dz.style.opacity = '0.5'; dz.style.pointerEvents = 'none'; }
     }
 
     // --- Step 2: Connect Stripe ---
@@ -457,7 +551,9 @@
           return;
         }
       }
-      if (typeof Stripe === 'undefined' || !STRIPE_PUBLISHABLE_KEY) return;
+      // Wait for Stripe.js to load (async script)
+      const stripeLoaded = await waitForStripe(5000);
+      if (!stripeLoaded || !STRIPE_PUBLISHABLE_KEY) return;
       stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
       stripeElements = stripeInstance.elements();
       cardElement = stripeElements.create("card", {
@@ -470,6 +566,8 @@
       cardElement.on("change", (ev) => {
         document.getElementById("card-errors").textContent = ev.error ? ev.error.message : "";
       });
+      // Disconnect observer once Stripe is initialized
+      observer.disconnect();
     }
 
     document.getElementById("saveBillingBtn").addEventListener("click", async () => {
@@ -508,7 +606,7 @@
 
       } catch (err) {
         document.getElementById("step3Status").textContent = err.message || "Failed to save card";
-        billingClientSecret = null;
+        // Do NOT null billingClientSecret on error — lets user retry with same SetupIntent
       } finally {
         btn.disabled = false;
         btn.textContent = "Save Payment Method";
@@ -527,6 +625,44 @@
       document.getElementById("finalStoreUrl").textContent = storeUrl;
       document.getElementById("viewStoreLink").href = storeUrl;
 
+      // SMS share template
+      const smsText = `Hey! I've partnered with Moonshot Medical for DEXA body scans and bloodwork. Book yours here: ${storeUrl}`;
+      document.getElementById("smsTemplate").textContent = smsText;
+
+      // Copy Link button
+      document.getElementById("copyLinkBtn").addEventListener("click", () => {
+        const btn = document.getElementById("copyLinkBtn");
+        navigator.clipboard.writeText(storeUrl).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy Link', 2000);
+        });
+      });
+
+      // Copy SMS button
+      document.getElementById("copySmsBtn").addEventListener("click", () => {
+        const btn = document.getElementById("copySmsBtn");
+        navigator.clipboard.writeText(smsText).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy Text', 2000);
+        });
+      });
+
+      // Check if Stripe is not connected — show warning
+      if (createdSlug) {
+        try {
+          const statusRes = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(createdSlug)}`, { skipAuthRedirect: true });
+          const statusData = await statusRes.json();
+          if (!statusData.onboarded) {
+            document.getElementById("stripeWarning").style.display = "block";
+          } else {
+            document.getElementById("stripeWarning").style.display = "none";
+          }
+        } catch {
+          // If we can't check, show warning to be safe
+          document.getElementById("stripeWarning").style.display = "block";
+        }
+      }
+
       // Load margin preview
       try {
         const res = await PartnerAPI.apiGet('/api/partners/catalog', { skipAuthRedirect: true });
@@ -536,14 +672,18 @@
           if (products.length > 0) {
             document.getElementById("marginPreview").innerHTML = `
               <h4 style="font-size: 14px; margin-bottom: 8px;">Your Margins</h4>
+              <div style="overflow-x: auto;">
               <table style="width:100%; border-collapse:collapse; font-size:13px;">
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">PRODUCT</th><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">RETAIL</th><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">WHOLESALE</th><th style="text-align:left;padding:6px 8px;color:#888;font-size:11px;">YOUR MARGIN</th></tr>
-                ${products.map(p => `<tr><td style="padding:6px 8px;">${p.name}</td><td style="padding:6px 8px;">$${(p.priceCents/100).toFixed(0)}</td><td style="padding:6px 8px;">$${(p.wholesalePriceCents/100).toFixed(0)}</td><td style="padding:6px 8px;color:#4ade80;font-weight:600;">$${((p.priceCents-p.wholesalePriceCents)/100).toFixed(0)}</td></tr>`).join('')}
+                ${products.map(p => `<tr><td style="padding:6px 8px;">${escapeHtml(p.name)}</td><td style="padding:6px 8px;">$${(p.priceCents/100).toFixed(0)}</td><td style="padding:6px 8px;">$${(p.wholesalePriceCents/100).toFixed(0)}</td><td style="padding:6px 8px;color:#4ade80;font-weight:600;">$${((p.priceCents-p.wholesalePriceCents)/100).toFixed(0)}</td></tr>`).join('')}
               </table>
+              </div>
               <p style="font-size:11px;color:#888;margin-top:6px;">Your margin stays the same even if we run promos.</p>`;
           }
         }
       } catch {}
+
+      clearProgress();
     }
 
     // --- Resolve current step from API status ---
@@ -586,7 +726,7 @@
 
       if (resumeSlug) {
         createdSlug = resumeSlug;
-        showStep1Created();
+        await showStep1Created();
 
         // Resolve actual step from API
         const resolvedStep = await resolveStep(resumeSlug);

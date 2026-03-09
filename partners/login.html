@@ -6,7 +6,31 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://moonshotmp.com/partners/login.html" />
   <title>Partner Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/partners/styles.css" />
+  <style>
+    input:not([type="checkbox"]):not([type="file"]) {
+      display: block;
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: var(--color-brand-light, #F0EEE9);
+      padding: 12px 14px;
+      font-size: 16px;
+      font-family: var(--font-body, 'Poppins', sans-serif);
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      border-color: rgba(255,255,255,0.4);
+      outline: none;
+    }
+    input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+  </style>
 </head>
 <body>
   <main class="container" style="max-width:760px;">
@@ -21,8 +45,8 @@
       <div id="loginForm">
         <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
           <label style="display:flex; flex-direction:column; gap:6px;">
-            Store ID
-            <input id="slug" placeholder="e.g. tommy-k-fitness" />
+            Store name
+            <input id="slug" placeholder="Your store name" />
           </label>
 
           <label style="display:flex; flex-direction:column; gap:6px;">
@@ -41,7 +65,7 @@
         </div>
 
         <div class="muted" style="font-size:13px; margin-top:10px;">
-          If the email matches the store owner email, you'll receive a sign-in link.
+          If the email matches your partner account, you'll receive a sign-in link.
         </div>
       </div>
 
@@ -115,7 +139,7 @@
     const slug = (slugEl.value || "").trim().toLowerCase();
     const email = (emailEl.value || "").trim();
     if (!slug || !email) {
-      statusEl.textContent = "Enter Store ID + Email.";
+      statusEl.textContent = "Enter your store name and email.";
       return;
     }
 

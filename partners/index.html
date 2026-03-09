@@ -57,6 +57,11 @@
       color: var(--color-brand-dark);
       font-weight: bold;
     }
+
+    @media (max-width: 768px) {
+      .sticky-cta { display: block !important; }
+      footer { padding-bottom: 80px !important; }
+    }
   </style>
 </head>
 
@@ -85,13 +90,14 @@
     <section class="section section-dark bg-texture">
       <div class="container">
         <div style="max-width: 800px;">
-          <h1>Partner Diagnostic Access</h1>
-          <p class="lead">Offer Moonshot diagnostics inside your programs — without buying equipment.</p>
+          <h1>Add a Revenue Stream. No Equipment Required.</h1>
+          <p class="lead">Offer DEXA scans and bloodwork through your own branded storefront. Wholesale pricing, full medical oversight, zero equipment.</p>
 
           <div style="margin: 2rem 0; display: flex; gap: 1rem; flex-wrap: wrap;">
             <a href="./setup.html" class="btn-primary">Set up my storefront</a>
             <a href="#how-it-works" class="btn-outline">How it works</a>
           </div>
+          <p class="muted" style="font-size: 0.85rem; margin-top: 1rem;">Free to set up. No monthly fees. No minimums. Cancel anytime.</p>
 
           <!-- Trust Strip -->
           <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 4rem; gap: 1rem;">
@@ -195,8 +201,29 @@
             </p>
           </div>
 
+          <div style="margin-top: 2rem;">
+            <h3 style="font-size: 1rem; margin-bottom: 1rem;">Example Margins</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:14px;">
+              <thead>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+                  <th style="text-align:left; padding:10px 12px; color:#888; font-size:11px; text-transform:uppercase; letter-spacing:0.05em;">Service</th>
+                  <th style="text-align:left; padding:10px 12px; color:#888; font-size:11px; text-transform:uppercase; letter-spacing:0.05em;">Retail</th>
+                  <th style="text-align:left; padding:10px 12px; color:#888; font-size:11px; text-transform:uppercase; letter-spacing:0.05em;">Your Cost</th>
+                  <th style="text-align:left; padding:10px 12px; color:#888; font-size:11px; text-transform:uppercase; letter-spacing:0.05em;">Your Margin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:10px 12px;">DEXA Body Scan</td><td style="padding:10px 12px;">$200</td><td style="padding:10px 12px;">$120</td><td style="padding:10px 12px; color:#4ade80; font-weight:600;">$80</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:10px 12px;">Bloodwork Panel</td><td style="padding:10px 12px;">$350</td><td style="padding:10px 12px;">$200</td><td style="padding:10px 12px; color:#4ade80; font-weight:600;">$150</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:10px 12px;">Follow-up DEXA</td><td style="padding:10px 12px;">$150</td><td style="padding:10px 12px;">$90</td><td style="padding:10px 12px; color:#4ade80; font-weight:600;">$60</td></tr>
+                <tr><td style="padding:10px 12px;">InBody Scan</td><td style="padding:10px 12px;">$50</td><td style="padding:10px 12px;">$25</td><td style="padding:10px 12px; color:#4ade80; font-weight:600;">$25</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:12px; color:#666; margin-top:8px;">Illustrative pricing. Actual wholesale rates shown in your partner dashboard.</p>
+          </div>
+
           <p class="muted" style="font-size: 0.85rem;">
-            <strong style="color: var(--color-brand-light);">Example:</strong> A client pays $200 retail for a DEXA scan on your storefront. That $200 goes to your Stripe. After the scan is complete, Moonshot charges your card the wholesale rate. You keep the difference as margin for offering the service inside your program.
+            <strong style="color: var(--color-brand-light);">Example:</strong> A client pays $200 retail for a DEXA scan on your storefront. That $200 goes to your Stripe. After the scan is complete, Moonshot charges your card $120 wholesale. You keep the $80 margin.
           </p>
         </div>
       </div>
@@ -215,7 +242,7 @@
             <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
               Medical-grade body fat, lean mass, and bone density analysis. Far more accurate than InBody or calipers.
             </p>
-            <span class="badge">Retail price set by Moonshot</span>
+            <span class="badge">$200 retail</span>
           </div>
 
           <div class="tile">
@@ -224,7 +251,7 @@
             <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
               Comprehensive panels looking at metabolic health, hormones, lipids, and inflammation markers.
             </p>
-            <span class="badge">Retail price set by Moonshot</span>
+            <span class="badge">$350 retail</span>
           </div>
 
           <div class="tile">
@@ -233,7 +260,7 @@
             <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
               Validate your programming effectiveness with objective data points at the end of your program.
             </p>
-            <span class="badge">Retail price set by Moonshot</span>
+            <span class="badge">$150 retail</span>
           </div>
 
           <div class="tile">
@@ -242,13 +269,10 @@
             <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">
               Quick bioimpedance analysis for more frequent check-ins between major DEXA scans.
             </p>
-            <span class="badge">Retail price set by Moonshot</span>
+            <span class="badge">$50 retail</span>
           </div>
         </div>
 
-        <div style="margin-top: 3rem; text-align: center;">
-          <a href="/partners/demo" class="btn-outline">View Storefront Example</a>
-        </div>
       </div>
     </section>
 
@@ -318,10 +342,14 @@
         <div class="divider" style="width: 100%; margin: 2rem 0;"></div>
 
         <div class="muted" style="font-size: 0.75rem;">
-          &copy; 2025 Moonshot Medical and Performance. All Rights Reserved.
+          &copy; 2026 Moonshot Medical and Performance. All Rights Reserved.
         </div>
       </div>
     </div>
   </footer>
+
+  <div class="sticky-cta" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:999; padding:12px 16px; background:rgba(16,25,33,0.97); border-top:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(8px); text-align:center;">
+    <a href="./setup.html" class="btn-primary" style="width:100%; max-width:400px; display:inline-block;">Set Up My Storefront</a>
+  </div>
 </body>
 </html>

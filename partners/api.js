@@ -30,10 +30,14 @@ function isLoggedIn() {
 async function apiFetch(path, options = {}) {
   const url = `${API_BASE}${path}`;
   const headers = {
-    'Content-Type': 'application/json',
     'X-Tenant-Slug': TENANT_SLUG,
     ...(options.headers || {}),
   };
+
+  // Only set Content-Type for requests with a body
+  if (options.body) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   const token = getToken();
   if (token) {

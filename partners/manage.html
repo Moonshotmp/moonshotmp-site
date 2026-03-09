@@ -6,6 +6,9 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://moonshotmp.com/partners/manage.html" />
   <title>Manage Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/partners/styles.css" />
   <style>
     .status { margin-top: 14px; white-space: pre-wrap; }
@@ -48,6 +51,15 @@
   </style>
 </head>
 <body>
+
+<nav class="nav" aria-label="Primary" style="position:relative; height:auto; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+  <div class="container" style="max-width:700px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <a href="/partners/" style="font-family:var(--font-heading); font-size:0.85rem; letter-spacing:0.05em; color:var(--color-brand-light, #F0EEE9); text-decoration:none;">MOONSHOT PARTNERS</a>
+      <a href="#" id="viewStoreNav" class="muted" style="font-size:13px;">View Store</a>
+    </div>
+  </div>
+</nav>
 
   <div class="container" style="max-width: 700px;">
     <h1>Manage Your Store</h1>
@@ -115,6 +127,7 @@
       <div class="form-group">
         <label>Your Store URL</label>
         <input type="text" id="storeUrl" readonly />
+        <button type="button" class="btn-outline" id="copyUrlBtn" style="margin-top: 8px; font-size: 13px; padding: 6px 16px;">Copy URL</button>
       </div>
 
       <div class="logo-section">
@@ -440,6 +453,25 @@
   }
 
   function wireUpButtons(p) {
+    // Set store nav link
+    const storeNav = document.getElementById('viewStoreNav');
+    if (storeNav) storeNav.href = '/partners/' + p.slug;
+
+    // Copy URL
+    document.getElementById('copyUrlBtn').addEventListener('click', function() {
+      const url = document.getElementById('storeUrl').value;
+      navigator.clipboard.writeText(url).then(() => {
+        this.textContent = 'Copied!';
+        setTimeout(() => { this.textContent = 'Copy URL'; }, 2000);
+      }).catch(() => {
+        // Fallback for older browsers
+        document.getElementById('storeUrl').select();
+        document.execCommand('copy');
+        this.textContent = 'Copied!';
+        setTimeout(() => { this.textContent = 'Copy URL'; }, 2000);
+      });
+    });
+
     // View Store
     document.getElementById('viewStoreBtn').onclick = function() {
       window.open('/partners/' + p.slug, '_blank');
