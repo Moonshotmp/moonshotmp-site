@@ -454,17 +454,10 @@ textarea::placeholder {
 
 label {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 6px;
   color: var(--color-text-muted);
   font-size: 13px;
   font-weight: 500;
-}
-
-label input,
-label select,
-label textarea {
-  display: block;
-  margin-top: 6px;
 }
 
 select {
@@ -477,6 +470,29 @@ select {
   cursor: pointer;
 }
 
+.form-field {
+  margin-bottom: 1.25rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row .form-field {
+  margin-bottom: 1.25rem;
+}
+
+.form-row-address {
+  grid-template-columns: 2fr 0.8fr 1fr;
+}
+
 .form-feedback {
   white-space: pre-wrap;
   margin-top: 16px;
@@ -486,8 +502,9 @@ select {
 
 .form-section-divider {
   border-top: 1px solid rgba(255,255,255,0.08);
-  padding-top: 1.5rem;
-  margin-top: 1.5rem;
+  padding-top: 0;
+  margin-top: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .logo-dropzone {
@@ -544,10 +561,13 @@ select {
     font-size: 1rem;
   }
 
-  .form-grid-2,
-  [style*="grid-template-columns: 1fr 1fr"],
-  [style*="grid-template-columns: 2fr 1fr 1fr"] {
+  .form-row,
+  .form-row-address {
     grid-template-columns: 1fr !important;
+  }
+
+  .form-row .form-field {
+    flex: unset !important;
   }
 
   .card .btn-primary,

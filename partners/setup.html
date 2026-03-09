@@ -49,47 +49,48 @@
 
       <!-- Step 1: Business Info -->
       <div class="step-panel active" id="step1">
-        <form id="partner-form" class="card" style="padding: 1.5rem;">
-          <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Business Information</h3>
+        <form id="partner-form" class="card" style="padding: 2rem;">
+          <h3 style="margin-bottom: 1.25rem; font-size: 1.1rem;">Business Information</h3>
 
-          <label>
-            Business name
+          <div class="form-field">
+            <label for="name">Business name</label>
             <input id="name" name="name" placeholder="e.g. Acme Wellness Clinic" required />
-          </label>
+          </div>
           <div class="store-link-callout" id="storeLinkCallout" style="display: none; margin-bottom: 1rem;">
             Your store will be at: <code id="store-link-preview"></code>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-            <label>
-              Contact name
-              <input id="contactName" name="contactName" placeholder="Dr. Jane Smith" required />
-            </label>
-            <label>
-              Phone number
+          <div class="form-row">
+            <div class="form-field">
+              <label for="contactName">Contact name</label>
+              <input id="contactName" name="contactName" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-field">
+              <label for="phone">Phone number</label>
               <input id="phone" name="phone" type="tel" placeholder="(555) 123-4567" required />
-            </label>
+            </div>
           </div>
 
-          <label>
-            Contact email
+          <div class="form-field">
+            <label for="email">Contact email</label>
             <input id="email" name="email" type="email" placeholder="jane@acmewellness.com" required />
-          </label>
+          </div>
 
-          <h3 class="form-section-divider" style="font-size: 1.1rem;">Business Address</h3>
+          <div class="form-section-divider"></div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 1.25rem;">Business Address</h3>
 
-          <label>
-            Street address
+          <div class="form-field">
+            <label for="street">Street address</label>
             <input id="street" name="street" placeholder="123 Main Street, Suite 100" required />
-          </label>
+          </div>
 
-          <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
-            <label>
-              City
-              <input id="city" name="city" placeholder="Austin" required />
-            </label>
-            <label>
-              State
+          <div class="form-row form-row-address">
+            <div class="form-field" style="flex: 2;">
+              <label for="city">City</label>
+              <input id="city" name="city" placeholder="Park Ridge" required />
+            </div>
+            <div class="form-field" style="flex: 0.8;">
+              <label for="state">State</label>
               <select id="state" name="state" required>
                 <option value="" disabled selected>ST</option>
                 <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option>
@@ -106,20 +107,26 @@
                 <option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option>
                 <option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
               </select>
-            </label>
-            <label>
-              ZIP
-              <input id="zip" name="zip" placeholder="78701" required inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" />
-            </label>
+            </div>
+            <div class="form-field" style="flex: 1;">
+              <label for="zip">ZIP</label>
+              <input id="zip" name="zip" placeholder="60068" required inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" />
+            </div>
           </div>
 
-          <h3 class="form-section-divider" style="font-size: 1.1rem;">Business Logo <span style="font-weight: normal; opacity: 0.6;">(optional)</span></h3>
+          <div class="form-section-divider"></div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Business Logo <span style="font-weight: normal; opacity: 0.5; font-size: 0.85em;">(optional)</span></h3>
+          <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 1rem;">Shown on your storefront. You can add this later from your dashboard.</p>
           <input id="logo" name="logo" type="file" accept="image/*" style="display: none;" />
           <div class="logo-dropzone" id="logoDropzone">
             <div id="dropzone-content">
-              <div style="font-size: 24px; margin-bottom: 6px;">&#128247;</div>
-              Click to upload your logo
-              <div class="dropzone-hint">Any image format. Will be automatically resized.</div>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.4; margin-bottom: 8px;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <div>Upload logo</div>
+              <div class="dropzone-hint">PNG or JPG, max 10 MB</div>
             </div>
             <div id="logo-preview" style="display: none;">
               <img id="logo-preview-img" style="max-width: 120px; max-height: 120px; object-fit: contain; margin: 0 auto; border-radius: 6px;" alt="Logo preview" />
@@ -128,7 +135,7 @@
 
           <div class="terms-check">
             <input type="checkbox" id="termsCheck" />
-            <label for="termsCheck">I agree to the <a href="/partners/terms.html" target="_blank">Wholesale Partner Terms</a> &mdash; no long-term commitment, cancel anytime.</label>
+            <label for="termsCheck" style="margin-bottom: 0;">I agree to the <a href="/partners/terms.html" target="_blank">Wholesale Partner Terms</a> &mdash; no long-term commitment, cancel anytime.</label>
           </div>
 
           <div style="margin-top: 1.25rem;">
