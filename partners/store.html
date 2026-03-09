@@ -1255,14 +1255,16 @@
 
       // Update partner login link
       if (slug) {
-        document.getElementById('partnerLoginLink').href = `/partners/login.html?slug=${encodeURIComponent(slug)}`;
+        const loginLink = document.getElementById('partnerLoginLink');
+        if (loginLink) loginLink.href = `/partners/login.html?slug=${encodeURIComponent(slug)}`;
 
-        // Update SEO meta tags with partner-specific info
-        document.getElementById('canonicalLink').href = `https://moonshotmp.com/partners/${encodeURIComponent(slug)}`;
-        document.getElementById('pageTitle').textContent = `${partner ? partner.name + ' × ' : ''}Moonshot Diagnostics — DEXA Scans & Blood Work`;
-        if (partner) {
-          document.getElementById('metaDescription').content = `Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through ${partner.name}. Powered by Moonshot Medical Performance.`;
-        }
+        // Update SEO meta tags (IDs may be stripped by edge function for partner slugs)
+        const canonEl = document.getElementById('canonicalLink');
+        const titleEl = document.getElementById('pageTitle');
+        const descEl = document.getElementById('metaDescription');
+        if (canonEl) canonEl.href = `https://moonshotmp.com/partners/${encodeURIComponent(slug)}`;
+        if (titleEl) titleEl.textContent = `${partner ? partner.name + ' \u00d7 ' : ''}Moonshot Diagnostics — DEXA Scans & Blood Work`;
+        if (partner && descEl) descEl.content = `Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through ${partner.name}. Powered by Moonshot Medical Performance.`;
       }
 
       try {
