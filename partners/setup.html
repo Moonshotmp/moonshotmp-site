@@ -12,8 +12,11 @@
     .step-item { flex: 1; padding: 14px 12px; text-align: center; font-size: 13px; font-weight: 500; background: rgba(255,255,255,0.02); color: #666; border-right: 1px solid rgba(255,255,255,0.08); position: relative; transition: all 0.3s; }
     .step-item:last-child { border-right: none; }
     .step-item.active { background: rgba(255,255,255,0.06); color: var(--color-brand-light, #F0EEE9); }
-    .step-item.done { background: rgba(74, 222, 128, 0.08); color: #4ade80; }
+    .step-item.done { background: rgba(74, 222, 128, 0.08); color: #4ade80; cursor: pointer; }
+    .step-item.done:hover { background: rgba(74, 222, 128, 0.14); }
     .step-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.1); font-size: 11px; font-weight: 700; margin-right: 6px; }
+    .step-back { color: #888; font-size: 13px; cursor: pointer; border: none; background: none; padding: 0; text-decoration: underline; margin-top: 12px; display: inline-block; }
+    .step-back:hover { color: var(--color-brand-light, #F0EEE9); }
     .step-item.active .step-num { background: rgba(255,255,255,0.15); }
     .step-item.done .step-num { background: rgba(74, 222, 128, 0.2); }
     .step-panel { display: none; }
@@ -132,10 +135,13 @@
             <div class="connect-waiting">Stripe not yet connected</div>
           </div>
 
-          <button class="btn-primary" id="connectStripeBtn" type="button">Connect Stripe</button>
-          <button class="btn-outline" id="skipStripeBtn" type="button" style="margin-left: 8px;">Skip for now</button>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <button class="btn-primary" id="connectStripeBtn" type="button">Connect Stripe</button>
+            <button class="btn-outline" id="skipStripeBtn" type="button">Skip for now</button>
+          </div>
 
           <pre id="step2Status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+          <button class="step-back" id="back2to1" type="button">&larr; Back to Business Info</button>
         </div>
       </div>
 
@@ -156,6 +162,7 @@
           <button class="btn-outline" id="skipBillingBtn" type="button" style="margin-top: 8px;">Skip for now</button>
 
           <pre id="step3Status" style="white-space:pre-wrap;margin-top:16px;"></pre>
+          <button class="step-back" id="back3to2" type="button">&larr; Back to Stripe</button>
         </div>
       </div>
 
@@ -188,6 +195,7 @@
     let STRIPE_PUBLISHABLE_KEY = null;
 
     let currentStep = 1;
+    let highestStep = 1;  // tracks furthest step reached (for stepper clickability)
     let createdSlug = null;
     let stripeInstance = null;
     let stripeElements = null;
@@ -195,9 +203,31 @@
     let billingClientSecret = null;
     let logoDataUrl = null;
 
+    const PROGRESS_KEY = 'ms_partner_setup';
+
+    // --- Progress persistence ---
+    function saveProgress() {
+      if (!createdSlug) return;
+      try {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify({ slug: createdSlug, highestStep }));
+      } catch {}
+    }
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(PROGRESS_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch { return null; }
+    }
+
+    function clearProgress() {
+      try { localStorage.removeItem(PROGRESS_KEY); } catch {}
+    }
+
     // --- Stepper ---
     function goToStep(step) {
       currentStep = step;
+      if (step > highestStep) highestStep = step;
       document.querySelectorAll('.step-item').forEach(el => {
         const s = parseInt(el.dataset.step);
         el.classList.toggle('active', s === step);
@@ -206,7 +236,26 @@
       document.querySelectorAll('.step-panel').forEach(el => {
         el.classList.toggle('active', el.id === 'step' + step);
       });
+      saveProgress();
     }
+
+    // Stepper click navigation — allow clicking completed steps
+    document.getElementById('stepper').addEventListener('click', (e) => {
+      const item = e.target.closest('.step-item');
+      if (!item) return;
+      const target = parseInt(item.dataset.step);
+      if (target === currentStep) return;
+      // Can go back to any completed step, or forward up to highestStep
+      if (!createdSlug) return; // must complete step 1 first
+      if (target >= 1 && target <= highestStep) {
+        goToStep(target);
+        if (target === 4) showFinalStep();
+      }
+    });
+
+    // Back buttons
+    document.getElementById('back2to1').addEventListener('click', () => goToStep(1));
+    document.getElementById('back3to2').addEventListener('click', () => goToStep(2));
 
     // --- Step 1: Business Info ---
     const nameEl = document.getElementById("name");
@@ -262,6 +311,12 @@
       e.preventDefault();
       statusEl.textContent = "";
 
+      // If store already created, just advance to step 2
+      if (createdSlug) {
+        goToStep(2);
+        return;
+      }
+
       if (!document.getElementById("termsCheck").checked) {
         statusEl.textContent = "Please accept the Wholesale Partner Terms.";
         return;
@@ -301,13 +356,12 @@
 
         createdSlug = data.slug;
 
-        // Now request a magic link so the partner gets a login token
-        await PartnerAPI.apiPost("/api/partners/auth/request", {
-          slug: createdSlug,
-          email: payload.email
-        }, { skipAuthRedirect: true });
+        // Auto-login with the session token returned from setup
+        if (data.sessionToken) {
+          PartnerAPI.setToken(data.sessionToken);
+        }
 
-        statusEl.textContent = "Store created! Check your email for a login link, then proceed to Step 2.";
+        statusEl.textContent = "Store created!";
         goToStep(2);
 
       } catch (err) {
@@ -316,10 +370,23 @@
       }
     });
 
+    // Show step 1 in "already created" mode
+    function showStep1Created() {
+      document.getElementById("createBtn").textContent = "Continue to Step 2";
+      document.getElementById("termsCheck").checked = true;
+      document.getElementById("termsCheck").disabled = true;
+      statusEl.textContent = "Store already created (" + createdSlug + "). Click continue or use the steps above to navigate.";
+      // Disable form fields since store already exists
+      ["name", "contactName", "phone", "email", "street", "city", "state", "zip", "logo"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = true;
+      });
+    }
+
     // --- Step 2: Connect Stripe ---
     document.getElementById("connectStripeBtn").addEventListener("click", async () => {
       if (!PartnerAPI.isLoggedIn()) {
-        document.getElementById("step2Status").textContent = "Please check your email for the login link first, then come back to this page.";
+        document.getElementById("step2Status").textContent = "Session not found. Please check your email for the login link, or go back and re-create your store.";
         return;
       }
 
@@ -346,18 +413,33 @@
 
     document.getElementById("skipStripeBtn").addEventListener("click", () => goToStep(3));
 
+    // Update step 2 UI based on Stripe status
+    function updateStripeUI(onboarded) {
+      if (onboarded) {
+        document.getElementById("stripeStatus").innerHTML = '<div class="connect-done">Stripe connected!</div>';
+        document.getElementById("connectStripeBtn").style.display = "none";
+        document.getElementById("skipStripeBtn").textContent = "Continue";
+      } else {
+        document.getElementById("stripeStatus").innerHTML = '<div class="connect-waiting">Stripe not yet connected</div>';
+        document.getElementById("connectStripeBtn").style.display = "inline-block";
+        document.getElementById("connectStripeBtn").disabled = false;
+        document.getElementById("connectStripeBtn").textContent = "Connect Stripe";
+        document.getElementById("skipStripeBtn").textContent = "Skip for now";
+      }
+    }
+
     // Check Stripe status on return from onboarding
     async function checkStripeStatus() {
       if (!createdSlug) return;
       try {
         const res = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(createdSlug)}`, { skipAuthRedirect: true });
         const data = await res.json();
-        if (data.onboarded) {
-          document.getElementById("stripeStatus").innerHTML = '<div class="connect-done">Stripe connected!</div>';
-          document.getElementById("connectStripeBtn").style.display = "none";
+        updateStripeUI(data.onboarded);
+        if (data.onboarded && currentStep === 2) {
           goToStep(3);
         }
-      } catch {}
+        return data;
+      } catch { return null; }
     }
 
     window.addEventListener("focus", checkStripeStatus);
@@ -464,56 +546,74 @@
       } catch {}
     }
 
-    // --- Init: check URL params to resume flow ---
+    // --- Resolve current step from API status ---
+    async function resolveStep(slug) {
+      let stripeOnboarded = false;
+      let hasBilling = false;
+
+      try {
+        const statusRes = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(slug)}`, { skipAuthRedirect: true });
+        const statusData = await statusRes.json();
+        stripeOnboarded = !!statusData.onboarded;
+      } catch {}
+
+      if (PartnerAPI.isLoggedIn()) {
+        try {
+          const meRes = await PartnerAPI.apiGet('/api/partners/me');
+          if (meRes.ok) {
+            const meData = await meRes.json();
+            hasBilling = !!meData.partner?.billingCardLast4;
+          }
+        } catch {}
+      }
+
+      updateStripeUI(stripeOnboarded);
+
+      if (hasBilling) return 4;
+      if (stripeOnboarded) return 3;
+      return 2; // store exists, so at least step 2
+    }
+
+    // --- Init: resume from saved progress, URL params, or fresh start ---
     (async () => {
       const qs = new URL(window.location.href).searchParams;
       const returnSlug = qs.get("slug");
       const isReturn = qs.get("return") === "true";
+      const saved = loadProgress();
 
-      if (returnSlug) {
-        createdSlug = returnSlug;
+      // Determine slug from URL params or saved progress
+      const resumeSlug = returnSlug || (saved ? saved.slug : null);
 
-        // Check if Stripe is connected (return from Stripe onboarding)
+      if (resumeSlug) {
+        createdSlug = resumeSlug;
+        showStep1Created();
+
+        // Resolve actual step from API
+        const resolvedStep = await resolveStep(resumeSlug);
+
+        // Use the highest of resolved step and saved step
+        const targetStep = Math.max(resolvedStep, isReturn ? resolvedStep : (saved ? saved.highestStep : 2));
+        highestStep = targetStep;
+
+        // If returning from Stripe, go to the resolved step
+        // Otherwise go to the step they were last on (or resolved, whichever is appropriate)
         if (isReturn) {
-          try {
-            const statusRes = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(returnSlug)}`, { skipAuthRedirect: true });
-            const statusData = await statusRes.json();
-            if (statusData.onboarded) {
-              // Check billing via authenticated endpoint
-              let hasBilling = false;
-              if (PartnerAPI.isLoggedIn()) {
-                try {
-                  const meRes = await PartnerAPI.apiGet('/api/partners/me');
-                  if (meRes.ok) {
-                    const meData = await meRes.json();
-                    hasBilling = !!meData.partner?.billingCardLast4;
-                  }
-                } catch {}
-              }
-              if (hasBilling) {
-                goToStep(4);
-                showFinalStep();
-              } else {
-                goToStep(3);
-                initBillingStripe();
-              }
-              return;
-            }
-          } catch {}
-          goToStep(2);
-          return;
+          goToStep(resolvedStep);
+        } else {
+          goToStep(Math.min(targetStep, resolvedStep));
         }
+
+        if (currentStep === 4) showFinalStep();
+        return;
       }
 
-      // If step 3 will be needed, init Stripe elements
-      // (deferred until step 3 is reached)
+      // Fresh start — step 1
     })();
 
     // Init billing Stripe when step 3 becomes active
     const observer = new MutationObserver(() => {
       if (document.getElementById('step3').classList.contains('active')) {
         initBillingStripe();
-        observer.disconnect();
       }
     });
     observer.observe(document.getElementById('step3'), { attributes: true, attributeFilter: ['class'] });
