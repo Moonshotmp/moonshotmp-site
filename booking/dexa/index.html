@@ -12,7 +12,7 @@
     <meta property="og:description" content="$150. 15 minutes. Same-day results. Book your DEXA body composition scan at Moonshot Medical in Park Ridge, IL.">
     <meta property="og:url" content="https://moonshotmp.com/booking/dexa/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://moonshotmp.com/images/dexamachine.webp">
+    <meta property="og:image" content="https://moonshotmp.com/images/dexa-hologic-front.webp">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Book a DEXA Scan | Moonshot Medical">
@@ -20,7 +20,7 @@
 
     <link rel="icon" href="/favicon.ico" sizes="any">
 
-    <link rel="preload" href="/images/dexamachine.webp" as="image">
+    <link rel="preload" href="/images/dexa-hologic-front.webp" as="image">
     <link rel="stylesheet" href="/shared/tailwind.css">
     <link rel="stylesheet" href="/shared/styles.css">
 
@@ -88,17 +88,24 @@
 
     <main class="flex-grow pt-20">
 
-        <!-- Hero -->
+        <!-- Hero with machine photo -->
         <section class="py-20 bg-brand-dark">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Moonshot Medical and Performance &middot; Park Ridge, IL</p>
-                <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6">BOOK A DEXA SCAN</h1>
-                <p class="text-brand-gray text-lg font-light max-w-2xl mx-auto mb-10">
-                    The gold standard in body composition testing. Know exactly how much muscle, fat, and bone you have — and track changes over time.
-                </p>
-                <a href="https://moonshotclinic.com/book/?flow=new-patient&slug=moonshot&service=dexa"
-                   class="btn-primary text-lg px-10 py-4 inline-block">Book Now &mdash; $150</a>
-                <p class="text-brand-gray/50 text-sm mt-4">15-minute appointment &middot; Same-day results</p>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center md:text-left">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Moonshot Medical and Performance &middot; Park Ridge, IL</p>
+                        <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6">BOOK A DEXA SCAN</h1>
+                        <p class="text-brand-gray text-lg font-light mb-8">
+                            The gold standard in body composition testing. Know exactly how much muscle, fat, and bone you have &mdash; and track changes over time.
+                        </p>
+                        <a href="https://moonshotclinic.com/book/?flow=new-patient&slug=moonshot&service=dexa"
+                           class="btn-primary text-lg px-10 py-4 inline-block">Book Now &mdash; $150</a>
+                        <p class="text-brand-gray/50 text-sm mt-4">15-minute appointment &middot; Same-day results</p>
+                    </div>
+                    <div class="aspect-[4/5] bg-brand-slate rounded-sm overflow-hidden">
+                        <img src="/images/dexa-hologic-front.webp" alt="Hologic Horizon DEXA scanner at Moonshot Medical and Performance" class="w-full h-full object-cover" width="1200" height="1500" fetchpriority="high">
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -171,41 +178,99 @@
             </div>
         </section>
 
-        <!-- How It Works -->
+        <!-- Your 8-Page Report -->
         <section class="py-16 bg-brand-dark">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-4 text-center">YOUR 8-PAGE REPORT</h2>
+                <p class="text-brand-gray font-light text-center max-w-2xl mx-auto mb-10">
+                    Every scan includes a comprehensive report. Here's what a real report looks like &mdash; from a sample patient, Jane Doe.
+                </p>
+
+                <!-- Report gallery - 2 featured pages -->
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <div class="bg-white rounded-sm overflow-hidden shadow-lg">
+                            <img src="/images/dexa-report-overview.webp" alt="DEXA report page 1: body composition overview with colormap and key metrics" class="w-full" width="800" height="1035" loading="lazy">
+                        </div>
+                        <p class="text-brand-gray text-sm mt-3 text-center">Body composition overview with colormap imaging</p>
+                    </div>
+                    <div>
+                        <div class="bg-white rounded-sm overflow-hidden shadow-lg">
+                            <img src="/images/dexa-report-scorecard.webp" alt="DEXA report page 6: scorecard showing wins and areas for attention" class="w-full" width="800" height="1035" loading="lazy">
+                        </div>
+                        <p class="text-brand-gray text-sm mt-3 text-center">Scorecard with status indicators and actionable insights</p>
+                    </div>
+                </div>
+
+                <!-- Report gallery - 4 supporting pages -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div>
+                        <div class="bg-white rounded-sm overflow-hidden shadow-md">
+                            <img src="/images/dexa-report-visceral.webp" alt="DEXA report: visceral fat assessment and population percentiles" class="w-full" width="800" height="1035" loading="lazy">
+                        </div>
+                        <p class="text-brand-gray text-xs mt-2 text-center">Visceral Fat</p>
+                    </div>
+                    <div>
+                        <div class="bg-white rounded-sm overflow-hidden shadow-md">
+                            <img src="/images/dexa-report-muscle.webp" alt="DEXA report: lean mass index, muscle health, and resting metabolic rate" class="w-full" width="800" height="1035" loading="lazy">
+                        </div>
+                        <p class="text-brand-gray text-xs mt-2 text-center">Muscle &amp; RMR</p>
+                    </div>
+                    <div>
+                        <div class="bg-white rounded-sm overflow-hidden shadow-md">
+                            <img src="/images/dexa-report-nutrition.webp" alt="DEXA report: personalized protein targets and calorie estimates" class="w-full" width="800" height="1035" loading="lazy">
+                        </div>
+                        <p class="text-brand-gray text-xs mt-2 text-center">Nutrition Targets</p>
+                    </div>
+                    <div>
+                        <div class="bg-white rounded-sm overflow-hidden shadow-md">
+                            <img src="/images/dexa-report-bone.webp" alt="DEXA report: bone mineral density and limb symmetry breakdown" class="w-full" width="800" height="1035" loading="lazy">
+                        </div>
+                        <p class="text-brand-gray text-xs mt-2 text-center">Bone &amp; Symmetry</p>
+                    </div>
+                </div>
+
+                <p class="text-center">
+                    <a href="/learn/sample-dexa-report/" class="text-brand-gray text-sm underline decoration-brand-gray/30 hover:decoration-brand-gray transition-colors">Walk through the full sample report page by page &rarr;</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-16 bg-brand-light text-brand-dark">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold text-brand-light mb-8 text-center">HOW IT WORKS</h2>
+                <h2 class="text-2xl font-bold mb-8 text-center">HOW IT WORKS</h2>
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="text-center">
-                        <div class="w-12 h-12 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-brand-light font-bold">1</span>
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="font-bold">1</span>
                         </div>
-                        <h3 class="font-bold text-brand-light mb-2">Book Online</h3>
-                        <p class="text-brand-gray text-sm font-light">Pick a time that works. No referral needed.</p>
+                        <h3 class="font-bold mb-2">Book Online</h3>
+                        <p class="text-brand-slate text-sm font-light">Pick a time that works. No referral needed.</p>
                     </div>
                     <div class="text-center">
-                        <div class="w-12 h-12 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-brand-light font-bold">2</span>
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="font-bold">2</span>
                         </div>
-                        <h3 class="font-bold text-brand-light mb-2">Get Scanned</h3>
-                        <p class="text-brand-gray text-sm font-light">7 minutes on the table. Non-invasive, minimal radiation.</p>
+                        <h3 class="font-bold mb-2">Get Scanned</h3>
+                        <p class="text-brand-slate text-sm font-light">7 minutes on the table. Non-invasive, minimal radiation.</p>
                     </div>
                     <div class="text-center">
-                        <div class="w-12 h-12 bg-brand-slate rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-brand-light font-bold">3</span>
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="font-bold">3</span>
                         </div>
-                        <h3 class="font-bold text-brand-light mb-2">Get Your Report</h3>
-                        <p class="text-brand-gray text-sm font-light">Detailed results same day. We walk you through every metric.</p>
+                        <h3 class="font-bold mb-2">Get Your Report</h3>
+                        <p class="text-brand-slate text-sm font-light">Detailed results same day. We walk you through every metric.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Prep -->
-        <section class="py-12 bg-brand-light text-brand-dark border-b border-brand-slate/10">
+        <section class="py-12 bg-brand-dark border-t border-white/10">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-xl font-bold mb-4 text-center">BEFORE YOUR SCAN</h2>
-                <ul class="text-brand-slate text-sm font-light space-y-2 max-w-lg mx-auto">
+                <h2 class="text-xl font-bold text-brand-light mb-4 text-center">BEFORE YOUR SCAN</h2>
+                <ul class="text-brand-gray text-sm font-light space-y-2 max-w-lg mx-auto">
                     <li>&#8226; Avoid eating or drinking for 2 hours before your scan</li>
                     <li>&#8226; Wear comfortable clothing without metal (no zippers or underwire)</li>
                     <li>&#8226; Remove jewelry</li>
@@ -215,7 +280,7 @@
         </section>
 
         <!-- CTA -->
-        <section class="py-20 bg-brand-dark text-center">
+        <section class="py-20 bg-brand-dark text-center border-t border-white/10">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-brand-light mb-4">STOP GUESSING</h2>
                 <p class="text-brand-gray text-lg font-light mb-8">Get precise data on your body composition.</p>
