@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coalition × Moonshot Medical — Mobile Blood Draw Event</title>
+    <meta name="description" content="Exclusive blood testing event for Coalition members. Discounted packages starting at $125. Licensed medical staff on-site. Results reviewed by a board-certified provider.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glass-card:hover {
+            border-color: rgba(178, 191, 190, 0.25);
+        }
+        .strike {
+            text-decoration: line-through;
+            opacity: 0.45;
+        }
+        .badge-save {
+            background: linear-gradient(135deg, #B2BFBE 0%, #8fa3a2 100%);
+            color: #101921;
+        }
+        .hero-gradient {
+            background: linear-gradient(180deg, #101921 0%, #1a2730 50%, #2C353E 100%);
+        }
+        .co-brand-divider {
+            width: 2px;
+            height: 2.5rem;
+            background: rgba(178, 191, 190, 0.3);
+        }
+        .btn-coming-soon {
+            background-color: var(--brand-gray);
+            color: var(--brand-dark);
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 0.875rem 2.5rem;
+            display: inline-block;
+            text-decoration: none;
+            cursor: default;
+            border: none;
+            opacity: 0.7;
+            position: relative;
+        }
+        .pulse-dot {
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <script src="/shared/header.js" defer></script>
+
+    <main class="flex-grow pt-20">
+
+        <!-- Hero -->
+        <section class="hero-gradient py-20 md:py-28">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+                <!-- Co-Brand Logos -->
+                <div class="flex items-center justify-center gap-5 mb-10">
+                    <!-- Moonshot Logo (text) -->
+                    <div>
+                        <p class="text-brand-light font-bold text-lg tracking-wider" style="font-family: 'Oswald', sans-serif;">MOONSHOT</p>
+                        <p class="text-brand-gray text-[10px] uppercase tracking-[0.2em]">Medical & Performance</p>
+                    </div>
+                    <div class="co-brand-divider"></div>
+                    <!-- Coalition Logo (placeholder) -->
+                    <div>
+                        <p class="text-brand-light font-bold text-lg tracking-wider" style="font-family: 'Oswald', sans-serif;">COALITION</p>
+                        <p class="text-brand-gray text-[10px] uppercase tracking-[0.2em]">Gym</p>
+                    </div>
+                </div>
+
+                <p class="text-brand-gray text-xs uppercase tracking-[0.25em] mb-4">Exclusive Member Event</p>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-light mb-6">MOBILE BLOOD DRAW<br>AT COALITION</h1>
+                <p class="text-brand-gray text-lg md:text-xl font-light max-w-2xl mx-auto mb-4">
+                    Comprehensive blood testing brought directly to your gym. Licensed medical staff, 60+ biomarkers, and a one-on-one provider consultation — all at a discounted rate for Coalition members.
+                </p>
+
+                <!-- Date Badge -->
+                <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-sm px-5 py-3 mt-4 mb-8">
+                    <span class="pulse-dot w-2 h-2 bg-brand-gray rounded-full inline-block"></span>
+                    <span class="text-brand-light font-bold text-sm tracking-wide" style="font-family: 'Oswald', sans-serif;">SPRING 2026 — DATE COMING SOON</span>
+                </div>
+
+                <div class="block">
+                    <a href="#packages" class="btn-primary text-lg px-8 py-4">View Packages</a>
+                </div>
+
+                <p class="text-brand-gray/50 text-xs mt-8">All results reviewed by Missy Zammichieli, DNP, APRN, FNP-BC — Board-Certified Family Nurse Practitioner</p>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-16 bg-brand-slate">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-10 text-center">HOW IT WORKS</h2>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+                        <h3 class="font-bold text-brand-light mb-2">Pick a Package</h3>
+                        <p class="text-brand-gray text-sm font-light">Choose from three options below. All include a provider follow-up.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+                        <h3 class="font-bold text-brand-light mb-2">Sign Up & Prepay</h3>
+                        <p class="text-brand-gray text-sm font-light">Book your slot online. Quick intake form, payment handled upfront.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+                        <h3 class="font-bold text-brand-light mb-2">Show Up Fasted</h3>
+                        <p class="text-brand-gray text-sm font-light">Come to Coalition on event day. The draw takes about 10 minutes.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">4</div>
+                        <h3 class="font-bold text-brand-light mb-2">Get Your Results</h3>
+                        <p class="text-brand-gray text-sm font-light">Results in 3-5 business days + one-on-one consultation with a licensed provider.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages -->
+        <section id="packages" class="py-20 bg-brand-dark">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-brand-light text-center mb-3">COALITION MEMBER PRICING</h2>
+                <p class="text-brand-gray font-light text-center mb-12 max-w-2xl mx-auto">
+                    Coalition passes the partner discount directly to you. Every package includes a follow-up consultation with a licensed provider. HSA/FSA eligible.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6">
+
+                    <!-- Basic -->
+                    <div class="glass-card rounded-sm p-8 flex flex-col transition-all duration-300">
+                        <h3 class="text-2xl font-bold text-brand-light mb-2">Basic Hormone Panel</h3>
+                        <div class="flex items-baseline gap-3 mb-2">
+                            <p class="text-4xl font-bold text-brand-light">$125</p>
+                            <p class="strike text-brand-gray text-lg">$145</p>
+                        </div>
+                        <span class="badge-save text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm w-fit mb-4">Save $20</span>
+                        <p class="text-brand-gray text-xs font-light mb-4">Best for: anyone who's never had bloodwork beyond a standard physical</p>
+                        <p class="text-brand-gray text-sm font-light mb-6">
+                            Key hormone and metabolic markers — the essential screening to find out where you stand on testosterone, thyroid, cholesterol, and blood sugar.
+                        </p>
+                        <div class="border-t border-white/10 pt-6 mt-auto">
+                            <p class="text-brand-gray text-xs uppercase tracking-widest mb-3">What's Tested</p>
+                            <ul class="text-brand-gray text-sm font-light space-y-2">
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Comprehensive Metabolic Panel</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Lipid Panel <span class="text-brand-gray/50 text-xs ml-1">(cholesterol, triglycerides)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Testosterone (Total)</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Estradiol</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> FSH & LH</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> SHBG</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Progesterone <span class="text-brand-gray/50 text-xs ml-1">(women)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> PSA <span class="text-brand-gray/50 text-xs ml-1">(men)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Hemoglobin & Hematocrit <span class="text-brand-gray/50 text-xs ml-1">(men)</span></li>
+                            </ul>
+                            <p class="text-brand-gray/40 text-xs mt-4">Gender-specific panels included.</p>
+                        </div>
+                    </div>
+
+                    <!-- Comprehensive (Featured) -->
+                    <div class="glass-card rounded-sm p-8 flex flex-col transition-all duration-300 ring-1 ring-brand-gray/30">
+                        <div class="-mt-12 mb-4 bg-brand-gray text-brand-dark text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-sm w-fit">Most Popular</div>
+                        <h3 class="text-2xl font-bold text-brand-light mb-2">Comprehensive 60+ Panel</h3>
+                        <div class="flex items-baseline gap-3 mb-2">
+                            <p class="text-4xl font-bold text-brand-light">$285</p>
+                            <p class="strike text-brand-gray text-lg">$305</p>
+                        </div>
+                        <span class="badge-save text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm w-fit mb-4">Save $20</span>
+                        <p class="text-brand-gray text-xs font-light mb-4">Best for: the full picture on hormones, metabolism, heart risk, thyroid, and nutrients</p>
+                        <p class="text-brand-gray text-sm font-light mb-6">
+                            60+ biomarkers that go way beyond what your doctor typically orders. Hormones, cardiovascular risk, thyroid, inflammation, vitamins — the works.
+                        </p>
+                        <div class="border-t border-white/10 pt-6 mt-auto">
+                            <p class="text-brand-gray text-xs uppercase tracking-widest mb-3">Everything in Basic, Plus</p>
+                            <ul class="text-brand-gray text-sm font-light space-y-2">
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> CBC with Differential</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Hemoglobin A1c <span class="text-brand-gray/50 text-xs ml-1">(3-month blood sugar)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Fasting Insulin <span class="text-brand-gray/50 text-xs ml-1">(early diabetes detection)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Apolipoprotein B <span class="text-brand-gray/50 text-xs ml-1">(true heart attack risk)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Lipoprotein(a) <span class="text-brand-gray/50 text-xs ml-1">(genetic heart risk)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> hs-CRP <span class="text-brand-gray/50 text-xs ml-1">(systemic inflammation)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Free & Bioavailable Testosterone</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> DHEA Sulfate</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Full Thyroid <span class="text-brand-gray/50 text-xs ml-1">(TSH, Free T3, T4, TPO)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Vitamin D, B12, Ferritin</li>
+                            </ul>
+                            <p class="text-brand-gray/40 text-xs mt-4">22+ lab tests. Gender-specific markers included.</p>
+                        </div>
+                    </div>
+
+                    <!-- Elite -->
+                    <div class="glass-card rounded-sm p-8 flex flex-col transition-all duration-300 bg-white/[0.07]">
+                        <div class="-mt-12 mb-4 bg-brand-light text-brand-dark text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-sm w-fit">Best Value</div>
+                        <h3 class="text-2xl font-bold text-brand-light mb-2">Elite Panel + DEXA</h3>
+                        <div class="flex items-baseline gap-3 mb-2">
+                            <p class="text-4xl font-bold text-brand-light">$405</p>
+                            <p class="strike text-brand-gray text-lg">$425</p>
+                        </div>
+                        <span class="badge-save text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm w-fit mb-4">Save $20</span>
+                        <p class="text-brand-gray text-xs font-light mb-4">Best for: the complete picture — blood work + body composition</p>
+                        <p class="text-brand-gray text-sm font-light mb-6">
+                            Everything in the Comprehensive Panel, plus a DEXA body composition scan — medical-grade body fat %, lean muscle mass per limb, visceral fat, and bone density.
+                        </p>
+                        <div class="border-t border-white/10 pt-6 mt-auto">
+                            <p class="text-brand-gray text-xs uppercase tracking-widest mb-3">Everything in Comprehensive, Plus</p>
+                            <ul class="text-brand-gray text-sm font-light space-y-2">
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> DEXA Body Composition Scan</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Body Fat % (Regional & Total)</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Lean Muscle Mass (per limb)</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Visceral Adipose Tissue</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Bone Mineral Density</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Detailed PDF Report with Benchmarks</li>
+                            </ul>
+                            <p class="text-brand-gray/40 text-xs mt-4">Blood draw at Coalition. DEXA scan scheduled separately at our Park Ridge clinic.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Book Now (Coming Soon) -->
+                <div class="text-center mt-12">
+                    <a href="#" class="btn-coming-soon text-lg" onclick="return false;">Book Now — Coming Soon</a>
+                    <p class="text-brand-gray/50 text-xs mt-3">Booking link will be activated once the event date is confirmed.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Get Tested -->
+        <section class="py-20 bg-brand-slate">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-brand-light mb-4 text-center">WHY GET TESTED</h2>
+                <p class="text-brand-gray font-light text-center mb-12 max-w-2xl mx-auto">Most people train hard and eat right — but have no idea what's happening under the surface.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Why Am I Always Tired?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Thyroid dysfunction, low iron, vitamin D deficiency, and blood sugar imbalances are invisible until you test. Most standard physicals don't check.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Is My Heart Healthy?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Standard cholesterol panels miss the real risk markers. We test ApoB, Lp(a), and hs-CRP — the biomarkers that predict cardiovascular events.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Why Can't I Lose Weight?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Insulin resistance, thyroid issues, and hormone imbalances can stall progress no matter how hard you train. Blood work shows what's working against you.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Am I Actually Healthy?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Feeling fine isn't the same as being fine. We test 60+ markers across hormones, metabolism, inflammation, and nutrients — catching problems years early.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fasting Prep -->
+        <section class="py-16 bg-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-6 text-center">FASTING PREP</h2>
+                <p class="text-brand-gray font-light text-center mb-8 max-w-2xl mx-auto">
+                    Accurate results require fasting. Here's the rundown for event day.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-6 bg-white/5 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Fasting Window</p>
+                        <p class="text-3xl font-bold text-brand-light">8-12 hrs</p>
+                        <p class="text-brand-gray text-sm mt-1">Before the blood draw</p>
+                    </div>
+                    <div class="text-center p-6 bg-white/5 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">You Can Have</p>
+                        <p class="text-xl font-bold text-brand-light">Water & Black Coffee</p>
+                        <p class="text-brand-gray text-sm mt-1">No cream, sugar, or food</p>
+                    </div>
+                    <div class="text-center p-6 bg-white/5 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Draw Time</p>
+                        <p class="text-xl font-bold text-brand-light">~10 Minutes</p>
+                        <p class="text-brand-gray text-sm mt-1">Quick and easy</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-white/5 border border-white/10 rounded-sm p-6">
+                    <h3 class="text-brand-light font-bold mb-3">Tips for Best Results</h3>
+                    <ul class="text-brand-gray text-sm font-light space-y-2">
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Stop eating by 10pm the night before (for a morning draw)</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Stay hydrated — drink plenty of water. Dehydration makes veins harder to find.</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Take your regular medications unless your doctor says otherwise</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Avoid intense exercise the morning of the draw</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Wear a short-sleeved shirt or easy-to-roll sleeves</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details -->
+        <section class="py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-10">EVENT DETAILS</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">Location</h3>
+                        <p class="text-brand-slate font-light mb-2">Coalition Gym — Address TBD</p>
+                        <p class="text-brand-slate/60 text-sm font-light">Exact address and parking instructions will be shared once the event is confirmed.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">Date & Time</h3>
+                        <p class="text-brand-slate font-light mb-2">Spring 2026 — Date Coming Soon</p>
+                        <p class="text-brand-slate/60 text-sm font-light">Morning event recommended for easiest fasting. You'll pick a time slot when you book.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">What to Bring</h3>
+                        <ul class="text-brand-slate text-sm font-light space-y-1">
+                            <li>&#8226; Valid photo ID</li>
+                            <li>&#8226; Short sleeves or easy-to-roll sleeves</li>
+                            <li>&#8226; An empty stomach (fasted 8-12 hours)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">Payment</h3>
+                        <ul class="text-brand-slate text-sm font-light space-y-1">
+                            <li>&#8226; Prepay online when you book</li>
+                            <li>&#8226; Flat-fee, cash-pay — no insurance billing</li>
+                            <li>&#8226; HSA/FSA eligible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust -->
+        <section class="py-16 bg-brand-dark">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-8 text-center">WHAT YOU SHOULD KNOW</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-brand-slate border border-white/10 p-6 rounded-sm">
+                        <h3 class="text-brand-light font-bold mb-2">Licensed Providers</h3>
+                        <p class="text-brand-gray text-sm font-light">Blood draws by certified phlebotomists or RNs. Every result reviewed by a board-certified family nurse practitioner.</p>
+                    </div>
+                    <div class="bg-brand-slate border border-white/10 p-6 rounded-sm">
+                        <h3 class="text-brand-light font-bold mb-2">HIPAA Compliant</h3>
+                        <p class="text-brand-gray text-sm font-light">Your results are shared only with you and your reviewing provider. Coalition never sees individual health data.</p>
+                    </div>
+                    <div class="bg-brand-slate border border-white/10 p-6 rounded-sm">
+                        <h3 class="text-brand-light font-bold mb-2">Quest Diagnostics Labs</h3>
+                        <p class="text-brand-gray text-sm font-light">Samples processed by Quest — the same lab your doctor uses. Accurate, reliable, and CLIA-certified.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-10 text-center">COMMON QUESTIONS</h2>
+
+                <div class="space-y-4">
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">Do I need to fast?</h3>
+                        <p class="text-brand-slate font-light text-sm">Yes — 8-12 hours of fasting for the most accurate results. Water and black coffee are fine. Skip breakfast and show up.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">How long does the blood draw take?</h3>
+                        <p class="text-brand-slate font-light text-sm">About 10 minutes per person. You'll pick a time slot when you book so there's no waiting around.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">When do I get results?</h3>
+                        <p class="text-brand-slate font-light text-sm">Typically 3-5 business days. You'll get a notification when results are ready, plus a one-on-one follow-up with a licensed provider to walk through everything.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">What's the follow-up consultation?</h3>
+                        <p class="text-brand-slate font-light text-sm">Every package includes a one-on-one with a licensed provider — in-person at our Park Ridge clinic or via telehealth. They'll explain your numbers, flag anything concerning, and discuss next steps. Not a sales pitch — a real health consultation.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">Is this covered by insurance?</h3>
+                        <p class="text-brand-slate font-light text-sm">This is a flat-fee, cash-pay service — no insurance billing, no surprise bills. All packages are HSA/FSA eligible.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">What about the DEXA scan (Elite package)?</h3>
+                        <p class="text-brand-slate font-light text-sm">Blood draw happens at Coalition. The DEXA body composition scan is scheduled separately at Moonshot Medical's Park Ridge clinic (542 Busse Hwy, Park Ridge, IL 60068). We'll coordinate the scheduling.</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <a href="/medical/mobile-blood-draw/" class="text-brand-dark underline decoration-brand-slate/30 hover:decoration-brand-dark transition-colors text-sm font-light">View full biomarker details on our Mobile Blood Draw page &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 bg-brand-slate text-center">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-brand-light mb-6">DON'T MISS THIS EVENT</h2>
+                <p class="text-xl text-brand-gray font-light mb-4">
+                    Discounted pricing exclusively for Coalition members. Real health data. Licensed providers. Zero guesswork.
+                </p>
+                <p class="text-brand-gray font-light mb-10">
+                    Booking will open once the event date is confirmed. Stay tuned to Coalition for updates.
+                </p>
+                <a href="#" class="btn-coming-soon text-lg" onclick="return false;">Book Now — Coming Soon</a>
+                <p class="text-brand-gray/50 text-xs mt-8">Moonshot Medical and Performance &middot; 542 Busse Hwy, Park Ridge, IL 60068 &middot; <a href="tel:+18474960777" class="underline decoration-brand-gray/30 hover:decoration-brand-gray">( 847) 496-0777</a></p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/shared/footer.js"></script>
+
+</body>
+</html>
