@@ -25,6 +25,12 @@
 
         gtag('js', new Date());
         gtag('config', 'G-TVYS826RW0');
+
+        // Meta CAPI — deferred client-side event tracker
+        const metaScript = document.createElement('script');
+        metaScript.defer = true;
+        metaScript.src = '/shared/meta-tracking.js';
+        document.head.appendChild(metaScript);
     }, 0);
 
     const headerHTML = `
