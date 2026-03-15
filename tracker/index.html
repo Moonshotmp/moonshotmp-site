@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moonshot 90 Tracker</title>
+<meta name="description" content="Daily compliance tracker for the Moonshot 90 transformation program. Log your weight, protein, calories, and workouts.">
+<meta name="theme-color" content="#101921">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F0EEE9;--text:#101921;--accent:#B2BFBE;--success:#2D8A4E;--warning:#C4880D;--muted:#8A8A8A}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased}
+.container{max-width:440px;width:100%;text-align:center}
+.logo{width:120px;height:auto;margin-bottom:24px}
+h1{font-family:'Oswald',sans-serif;font-weight:700;font-size:2.4rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;line-height:1.1}
+.subtitle{font-size:1rem;color:var(--muted);margin-bottom:40px;font-weight:300}
+.features{text-align:left;margin-bottom:40px;padding:0 8px}
+.feature{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.feature-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.feature-text{font-size:0.95rem;line-height:1.5}
+.feature-text strong{font-weight:600}
+.cta{display:block;width:100%;padding:18px 24px;background:var(--text);color:#fff;font-family:'Oswald',sans-serif;font-weight:700;font-size:1.1rem;text-transform:uppercase;letter-spacing:1.5px;border:none;border-radius:12px;cursor:pointer;text-decoration:none;text-align:center;transition:transform 0.15s,background 0.2s}
+.cta:hover{background:#2a3440;transform:scale(1.02)}
+.cta:active{transform:scale(0.98)}
+.note{margin-top:24px;font-size:0.82rem;color:var(--muted);line-height:1.5}
+.note a{color:var(--text);text-decoration:underline}
+.divider{width:60px;height:3px;background:var(--accent);margin:0 auto 32px;border-radius:2px}
+@media(prefers-reduced-motion:reduce){.cta{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img src="/images/mm+logocloud.png" alt="Moonshot Medical + Performance" class="logo">
+  <h1>Moonshot 90</h1>
+  <p class="subtitle">Transformation Tracker</p>
+  <div class="divider"></div>
+
+  <div class="features">
+    <div class="feature">
+      <span class="feature-icon">&#x1F4CA;</span>
+      <p class="feature-text"><strong>Daily logging</strong> — Track weight, protein, calories, and workouts with one tap</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">&#x1F525;</span>
+      <p class="feature-text"><strong>Streak tracking</strong> — Build momentum with consecutive compliance days</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">&#x1F5D3;</span>
+      <p class="feature-text"><strong>90-day heatmap</strong> — See your full journey at a glance</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">&#x2696;</span>
+      <p class="feature-text"><strong>Weight trends</strong> — Track progress with an auto-generated sparkline</p>
+    </div>
+  </div>
+
+  <a href="https://moonshot.moonshotclinic.com/tracker/" class="cta" id="launch-btn">Open My Tracker</a>
+
+  <p class="note">
+    You'll be taken to your patient portal to log in.<br>
+    Don't have an account? <a href="https://moonshot.moonshotclinic.com/portal/">Create one here</a>
+  </p>
+</div>
+
+</body>
+</html>
