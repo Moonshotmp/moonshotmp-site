@@ -18,6 +18,13 @@ const PACKAGES = {
 
 const EVENT_SLUG = 'coalition-apr-2026';
 
+const VALID_SLOTS = new Set([
+  '07:00','07:10','07:20','07:30','07:40','07:50',
+  '08:00','08:10','08:20','08:30','08:40','08:50',
+  '09:00','09:10','09:20','09:30','09:40','09:50',
+  '10:00','10:05',
+]);
+
 export default async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
   if (req.method !== 'POST') return json(405, { error: 'Method not allowed' });
@@ -37,7 +44,7 @@ export default async (req) => {
 
   // Validate required fields
   if (!pkg || !PACKAGES[pkg]) return json(400, { error: 'Invalid package. Choose basic, comprehensive, or elite.' });
-  if (!slot_time) return json(400, { error: 'slot_time is required' });
+  if (!slot_time || !VALID_SLOTS.has(slot_time)) return json(400, { error: 'Invalid time slot.' });
   if (!patient_first_name?.trim()) return json(400, { error: 'First name is required' });
   if (!patient_last_name?.trim()) return json(400, { error: 'Last name is required' });
   if (!patient_email?.trim() || !patient_email.includes('@')) return json(400, { error: 'Valid email is required' });
@@ -98,7 +105,7 @@ export default async (req) => {
     }
 
     // Create Stripe Checkout Session
-    const stripe = new Stripe(secretKey);
+    const stripe = new Stripe(secretKey, { apiVersion: '2024-06-20' });
 
     const session = await stripe.checkout.sessions.create({
       line_items: [{ price: pkgInfo.priceId, quantity: 1 }],
@@ -106,7 +113,7 @@ export default async (req) => {
       success_url: `${siteUrl}/medical/mobile-blood-draw/coalition/success/?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/medical/mobile-blood-draw/coalition/#packages`,
       customer_email: patient_email.trim().toLowerCase(),
-      expires_at: Math.floor(Date.now() / 1000) + 1800,
+      expires_at: Math.floor(Date.now() / 1000) + 2700, // 45 min — buffer over Stripe's 30-min minimum
       metadata: {
         event_slug: EVENT_SLUG,
         slot_time,
@@ -137,6 +144,6 @@ export default async (req) => {
     return json(200, { url: session.url });
   } catch (err) {
     console.error('[mobile-checkout] Error:', err);
-    return json(500, { error: 'Checkout failed', message: err?.message || String(err) });
+    return json(500, { error: 'Something went wrong. Please try again.' });
   }
 };

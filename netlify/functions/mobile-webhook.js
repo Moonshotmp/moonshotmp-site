@@ -14,27 +14,25 @@ export default async (req) => {
     return new Response('Server error', { status: 500 });
   }
 
-  const stripe = new Stripe(secretKey);
+  const stripe = new Stripe(secretKey, { apiVersion: '2024-06-20' });
 
   let stripeEvent;
   const body = await req.text();
   const sig = req.headers.get('stripe-signature');
 
-  // Verify webhook signature
-  if (webhookSecret && sig) {
-    try {
-      stripeEvent = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-    } catch (err) {
-      console.error('[mobile-webhook] Signature verification failed:', err.message);
-      return new Response(`Webhook Error: ${err.message}`, { status: 400 });
-    }
-  } else {
-    try {
-      stripeEvent = JSON.parse(body);
-      console.log('[mobile-webhook] WARNING: No signature verification');
-    } catch (err) {
-      return new Response('Invalid JSON', { status: 400 });
-    }
+  // Verify webhook signature (REQUIRED — no bypass)
+  if (!webhookSecret) {
+    console.error('[mobile-webhook] STRIPE_MEDICAL_WEBHOOK_SECRET not configured');
+    return new Response('Webhook not configured', { status: 500 });
+  }
+  if (!sig) {
+    return new Response('Missing stripe-signature header', { status: 400 });
+  }
+  try {
+    stripeEvent = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+  } catch (err) {
+    console.error('[mobile-webhook] Signature verification failed:', err.message);
+    return new Response('Invalid signature', { status: 400 });
   }
 
   console.log('[mobile-webhook] Received event:', stripeEvent.type);
@@ -49,6 +47,12 @@ export default async (req) => {
     // Only process if this is a mobile event booking
     if (!meta.event_slug) {
       console.log('[mobile-webhook] No event_slug in metadata, skipping');
+      return new Response('OK', { status: 200 });
+    }
+
+    // Verify payment was actually completed
+    if (session.payment_status !== 'paid') {
+      console.log('[mobile-webhook] Payment not complete, status:', session.payment_status);
       return new Response('OK', { status: 200 });
     }
 
