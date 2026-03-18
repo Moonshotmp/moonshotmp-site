@@ -53,7 +53,7 @@
                 </div>
                 <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-4">YOU'RE BOOKED!</h1>
                 <p class="text-brand-gray text-lg md:text-xl font-light max-w-xl mx-auto">
-                    Your time slot for the Coalition blood draw event is confirmed. Check your email for a receipt from Stripe.
+                    Your time slot is confirmed. Fill out your health intake below so our provider can review your results in context.
                 </p>
             </div>
         </section>
@@ -62,43 +62,24 @@
         <section class="py-16 bg-brand-light text-brand-dark">
             <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
-                    <h2 class="text-xl font-bold mb-6">Event Details</h2>
-                    <div class="space-y-4">
-                        <div class="border-b border-brand-slate/10 pb-3">
-                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Event</p>
-                            <p class="font-medium">Coalition x Moonshot Mobile Blood Draw</p>
-                        </div>
-                        <div class="border-b border-brand-slate/10 pb-3">
-                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Date</p>
-                            <p class="font-medium">Saturday, April 4, 2026</p>
-                        </div>
-                        <div class="border-b border-brand-slate/10 pb-3">
-                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Location</p>
-                            <p class="font-medium">Coalition Strength & Conditioning</p>
-                            <p class="text-sm text-brand-slate font-light">2051 West Carroll Ave, Chicago, IL 60612</p>
-                        </div>
-                        <div>
-                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Duration</p>
-                            <p class="font-medium">~15 minutes</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Health Intake Form (inline — no loading, no redirects) -->
+                <!-- Health Intake Form (first thing they see — above event details) -->
                 <div id="intake-form" class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
                     <h2 class="text-xl font-bold mb-2">HEALTH INTAKE</h2>
                     <p class="text-brand-slate text-sm font-light mb-6">Help our provider review your results in context. Takes about 2 minutes.</p>
 
                     <div id="intake-fields">
-                        <div class="grid grid-cols-2 gap-4 mb-5">
+                        <div class="grid grid-cols-3 gap-3 mb-5">
                             <div>
-                                <label class="block text-sm font-medium mb-1">Height</label>
-                                <input type="text" id="in-height" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="e.g., 5'10&quot;">
+                                <label class="block text-sm font-medium mb-1">Height (ft)</label>
+                                <input type="number" id="in-height-ft" min="3" max="7" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="5">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1">Weight</label>
-                                <input type="text" id="in-weight" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="e.g., 185 lbs">
+                                <label class="block text-sm font-medium mb-1">Height (in)</label>
+                                <input type="number" id="in-height-in" min="0" max="11" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="10">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Weight (lbs)</label>
+                                <input type="number" id="in-weight" min="50" max="600" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="185">
                             </div>
                         </div>
 
@@ -127,7 +108,7 @@
                         </div>
 
                         <div class="mb-5">
-                            <label class="block text-sm font-medium mb-2">Have you fasted 8-12 hours? *</label>
+                            <label class="block text-sm font-medium mb-2">Do you plan to fast 8-12 hours before the blood draw? *</label>
                             <div class="flex gap-6">
                                 <label class="flex items-center text-sm"><input type="radio" name="fasting" value="Yes" class="mr-2"> Yes</label>
                                 <label class="flex items-center text-sm"><input type="radio" name="fasting" value="No" class="mr-2"> No</label>
@@ -160,6 +141,29 @@
                         </div>
                         <h3 class="text-xl font-bold mb-2">Health Intake Complete</h3>
                         <p class="text-brand-slate font-light text-sm">Thank you! Your provider will review this before your blood draw on April 4.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-6">Event Details</h2>
+                    <div class="space-y-4">
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Event</p>
+                            <p class="font-medium">Coalition x Moonshot Mobile Blood Draw</p>
+                        </div>
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Date</p>
+                            <p class="font-medium">Saturday, April 4, 2026</p>
+                        </div>
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Location</p>
+                            <p class="font-medium">Coalition Strength & Conditioning</p>
+                            <p class="text-sm text-brand-slate font-light">2051 West Carroll Ave, Chicago, IL 60612</p>
+                        </div>
+                        <div>
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Duration</p>
+                            <p class="font-medium">~15 minutes</p>
+                        </div>
                     </div>
                 </div>
 
@@ -254,8 +258,8 @@
         if (!fasting) { showIntakeError('Please indicate whether you have fasted.'); return; }
 
         var responses = {
-            height: document.getElementById('in-height').value.trim(),
-            weight: document.getElementById('in-weight').value.trim(),
+            height: (document.getElementById('in-height-ft').value || '') + "'" + (document.getElementById('in-height-in').value || '') + '"',
+            weight: document.getElementById('in-weight').value.trim() ? document.getElementById('in-weight').value.trim() + ' lbs' : '',
             conditions: Array.from(document.querySelectorAll('input[name="conditions"]:checked')).map(function(c) { return c.value; }),
             medications: document.getElementById('in-medications').value.trim(),
             allergies: document.getElementById('in-allergies').value.trim(),
