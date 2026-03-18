@@ -90,8 +90,8 @@
                     <h2 class="text-xl font-bold mb-3">ONE MORE STEP</h2>
                     <p class="text-brand-gray font-light text-sm mb-6">Complete your health history so our provider can review your results in context. Takes about 5 minutes.</p>
                     <div id="form-loading" class="text-brand-gray text-sm py-2">Loading your intake form...</div>
-                    <a id="form-btn" href="#" class="btn-primary text-lg px-10 py-4 hidden inline-block">Complete Health Intake</a>
-                    <p id="form-fallback" class="text-brand-gray/50 text-xs mt-4 hidden">If the button doesn't appear, check your email for a form link.</p>
+                    <a id="form-btn" href="#" class="btn-primary text-lg px-10 py-4" style="display:none">Complete Health Intake</a>
+                    <p id="form-fallback" class="text-brand-gray/50 text-xs mt-4" style="display:none">If the button doesn't appear, check your email for a form link.</p>
                 </div>
 
                 <!-- Fasting Prep -->
@@ -195,23 +195,22 @@
           .then(function(r) { return r.json(); })
           .then(function(data) {
             if (data.form_url) {
-              loading.classList.add('hidden');
+              loading.style.display = 'none';
               btn.href = data.form_url;
-              btn.classList.remove('hidden');
               btn.style.display = 'inline-block';
             } else if (attempts < maxAttempts) {
               setTimeout(checkFormLink, 2000);
             } else {
-              loading.classList.add('hidden');
-              fallback.classList.remove('hidden');
+              loading.style.display = 'none';
+              fallback.style.display = 'block';
             }
           })
           .catch(function() {
             if (attempts < maxAttempts) {
               setTimeout(checkFormLink, 2000);
             } else {
-              loading.classList.add('hidden');
-              fallback.classList.remove('hidden');
+              loading.style.display = 'none';
+              fallback.style.display = 'block';
             }
           });
       }
