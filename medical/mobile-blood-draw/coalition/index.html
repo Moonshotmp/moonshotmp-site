@@ -601,7 +601,7 @@
       function loadSlots() {
         slotsGrid.innerHTML = '<p class="col-span-full text-brand-slate text-sm font-light text-center py-4">Loading available times...</p>';
 
-        fetch('/.netlify/functions/mobile-slots?event_slug=coalition-apr-2026')
+        fetch('https://api.moonshotclinic.com/api/mobile/slots?event_date=2026-04-04', { headers: { 'X-Tenant-Slug': 'moonshot' } })
           .then(function (res) { return res.json(); })
           .then(function (data) {
             if (!data.slots || !data.slots.length) {
@@ -659,12 +659,13 @@
         submitBtn.disabled = true;
         submitBtn.textContent = 'Reserving your slot...';
 
-        fetch('/.netlify/functions/mobile-checkout', {
+        fetch('https://api.moonshotclinic.com/api/mobile/checkout', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'X-Tenant-Slug': 'moonshot' },
           body: JSON.stringify({
             package: selectedPkg.key,
             slot_time: selectedSlot.time,
+            event_date: '2026-04-04',
             patient_first_name: first,
             patient_last_name: last,
             patient_email: email,
