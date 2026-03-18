@@ -67,6 +67,36 @@
         .toggle-knob { width: 20px; height: 20px; border-radius: 50%; background: #F0EEE9; position: absolute; top: 2px; left: 2px; transition: transform 0.2s ease; }
         .toggle-track.on .toggle-knob { transform: translateX(20px); }
         .result-bar { height: 8px; border-radius: 4px; transition: width 0.6s ease; }
+
+        /* Interstitial stat screens */
+        .interstitial-stat { padding: 2rem 0; }
+        .interstitial-stat p { line-height: 1.6; }
+
+        /* Calculating animation markers */
+        .calculating-marker { transition: opacity 0.3s ease; }
+        .calculating-check { transition: border-color 0.3s ease, background-color 0.3s ease; }
+        .calculating-check svg { transition: opacity 0.2s ease; }
+
+        /* Checkmark keyframe animation */
+        @keyframes checkmark {
+            0% { stroke-dashoffset: 24; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .calculating-check svg path {
+            stroke-dasharray: 24;
+            stroke-dashoffset: 24;
+        }
+        .calculating-check svg[style*="opacity: 1"] path,
+        .calculating-check svg[style*="opacity:1"] path {
+            animation: checkmark 0.3s ease forwards;
+        }
+
+        /* Results score ring */
+        .result-score-ring { display: inline-block; }
+        .score-ring-fill { transition: stroke-dasharray 1s ease; }
+
+        /* Gap section checkmarks */
+        .gap-check svg { flex-shrink: 0; }
     </style>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">

@@ -1,268 +1,194 @@
 /*
- * Moonshot Hormone Health Quiz Engine
- * ====================================
- * Typeform-style one-question-at-a-time flow.
+ * Moonshot Hormone Health Quiz Engine v2
+ * =======================================
+ * 18-screen flow with interstitials, severity scoring, and calculating animation.
  * Vanilla JS IIFE — no dependencies.
  */
 (function() {
     'use strict';
 
-    // ── Question Data ───────────────────────────────────────────────────
+    // ── Screen Constants ───────────────────────────────────────────────
+    var SCREEN = {
+        WELCOME: 0,
+        GENDER: 1,
+        AGE: 2,
+        PRIMARY_CONCERN: 3,
+        INTERSTITIAL_1: 4,
+        SYMPTOM_1: 5,
+        SYMPTOM_2: 6,
+        INTERSTITIAL_2: 7,
+        SYMPTOM_3: 8,
+        DURATION: 9,
+        INTERSTITIAL_3: 10,
+        LIFESTYLE: 11,
+        READINESS: 12,
+        EMAIL: 13,
+        CALCULATING: 14,
+        RESULTS: 15
+    };
 
-    var maleCategories = [
-        {
-            key: 'energy',
-            label: 'Energy & Fatigue',
-            intro: 'Not just tiredness \u2014 the kind where coffee stopped working.',
-            items: [
-                'Persistent fatigue despite sleep',
-                'Low motivation or drive',
-                'Afternoon energy crashes'
-            ]
-        },
-        {
-            key: 'mental',
-            label: 'Mental Clarity',
-            intro: 'Your brain used to be sharper. Sound familiar?',
-            items: [
+    var TOTAL_SCREENS = 16;
+    var PROGRESS_MAX = 14; // welcome through email capture for progress calculation
+
+    // ── Symptom Data (gender-specific) ─────────────────────────────────
+
+    var symptomData = {
+        male: {
+            energy_physical: [
+                'Persistent fatigue that coffee can\'t fix',
+                'Losing muscle or gaining fat despite effort',
+                'Slower recovery from workouts or illness'
+            ],
+            mental_mood: [
                 'Brain fog or difficulty concentrating',
-                'Forgetfulness / poor short-term memory',
-                'Difficulty making decisions'
-            ]
-        },
-        {
-            key: 'mood',
-            label: 'Mood',
-            intro: 'Mood shifts that don\u2019t match what\u2019s actually happening.',
-            items: [
-                'Irritability or short temper',
-                'Feeling down, flat, or unmotivated',
-                'Increased anxiety or restlessness'
-            ]
-        },
-        {
-            key: 'sleep',
-            label: 'Sleep',
-            intro: 'Sleep is supposed to recharge you. Is it?',
-            items: [
-                'Difficulty falling asleep',
-                'Waking during the night',
-                'Waking up feeling unrefreshed'
-            ]
-        },
-        {
-            key: 'body',
-            label: 'Body Composition',
-            intro: 'Your body is changing in ways that don\u2019t match your effort.',
-            items: [
-                'Gaining fat despite exercise/diet',
-                'Difficulty building/maintaining muscle',
-                'Decreased stamina or endurance'
-            ]
-        },
-        {
-            key: 'sexual',
-            label: 'Sexual Health',
-            intro: 'This one matters more than most guys admit.',
-            items: [
-                'Decreased libido',
-                'Erectile difficulty or reduced quality',
-                'Reduced satisfaction or performance'
-            ]
-        },
-        {
-            key: 'physical',
-            label: 'Physical',
-            intro: 'Some of these get blamed on \u201Caging.\u201D They shouldn\u2019t be.',
-            items: [
-                'Joint pain or stiffness',
-                'Temperature issues / sweating',
-                'Hair thinning or loss'
-            ]
-        },
-        {
-            key: 'recovery',
-            label: 'Recovery',
-            intro: 'How well does your body bounce back?',
-            items: [
-                'Slow recovery from workouts',
-                'Getting sick more often',
-                'Slow wound/injury healing'
-            ]
-        }
-    ];
-
-    var femaleCategories = [
-        {
-            key: 'energy',
-            label: 'Energy & Fatigue',
-            intro: 'Not just tired \u2014 the bone-deep exhaustion that sleep doesn\u2019t fix.',
-            items: [
-                'Persistent fatigue or exhaustion',
                 'Low motivation or feeling flat',
-                'Physical or mental burnout'
+                'Irritability or mood swings that don\'t match the situation'
+            ],
+            sleep_sexual: [
+                'Trouble sleeping or waking unrefreshed',
+                'Decreased libido or sexual performance',
+                'Night sweats or temperature issues'
             ]
         },
-        {
-            key: 'temperature',
-            label: 'Hot Flashes & Temperature',
-            intro: 'Your internal thermostat has a mind of its own.',
-            items: [
-                'Hot flashes or sudden warmth',
-                'Night sweats',
-                'Chills or temperature sensitivity'
-            ]
-        },
-        {
-            key: 'sleep',
-            label: 'Sleep',
-            intro: 'When sleep stops being restful, everything else suffers.',
-            items: [
-                'Difficulty falling asleep',
-                'Waking at 2\u20134 AM',
-                'Waking up exhausted'
-            ]
-        },
-        {
-            key: 'mood',
-            label: 'Mood',
-            intro: 'Mood swings, anxiety, feeling unlike yourself.',
-            items: [
-                'Mood swings / emotional volatility',
-                'Anxiety or inner restlessness',
-                'Feeling depressed or tearful',
-                'Irritability or short fuse'
-            ]
-        },
-        {
-            key: 'mental',
-            label: 'Mental Clarity',
-            intro: 'The word is right there and you just can\u2019t find it.',
-            items: [
-                'Brain fog',
-                'Forgetfulness / losing train of thought',
-                'Difficulty with word recall'
-            ]
-        },
-        {
-            key: 'sexual',
-            label: 'Sexual Health',
-            intro: 'These changes are common but not something you have to accept.',
-            items: [
-                'Decreased libido',
-                'Vaginal dryness or discomfort',
-                'Pain during intercourse'
-            ]
-        },
-        {
-            key: 'body',
-            label: 'Body & Physical',
-            intro: 'When your body stops responding the way it used to.',
-            items: [
-                'Weight gain (especially midsection)',
-                'Difficulty losing weight despite effort',
-                'Joint pain/stiffness/muscle aches',
-                'Hair thinning or skin changes'
-            ]
-        },
-        {
-            key: 'bladder',
-            label: 'Bladder & Other',
-            intro: 'Small things that add up to a big quality-of-life hit.',
-            items: [
-                'Urinary urgency or frequency',
-                'Bladder leakage',
-                'Heart palpitations or racing heart'
+        female: {
+            energy_physical: [
+                'Fatigue that rest doesn\'t fix',
+                'Unexplained weight gain, especially around the middle',
+                'Slower recovery or persistent aches'
+            ],
+            mental_mood: [
+                'Brain fog or difficulty finding words',
+                'Anxiety, irritability, or mood swings',
+                'Feeling emotionally flat or unlike yourself'
+            ],
+            sleep_sexual: [
+                'Disrupted sleep, waking at 2-3 AM',
+                'Low libido or discomfort during intimacy',
+                'Hot flashes, night sweats, or temperature swings'
             ]
         }
-    ];
+    };
 
     var severityOptions = [
         { value: 0, label: 'Not me' },
         { value: 1, label: 'Mild' },
         { value: 2, label: 'Moderate' },
-        { value: 3, label: 'Severe' }
+        { value: 3, label: 'Significant' }
     ];
 
-    var ageRanges = ['Under 30', '30\u201339', '40\u201349', '50\u201359', '60+'];
+    var ageRanges = [
+        { label: 'Under 30', key: 'under-30' },
+        { label: '30\u201339', key: '30-39' },
+        { label: '40\u201349', key: '40-49' },
+        { label: '50\u201359', key: '50-59' },
+        { label: '60+', key: '60+' }
+    ];
 
-    // Results blurbs
-    var maleBlurbs = {
-        energy:   { text: 'Persistent fatigue is one of the most common signs of low testosterone. T plays a direct role in mitochondrial energy production and red blood cell formation.', link: '/learn/low-testosterone-symptoms/' },
-        mental:   { text: 'Brain fog and poor memory are well-documented effects of low T. Testosterone supports neurotransmitter function and cerebral blood flow.', link: '/learn/low-testosterone-symptoms/' },
-        mood:     { text: 'Testosterone directly influences serotonin and dopamine pathways. Low levels are associated with irritability, depression, and anxiety. Not a character flaw \u2014 biochemistry.', link: '/learn/low-testosterone-symptoms/' },
-        sleep:    { text: 'Low T disrupts sleep architecture, and poor sleep further suppresses T. Breaking this cycle often requires addressing the hormonal component.', link: '/learn/sleep-optimization/' },
-        body:     { text: 'Testosterone is your body\u2019s primary muscle-building and fat-regulating hormone. When levels decline, you store more fat and lose muscle regardless of effort.', link: '/medical/mens-hormones/' },
-        sexual:   { text: 'Libido and erectile function are among the most testosterone-sensitive functions. Often the first noticeable sign of declining hormone levels.', link: '/medical/mens-hormones/' },
-        physical: { text: 'Joint pain, temperature dysregulation, and hair changes can all have hormonal roots. T supports collagen synthesis and thermoregulation.', link: '/medical/mens-hormones/' },
-        recovery: { text: 'Testosterone is essential for tissue repair, immune function, and workout recovery. Slow healing can indicate hormonal deficiency.', link: '/medical/mens-hormones/' }
+    var primaryConcerns = [
+        { label: 'Energy & Vitality', key: 'energy' },
+        { label: 'Body Composition', key: 'body' },
+        { label: 'Sleep & Recovery', key: 'sleep' },
+        { label: 'Mood & Mental Clarity', key: 'mood' },
+        { label: 'Sexual Health', key: 'sexual' },
+        { label: 'All of the above', key: 'all' }
+    ];
+
+    var durationOptions = [
+        { label: 'A few weeks', key: 'weeks' },
+        { label: 'A few months', key: 'months' },
+        { label: '1\u20132 years', key: '1-2years' },
+        { label: '3+ years', key: '3+years' }
+    ];
+
+    var readinessOptions = [
+        { label: 'Very likely', key: 'very' },
+        { label: 'Somewhat likely', key: 'somewhat' },
+        { label: 'Just curious', key: 'curious' }
+    ];
+
+    var durationMultipliers = {
+        'weeks': 1.0,
+        'months': 1.1,
+        '1-2years': 1.2,
+        '3+years': 1.3
     };
 
-    var femaleBlurbs = {
-        energy:      { text: 'Fatigue in women is frequently tied to declining estrogen, progesterone, or thyroid. These hormones directly regulate cellular energy production.', link: '/learn/menopause-perimenopause/' },
-        temperature: { text: 'Hot flashes and night sweats are the hallmark of estrogen decline \u2014 caused by disruption of your hypothalamic thermostat. BHRT is the most effective treatment.', link: '/learn/menopause-perimenopause/' },
-        sleep:       { text: 'Sleep disruption in women is strongly linked to progesterone decline. Progesterone has natural calming, GABA-enhancing properties.', link: '/learn/progesterone/' },
-        mood:        { text: 'Estrogen and progesterone both influence serotonin, GABA, and dopamine. Hormonal shifts can cause mood swings and anxiety that feel completely out of character.', link: '/learn/menopause-perimenopause/' },
-        mental:      { text: 'Estrogen supports acetylcholine and cerebral blood flow. When it declines, brain fog and word-finding difficulty follow. Often a treatable hormonal issue \u2014 not early dementia.', link: '/learn/estrogen-dominance/' },
-        sexual:      { text: 'Vaginal dryness, low libido, and painful intercourse are caused by declining estrogen and testosterone. Both are critical for female sexual health and are treatable.', link: '/learn/testosterone-for-women/' },
-        body:        { text: 'Estrogen regulates where your body stores fat. As it declines, fat shifts to the midsection. Add declining testosterone and muscle loss accelerates.', link: '/learn/testosterone-for-women/' },
-        bladder:     { text: 'Estrogen maintains urinary tract tissues and pelvic floor. Declining levels lead to urgency, frequency, and incontinence. Heart palpitations can also be estrogen-mediated.', link: '/learn/menopause-perimenopause/' }
+    // ── Category Labels & Insights ─────────────────────────────────────
+
+    var categoryLabels = {
+        energy_physical: 'Energy & Physical',
+        mental_mood: 'Mental & Mood',
+        sleep_sexual: 'Sleep & Sexual Health'
     };
 
-    // Result page mapping
-    var maleResultPages = {
-        energy: '/quiz/results/low-testosterone-fatigue/',
-        recovery: '/quiz/results/low-testosterone-fatigue/',
-        mental: '/quiz/results/low-testosterone-brain-fog/',
-        mood: '/quiz/results/low-testosterone-brain-fog/',
-        sleep: '/quiz/results/testosterone-sleep-problems/',
-        body: '/quiz/results/low-testosterone-body-changes/',
-        physical: '/quiz/results/low-testosterone-body-changes/',
-        sexual: '/quiz/results/low-testosterone-sexual-health/'
+    var categoryInsights = {
+        male: {
+            energy_physical: 'Energy and physical performance are among the most testosterone-sensitive functions. When T drops, your mitochondria produce less ATP and recovery slows.',
+            mental_mood: 'Testosterone directly supports neurotransmitter function and cerebral blood flow. Brain fog and mood changes are well-documented effects of low T.',
+            sleep_sexual: 'Low T disrupts sleep architecture, and poor sleep further suppresses testosterone \u2014 creating a cycle that\'s hard to break without addressing the hormonal component.'
+        },
+        female: {
+            energy_physical: 'Fatigue and physical changes are often the first signs of hormonal shifts. Estrogen, progesterone, and thyroid all directly regulate energy production.',
+            mental_mood: 'Estrogen and progesterone influence serotonin, GABA, and dopamine pathways. Hormonal shifts can cause mood changes that feel completely out of character.',
+            sleep_sexual: 'Sleep disruption and intimacy changes are strongly linked to declining estrogen and progesterone. These hormones have natural calming, sleep-supporting properties.'
+        }
     };
 
-    var femaleResultPages = {
-        energy: '/quiz/results/hormone-imbalance-fatigue-women/',
-        temperature: '/quiz/results/menopause-hot-flashes/',
-        sleep: '/quiz/results/hormone-sleep-mood-women/',
-        mood: '/quiz/results/hormone-sleep-mood-women/',
-        mental: '/quiz/results/hormone-brain-fog-women/',
-        body: '/quiz/results/hormone-body-changes-women/',
-        sexual: '/quiz/results/hormone-body-changes-women/',
-        bladder: '/quiz/results/hormone-body-changes-women/'
+    var gapStats = {
+        male: [
+            '47% improvement in sustained energy',
+            '3x faster workout recovery',
+            'Significant improvement in sleep quality within 4-6 weeks'
+        ],
+        female: [
+            'Significant improvement in energy and mood within 4-6 weeks',
+            'Better sleep quality and fewer night-time disruptions',
+            'Improved mental clarity and emotional balance'
+        ]
     };
 
-    // Score classifications
+    var interstitials = {
+        screen4: {
+            male: '1 in 4 men over 30 has testosterone below the optimal range. Most don\'t know it.',
+            female: 'Hormonal shifts can start 10 years before menopause. Most women are told it\'s \u201Cjust stress.\u201D'
+        },
+        screen7: '\u201CNormal\u201D lab ranges miss up to 73% of hormonal imbalances. We look at where your body functions best, not just where it avoids disease.',
+        screen10: 'Patients with similar profiles who got tested discovered an average of 4 actionable findings. Most had been told their labs were \u201Cnormal.\u201D'
+    };
+
+    var calculatingMarkers = ['Energy', 'Body Composition', 'Sleep', 'Mood', 'Mental Clarity', 'Sexual Health', 'Recovery', 'Overall'];
+
+    // ── Score Classification ──────────────────────────────────────────
+
     function classify(score) {
-        if (score <= 10) return { level: 'Low', summary: 'Minimal hormonal impact. Baseline testing is still valuable for prevention and establishing your personal benchmarks.' };
-        if (score <= 25) return { level: 'Moderate', summary: 'Your hormones may not be performing at their best. Blood work would clarify what\u2019s going on and whether optimization could help.' };
-        if (score <= 45) return { level: 'Elevated', summary: 'Multiple categories are lining up \u2014 this strongly suggests a hormonal component. The good news: these patterns are highly treatable once we know your numbers.' };
-        return { level: 'High', summary: 'Significant impact across multiple areas. This is consistent with meaningful hormonal decline \u2014 and highly treatable once we get your blood work.' };
+        if (score <= 25) return { level: 'Low', summary: 'Minimal hormonal impact detected' };
+        if (score <= 50) return { level: 'Moderate', summary: 'Some areas worth investigating' };
+        if (score <= 75) return { level: 'Elevated', summary: 'Multiple markers suggest optimization opportunity' };
+        return { level: 'High', summary: 'Significant indicators across several areas' };
     }
 
     // ── State ────────────────────────────────────────────────────────────
 
     var state = {
         currentScreen: 0,
-        gender: null,       // 'male' | 'female'
+        gender: null,
         age: null,
-        answers: {},        // { 'energy_0': 2, 'energy_1': 1, ... }
+        primaryConcern: null,
+        answers: {},            // { 'energy_physical_0': 2, ... }
+        duration: null,
+        readiness: null,
         lifestyle: { exercise: false, sleep: false, tested: false },
         name: '',
-        email: '',
-        totalScreens: 0
+        email: ''
     };
-
-    // Total screens: welcome(1) + gender(1) + age(1) + 8 symptom + lifestyle(1) + email(1) + results(1) = 14
-    // Progress only counts up through email capture (screen 12 of 13 zero-indexed), results is final
 
     var root = document.getElementById('quiz-root');
     var progressBar = document.getElementById('quiz-progress-bar');
 
     // ── State Persistence ──────────────────────────────────────────────
 
-    var STORAGE_KEY = 'mmp_quiz_state';
-    var STORAGE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
+    var STORAGE_KEY = 'mmp_quiz_v2_state';
+    var STORAGE_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
 
     function saveState() {
         try {
@@ -270,7 +196,10 @@
                 currentScreen: state.currentScreen,
                 gender: state.gender,
                 age: state.age,
+                primaryConcern: state.primaryConcern,
                 answers: state.answers,
+                duration: state.duration,
+                readiness: state.readiness,
                 lifestyle: state.lifestyle,
                 name: state.name,
                 email: state.email,
@@ -303,18 +232,8 @@
         if (window.gtag) window.gtag('event', event, params || {});
     }
 
-    function getCategories() {
-        return state.gender === 'female' ? femaleCategories : maleCategories;
-    }
-
-    function getBlurbs() {
-        return state.gender === 'female' ? femaleBlurbs : maleBlurbs;
-    }
-
     function updateProgress() {
-        // 13 screens before results: 0=welcome, 1=gender, 2=age, 3-10=symptoms, 11=lifestyle, 12=email
-        var total = 13;
-        var pct = Math.min(100, Math.round((state.currentScreen / total) * 100));
+        var pct = Math.min(100, Math.round((state.currentScreen / PROGRESS_MAX) * 100));
         progressBar.style.width = pct + '%';
     }
 
@@ -326,10 +245,12 @@
         for (var i = 0; i < screens.length; i++) {
             screens[i].classList.remove('active');
         }
-        // Small delay for transition effect
         setTimeout(function() {
             var target = root.querySelector('[data-screen="' + screenIndex + '"]');
-            if (target) target.classList.add('active');
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }, 30);
     }
 
@@ -338,35 +259,66 @@
             '<div class="max-w-2xl w-full">' + inner + '</div></div>';
     }
 
-    function allItemsAnswered(catIndex) {
-        var cats = getCategories();
-        var cat = cats[catIndex];
-        for (var i = 0; i < cat.items.length; i++) {
-            if (state.answers[cat.key + '_' + i] === undefined) return false;
+    function getSymptoms(groupKey) {
+        if (!state.gender) return [];
+        return symptomData[state.gender][groupKey] || [];
+    }
+
+    function allGroupAnswered(groupKey) {
+        var items = getSymptoms(groupKey);
+        for (var i = 0; i < items.length; i++) {
+            if (state.answers[groupKey + '_' + i] === undefined) return false;
         }
         return true;
+    }
+
+    function computeScores() {
+        var categories = ['energy_physical', 'mental_mood', 'sleep_sexual'];
+        var catScores = [];
+        var rawTotal = 0;
+
+        for (var c = 0; c < categories.length; c++) {
+            var key = categories[c];
+            var catTotal = 0;
+            for (var i = 0; i < 3; i++) {
+                var val = state.answers[key + '_' + i] || 0;
+                catTotal += val;
+                rawTotal += val;
+            }
+            catScores.push({ key: key, label: categoryLabels[key], score: catTotal, max: 9 });
+        }
+
+        var multiplier = durationMultipliers[state.duration] || 1.0;
+        var normalized = Math.min(100, Math.round((rawTotal / 27) * 100 * multiplier));
+
+        return {
+            rawScore: rawTotal,
+            maxRawScore: 27,
+            score: normalized,
+            classification: classify(normalized),
+            categories: catScores
+        };
     }
 
     // ── Screen Builders ─────────────────────────────────────────────────
 
     function buildWelcome() {
-        return screenWrap(0,
+        return screenWrap(SCREEN.WELCOME,
             '<div class="text-center">' +
-                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free 2-Minute Assessment</p>' +
-                '<h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">HOW ARE YOUR<br>HORMONES?</h1>' +
+                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free 2-Minute Science-Backed Assessment</p>' +
+                '<h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">How Are Your Hormones<br>Really Doing?</h1>' +
                 '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Answer a few quick questions and get personalized insights about what your symptoms might mean.</p>' +
-                '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Let\u2019s Go</button>' +
+                '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start My Assessment</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-6">Not a medical diagnosis. For educational purposes only.</p>' +
             '</div>'
         );
     }
 
     function buildGender() {
-        return screenWrap(1,
+        return screenWrap(SCREEN.GENDER,
             '<div class="text-center">' +
-                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Step 1</p>' +
                 '<h2 class="text-3xl font-bold text-brand-light mb-2 font-heading">I AM</h2>' +
-                '<p class="text-brand-gray font-light mb-10">This determines which symptom questions you\u2019ll see.</p>' +
+                '<p class="text-brand-gray font-light mb-10">This determines which symptom questions you\'ll see.</p>' +
                 '<div class="grid grid-cols-2 gap-4 max-w-md mx-auto">' +
                     '<button type="button" class="quiz-card border border-white/10 rounded-sm p-8 text-center" data-gender="male">' +
                         '<span class="block text-4xl mb-3">&#9794;</span>' +
@@ -384,11 +336,10 @@
     function buildAge() {
         var btns = '';
         for (var i = 0; i < ageRanges.length; i++) {
-            btns += '<button type="button" class="quiz-card border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium hover:border-brand-gray/40" data-age="' + ageRanges[i] + '">' + ageRanges[i] + '</button>';
+            btns += '<button type="button" class="quiz-card border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium hover:border-brand-gray/40" data-age="' + ageRanges[i].key + '">' + ageRanges[i].label + '</button>';
         }
-        return screenWrap(2,
+        return screenWrap(SCREEN.AGE,
             '<div class="text-center">' +
-                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Step 2</p>' +
                 '<h2 class="text-3xl font-bold text-brand-light mb-2 font-heading">AGE RANGE</h2>' +
                 '<p class="text-brand-gray font-light mb-10">Helps us personalize your results.</p>' +
                 '<div class="flex flex-wrap justify-center gap-3">' + btns + '</div>' +
@@ -396,210 +347,300 @@
         );
     }
 
-    function buildSymptomScreen(catIndex) {
-        var cats = getCategories();
-        var cat = cats[catIndex];
-        var screenIdx = 3 + catIndex;
-        var rows = '';
-
-        for (var i = 0; i < cat.items.length; i++) {
-            var pills = '';
-            for (var s = 0; s < severityOptions.length; s++) {
-                var opt = severityOptions[s];
-                pills += '<button type="button" class="severity-pill border border-white/20 rounded-sm px-3 py-2 text-xs text-brand-gray font-medium" ' +
-                    'data-cat="' + cat.key + '" data-item="' + i + '" data-level="' + opt.value + '" data-selected="false">' +
-                    opt.label + '</button>';
-            }
-            rows += '<div class="mb-6">' +
-                '<p class="text-brand-light text-sm font-medium mb-3">' + cat.items[i] + '</p>' +
-                '<div class="grid grid-cols-4 gap-2">' + pills + '</div>' +
-            '</div>';
+    function buildPrimaryConcern() {
+        var btns = '';
+        for (var i = 0; i < primaryConcerns.length; i++) {
+            btns += '<button type="button" class="quiz-card border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium text-left w-full hover:border-brand-gray/40" data-concern="' + primaryConcerns[i].key + '">' + primaryConcerns[i].label + '</button>';
         }
+        return screenWrap(SCREEN.PRIMARY_CONCERN,
+            '<div class="text-center">' +
+                '<h2 class="text-3xl font-bold text-brand-light mb-2 font-heading">What would you most like to improve?</h2>' +
+                '<p class="text-brand-gray font-light mb-10">Select the area that matters most to you right now.</p>' +
+                '<div class="flex flex-col gap-3 max-w-md mx-auto">' + btns + '</div>' +
+            '</div>'
+        );
+    }
 
+    function buildInterstitial1() {
+        // Gender-specific — content filled after gender is known
+        return screenWrap(SCREEN.INTERSTITIAL_1,
+            '<div class="text-center">' +
+                '<div class="interstitial-stat">' +
+                    '<p id="interstitial-1-text" class="text-brand-light text-xl md:text-2xl font-light leading-relaxed max-w-lg mx-auto mb-10"></p>' +
+                '</div>' +
+                '<button type="button" class="btn-primary px-8 py-3 quiz-continue-btn" data-to="' + SCREEN.SYMPTOM_1 + '">Continue \u2192</button>' +
+            '</div>'
+        );
+    }
+
+    function buildSymptomGroup(screenIdx, groupKey, groupNumber) {
+        var groupLabels = {
+            energy_physical: 'Energy & Physical',
+            mental_mood: 'Mental & Mood',
+            sleep_sexual: 'Sleep & Sexual Health'
+        };
+        var label = groupLabels[groupKey] || groupKey;
+
+        // Items are populated dynamically after gender is selected
         return screenWrap(screenIdx,
             '<div>' +
-                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Category ' + (catIndex + 1) + ' of 8</p>' +
-                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">' + cat.label.toUpperCase() + '</h2>' +
-                '<p class="text-brand-gray font-light mb-8 italic">\u201C' + cat.intro + '\u201D</p>' +
-                rows +
+                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Symptom Group ' + groupNumber + ' of 3</p>' +
+                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">' + label.toUpperCase() + '</h2>' +
+                '<p class="text-brand-gray font-light mb-8">Rate each symptom based on your experience.</p>' +
+                '<div id="symptom-group-' + groupKey + '"></div>' +
                 '<div class="flex justify-between items-center mt-8">' +
                     '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + (screenIdx - 1) + '">\u2190 Back</button>' +
-                    '<button type="button" class="btn-primary quiz-next-btn opacity-40 pointer-events-none" data-from-cat="' + catIndex + '" data-to="' + (screenIdx + 1) + '" disabled>Next \u2192</button>' +
+                    '<button type="button" class="btn-primary quiz-symptom-next opacity-40 pointer-events-none" data-group="' + groupKey + '" data-to="' + (screenIdx + 1) + '" disabled>Next \u2192</button>' +
                 '</div>' +
             '</div>'
         );
     }
 
+    function buildInterstitial2() {
+        return screenWrap(SCREEN.INTERSTITIAL_2,
+            '<div class="text-center">' +
+                '<div class="interstitial-stat">' +
+                    '<p class="text-brand-light text-xl md:text-2xl font-light leading-relaxed max-w-lg mx-auto mb-10">' + interstitials.screen7 + '</p>' +
+                '</div>' +
+                '<button type="button" class="btn-primary px-8 py-3 quiz-continue-btn" data-to="' + SCREEN.SYMPTOM_3 + '">Continue \u2192</button>' +
+            '</div>'
+        );
+    }
+
+    function buildDuration() {
+        var btns = '';
+        for (var i = 0; i < durationOptions.length; i++) {
+            btns += '<button type="button" class="quiz-card border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium text-left w-full hover:border-brand-gray/40" data-duration="' + durationOptions[i].key + '">' + durationOptions[i].label + '</button>';
+        }
+        return screenWrap(SCREEN.DURATION,
+            '<div class="text-center">' +
+                '<h2 class="text-3xl font-bold text-brand-light mb-2 font-heading">How long have you been experiencing these symptoms?</h2>' +
+                '<p class="text-brand-gray font-light mb-10">This helps us understand your situation better.</p>' +
+                '<div class="flex flex-col gap-3 max-w-md mx-auto">' + btns + '</div>' +
+            '</div>'
+        );
+    }
+
+    function buildInterstitial3() {
+        return screenWrap(SCREEN.INTERSTITIAL_3,
+            '<div class="text-center">' +
+                '<div class="interstitial-stat">' +
+                    '<p class="text-brand-light text-xl md:text-2xl font-light leading-relaxed max-w-lg mx-auto mb-10">' + interstitials.screen10 + '</p>' +
+                '</div>' +
+                '<button type="button" class="btn-primary px-8 py-3 quiz-continue-btn" data-to="' + SCREEN.LIFESTYLE + '">Continue \u2192</button>' +
+            '</div>'
+        );
+    }
+
     function buildLifestyle() {
-        var screenIdx = 11;
         function toggle(id, label) {
             return '<div class="flex items-center justify-between py-4 border-b border-white/10">' +
                 '<span class="text-brand-light text-sm font-medium">' + label + '</span>' +
                 '<div class="toggle-track" data-toggle="' + id + '"><div class="toggle-knob"></div></div>' +
             '</div>';
         }
-        return screenWrap(screenIdx,
+        return screenWrap(SCREEN.LIFESTYLE,
             '<div>' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Almost Done</p>' +
-                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">LIFESTYLE</h2>' +
+                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">LIFESTYLE SNAPSHOT</h2>' +
                 '<p class="text-brand-gray font-light mb-8">A few quick context questions.</p>' +
                 '<div class="bg-white/5 rounded-sm p-6">' +
                     toggle('exercise', 'I exercise at least 3x per week') +
-                    toggle('sleep', 'I typically get 7+ hours of sleep') +
-                    toggle('tested', 'I\u2019ve had my hormones tested before') +
+                    toggle('sleep', 'I typically sleep 7+ hours') +
+                    toggle('tested', 'I\'ve had my hormones tested before') +
                 '</div>' +
                 '<div class="flex justify-between items-center mt-8">' +
-                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="10">\u2190 Back</button>' +
-                    '<button type="button" class="btn-primary quiz-lifestyle-next" data-to="12">Next \u2192</button>' +
+                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + SCREEN.INTERSTITIAL_3 + '">\u2190 Back</button>' +
+                    '<button type="button" class="btn-primary quiz-lifestyle-next" data-to="' + SCREEN.READINESS + '">Next \u2192</button>' +
                 '</div>' +
+            '</div>'
+        );
+    }
+
+    function buildReadiness() {
+        var btns = '';
+        for (var i = 0; i < readinessOptions.length; i++) {
+            btns += '<button type="button" class="quiz-card border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium text-left w-full hover:border-brand-gray/40" data-readiness="' + readinessOptions[i].key + '">' + readinessOptions[i].label + '</button>';
+        }
+        return screenWrap(SCREEN.READINESS,
+            '<div class="text-center">' +
+                '<h2 class="text-3xl font-bold text-brand-light mb-2 font-heading">If testing showed something actionable, how likely are you to address it?</h2>' +
+                '<p class="text-brand-gray font-light mb-10">No wrong answer here.</p>' +
+                '<div class="flex flex-col gap-3 max-w-md mx-auto">' + btns + '</div>' +
             '</div>'
         );
     }
 
     function buildEmailCapture() {
-        return screenWrap(12,
+        return screenWrap(SCREEN.EMAIL,
             '<div class="text-center">' +
-                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Optional</p>' +
-                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">GET YOUR RESULTS BY EMAIL</h2>' +
-                '<p class="text-brand-gray font-light mb-8">We\u2019ll send a detailed breakdown with actionable tips. No spam.</p>' +
+                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">Your personalized results are ready.</h2>' +
+                '<p class="text-brand-gray font-light mb-8">We\'ll send your results to this email. No spam. Unsubscribe anytime.</p>' +
                 '<div class="max-w-sm mx-auto space-y-4">' +
-                    '<input type="text" id="quiz-name" placeholder="First name" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
+                    '<input type="text" id="quiz-name" placeholder="First name (optional)" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<input type="email" id="quiz-email" placeholder="Email address" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
+                    '<p id="quiz-email-error" class="text-red-500 text-xs text-left hidden">Please enter a valid email address.</p>' +
                     '<button type="button" id="quiz-submit-email" class="btn-primary w-full py-3">See My Results</button>' +
                 '</div>' +
-                '<button type="button" id="quiz-skip-email" class="text-brand-gray/60 text-sm mt-4 hover:text-brand-gray transition inline-block">Skip & See Results</button>' +
                 '<div class="flex justify-start mt-6">' +
-                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="11">\u2190 Back</button>' +
+                    '<button type="button" class="text-brand-gray text-sm hover:text-brand-light transition quiz-back-btn" data-to="' + SCREEN.READINESS + '">\u2190 Back</button>' +
                 '</div>' +
             '</div>'
         );
     }
 
-    function buildResults() {
-        // Placeholder — filled dynamically when shown
-        return '<div class="quiz-screen flex items-start justify-center min-h-[calc(100vh-5rem)] px-4 py-12" data-screen="13">' +
+    function buildCalculating() {
+        var markers = '';
+        for (var i = 0; i < calculatingMarkers.length; i++) {
+            markers += '<div class="calculating-marker flex items-center gap-3 py-2 opacity-0" data-marker-idx="' + i + '">' +
+                '<div class="calculating-check w-6 h-6 rounded-full border-2 border-brand-gray/30 flex items-center justify-center flex-shrink-0">' +
+                    '<svg class="w-4 h-4 text-brand-gray opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' +
+                '</div>' +
+                '<span class="text-brand-gray text-sm font-medium">' + calculatingMarkers[i] + '</span>' +
+            '</div>';
+        }
+        return screenWrap(SCREEN.CALCULATING,
+            '<div class="text-center">' +
+                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">Analyzing Your Responses</h2>' +
+                '<p class="text-brand-gray font-light mb-10">Evaluating across 8 hormone health markers...</p>' +
+                '<div class="max-w-sm mx-auto text-left">' + markers + '</div>' +
+            '</div>'
+        );
+    }
+
+    function buildResultsShell() {
+        return '<div class="quiz-screen flex items-start justify-center min-h-[calc(100vh-5rem)] px-4 py-12" data-screen="' + SCREEN.RESULTS + '">' +
             '<div class="max-w-2xl w-full" id="quiz-results-inner"></div></div>';
     }
 
-    // ── Results Renderer ─────────────────────────────────────────────────
+    // ── Populate Gender-Specific Symptom Items ──────────────────────────
 
-    function renderResults() {
-        var cats = getCategories();
-        var blurbs = getBlurbs();
+    function populateSymptomItems(groupKey) {
+        var container = document.getElementById('symptom-group-' + groupKey);
+        if (!container) return;
 
-        // Calculate category scores
-        var catScores = [];
-        var totalScore = 0;
-        for (var c = 0; c < cats.length; c++) {
-            var cat = cats[c];
-            var catTotal = 0;
-            var catMax = cat.items.length * 3;
-            for (var i = 0; i < cat.items.length; i++) {
-                var val = state.answers[cat.key + '_' + i] || 0;
-                catTotal += val;
-                totalScore += val;
+        var items = getSymptoms(groupKey);
+        var rows = '';
+
+        for (var i = 0; i < items.length; i++) {
+            var pills = '';
+            for (var s = 0; s < severityOptions.length; s++) {
+                var opt = severityOptions[s];
+                var selected = state.answers[groupKey + '_' + i] === opt.value;
+                pills += '<button type="button" class="severity-pill border border-white/20 rounded-sm px-3 py-2 text-xs text-brand-gray font-medium" ' +
+                    'data-group="' + groupKey + '" data-item="' + i + '" data-level="' + opt.value + '" data-selected="' + selected + '">' +
+                    opt.label + '</button>';
             }
-            catScores.push({ key: cat.key, label: cat.label, score: catTotal, max: catMax });
+            rows += '<div class="mb-6">' +
+                '<p class="text-brand-light text-sm font-medium mb-3">' + items[i] + '</p>' +
+                '<div class="grid grid-cols-4 gap-2">' + pills + '</div>' +
+            '</div>';
         }
 
-        var result = classify(totalScore);
-        var maxScore = state.gender === 'female' ? 72 : 66;
+        container.innerHTML = rows;
+    }
 
-        // Sort categories by score descending for top 3
-        var sorted = catScores.slice().sort(function(a, b) { return b.score - a.score; });
-        var top3 = sorted.filter(function(c) { return c.score > 0; }).slice(0, 3);
+    function updateInterstitial1() {
+        var el = document.getElementById('interstitial-1-text');
+        if (el && state.gender) {
+            el.textContent = interstitials.screen4[state.gender];
+        }
+    }
 
-        // Level color for results
+    // ── Results Renderer ───────────────────────────────────────────────
+
+    function renderResults() {
+        var scores = computeScores();
+        var result = scores.classification;
+        var gender = state.gender || 'male';
+
+        // Level color
         var levelColor = '#B2BFBE';
         if (result.level === 'Moderate') levelColor = '#ca8a04';
         else if (result.level === 'Elevated') levelColor = '#ea580c';
         else if (result.level === 'High') levelColor = '#dc2626';
 
-        // Build HTML
+        // Find top category
+        var sorted = scores.categories.slice().sort(function(a, b) { return b.score - a.score; });
+        var topCategory = sorted[0];
+
         var html = '';
 
-        // Score header
+        // ── Overall Score ──────────────────────────────────────────────
         html += '<div class="text-center mb-10">' +
             '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Your Results</p>' +
-            '<h2 class="text-4xl font-bold text-brand-light mb-2 font-heading">HORMONE HEALTH SCORE</h2>' +
-            '<div class="mt-6 mb-4">' +
-                '<span class="text-6xl font-bold" style="color:' + levelColor + '">' + totalScore + '</span>' +
-                '<span class="text-brand-gray text-xl">/' + maxScore + '</span>' +
+            '<h2 class="text-4xl font-bold text-brand-light mb-6 font-heading">HORMONE HEALTH SCORE</h2>' +
+            '<div class="result-score-ring mx-auto mb-6">' +
+                '<svg viewBox="0 0 120 120" width="160" height="160">' +
+                    '<circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"></circle>' +
+                    '<circle cx="60" cy="60" r="52" fill="none" stroke="' + levelColor + '" stroke-width="8" ' +
+                        'stroke-dasharray="' + Math.round(326.7 * scores.score / 100) + ' 326.7" ' +
+                        'stroke-linecap="round" transform="rotate(-90 60 60)" class="score-ring-fill"></circle>' +
+                    '<text x="60" y="55" text-anchor="middle" fill="' + levelColor + '" font-size="32" font-weight="bold">' + scores.score + '</text>' +
+                    '<text x="60" y="72" text-anchor="middle" fill="#B2BFBE" font-size="12">/100</text>' +
+                '</svg>' +
             '</div>' +
             '<span class="inline-block px-4 py-1 rounded-sm text-sm font-bold" style="background:' + levelColor + '; color:#101921">' + result.level.toUpperCase() + '</span>' +
-            '<p class="text-brand-gray font-light mt-6 max-w-lg mx-auto">' + result.summary + '</p>' +
         '</div>';
 
-        // Category breakdown bars
-        html += '<div class="bg-white/5 rounded-sm p-6 mb-8">' +
-            '<h3 class="text-brand-light font-bold mb-4">CATEGORY BREAKDOWN</h3>';
-        for (var b = 0; b < catScores.length; b++) {
-            var cs = catScores[b];
-            var pct = cs.max > 0 ? Math.round((cs.score / cs.max) * 100) : 0;
+        // ── Personalized Summary ───────────────────────────────────────
+        html += '<div class="bg-white/5 rounded-sm p-6 mb-8 text-center">' +
+            '<p class="text-brand-gray font-light">Your responses suggest multiple areas where hormone optimization could make a meaningful difference \u2014 especially in <strong class="text-brand-light">' + topCategory.label + '</strong>.</p>' +
+        '</div>';
+
+        // ── Top 3 Areas ────────────────────────────────────────────────
+        html += '<div class="mb-8">' +
+            '<h3 class="text-brand-light font-bold mb-4">YOUR TOP AREAS</h3>';
+        for (var t = 0; t < sorted.length; t++) {
+            var cat = sorted[t];
+            var pct = cat.max > 0 ? Math.round((cat.score / cat.max) * 100) : 0;
             var barColor = pct <= 33 ? '#4b5563' : pct <= 66 ? '#ca8a04' : '#dc2626';
-            html += '<div class="mb-3">' +
-                '<div class="flex justify-between text-sm mb-1">' +
-                    '<span class="text-brand-gray">' + cs.label + '</span>' +
-                    '<span class="text-brand-light font-medium">' + cs.score + '/' + cs.max + '</span>' +
+            var insight = categoryInsights[gender][cat.key] || '';
+            html += '<div class="bg-white/5 rounded-sm p-6 mb-3">' +
+                '<div class="flex justify-between text-sm mb-2">' +
+                    '<span class="text-brand-light font-bold">' + cat.label + '</span>' +
+                    '<span class="text-brand-light font-medium">' + pct + '%</span>' +
                 '</div>' +
-                '<div class="w-full bg-white/10 rounded-sm overflow-hidden" style="height:8px">' +
+                '<div class="w-full bg-white/10 rounded-sm overflow-hidden mb-3" style="height:8px">' +
                     '<div class="result-bar" style="width:' + pct + '%; background:' + barColor + '"></div>' +
                 '</div>' +
+                '<p class="text-brand-gray font-light text-sm">' + insight + '</p>' +
             '</div>';
         }
         html += '</div>';
 
-        // Result page link based on top category
-        if (sorted.length > 0) {
-            var resultPages = state.gender === 'female' ? femaleResultPages : maleResultPages;
-            var topKey = sorted[0].key;
-            var resultPageUrl = resultPages[topKey];
-            if (resultPageUrl) {
-                html += '<div class="mb-8 text-center">' +
-                    '<a href="' + resultPageUrl + '" class="inline-block bg-brand-slate px-6 py-3 rounded-sm text-brand-light text-sm font-medium hover:bg-white/10 transition quiz-cta" data-cta="result_page">' +
-                    'See your full results breakdown \u2192</a>' +
-                '</div>';
-            }
-        }
+        // ── THE GAP Section ────────────────────────────────────────────
+        var gapIntro = gender === 'male'
+            ? 'Men with your profile who addressed their hormone levels reported:'
+            : 'Women with your profile who optimized their hormones reported:';
+        var gapItems = gapStats[gender];
 
-        // Top category insights
-        if (top3.length > 0) {
-            html += '<div class="mb-8">' +
-                '<h3 class="text-brand-light font-bold mb-4">YOUR TOP AREAS</h3>';
-            for (var t = 0; t < top3.length; t++) {
-                var cat = top3[t];
-                var blurb = blurbs[cat.key];
-                if (!blurb) continue;
-                html += '<div class="bg-white/5 rounded-sm p-6 mb-3">' +
-                    '<h4 class="text-brand-light font-bold text-sm uppercase tracking-wide mb-2">' + cat.label + '</h4>' +
-                    '<p class="text-brand-gray font-light text-sm mb-3">' + blurb.text + '</p>' +
-                    '<a href="' + blurb.link + '" class="text-brand-gray text-xs hover:text-brand-light transition">Learn more \u2192</a>' +
-                '</div>';
-            }
-            html += '</div>';
+        html += '<div class="bg-white/5 rounded-sm p-6 mb-8">' +
+            '<h3 class="text-brand-light font-bold mb-4">THE GAP</h3>' +
+            '<p class="text-brand-gray font-light text-sm mb-4">' + gapIntro + '</p>';
+        for (var g = 0; g < gapItems.length; g++) {
+            html += '<div class="gap-check flex items-start gap-3 mb-3">' +
+                '<svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' +
+                '<span class="text-brand-gray text-sm font-light">' + gapItems[g] + '</span>' +
+            '</div>';
         }
+        html += '</div>';
 
-        // Next steps
-        html += '<div class="bg-brand-slate rounded-sm p-8 mb-8">' +
-            '<h3 class="text-brand-light font-bold mb-4">RECOMMENDED NEXT STEPS</h3>' +
-            '<div class="space-y-4">' +
-                '<a href="/medical/blood-panels/" class="block bg-brand-dark p-4 rounded-sm hover:bg-white/5 transition quiz-cta" data-cta="blood_panels">' +
-                    '<span class="text-brand-light font-bold text-sm block">1. Get Comprehensive Blood Work</span>' +
-                    '<span class="text-brand-gray text-xs">60+ biomarkers including full hormone, thyroid, metabolic, and nutrient panels.</span>' +
-                '</a>' +
-                '<a href="/booking/" class="block bg-brand-dark p-4 rounded-sm hover:bg-white/5 transition quiz-cta" data-cta="book_consultation">' +
-                    '<span class="text-brand-light font-bold text-sm block">2. Book a Consultation</span>' +
-                    '<span class="text-brand-gray text-xs">Review your results with our team and get a personalized plan.</span>' +
-                '</a>' +
-            '</div>' +
+        // ── WHAT'S NEXT ────────────────────────────────────────────────
+        html += '<div class="bg-brand-slate rounded-sm p-8 mb-8 text-center">' +
+            '<h3 class="text-brand-light font-bold mb-4">WHAT\'S NEXT</h3>' +
+            '<p class="text-brand-gray font-light mb-2">A quiz can only tell you so much. Blood work tells the whole story.</p>' +
+            '<p class="text-brand-gray font-light text-sm mb-8">Your quiz results will be reviewed by our clinical team before your first visit.</p>' +
+            '<a href="/medical/" class="btn-primary text-lg px-10 py-4 inline-block quiz-cta" data-cta="book_consultation">BOOK YOUR FREE CONSULTATION</a>' +
+            '<p class="text-brand-gray/60 text-xs mt-4">We have limited consultation slots available this week.</p>' +
         '</div>';
 
-        // Keep learning links
+        // ── Keep Learning ──────────────────────────────────────────────
         var learnLinks = '';
-        if (state.gender === 'male') {
+        if (gender === 'male') {
             learnLinks = '<a href="/learn/low-testosterone-symptoms/" class="bg-brand-dark px-4 py-2 text-brand-light text-xs hover:bg-white/10 transition rounded-sm">Low T Symptoms \u2192</a>' +
                 '<a href="/learn/sleep-optimization/" class="bg-brand-dark px-4 py-2 text-brand-light text-xs hover:bg-white/10 transition rounded-sm">Sleep Optimization \u2192</a>' +
-                '<a href="/medical/mens-hormones/" class="bg-brand-dark px-4 py-2 text-brand-light text-xs hover:bg-white/10 transition rounded-sm">Men\u2019s Hormone Program \u2192</a>';
+                '<a href="/medical/mens-hormones/" class="bg-brand-dark px-4 py-2 text-brand-light text-xs hover:bg-white/10 transition rounded-sm">Men\'s Hormone Program \u2192</a>';
         } else {
             learnLinks = '<a href="/learn/menopause-perimenopause/" class="bg-brand-dark px-4 py-2 text-brand-light text-xs hover:bg-white/10 transition rounded-sm">Menopause Guide \u2192</a>' +
                 '<a href="/learn/progesterone/" class="bg-brand-dark px-4 py-2 text-brand-light text-xs hover:bg-white/10 transition rounded-sm">Progesterone \u2192</a>' +
@@ -610,267 +651,339 @@
             '<div class="flex flex-wrap justify-center gap-2">' + learnLinks + '</div>' +
         '</div>';
 
-        // Final CTA
-        html += '<div class="text-center py-8 border-t border-white/10">' +
-            '<p class="text-brand-gray font-light text-sm mb-4">Ready to find out what\u2019s really going on?</p>' +
-            '<a href="/booking/" class="btn-primary text-lg px-8 py-4 quiz-cta" data-cta="book_final">Book Blood Work</a>' +
-        '</div>';
-
         document.getElementById('quiz-results-inner').innerHTML = html;
 
         // Animate bars after render
         setTimeout(function() {
             var bars = document.querySelectorAll('.result-bar');
             for (var i = 0; i < bars.length; i++) {
-                bars[i].style.width = bars[i].style.width; // trigger reflow
+                bars[i].style.width = bars[i].style.width;
             }
         }, 100);
     }
 
-    // ── Build All Screens ───────────────────────────────────────────────
+    // ── Calculating Animation ───────────────────────────────────────────
 
-    function buildQuiz() {
-        // We build welcome, gender, age first. Symptom screens built after gender is selected.
-        root.innerHTML = buildWelcome() + buildGender() + buildAge();
-        bindWelcome();
-        bindGender();
-        bindAge();
-        show(0);
-    }
+    function runCalculatingAnimation(callback) {
+        var markers = root.querySelectorAll('.calculating-marker');
+        var delay = 400; // ms between each marker
+        var totalTime = 0;
 
-    function buildSymptomAndRemainingScreens() {
-        // Remove any existing symptom/lifestyle/email/result screens
-        var existing = root.querySelectorAll('[data-screen]');
-        for (var i = 0; i < existing.length; i++) {
-            var idx = parseInt(existing[i].getAttribute('data-screen'), 10);
-            if (idx >= 3) existing[i].remove();
+        for (var i = 0; i < markers.length; i++) {
+            (function(idx) {
+                var t = delay * (idx + 1);
+                setTimeout(function() {
+                    var marker = markers[idx];
+                    if (!marker) return;
+                    // Fade in the row
+                    marker.style.opacity = '1';
+                    marker.style.transition = 'opacity 0.3s ease';
+                    // After a beat, show the checkmark
+                    setTimeout(function() {
+                        var check = marker.querySelector('.calculating-check');
+                        var svg = marker.querySelector('svg');
+                        if (check) {
+                            check.style.borderColor = '#B2BFBE';
+                            check.style.background = 'rgba(178, 191, 190, 0.15)';
+                        }
+                        if (svg) {
+                            svg.style.opacity = '1';
+                            svg.style.transition = 'opacity 0.2s ease';
+                        }
+                        // Update text color
+                        var label = marker.querySelector('span');
+                        if (label) label.style.color = '#F0EEE9';
+                    }, 150);
+                }, t);
+                totalTime = t + 300;
+            })(i);
         }
 
-        var cats = getCategories();
+        // Auto-advance after all markers complete
+        setTimeout(function() {
+            if (callback) callback();
+        }, totalTime + 600);
+    }
+
+    // ── Build & Bind ──────────────────────────────────────────────────
+
+    function buildAllScreens() {
         var html = '';
-        for (var c = 0; c < cats.length; c++) {
-            html += buildSymptomScreen(c);
-        }
+        html += buildWelcome();
+        html += buildGender();
+        html += buildAge();
+        html += buildPrimaryConcern();
+        html += buildInterstitial1();
+        html += buildSymptomGroup(SCREEN.SYMPTOM_1, 'energy_physical', 1);
+        html += buildSymptomGroup(SCREEN.SYMPTOM_2, 'mental_mood', 2);
+        html += buildInterstitial2();
+        html += buildSymptomGroup(SCREEN.SYMPTOM_3, 'sleep_sexual', 3);
+        html += buildDuration();
+        html += buildInterstitial3();
         html += buildLifestyle();
+        html += buildReadiness();
         html += buildEmailCapture();
-        html += buildResults();
+        html += buildCalculating();
+        html += buildResultsShell();
 
-        root.insertAdjacentHTML('beforeend', html);
-
-        // Bind all new screens
-        bindSymptomScreens();
-        bindLifestyle();
-        bindEmailCapture();
-        bindResultsCTAs();
+        root.innerHTML = html;
     }
 
-    // ── Event Binding ───────────────────────────────────────────────────
-
-    function bindWelcome() {
-        var btn = document.getElementById('quiz-start-btn');
-        if (btn) btn.addEventListener('click', function() {
+    function bindAll() {
+        // Welcome
+        var startBtn = document.getElementById('quiz-start-btn');
+        if (startBtn) startBtn.addEventListener('click', function() {
             ga('quiz_start', { page: '/quiz/' });
-            show(1);
+            show(SCREEN.GENDER);
         });
-    }
 
-    function bindGender() {
-        var cards = root.querySelectorAll('[data-gender]');
-        for (var i = 0; i < cards.length; i++) {
-            cards[i].addEventListener('click', function() {
-                state.gender = this.getAttribute('data-gender');
-                // Visual feedback
-                var all = root.querySelectorAll('[data-gender]');
-                for (var j = 0; j < all.length; j++) all[j].classList.remove('selected');
-                this.classList.add('selected');
-                ga('quiz_step', { step: 'gender', value: state.gender });
-                // Build remaining screens now that we know the path
-                buildSymptomAndRemainingScreens();
-                setTimeout(function() { show(2); }, 200);
-            });
-        }
-    }
-
-    function bindAge() {
+        // Use delegated event handling on root for most interactions
         root.addEventListener('click', function(e) {
-            var btn = e.target.closest('[data-age]');
-            if (!btn) return;
-            state.age = btn.getAttribute('data-age');
-            var all = root.querySelectorAll('[data-age]');
-            for (var j = 0; j < all.length; j++) all[j].classList.remove('selected');
-            btn.classList.add('selected');
-            ga('quiz_step', { step: 'age', value: state.age });
-            setTimeout(function() { show(3); }, 200);
-        });
-    }
+            var target = e.target;
 
-    function bindSymptomScreens() {
-        // Severity pills
-        var pills = root.querySelectorAll('.severity-pill');
-        for (var i = 0; i < pills.length; i++) {
-            pills[i].addEventListener('click', function() {
-                var cat = this.getAttribute('data-cat');
-                var item = this.getAttribute('data-item');
-                var level = parseInt(this.getAttribute('data-level'), 10);
+            // Gender cards (auto-advance)
+            var genderCard = target.closest('[data-gender]');
+            if (genderCard) {
+                state.gender = genderCard.getAttribute('data-gender');
+                var allG = root.querySelectorAll('[data-gender]');
+                for (var j = 0; j < allG.length; j++) allG[j].classList.remove('selected');
+                genderCard.classList.add('selected');
+                ga('quiz_gender', { value: state.gender });
+                // Populate gender-specific content
+                updateInterstitial1();
+                populateSymptomItems('energy_physical');
+                populateSymptomItems('mental_mood');
+                populateSymptomItems('sleep_sexual');
+                // Re-bind severity pills after populating
+                bindSeverityPills();
+                setTimeout(function() { show(SCREEN.AGE); }, 400);
+                return;
+            }
 
-                // Store answer
-                state.answers[cat + '_' + item] = level;
+            // Age cards (auto-advance)
+            var ageCard = target.closest('[data-age]');
+            if (ageCard) {
+                state.age = ageCard.getAttribute('data-age');
+                var allA = root.querySelectorAll('[data-age]');
+                for (var k = 0; k < allA.length; k++) allA[k].classList.remove('selected');
+                ageCard.classList.add('selected');
+                ga('quiz_age', { value: state.age });
+                setTimeout(function() { show(SCREEN.PRIMARY_CONCERN); }, 400);
+                return;
+            }
 
-                // Update UI: deselect siblings, select this
-                var row = this.parentElement;
-                var siblings = row.querySelectorAll('.severity-pill');
-                for (var s = 0; s < siblings.length; s++) {
-                    siblings[s].setAttribute('data-selected', 'false');
-                }
-                this.setAttribute('data-selected', 'true');
+            // Primary concern (auto-advance)
+            var concernCard = target.closest('[data-concern]');
+            if (concernCard) {
+                state.primaryConcern = concernCard.getAttribute('data-concern');
+                var allC = root.querySelectorAll('[data-concern]');
+                for (var m = 0; m < allC.length; m++) allC[m].classList.remove('selected');
+                concernCard.classList.add('selected');
+                ga('quiz_primary_concern', { value: state.primaryConcern });
+                setTimeout(function() { show(SCREEN.INTERSTITIAL_1); }, 400);
+                return;
+            }
 
-                // Check if all items in this category are answered to enable Next
-                var screen = this.closest('.quiz-screen');
-                var nextBtn = screen.querySelector('.quiz-next-btn');
-                if (nextBtn) {
-                    var catIdx = parseInt(nextBtn.getAttribute('data-from-cat'), 10);
-                    if (allItemsAnswered(catIdx)) {
-                        nextBtn.classList.remove('opacity-40', 'pointer-events-none');
-                        nextBtn.disabled = false;
-                    }
-                }
-            });
-        }
+            // Duration (auto-advance)
+            var durationCard = target.closest('[data-duration]');
+            if (durationCard) {
+                state.duration = durationCard.getAttribute('data-duration');
+                var allD = root.querySelectorAll('[data-duration]');
+                for (var d = 0; d < allD.length; d++) allD[d].classList.remove('selected');
+                durationCard.classList.add('selected');
+                ga('quiz_duration', { value: state.duration });
+                setTimeout(function() { show(SCREEN.INTERSTITIAL_3); }, 400);
+                return;
+            }
 
-        // Next buttons on symptom screens
-        var nextBtns = root.querySelectorAll('.quiz-next-btn');
-        for (var n = 0; n < nextBtns.length; n++) {
-            nextBtns[n].addEventListener('click', function() {
-                if (this.disabled) return;
-                var to = parseInt(this.getAttribute('data-to'), 10);
-                var catIdx = parseInt(this.getAttribute('data-from-cat'), 10);
-                ga('quiz_step', { step: 'category_' + (catIdx + 1), category: getCategories()[catIdx].label });
-                show(to);
-            });
-        }
+            // Readiness (auto-advance)
+            var readinessCard = target.closest('[data-readiness]');
+            if (readinessCard) {
+                state.readiness = readinessCard.getAttribute('data-readiness');
+                var allR = root.querySelectorAll('[data-readiness]');
+                for (var r = 0; r < allR.length; r++) allR[r].classList.remove('selected');
+                readinessCard.classList.add('selected');
+                ga('quiz_readiness', { value: state.readiness });
+                setTimeout(function() { show(SCREEN.EMAIL); }, 400);
+                return;
+            }
 
-        // Back buttons
-        var backBtns = root.querySelectorAll('.quiz-back-btn');
-        for (var b = 0; b < backBtns.length; b++) {
-            backBtns[b].addEventListener('click', function() {
-                var to = parseInt(this.getAttribute('data-to'), 10);
-                show(to);
-            });
-        }
-    }
+            // Continue buttons (interstitials)
+            var continueBtn = target.closest('.quiz-continue-btn');
+            if (continueBtn) {
+                var toScreen = parseInt(continueBtn.getAttribute('data-to'), 10);
+                show(toScreen);
+                return;
+            }
 
-    function bindLifestyle() {
-        // Toggle switches
-        root.addEventListener('click', function(e) {
-            var track = e.target.closest('.toggle-track');
-            if (!track) return;
-            var key = track.getAttribute('data-toggle');
-            state.lifestyle[key] = !state.lifestyle[key];
-            track.classList.toggle('on', state.lifestyle[key]);
-        });
+            // Symptom Next buttons
+            var symptomNext = target.closest('.quiz-symptom-next');
+            if (symptomNext && !symptomNext.disabled) {
+                var groupKey = symptomNext.getAttribute('data-group');
+                var toIdx = parseInt(symptomNext.getAttribute('data-to'), 10);
+                ga('quiz_symptom_complete', { group: groupKey });
+                show(toIdx);
+                return;
+            }
 
-        // Next button
-        var nextBtn = root.querySelector('.quiz-lifestyle-next');
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
+            // Back buttons
+            var backBtn = target.closest('.quiz-back-btn');
+            if (backBtn) {
+                var backTo = parseInt(backBtn.getAttribute('data-to'), 10);
+                show(backTo);
+                return;
+            }
+
+            // Toggle switches
+            var track = target.closest('.toggle-track');
+            if (track) {
+                var toggleKey = track.getAttribute('data-toggle');
+                state.lifestyle[toggleKey] = !state.lifestyle[toggleKey];
+                track.classList.toggle('on', state.lifestyle[toggleKey]);
+                return;
+            }
+
+            // Lifestyle next
+            var lifestyleNext = target.closest('.quiz-lifestyle-next');
+            if (lifestyleNext) {
                 ga('quiz_step', { step: 'lifestyle' });
-                show(12);
-            });
-        }
-    }
+                show(SCREEN.READINESS);
+                return;
+            }
 
-    function bindEmailCapture() {
+            // Results CTAs
+            var cta = target.closest('.quiz-cta');
+            if (cta) {
+                var ctaName = cta.getAttribute('data-cta');
+                ga('quiz_cta_click', { cta_name: ctaName, page: '/quiz/' });
+                return;
+            }
+        });
+
+        // Email submit
         var submitBtn = document.getElementById('quiz-submit-email');
-        var skipBtn = document.getElementById('quiz-skip-email');
-
         if (submitBtn) {
             submitBtn.addEventListener('click', function() {
                 var nameInput = document.getElementById('quiz-name');
                 var emailInput = document.getElementById('quiz-email');
+                var errorEl = document.getElementById('quiz-email-error');
                 state.name = (nameInput.value || '').trim();
                 state.email = (emailInput.value || '').trim();
 
-                if (!state.email || state.email.indexOf('@') === -1) {
+                // Validate email
+                if (!state.email || state.email.indexOf('@') === -1 || state.email.indexOf('.') === -1) {
                     emailInput.style.borderColor = '#dc2626';
+                    if (errorEl) errorEl.classList.remove('hidden');
                     emailInput.focus();
                     return;
                 }
 
-                ga('quiz_email_capture', { page: '/quiz/' });
-                submitBtn.textContent = 'Sending\u2026';
-                submitBtn.disabled = true;
+                // Clear error state
+                emailInput.style.borderColor = '';
+                if (errorEl) errorEl.classList.add('hidden');
 
-                sendResults(function() {
-                    showResults();
-                });
-            });
-        }
+                ga('quiz_email_submit', { page: '/quiz/' });
 
-        if (skipBtn) {
-            skipBtn.addEventListener('click', function() {
-                showResults();
+                // Fire-and-forget: submit data then show calculating
+                sendResults();
+                showCalculating();
             });
         }
     }
 
-    function bindResultsCTAs() {
-        root.addEventListener('click', function(e) {
-            var cta = e.target.closest('.quiz-cta');
-            if (!cta) return;
-            var ctaName = cta.getAttribute('data-cta');
-            ga('quiz_cta_click', { cta_name: ctaName, page: '/quiz/' });
-        });
+    function bindSeverityPills() {
+        // Use delegated handler — already bound on root, but we need specific pill logic
+        // This is handled via the root click listener below
     }
 
-    function showResults() {
-        renderResults();
-        ga('quiz_complete', {
-            gender: state.gender,
-            age: state.age,
-            score: computeTotalScore(),
-            classification: classify(computeTotalScore()).level
-        });
-        show(13);
-        // Hide progress bar on results
-        progressBar.style.width = '100%';
-    }
+    // Severity pill handler — needs to be in the root delegated listener
+    // We add it separately since pills are populated dynamically
+    function handleSeverityPill(pill) {
+        var groupKey = pill.getAttribute('data-group');
+        var item = pill.getAttribute('data-item');
+        var level = parseInt(pill.getAttribute('data-level'), 10);
 
-    function computeTotalScore() {
-        var total = 0;
-        for (var key in state.answers) {
-            if (state.answers.hasOwnProperty(key)) {
-                total += state.answers[key];
+        state.answers[groupKey + '_' + item] = level;
+
+        // Update UI: deselect siblings, select this
+        var row = pill.parentElement;
+        var siblings = row.querySelectorAll('.severity-pill');
+        for (var s = 0; s < siblings.length; s++) {
+            siblings[s].setAttribute('data-selected', 'false');
+        }
+        pill.setAttribute('data-selected', 'true');
+
+        // Check if all items in this group are answered to enable Next
+        var screen = pill.closest('.quiz-screen');
+        var nextBtn = screen.querySelector('.quiz-symptom-next');
+        if (nextBtn) {
+            var gk = nextBtn.getAttribute('data-group');
+            if (allGroupAnswered(gk)) {
+                nextBtn.classList.remove('opacity-40', 'pointer-events-none');
+                nextBtn.disabled = false;
             }
         }
-        return total;
+
+        saveState();
+    }
+
+    // Add severity pill click handler to root
+    function bindSeverityPillDelegation() {
+        root.addEventListener('click', function(e) {
+            var pill = e.target.closest('.severity-pill');
+            if (pill) {
+                handleSeverityPill(pill);
+            }
+        });
+    }
+
+    // ── Calculating & Results Flow ─────────────────────────────────────
+
+    function showCalculating() {
+        show(SCREEN.CALCULATING);
+        // Reset marker states
+        var markers = root.querySelectorAll('.calculating-marker');
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].style.opacity = '0';
+            var check = markers[i].querySelector('.calculating-check');
+            var svg = markers[i].querySelector('svg');
+            if (check) { check.style.borderColor = ''; check.style.background = ''; }
+            if (svg) { svg.style.opacity = '0'; }
+            var label = markers[i].querySelector('span');
+            if (label) label.style.color = '';
+        }
+        runCalculatingAnimation(function() {
+            renderResults();
+            ga('quiz_results_view', {
+                gender: state.gender,
+                age: state.age,
+                score: computeScores().score,
+                classification: computeScores().classification.level
+            });
+            show(SCREEN.RESULTS);
+            progressBar.style.width = '100%';
+            clearSavedState();
+        });
     }
 
     // ── Email Submission ────────────────────────────────────────────────
 
-    function sendResults(callback) {
-        var cats = getCategories();
-        var catScores = [];
-        var totalScore = 0;
-
-        for (var c = 0; c < cats.length; c++) {
-            var cat = cats[c];
-            var catTotal = 0;
-            for (var i = 0; i < cat.items.length; i++) {
-                catTotal += state.answers[cat.key + '_' + i] || 0;
-            }
-            totalScore += catTotal;
-            catScores.push({ key: cat.key, label: cat.label, score: catTotal, max: cat.items.length * 3 });
-        }
+    function sendResults() {
+        var scores = computeScores();
 
         var payload = {
-            name: state.name,
+            name: state.name || null,
             email: state.email,
             gender: state.gender,
             age: state.age,
-            totalScore: totalScore,
-            maxScore: state.gender === 'female' ? 72 : 66,
-            classification: classify(totalScore).level,
-            categories: catScores,
+            primaryConcern: state.primaryConcern,
+            score: scores.score,
+            rawScore: scores.rawScore,
+            maxRawScore: scores.maxRawScore,
+            classification: scores.classification.level,
+            categories: scores.categories,
+            duration: state.duration,
+            readiness: state.readiness,
             lifestyle: state.lifestyle
         };
 
@@ -878,75 +991,80 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
-        }).then(function() {
-            clearSavedState();
-            if (callback) callback();
         }).catch(function() {
-            // Still show results even if email fails
-            clearSavedState();
-            if (callback) callback();
+            // Fire-and-forget: don't block on failure
         });
     }
 
-    // ── Restore from saved state ─────────────────────────────────────────
+    // ── Restore from Saved State ─────────────────────────────────────
 
     function restoreQuiz() {
         var saved = loadSavedState();
+
+        buildAllScreens();
+        bindAll();
+        bindSeverityPillDelegation();
+
         if (!saved || !saved.gender) {
-            buildQuiz();
+            show(SCREEN.WELCOME);
             return;
         }
 
         // Restore state
         state.gender = saved.gender;
         state.age = saved.age;
+        state.primaryConcern = saved.primaryConcern;
         state.answers = saved.answers || {};
+        state.duration = saved.duration;
+        state.readiness = saved.readiness;
         state.lifestyle = saved.lifestyle || { exercise: false, sleep: false, tested: false };
         state.name = saved.name || '';
         state.email = saved.email || '';
 
-        // Build the full quiz with all screens
-        root.innerHTML = buildWelcome() + buildGender() + buildAge();
-        bindWelcome();
-        bindGender();
-        bindAge();
+        // Populate gender-specific content
+        updateInterstitial1();
+        populateSymptomItems('energy_physical');
+        populateSymptomItems('mental_mood');
+        populateSymptomItems('sleep_sexual');
 
-        // Build remaining screens since gender is set
-        buildSymptomAndRemainingScreens();
-
-        // Rehydrate UI: gender selection
+        // Rehydrate UI: gender
         var genderCard = root.querySelector('[data-gender="' + state.gender + '"]');
         if (genderCard) genderCard.classList.add('selected');
 
-        // Rehydrate UI: age selection
+        // Rehydrate UI: age
         if (state.age) {
             var ageCard = root.querySelector('[data-age="' + state.age + '"]');
             if (ageCard) ageCard.classList.add('selected');
         }
 
-        // Rehydrate UI: symptom pills
-        for (var key in state.answers) {
-            if (!state.answers.hasOwnProperty(key)) continue;
-            var val = state.answers[key];
-            var parts = key.split('_');
-            var catKey = parts.slice(0, -1).join('_');
-            var itemIdx = parts[parts.length - 1];
-            var pill = root.querySelector('.severity-pill[data-cat="' + catKey + '"][data-item="' + itemIdx + '"][data-level="' + val + '"]');
-            if (pill) pill.setAttribute('data-selected', 'true');
+        // Rehydrate UI: primary concern
+        if (state.primaryConcern) {
+            var concernCard = root.querySelector('[data-concern="' + state.primaryConcern + '"]');
+            if (concernCard) concernCard.classList.add('selected');
         }
 
-        // Enable next buttons for completed categories
-        var cats = getCategories();
-        for (var c = 0; c < cats.length; c++) {
-            if (allItemsAnswered(c)) {
-                var screenIdx = c + 3;
-                var screen = root.querySelector('[data-screen="' + screenIdx + '"]');
-                if (screen) {
-                    var nextBtn = screen.querySelector('.quiz-next-btn');
-                    if (nextBtn) {
-                        nextBtn.classList.remove('opacity-40', 'pointer-events-none');
-                        nextBtn.disabled = false;
-                    }
+        // Rehydrate UI: duration
+        if (state.duration) {
+            var durationCard = root.querySelector('[data-duration="' + state.duration + '"]');
+            if (durationCard) durationCard.classList.add('selected');
+        }
+
+        // Rehydrate UI: readiness
+        if (state.readiness) {
+            var readinessCard = root.querySelector('[data-readiness="' + state.readiness + '"]');
+            if (readinessCard) readinessCard.classList.add('selected');
+        }
+
+        // Rehydrate symptom severity pills (already populated with correct state above)
+
+        // Enable next buttons for completed symptom groups
+        var groups = ['energy_physical', 'mental_mood', 'sleep_sexual'];
+        for (var c = 0; c < groups.length; c++) {
+            if (allGroupAnswered(groups[c])) {
+                var nextBtn = root.querySelector('.quiz-symptom-next[data-group="' + groups[c] + '"]');
+                if (nextBtn) {
+                    nextBtn.classList.remove('opacity-40', 'pointer-events-none');
+                    nextBtn.disabled = false;
                 }
             }
         }
@@ -959,7 +1077,7 @@
             }
         }
 
-        // Rehydrate name/email inputs
+        // Rehydrate name/email
         if (state.name) {
             var nameInput = document.getElementById('quiz-name');
             if (nameInput) nameInput.value = state.name;
@@ -969,10 +1087,12 @@
             if (emailInput) emailInput.value = state.email;
         }
 
-        // If on results screen, re-render results
+        // Determine which screen to show
         var targetScreen = saved.currentScreen || 0;
-        if (targetScreen === 13) {
-            renderResults();
+
+        // Don't restore to calculating or results — go to email instead
+        if (targetScreen >= SCREEN.CALCULATING) {
+            targetScreen = SCREEN.EMAIL;
         }
 
         show(targetScreen);
