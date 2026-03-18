@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Booked! — Coalition × Moonshot Medical</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <style>
+        .hero-gradient {
+            background: linear-gradient(180deg, #101921 0%, #1a2730 50%, #2C353E 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .check-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(74, 222, 128, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        .check-circle svg {
+            width: 40px;
+            height: 40px;
+            color: #4ade80;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <script src="/shared/header.js" defer></script>
+
+    <main class="flex-grow pt-20">
+
+        <!-- Hero -->
+        <section class="hero-gradient py-20 md:py-28">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="check-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-4">YOU'RE BOOKED!</h1>
+                <p class="text-brand-gray text-lg md:text-xl font-light max-w-xl mx-auto">
+                    Your time slot for the Coalition blood draw event is confirmed. Check your email for a receipt from Stripe.
+                </p>
+            </div>
+        </section>
+
+        <!-- Confirmation Card -->
+        <section class="py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-6">Event Details</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between border-b border-brand-slate/10 pb-3">
+                            <span class="text-brand-slate font-light">Event</span>
+                            <span class="font-medium">Coalition x Moonshot Mobile Blood Draw</span>
+                        </div>
+                        <div class="flex justify-between border-b border-brand-slate/10 pb-3">
+                            <span class="text-brand-slate font-light">Date</span>
+                            <span class="font-medium">Saturday, April 4, 2026</span>
+                        </div>
+                        <div class="flex justify-between border-b border-brand-slate/10 pb-3">
+                            <span class="text-brand-slate font-light">Location</span>
+                            <span class="font-medium text-right">Coalition Strength & Conditioning<br><span class="text-sm text-brand-slate font-light">2051 West Carroll Ave, Chicago, IL 60612</span></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-brand-slate font-light">Duration</span>
+                            <span class="font-medium">~10 minutes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fasting Prep -->
+                <div class="bg-brand-dark text-brand-light rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-2">Fasting Reminder</h2>
+                    <p class="text-brand-gray font-light text-sm mb-6">Accurate results require fasting. Follow these guidelines the night before and morning of the event.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Fast 8-12 hours</strong> before your appointment. Stop eating by 10 PM the night before.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Water and black coffee are fine.</strong> No cream, sugar, juice, or food.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Avoid intense exercise</strong> the morning of the draw. It can skew hormone and metabolic markers.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Wear short sleeves</strong> or easy-to-roll sleeves for the blood draw.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Stay hydrated.</strong> Drink plenty of water — dehydration makes veins harder to find.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What to Bring -->
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-4">What to Bring</h2>
+                    <ul class="text-brand-slate text-sm font-light space-y-2">
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#8226;</span> Valid photo ID</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#8226;</span> Short sleeves or easy-to-roll sleeves</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#8226;</span> An empty stomach (fasted 8-12 hours)</li>
+                    </ul>
+                </div>
+
+                <!-- What's Next -->
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-4">What Happens Next</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                            <div>
+                                <p class="font-medium">Show up fasted on April 4</p>
+                                <p class="text-brand-slate text-sm font-light">Arrive at Coalition at your scheduled time. The draw takes about 10 minutes.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                            <div>
+                                <p class="font-medium">Results in 3-5 business days</p>
+                                <p class="text-brand-slate text-sm font-light">Your samples are sent to Quest Diagnostics. We'll notify you when results are ready.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                            <div>
+                                <p class="font-medium">Provider consultation</p>
+                                <p class="text-brand-slate text-sm font-light">A licensed provider walks through your results one-on-one — in person or telehealth. Included with every package.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="text-center">
+                    <p class="text-brand-slate text-sm font-light">
+                        Questions? Contact Moonshot Medical at
+                        <a href="tel:+12244354280" class="text-brand-dark underline decoration-brand-slate/30 hover:decoration-brand-dark">(224) 435-4280</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/shared/footer.js"></script>
+
+</body>
+</html>
