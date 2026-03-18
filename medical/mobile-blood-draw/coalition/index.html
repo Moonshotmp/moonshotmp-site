@@ -76,12 +76,17 @@
         }
         .slot-btn {
             border: 1px solid rgba(44, 53, 62, 0.2);
-            padding: 0.5rem 0.75rem;
+            padding: 0.625rem 0.25rem;
             cursor: pointer;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             transition: all 0.15s ease;
             text-align: center;
             background: #fff;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.75rem;
         }
         .slot-btn:hover:not(.taken) {
             border-color: #101921;
@@ -129,7 +134,7 @@
                 </p>
 
                 <!-- Date Badge -->
-                <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-sm px-5 py-3 mt-4 mb-8">
+                <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-sm px-8 py-3 mt-4 mb-8">
                     <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
                     <span class="text-brand-light font-bold text-sm tracking-wide" style="font-family: 'Oswald', sans-serif;">SATURDAY, APRIL 4, 2026</span>
                 </div>
@@ -189,10 +194,10 @@
                     Coalition passes the partner discount directly to you. Every package includes a follow-up consultation with a licensed provider. HSA/FSA eligible.
                 </p>
 
-                <div class="grid md:grid-cols-3 gap-6">
+                <div class="grid md:grid-cols-3 gap-6 items-start">
 
                     <!-- Basic -->
-                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8 flex flex-col">
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
                         <h3 class="text-2xl font-bold mb-2">Basic Hormone Panel</h3>
                         <div class="flex items-baseline gap-3 mb-1">
                             <p class="text-4xl font-bold">$125</p>
@@ -203,7 +208,7 @@
                         <p class="text-brand-slate text-sm font-light mb-6">
                             Key hormone and metabolic markers — the essential screening to find out where you stand on testosterone, thyroid, cholesterol, and blood sugar.
                         </p>
-                        <div class="border-t border-brand-slate/10 pt-6 mt-auto">
+                        <div class="border-t border-brand-slate/10 pt-6 mt-6">
                             <p class="text-brand-slate text-xs uppercase tracking-widest mb-3">What's Tested</p>
                             <ul class="text-brand-slate text-sm font-light space-y-2">
                                 <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Comprehensive Metabolic Panel</li>
@@ -222,7 +227,7 @@
                     </div>
 
                     <!-- Comprehensive (Featured) -->
-                    <div class="bg-white border-2 border-brand-dark rounded-sm p-8 flex flex-col" style="padding-top: 3.5rem;">
+                    <div class="bg-white border-2 border-brand-dark rounded-sm p-8" style="padding-top: 3.5rem;">
                         <div class="bg-brand-dark text-brand-light text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-sm mb-6" style="margin-top: -4.5rem; width: fit-content;">Most Popular</div>
                         <h3 class="text-2xl font-bold mb-2">Comprehensive 60+ Panel</h3>
                         <div class="flex items-baseline gap-3 mb-1">
@@ -234,7 +239,7 @@
                         <p class="text-brand-slate text-sm font-light mb-6">
                             60+ biomarkers that go way beyond what your doctor typically orders. Hormones, cardiovascular risk, thyroid, inflammation, vitamins — the works.
                         </p>
-                        <div class="border-t border-brand-slate/10 pt-6 mt-auto">
+                        <div class="border-t border-brand-slate/10 pt-6 mt-6">
                             <p class="text-brand-slate text-xs uppercase tracking-widest mb-3">Everything in Basic, Plus</p>
                             <ul class="text-brand-slate text-sm font-light space-y-2">
                                 <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> CBC with Differential <span class="text-brand-slate/50 text-xs ml-1">(blood cell health)</span></li>
@@ -255,7 +260,7 @@
                     </div>
 
                     <!-- Elite -->
-                    <div class="bg-brand-dark text-brand-light rounded-sm p-8 flex flex-col" style="padding-top: 3.5rem;">
+                    <div class="bg-brand-dark text-brand-light rounded-sm p-8" style="padding-top: 3.5rem;">
                         <div class="bg-brand-gray text-brand-dark text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-sm mb-6" style="margin-top: -4.5rem; width: fit-content;">Best Value</div>
                         <h3 class="text-2xl font-bold mb-2">Elite Panel + DEXA</h3>
                         <div class="flex items-baseline gap-3 mb-1">
@@ -267,7 +272,7 @@
                         <p class="text-brand-gray text-sm font-light mb-6">
                             Everything in the Comprehensive Panel, plus a DEXA body composition scan — medical-grade body fat %, lean muscle mass per limb, visceral fat, and bone density.
                         </p>
-                        <div class="border-t border-white/10 pt-6 mt-auto">
+                        <div class="border-t border-white/10 pt-6 mt-6">
                             <p class="text-brand-gray text-xs uppercase tracking-widest mb-3">Everything in Comprehensive, Plus</p>
                             <ul class="text-brand-gray text-sm font-light space-y-2">
                                 <li class="flex items-start"><span class="text-brand-gray mr-2 mt-0.5">&#10003;</span> DEXA Body Composition Scan</li>
@@ -315,7 +320,7 @@
                     <!-- Step 2: Time Slot -->
                     <div class="mb-8">
                         <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Step 2 — Pick a Time Slot <span class="normal-case tracking-normal">(Sat, April 4)</span></p>
-                        <div id="slots-grid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-2">
+                        <div id="slots-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2">
                             <p class="col-span-full text-brand-slate text-sm font-light text-center py-4">Loading available times...</p>
                         </div>
                         <p class="text-brand-slate/50 text-xs mt-2">Slots are held for 30 minutes during checkout.</p>
@@ -342,11 +347,11 @@
                                 <input type="tel" id="bf-phone" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="(312) 555-1234" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-brand-dark mb-1">Date of Birth <span class="font-light text-brand-slate">(optional)</span></label>
-                                <input type="date" id="bf-dob" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark">
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Date of Birth *</label>
+                                <input type="date" id="bf-dob" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-brand-dark mb-1">Gender <span class="font-light text-brand-slate">(optional)</span></label>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Biological Sex *</label>
                                 <select id="bf-gender" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark bg-white">
                                     <option value="">Select...</option>
                                     <option value="male">Male</option>
@@ -655,6 +660,8 @@
         if (!last) { showError('Last name is required.'); return; }
         if (!email || email.indexOf('@') === -1) { showError('A valid email address is required.'); return; }
         if (!phone) { showError('Phone number is required.'); return; }
+        if (!dob) { showError('Date of birth is required.'); return; }
+        if (!gender) { showError('Biological sex is required for accurate biomarker panels.'); return; }
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Reserving your slot...';
