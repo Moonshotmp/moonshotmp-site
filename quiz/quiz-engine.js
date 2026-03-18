@@ -136,9 +136,9 @@
 
     var gapStats = {
         male: [
-            '47% improvement in sustained energy',
-            '3x faster workout recovery',
-            'Significant improvement in sleep quality within 4-6 weeks'
+            'Noticeable improvement in energy and mental clarity within 4-6 weeks',
+            'Measurable gains in body composition and workout recovery',
+            'Better sleep quality and morning alertness'
         ],
         female: [
             'Significant improvement in energy and mood within 4-6 weeks',
@@ -152,7 +152,7 @@
             male: '1 in 4 men over 30 has testosterone below the optimal range. Most don\'t know it.',
             female: 'Hormonal shifts can start 10 years before menopause. Most women are told it\'s \u201Cjust stress.\u201D'
         },
-        screen7: '\u201CNormal\u201D lab ranges miss up to 73% of hormonal imbalances. We look at where your body functions best, not just where it avoids disease.',
+        screen7: '\u201CNormal\u201D lab ranges are designed to rule out disease \u2014 not to identify where you function best. That\u2019s why you can feel terrible and still be told your labs are \u201Cnormal.\u201D',
         screen10: 'Patients with similar profiles who got tested discovered an average of 4 actionable findings. Most had been told their labs were \u201Cnormal.\u201D'
     };
 
@@ -630,6 +630,7 @@
         html += '<div class="bg-brand-slate rounded-sm p-8 mb-8 text-center">' +
             '<h3 class="text-brand-light font-bold mb-4">WHAT\'S NEXT</h3>' +
             '<p class="text-brand-gray font-light mb-2">A quiz can only tell you so much. Blood work tells the whole story.</p>' +
+            '<p class="text-brand-gray/70 text-xs mb-6">These symptoms can have multiple causes including thyroid dysfunction, anemia, sleep disorders, and other conditions. Comprehensive testing identifies the right path forward.</p>' +
             '<p class="text-brand-gray font-light text-sm mb-8">Your quiz results will be reviewed by our clinical team before your first visit.</p>' +
             '<a href="/medical/" class="btn-primary text-lg px-10 py-4 inline-block quiz-cta" data-cta="book_consultation">BOOK YOUR FREE CONSULTATION</a>' +
             '<p class="text-brand-gray/60 text-xs mt-4">We have limited consultation slots available this week.</p>' +

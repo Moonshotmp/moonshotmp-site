@@ -85,19 +85,19 @@ export default async function handler(req) {
     ? {
         intro: 'Women with your profile who optimized their hormones reported:',
         bullets: [
-          '73% improvement in energy and daily stamina',
-          '68% reduction in mood swings and anxiety',
-          '81% improvement in sleep quality',
-          '65% improvement in body composition'
+          'Significant improvement in energy and mood within 4-6 weeks',
+          'Better sleep quality and fewer night-time disruptions',
+          'Improved mental clarity and emotional balance',
+          'Measurable changes in body composition over 8-12 weeks'
         ]
       }
     : {
         intro: 'Men with your profile who addressed their hormone levels reported:',
         bullets: [
-          '78% improvement in energy and mental clarity',
-          '71% improvement in body composition and strength',
-          '83% improvement in sleep quality',
-          '69% improvement in mood stability'
+          'Noticeable improvement in energy and mental clarity within 4-6 weeks',
+          'Measurable gains in body composition and workout recovery',
+          'Better sleep quality and morning alertness',
+          'Improved mood stability and motivation'
         ]
       };
 
@@ -155,7 +155,9 @@ export default async function handler(req) {
     </div>
 
     <p style="color: #666; font-size: 11px; text-align: center; margin-top: 24px; line-height: 1.5;">
-      This quiz is for educational purposes only and is not a medical diagnosis.<br>
+      This assessment is for informational purposes only and does not constitute medical advice.<br>
+      Your symptoms may have multiple causes including thyroid, anemia, and sleep disorders.<br>
+      Please consult a healthcare provider for diagnosis and treatment.<br>
       Moonshot Medical and Performance &middot; 542 Busse Hwy, Park Ridge, IL 60068
     </p>
   </div>
