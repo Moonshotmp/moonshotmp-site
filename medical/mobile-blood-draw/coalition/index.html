@@ -52,12 +52,51 @@
             opacity: 0.7;
             position: relative;
         }
-        .pulse-dot {
-            animation: pulse-dot 2s ease-in-out infinite;
+        .pkg-btn {
+            border: 2px solid rgba(44, 53, 62, 0.15);
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+            background: #fff;
         }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
+        .pkg-btn:hover {
+            border-color: rgba(44, 53, 62, 0.4);
+        }
+        .pkg-btn.selected {
+            background: #101921;
+            color: #F0EEE9;
+            border-color: #101921;
+        }
+        .pkg-btn.selected .pkg-price {
+            color: #F0EEE9;
+        }
+        .pkg-btn.selected .pkg-sub {
+            color: #B2BFBE;
+        }
+        .slot-btn {
+            border: 1px solid rgba(44, 53, 62, 0.2);
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.15s ease;
+            text-align: center;
+            background: #fff;
+        }
+        .slot-btn:hover:not(.taken) {
+            border-color: #101921;
+            background: rgba(16, 25, 33, 0.05);
+        }
+        .slot-btn.selected {
+            background: #101921;
+            color: #F0EEE9;
+            border-color: #101921;
+        }
+        .slot-btn.taken {
+            opacity: 0.35;
+            text-decoration: line-through;
+            cursor: not-allowed;
+            background: #f5f5f5;
         }
     </style>
 </head>
@@ -91,8 +130,8 @@
 
                 <!-- Date Badge -->
                 <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-sm px-5 py-3 mt-4 mb-8">
-                    <span class="pulse-dot w-2 h-2 bg-brand-gray rounded-full inline-block"></span>
-                    <span class="text-brand-light font-bold text-sm tracking-wide" style="font-family: 'Oswald', sans-serif;">SPRING 2026 — DATE COMING SOON</span>
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+                    <span class="text-brand-light font-bold text-sm tracking-wide" style="font-family: 'Oswald', sans-serif;">SATURDAY, APRIL 4, 2026</span>
                 </div>
 
                 <div class="block">
@@ -244,10 +283,87 @@
 
                 </div>
 
-                <!-- Book Now (Coming Soon) -->
-                <div class="text-center mt-8">
-                    <a href="#" class="btn-coming-soon text-lg" onclick="return false;">Book Now — Coming Soon</a>
-                    <p class="text-brand-slate/50 text-xs mt-3">Booking link will be activated once the event date is confirmed.</p>
+                <!-- Booking Form -->
+                <div id="booking-form" class="mt-12 bg-white border border-brand-slate/10 rounded-sm p-8">
+                    <h3 class="text-2xl font-bold text-center mb-8">BOOK YOUR SLOT</h3>
+
+                    <!-- Error Display -->
+                    <div id="booking-error" class="hidden bg-red-50 border border-red-200 text-red-800 text-sm p-4 rounded-sm mb-6"></div>
+
+                    <!-- Step 1: Package Selection -->
+                    <div class="mb-8">
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Step 1 — Choose Your Package</p>
+                        <div class="grid md:grid-cols-3 gap-3">
+                            <button type="button" class="pkg-btn rounded-sm" data-pkg="basic" data-name="Basic Hormone Panel" data-price="125">
+                                <p class="font-bold text-sm">Basic Hormone</p>
+                                <p class="pkg-price text-2xl font-bold mt-1">$125</p>
+                                <p class="pkg-sub text-brand-slate text-xs mt-1">14 markers</p>
+                            </button>
+                            <button type="button" class="pkg-btn rounded-sm" data-pkg="comprehensive" data-name="Comprehensive 60+" data-price="285">
+                                <p class="font-bold text-sm">Comprehensive 60+</p>
+                                <p class="pkg-price text-2xl font-bold mt-1">$285</p>
+                                <p class="pkg-sub text-brand-slate text-xs mt-1">60+ markers</p>
+                            </button>
+                            <button type="button" class="pkg-btn rounded-sm" data-pkg="elite" data-name="Elite + DEXA" data-price="405">
+                                <p class="font-bold text-sm">Elite + DEXA</p>
+                                <p class="pkg-price text-2xl font-bold mt-1">$405</p>
+                                <p class="pkg-sub text-brand-slate text-xs mt-1">60+ markers + body comp</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Time Slot -->
+                    <div class="mb-8">
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Step 2 — Pick a Time Slot <span class="normal-case tracking-normal">(Sat, April 4)</span></p>
+                        <div id="slots-grid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-2">
+                            <p class="col-span-full text-brand-slate text-sm font-light text-center py-4">Loading available times...</p>
+                        </div>
+                        <p class="text-brand-slate/50 text-xs mt-2">Slots are held for 30 minutes during checkout.</p>
+                    </div>
+
+                    <!-- Step 3: Patient Info -->
+                    <div class="mb-8">
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Step 3 — Your Information</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">First Name *</label>
+                                <input type="text" id="bf-first" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Last Name *</label>
+                                <input type="text" id="bf-last" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Email *</label>
+                                <input type="email" id="bf-email" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Phone *</label>
+                                <input type="tel" id="bf-phone" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="(312) 555-1234" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Date of Birth <span class="font-light text-brand-slate">(optional)</span></label>
+                                <input type="date" id="bf-dob" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Gender <span class="font-light text-brand-slate">(optional)</span></label>
+                                <select id="bf-gender" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark bg-white">
+                                    <option value="">Select...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other / Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="text-center">
+                        <button type="button" id="booking-submit" disabled class="btn-primary text-lg px-10 py-4 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity">
+                            Select a package & time slot
+                        </button>
+                        <p class="text-brand-slate/50 text-xs mt-3">You'll be redirected to Stripe for secure payment. HSA/FSA eligible.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -324,13 +440,14 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
                         <h3 class="font-bold text-lg mb-4">Location</h3>
-                        <p class="text-brand-slate font-light mb-2">Coalition Gym — Address TBD</p>
-                        <p class="text-brand-slate/60 text-sm font-light">Exact address and parking instructions will be shared once the event is confirmed.</p>
+                        <p class="text-brand-slate font-light mb-2">Coalition Strength & Conditioning</p>
+                        <p class="text-brand-slate font-light mb-2">2051 West Carroll Ave, Chicago, IL 60612</p>
+                        <p class="text-brand-slate/60 text-sm font-light">West Town neighborhood. Street parking available.</p>
                     </div>
                     <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
                         <h3 class="font-bold text-lg mb-4">Date & Time</h3>
-                        <p class="text-brand-slate font-light mb-2">Spring 2026 — Date Coming Soon</p>
-                        <p class="text-brand-slate/60 text-sm font-light">Morning event recommended for easiest fasting. You'll pick a time slot when you book.</p>
+                        <p class="text-brand-slate font-light mb-2">Saturday, April 4, 2026</p>
+                        <p class="text-brand-slate/60 text-sm font-light">7:00 AM &ndash; 10:15 AM CT &middot; 20 time slots available</p>
                     </div>
                     <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
                         <h3 class="font-bold text-lg mb-4">What to Bring</h3>
@@ -419,9 +536,9 @@
                     Discounted pricing exclusively for Coalition members. Real health data. Licensed providers. Zero guesswork.
                 </p>
                 <p class="text-brand-gray font-light mb-10">
-                    Booking will open once the event date is confirmed. Stay tuned to Coalition for updates.
+                    Limited to 20 spots. Prepay to reserve your time slot.
                 </p>
-                <a href="#" class="btn-coming-soon text-lg" onclick="return false;">Book Now — Coming Soon</a>
+                <a href="#booking-form" class="btn-primary text-lg px-10 py-4">Book Your Slot</a>
                 <p class="text-brand-gray/50 text-xs mt-8">Moonshot Medical and Performance &middot; 542 Busse Hwy, Park Ridge, IL 60068 &middot; <a href="tel:+12244354280" class="underline decoration-brand-gray/30 hover:decoration-brand-gray">(224) 435-4280</a></p>
             </div>
         </section>
@@ -429,6 +546,157 @@
     </main>
 
     <script src="/shared/footer.js"></script>
+
+    <script>
+    (function () {
+      // ── State ──────────────────────────────────────────────────
+      let selectedPkg = null;   // { key, name, price }
+      let selectedSlot = null;  // { time, display }
+
+      const errorEl = document.getElementById('booking-error');
+      const submitBtn = document.getElementById('booking-submit');
+      const slotsGrid = document.getElementById('slots-grid');
+
+      function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.classList.remove('hidden');
+        errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      function hideError() {
+        errorEl.classList.add('hidden');
+      }
+
+      function updateSubmitBtn() {
+        if (selectedPkg && selectedSlot) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = selectedPkg.name + ' ($' + selectedPkg.price + ') at ' + selectedSlot.display;
+        } else if (selectedPkg) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Select a time slot';
+        } else if (selectedSlot) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Select a package';
+        } else {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Select a package & time slot';
+        }
+      }
+
+      // ── Package Selection ──────────────────────────────────────
+      document.querySelectorAll('.pkg-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          hideError();
+          document.querySelectorAll('.pkg-btn').forEach(function (b) { b.classList.remove('selected'); });
+          btn.classList.add('selected');
+          selectedPkg = {
+            key: btn.dataset.pkg,
+            name: btn.dataset.name,
+            price: btn.dataset.price,
+          };
+          updateSubmitBtn();
+        });
+      });
+
+      // ── Slot Loading ───────────────────────────────────────────
+      function loadSlots() {
+        slotsGrid.innerHTML = '<p class="col-span-full text-brand-slate text-sm font-light text-center py-4">Loading available times...</p>';
+
+        fetch('/.netlify/functions/mobile-slots?event_slug=coalition-apr-2026')
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (!data.slots || !data.slots.length) {
+              slotsGrid.innerHTML = '<p class="col-span-full text-brand-slate text-sm text-center py-4">No slots available.</p>';
+              return;
+            }
+            slotsGrid.innerHTML = '';
+            data.slots.forEach(function (slot) {
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'slot-btn rounded-sm' + (slot.available ? '' : ' taken');
+              btn.textContent = slot.display;
+              btn.dataset.time = slot.time;
+              btn.dataset.display = slot.display;
+
+              if (slot.available) {
+                btn.addEventListener('click', function () {
+                  hideError();
+                  document.querySelectorAll('.slot-btn.selected').forEach(function (b) { b.classList.remove('selected'); });
+                  btn.classList.add('selected');
+                  selectedSlot = { time: slot.time, display: slot.display };
+                  updateSubmitBtn();
+                });
+              }
+
+              slotsGrid.appendChild(btn);
+            });
+          })
+          .catch(function () {
+            slotsGrid.innerHTML = '<p class="col-span-full text-red-600 text-sm text-center py-4">Failed to load time slots. Please refresh the page.</p>';
+          });
+      }
+
+      loadSlots();
+
+      // ── Form Submission ────────────────────────────────────────
+      submitBtn.addEventListener('click', function () {
+        hideError();
+
+        if (!selectedPkg) { showError('Please select a package.'); return; }
+        if (!selectedSlot) { showError('Please select a time slot.'); return; }
+
+        var first = document.getElementById('bf-first').value.trim();
+        var last = document.getElementById('bf-last').value.trim();
+        var email = document.getElementById('bf-email').value.trim();
+        var phone = document.getElementById('bf-phone').value.trim();
+        var dob = document.getElementById('bf-dob').value;
+        var gender = document.getElementById('bf-gender').value;
+
+        if (!first) { showError('First name is required.'); return; }
+        if (!last) { showError('Last name is required.'); return; }
+        if (!email || email.indexOf('@') === -1) { showError('A valid email address is required.'); return; }
+        if (!phone) { showError('Phone number is required.'); return; }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Reserving your slot...';
+
+        fetch('/.netlify/functions/mobile-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            package: selectedPkg.key,
+            slot_time: selectedSlot.time,
+            patient_first_name: first,
+            patient_last_name: last,
+            patient_email: email,
+            patient_phone: phone,
+            patient_dob: dob,
+            patient_gender: gender,
+          }),
+        })
+          .then(function (res) {
+            return res.json().then(function (data) { return { ok: res.ok, status: res.status, data: data }; });
+          })
+          .then(function (result) {
+            if (result.ok && result.data.url) {
+              window.location.href = result.data.url;
+            } else {
+              var msg = result.data.error || 'Something went wrong. Please try again.';
+              if (result.status === 409) {
+                // Slot taken — reload slots
+                selectedSlot = null;
+                loadSlots();
+              }
+              showError(msg);
+              updateSubmitBtn();
+            }
+          })
+          .catch(function () {
+            showError('Network error. Please check your connection and try again.');
+            updateSubmitBtn();
+          });
+      });
+    })();
+    </script>
 
 </body>
 </html>
