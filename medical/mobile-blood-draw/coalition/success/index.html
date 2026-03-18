@@ -65,23 +65,33 @@
                 <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
                     <h2 class="text-xl font-bold mb-6">Event Details</h2>
                     <div class="space-y-4">
-                        <div class="flex justify-between border-b border-brand-slate/10 pb-3">
-                            <span class="text-brand-slate font-light">Event</span>
-                            <span class="font-medium">Coalition x Moonshot Mobile Blood Draw</span>
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Event</p>
+                            <p class="font-medium">Coalition x Moonshot Mobile Blood Draw</p>
                         </div>
-                        <div class="flex justify-between border-b border-brand-slate/10 pb-3">
-                            <span class="text-brand-slate font-light">Date</span>
-                            <span class="font-medium">Saturday, April 4, 2026</span>
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Date</p>
+                            <p class="font-medium">Saturday, April 4, 2026</p>
                         </div>
-                        <div class="flex justify-between border-b border-brand-slate/10 pb-3">
-                            <span class="text-brand-slate font-light">Location</span>
-                            <span class="font-medium text-right">Coalition Strength & Conditioning<br><span class="text-sm text-brand-slate font-light">2051 West Carroll Ave, Chicago, IL 60612</span></span>
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Location</p>
+                            <p class="font-medium">Coalition Strength & Conditioning</p>
+                            <p class="text-sm text-brand-slate font-light">2051 West Carroll Ave, Chicago, IL 60612</p>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-brand-slate font-light">Duration</span>
-                            <span class="font-medium">~10 minutes</span>
+                        <div>
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Duration</p>
+                            <p class="font-medium">~15 minutes</p>
                         </div>
                     </div>
+                </div>
+
+                <!-- Health Intake Form CTA -->
+                <div id="form-cta" class="bg-brand-dark text-brand-light rounded-sm p-8 mb-8 text-center">
+                    <h2 class="text-xl font-bold mb-3">ONE MORE STEP</h2>
+                    <p class="text-brand-gray font-light text-sm mb-6">Complete your health history so our provider can review your results in context. Takes about 5 minutes.</p>
+                    <div id="form-loading" class="text-brand-gray text-sm py-2">Loading your intake form...</div>
+                    <a id="form-btn" href="#" class="btn-primary text-lg px-10 py-4 hidden inline-block">Complete Health Intake</a>
+                    <p id="form-fallback" class="text-brand-gray/50 text-xs mt-4 hidden">If the button doesn't appear, check your email for a form link.</p>
                 </div>
 
                 <!-- Fasting Prep -->
@@ -163,6 +173,51 @@
     </main>
 
     <script src="/shared/footer.js"></script>
+
+    <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var sessionId = params.get('session_id');
+      if (!sessionId) return;
+
+      var loading = document.getElementById('form-loading');
+      var btn = document.getElementById('form-btn');
+      var fallback = document.getElementById('form-fallback');
+      var attempts = 0;
+      var maxAttempts = 15;
+
+      function checkFormLink() {
+        attempts++;
+        fetch('https://api.moonshotclinic.com/api/mobile/form-link?session_id=' + encodeURIComponent(sessionId), {
+          headers: { 'X-Tenant-Slug': 'moonshot' }
+        })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (data.form_url) {
+              loading.classList.add('hidden');
+              btn.href = data.form_url;
+              btn.classList.remove('hidden');
+              btn.style.display = 'inline-block';
+            } else if (attempts < maxAttempts) {
+              setTimeout(checkFormLink, 2000);
+            } else {
+              loading.classList.add('hidden');
+              fallback.classList.remove('hidden');
+            }
+          })
+          .catch(function() {
+            if (attempts < maxAttempts) {
+              setTimeout(checkFormLink, 2000);
+            } else {
+              loading.classList.add('hidden');
+              fallback.classList.remove('hidden');
+            }
+          });
+      }
+
+      setTimeout(checkFormLink, 1500);
+    })();
+    </script>
 
 </body>
 </html>
