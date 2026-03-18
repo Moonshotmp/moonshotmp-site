@@ -85,13 +85,82 @@
                     </div>
                 </div>
 
-                <!-- Health Intake Form CTA -->
-                <div id="form-cta" class="bg-brand-dark text-brand-light rounded-sm p-8 mb-8 text-center">
-                    <h2 class="text-xl font-bold mb-3">ONE MORE STEP</h2>
-                    <p class="text-brand-gray font-light text-sm mb-6">Complete your health history so our provider can review your results in context. Takes about 5 minutes.</p>
-                    <div id="form-loading" class="text-brand-gray text-sm py-2">Loading your intake form...</div>
-                    <a id="form-btn" href="#" class="btn-primary text-lg px-10 py-4" style="display:none">Complete Health Intake</a>
-                    <p id="form-fallback" class="text-brand-gray/50 text-xs mt-4" style="display:none">If the button doesn't appear, check your email for a form link.</p>
+                <!-- Health Intake Form (inline — no loading, no redirects) -->
+                <div id="intake-form" class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-2">HEALTH INTAKE</h2>
+                    <p class="text-brand-slate text-sm font-light mb-6">Help our provider review your results in context. Takes about 2 minutes.</p>
+
+                    <div id="intake-fields">
+                        <div class="grid grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Height</label>
+                                <input type="text" id="in-height" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="e.g., 5'10&quot;">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Weight</label>
+                                <input type="text" id="in-weight" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="e.g., 185 lbs">
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-2">Any diagnosed conditions?</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="High blood pressure" class="mr-2"> High blood pressure</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="High cholesterol" class="mr-2"> High cholesterol</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Diabetes / prediabetes" class="mr-2"> Diabetes / prediabetes</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Thyroid disorder" class="mr-2"> Thyroid disorder</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Heart disease" class="mr-2"> Heart disease</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Sleep apnea" class="mr-2"> Sleep apnea</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Anxiety / depression" class="mr-2"> Anxiety / depression</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="None of the above" class="mr-2"> None of the above</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-1">Current medications</label>
+                            <textarea id="in-medications" rows="3" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="List any medications, supplements, or hormones you currently take"></textarea>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-1">Drug allergies</label>
+                            <textarea id="in-allergies" rows="2" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="e.g., Penicillin, latex, iodine. Write 'None' if none."></textarea>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-2">Have you fasted 8-12 hours? *</label>
+                            <div class="flex gap-6">
+                                <label class="flex items-center text-sm"><input type="radio" name="fasting" value="Yes" class="mr-2"> Yes</label>
+                                <label class="flex items-center text-sm"><input type="radio" name="fasting" value="No" class="mr-2"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-2">History of fainting during blood draws?</label>
+                            <div class="flex gap-6">
+                                <label class="flex items-center text-sm"><input type="radio" name="fainting" value="Yes" class="mr-2"> Yes</label>
+                                <label class="flex items-center text-sm"><input type="radio" name="fainting" value="No" class="mr-2"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium mb-1">Anything else we should know?</label>
+                            <textarea id="in-notes" rows="2" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="Any concerns, questions, or relevant health info"></textarea>
+                        </div>
+
+                        <div id="intake-error" class="bg-red-50 border border-red-200 text-red-700 rounded-sm p-3 mb-4 text-sm" style="display:none"></div>
+
+                        <div class="text-center">
+                            <button type="button" id="intake-submit" onclick="submitIntake()" class="btn-primary text-lg px-10 py-4">Submit Health Intake</button>
+                        </div>
+                    </div>
+
+                    <div id="intake-success" style="display:none" class="text-center py-8">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-green-600 text-2xl">&#10003;</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Health Intake Complete</h3>
+                        <p class="text-brand-slate font-light text-sm">Thank you! Your provider will review this before your blood draw on April 4.</p>
+                    </div>
                 </div>
 
                 <!-- Fasting Prep -->
@@ -176,47 +245,59 @@
     <script src="/shared/footer.js"></script>
 
     <script>
-    (function() {
-      var params = new URLSearchParams(window.location.search);
-      var sessionId = params.get('session_id');
-      if (!sessionId) return;
+    function submitIntake() {
+        var params = new URLSearchParams(window.location.search);
+        var sessionId = params.get('session_id');
+        if (!sessionId) { showIntakeError('Missing session. Please use the link from your checkout confirmation.'); return; }
 
-      var loading = document.getElementById('form-loading');
-      var btn = document.getElementById('form-btn');
-      var fallback = document.getElementById('form-fallback');
-      var attempts = 0;
-      var maxAttempts = 15;
+        var fasting = document.querySelector('input[name="fasting"]:checked');
+        if (!fasting) { showIntakeError('Please indicate whether you have fasted.'); return; }
 
-      function checkFormLink() {
-        attempts++;
-        fetch('https://api.moonshotclinic.com/api/mobile/form-link?session_id=' + encodeURIComponent(sessionId), {
-          headers: { 'X-Tenant-Slug': 'moonshot' }
+        var responses = {
+            height: document.getElementById('in-height').value.trim(),
+            weight: document.getElementById('in-weight').value.trim(),
+            conditions: Array.from(document.querySelectorAll('input[name="conditions"]:checked')).map(function(c) { return c.value; }),
+            medications: document.getElementById('in-medications').value.trim(),
+            allergies: document.getElementById('in-allergies').value.trim(),
+            fasting: fasting.value,
+            fainting: (document.querySelector('input[name="fainting"]:checked') || {}).value || '',
+            notes: document.getElementById('in-notes').value.trim()
+        };
+
+        var btn = document.getElementById('intake-submit');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+        document.getElementById('intake-error').style.display = 'none';
+
+        fetch('https://api.moonshotclinic.com/api/mobile/intake', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Tenant-Slug': 'moonshot' },
+            body: JSON.stringify({ session_id: sessionId, responses: responses })
         })
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            if (data.form_url) {
-              loading.style.display = 'none';
-              btn.href = data.form_url;
-              btn.style.display = 'inline-block';
-            } else if (attempts < maxAttempts) {
-              setTimeout(checkFormLink, 2000);
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.ok) {
+                document.getElementById('intake-fields').style.display = 'none';
+                document.getElementById('intake-success').style.display = 'block';
             } else {
-              loading.style.display = 'none';
-              fallback.style.display = 'block';
+                showIntakeError(data.error || 'Something went wrong. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Submit Health Intake';
             }
-          })
-          .catch(function() {
-            if (attempts < maxAttempts) {
-              setTimeout(checkFormLink, 2000);
-            } else {
-              loading.style.display = 'none';
-              fallback.style.display = 'block';
-            }
-          });
-      }
+        })
+        .catch(function() {
+            showIntakeError('Network error. Please check your connection and try again.');
+            btn.disabled = false;
+            btn.textContent = 'Submit Health Intake';
+        });
+    }
 
-      setTimeout(checkFormLink, 1500);
-    })();
+    function showIntakeError(msg) {
+        var el = document.getElementById('intake-error');
+        el.textContent = msg;
+        el.style.display = 'block';
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     </script>
 
 </body>
