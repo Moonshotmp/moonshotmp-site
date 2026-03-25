@@ -26,9 +26,9 @@ export default async function handler(req) {
   const peptides = {
     'BPC-157':       { price: 250, category: 'Healing & Repair',          desc: 'Accelerates tendon, ligament, muscle, and gut healing by upregulating growth factors at the injury site.', dosing: 'Daily injection', cycle: '4-12 weeks' },
     'TB-500':        { price: 250, category: 'Recovery & Mobility',       desc: 'Reduces systemic inflammation, improves flexibility, and accelerates soft tissue recovery.', dosing: '2x/week injection', cycle: '6-12 weeks' },
-    'Wolverine Blend': { price: 350, category: 'Healing + Recovery',      desc: 'BPC-157 + TB-500 combined for maximum regenerative effect \u2014 localized repair plus systemic recovery.', dosing: 'Daily/EOD injection', cycle: '4-12 weeks' },
+    'Wolverine Blend': { price: 375, category: 'Healing + Recovery',      desc: 'BPC-157 + TB-500 combined for maximum regenerative effect \u2014 localized repair plus systemic recovery.', dosing: 'Daily/EOD injection', cycle: '4-12 weeks' },
     'GHK-Cu':        { price: 175, category: 'Skin & Anti-Aging',        desc: 'Copper peptide that stimulates collagen and elastin production for improved skin firmness, texture, and wound healing.', dosing: 'Daily injection', cycle: '3-6 months' },
-    'Glow Stack':    { price: 350, category: 'Skin + Hair + Nails',      desc: 'GHK-Cu plus complementary peptides targeting collagen, follicular health, and skin radiance.', dosing: 'Daily/EOD injection', cycle: '3-6 months' },
+    'Glow Stack':    { price: 400, category: 'Skin + Hair + Nails',      desc: 'GHK-Cu plus complementary peptides targeting collagen, follicular health, and skin radiance.', dosing: 'Daily/EOD injection', cycle: '3-6 months' },
     'Sermorelin':    { price: 250, category: 'Growth Hormone Optimization', desc: 'Stimulates your pituitary to produce its own growth hormone \u2014 better sleep, body composition, recovery, and energy.', dosing: 'Daily injection (bedtime)', cycle: 'Ongoing' },
     'PT-141':        { price: 250, category: 'Sexual Health',             desc: 'Works through the brain to increase sexual desire and arousal. Effective for both men and women.', dosing: 'As needed', cycle: 'As needed' },
   };
@@ -102,9 +102,9 @@ export default async function handler(req) {
           <td style="padding: 6px; color: #B2BFBE; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05);">Price</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
-          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$350</td>
+          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$375</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$175</td>
-          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$350</td>
+          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$400</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
         </tr>

@@ -23,10 +23,10 @@
   var PEPTIDES = {
     'bpc157':      { name: 'BPC-157',         price: 250, desc: 'Promotes healing of tendons, ligaments, gut lining, and muscle tissue.' },
     'ghkcu':       { name: 'GHK-Cu',          price: 175, desc: 'Copper peptide that stimulates collagen, skin elasticity, and hair growth.' },
-    'wolverine':   { name: 'Wolverine Blend',  price: 350, desc: 'BPC-157 + TB-500 dual-pathway healing in one injection.' },
+    'wolverine':   { name: 'Wolverine Blend',  price: 375, desc: 'BPC-157 + TB-500 dual-pathway healing in one injection.' },
     'pt141':       { name: 'PT-141',           price: 250, desc: 'Works on the nervous system to improve sexual desire and arousal.' },
     'sermorelin':  { name: 'Sermorelin',       price: 250, desc: 'Stimulates natural growth hormone production for recovery, sleep, and vitality.' },
-    'glowstack':   { name: 'Glow Stack',       price: 350, desc: 'GHK-Cu + BPC-157 + TB-500 triple-peptide for skin, healing, and recovery.' }
+    'glowstack':   { name: 'Glow Stack',       price: 400, desc: 'GHK-Cu + BPC-157 + TB-500 triple-peptide for skin, healing, and recovery.' }
   };
 
   /* ========================================
