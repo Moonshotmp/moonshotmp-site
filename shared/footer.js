@@ -186,7 +186,7 @@
         window.addEventListener('scroll', function() {
             if (promptShown) return;
             var scrollPct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-            if (scrollPct >= 0.6) {
+            if (scrollPct >= 0.85) {
                 promptShown = true;
                 sessionStorage.setItem('quiz_prompt_shown', '1');
                 var prompt = document.createElement('div');
