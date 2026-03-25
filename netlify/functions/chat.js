@@ -35,6 +35,7 @@ CRITICAL — Source of Truth Hierarchy:
 
 Specific notes:
 - Our peptide offerings include: BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Wolverine Blend - BPC-157+TB-500 ($375/mo), Glow Stack - GHK-Cu+BPC-157+TB-500 ($400/mo), Sermorelin ($250/mo), PT-141 ($250/mo). All sourced from licensed 503A compounding pharmacies.
+- Peptide protocol bundles (all except PT-141): 3-month protocols save 15%, 6-month protocols save 20% (includes built-in cycle-off month). BPC-157: 3-mo $635, 6-mo $1,200. TB-500: 3-mo $635, 6-mo $1,200. Wolverine Blend: 3-mo $955, 6-mo $1,800. GHK-Cu: 3-mo $445, 6-mo $840. Glow Stack: 3-mo $1,020, 6-mo $1,920. Sermorelin: 3-mo $635, 6-mo $1,200. PT-141 is as-needed only — no protocol bundles.
 
 Rules:
 - Answer questions using ONLY the provided context. Do not make up information.
@@ -167,6 +168,16 @@ Peptide Stacks:
 - Wolverine Blend — $375/month: BPC-157 + TB-500 combined in one injection. Dual-pathway healing. Saves $125/mo vs purchasing separately ($500).
 - Glow Stack — $400/month: GHK-Cu + BPC-157 + TB-500 triple-peptide protocol. Skin rejuvenation + tissue healing + recovery. Saves $275/mo vs purchasing all three separately ($675).
 
+Protocol Bundles (save 15-20%):
+All peptides except PT-141 are available in multi-month protocols. 3-month protocols save 15%. 6-month protocols save 20% and include a built-in cycle-off month.
+- BPC-157: 3-mo $635, 6-mo $1,200
+- TB-500: 3-mo $635, 6-mo $1,200
+- Wolverine Blend: 3-mo $955, 6-mo $1,800
+- GHK-Cu: 3-mo $445, 6-mo $840
+- Glow Stack: 3-mo $1,020, 6-mo $1,920
+- Sermorelin: 3-mo $635, 6-mo $1,200
+- PT-141: as-needed only, no protocol bundles
+
 Important peptide notes:
 - All peptides require an initial consultation before prescribing
 - Peptides can be standalone — they do NOT require being on a hormone program
@@ -244,7 +255,7 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 
 **What peptides do you offer?** We offer BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Sermorelin ($250/mo), PT-141 ($250/mo), plus the Wolverine Blend ($375/mo, BPC-157+TB-500) and Glow Stack ($400/mo, GHK-Cu+BPC-157+TB-500). All sourced from licensed 503A compounding pharmacies.
 
-**How much do peptides cost?** Individual peptides range from $175-$250/month. Stacks (Wolverine Blend at $375/mo, Glow Stack at $400/mo) save money vs buying individually. All include medical oversight and injection training.
+**How much do peptides cost?** Individual peptides range from $175-$250/month. Stacks (Wolverine Blend at $375/mo, Glow Stack at $400/mo) save money vs buying individually. All include medical oversight and injection training. Multi-month protocol bundles available: 3-month protocols save 15%, 6-month protocols save 20% (includes cycle-off month). Example: BPC-157 drops from $750 to $635 (3-mo) or $1,200 (6-mo).
 
 **Are BPC-157 and TB-500 legal?** Yes. BPC-157 and TB-500 are available through licensed 503A compounding pharmacies, which prepare patient-specific prescriptions under a valid prescription from a provider. The FDA's 2024 action affected 503B bulk manufacturing facilities, but 503A pharmacies operate under a different regulatory framework.
 
