@@ -106,6 +106,7 @@
                   <!-- Men Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Men</span>
+                    <a href="/learn/trt-guide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT Guide</a>
                     <a href="/learn/low-testosterone-symptoms/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Low T Symptoms</a>
                     <a href="/learn/trt-vs-steroids/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT vs Steroids</a>
                     <a href="/medical/trt-vs-enclomiphene/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT vs Enclomiphene</a>
@@ -269,6 +270,7 @@
             </button>
             <div id="mobile-learn-submenu" class="bg-black/20 hidden">
               <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide">— Men —</span>
+              <a href="/learn/trt-guide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT Guide</a>
               <a href="/learn/low-testosterone-symptoms/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Low T Symptoms</a>
               <a href="/learn/trt-vs-steroids/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Steroids</a>
               <a href="/medical/trt-vs-enclomiphene/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Enclomiphene</a>
@@ -487,6 +489,7 @@
             { title: "DEXA vs InBody", desc: "Body composition scan comparison", url: "/medical/dexa-scan/dexa-vs-inbody/", cat: "Diagnostics" },
             { title: "Optimal vs Normal Ranges", desc: "Why normal isn't always optimal", url: "/learn/optimal-vs-normal/", cat: "Diagnostics" },
             // Hormones
+            { title: "TRT Guide", desc: "Testosterone replacement therapy — benefits, risks, dosing, cost", url: "/learn/trt-guide/", cat: "Men" },
             { title: "Low Testosterone Symptoms", desc: "Signs of low T in men", url: "/learn/low-testosterone-symptoms/", cat: "Men" },
             { title: "TRT vs Steroids", desc: "Understanding the difference", url: "/learn/trt-vs-steroids/", cat: "Men" },
             { title: "Menopause Guide", desc: "Perimenopause and menopause explained", url: "/learn/menopause-perimenopause/", cat: "Women" },
