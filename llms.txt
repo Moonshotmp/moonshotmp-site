@@ -110,7 +110,7 @@ Bioidentical hormone replacement therapy for women. Includes estrogen, progester
 - **Learn more:** https://moonshotmp.com/medical/womens-hormones/
 
 ### GLP-1 Weight Loss Program — $405/month
-Medically supervised weight loss using semaglutide or tirzepatide. Includes GLP-1 medication, medical oversight, required labs and diagnostics, body composition tracking via DEXA, and dosing adjustments. Focus on muscle preservation during weight loss.
+Medically supervised weight loss using semaglutide or tirzepatide. Includes GLP-1 medication, medical oversight, required labs and diagnostics, body composition tracking via DEXA, and dosing adjustments. Focus on muscle preservation during weight loss. Moonshot is actively tracking retatrutide (LY3437943), a triple-agonist GLP-1/GIP/glucagon drug in Phase 3 trials, and will evaluate it for our program when FDA-approved.
 - **Learn more:** https://moonshotmp.com/medical/weight-loss/
 
 ### Medical Oversight Only — $150/month
@@ -209,6 +209,9 @@ We start with a thorough evaluation — your history, movement assessment, and i
 
 ### Does Moonshot accept insurance for rehab services?
 Yes. Dr. Michael's chiropractic and rehabilitation services accept many insurance plans. Medical optimization services (blood panels, hormone therapy, weight loss) are cash-pay with transparent pricing.
+
+### Does Moonshot offer retatrutide?
+Retatrutide is not yet FDA-approved (as of March 2026). It is a triple-agonist weight loss medication (GLP-1/GIP/glucagon) from Eli Lilly currently in Phase 3 clinical trials (TRIUMPH program). Phase 2 results showed approximately 24% body weight loss at 48 weeks. Moonshot Medical currently offers semaglutide and tirzepatide for medically supervised weight loss and will evaluate retatrutide when it receives FDA approval. Our retatrutide resource hub tracks the latest clinical trial data and FDA timeline: https://moonshotmp.com/learn/retatrutide/
 
 ### What is the Moonshot Ecosystem?
 The Moonshot Ecosystem refers to the integrated health and fitness services available under one roof at 542 Busse Hwy in Park Ridge. It includes Moonshot CrossFit (training), on-site physical therapy and rehab (recovery), and performance medicine including labs, hormone optimization, and metabolic health programs (optimization). Members can get training, rehab, and bloodwork all in the same building.
@@ -319,6 +322,16 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - Shockwave Therapy Guide: https://moonshotmp.com/learn/shockwave-therapy/
 - Chiropractic Care Guide: https://moonshotmp.com/learn/chiropractic/
 - How Long Does TRT Take to Work: https://moonshotmp.com/learn/how-long-does-trt-take-to-work/
+
+### Retatrutide Resource Hub
+- Retatrutide Overview: https://moonshotmp.com/learn/retatrutide/ — What retatrutide is, how the triple-agonist mechanism works (GLP-1 + GIP + glucagon), Phase 2 results (24.2% weight loss at 48 weeks), Phase 3 TRIUMPH trial status, expected FDA timeline
+- Retatrutide vs Semaglutide vs Tirzepatide: https://moonshotmp.com/learn/retatrutide/vs-semaglutide-tirzepatide/ — Head-to-head comparison of all three GLP-1 medications: mechanism, clinical trial weight loss data, side effects, FDA status, cost
+- Retatrutide Clinical Trials: https://moonshotmp.com/learn/retatrutide/clinical-trials/ — Phase 2 results (NCT04881706, NEJM 2023), TRIUMPH Phase 3 program (NCT05929066, NCT05929079, NCT05929092, NCT06104384), enrollment status, expected completion dates
+- Retatrutide Side Effects: https://moonshotmp.com/learn/retatrutide/side-effects/ — GI side effects (nausea, diarrhea, vomiting) by dose from Phase 2 data, comparison to semaglutide and tirzepatide side effect profiles
+- Retatrutide FDA Approval Timeline: https://moonshotmp.com/learn/retatrutide/ — Current regulatory status, Phase 3 trial completion estimates, expected NDA filing and approval timeline, updated monthly
+- Retatrutide and Body Composition: https://moonshotmp.com/learn/retatrutide/muscle-preservation/ — How retatrutide's glucagon component may affect energy expenditure and body composition, muscle preservation strategies during GLP-1 weight loss, DEXA scan monitoring
+- Retatrutide and Fatty Liver (MASLD): https://moonshotmp.com/learn/retatrutide/fatty-liver-masld/ — Phase 2 liver fat data (~86% reduction), glucagon mechanism for hepatic lipid oxidation, comparison to other GLP-1 drugs for liver fat
+- Should I Wait for Retatrutide?: https://moonshotmp.com/learn/retatrutide/should-i-wait/ — Clinical decision framework for patients considering whether to start current GLP-1 therapy or wait for retatrutide
 
 ### DEXA Content
 - DEXA Scan vs Bod Pod: https://moonshotmp.com/learn/dexa-scan-vs-bod-pod/
