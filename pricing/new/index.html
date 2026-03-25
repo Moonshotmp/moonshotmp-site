@@ -171,6 +171,36 @@
             font-weight: 400;
         }
 
+        /* Gender price split */
+        .price-split {
+            margin-top: auto;
+        }
+        .price-split-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: var(--font-heading);
+        }
+        .price-split-label {
+            font-size: 11px;
+            color: var(--brand-accent);
+            font-family: var(--font-body);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .price-split-amount {
+            font-size: 22px;
+            color: var(--brand-light);
+            font-weight: 500;
+        }
+        .price-split-row + .price-split-row {
+            margin-top: 2px;
+        }
+        .price-split .program-period {
+            margin-top: 4px;
+        }
+
         /* --- NEW SECTION: WHAT'S INCLUDED --- */
         .included-section {
             margin-bottom: 0.3in;
@@ -340,8 +370,15 @@
     <section class="core-programs">
         <div class="program-card">
             <div class="program-title">HORMONE<br>OPTIMIZATION</div>
-            <div class="program-price">
-                $235
+            <div class="price-split">
+                <div class="price-split-row">
+                    <span class="price-split-label">Men</span>
+                    <span class="price-split-amount">$235</span>
+                </div>
+                <div class="price-split-row">
+                    <span class="price-split-label">Women</span>
+                    <span class="price-split-amount">$285</span>
+                </div>
                 <span class="program-period">Per Month</span>
             </div>
         </div>
@@ -361,8 +398,15 @@
         </div>
         <div class="program-card">
             <div class="program-title">COMBINED<br>PROGRAM</div>
-            <div class="program-price">
-                $523
+            <div class="price-split">
+                <div class="price-split-row">
+                    <span class="price-split-label">Men</span>
+                    <span class="price-split-amount">$523</span>
+                </div>
+                <div class="price-split-row">
+                    <span class="price-split-label">Women</span>
+                    <span class="price-split-amount">$575</span>
+                </div>
                 <span class="program-period">Per Month</span>
             </div>
         </div>
@@ -486,7 +530,7 @@
         </div>
         <div class="footer-right">
             <span class="market-val">Market value: $450</span>
-            <span class="your-price">Your price: $235</span>
+            <span class="your-price">Your price: $210</span>
         </div>
     </footer>
     
