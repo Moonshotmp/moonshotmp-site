@@ -181,6 +181,7 @@
               <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="quiz-dropdown">
                 <div class="py-2">
                   <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Hormone Health Quiz</a>
+                  <a href="/quiz/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Peptide Quiz</a>
                   <a href="/quiz/body-comp/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Body Comp IQ Quiz</a>
                 </div>
               </div>
@@ -312,6 +313,7 @@
             </button>
             <div id="mobile-quiz-submenu" class="bg-black/20 hidden">
               <a href="/quiz/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Hormone Health Quiz</a>
+              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
               <a href="/quiz/body-comp/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Comp IQ Quiz</a>
             </div>
           </div>
