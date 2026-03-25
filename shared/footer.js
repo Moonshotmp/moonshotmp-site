@@ -181,7 +181,7 @@
     }
 
     // Scroll-depth quiz prompt on content pages (60%+ scroll, once per session)
-    if (/^\/(learn|medical|rehab)\//.test(path) && !/^\/quiz\//.test(path) && !sessionStorage.getItem('quiz_prompt_shown')) {
+    if (/\/(peptide|bpc-157|tb-500|wolverine-blend|ghk-cu|glow-stack)/.test(path) && !sessionStorage.getItem('quiz_prompt_shown')) {
         var promptShown = false;
         window.addEventListener('scroll', function() {
             if (promptShown) return;
