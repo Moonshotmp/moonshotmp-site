@@ -95,6 +95,12 @@
                 </div>
             </div>
 
+            <div class="mt-6 pt-6 border-t border-white/5">
+                <p class="text-brand-gray/50 text-[10px] leading-relaxed max-w-4xl mx-auto text-center">
+                    Content on this site is for informational purposes only and does not constitute medical advice, diagnosis, or treatment. Peptide therapies and compounded preparations discussed on this site are not FDA-approved drugs. Results vary. Always consult a qualified healthcare provider before starting any therapy. No provider-patient relationship is established by viewing this content.
+                </p>
+            </div>
+
             <div class="mt-6 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-brand-gray">
                 <span>&copy; ${currentYear} Moonshot Medical and Performance. All Rights Reserved.</span>
                 <div class="flex gap-6">

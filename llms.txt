@@ -117,7 +117,7 @@ Medically supervised weight loss using semaglutide or tirzepatide. Includes GLP-
 For patients whose insurance covers their medication. Includes medical oversight and monitoring, prescription sent to your pharmacy, 2 DEXA scans per year, comprehensive blood panels every 6 months, and 1 vitamin shot per month.
 
 ### Peptides & Supplements
-Evidence-based peptides and supplements guided by bloodwork. Offerings include Sermorelin, PT-141, NAD+ injections, vitamin injections, and targeted supplements based on lab results.
+Evidence-based peptide therapy with medical oversight. Offerings include BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Wolverine Blend - BPC-157 + TB-500 ($350/mo), Glow Stack ($350/mo), Sermorelin ($250/mo), PT-141 ($250/mo), NAD+ injections, vitamin injections, and targeted supplements based on lab results. All peptides sourced from licensed 503A compounding pharmacies.
 - **Learn more:** https://moonshotmp.com/medical/peptides/
 
 ### Tadalafil
@@ -289,6 +289,11 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - TRT vs Steroids — What's the Difference: https://moonshotmp.com/learn/trt-vs-steroids/
 - Testosterone Therapy Over 40: https://moonshotmp.com/learn/testosterone-therapy-over-40/
 - Peptides Guide: https://moonshotmp.com/learn/peptides/
+- BPC-157 Guide: https://moonshotmp.com/learn/bpc-157/ — BPC-157 benefits, dosing protocols, side effects, mechanism of action, how to get pharmaceutical-grade BPC-157
+- TB-500 Guide: https://moonshotmp.com/learn/tb-500/ — TB-500 (thymosin beta-4) benefits, dosing, mechanism, side effects, regulatory status
+- GHK-Cu Guide: https://moonshotmp.com/learn/ghk-cu/ — GHK-Cu copper peptide for skin rejuvenation, hair growth, anti-aging, wound healing
+- Wolverine Blend Guide: https://moonshotmp.com/learn/wolverine-blend/ — BPC-157 + TB-500 combination therapy, comparison vs individual peptides
+- Peptide Quiz: https://moonshotmp.com/quiz/peptides/ — Interactive 2-minute quiz to find which peptide therapy matches your goals
 - Semaglutide vs Tirzepatide Comparison: https://moonshotmp.com/learn/semaglutide-vs-tirzepatide/
 - Optimal vs Normal Lab Ranges: https://moonshotmp.com/learn/optimal-vs-normal/
 - What Labs Should You Test: https://moonshotmp.com/learn/what-labs-to-test/

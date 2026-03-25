@@ -93,7 +93,7 @@
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/peptides/</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-03-24</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -133,6 +133,12 @@
   <url>
     <loc>https://moonshotmp.com/quiz/results/</loc>
     <lastmod>2026-02-03</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/peptides/</loc>
+    <lastmod>2026-03-24</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -308,7 +314,7 @@
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/peptides/</loc>
-    <lastmod>2026-03-02</lastmod>
+    <lastmod>2026-03-24</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
