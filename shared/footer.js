@@ -83,10 +83,14 @@
             <!-- Quiz CTAs -->
             <div class="mt-8 pt-8 border-t border-white/5">
                 <p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">FREE QUIZZES</p>
-                <div class="grid sm:grid-cols-2 gap-4">
+                <div class="grid sm:grid-cols-3 gap-4">
                     <a href="/quiz/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
                         <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">HORMONE HEALTH QUIZ</p>
                         <p class="text-brand-light/80 text-xs mt-1">Are your hormones holding you back? 2-min assessment with personalized results.</p>
+                    </a>
+                    <a href="/quiz/peptides/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
+                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">PEPTIDE QUIZ</p>
+                        <p class="text-brand-light/80 text-xs mt-1">Which peptide is right for you? Get a personalized protocol recommendation.</p>
                     </a>
                     <a href="/quiz/body-comp/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
                         <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BODY COMP IQ QUIZ</p>
@@ -169,6 +173,7 @@
             quizNudge.innerHTML = '<p class="text-brand-gray text-sm mb-3">Not ready to book? Start with a free quiz.</p>' +
                 '<div class="flex justify-center gap-4 flex-wrap">' +
                 '<a href="/quiz/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Hormone Health Quiz</a>' +
+                '<a href="/quiz/peptides/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Peptide Quiz</a>' +
                 '<a href="/quiz/body-comp/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Body Comp IQ Quiz</a>' +
                 '</div>';
             lastCta.insertAdjacentElement('afterend', quizNudge);
@@ -192,6 +197,7 @@
                     '<p class="text-brand-gray text-xs mb-3">Take a free 2-min quiz and get personalized insights.</p>' +
                     '<div class="space-y-2">' +
                     '<a href="/quiz/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Hormone Health Quiz</a>' +
+                    '<a href="/quiz/peptides/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Peptide Quiz</a>' +
                     '<a href="/quiz/body-comp/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Body Comp IQ Quiz</a>' +
                     '</div>';
                 document.body.appendChild(prompt);
