@@ -12,7 +12,7 @@
 (function () {
   // ─── Only run on peptide pages ──────────────────────────────────
   var path = window.location.pathname;
-  var peptidePages = ['/peptide', '/bpc-157', '/tb-500', '/wolverine-blend', '/ghk-cu', '/glow-stack'];
+  var peptidePages = ['/peptide', '/bpc-157', '/tb-500', '/wolverine-blend', '/ghk-cu', '/glow-stack', '/pt-141', '/sermorelin', '/peptides-for-gut', '/peptides-for-injury', '/bpc-157-vs-prp', '/peptide-therapy-park-ridge'];
   if (!peptidePages.some(function (p) { return path.includes(p); })) return;
 
   // ─── Don't show if already dismissed (cookie) ──────────────────
