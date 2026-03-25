@@ -120,26 +120,32 @@
                     <a href="/learn/pcos/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">PCOS</a>
                     <a href="/learn/whi-study-hrt-truth/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">HRT: Myths vs Facts</a>
                   </div>
-                  <!-- Weight Loss & Peptides Column -->
+                  <!-- Weight Loss Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Weight Loss & Peptides</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Weight Loss</span>
                     <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Semaglutide vs Tirzepatide</a>
                     <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">GLP-1 vs Other Methods</a>
-                    <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptides Explained</a>
+                    <a href="/learn/retatrutide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Retatrutide Guide</a>
                   </div>
-                  <!-- Rehab Column -->
+                  <!-- Peptides Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Rehab</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Peptides</span>
+                    <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptide Therapy Guide</a>
+                    <a href="/learn/bpc-157/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">BPC-157</a>
+                    <a href="/learn/sermorelin/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Sermorelin</a>
+                    <a href="/learn/tb-500/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TB-500</a>
+                    <a href="/learn/wolverine-blend/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Wolverine Blend</a>
+                    <a href="/learn/pt-141/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">PT-141</a>
+                    <a href="/learn/ghk-cu/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">GHK-Cu</a>
+                    <a href="/quiz/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptide Quiz</a>
+                  </div>
+                  <!-- Rehab & Diagnostics Column -->
+                  <div>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Rehab & Diagnostics</span>
                     <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Dry Needling</a>
-                    <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Trigger Point Injections</a>
                     <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Shockwave Therapy</a>
-                  </div>
-                  <!-- Diagnostics Column -->
-                  <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Diagnostics</span>
+                    <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Trigger Point Injections</a>
                     <a href="/blood-work/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Blood Work Guide</a>
-                    <a href="/learn/optimal-vs-normal/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Optimal vs Normal Ranges</a>
-                    <a href="/learn/understanding-blood-results/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Understanding Blood Results</a>
                     <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">DEXA vs InBody</a>
                     <a href="/learn/first-visit/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Your First Visit</a>
                   </div>
@@ -187,11 +193,17 @@
               </div>
             </div>
 
+            <button type="button" id="search-toggle" aria-label="Search" class="text-brand-light hover:text-brand-gray transition">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
             <a href="https://moonshot.moonshotclinic.com/portal" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Login</a>
             <a href="/booking/medical/" class="btn-primary text-xs tracking-widest" onclick="event.preventDefault(); openBookingModal();">Book Now</a>
           </div>
 
-          <div class="lg:hidden flex items-center">
+          <div class="lg:hidden flex items-center gap-3">
+            <button type="button" id="mobile-search-toggle" aria-label="Search" class="text-brand-light hover:text-white focus:outline-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
             <button type="button" id="mobile-menu-btn" aria-label="Open menu" class="text-brand-light hover:text-white focus:outline-none">
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
@@ -267,18 +279,24 @@
               <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone</a>
               <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS</a>
               <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Weight Loss & Peptides —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Weight Loss —</span>
               <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
               <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
-              <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides Explained</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Rehab —</span>
+              <a href="/learn/retatrutide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Retatrutide Guide</a>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Peptides —</span>
+              <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Therapy Guide</a>
+              <a href="/learn/bpc-157/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">BPC-157</a>
+              <a href="/learn/sermorelin/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Sermorelin</a>
+              <a href="/learn/tb-500/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TB-500</a>
+              <a href="/learn/wolverine-blend/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Wolverine Blend</a>
+              <a href="/learn/pt-141/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PT-141</a>
+              <a href="/learn/ghk-cu/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GHK-Cu</a>
+              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Rehab & Diagnostics —</span>
               <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
-              <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Injections</a>
               <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Diagnostics —</span>
+              <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Injections</a>
               <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Work Guide</a>
-              <a href="/learn/optimal-vs-normal/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Optimal vs Normal Ranges</a>
-              <a href="/learn/understanding-blood-results/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Understanding Blood Results</a>
               <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA vs InBody</a>
               <a href="/learn/first-visit/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Your First Visit</a>
               <a href="/learn/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">View All &rarr;</a>
@@ -323,6 +341,17 @@
         </div>
       </div>
     </nav>
+
+    <div id="search-overlay" class="fixed inset-0 z-[60] bg-brand-dark/95 backdrop-blur-md hidden">
+      <div class="max-w-2xl mx-auto px-4 pt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gray"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input id="search-input" type="text" placeholder="Search services, articles, and guides..." autocomplete="off" class="flex-1 bg-transparent border-b border-white/20 focus:border-brand-gray py-3 text-xl text-brand-light placeholder-brand-gray/40 focus:outline-none font-light">
+          <button type="button" id="search-close" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider">Esc</button>
+        </div>
+        <div id="search-results" class="space-y-1 max-h-[60vh] overflow-y-auto"></div>
+      </div>
+    </div>
     `;
 
     // Inject header
@@ -428,6 +457,177 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+            }
+        });
+
+        // Search functionality
+        const searchIndex = [
+            // Medical
+            { title: "Blood Panels", desc: "60+ biomarker comprehensive blood panel", url: "/medical/blood-panels/", cat: "Medical" },
+            { title: "DEXA Body Composition Scan", desc: "Medical-grade body composition analysis", url: "/medical/dexa-scan/", cat: "Medical" },
+            { title: "Men's Hormone Optimization", desc: "Testosterone replacement therapy (TRT)", url: "/medical/mens-hormones/", cat: "Medical" },
+            { title: "Women's Hormone Optimization", desc: "Bioidentical hormone replacement therapy", url: "/medical/womens-hormones/", cat: "Medical" },
+            { title: "Weight Loss (GLP-1)", desc: "Semaglutide and tirzepatide programs", url: "/medical/weight-loss/", cat: "Medical" },
+            { title: "Peptides & Add-On Therapies", desc: "BPC-157, TB-500, Sermorelin, PT-141, GHK-Cu", url: "/medical/peptides/", cat: "Medical" },
+            { title: "Daily Tadalafil", desc: "Low-dose tadalafil for vascular health", url: "/medical/tadalafil/", cat: "Medical" },
+            // Peptides
+            { title: "BPC-157 Guide", desc: "Benefits, dosing, side effects, how to get it", url: "/learn/bpc-157/", cat: "Peptides" },
+            { title: "TB-500 Guide", desc: "Thymosin beta-4 for tissue repair", url: "/learn/tb-500/", cat: "Peptides" },
+            { title: "Sermorelin Guide", desc: "Growth hormone optimization", url: "/learn/sermorelin/", cat: "Peptides" },
+            { title: "PT-141 Guide", desc: "Sexual health peptide, FDA-approved", url: "/learn/pt-141/", cat: "Peptides" },
+            { title: "GHK-Cu Guide", desc: "Copper peptide for skin and anti-aging", url: "/learn/ghk-cu/", cat: "Peptides" },
+            { title: "Wolverine Blend", desc: "BPC-157 + TB-500 combination therapy", url: "/learn/wolverine-blend/", cat: "Peptides" },
+            { title: "Glow Stack", desc: "GHK-Cu + BPC-157 + TB-500 triple protocol", url: "/learn/glow-stack/", cat: "Peptides" },
+            { title: "Peptide Therapy Guide", desc: "Benefits, side effects, FDA regulation", url: "/learn/peptides/", cat: "Peptides" },
+            { title: "Peptides for Gut Healing", desc: "BPC-157 for IBS, leaky gut, NSAID damage", url: "/learn/peptides-for-gut-healing/", cat: "Peptides" },
+            { title: "Peptides for Injury Recovery", desc: "BPC-157, TB-500 for tendon and muscle healing", url: "/learn/peptides-for-injury-recovery/", cat: "Peptides" },
+            { title: "BPC-157 vs PRP", desc: "Head-to-head comparison", url: "/learn/bpc-157-vs-prp/", cat: "Peptides" },
+            { title: "Peptide Quiz", desc: "Find which peptide is right for you", url: "/quiz/peptides/", cat: "Quiz" },
+            // Weight Loss
+            { title: "Semaglutide vs Tirzepatide", desc: "GLP-1 medication comparison", url: "/learn/semaglutide-vs-tirzepatide/", cat: "Weight Loss" },
+            { title: "GLP-1 vs Other Weight Loss", desc: "How GLP-1s compare to other methods", url: "/medical/glp1-vs-other-weight-loss/", cat: "Weight Loss" },
+            { title: "Retatrutide Guide", desc: "Triple-agonist GLP-1 in clinical trials", url: "/learn/retatrutide/", cat: "Weight Loss" },
+            // Rehab
+            { title: "Chiropractic Care", desc: "McKenzie Method evidence-based care", url: "/rehab/chiropractic/", cat: "Rehab" },
+            { title: "Dry Needling", desc: "Trigger point release for chronic pain", url: "/learn/dry-needling/", cat: "Rehab" },
+            { title: "Shockwave Therapy", desc: "ESWT for tendon injuries", url: "/learn/shockwave-therapy/", cat: "Rehab" },
+            { title: "Trigger Point Injections", desc: "Targeted relief for muscle pain", url: "/learn/trigger-point-injections/", cat: "Rehab" },
+            { title: "Physical Rehabilitation", desc: "Movement restoration and strength rehab", url: "/rehab/physical-rehab/", cat: "Rehab" },
+            // Diagnostics
+            { title: "Blood Work Guide", desc: "Understanding your lab results", url: "/blood-work/", cat: "Diagnostics" },
+            { title: "DEXA vs InBody", desc: "Body composition scan comparison", url: "/medical/dexa-scan/dexa-vs-inbody/", cat: "Diagnostics" },
+            { title: "Optimal vs Normal Ranges", desc: "Why normal isn't always optimal", url: "/learn/optimal-vs-normal/", cat: "Diagnostics" },
+            // Hormones
+            { title: "Low Testosterone Symptoms", desc: "Signs of low T in men", url: "/learn/low-testosterone-symptoms/", cat: "Men" },
+            { title: "TRT vs Steroids", desc: "Understanding the difference", url: "/learn/trt-vs-steroids/", cat: "Men" },
+            { title: "Menopause Guide", desc: "Perimenopause and menopause explained", url: "/learn/menopause-perimenopause/", cat: "Women" },
+            { title: "Testosterone for Women", desc: "Why women need testosterone too", url: "/learn/testosterone-for-women/", cat: "Women" },
+            // About
+            { title: "Our Team", desc: "Meet the Moonshot Medical team", url: "/about/", cat: "About" },
+            { title: "Missy Zammichieli, DNP", desc: "Medical Director credentials and bio", url: "/about/missy-zammichieli/", cat: "About" },
+            { title: "Book an Appointment", desc: "Schedule medical or rehab visit", url: "/booking/", cat: "Book" },
+            { title: "Contact Us", desc: "Phone, email, and location", url: "/contact/", cat: "About" },
+            { title: "Hormone Health Quiz", desc: "2-minute hormone assessment", url: "/quiz/", cat: "Quiz" },
+            { title: "Peptide Therapy in Park Ridge", desc: "Local peptide therapy guide", url: "/learn/peptide-therapy-park-ridge/", cat: "Local" },
+        ];
+
+        const searchOverlay = document.getElementById('search-overlay');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        const searchToggle = document.getElementById('search-toggle');
+        const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+        const searchClose = document.getElementById('search-close');
+        let searchDebounce = null;
+        let activeResultIndex = -1;
+
+        function openSearch() {
+            searchOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            activeResultIndex = -1;
+            setTimeout(() => searchInput.focus(), 50);
+        }
+
+        function closeSearch() {
+            searchOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            activeResultIndex = -1;
+        }
+
+        function renderResults(query) {
+            if (!query || query.length < 2) {
+                searchResults.innerHTML = '';
+                activeResultIndex = -1;
+                return;
+            }
+            const q = query.toLowerCase();
+            const matches = searchIndex.filter(item =>
+                item.title.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q)
+            ).slice(0, 8);
+
+            if (matches.length === 0) {
+                searchResults.innerHTML = '<p class="text-brand-gray/60 text-sm py-4">No results found.</p>';
+                activeResultIndex = -1;
+                return;
+            }
+
+            activeResultIndex = -1;
+            searchResults.innerHTML = matches.map((item, i) =>
+                '<a href="' + item.url + '" class="search-result flex items-center justify-between px-4 py-3 rounded-sm hover:bg-white/5 transition group" data-index="' + i + '">' +
+                    '<div>' +
+                        '<span class="text-brand-light text-sm font-medium group-hover:text-white">' + item.title + '</span>' +
+                        '<span class="block text-brand-gray/60 text-xs mt-0.5">' + item.desc + '</span>' +
+                    '</div>' +
+                    '<span class="text-[10px] uppercase tracking-wider text-brand-gray/40 border border-white/10 px-2 py-0.5 rounded-sm shrink-0 ml-4">' + item.cat + '</span>' +
+                '</a>'
+            ).join('');
+        }
+
+        function updateActiveResult() {
+            const items = searchResults.querySelectorAll('.search-result');
+            items.forEach((el, i) => {
+                if (i === activeResultIndex) {
+                    el.classList.add('bg-white/5');
+                } else {
+                    el.classList.remove('bg-white/5');
+                }
+            });
+            if (items[activeResultIndex]) {
+                items[activeResultIndex].scrollIntoView({ block: 'nearest' });
+            }
+        }
+
+        if (searchToggle) searchToggle.addEventListener('click', openSearch);
+        if (mobileSearchToggle) mobileSearchToggle.addEventListener('click', openSearch);
+        if (searchClose) searchClose.addEventListener('click', closeSearch);
+
+        if (searchOverlay) {
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) closeSearch();
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchDebounce);
+                searchDebounce = setTimeout(() => renderResults(searchInput.value.trim()), 150);
+            });
+
+            searchInput.addEventListener('keydown', (e) => {
+                const items = searchResults.querySelectorAll('.search-result');
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    activeResultIndex = Math.min(activeResultIndex + 1, items.length - 1);
+                    updateActiveResult();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    activeResultIndex = Math.max(activeResultIndex - 1, -1);
+                    updateActiveResult();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (activeResultIndex >= 0 && items[activeResultIndex]) {
+                        items[activeResultIndex].click();
+                    }
+                } else if (e.key === 'Escape') {
+                    closeSearch();
+                }
+            });
+        }
+
+        // Cmd+K / Ctrl+K to open search
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                if (searchOverlay.classList.contains('hidden')) {
+                    openSearch();
+                } else {
+                    closeSearch();
+                }
+            }
+            // Also close search on Escape (global)
+            if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) {
+                closeSearch();
             }
         });
 

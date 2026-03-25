@@ -33,18 +33,17 @@ CRITICAL — Source of Truth Hierarchy:
 - If there is ANY conflict between Base Knowledge and a retrieved chunk, Base Knowledge wins. Always.
 - ONLY list services and products that appear in Base Knowledge as current offerings. If something is described in a retrieved chunk but NOT listed in Base Knowledge as offered, do NOT tell the user we offer it.
 
-Specific restrictions:
-- We do NOT offer BPC-157 or TB-500. These are on the FDA do not compound list. If a retrieved chunk discusses them, it is educational content about WHY they are unavailable — never tell users we offer them.
-- Our peptides are ONLY: Sermorelin ($250/mo), PT-141 ($250/mo), Tesamorelin ($300/mo).
+Specific notes:
+- Our peptide offerings include: BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Wolverine Blend - BPC-157+TB-500 ($375/mo), Glow Stack - GHK-Cu+BPC-157+TB-500 ($400/mo), Sermorelin ($250/mo), PT-141 ($250/mo). All sourced from licensed 503A compounding pharmacies.
 
 Rules:
 - Answer questions using ONLY the provided context. Do not make up information.
-- If you're unsure or the answer isn't in the context, say so honestly and suggest contacting the clinic at 224-435-4280 or hello@moonshotmp.com.
+- If you're unsure or the answer isn't in the context, say so honestly and suggest contacting the clinic at (224) 435-4280 or hello@moonshotmp.com.
 - Be friendly, direct, and helpful. Match the clinic's tone: confident, no-BS, evidence-based.
 - Keep answers concise — 2-4 sentences for simple questions, more for detailed clinical questions.
 - When discussing pricing, always mention exact prices from the Base Knowledge.
 - Do NOT include any links or URLs in your response EXCEPT the booking link. The chat interface will automatically display source links below your answer. Never generate markdown links.
-- When someone asks how to book, schedule, or make an appointment, ALWAYS tell them to book online at moonshotmp.com/booking — this is the primary booking method. Also mention they can call 224-435-4280.
+- When someone asks how to book, schedule, or make an appointment, ALWAYS tell them to book online at moonshotmp.com/booking/ — this is the primary booking method. Also mention they can call (224) 435-4280.
 - Always end clinical/medical answers with: "This is general information — for personalized guidance, book a consultation at moonshotmp.com/booking."
 - Never provide specific medical diagnoses or treatment recommendations for the user's personal health.
 - If asked about topics unrelated to Moonshot Medical, politely redirect to clinic-related topics.`;
@@ -54,44 +53,47 @@ Rules:
 const BASE_CONTEXT = `# Moonshot Medical and Performance — Source of Truth
 
 ## Quick Summary
-Moonshot Medical and Performance is a performance medicine clinic combining medical optimization with physical rehabilitation in Park Ridge, IL. We focus on taking people from "normal" to optimal — not waiting until something is broken to act. Data-driven, proactive, and evidence-based.
+Moonshot Medical and Performance is a performance medicine clinic combining medical optimization with physical rehabilitation in Park Ridge, IL. We focus on taking people from "normal" to optimal — not waiting until something is broken to act. Data-driven, proactive, and evidence-based. 5.0 stars on Google with 141 reviews.
 
 ## Location & Contact
 - Address: 542 Busse Hwy, Park Ridge, IL 60068
-- Medical Phone: 224-435-4280
-- Medical Email: hello@moonshotmp.com
-- Rehab Phone: 224-435-4280
-- Rehab Email: support@principleperformancehealth.com
+- Phone: (224) 435-4280
+- Email: hello@moonshotmp.com
 - Website: https://moonshotmp.com
-- Book Online: https://moonshotmp.com/booking (primary way to schedule any appointment)
+- Book Online: https://moonshotmp.com/booking/ (primary way to schedule any appointment)
+- Book Medical: https://moonshotmp.com/booking/medical/
+- Book Rehab: https://moonshotmp.com/booking/rehab/
 
 ## Hours
-- Monday: 7am–3pm (Medical)
-- Tuesday: 8am–1pm, 3pm–6pm (Rehab)
-- Wednesday: 3pm–7pm (Medical), 8am–1pm, 3pm–6pm (Rehab)
-- Thursday: 8am–1pm (Rehab)
-- Friday: 7am–5pm (Medical), 8am–1pm, 3pm–5pm (Rehab)
-- Saturday: 8am–2pm (Medical by appointment)
+- Monday: 7:00am-4:00pm
+- Tuesday: 11:00am-6:00pm
+- Wednesday: 9:00am-7:00pm
+- Thursday: 11:00am-6:00pm
+- Friday: 7:00am-3:00pm
+- Saturday: 8:00am-2:00pm
 - Sunday: Closed
 
 ## Our Team
 
-### Missy, NP — Medical Director
-- Board-certified Nurse Practitioner
-- Leads all medical optimization services
-- Specializes in hormone optimization for men and women
-- Expertise in metabolic health, GLP-1 weight loss, and peptide therapy
+### Missy Zammichieli, DNP, APRN, FNP-BC — Medical Director
+- Board-Certified Family Nurse Practitioner
+- Doctor of Nursing Practice (DNP)
+- Leads all medical optimization services: hormone therapy, weight loss, blood panels, DEXA scans, peptides
+- Medically reviews all educational content on the site
+- Philosophy: "We don't guess. We test, we track, and we optimize based on your data."
 
-### Dr. Michael Gontarek — Partner, Physical Medicine
+### Dr. Michael Gontarek, DC, MSc, DACBN — Partner, Physical Medicine
 - Doctor of Chiropractic (DC)
-- Master's in Clinical Nutrition (MSc)
+- Master of Science in Clinical Nutrition (MSc)
 - Diplomate of the American Clinical Board of Nutrition (DACBN)
-- McKenzie Method certified (MDT)
-- Evidence-based approach to spine and musculoskeletal care
+- McKenzie Method Certified
+- Leads all rehabilitation services: chiropractic, dry needling, trigger point injections, shockwave therapy
+- Also provides nutritional counseling
 
 ### Supporting Team
 - Sarah (RN, MSN): Registered Nurse supporting medical services
 - Melissa: Medical Assistant, supports labs and DEXA scans
+- Sarah: Performance Specialist, works with rehab patients on movement restoration and strength programming
 - Maria: Patient Experience & Brand Lead
 
 ---
@@ -100,23 +102,24 @@ Moonshot Medical and Performance is a performance medicine clinic combining medi
 
 ### Comprehensive Blood Panel — $285
 60+ biomarkers including:
-- Hormones: Total testosterone, free testosterone, estradiol, progesterone, DHEA-S, thyroid panel (TSH, free T3, free T4)
-- Metabolic: Fasting glucose, HbA1c, insulin, lipid panel, ApoB
+- Hormones: Total testosterone, free testosterone, estradiol, progesterone, DHEA-S, thyroid panel (TSH, free T3, free T4) with antibodies
+- Metabolic: Fasting glucose, HbA1c, insulin, lipid panel, ApoB, Lp(a)
 - Inflammation: CRP, homocysteine
 - Nutrients: Vitamin D, B12, ferritin, iron panel, magnesium
 - Organ function: Complete metabolic panel, liver enzymes, kidney function
+- Blood cells: Complete blood count with differential
 
 Fasting: Minimum 8 hours (ideal 10-12). Water and black coffee allowed. Results in 3-5 business days.
 
 ### DEXA Body Composition Scan — $150
-Medical-grade body composition analysis:
+Medical-grade body composition analysis using dual-energy X-ray absorptiometry:
 - Total body fat percentage and distribution
 - Lean muscle mass by region (arms, legs, trunk)
 - Bone mineral density (osteoporosis screening)
 - Visceral adipose tissue (VAT)
 - Android/gynoid fat ratio
 
-Equipment: Hologic Horizon scanner (gold standard). Scan takes under 3 minutes. Supports patients up to 500 lbs.
+Equipment: Hologic Horizon scanner (gold standard). Scan takes under 3 minutes. Supports patients up to 500 lbs. More accurate than InBody, Bod Pod, or calipers.
 
 Prep: Avoid eating/drinking 2 hours before. Wear comfortable clothing without metal. Results same day.
 
@@ -128,7 +131,7 @@ For men experiencing low energy, decreased libido, brain fog, mood changes, diff
 
 Includes: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments, provider access.
 
-Treatment options: Testosterone cypionate injections, testosterone cream, enclomiphene (fertility-preserving), HCG (fertility preservation).
+Treatment options: Testosterone cypionate injections, enclomiphene (fertility-preserving), thyroid optimization.
 
 ### Women's Hormone Optimization — $235/month
 For women experiencing perimenopause/menopause symptoms, hot flashes, sleep disturbances, mood changes, low libido, weight gain, bone density concerns.
@@ -144,16 +147,32 @@ Includes: GLP-1 medication, medical oversight, DEXA tracking (fat loss vs muscle
 
 Average weight loss: 15-20% of body weight over 12-18 months.
 
+### Medical Oversight Only — $150/month
+For patients whose insurance covers their medication. Includes medical oversight and monitoring, prescription sent to your pharmacy, 2 DEXA scans per year, comprehensive blood panels every 6 months, and 1 vitamin shot per month.
+
 ### Prescription + Oversight Program — $105/month
 For patients whose insurance covers GLP-1 or hormone medications. We write the prescription, provide medical oversight, lab work, dosing guidance, and provider access.
 
-### Peptides
-We offer the following peptides (all FDA-compliant):
-- Sermorelin — $250/month: Growth hormone stimulant. Stimulates the body's natural GH production. Anti-aging, recovery, body composition. Improved sleep within days to weeks.
-- PT-141 — $250/month: Sexual health peptide. Works on the nervous system (not blood flow). Improves desire and arousal for both men and women.
-- Tesamorelin — $300/month: Growth hormone-releasing hormone analog. Reduces visceral fat, supports body composition.
+### Peptides & Add-On Therapies
+All peptides sourced from licensed 503A compounding pharmacies with medical oversight.
 
-We do NOT offer BPC-157 or TB-500. These are on the FDA do not compound list and are not available at our clinic.
+Individual Peptides:
+- BPC-157 — $250/month: Body Protection Compound. Promotes healing of tendons, ligaments, gut, and muscle. Works by upregulating growth factors and promoting angiogenesis. Most studied healing peptide. Available via 503A pharmacy.
+- TB-500 — $250/month: Thymosin beta-4. Accelerates tissue repair by upregulating actin for cell migration. Reduces inflammation. Often combined with BPC-157.
+- GHK-Cu — $175/month: Copper peptide. Stimulates collagen synthesis, skin rejuvenation, hair growth, wound healing. Naturally occurring peptide that declines with age. Most affordable peptide option.
+- Sermorelin — $250/month: Growth hormone releasing hormone analog. Stimulates natural GH production. Benefits: improved sleep, recovery, body composition, energy. Previously FDA-approved (Geref, 1997).
+- PT-141 — $250/month: Bremelanotide. Works on the central nervous system to increase sexual desire and arousal. Works for both men and women. FDA-approved as Vyleesi (2019). Different mechanism than Viagra/Cialis.
+
+Peptide Stacks:
+- Wolverine Blend — $375/month: BPC-157 + TB-500 combined in one injection. Dual-pathway healing. Saves $125/mo vs purchasing separately ($500).
+- Glow Stack — $400/month: GHK-Cu + BPC-157 + TB-500 triple-peptide protocol. Skin rejuvenation + tissue healing + recovery. Saves $275/mo vs purchasing all three separately ($675).
+
+Important peptide notes:
+- All peptides require an initial consultation before prescribing
+- Peptides can be standalone — they do NOT require being on a hormone program
+- Medical oversight, personalized dosing, and injection training included
+- Insurance does not cover peptide therapy — cash-pay service
+- BPC-157 and TB-500 are available through 503A compounding pharmacies (patient-specific prescriptions). The FDA's 2024 decision removed them from 503B bulk manufacturing, but 503A operates under a different regulatory framework.
 
 ### Vitamin & Nutrient Injections
 - NAD+: $60/shot (cellular energy & longevity)
@@ -173,30 +192,33 @@ Hormone optimization and weight loss members get 1 complimentary injection per m
 
 ## Rehab Services
 
-Insurance: Blue Cross Blue Shield PPO accepted for rehab. HSA/FSA accepted.
+Insurance accepted for rehab services. HSA/FSA accepted.
 
 ### Chiropractic Care
-Evidence-based chiropractic with Dr. Michael, McKenzie Method certified. Treats back pain, neck pain, joint pain, sports injuries. Goal is to fix the problem and teach self-management — most patients improve within 6-8 visits. No "maintenance adjustment" plans. Initial visit: 45-60 minutes. No referral needed in Illinois.
+Evidence-based chiropractic with Dr. Michael Gontarek, McKenzie Method certified. Treats back pain, neck pain, joint pain, sports injuries. Goal is to fix the problem and teach self-management — most patients improve within 6-8 visits. No "maintenance adjustment" plans. Initial visit: 45-60 minutes. No referral needed in Illinois.
 
 ### Physical Rehabilitation
-Movement restoration and strength-based rehabilitation. Process: Assess → Treat → Rebuild → Return. For post-injury recovery, chronic pain, and performance optimization.
+Movement restoration and strength-based rehabilitation. For post-injury recovery, chronic pain, and performance optimization.
 
 ### Trigger Point Injections
 Targeted injections for chronic muscle pain — neck/shoulder tension, headaches, lower back spasms, fibromyalgia. Common patterns: upper trap (headaches), infraspinatus (shoulder/arm pain), piriformis (sciatica-like symptoms), QL (lower back/hip pain).
 
 ### Dry Needling
-Thin filament needles targeting muscle trigger points. Based on modern neuroscience (not acupuncture). Effective for chronic tension, myofascial pain, headaches, tennis/golf elbow, TMJ, shoulder pain, back pain, hip pain, knee pain, plantar fasciitis. Soreness for 24-48 hours after treatment is normal.
+Thin filament needles targeting muscle trigger points. Based on modern neuroscience (not acupuncture). Effective for chronic tension, myofascial pain, headaches, tennis/golf elbow, TMJ, shoulder/arm pain, back pain, hip pain, knee pain, plantar fasciitis. Soreness for 24-48 hours after treatment is normal.
 
 ### Shockwave Therapy (ESWT)
 Acoustic wave therapy for chronic tendon injuries. 3-6 sessions, 1 week apart, 10-15 minutes each. 70-90% success rate for appropriate candidates. Full effects over 6-12 weeks. Effective for plantar fasciitis, Achilles tendinopathy, tennis/golf elbow, patellar tendinopathy, calcific tendinitis, hip bursitis, rotator cuff issues.
+
+### IASTM & Soft Tissue Mobilization
+Instrument-assisted soft tissue mobilization to break up scar tissue, improve tissue quality, and restore range of motion.
 
 ---
 
 ## FAQ
 
-**Insurance:** Medical services are cash-pay only. Rehab accepts Blue Cross Blue Shield PPO. HSA/FSA accepted for most services.
+**Insurance:** Medical optimization services are cash-pay only. Rehab services accept insurance. HSA/FSA accepted for most services.
 
-**What makes Moonshot different?** We test 60+ biomarkers (vs typical 10-15), spend 30-60 minutes per visit (vs typical 7 min), and optimize for performance — not just absence of disease.
+**What makes Moonshot different?** We test 60+ biomarkers (vs typical 10-15), spend 30-60 minutes per visit (vs typical 7 min), and optimize for performance — not just absence of disease. Medical and rehab coordinated under one roof.
 
 **TRT safety:** Strong safety profile when properly monitored. We track hematocrit, PSA, lipids, estradiol.
 
@@ -214,9 +236,19 @@ Acoustic wave therapy for chronic tendon injuries. 3-6 sessions, 1 week apart, 1
 
 **What happens when I stop GLP-1s?** Without lifestyle changes, weight often returns. We focus on building sustainable habits during treatment.
 
+**Does Moonshot offer retatrutide?** We don't offer retatrutide yet — it's in Phase 3 clinical trials (TRIUMPH program) and is not yet FDA-approved. We currently offer semaglutide and tirzepatide. See our retatrutide resource hub at moonshotmp.com/learn/retatrutide/ for the latest clinical trial data and FDA timeline.
+
 **DEXA frequency:** Every 6 months for optimization patients. Hormone programs include 2 scans/year.
 
 **Chiropractic visits needed:** Most patients improve within 6-8 visits. Goal is to fix the problem, not create dependency.
+
+**What peptides do you offer?** We offer BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Sermorelin ($250/mo), PT-141 ($250/mo), plus the Wolverine Blend ($375/mo, BPC-157+TB-500) and Glow Stack ($400/mo, GHK-Cu+BPC-157+TB-500). All sourced from licensed 503A compounding pharmacies.
+
+**How much do peptides cost?** Individual peptides range from $175-$250/month. Stacks (Wolverine Blend at $375/mo, Glow Stack at $400/mo) save money vs buying individually. All include medical oversight and injection training.
+
+**Are BPC-157 and TB-500 legal?** Yes. BPC-157 and TB-500 are available through licensed 503A compounding pharmacies, which prepare patient-specific prescriptions under a valid prescription from a provider. The FDA's 2024 action affected 503B bulk manufacturing facilities, but 503A pharmacies operate under a different regulatory framework.
+
+**What is the Wolverine Blend?** The Wolverine Blend ($375/mo) combines BPC-157 and TB-500 in a single injection. BPC-157 promotes healing via growth factor upregulation while TB-500 accelerates tissue repair via actin upregulation — dual-pathway healing. Saves $125/mo vs purchasing both separately.
 
 ---
 
@@ -230,10 +262,15 @@ Acoustic wave therapy for chronic tendon injuries. 3-6 sessions, 1 week apart, 1
 | Men's Hormone Optimization | $235/month |
 | Women's Hormone Optimization | $235/month |
 | Weight Loss Program (GLP-1) | $405/month |
+| Medical Oversight Only | $150/month |
 | Prescription + Oversight | $105/month |
+| BPC-157 | $250/month |
+| TB-500 | $250/month |
+| GHK-Cu | $175/month |
+| Wolverine Blend (BPC-157 + TB-500) | $375/month |
+| Glow Stack (GHK-Cu + BPC-157 + TB-500) | $400/month |
 | Sermorelin | $250/month |
 | PT-141 | $250/month |
-| Tesamorelin | $300/month |
 | Daily Tadalafil | $70/month |
 | HCG | $350/month |
 | Enclomiphene | $200-208/month |
@@ -242,10 +279,10 @@ Acoustic wave therapy for chronic tendon injuries. 3-6 sessions, 1 week apart, 1
 | Vitamin C injection | $30-60/shot |
 
 ## Service Area
-Park Ridge, IL and surrounding communities including Chicago, Des Plaines, Niles, Morton Grove, Glenview, Skokie, Evanston, and the greater northwest suburbs.
+Park Ridge, IL and surrounding communities including Chicago (Edison Park, Norwood Park), Des Plaines, Niles, Rosemont, Morton Grove, Glenview, Skokie, Mount Prospect, Arlington Heights, Evanston, and the greater northwest suburbs. Approximately 30-mile service radius.
 
 ## Related Business
-Moonshot CrossFit operates next door at the same address — offers a continuum from rehab to fitness for patients ready to return to training.`;
+Moonshot CrossFit operates in the same building at 542 Busse Hwy — offers a continuum from rehab to fitness for patients ready to return to training. Train, recover, and optimize under one roof.`;
 
 // ---------------------------------------------------------------------------
 // Rate limiting
@@ -489,7 +526,7 @@ export default async (req) => {
     if (!rateCheck.allowed) {
       console.warn(`[chat] rate limited IP ${clientIp} (${rateCheck.current_count} requests)`);
       return json(429, {
-        reply: "You're sending messages too quickly. Please wait a few minutes and try again, or call us at 224-435-4280.",
+        reply: "You're sending messages too quickly. Please wait a few minutes and try again, or call us at (224) 435-4280.",
         sources: [],
       });
     }
