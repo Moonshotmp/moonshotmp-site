@@ -1,7 +1,7 @@
 /*
- * Moonshot Peptide Quiz Engine v1
+ * Moonshot Peptide Quiz Engine v2
  * ================================
- * 12-screen flow with recommendation engine, calculating animation, and personalized results.
+ * 13-screen flow with recommendation engine, calculating animation, and personalized results.
  * Vanilla JS IIFE — no dependencies.
  */
 (function() {
@@ -18,13 +18,14 @@
         CURRENT_THERAPY: 6,
         CONVENIENCE: 7,
         BUDGET: 8,
-        INFO_CAPTURE: 9,
-        CALCULATING: 10,
-        RESULTS: 11
+        SOCIAL_PROOF: 9,
+        INFO_CAPTURE: 10,
+        CALCULATING: 11,
+        RESULTS: 12
     };
 
-    var TOTAL_SCREENS = 12;
-    var PROGRESS_MAX = 11; // welcome through info capture for progress calculation
+    var TOTAL_SCREENS = 13;
+    var PROGRESS_MAX = 12; // welcome through info capture for progress calculation
 
     // ── Option Data ──────────────────────────────────────────────────
 
@@ -253,14 +254,14 @@
             category: 'Sexual Health',
             price: 250,
             tagline: 'Desire starts in the brain, not the bloodstream.',
-            description: 'PT-141 works on the central nervous system to increase sexual desire and arousal \u2014 a fundamentally different mechanism than Viagra or Cialis. FDA-approved (as Vyleesi) and works for both men and women.',
+            description: 'PT-141 works on the central nervous system to increase sexual desire and arousal \u2014 a fundamentally different mechanism than Viagra or Cialis. The active compound (bremelanotide) is the same molecule in the FDA-approved medication Vyleesi. The compounded version is not an FDA-approved product. Works for both men and women.',
             timeline: 'Effects typically noticed within 1\u20132 hours of administration.',
             dosing: 'As-needed subcutaneous injection, 1\u20132 hours before desired effect',
             cycle: 'As needed \u2014 not a daily protocol',
             frequency: 'As needed (not daily)',
             learnUrl: '/learn/peptides/',
             matchText: {
-                sexual: 'PT-141 is FDA-approved and works through the brain\'s melanocortin system \u2014 increasing actual desire, not just blood flow. It\'s the only peptide that addresses the neurological root of low libido.'
+                sexual: 'PT-141 works through the brain\'s melanocortin system \u2014 increasing actual desire, not just blood flow. The active compound (bremelanotide) is the same molecule in the FDA-approved medication Vyleesi. The compounded version is not an FDA-approved product. It\'s the only peptide that addresses the neurological root of low libido.'
             }
         }
     };
@@ -366,6 +367,10 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }, 30);
+        // Auto-advance social proof after 3 seconds
+        if (screenIndex === SCREEN.SOCIAL_PROOF) {
+            startSocialProofTimer();
+        }
     }
 
     function screenWrap(index, inner) {
@@ -377,6 +382,19 @@
         if (budgetKey === '300-400' || budgetKey === '400+') return 300;
         if (budgetKey === '200-300') return 200;
         return 150;
+    }
+
+    // ── Social Proof Timer ───────────────────────────────────────────
+
+    var socialProofTimer = null;
+
+    function startSocialProofTimer() {
+        if (socialProofTimer) clearTimeout(socialProofTimer);
+        socialProofTimer = setTimeout(function() {
+            if (state.currentScreen === SCREEN.SOCIAL_PROOF) {
+                show(SCREEN.INFO_CAPTURE);
+            }
+        }, 3000);
     }
 
     // ── Recommendation Engine ────────────────────────────────────────
@@ -472,11 +490,13 @@
     function buildWelcome() {
         return screenWrap(SCREEN.WELCOME,
             '<div class="text-center">' +
-                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free 2-Minute Assessment</p>' +
-                '<h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">Find Your Peptide Protocol</h1>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Answer a few questions and we\'ll recommend the right peptide therapy for your goals.</p>' +
-                '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Let\'s Go</button>' +
-                '<p class="text-brand-gray/50 text-xs mt-6">Takes about 2 minutes</p>' +
+                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Personalized in Under 2 Minutes</p>' +
+                '<h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">Which Peptide Will Work for You?</h1>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Tell us what you\'re dealing with. We\'ll show you the exact peptide, dosing protocol, timeline, and cost \u2014 matched to your goals.</p>' +
+                '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start My Assessment</button>' +
+                '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant.</p>' +
+                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical \u2014 a licensed clinic in Park Ridge, IL</p>' +
+                '<p class="text-brand-gray/40 text-xs mt-2">For educational purposes only. Not medical advice.</p>' +
             '</div>'
         );
     }
@@ -592,20 +612,59 @@
         );
     }
 
+    function buildSocialProof() {
+        return screenWrap(SCREEN.SOCIAL_PROOF,
+            '<div class="text-center">' +
+                '<h2 class="text-3xl font-bold text-brand-light mb-8 font-heading">You\'re in good company.</h2>' +
+                '<p class="text-5xl font-bold text-brand-light mb-4">300+</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-8">patients have started peptide therapy at Moonshot Medical</p>' +
+                '<p class="text-brand-gray/60 text-sm font-light">Medically supervised. Pharmaceutical-grade. Park Ridge, IL.</p>' +
+            '</div>'
+        );
+    }
+
     function buildInfoCapture() {
+        var rec = getRecommendation();
+        var primary = rec.primary;
+
+        var previewCard = '<div class="max-w-sm mx-auto mb-8">' +
+            '<div class="border border-brand-gray/40 rounded-sm p-6" style="background: rgba(178, 191, 190, 0.05)">' +
+                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-1">Your Match</p>' +
+                '<h3 class="text-xl font-bold text-brand-light font-heading">' + primary.name + '</h3>' +
+                '<p class="text-brand-gray/70 text-sm mb-4">' + primary.category + '</p>' +
+                '<div style="position: relative; overflow: hidden; border-radius: 4px;">' +
+                    '<div style="filter: blur(4px); -webkit-filter: blur(4px); pointer-events: none; user-select: none;">' +
+                        '<div class="bg-white/5 rounded-sm p-3 mb-2">' +
+                            '<p class="text-brand-gray text-xs">Dosing: 250\u2013500mcg daily, subcutaneous</p>' +
+                        '</div>' +
+                        '<div class="bg-white/5 rounded-sm p-3 mb-2">' +
+                            '<p class="text-brand-gray text-xs">Timeline: 4\u201312 weeks typical cycle</p>' +
+                        '</div>' +
+                        '<div class="bg-white/5 rounded-sm p-3">' +
+                            '<p class="text-brand-gray text-xs">Cost: $XXX/month including oversight</p>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 4px;">' +
+                        '<p class="text-brand-light text-xs text-center px-4 font-medium">Unlock your full protocol: dosing, timeline, cost, and personalized match analysis</p>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+
         return screenWrap(SCREEN.INFO_CAPTURE,
             '<div class="text-center">' +
-                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">Almost done \u2014 enter your info to see your personalized results</h2>' +
-                '<p class="text-brand-gray font-light mb-8">Your results include a personalized peptide recommendation with dosing, timeline, and cost.</p>' +
+                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">Your Protocol Is Ready</h2>' +
+                '<p class="text-brand-gray font-light mb-8">We matched you with a specific peptide based on your answers. Enter your info below to unlock the full details.</p>' +
+                previewCard +
                 '<div class="max-w-sm mx-auto space-y-4">' +
                     '<input type="text" id="quiz-name" placeholder="First name" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<input type="email" id="quiz-email" placeholder="Email address" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<input type="tel" id="quiz-phone" placeholder="Phone (optional)" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<p id="quiz-name-error" class="text-red-500 text-xs text-left hidden">Please enter your first name.</p>' +
                     '<p id="quiz-email-error" class="text-red-500 text-xs text-left hidden">Please enter a valid email address.</p>' +
-                    '<button type="button" id="quiz-submit-info" class="btn-primary w-full py-3">See My Results</button>' +
+                    '<button type="button" id="quiz-submit-info" class="btn-primary w-full py-3">Show My Protocol</button>' +
                 '</div>' +
-                '<p class="text-brand-gray/50 text-xs mt-4">We\'ll never spam you. Unsubscribe anytime.</p>' +
+                '<p class="text-brand-gray/50 text-xs mt-4">We\'ll also email you a copy. No spam, no sales calls. Unsubscribe anytime.</p>' +
             '</div>'
         );
     }
@@ -685,8 +744,36 @@
                 '</div>' +
             '</div>' +
             '<p class="text-brand-light font-medium text-lg mb-3" style="font-style: italic">' + primary.tagline + '</p>' +
-            '<p class="text-brand-gray font-light mb-6">' + matchText + '</p>' +
-            '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">' +
+            '<p class="text-brand-gray font-light mb-6">' + matchText + '</p>';
+
+        // ── Personalized callouts based on state data ────────────────
+        if (state.severity === 'significant' || state.severity === 'severe') {
+            html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
+                '<p class="text-brand-light text-sm font-light">Given the severity of your symptoms, your provider may recommend a more aggressive protocol to start.</p>' +
+            '</div>';
+        }
+        if (state.duration === '3+years') {
+            html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
+                '<p class="text-brand-light text-sm font-light">You\'ve been dealing with this for over 3 years. Early results are often most noticeable in patients with chronic conditions.</p>' +
+            '</div>';
+        }
+        if (state.experience === 'never') {
+            html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
+                '<p class="text-brand-light text-sm font-light">New to peptides? Most of our patients are. Your first visit includes hands-on injection training \u2014 you\'ll leave confident.</p>' +
+            '</div>';
+        }
+        if (state.experience === 'online') {
+            html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
+                '<p class="text-brand-light text-sm font-light">Coming from online peptides? Pharmaceutical-grade compounds from licensed pharmacies are a different experience \u2014 consistent potency, sterility testing, and medical oversight.</p>' +
+            '</div>';
+        }
+        if (state.therapy === 'moonshot') {
+            html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
+                '<p class="text-brand-light text-sm font-light">As a current Moonshot patient, adding peptides to your protocol is simple \u2014 just book a quick add-on visit.</p>' +
+            '</div>';
+        }
+
+        html += '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">' +
                 '<div class="bg-white/5 rounded-sm p-4">' +
                     '<p class="text-brand-gray text-xs uppercase tracking-widest mb-1">How It Works</p>' +
                     '<p class="text-brand-light text-sm font-light">' + primary.description + '</p>' +
@@ -761,13 +848,33 @@
             '</div>' +
         '</div>';
 
+        // ── Common Questions ────────────────────────────────────────
+        html += '<div class="bg-white/5 rounded-sm p-6 mb-8">' +
+            '<h3 class="text-brand-light font-bold mb-6">COMMON QUESTIONS</h3>' +
+            '<div class="space-y-6">' +
+                '<div>' +
+                    '<p class="text-brand-light font-medium text-sm mb-1">Do I really have to inject myself?</p>' +
+                    '<p class="text-brand-gray font-light text-sm">Yes, but it\'s a tiny insulin needle \u2014 most patients say they barely feel it. We do hands-on injection training at your first visit.</p>' +
+                '</div>' +
+                '<div>' +
+                    '<p class="text-brand-light font-medium text-sm mb-1">Where do the peptides come from?</p>' +
+                    '<p class="text-brand-gray font-light text-sm">Every compound is made at a licensed 503A compounding pharmacy. We don\'t use overseas or gray-market sources.</p>' +
+                '</div>' +
+                '<div>' +
+                    '<p class="text-brand-light font-medium text-sm mb-1">Is this a long-term commitment?</p>' +
+                    '<p class="text-brand-gray font-light text-sm">Most protocols run 4\u201312 weeks. No contracts, no commitments.</p>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+
         // ── CTA ─────────────────────────────────────────────────────
         html += '<div class="bg-brand-slate rounded-sm p-8 mb-8 text-center">' +
-            '<h3 class="text-brand-light font-bold mb-4">READY TO START?</h3>' +
-            '<p class="text-brand-gray font-light mb-2">Your protocol begins with a quick consultation to confirm the right peptide and dosing for your goals.</p>' +
+            '<h3 class="text-brand-light font-bold mb-4">YOUR NEXT STEP</h3>' +
+            '<p class="text-brand-gray font-light mb-2">Your provider will review your protocol, confirm the right peptide, and walk you through injection training \u2014 usually in a single 15-minute visit.</p>' +
             '<p class="text-brand-gray/70 text-xs mb-6">All peptide therapies require a medical evaluation. This quiz is for educational purposes and does not constitute medical advice.</p>' +
-            '<a href="/booking/" class="btn-primary text-lg px-10 py-4 inline-block quiz-cta" data-cta="book_peptide_consultation">Book Your Peptide Consultation</a>' +
-            '<p class="text-brand-gray/60 text-sm mt-4">Questions? Call <a href="tel:+12244354280" class="text-brand-light hover:underline">(224) 435-4280</a></p>' +
+            '<a href="/booking/" class="btn-primary text-lg px-10 py-4 inline-block quiz-cta" data-cta="book_peptide_consultation">Book My Free Consultation</a>' +
+            '<p class="text-brand-gray/60 text-sm mt-4"><a href="tel:+12244354280" class="text-brand-light hover:underline">(224) 435-4280</a> if you\'d rather call</p>' +
+            '<p class="text-brand-gray/50 text-xs mt-3">Not ready? Reply to the email we just sent \u2014 we answer every one.</p>' +
         '</div>';
 
         // ── Learn More Links ────────────────────────────────────────
@@ -841,6 +948,7 @@
         html += buildCurrentTherapy();
         html += buildConvenience();
         html += buildBudget();
+        html += buildSocialProof();
         html += buildInfoCapture();
         html += buildCalculating();
         html += buildResultsShell();
@@ -946,7 +1054,7 @@
                 return;
             }
 
-            // Budget (auto-advance)
+            // Budget (auto-advance to social proof)
             var budgetCard = target.closest('[data-budget]');
             if (budgetCard) {
                 state.budget = budgetCard.getAttribute('data-budget');
@@ -954,7 +1062,7 @@
                 for (var b = 0; b < allB.length; b++) allB[b].classList.remove('selected');
                 budgetCard.classList.add('selected');
                 ga('peptide_quiz_budget', { value: state.budget });
-                setTimeout(function() { show(SCREEN.INFO_CAPTURE); }, 400);
+                setTimeout(function() { show(SCREEN.SOCIAL_PROOF); }, 400);
                 return;
             }
 

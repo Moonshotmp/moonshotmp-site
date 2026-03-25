@@ -118,6 +118,10 @@ export default async function handler(req) {
       A licensed provider will review your health history before prescribing any peptide therapy.<br>
       Moonshot Medical and Performance &middot; 542 Busse Hwy, Park Ridge, IL 60068
     </p>
+    <p style="color: #666; font-size: 11px; text-align: center; margin-top: 16px;">
+      <a href="https://moonshotmp.com/unsubscribe?email=${encodeURIComponent(email)}"
+         style="color: #666; text-decoration: underline;">Unsubscribe from future emails</a>
+    </p>
   </div>
 </body>
 </html>`.trim();
@@ -184,7 +188,15 @@ export default async function handler(req) {
 
   try {
     await Promise.all([
-      sendEmail({ to: email, subject: userSubject, html: userHtml }),
+      sendEmail({
+        to: email,
+        subject: userSubject,
+        html: userHtml,
+        headers: {
+          'List-Unsubscribe': `<https://moonshotmp.com/unsubscribe?email=${encodeURIComponent(email)}>`,
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
+        }
+      }),
       sendEmail({ to: 'hello@moonshotmp.com', subject: internalSubject, html: internalHtml })
     ]);
 
@@ -220,9 +232,20 @@ export default async function handler(req) {
         email,
         name,
         quiz_type: 'peptide',
+        source: 'peptide-quiz',
         recommendation: primary.key || '',
         goal: goal || '',
-        budget: budget || ''
+        goalLabel: goalLabel || '',
+        concern: concern || '',
+        concernLabel: concernLabel || '',
+        budget: budget || '',
+        severity: severity || '',
+        duration: duration || '',
+        experience: experience || '',
+        therapy: therapy || '',
+        convenience: convenience || '',
+        phone: phone || '',
+        secondaryRecommendation: secondary ? { key: secondary.key, name: secondary.name, price: secondary.price } : null,
       })
     }).catch(err => console.error('[peptide-quiz-submit] Marketing drip sync error:', err.message));
 

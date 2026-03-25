@@ -5,7 +5,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_FROM = process.env.RESEND_FROM || 'noreply@updates.moonshotclinic.com';
 const RESEND_FROM_NAME = process.env.RESEND_FROM_NAME || 'Moonshot Medical';
 
-export async function sendEmail({ to, subject, html, text, from, fromName, replyTo }) {
+export async function sendEmail({ to, subject, html, text, from, fromName, replyTo, headers: customHeaders }) {
   if (!RESEND_API_KEY) {
     console.error("[send-email] RESEND_API_KEY not configured");
     return { ok: false, error: "Email not configured" };
@@ -30,6 +30,7 @@ export async function sendEmail({ to, subject, html, text, from, fromName, reply
         subject,
         html: html || undefined,
         text: text || undefined,
+        headers: customHeaders || undefined,
       }),
     });
 

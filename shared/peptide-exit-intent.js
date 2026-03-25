@@ -114,6 +114,7 @@
         '<button type="submit" class="btn-primary">Send Me the Guide</button>' +
       '</form>' +
       '<p class="pep-disclaimer">No spam. Unsubscribe anytime.</p>' +
+      '<p class="pep-disclaimer" style="margin-top:6px;">For educational purposes only. Not medical advice.</p>' +
     '</div>';
   document.body.appendChild(overlay);
 

@@ -212,6 +212,10 @@ export default async function handler(req) {
       Peptide therapy requires a medical evaluation and prescription from a licensed provider.<br>
       Moonshot Medical and Performance &middot; 542 Busse Hwy, Park Ridge, IL 60068
     </p>
+    <p style="color: #666; font-size: 11px; text-align: center; margin-top: 16px;">
+      <a href="https://moonshotmp.com/unsubscribe?email=${encodeURIComponent(email)}"
+         style="color: #666; text-decoration: underline;">Unsubscribe from future emails</a>
+    </p>
   </div>
 </body>
 </html>`.trim();
@@ -274,7 +278,15 @@ export default async function handler(req) {
 
   try {
     await Promise.all([
-      sendEmail({ to: email, subject: userSubject, html: userHtml }),
+      sendEmail({
+        to: email,
+        subject: userSubject,
+        html: userHtml,
+        headers: {
+          'List-Unsubscribe': `<https://moonshotmp.com/unsubscribe?email=${encodeURIComponent(email)}>`,
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
+        }
+      }),
       sendEmail({ to: 'hello@moonshotmp.com', subject: internalSubject, html: internalHtml })
     ]);
 
@@ -296,6 +308,20 @@ export default async function handler(req) {
         notes: `Requested peptide guide.${protocolNames.length > 0 ? ` Protocol: ${protocolNames.join(', ')}` : ''}`
       })
     }).catch(err => console.error('[peptide-guide-send] Clinic lead sync error:', err.message));
+
+    // Marketing drip webhook
+    fetch(clinicApi + '/api/marketing/quiz-complete', {
+      method: 'POST',
+      headers: webhookHeaders,
+      body: JSON.stringify({
+        email,
+        name,
+        quiz_type: 'peptide',
+        source: source || sourceLabel,
+        recommendation: protocolNames.length > 0 ? protocolNames[0] : null,
+        goal: null,
+      })
+    }).catch(err => console.error('[peptide-guide-send] Marketing drip sync error:', err.message));
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
