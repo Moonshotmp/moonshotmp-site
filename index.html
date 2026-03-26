@@ -233,7 +233,37 @@
                     ]
                 }
             ]
-        }
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5.0",
+            "reviewCount": "147",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "review": [
+            {
+                "@type": "Review",
+                "author": {"@type": "Person", "name": "Nick A."},
+                "datePublished": "2026-03",
+                "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+                "reviewBody": "I recently got a Dexa Scan at Moonshot Medical and Performance in Park Ridge and it was honestly really cool to see the breakdown of everything. The staff were really easy to work with and explained the results in a way that actually made sense."
+            },
+            {
+                "@type": "Review",
+                "author": {"@type": "Person", "name": "Chris G."},
+                "datePublished": "2026-02",
+                "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+                "reviewBody": "I had my blood work tested and turns out doing the right thing isn't always enough when you are dealing with low T. Immediately I felt a change in my energy levels, skipping the midday nap and never looking back."
+            },
+            {
+                "@type": "Review",
+                "author": {"@type": "Person", "name": "Edwin G."},
+                "datePublished": "2026-02",
+                "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+                "reviewBody": "Best place! Since starting TRT here I've noticed a huge change in my energy levels and stamina. The team is incredibly nice, knowledgeable, and really guides you through the whole process."
+            }
+        ]
     }
     </script>
     <script type="application/ld+json">
@@ -382,8 +412,11 @@
                     </div>
                 </div>
 
+                <!-- Trust Badge -->
+                <div class="text-center mt-8 mb-4" data-reviews-trust></div>
+
                 <!-- Single CTA -->
-                <div class="text-center mt-12">
+                <div class="text-center mt-4">
                     <button type="button" onclick="openBookingModal()" class="btn-primary text-lg px-10 py-4">Book Now</button>
                 </div>
             </div>
@@ -679,6 +712,9 @@
             </div>
         </section>
 
+        <!-- Patient Reviews -->
+        <div id="reviews-section" data-theme="dark"></div>
+
         <!-- Why We Built This -->
         <section class="py-20 bg-brand-light text-brand-dark">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -752,6 +788,7 @@
 
     </main>
 
+    <script src="/shared/reviews.js" defer></script>
     <script src="/shared/footer.js"></script>
 
 </body>

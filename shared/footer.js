@@ -125,6 +125,43 @@
         document.body.insertAdjacentHTML('beforeend', footerHTML);
     }
 
+    // Auto-inject reviews section on service, learn, about, booking, and contact pages
+    // (Homepage has explicit placement, so skip it)
+    var reviewsPath = location.pathname;
+    var needsReviews = /^\/(medical|rehab|learn|about|contact|booking)\/?/.test(reviewsPath) && reviewsPath !== '/';
+    if (needsReviews && !document.getElementById('reviews-section')) {
+        // Determine filter based on page context
+        var reviewFilter = '';
+        if (/\/(mens-hormones|trt|testosterone|enclomiphene)/.test(reviewsPath)) reviewFilter = 'trt';
+        else if (/\/(dexa|body-comp)/.test(reviewsPath)) reviewFilter = 'dexa';
+        else if (/\/(blood-panel|blood-work|blood-draw)/.test(reviewsPath)) reviewFilter = 'blood-work';
+
+        // Determine theme — light sections get light reviews
+        var mainEl = document.querySelector('main');
+        var lastSection = mainEl ? mainEl.querySelector('section:last-of-type') : null;
+        var reviewTheme = 'dark';
+
+        // Insert before the last section (usually the final CTA)
+        var reviewDiv = document.createElement('div');
+        reviewDiv.id = 'reviews-section';
+        reviewDiv.setAttribute('data-theme', reviewTheme);
+        if (reviewFilter) reviewDiv.setAttribute('data-filter', reviewFilter);
+        if (lastSection) {
+            lastSection.parentNode.insertBefore(reviewDiv, lastSection);
+        } else if (mainEl) {
+            mainEl.appendChild(reviewDiv);
+        }
+
+        // Load reviews.js if not already loaded
+        if (!window.MoonshotReviews) {
+            var rvScript = document.createElement('script');
+            rvScript.src = '/shared/reviews.js';
+            document.body.appendChild(rvScript);
+        } else {
+            window.MoonshotReviews.render();
+        }
+    }
+
     // Contextual lead magnet CTA on learn articles (replaces generic booking CTA)
     if (/^\/learn\/[^/]+\//.test(location.pathname)) {
         var magnetScript = document.createElement('script');
