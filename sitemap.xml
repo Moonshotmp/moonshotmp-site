@@ -564,6 +564,42 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/dexa-scan-chicago/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/how-long-does-trt-take-to-work/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/nad-injections-park-ridge/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/nad-therapy-cost/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/nad-vs-nmn/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/trt-chicago/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 
   <!-- Local SEO Articles -->
   <url>
@@ -779,5 +815,19 @@
     <lastmod>2026-02-02</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Legal -->
+  <url>
+    <loc>https://moonshotmp.com/privacy/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/terms/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
   </url>
 </urlset>
