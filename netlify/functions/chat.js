@@ -34,7 +34,7 @@ CRITICAL — Source of Truth Hierarchy:
 - ONLY list services and products that appear in Base Knowledge as current offerings. If something is described in a retrieved chunk but NOT listed in Base Knowledge as offered, do NOT tell the user we offer it.
 
 Specific notes:
-- Our peptide offerings include: BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Wolverine Blend - BPC-157+TB-500 ($375/mo), Glow Stack - GHK-Cu+BPC-157+TB-500 ($400/mo), Sermorelin ($250/mo), PT-141 ($250/mo). All sourced from licensed 503A compounding pharmacies.
+- Our peptide offerings include: BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Wolverine Blend - BPC-157+TB-500 ($394/mo), Glow Stack - GHK-Cu+BPC-157+TB-500 ($400/mo), Sermorelin ($250/mo), PT-141 ($250/mo). All sourced from licensed 503A compounding pharmacies.
 - Peptide protocol bundles (all except PT-141): 3-month protocols save 15%, 6-month protocols save 20% (includes built-in cycle-off month). BPC-157: 3-mo $635, 6-mo $1,200. TB-500: 3-mo $635, 6-mo $1,200. Wolverine Blend: 3-mo $955, 6-mo $1,800. GHK-Cu: 3-mo $445, 6-mo $840. Glow Stack: 3-mo $1,020, 6-mo $1,920. Sermorelin: 3-mo $635, 6-mo $1,200. PT-141 is as-needed only — no protocol bundles.
 
 Rules:
@@ -165,7 +165,7 @@ Individual Peptides:
 - PT-141 — $250/month: Bremelanotide. Works on the central nervous system to increase sexual desire and arousal. Works for both men and women. FDA-approved as Vyleesi (2019). Different mechanism than Viagra/Cialis.
 
 Peptide Stacks:
-- Wolverine Blend — $375/month: BPC-157 + TB-500 combined in one injection. Dual-pathway healing. Saves $125/mo vs purchasing separately ($500).
+- Wolverine Blend — $394/month: BPC-157 + TB-500 combined in one injection. Dual-pathway healing. Saves $106/mo vs purchasing separately ($500).
 - Glow Stack — $400/month: GHK-Cu + BPC-157 + TB-500 triple-peptide protocol. Skin rejuvenation + tissue healing + recovery. Saves $275/mo vs purchasing all three separately ($675).
 
 Protocol Bundles (save 15-20%):
@@ -253,13 +253,13 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 
 **Chiropractic visits needed:** Most patients improve within 6-8 visits. Goal is to fix the problem, not create dependency.
 
-**What peptides do you offer?** We offer BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Sermorelin ($250/mo), PT-141 ($250/mo), plus the Wolverine Blend ($375/mo, BPC-157+TB-500) and Glow Stack ($400/mo, GHK-Cu+BPC-157+TB-500). All sourced from licensed 503A compounding pharmacies.
+**What peptides do you offer?** We offer BPC-157 ($250/mo), TB-500 ($250/mo), GHK-Cu ($175/mo), Sermorelin ($250/mo), PT-141 ($250/mo), plus the Wolverine Blend ($394/mo, BPC-157+TB-500) and Glow Stack ($400/mo, GHK-Cu+BPC-157+TB-500). All sourced from licensed 503A compounding pharmacies.
 
-**How much do peptides cost?** Individual peptides range from $175-$250/month. Stacks (Wolverine Blend at $375/mo, Glow Stack at $400/mo) save money vs buying individually. All include medical oversight and injection training. Multi-month protocol bundles available: 3-month protocols save 15%, 6-month protocols save 20% (includes cycle-off month). Example: BPC-157 drops from $750 to $635 (3-mo) or $1,200 (6-mo).
+**How much do peptides cost?** Individual peptides range from $175-$250/month. Stacks (Wolverine Blend at $394/mo, Glow Stack at $400/mo) save money vs buying individually. All include medical oversight and injection training. Multi-month protocol bundles available: 3-month protocols save 15%, 6-month protocols save 20% (includes cycle-off month). Example: BPC-157 drops from $750 to $635 (3-mo) or $1,200 (6-mo).
 
 **Are BPC-157 and TB-500 legal?** Yes. BPC-157 and TB-500 are available through licensed 503A compounding pharmacies, which prepare patient-specific prescriptions under a valid prescription from a provider. The FDA's 2024 action affected 503B bulk manufacturing facilities, but 503A pharmacies operate under a different regulatory framework.
 
-**What is the Wolverine Blend?** The Wolverine Blend ($375/mo) combines BPC-157 and TB-500 in a single injection. BPC-157 promotes healing via growth factor upregulation while TB-500 accelerates tissue repair via actin upregulation — dual-pathway healing. Saves $125/mo vs purchasing both separately.
+**What is the Wolverine Blend?** The Wolverine Blend ($394/mo) combines BPC-157 and TB-500 in a single injection. BPC-157 promotes healing via growth factor upregulation while TB-500 accelerates tissue repair via actin upregulation — dual-pathway healing. Saves $106/mo vs purchasing both separately.
 
 ---
 
@@ -278,7 +278,7 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 | BPC-157 | $250/month |
 | TB-500 | $250/month |
 | GHK-Cu | $175/month |
-| Wolverine Blend (BPC-157 + TB-500) | $375/month |
+| Wolverine Blend (BPC-157 + TB-500) | $394/month |
 | Glow Stack (GHK-Cu + BPC-157 + TB-500) | $400/month |
 | Sermorelin | $250/month |
 | PT-141 | $250/month |
