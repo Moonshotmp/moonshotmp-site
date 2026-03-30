@@ -367,6 +367,11 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }, 30);
+        // Cancel social proof timer if navigating away
+        if (screenIndex !== SCREEN.SOCIAL_PROOF && socialProofTimer) {
+            clearTimeout(socialProofTimer);
+            socialProofTimer = null;
+        }
         // Auto-advance social proof after 3 seconds
         if (screenIndex === SCREEN.SOCIAL_PROOF) {
             startSocialProofTimer();
@@ -374,8 +379,14 @@
     }
 
     function screenWrap(index, inner) {
+        var backBtn = '';
+        if (index >= SCREEN.PRIMARY_GOAL && index <= SCREEN.INFO_CAPTURE) {
+            backBtn = '<button type="button" class="quiz-back-btn text-brand-gray/60 hover:text-brand-light text-sm flex items-center gap-1 mb-6 transition-colors" data-back="true">' +
+                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>' +
+                'Back</button>';
+        }
         return '<div class="quiz-screen flex items-center justify-center min-h-[calc(100vh-5rem)] px-4 py-12" data-screen="' + index + '">' +
-            '<div class="max-w-2xl w-full">' + inner + '</div></div>';
+            '<div class="max-w-2xl w-full">' + backBtn + inner + '</div></div>';
     }
 
     function budgetValue(budgetKey) {
@@ -889,6 +900,11 @@
             '<div class="flex flex-wrap justify-center gap-2">' + learnLinks + '</div>' +
         '</div>';
 
+        // Retake quiz button
+        html += '<div class="text-center mb-8">' +
+            '<button type="button" class="text-brand-gray/60 hover:text-brand-light text-sm transition-colors underline underline-offset-2" data-retake="true">Retake Quiz</button>' +
+        '</div>';
+
         document.getElementById('quiz-results-inner').innerHTML = html;
     }
 
@@ -1063,6 +1079,41 @@
                 budgetCard.classList.add('selected');
                 ga('peptide_quiz_budget', { value: state.budget });
                 setTimeout(function() { show(SCREEN.SOCIAL_PROOF); }, 400);
+                return;
+            }
+
+            // Back button
+            var backBtn = target.closest('[data-back]');
+            if (backBtn) {
+                var prevScreen = state.currentScreen - 1;
+                // Skip social proof interstitial when going back
+                if (prevScreen === SCREEN.SOCIAL_PROOF) prevScreen = SCREEN.BUDGET;
+                if (prevScreen >= SCREEN.WELCOME) {
+                    show(prevScreen);
+                }
+                return;
+            }
+
+            // Retake quiz
+            var retakeBtn = target.closest('[data-retake]');
+            if (retakeBtn) {
+                state.goal = null;
+                state.concern = null;
+                state.severity = null;
+                state.duration = null;
+                state.experience = null;
+                state.therapy = null;
+                state.convenience = null;
+                state.budget = null;
+                state.name = '';
+                state.email = '';
+                state.phone = '';
+                clearSavedState();
+                // Rebuild screens to clear all selected states
+                buildAllScreens();
+                bindAll();
+                ga('peptide_quiz_retake', { page: '/quiz/peptides/' });
+                show(SCREEN.PRIMARY_GOAL);
                 return;
             }
 
