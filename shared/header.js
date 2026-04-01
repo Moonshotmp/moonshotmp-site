@@ -27,6 +27,13 @@
         gtag('config', 'G-TVYS826RW0');
         gtag('config', 'AW-18022260388');
 
+        // Ahrefs analytics
+        const ahrefsScript = document.createElement('script');
+        ahrefsScript.async = true;
+        ahrefsScript.src = 'https://analytics.ahrefs.com/analytics.js';
+        ahrefsScript.dataset.key = 'UTkNprdRUfEYySLJJPoA3A';
+        document.head.appendChild(ahrefsScript);
+
         // Meta CAPI — deferred client-side event tracker
         const metaScript = document.createElement('script');
         metaScript.defer = true;
