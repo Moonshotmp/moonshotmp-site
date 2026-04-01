@@ -248,8 +248,18 @@
         }, {passive: true});
     }
 
-    // Load chat widget
-    const chatScript = document.createElement('script');
-    chatScript.src = '/shared/chat-widget.js';
-    document.body.appendChild(chatScript);
+    // Load chat widget — deferred until idle to avoid competing with critical resources
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(function() {
+            const chatScript = document.createElement('script');
+            chatScript.src = '/shared/chat-widget.js';
+            document.body.appendChild(chatScript);
+        }, { timeout: 5000 });
+    } else {
+        setTimeout(function() {
+            const chatScript = document.createElement('script');
+            chatScript.src = '/shared/chat-widget.js';
+            document.body.appendChild(chatScript);
+        }, 3000);
+    }
 })();

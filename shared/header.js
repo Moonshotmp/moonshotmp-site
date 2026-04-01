@@ -17,7 +17,7 @@
     window.gtag = function(){dataLayer.push(arguments);};
 
     // Google Analytics 4 — deferred to avoid competing with critical resources
-    setTimeout(function() {
+    var loadAnalytics = function() {
         const gtagScript = document.createElement('script');
         gtagScript.async = true;
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-TVYS826RW0';
@@ -39,7 +39,12 @@
         metaScript.defer = true;
         metaScript.src = '/shared/meta-tracking.js';
         document.head.appendChild(metaScript);
-    }, 0);
+    };
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadAnalytics, { timeout: 3000 });
+    } else {
+        setTimeout(loadAnalytics, 2000);
+    }
 
     const headerHTML = `
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand-dark focus:text-brand-light focus:px-4 focus:py-2 focus:border focus:border-white/20">Skip to content</a>
