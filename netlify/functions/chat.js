@@ -134,7 +134,7 @@ Includes: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, c
 
 Treatment options: Testosterone cypionate injections, enclomiphene (fertility-preserving), thyroid optimization.
 
-### Women's Hormone Optimization — $285/month
+### Women's Hormone Optimization — $235/month
 For women experiencing perimenopause/menopause symptoms, hot flashes, sleep disturbances, mood changes, low libido, weight gain, bone density concerns.
 
 Includes: Ongoing medical oversight, personalized protocol, 2 DEXA scans/year, comprehensive labs every 6 months, 1 vitamin shot/month, dosing adjustments, provider access.
@@ -271,7 +271,7 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 | DEXA Body Composition Scan | $150 |
 | Performance Baseline Bundle (DEXA + Labs) | $405 |
 | Men's Hormone Optimization | $235/month |
-| Women's Hormone Optimization | $285/month |
+| Women's Hormone Optimization | $235/month |
 | Weight Loss Program (GLP-1) | $405/month |
 | Medical Oversight Only | $150/month |
 | Prescription + Oversight | $105/month |
