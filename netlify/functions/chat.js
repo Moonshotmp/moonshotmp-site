@@ -185,8 +185,24 @@ Important peptide notes:
 - Insurance does not cover peptide therapy — cash-pay service
 - BPC-157 and TB-500 are available through 503A compounding pharmacies (patient-specific prescriptions). The FDA's 2024 decision removed them from 503B bulk manufacturing, but 503A operates under a different regulatory framework.
 
-### Vitamin & Nutrient Injections
-- NAD+: $60/shot (cellular energy & longevity)
+### NAD+ Therapy — $60/shot
+NAD+ (nicotinamide adenine dinucleotide) subcutaneous injections for cellular energy, recovery, and anti-aging. 5-minute SubQ injection with near-complete bioavailability. Much cheaper than IV NAD+ at drip bars ($250-1000+) with 90%+ comparable bioavailability — same molecule, fraction of the cost, with medical oversight.
+
+Loading phase: 2x/week for 2-4 weeks. Maintenance: weekly, biweekly, or monthly based on individual needs.
+
+Benefits: cellular energy production (ATP), exercise recovery, cognitive clarity, DNA repair, sirtuin activation, anti-aging support.
+
+Who benefits most: chronic fatigue, brain fog, athletes wanting faster recovery, adults 40+, patients on hormone therapy or peptide protocols.
+
+Stacking: NAD+ pairs well with TRT/BHRT (supports metabolic pathways hormones activate), peptides (BPC-157, TB-500, Sermorelin), GLP-1 weight loss programs, and other optimization protocols. Highest-leverage add-on for existing hormone patients.
+
+Hormone optimization and weight loss members get 1 vitamin injection/month included in their plan. NAD+ can be added on top of that.
+
+No membership required. No referral needed. Available as a standalone service.
+
+Pages: /medical/nad/, /learn/nad-protocol/, /learn/nad-vitamin-injections/, /learn/nad-therapy-cost/
+
+### Other Vitamin & Nutrient Injections
 - Vitamin C: $30-60/shot (immune support & antioxidant)
 - B12: $30/shot (energy & nervous system)
 - MIC B: $30/shot (fat metabolism & energy)

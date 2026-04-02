@@ -487,6 +487,12 @@
             { title: "Peptides for Injury Recovery", desc: "BPC-157, TB-500 for tendon and muscle healing", url: "/learn/peptides-for-injury-recovery/", cat: "Peptides" },
             { title: "BPC-157 vs PRP", desc: "Head-to-head comparison", url: "/learn/bpc-157-vs-prp/", cat: "Peptides" },
             { title: "Peptide Quiz", desc: "Find which peptide is right for you", url: "/quiz/peptides/", cat: "Quiz" },
+            // NAD+
+            { title: "NAD+ Therapy", desc: "NAD+ injections for cellular energy and recovery — $60/shot", url: "/medical/nad/", cat: "Medical" },
+            { title: "NAD+ Protocol Guide", desc: "What to expect: loading phase, maintenance, stacking", url: "/learn/nad-protocol/", cat: "NAD+" },
+            { title: "NAD+ for Anti-Aging", desc: "Science of NAD+ decline, sirtuins, DNA repair", url: "/learn/nad-anti-aging/", cat: "NAD+" },
+            { title: "NAD+ for Athletes", desc: "Recovery, mitochondrial biogenesis, performance", url: "/learn/nad-athletic-recovery/", cat: "NAD+" },
+            { title: "NAD+ Injections vs IV Drips", desc: "$60 SubQ vs $250-1000+ IV — cost and bioavailability comparison", url: "/learn/nad-injections-vs-iv/", cat: "NAD+" },
             // Weight Loss
             { title: "Semaglutide vs Tirzepatide", desc: "GLP-1 medication comparison", url: "/learn/semaglutide-vs-tirzepatide/", cat: "Weight Loss" },
             { title: "GLP-1 vs Other Weight Loss", desc: "How GLP-1s compare to other methods", url: "/medical/glp1-vs-other-weight-loss/", cat: "Weight Loss" },
