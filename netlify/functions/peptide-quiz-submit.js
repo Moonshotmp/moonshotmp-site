@@ -254,7 +254,7 @@ export default async function handler(req) {
       try {
         await fetch(clinicApi + '/api/webhooks/quiz-sms', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: webhookHeaders,
           body: JSON.stringify({
             phone: phone,
             name: name,
