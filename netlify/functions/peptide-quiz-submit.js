@@ -249,6 +249,25 @@ export default async function handler(req) {
       })
     }).catch(err => console.error('[peptide-quiz-submit] Marketing drip sync error:', err.message));
 
+    // SMS follow-up (if phone provided)
+    if (phone) {
+      try {
+        await fetch(clinicApi + '/api/webhooks/quiz-sms', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: phone,
+            name: name,
+            peptide: primary.name || primaryRecommendation?.name,
+            quiz_type: 'peptide'
+          })
+        });
+      } catch (e) {
+        // Non-fatal — don't block the response
+        console.error('[peptide-quiz-submit] Quiz SMS webhook error:', e.message);
+      }
+    }
+
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }

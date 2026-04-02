@@ -263,19 +263,38 @@
             matchText: {
                 sexual: 'PT-141 works through the brain\'s melanocortin system \u2014 increasing actual desire, not just blood flow. The active compound (bremelanotide) is the same molecule in the FDA-approved medication Vyleesi. The compounded version is not an FDA-approved product. It\'s the only peptide that addresses the neurological root of low libido.'
             }
+        },
+        'nad': {
+            name: 'NAD+',
+            fullName: 'Nicotinamide Adenine Dinucleotide',
+            category: 'Cellular Energy & Recovery',
+            price: 60,
+            tagline: 'Restore the fuel your cells run on.',
+            description: 'NAD+ is a coenzyme in every living cell, essential for energy production, DNA repair, and anti-aging pathways. Levels decline 50%+ by age 60. Subcutaneous injections bypass gut absorption for near-complete bioavailability at a fraction of IV drip costs.',
+            timeline: 'Energy improvements in 1\u20132 weeks. Recovery and cognitive benefits over 3\u20134 weeks. Cumulative results over 2\u20133 months.',
+            dosing: '100\u2013250mg subcutaneous injection',
+            cycle: 'Loading: 2x/week for 2\u20134 weeks. Maintenance: weekly to monthly.',
+            frequency: '1\u20132x per week (loading), then weekly/biweekly/monthly',
+            learnUrl: '/medical/nad/',
+            matchText: {
+                general: 'NAD+ restores the cellular energy production that declines with age. It activates sirtuins \u2014 your body\'s master regulators of aging, metabolism, and repair. At $60/shot, it\'s the highest-value entry point for optimization.',
+                athletic: 'NAD+ fuels mitochondrial energy production and recovery pathways. Athletes deplete NAD+ faster through intense training \u2014 replenishing it supports faster recovery, reduced inflammation, and sustained performance.',
+                skin: 'NAD+ activates sirtuins that regulate collagen production and DNA repair at the cellular level. It addresses aging from the inside out, complementing topical peptides like GHK-Cu.'
+            }
         }
     };
 
     // ── Secondary Recommendation Map ─────────────────────────────────
 
     var secondaryMap = {
-        bpc157: { injury: 'tb500', gut: 'sermorelin', athletic: 'tb500' },
-        tb500: { injury: 'bpc157', athletic: 'bpc157' },
-        wolverine: { injury: 'sermorelin', athletic: 'sermorelin' },
-        'ghk-cu': { skin: 'bpc157', general: 'sermorelin' },
+        bpc157: { injury: 'tb500', gut: 'sermorelin', athletic: 'nad' },
+        tb500: { injury: 'bpc157', athletic: 'nad' },
+        wolverine: { injury: 'sermorelin', athletic: 'nad' },
+        'ghk-cu': { skin: 'nad', general: 'nad' },
         'glow-stack': { skin: 'sermorelin' },
-        sermorelin: { general: 'ghk-cu' },
-        pt141: { sexual: 'sermorelin' }
+        sermorelin: { general: 'nad' },
+        pt141: { sexual: 'sermorelin' },
+        'nad': { general: 'sermorelin', athletic: 'bpc157', skin: 'ghk-cu' }
     };
 
     // ── State ────────────────────────────────────────────────────────
@@ -461,7 +480,9 @@
 
         // GENERAL OPTIMIZATION
         if (goal === 'general') {
-            if (concern === 'sleep' || concern === 'body-comp' || concern === 'energy') {
+            if (concern === 'energy') {
+                primaryKey = 'nad';
+            } else if (concern === 'sleep' || concern === 'body-comp') {
                 primaryKey = 'sermorelin';
             } else if (concern === 'aging') {
                 primaryKey = 'ghk-cu';
@@ -641,22 +662,24 @@
         var previewCard = '<div class="max-w-sm mx-auto mb-8">' +
             '<div class="border border-brand-gray/40 rounded-sm p-6" style="background: rgba(178, 191, 190, 0.05)">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-1">Your Match</p>' +
-                '<h3 class="text-xl font-bold text-brand-light font-heading">' + primary.name + '</h3>' +
-                '<p class="text-brand-gray/70 text-sm mb-4">' + primary.category + '</p>' +
+                '<h3 class="text-2xl font-bold text-brand-light font-heading">' + primary.name + '</h3>' +
+                '<p class="text-brand-gray/70 text-sm mb-2">' + primary.category + '</p>' +
+                '<p class="text-brand-light font-semibold mb-3">$' + primary.price + '/month</p>' +
+                '<p class="text-brand-gray text-sm mb-4">' + primary.tagline + '</p>' +
                 '<div style="position: relative; overflow: hidden; border-radius: 4px;">' +
                     '<div style="filter: blur(4px); -webkit-filter: blur(4px); pointer-events: none; user-select: none;">' +
                         '<div class="bg-white/5 rounded-sm p-3 mb-2">' +
-                            '<p class="text-brand-gray text-xs">Dosing: 250\u2013500mcg daily, subcutaneous</p>' +
+                            '<p class="text-brand-gray text-xs">Why this is your match: Personalized analysis based on your goals...</p>' +
                         '</div>' +
                         '<div class="bg-white/5 rounded-sm p-3 mb-2">' +
-                            '<p class="text-brand-gray text-xs">Timeline: 4\u201312 weeks typical cycle</p>' +
+                            '<p class="text-brand-gray text-xs">Dosing: ' + primary.dosing + '</p>' +
                         '</div>' +
                         '<div class="bg-white/5 rounded-sm p-3">' +
-                            '<p class="text-brand-gray text-xs">Cost: $XXX/month including oversight</p>' +
+                            '<p class="text-brand-gray text-xs">Timeline: ' + primary.timeline + '</p>' +
                         '</div>' +
                     '</div>' +
                     '<div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 4px;">' +
-                        '<p class="text-brand-light text-xs text-center px-4 font-medium">Unlock your full protocol: dosing, timeline, cost, and personalized match analysis</p>' +
+                        '<p class="text-brand-light text-xs text-center px-4 font-medium">Enter your info to unlock your full protocol</p>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -664,8 +687,8 @@
 
         return screenWrap(SCREEN.INFO_CAPTURE,
             '<div class="text-center">' +
-                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">Your Protocol Is Ready</h2>' +
-                '<p class="text-brand-gray font-light mb-8">We matched you with a specific peptide based on your answers. Enter your info below to unlock the full details.</p>' +
+                '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">We Matched You with ' + primary.name + '</h2>' +
+                '<p class="text-brand-gray font-light mb-8">Enter your info below to see your full protocol \u2014 dosing, timeline, cost breakdown, and personalized recommendations.</p>' +
                 previewCard +
                 '<div class="max-w-sm mx-auto space-y-4">' +
                     '<input type="text" id="quiz-name" placeholder="First name" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
@@ -906,6 +929,18 @@
         '</div>';
 
         document.getElementById('quiz-results-inner').innerHTML = html;
+
+        // Update URL for sharing
+        var resultSlug = rec.primaryKey + '-' + (state.goal || 'general');
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '/quiz/peptides/?r=' + resultSlug);
+        }
+
+        // Update meta tags for sharing
+        var metaTitle = document.querySelector('meta[property="og:title"]');
+        var metaDesc = document.querySelector('meta[property="og:description"]');
+        if (metaTitle) metaTitle.setAttribute('content', 'My Peptide Match: ' + primary.name + ' | Moonshot Medical');
+        if (metaDesc) metaDesc.setAttribute('content', primary.tagline + ' Take the free quiz to find your match.');
     }
 
     // ── Calculating Animation ────────────────────────────────────────
@@ -1243,6 +1278,47 @@
         });
     }
 
+    // ── Shared Result View ────────────────────────────────────────────
+
+    function showSharedResult(peptideKey, goalKey) {
+        var peptide = PEPTIDES[peptideKey];
+        if (!peptide) return;
+
+        var html = '<div class="flex items-center justify-center min-h-[calc(100vh-5rem)] px-4 py-12">' +
+            '<div class="max-w-2xl w-full">' +
+                '<div class="text-center mb-8">' +
+                    '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Shared Quiz Result</p>' +
+                    '<h2 class="text-3xl font-bold text-brand-light mb-4 font-heading">Someone Matched With ' + peptide.name + '</h2>' +
+                '</div>' +
+                '<div class="border border-brand-gray/40 rounded-sm p-8 mb-8" style="background: rgba(178, 191, 190, 0.05)">' +
+                    '<p class="text-brand-gray text-xs uppercase tracking-widest mb-1">' + peptide.category + '</p>' +
+                    '<h3 class="text-2xl font-bold text-brand-light font-heading mb-2">' + peptide.name + '</h3>' +
+                    '<p class="text-brand-light font-semibold mb-3">$' + peptide.price + '/month</p>' +
+                    '<p class="text-brand-light font-medium text-lg mb-4" style="font-style: italic">' + peptide.tagline + '</p>' +
+                    '<p class="text-brand-gray font-light">' + peptide.description + '</p>' +
+                '</div>' +
+                '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-8 text-center">' +
+                    '<p class="text-brand-gray font-light mb-6">This result was personalized for someone else. Take the quiz to get your own match.</p>' +
+                    '<button type="button" id="shared-result-cta" class="btn-primary text-lg px-10 py-4">Find My Peptide Match</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+
+        root.innerHTML = html;
+        progressBar.style.width = '0%';
+
+        var ctaBtn = document.getElementById('shared-result-cta');
+        if (ctaBtn) {
+            ctaBtn.addEventListener('click', function() {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', '/quiz/peptides/');
+                }
+                ga('peptide_quiz_shared_result_cta', { shared_peptide: peptideKey });
+                restoreQuiz();
+            });
+        }
+    }
+
     // ── Restore from Saved State ────────────────────────────────────
 
     function restoreQuiz() {
@@ -1349,10 +1425,26 @@
 
     // ── Init ──────────────────────────────────────────────────────────
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', restoreQuiz);
-    } else {
+    function init() {
+        // Check for shared result URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var sharedResult = urlParams.get('r');
+        if (sharedResult) {
+            var parts = sharedResult.split('-');
+            var peptideKey = parts.slice(0, -1).join('-') || parts[0];
+            var goalKey = parts[parts.length - 1];
+            if (PEPTIDES[peptideKey]) {
+                showSharedResult(peptideKey, goalKey);
+                return; // Skip normal quiz init
+            }
+        }
         restoreQuiz();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
 
 })();
