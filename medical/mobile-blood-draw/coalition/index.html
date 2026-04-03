@@ -361,6 +361,27 @@
                                 </select>
                             </div>
                         </div>
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4 mt-6">Address <span class="normal-case tracking-normal">(where should we send the phlebotomist?)</span></p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Street Address *</label>
+                                <input type="text" id="bf-street" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="123 Main St, Apt 4" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">City *</label>
+                                <input type="text" id="bf-city" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-brand-dark mb-1">State *</label>
+                                    <input type="text" id="bf-state" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="IL" maxlength="2" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-brand-dark mb-1">ZIP *</label>
+                                    <input type="text" id="bf-zip" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="60068" maxlength="10" required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Submit -->
@@ -656,6 +677,10 @@
         var phone = document.getElementById('bf-phone').value.trim();
         var dob = document.getElementById('bf-dob').value;
         var gender = document.getElementById('bf-gender').value;
+        var street = document.getElementById('bf-street').value.trim();
+        var city = document.getElementById('bf-city').value.trim();
+        var state = document.getElementById('bf-state').value.trim().toUpperCase();
+        var zip = document.getElementById('bf-zip').value.trim();
 
         if (!first) { showError('First name is required.'); return; }
         if (!last) { showError('Last name is required.'); return; }
@@ -663,6 +688,10 @@
         if (!phone) { showError('Phone number is required.'); return; }
         if (!dob) { showError('Date of birth is required.'); return; }
         if (!gender) { showError('Biological sex is required for accurate biomarker panels.'); return; }
+        if (!street) { showError('Street address is required so our phlebotomist can find you.'); return; }
+        if (!city) { showError('City is required.'); return; }
+        if (!state || state.length !== 2) { showError('Please enter a 2-letter state abbreviation (e.g. IL).'); return; }
+        if (!zip) { showError('ZIP code is required.'); return; }
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Reserving your slot...';
@@ -680,6 +709,10 @@
             patient_phone: phone,
             patient_dob: dob,
             patient_gender: gender,
+            patient_address_street: street,
+            patient_address_city: city,
+            patient_address_state: state,
+            patient_address_zip: zip,
           }),
         })
           .then(function (res) {
