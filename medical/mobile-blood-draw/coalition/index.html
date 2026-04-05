@@ -361,6 +361,10 @@
                                 </select>
                             </div>
                         </div>
+                        <label style="display:flex;align-items:start;gap:8px;margin:16px 0 0;font-size:13px;color:#6b7280;cursor:pointer">
+                            <input type="checkbox" id="sms-consent" style="width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:#101921" checked>
+                            <span>I consent to receive SMS messages about my appointments and lab results</span>
+                        </label>
                         <p class="text-brand-slate text-xs uppercase tracking-widest mb-4 mt-6">Address <span class="normal-case tracking-normal">(where should we send the phlebotomist?)</span></p>
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="md:col-span-2">
@@ -713,6 +717,7 @@
             patient_address_city: city,
             patient_address_state: state,
             patient_address_zip: zip,
+            patient_sms_consent: document.getElementById('sms-consent').checked,
           }),
         })
           .then(function (res) {
