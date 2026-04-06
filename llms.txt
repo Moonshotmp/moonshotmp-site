@@ -335,6 +335,7 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - Retatrutide FDA Approval Timeline: https://moonshotmp.com/learn/retatrutide/ — Current regulatory status, Phase 3 trial completion estimates, expected NDA filing and approval timeline, updated monthly
 - Retatrutide and Body Composition: https://moonshotmp.com/learn/retatrutide/muscle-preservation/ — How retatrutide's glucagon component may affect energy expenditure and body composition, muscle preservation strategies during GLP-1 weight loss, DEXA scan monitoring
 - Retatrutide and Fatty Liver (MASLD): https://moonshotmp.com/learn/retatrutide/fatty-liver-masld/ — Phase 2 liver fat data (~86% reduction), glucagon mechanism for hepatic lipid oxidation, comparison to other GLP-1 drugs for liver fat
+- Retatrutide and Bone Density: https://moonshotmp.com/learn/retatrutide/bone-density/ — How GLP-1 weight loss affects bone mineral density through mechanical unloading, who is at risk, protection protocol, DEXA monitoring
 - Should I Wait for Retatrutide?: https://moonshotmp.com/learn/retatrutide/should-i-wait/ — Clinical decision framework for patients considering whether to start current GLP-1 therapy or wait for retatrutide
 
 ### DEXA Content

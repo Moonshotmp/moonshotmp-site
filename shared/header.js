@@ -497,6 +497,7 @@
             { title: "Semaglutide vs Tirzepatide", desc: "GLP-1 medication comparison", url: "/learn/semaglutide-vs-tirzepatide/", cat: "Weight Loss" },
             { title: "GLP-1 vs Other Weight Loss", desc: "How GLP-1s compare to other methods", url: "/medical/glp1-vs-other-weight-loss/", cat: "Weight Loss" },
             { title: "Retatrutide Guide", desc: "Triple-agonist GLP-1 in clinical trials", url: "/learn/retatrutide/", cat: "Weight Loss" },
+            { title: "Retatrutide & Bone Density", desc: "How GLP-1 weight loss affects bone density and how to protect it", url: "/learn/retatrutide/bone-density/", cat: "Weight Loss" },
             // Rehab
             { title: "Chiropractic Care", desc: "McKenzie Method evidence-based care", url: "/rehab/chiropractic/", cat: "Rehab" },
             { title: "Dry Needling", desc: "Trigger point release for chronic pain", url: "/learn/dry-needling/", cat: "Rehab" },
