@@ -76,11 +76,15 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <!-- Header (auto-injected) -->
-    <script src="/shared/header.js" defer></script>
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-14">
+            <a href="/leaderboard/" class="font-heading text-brand-light text-lg tracking-widest font-bold">PARK RIDGE FIT</a>
+            <a href="/leaderboard/" class="text-brand-gray hover:text-brand-light text-xs font-heading uppercase tracking-wider transition">View Leaderboard</a>
+        </div>
+    </nav>
 
     <!-- Main Content Area -->
-    <main id="main-content" class="flex-grow pt-20">
+    <main id="main-content" class="flex-grow pt-14">
 
         <div class="max-w-2xl mx-auto px-4 py-10">
 
@@ -96,8 +100,9 @@
 
                 <!-- ========== STEP 1: ENTER YOUR SCORES ========== -->
                 <div id="step-1" class="step step-visible">
-                    <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-6 text-center">Enter Your Scores</h1>
-                    <p class="text-brand-gray text-sm text-center mb-8">Fill in whatever you have. Leave the rest blank.</p>
+                    <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-2 text-center">Enter Your Scores</h1>
+                    <p class="text-brand-gray text-sm text-center mb-1">Fill in whatever you have. Leave the rest blank.</p>
+                    <p class="text-brand-gray/50 text-xs text-center mb-6">Open to anyone who lives in, works in, or works out in Park Ridge.</p>
 
                     <!-- STRENGTH -->
                     <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-4">
@@ -276,8 +281,12 @@
 
     </main>
 
-    <!-- Footer (auto-injected) -->
-    <script src="/shared/footer.js" defer></script>
+    <footer class="bg-black border-t border-white/10 py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-brand-gray text-xs mb-2">parkridgefit.com</p>
+            <p class="text-brand-gray/50 text-xs">Built by <a href="https://moonshotmp.com" class="text-brand-gray hover:text-brand-light transition underline">Moonshot Medical and Performance</a> &mdash; 542 Busse Hwy, Park Ridge, IL 60068</p>
+        </div>
+    </footer>
 
     <!-- Toast -->
     <div id="toast" class="toast"></div>

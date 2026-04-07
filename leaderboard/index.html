@@ -73,18 +73,27 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <!-- Header (auto-injected) -->
-    <script src="/shared/header.js" defer></script>
+    <!-- Park Ridge Fit Header -->
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="prf-navbar">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-14">
+            <a href="/leaderboard/" class="font-heading text-brand-light text-lg tracking-widest font-bold">PARK RIDGE FIT</a>
+            <div class="flex items-center gap-4">
+                <a href="/leaderboard/submit/" class="text-brand-gray hover:text-brand-light text-xs font-heading uppercase tracking-wider transition hidden sm:inline">Log Scores</a>
+                <a href="/leaderboard/submit/" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold text-xs px-4 py-1.5 rounded hover:bg-brand-light transition">Submit</a>
+            </div>
+        </div>
+    </nav>
 
     <!-- Main Content Area -->
-    <main id="main-content" class="flex-grow pt-20">
+    <main id="main-content" class="flex-grow pt-14">
 
         <!-- Hero Section -->
         <section id="hero" class="py-12 md:py-16 bg-brand-dark bg-texture-concrete relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-brand-light mb-4">THE PARK RIDGE FITNESS LEADERBOARD</h1>
                 <p class="text-brand-gray text-xl font-light mb-2">Who's the fittest in Park Ridge? Prove it.</p>
-                <p class="text-brand-gray text-base font-light max-w-2xl mx-auto mb-6">Submit your best lifts, fastest times, and most reps. Takes 60 seconds. Rankings updated weekly.</p>
+                <p class="text-brand-gray text-base font-light max-w-2xl mx-auto mb-4">Submit your best lifts, fastest times, and most reps. Takes 60 seconds. Rankings updated weekly.</p>
+                <p class="text-brand-gray/60 text-sm font-light mb-6">Open to anyone who lives in, works in, or works out in Park Ridge.</p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
                     <a href="/leaderboard/submit/" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition inline-block text-center w-full sm:w-auto">Log Your Scores</a>
                     <a href="#leaderboard" class="btn-outline text-center w-full sm:w-auto">View Rankings</a>
@@ -244,8 +253,13 @@
 
     </main>
 
-    <!-- Footer (auto-injected) -->
-    <script src="/shared/footer.js" defer></script>
+    <!-- Park Ridge Fit Footer -->
+    <footer class="bg-black border-t border-white/10 py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-brand-gray text-xs mb-2">parkridgefit.com</p>
+            <p class="text-brand-gray/50 text-xs">Built by <a href="https://moonshotmp.com" class="text-brand-gray hover:text-brand-light transition underline">Moonshot Medical and Performance</a> &mdash; 542 Busse Hwy, Park Ridge, IL 60068</p>
+        </div>
+    </footer>
 
     <!-- Toast container -->
     <div id="toast" class="toast"></div>

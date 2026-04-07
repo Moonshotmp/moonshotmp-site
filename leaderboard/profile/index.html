@@ -49,11 +49,15 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <!-- Header (auto-injected) -->
-    <script src="/shared/header.js" defer></script>
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-14">
+            <a href="/leaderboard/" class="font-heading text-brand-light text-lg tracking-widest font-bold">PARK RIDGE FIT</a>
+            <a href="/leaderboard/" class="text-brand-gray hover:text-brand-light text-xs font-heading uppercase tracking-wider transition">View Leaderboard</a>
+        </div>
+    </nav>
 
     <!-- Main Content Area -->
-    <main id="main-content" class="flex-grow pt-20">
+    <main id="main-content" class="flex-grow pt-14">
 
         <!-- Page Content — swapped between login / loading / dashboard -->
         <section class="py-12 md:py-16 bg-brand-dark bg-texture-concrete min-h-[60vh]">
@@ -169,7 +173,12 @@
     </main>
 
     <!-- Footer (auto-injected) -->
-    <script src="/shared/footer.js" defer></script>
+    <footer class="bg-black border-t border-white/10 py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-brand-gray text-xs mb-2">parkridgefit.com</p>
+            <p class="text-brand-gray/50 text-xs">Built by <a href="https://moonshotmp.com" class="text-brand-gray hover:text-brand-light transition underline">Moonshot Medical and Performance</a> &mdash; 542 Busse Hwy, Park Ridge, IL 60068</p>
+        </div>
+    </footer>
 
     <!-- Toast container -->
     <div id="toast" class="toast"></div>
