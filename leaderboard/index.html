@@ -79,7 +79,7 @@
     <main id="main-content" class="flex-grow pt-20">
 
         <!-- Hero Section -->
-        <section id="hero" class="py-24 md:py-32 bg-brand-dark bg-texture-concrete relative">
+        <section id="hero" class="py-16 md:py-24 bg-brand-dark bg-texture-concrete relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-brand-light mb-6">THE PARK RIDGE FITNESS LEADERBOARD</h1>
                 <p class="text-brand-gray text-xl font-light mb-4">Who's the fittest in Park Ridge? Prove it.</p>
@@ -92,9 +92,9 @@
         </section>
 
         <!-- How It Works -->
-        <section id="how-it-works" class="py-20 bg-brand-dark border-t border-white/5">
+        <section id="how-it-works" class="py-14 bg-brand-dark border-t border-white/5">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-14">HOW IT WORKS</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-8">HOW IT WORKS</h2>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-brand-slate border border-white/10 rounded-lg p-6">
                         <div class="text-3xl font-heading font-bold text-brand-light mb-3">1</div>
@@ -121,22 +121,25 @@
         </section>
 
         <!-- Leaderboard Section -->
-        <section id="leaderboard" class="py-20 bg-brand-dark border-t border-white/5">
+        <section id="leaderboard" class="py-14 bg-brand-dark border-t border-white/5">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-10">RANKINGS</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-6">RANKINGS</h2>
 
                 <!-- Category Tabs -->
                 <div class="flex flex-wrap justify-center gap-2 mb-6 border-b border-white/10 pb-4">
-                    <button data-category="strength" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-brand-light text-brand-light transition">Strength</button>
+                    <button data-category="fittest" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-brand-light text-brand-light transition">Fittest</button>
+                    <button data-category="strength" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Strength</button>
                     <button data-category="speed" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Speed &amp; Endurance</button>
                     <button data-category="bodyweight" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Bodyweight</button>
                     <button data-category="diagnostics" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Body Composition</button>
                 </div>
 
                 <!-- Gender Toggle -->
-                <div class="flex justify-center gap-2 mb-6">
-                    <button data-gender="male" class="gender-btn bg-white text-brand-dark rounded-full px-5 py-1.5 text-sm font-heading uppercase tracking-wider transition">Men</button>
-                    <button data-gender="female" class="gender-btn text-brand-gray rounded-full px-5 py-1.5 text-sm font-heading uppercase tracking-wider hover:text-brand-light transition">Women</button>
+                <div class="flex justify-center mb-6">
+                    <div class="inline-flex bg-brand-slate rounded-full p-1 border border-white/10">
+                        <button data-gender="male" class="gender-btn bg-white text-brand-dark rounded-full px-6 py-2 text-sm font-heading uppercase tracking-wider transition font-semibold">Men</button>
+                        <button data-gender="female" class="gender-btn text-brand-gray rounded-full px-6 py-2 text-sm font-heading uppercase tracking-wider hover:text-brand-light transition">Women</button>
+                    </div>
                 </div>
 
                 <!-- Age + Event Filters -->
@@ -157,9 +160,9 @@
         </section>
 
         <!-- Submission Standards -->
-        <section id="standards" class="py-20 bg-brand-slate border-t border-white/5">
+        <section id="standards" class="py-14 bg-brand-slate border-t border-white/5">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-14">SUBMISSION STANDARDS</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-8">SUBMISSION STANDARDS</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
                         <h3 class="text-lg font-bold text-brand-light mb-3">STRENGTH (1RM)</h3>
@@ -190,7 +193,7 @@
         </section>
 
         <!-- Submit Form -->
-        <section id="submit" class="py-20 bg-brand-dark border-t border-white/5">
+        <section id="submit" class="py-14 bg-brand-dark border-t border-white/5">
             <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-4">SUBMIT YOUR RECORD</h2>
                 <p class="text-brand-gray text-center mb-10">Think you belong on the board? Prove it.</p>
@@ -264,6 +267,15 @@
                         <label for="source" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Source</label>
                         <input type="text" id="source" name="source" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="e.g., 2026 CrossFit Open, USAPL Meet">
                     </div>
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mt-2">
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" id="parkRidgeResident" name="parkRidgeResident" class="mt-1 w-4 h-4 accent-white">
+                            <div>
+                                <span class="text-brand-light text-sm font-semibold">I live in Park Ridge</span>
+                                <p class="text-brand-gray/60 text-xs mt-0.5">Optional. Verified Park Ridge residents get a location badge on the leaderboard. We may ask for zip code confirmation.</p>
+                            </div>
+                        </label>
+                    </div>
 
                     <button type="submit" id="submit-btn" class="w-full bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-gray transition">Submit Record</button>
                     <p class="text-brand-gray/50 text-xs text-center">All submissions are reviewed before appearing on the leaderboard. Results typically posted within 48 hours.</p>
@@ -272,7 +284,7 @@
         </section>
 
         <!-- Cross-sell CTAs -->
-        <section class="py-20 bg-brand-slate border-t border-white/5">
+        <section class="py-14 bg-brand-slate border-t border-white/5">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-8">
@@ -315,22 +327,22 @@
     /* ----- Seed Data ----- */
     const SEED_DATA = [
         // Strength - Back Squat Men
-        { id: '1', name: 'Andrew S.', age: 32, gender: 'male', category: 'strength', event: 'Back Squat', result: '455 lbs', resultNumeric: 455, bodyweight: 205, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: '2026 CF Open' },
-        { id: '2', name: 'Edwin G.', age: 38, gender: 'male', category: 'strength', event: 'Back Squat', result: '425 lbs', resultNumeric: 425, bodyweight: 185, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '3', name: 'Tom K.', age: 36, gender: 'male', category: 'strength', event: 'Back Squat', result: '405 lbs', resultNumeric: 405, bodyweight: 195, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '1', name: 'Andrew S.', age: 32, gender: 'male', category: 'strength', event: 'Back Squat', result: '455 lbs', resultNumeric: 455, bodyweight: 205, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: '2026 CF Open', parkRidgeVerified: true },
+        { id: '2', name: 'Edwin G.', age: 38, gender: 'male', category: 'strength', event: 'Back Squat', result: '425 lbs', resultNumeric: 425, bodyweight: 185, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '3', name: 'Tom K.', age: 36, gender: 'male', category: 'strength', event: 'Back Squat', result: '405 lbs', resultNumeric: 405, bodyweight: 195, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '4', name: 'Danny L.', age: 24, gender: 'male', category: 'strength', event: 'Back Squat', result: '385 lbs', resultNumeric: 385, bodyweight: 175, unit: 'lbs', gymName: 'CrossFit Park Ridge', proofUrl: '#', verified: true, source: 'Self-submitted' },
-        { id: '5', name: 'Niko P.', age: 42, gender: 'male', category: 'strength', event: 'Back Squat', result: '375 lbs', resultNumeric: 375, bodyweight: 200, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '5', name: 'Niko P.', age: 42, gender: 'male', category: 'strength', event: 'Back Squat', result: '375 lbs', resultNumeric: 375, bodyweight: 200, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
 
         // Strength - Back Squat Women
-        { id: '6', name: 'Sarah D.', age: 34, gender: 'female', category: 'strength', event: 'Back Squat', result: '265 lbs', resultNumeric: 265, bodyweight: 145, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: '2026 CF Open' },
-        { id: '7', name: 'Jessica D.', age: 37, gender: 'female', category: 'strength', event: 'Back Squat', result: '245 lbs', resultNumeric: 245, bodyweight: 140, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '8', name: 'Dolores L.', age: 43, gender: 'female', category: 'strength', event: 'Back Squat', result: '235 lbs', resultNumeric: 235, bodyweight: 155, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '6', name: 'Sarah D.', age: 34, gender: 'female', category: 'strength', event: 'Back Squat', result: '265 lbs', resultNumeric: 265, bodyweight: 145, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: '2026 CF Open', parkRidgeVerified: true },
+        { id: '7', name: 'Jessica D.', age: 37, gender: 'female', category: 'strength', event: 'Back Squat', result: '245 lbs', resultNumeric: 245, bodyweight: 140, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '8', name: 'Dolores L.', age: 43, gender: 'female', category: 'strength', event: 'Back Squat', result: '235 lbs', resultNumeric: 235, bodyweight: 155, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '9', name: 'Claire C.', age: 29, gender: 'female', category: 'strength', event: 'Back Squat', result: '225 lbs', resultNumeric: 225, bodyweight: 135, unit: 'lbs', gymName: 'CrossFit Park Ridge', proofUrl: '#', verified: true, source: 'Self-submitted' },
 
         // Strength - Deadlift Men
-        { id: '10', name: 'Andrew S.', age: 32, gender: 'male', category: 'strength', event: 'Deadlift', result: '545 lbs', resultNumeric: 545, bodyweight: 205, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '11', name: 'Tom K.', age: 36, gender: 'male', category: 'strength', event: 'Deadlift', result: '505 lbs', resultNumeric: 505, bodyweight: 195, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '12', name: 'Edwin G.', age: 38, gender: 'male', category: 'strength', event: 'Deadlift', result: '495 lbs', resultNumeric: 495, bodyweight: 185, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '10', name: 'Andrew S.', age: 32, gender: 'male', category: 'strength', event: 'Deadlift', result: '545 lbs', resultNumeric: 545, bodyweight: 205, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '11', name: 'Tom K.', age: 36, gender: 'male', category: 'strength', event: 'Deadlift', result: '505 lbs', resultNumeric: 505, bodyweight: 195, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '12', name: 'Edwin G.', age: 38, gender: 'male', category: 'strength', event: 'Deadlift', result: '495 lbs', resultNumeric: 495, bodyweight: 185, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '13', name: 'Patrick O.', age: 56, gender: 'male', category: 'strength', event: 'Deadlift', result: '455 lbs', resultNumeric: 455, bodyweight: 190, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
 
         // Strength - Deadlift Women
@@ -339,13 +351,13 @@
         { id: '16', name: 'Maria P.', age: 41, gender: 'female', category: 'strength', event: 'Deadlift', result: '285 lbs', resultNumeric: 285, bodyweight: 150, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: '2026 CF Open' },
 
         // Strength - Bench Press Men
-        { id: '17', name: 'Tom K.', age: 36, gender: 'male', category: 'strength', event: 'Bench Press', result: '315 lbs', resultNumeric: 315, bodyweight: 195, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '18', name: 'Andrew S.', age: 32, gender: 'male', category: 'strength', event: 'Bench Press', result: '305 lbs', resultNumeric: 305, bodyweight: 205, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '17', name: 'Tom K.', age: 36, gender: 'male', category: 'strength', event: 'Bench Press', result: '315 lbs', resultNumeric: 315, bodyweight: 195, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '18', name: 'Andrew S.', age: 32, gender: 'male', category: 'strength', event: 'Bench Press', result: '305 lbs', resultNumeric: 305, bodyweight: 205, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '19', name: 'Danny L.', age: 24, gender: 'male', category: 'strength', event: 'Bench Press', result: '285 lbs', resultNumeric: 285, bodyweight: 175, unit: 'lbs', gymName: 'CrossFit Park Ridge', proofUrl: '#', verified: true, source: 'Self-submitted' },
 
         // Speed - Mile Run Men
-        { id: '20', name: 'Geoff N.', age: 57, gender: 'male', category: 'speed', event: 'Mile Run', result: '5:42', resultNumeric: 342, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Apple Watch' },
-        { id: '21', name: 'Tom K.', age: 36, gender: 'male', category: 'speed', event: 'Mile Run', result: '5:58', resultNumeric: 358, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Apple Watch' },
+        { id: '20', name: 'Geoff N.', age: 57, gender: 'male', category: 'speed', event: 'Mile Run', result: '5:42', resultNumeric: 342, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Apple Watch', parkRidgeVerified: true },
+        { id: '21', name: 'Tom K.', age: 36, gender: 'male', category: 'speed', event: 'Mile Run', result: '5:58', resultNumeric: 358, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Apple Watch', parkRidgeVerified: true },
         { id: '22', name: 'Edwin G.', age: 38, gender: 'male', category: 'speed', event: 'Mile Run', result: '6:15', resultNumeric: 375, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Garmin' },
         { id: '23', name: 'Patrick O.', age: 56, gender: 'male', category: 'speed', event: 'Mile Run', result: '6:30', resultNumeric: 390, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Apple Watch' },
 
@@ -360,29 +372,29 @@
         { id: '29', name: 'Edwin G.', age: 38, gender: 'male', category: 'speed', event: '400m Run', result: '1:12', resultNumeric: 72, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Track Time' },
 
         // Bodyweight - Strict Pull-ups Men
-        { id: '30', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '28 reps', resultNumeric: 28, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '31', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '22 reps', resultNumeric: 22, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '30', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '28 reps', resultNumeric: 28, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '31', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '22 reps', resultNumeric: 22, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '32', name: 'Niko P.', age: 42, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '20 reps', resultNumeric: 20, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
         { id: '33', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '18 reps', resultNumeric: 18, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
 
         // Bodyweight - Push-ups in 2 Min Men
-        { id: '34', name: 'Patrick O.', age: 56, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '82 reps', resultNumeric: 82, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '35', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '75 reps', resultNumeric: 75, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '34', name: 'Patrick O.', age: 56, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '82 reps', resultNumeric: 82, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '35', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '75 reps', resultNumeric: 75, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '36', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '70 reps', resultNumeric: 70, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
 
         // Bodyweight - Max Box Jump Men
-        { id: '37', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '52 in', resultNumeric: 52, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '37', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '52 in', resultNumeric: 52, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '38', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '50 in', resultNumeric: 50, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '39', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '48 in', resultNumeric: 48, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '39', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '48 in', resultNumeric: 48, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
 
         // Diagnostics - Body Fat Men
-        { id: '40', name: 'Tom K.', age: 36, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '11.2%', resultNumeric: 11.2, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA' },
-        { id: '41', name: 'Andrew S.', age: 32, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '12.8%', resultNumeric: 12.8, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA' },
-        { id: '42', name: 'Edwin G.', age: 38, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '13.5%', resultNumeric: 13.5, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA' }
+        { id: '40', name: 'Tom K.', age: 36, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '11.2%', resultNumeric: 11.2, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA', parkRidgeVerified: true },
+        { id: '41', name: 'Andrew S.', age: 32, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '12.8%', resultNumeric: 12.8, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA', parkRidgeVerified: true },
+        { id: '42', name: 'Edwin G.', age: 38, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '13.5%', resultNumeric: 13.5, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA', parkRidgeVerified: true }
     ];
 
     /* ----- State ----- */
-    var activeCategory = 'strength';
+    var activeCategory = 'fittest';
     var activeGender = 'male';
     var activeAgeRange = 'all';
 
@@ -415,6 +427,248 @@
         });
     }
 
+    /* ----- Compute "Fittest in Park Ridge" composite scores ----- */
+    function computeFittestScores(data, gender) {
+        // Filter to gender
+        var gendered = data.filter(function(d) { return d.gender === gender; });
+
+        // Define pillar mapping
+        var pillars = {
+            strength: { category: 'strength', events: {} },
+            cardio: { category: 'speed', events: {} },
+            calisthenics: { category: 'bodyweight', events: {} }
+        };
+
+        // For each pillar, rank all athletes in each event
+        Object.keys(pillars).forEach(function(pillarKey) {
+            var pillar = pillars[pillarKey];
+            var pillarEntries = gendered.filter(function(d) { return d.category === pillar.category; });
+
+            // Group by event
+            var events = {};
+            pillarEntries.forEach(function(d) {
+                if (!events[d.event]) events[d.event] = [];
+                events[d.event].push(d);
+            });
+
+            // Sort and rank each event
+            Object.keys(events).forEach(function(eventName) {
+                var lowerIsBetter = (pillar.category === 'speed');
+                events[eventName].sort(function(a, b) {
+                    return lowerIsBetter ? a.resultNumeric - b.resultNumeric : b.resultNumeric - a.resultNumeric;
+                });
+                // Assign ranks
+                events[eventName].forEach(function(entry, idx) {
+                    entry._rank = idx + 1;
+                });
+            });
+
+            pillar.events = events;
+        });
+
+        // Collect per-person ranks across all events in each pillar
+        var athletes = {}; // keyed by name
+
+        Object.keys(pillars).forEach(function(pillarKey) {
+            var pillar = pillars[pillarKey];
+            Object.keys(pillar.events).forEach(function(eventName) {
+                pillar.events[eventName].forEach(function(entry) {
+                    if (!athletes[entry.name]) {
+                        athletes[entry.name] = {
+                            name: entry.name,
+                            age: entry.age,
+                            gymName: entry.gymName,
+                            gymUrl: entry.gymUrl,
+                            parkRidgeVerified: entry.parkRidgeVerified,
+                            verified: entry.verified,
+                            pillarRanks: { strength: [], cardio: [], calisthenics: [] },
+                            pillarAvgs: {},
+                            eventsEntered: 0
+                        };
+                    }
+                    athletes[entry.name].pillarRanks[pillarKey].push({
+                        event: eventName,
+                        rank: entry._rank
+                    });
+                    athletes[entry.name].eventsEntered++;
+                    // Keep latest age/gym info
+                    if (entry.age) athletes[entry.name].age = entry.age;
+                    if (entry.gymName) athletes[entry.name].gymName = entry.gymName;
+                    if (entry.gymUrl) athletes[entry.name].gymUrl = entry.gymUrl;
+                    if (entry.parkRidgeVerified) athletes[entry.name].parkRidgeVerified = true;
+                });
+            });
+        });
+
+        // Calculate pillar averages and composite score
+        var qualified = [];
+
+        Object.keys(athletes).forEach(function(name) {
+            var a = athletes[name];
+            var hasPillars = 0;
+            var pillarSum = 0;
+
+            ['strength', 'cardio', 'calisthenics'].forEach(function(p) {
+                if (a.pillarRanks[p].length > 0) {
+                    var sum = 0;
+                    a.pillarRanks[p].forEach(function(r) { sum += r.rank; });
+                    a.pillarAvgs[p] = sum / a.pillarRanks[p].length;
+                    pillarSum += a.pillarAvgs[p];
+                    hasPillars++;
+                }
+            });
+
+            // Must have at least 1 event in ALL 3 pillars to qualify
+            if (hasPillars === 3) {
+                a.compositeScore = pillarSum;
+                qualified.push(a);
+            }
+        });
+
+        // Sort by composite score (lower is better)
+        qualified.sort(function(a, b) {
+            if (a.compositeScore !== b.compositeScore) return a.compositeScore - b.compositeScore;
+            // Tiebreaker: more events entered
+            return b.eventsEntered - a.eventsEntered;
+        });
+
+        return qualified;
+    }
+
+    /* ----- Render the Fittest composite leaderboard ----- */
+    function renderFittestLeaderboard(data, gender) {
+        var container = document.getElementById('leaderboard-content');
+        if (!container) return;
+
+        // Apply age filter
+        if (activeAgeRange !== 'all') {
+            var parts = activeAgeRange.split('-');
+            var minAge = parseInt(parts[0]);
+            var maxAge = parseInt(parts[1]);
+            data = data.filter(function(d) { return d.age && d.age >= minAge && d.age <= maxAge; });
+        }
+
+        var scores = computeFittestScores(data, gender);
+
+        var html = '';
+
+        // Explanation card
+        html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 mb-8">';
+        html += '<h3 class="text-base font-bold text-brand-light mb-2">HOW SCORING WORKS</h3>';
+        html += '<p class="text-brand-gray text-sm font-light leading-relaxed mb-3">Like golf, <strong class="text-brand-light">lower is better</strong>. Your score is the sum of your average rank in each of three pillars:</p>';
+        html += '<div class="grid sm:grid-cols-3 gap-3 mb-3">';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean & Jerk, Snatch, Strict Press</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Cardio</span><p class="text-brand-gray text-xs mt-1">Mile Run, 400m Run, 40-Yard Dash, 2,000m Row</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Strict Pull-ups, Push-ups in 2 Min, Max Box Jump</p></div>';
+        html += '</div>';
+        html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Example:</strong> If your avg strength rank is 2.0, avg cardio rank is 2.5, and avg calisthenics rank is 1.5, your score is <strong class="text-brand-light">6.0</strong>. A perfect score of 3.0 means #1 in every event. You must enter at least one event in each pillar to qualify.</p>';
+        html += '</div>';
+
+        if (scores.length === 0) {
+            html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 text-center">';
+            html += '<p class="text-brand-gray">No one has qualified yet. Enter at least one event in Strength, Cardio, and Calisthenics to appear here.</p>';
+            html += '<a href="#submit" class="text-brand-light underline hover:text-white transition text-sm">Submit your first record</a>';
+            html += '</div>';
+            container.innerHTML = html;
+            return;
+        }
+
+        // Fittest table
+        html += '<div class="overflow-x-auto">';
+        html += '<table class="w-full text-sm lb-table">';
+        html += '<thead><tr class="text-brand-gray uppercase tracking-wider text-xs border-b border-white/10">';
+        html += '<th class="text-left py-2 pr-3 w-12">Rank</th>';
+        html += '<th class="text-left py-2 pr-3">Name</th>';
+        html += '<th class="text-center py-2 pr-3">Score</th>';
+        html += '<th class="text-center py-2 pr-3 hidden md:table-cell">Strength</th>';
+        html += '<th class="text-center py-2 pr-3 hidden md:table-cell">Cardio</th>';
+        html += '<th class="text-center py-2 pr-3 hidden md:table-cell">Calisthenics</th>';
+        html += '<th class="text-center py-2 pr-3 hidden md:table-cell">Events</th>';
+        html += '<th class="text-left py-2 pr-3 hidden md:table-cell">Where They Train</th>';
+        html += '</tr></thead>';
+
+        // Top 3 visible
+        html += '<tbody>';
+        var visibleCount = Math.min(3, scores.length);
+        for (var i = 0; i < visibleCount; i++) {
+            html += renderFittestRow(scores[i], i + 1);
+        }
+        html += '</tbody>';
+
+        // Expandable rest
+        if (scores.length > 3) {
+            var extraCount = scores.length - 3;
+            html += '<tbody id="expand-fittest" class="expandable-rows">';
+            for (var j = 3; j < scores.length; j++) {
+                html += renderFittestRow(scores[j], j + 1);
+            }
+            html += '</tbody>';
+            html += '</table></div>';
+            html += '<button type="button" class="expand-btn mt-3 text-brand-gray hover:text-brand-light text-sm font-heading uppercase tracking-wider transition" data-target="expand-fittest" data-count="' + extraCount + '">';
+            html += 'Show All (' + extraCount + ' more)';
+            html += '</button>';
+        } else {
+            html += '</table></div>';
+        }
+
+        container.innerHTML = html;
+
+        // Attach expand handlers
+        container.querySelectorAll('.expand-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var target = document.getElementById(btn.getAttribute('data-target'));
+                var count = btn.getAttribute('data-count');
+                if (!target) return;
+                if (target.classList.contains('expanded')) {
+                    target.classList.remove('expanded');
+                    btn.textContent = 'Show All (' + count + ' more)';
+                } else {
+                    target.classList.add('expanded');
+                    btn.textContent = 'Show Less';
+                }
+            });
+        });
+    }
+
+    function renderFittestRow(athlete, rank) {
+        var rankClass = getRankStyle(rank);
+        var html = '<tr class="border-b border-white/5">';
+
+        // Rank
+        html += '<td class="py-2.5 pr-3 font-heading font-bold text-base ' + rankClass + '">' + rank + '</td>';
+
+        // Name
+        html += '<td class="py-2.5 pr-3 text-brand-light" data-label="Name">';
+        html += escapeHtml(athlete.name);
+        if (athlete.age) html += ' <span class="text-brand-gray text-xs">(' + athlete.age + ')</span>';
+        if (athlete.verified) html += ' <span class="text-green-400 text-xs" title="Verified">&#10003;</span>';
+        if (athlete.parkRidgeVerified) html += ' <span class="text-blue-400 text-xs ml-1" title="Park Ridge Resident">&#9679; PR</span>';
+        html += '</td>';
+
+        // Composite Score
+        html += '<td class="py-2.5 pr-3 text-center font-heading font-bold text-lg text-white">' + athlete.compositeScore.toFixed(1) + '</td>';
+
+        // Pillar averages
+        html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + (athlete.pillarAvgs.strength ? athlete.pillarAvgs.strength.toFixed(1) : '-') + '</td>';
+        html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + (athlete.pillarAvgs.cardio ? athlete.pillarAvgs.cardio.toFixed(1) : '-') + '</td>';
+        html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + (athlete.pillarAvgs.calisthenics ? athlete.pillarAvgs.calisthenics.toFixed(1) : '-') + '</td>';
+
+        // Events entered
+        html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + athlete.eventsEntered + '</td>';
+
+        // Where they train
+        html += '<td class="py-2.5 pr-3 text-brand-gray hidden md:table-cell">';
+        if (athlete.gymUrl) {
+            html += '<a href="' + escapeHtml(athlete.gymUrl) + '" target="_blank" rel="noopener noreferrer" class="hover:text-brand-light transition underline">' + escapeHtml(athlete.gymName) + '</a>';
+        } else {
+            html += escapeHtml(athlete.gymName || '-');
+        }
+        html += '</td>';
+
+        html += '</tr>';
+        return html;
+    }
+
     /* ----- Render a single event table ----- */
     function renderEventTable(entries, eventName, category) {
         var sorted = sortEntries(entries, category);
@@ -422,13 +676,13 @@
         var isSpeed = (category === 'speed');
         var isDiagnostics = (category === 'diagnostics');
 
-        var html = '<div class="mb-10">';
+        var html = '<div class="mb-8">';
         html += '<h3 class="text-lg md:text-xl font-bold text-brand-light mb-4">' + escapeHtml(eventName.toUpperCase());
         if (isStrength) html += ' &mdash; 1 REP MAX';
         html += '</h3>';
 
         if (sorted.length === 0) {
-            html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-8 text-center">';
+            html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 text-center">';
             html += '<p class="text-brand-gray">No entries yet. <a href="#submit" class="text-brand-light underline hover:text-white transition">Be the first!</a></p>';
             html += '</div></div>';
             return html;
@@ -495,6 +749,7 @@
         html += escapeHtml(entry.name);
         if (entry.age) html += ' <span class="text-brand-gray text-xs">(' + entry.age + ')</span>';
         if (entry.verified) html += ' <span class="text-green-400 text-xs" title="Verified">&#10003;</span>';
+        if (entry.parkRidgeVerified) html += ' <span class="text-blue-400 text-xs ml-1" title="Park Ridge Resident">&#9679; PR</span>';
         html += '</td>';
 
         // Result
@@ -542,6 +797,10 @@
 
     /* ----- Render all events for active category + gender ----- */
     function renderLeaderboard(data, category, gender) {
+        if (category === 'fittest') {
+            renderFittestLeaderboard(data, gender);
+            return;
+        }
         var container = document.getElementById('leaderboard-content');
         if (!container) return;
 
@@ -602,11 +861,11 @@
         btn.addEventListener('click', function() {
             activeGender = btn.getAttribute('data-gender');
             document.querySelectorAll('.gender-btn').forEach(function(b) {
-                b.classList.remove('bg-white', 'text-brand-dark');
+                b.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
                 b.classList.add('text-brand-gray');
             });
             btn.classList.remove('text-brand-gray');
-            btn.classList.add('bg-white', 'text-brand-dark');
+            btn.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
             renderLeaderboard(SEED_DATA, activeCategory, activeGender);
         });
     });
@@ -658,7 +917,8 @@
             proofUrl: document.getElementById('proofUrl').value.trim(),
             gymName: document.getElementById('gymName').value.trim(),
             gymUrl: document.getElementById('gymUrl').value.trim(),
-            source: document.getElementById('source').value.trim()
+            source: document.getElementById('source').value.trim(),
+            parkRidgeResident: document.getElementById('parkRidgeResident').checked
         };
 
         // Basic validation
