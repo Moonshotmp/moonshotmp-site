@@ -411,7 +411,7 @@
             calisthenics: { category: 'bodyweight', events: {} }
         };
 
-        // For each pillar, rank all athletes in each event
+        // For each pillar, rank all athletes in each event and compute percentiles
         Object.keys(pillars).forEach(function(pillarKey) {
             var pillar = pillars[pillarKey];
             var pillarEntries = gendered.filter(function(d) { return d.category === pillar.category; });
@@ -423,88 +423,105 @@
                 events[d.event].push(d);
             });
 
-            // Sort and rank each event
+            // Sort, rank, and compute percentile for each event
             Object.keys(events).forEach(function(eventName) {
                 var lowerIsBetter = (pillar.category === 'speed');
                 events[eventName].sort(function(a, b) {
                     return lowerIsBetter ? a.resultNumeric - b.resultNumeric : b.resultNumeric - a.resultNumeric;
                 });
-                // Assign ranks
+                var total = events[eventName].length;
                 events[eventName].forEach(function(entry, idx) {
                     entry._rank = idx + 1;
+                    entry._percentile = (idx + 1) / total; // 0.01 = top 1%, 1.0 = last
+                    entry._totalInEvent = total;
                 });
             });
 
             pillar.events = events;
         });
 
-        // Collect per-person ranks across all events in each pillar
-        var athletes = {}; // keyed by name
+        // Collect all unique athlete names from ALL data (not just gendered)
+        // so we know who to include
+        var allNames = new Set();
+        gendered.forEach(function(d) { allNames.add(d.name); });
+
+        // Collect per-person percentiles across all events in each pillar
+        var athletes = {};
+
+        allNames.forEach(function(name) {
+            athletes[name] = {
+                name: name,
+                age: null,
+                gymName: null,
+                gymUrl: null,
+                parkRidgeVerified: false,
+                verified: true,
+                pillarPercentiles: { strength: [], cardio: [], calisthenics: [] },
+                pillarAvgs: {},
+                pillarsEntered: 0,
+                eventsEntered: 0
+            };
+        });
 
         Object.keys(pillars).forEach(function(pillarKey) {
             var pillar = pillars[pillarKey];
             Object.keys(pillar.events).forEach(function(eventName) {
                 pillar.events[eventName].forEach(function(entry) {
-                    if (!athletes[entry.name]) {
-                        athletes[entry.name] = {
-                            name: entry.name,
-                            age: entry.age,
-                            gymName: entry.gymName,
-                            gymUrl: entry.gymUrl,
-                            parkRidgeVerified: entry.parkRidgeVerified,
-                            verified: entry.verified,
-                            pillarRanks: { strength: [], cardio: [], calisthenics: [] },
-                            pillarAvgs: {},
-                            eventsEntered: 0
-                        };
-                    }
-                    athletes[entry.name].pillarRanks[pillarKey].push({
+                    var a = athletes[entry.name];
+                    if (!a) return;
+                    a.pillarPercentiles[pillarKey].push({
                         event: eventName,
-                        rank: entry._rank
+                        percentile: entry._percentile,
+                        rank: entry._rank,
+                        total: entry._totalInEvent
                     });
-                    athletes[entry.name].eventsEntered++;
-                    // Keep latest age/gym info
-                    if (entry.age) athletes[entry.name].age = entry.age;
-                    if (entry.gymName) athletes[entry.name].gymName = entry.gymName;
-                    if (entry.gymUrl) athletes[entry.name].gymUrl = entry.gymUrl;
-                    if (entry.parkRidgeVerified) athletes[entry.name].parkRidgeVerified = true;
+                    a.eventsEntered++;
+                    if (entry.age) a.age = entry.age;
+                    if (entry.gymName) a.gymName = entry.gymName;
+                    if (entry.gymUrl) a.gymUrl = entry.gymUrl;
+                    if (entry.parkRidgeVerified) a.parkRidgeVerified = true;
                 });
             });
         });
 
-        // Calculate pillar averages and composite score
-        var qualified = [];
+        // Calculate pillar average percentiles and composite score
+        // Missing pillars = tied for last (percentile 1.0)
+        var results = [];
 
         Object.keys(athletes).forEach(function(name) {
             var a = athletes[name];
-            var hasPillars = 0;
+            if (a.eventsEntered === 0) return; // No data at all
+
             var pillarSum = 0;
 
             ['strength', 'cardio', 'calisthenics'].forEach(function(p) {
-                if (a.pillarRanks[p].length > 0) {
+                if (a.pillarPercentiles[p].length > 0) {
                     var sum = 0;
-                    a.pillarRanks[p].forEach(function(r) { sum += r.rank; });
-                    a.pillarAvgs[p] = sum / a.pillarRanks[p].length;
-                    pillarSum += a.pillarAvgs[p];
-                    hasPillars++;
+                    a.pillarPercentiles[p].forEach(function(r) { sum += r.percentile; });
+                    a.pillarAvgs[p] = sum / a.pillarPercentiles[p].length;
+                    a.pillarsEntered++;
+                } else {
+                    // No entries in this pillar = tied for last = 1.0
+                    a.pillarAvgs[p] = 1.0;
                 }
+                pillarSum += a.pillarAvgs[p];
             });
 
-            // Must have at least 1 event in ALL 3 pillars to qualify
-            if (hasPillars === 3) {
-                a.compositeScore = pillarSum;
-                qualified.push(a);
-            }
+            // Score = sum of 3 pillar percentiles, scaled to 0-100
+            // Perfect = 0.03 (3 pillars × ~0.01), Worst = 3.0
+            // Scale: score × 33.3 gives 0-100 range
+            a.compositeScore = Math.round(pillarSum * 33.3 * 10) / 10;
+            results.push(a);
         });
 
         // Sort by composite score (lower is better)
-        qualified.sort(function(a, b) {
+        results.sort(function(a, b) {
             if (a.compositeScore !== b.compositeScore) return a.compositeScore - b.compositeScore;
             // Tiebreaker: more events entered
             return b.eventsEntered - a.eventsEntered;
         });
 
-        return qualified;
+        return results;
     }
 
     /* ----- Render the Fittest composite leaderboard ----- */
@@ -532,18 +549,19 @@
         // Explanation card
         html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 mb-8">';
         html += '<h3 class="text-base font-bold text-brand-light mb-2">HOW SCORING WORKS</h3>';
-        html += '<p class="text-brand-gray text-sm font-light leading-relaxed mb-3">Like golf, <strong class="text-brand-light">lower is better</strong>. Your score is the sum of your average rank in each of three pillars:</p>';
+        html += '<p class="text-brand-gray text-sm font-light leading-relaxed mb-3">Like golf, <strong class="text-brand-light">lower is better</strong>. Your score is based on your <strong class="text-brand-light">percentile ranking</strong> across three pillars — this means a top-10% finish in an event with 100 people counts the same as a top-10% finish in an event with 10 people.</p>';
         html += '<div class="grid sm:grid-cols-3 gap-3 mb-3">';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean, Shoulder to Overhead</p></div>';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Cardio</span><p class="text-brand-gray text-xs mt-1">Mile Run, 400m Run, 40-Yard Dash, 2,000m Row</p></div>';
-        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups in 2 Minutes, Push-ups in 2 Min</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups in 2 Min, Push-ups in 2 Min</p></div>';
         html += '</div>';
-        html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Example:</strong> If your avg strength rank is 2.0, avg cardio rank is 2.5, and avg calisthenics rank is 1.5, your score is <strong class="text-brand-light">6.0</strong>. A perfect score of 3.0 means #1 in every event. You must enter at least one event in each pillar to qualify.</p>';
+        html += '<p class="text-brand-gray text-xs font-light leading-relaxed mb-1"><strong class="text-brand-light">Score 0-100:</strong> A perfect score of 0 means #1 in every event. A score of 100 means last in everything. Your score for each pillar is the average percentile of your rankings in that pillar, and the three pillar scores are combined.</p>';
+        html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Missing pillars?</strong> No problem — everyone is ranked. If you haven\'t submitted in a pillar yet, you\'re scored as tied for last in that category. More events = better chance to improve your score.</p>';
         html += '</div>';
 
         if (scores.length === 0) {
             html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 text-center">';
-            html += '<p class="text-brand-gray">No one has qualified yet. Enter at least one event in Strength, Cardio, and Calisthenics to appear here.</p>';
+            html += '<p class="text-brand-gray">No entries yet for this gender/age filter.</p>';
             html += '<a href="/leaderboard/submit/" class="text-brand-light underline hover:text-white transition text-sm">Submit your scores</a>';
             html += '</div>';
             container.innerHTML = html;
@@ -607,6 +625,13 @@
         });
     }
 
+    function formatPillarScore(avg, hasEntries) {
+        if (!hasEntries) return '<span class="text-brand-gray/40">last</span>';
+        var pct = Math.round(avg * 100);
+        var color = pct <= 10 ? 'text-green-400' : pct <= 30 ? 'text-brand-light' : pct <= 60 ? 'text-brand-gray' : 'text-red-400/70';
+        return '<span class="' + color + '">' + pct + '%</span>';
+    }
+
     function renderFittestRow(athlete, rank) {
         var rankClass = getRankStyle(rank);
         var html = '<tr class="border-b border-white/5">';
@@ -614,21 +639,25 @@
         // Rank
         html += '<td class="py-2.5 pr-3 font-heading font-bold text-base ' + rankClass + '">' + rank + '</td>';
 
-        // Name
+        // Name + pillar badges
         html += '<td class="py-2.5 pr-3 text-brand-light" data-label="Name">';
         html += escapeHtml(athlete.name);
         if (athlete.age) html += ' <span class="text-brand-gray text-xs">(' + athlete.age + ')</span>';
-        if (athlete.verified) html += ' <span class="text-green-400 text-xs" title="Verified">&#10003;</span>';
         if (athlete.parkRidgeVerified) html += ' <span class="text-blue-400 text-xs ml-1" title="Park Ridge Resident">&#9679; PR</span>';
+        // Pillar count badge
+        html += ' <span class="text-brand-gray/40 text-xs ml-1">' + athlete.pillarsEntered + '/3</span>';
         html += '</td>';
 
         // Composite Score
         html += '<td class="py-2.5 pr-3 text-center font-heading font-bold text-lg text-white">' + athlete.compositeScore.toFixed(1) + '</td>';
 
-        // Pillar averages
-        html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + (athlete.pillarAvgs.strength ? athlete.pillarAvgs.strength.toFixed(1) : '-') + '</td>';
-        html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + (athlete.pillarAvgs.cardio ? athlete.pillarAvgs.cardio.toFixed(1) : '-') + '</td>';
-        html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + (athlete.pillarAvgs.calisthenics ? athlete.pillarAvgs.calisthenics.toFixed(1) : '-') + '</td>';
+        // Pillar percentiles with color coding
+        var hasStr = athlete.pillarPercentiles && athlete.pillarPercentiles.strength.length > 0;
+        var hasCard = athlete.pillarPercentiles && athlete.pillarPercentiles.cardio.length > 0;
+        var hasCal = athlete.pillarPercentiles && athlete.pillarPercentiles.calisthenics.length > 0;
+        html += '<td class="py-2.5 pr-3 text-center text-sm hidden md:table-cell">' + formatPillarScore(athlete.pillarAvgs.strength, hasStr) + '</td>';
+        html += '<td class="py-2.5 pr-3 text-center text-sm hidden md:table-cell">' + formatPillarScore(athlete.pillarAvgs.cardio, hasCard) + '</td>';
+        html += '<td class="py-2.5 pr-3 text-center text-sm hidden md:table-cell">' + formatPillarScore(athlete.pillarAvgs.calisthenics, hasCal) + '</td>';
 
         // Events entered
         html += '<td class="py-2.5 pr-3 text-center text-brand-gray hidden md:table-cell">' + athlete.eventsEntered + '</td>';
