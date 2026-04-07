@@ -432,7 +432,7 @@
                 var total = events[eventName].length;
                 events[eventName].forEach(function(entry, idx) {
                     entry._rank = idx + 1;
-                    entry._percentile = (idx + 1) / total; // 0.01 = top 1%, 1.0 = last
+                    entry._percentile = 1 - (idx / Math.max(total - 1, 1)); // 1.0 = #1, 0.0 = last
                     entry._totalInEvent = total;
                 });
             });
@@ -485,7 +485,7 @@
         });
 
         // Calculate pillar average percentiles and composite score
-        // Missing pillars = tied for last (percentile 1.0)
+        // Missing pillars = tied for last (percentile 0.0)
         var results = [];
 
         Object.keys(athletes).forEach(function(name) {
@@ -501,22 +501,21 @@
                     a.pillarAvgs[p] = sum / a.pillarPercentiles[p].length;
                     a.pillarsEntered++;
                 } else {
-                    // No entries in this pillar = tied for last = 1.0
-                    a.pillarAvgs[p] = 1.0;
+                    // No entries in this pillar = tied for last = 0th percentile
+                    a.pillarAvgs[p] = 0;
                 }
                 pillarSum += a.pillarAvgs[p];
             });
 
-            // Score = sum of 3 pillar percentiles, scaled to 0-100
-            // Perfect = 0.03 (3 pillars × ~0.01), Worst = 3.0
-            // Scale: score × 33.3 gives 0-100 range
-            a.compositeScore = Math.round(pillarSum * 33.3 * 10) / 10;
+            // Score = average of 3 pillar percentiles, scaled to 0-100
+            // 100 = #1 in everything, 0 = last in everything
+            a.compositeScore = Math.round((pillarSum / 3) * 100 * 10) / 10;
             results.push(a);
         });
 
-        // Sort by composite score (lower is better)
+        // Sort by composite score (higher is better)
         results.sort(function(a, b) {
-            if (a.compositeScore !== b.compositeScore) return a.compositeScore - b.compositeScore;
+            if (a.compositeScore !== b.compositeScore) return b.compositeScore - a.compositeScore;
             // Tiebreaker: more events entered
             return b.eventsEntered - a.eventsEntered;
         });
@@ -549,14 +548,14 @@
         // Explanation card
         html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 mb-8">';
         html += '<h3 class="text-base font-bold text-brand-light mb-2">HOW SCORING WORKS</h3>';
-        html += '<p class="text-brand-gray text-sm font-light leading-relaxed mb-3">Like golf, <strong class="text-brand-light">lower is better</strong>. Your score is based on your <strong class="text-brand-light">percentile ranking</strong> across three pillars — this means a top-10% finish in an event with 100 people counts the same as a top-10% finish in an event with 10 people.</p>';
+        html += '<p class="text-brand-gray text-sm font-light leading-relaxed mb-3">Your score is your <strong class="text-brand-light">percentile ranking</strong> across three pillars, just like standardized test scoring. <strong class="text-brand-light">Higher is better</strong> — a score of 95 means you outperform 95% of competitors.</p>';
         html += '<div class="grid sm:grid-cols-3 gap-3 mb-3">';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean, Shoulder to Overhead</p></div>';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Cardio</span><p class="text-brand-gray text-xs mt-1">Mile Run, 400m Run, 40-Yard Dash, 2,000m Row</p></div>';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups in 2 Min, Push-ups in 2 Min</p></div>';
         html += '</div>';
-        html += '<p class="text-brand-gray text-xs font-light leading-relaxed mb-1"><strong class="text-brand-light">Score 0-100:</strong> A perfect score of 0 means #1 in every event. A score of 100 means last in everything. Your score for each pillar is the average percentile of your rankings in that pillar, and the three pillar scores are combined.</p>';
-        html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Missing pillars?</strong> No problem — everyone is ranked. If you haven\'t submitted in a pillar yet, you\'re scored as tied for last in that category. More events = better chance to improve your score.</p>';
+        html += '<p class="text-brand-gray text-xs font-light leading-relaxed mb-1"><strong class="text-brand-light">Score 0-100:</strong> A perfect 100 means #1 in every event. A score of 50 means you\'re right in the middle. Your score for each pillar is the average percentile across your events in that pillar, then the three pillar scores are averaged.</p>';
+        html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Missing pillars?</strong> Everyone is ranked. If you haven\'t submitted in a pillar, you\'re scored as tied for last in that category. The more events you enter, the better your score can get.</p>';
         html += '</div>';
 
         if (scores.length === 0) {
@@ -626,9 +625,9 @@
     }
 
     function formatPillarScore(avg, hasEntries) {
-        if (!hasEntries) return '<span class="text-brand-gray/40">last</span>';
+        if (!hasEntries) return '<span class="text-brand-gray/40">0%</span>';
         var pct = Math.round(avg * 100);
-        var color = pct <= 10 ? 'text-green-400' : pct <= 30 ? 'text-brand-light' : pct <= 60 ? 'text-brand-gray' : 'text-red-400/70';
+        var color = pct >= 90 ? 'text-green-400' : pct >= 70 ? 'text-brand-light' : pct >= 40 ? 'text-brand-gray' : 'text-red-400/70';
         return '<span class="' + color + '">' + pct + '%</span>';
     }
 
