@@ -26,6 +26,12 @@
   function = "partner-seo"
   path = "/partners/*"
 
+[[edge_functions]]
+  function = "leaderboard-share"
+  path = "/leaderboard/entry/*"
+
+# Leaderboard API URL — set in Netlify dashboard: LEADERBOARD_API_URL
+
 [[redirects]]
   from = "/partners/:slug"
   to = "/partners/store.html"

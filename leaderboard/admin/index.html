@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <!-- Fonts -->
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Tailwind + Brand Styles -->
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <style>
+        /* Admin-specific overrides */
+        .card-fade-out {
+            transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease 0.1s, margin 0.4s ease 0.1s, padding 0.4s ease 0.1s;
+            opacity: 0;
+            transform: translateX(60px);
+            max-height: 0;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            overflow: hidden;
+        }
+        .entry-card {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .tab-btn {
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--brand-light);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.25rem;
+            height: 1.25rem;
+            padding: 0 0.35rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+        select.input-field option {
+            background-color: var(--brand-slate);
+            color: var(--brand-light);
+        }
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--brand-gray);
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.875rem;
+            z-index: 9999;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast-success { background-color: #16a34a; color: white; }
+        .toast-error { background-color: #dc2626; color: white; }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-light font-body min-h-screen">
+
+    <!-- ==================== LOGIN SCREEN ==================== -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center px-4">
+        <div class="w-full max-w-sm">
+            <h1 class="font-heading text-3xl uppercase tracking-wider text-center mb-8">Leaderboard Admin</h1>
+            <form id="login-form" class="space-y-4">
+                <input
+                    type="password"
+                    id="login-password"
+                    placeholder="Admin password"
+                    class="input-field w-full rounded-lg"
+                    autocomplete="current-password"
+                    required
+                >
+                <button type="submit" class="btn-primary w-full rounded-lg text-center">Login</button>
+                <p id="login-error" class="text-red-400 text-sm text-center hidden">Authentication failed. Try again.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN APP ==================== -->
+    <div id="admin-app" class="hidden">
+
+        <!-- Top Bar -->
+        <header class="border-b border-white/10 px-4 sm:px-6 py-4">
+            <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-3">
+                <h1 class="font-heading text-xl sm:text-2xl uppercase tracking-wider">Leaderboard Admin</h1>
+                <div class="flex items-center gap-4 text-sm">
+                    <a href="/leaderboard/" class="text-brand-gray hover:text-brand-light transition-colors">View Public Page</a>
+                    <button onclick="logout()" class="text-red-400 hover:text-red-300 transition-colors cursor-pointer">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <nav class="border-b border-white/10 px-4 sm:px-6">
+            <div class="max-w-6xl mx-auto flex gap-6 overflow-x-auto">
+                <button class="tab-btn active text-brand-light font-body text-sm uppercase tracking-wider whitespace-nowrap cursor-pointer" data-tab="pending">
+                    Pending <span id="count-pending" class="badge bg-yellow-600 text-white ml-1">0</span>
+                </button>
+                <button class="tab-btn text-brand-gray hover:text-brand-light font-body text-sm uppercase tracking-wider whitespace-nowrap cursor-pointer" data-tab="verified">
+                    Verified <span id="count-verified" class="badge bg-green-700 text-white ml-1">0</span>
+                </button>
+                <button class="tab-btn text-brand-gray hover:text-brand-light font-body text-sm uppercase tracking-wider whitespace-nowrap cursor-pointer" data-tab="rejected">
+                    Rejected <span id="count-rejected" class="badge bg-red-700 text-white ml-1">0</span>
+                </button>
+                <button class="tab-btn text-brand-gray hover:text-brand-light font-body text-sm uppercase tracking-wider whitespace-nowrap cursor-pointer" data-tab="add">
+                    Add New
+                </button>
+            </div>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+
+            <!-- Pending Tab -->
+            <div id="tab-pending" class="tab-content">
+                <div id="entries-pending" class="space-y-4"></div>
+                <div id="empty-pending" class="hidden text-center py-12 text-brand-gray">No pending submissions.</div>
+                <div id="loading-pending" class="flex justify-center py-12"><div class="spinner"></div></div>
+            </div>
+
+            <!-- Verified Tab -->
+            <div id="tab-verified" class="tab-content hidden">
+                <div id="entries-verified" class="space-y-4"></div>
+                <div id="empty-verified" class="hidden text-center py-12 text-brand-gray">No verified entries.</div>
+                <div id="loading-verified" class="flex justify-center py-12"><div class="spinner"></div></div>
+            </div>
+
+            <!-- Rejected Tab -->
+            <div id="tab-rejected" class="tab-content hidden">
+                <div id="entries-rejected" class="space-y-4"></div>
+                <div id="empty-rejected" class="hidden text-center py-12 text-brand-gray">No rejected entries.</div>
+                <div id="loading-rejected" class="flex justify-center py-12"><div class="spinner"></div></div>
+            </div>
+
+            <!-- Add New Tab -->
+            <div id="tab-add" class="tab-content hidden">
+                <div class="max-w-2xl">
+                    <h2 class="font-heading text-xl uppercase tracking-wider mb-6">Add Entry</h2>
+                    <form id="add-form" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Name *</label>
+                                <input type="text" name="name" required class="input-field w-full rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Email</label>
+                                <input type="email" name="email" class="input-field w-full rounded-lg">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Gender *</label>
+                                <select name="gender" required class="input-field w-full rounded-lg">
+                                    <option value="">Select...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Category *</label>
+                                <select name="category" required class="input-field w-full rounded-lg">
+                                    <option value="">Select...</option>
+                                    <option value="rx">Rx</option>
+                                    <option value="scaled">Scaled</option>
+                                    <option value="beginner">Beginner</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Age</label>
+                                <input type="number" name="age" min="5" max="100" class="input-field w-full rounded-lg">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Event *</label>
+                                <input type="text" name="event" required placeholder="e.g. Back Squat, Fran, 5K Row" class="input-field w-full rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Result *</label>
+                                <input type="text" name="result" required placeholder="e.g. 315 lbs, 3:45, 10 rounds" class="input-field w-full rounded-lg">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Bodyweight (lbs)</label>
+                                <input type="number" name="bodyweight" step="0.1" class="input-field w-full rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Status</label>
+                                <select name="status" class="input-field w-full rounded-lg">
+                                    <option value="verified" selected>Verified</option>
+                                    <option value="pending">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Where They Train</label>
+                                <input type="text" name="gym_name" placeholder="Gym name" class="input-field w-full rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Gym URL</label>
+                                <input type="url" name="gym_url" placeholder="https://..." class="input-field w-full rounded-lg">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Proof URL</label>
+                            <input type="url" name="proof_url" placeholder="YouTube, Instagram, or other link" class="input-field w-full rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Source</label>
+                            <input type="text" name="source" placeholder="e.g. CrossFit Open, coach outreach" class="input-field w-full rounded-lg">
+                        </div>
+                        <div class="pt-2">
+                            <button type="submit" class="btn-primary rounded-lg">Add Entry</button>
+                        </div>
+                    </form>
+                    <div id="add-success" class="hidden mt-6 p-4 bg-green-900/30 border border-green-600/30 rounded-lg">
+                        <p class="text-green-400 font-medium mb-1">Entry created successfully.</p>
+                        <p class="text-sm text-brand-gray">Share ID: <span id="add-share-id" class="text-brand-light font-mono"></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toast-container"></div>
+
+    <script>
+    // ==================== CONFIG ====================
+    const API_BASE = 'https://owbgtzil2l.execute-api.us-east-1.amazonaws.com';
+
+    // ==================== STATE ====================
+    let currentTab = 'pending';
+    const cache = { pending: null, verified: null, rejected: null };
+
+    // ==================== AUTH ====================
+    function getToken() {
+        return localStorage.getItem('leaderboard_admin_token');
+    }
+
+    function login(password) {
+        localStorage.setItem('leaderboard_admin_token', password);
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('admin-app').classList.remove('hidden');
+        document.getElementById('login-error').classList.add('hidden');
+        loadEntries('pending');
+        loadCounts();
+    }
+
+    function logout() {
+        localStorage.removeItem('leaderboard_admin_token');
+        document.getElementById('admin-app').classList.add('hidden');
+        document.getElementById('login-screen').classList.remove('hidden');
+        document.getElementById('login-password').value = '';
+        cache.pending = null;
+        cache.verified = null;
+        cache.rejected = null;
+    }
+
+    function handleUnauthorized() {
+        showToast('Session expired. Please log in again.', true);
+        logout();
+    }
+
+    // ==================== API HELPERS ====================
+    async function apiFetch(path, options = {}) {
+        const token = getToken();
+        const headers = {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+            ...(options.headers || {})
+        };
+        const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+        if (res.status === 401) {
+            handleUnauthorized();
+            throw new Error('Unauthorized');
+        }
+        if (!res.ok) {
+            const body = await res.text();
+            throw new Error(body || `HTTP ${res.status}`);
+        }
+        return res.json();
+    }
+
+    // ==================== LOAD ENTRIES ====================
+    async function loadEntries(status) {
+        const container = document.getElementById(`entries-${status}`);
+        const empty = document.getElementById(`empty-${status}`);
+        const loading = document.getElementById(`loading-${status}`);
+
+        container.innerHTML = '';
+        empty.classList.add('hidden');
+        loading.classList.remove('hidden');
+
+        try {
+            const data = await apiFetch(`/api/admin/entries?status=${status}`);
+            const entries = data.entries || data;
+            cache[status] = entries;
+
+            loading.classList.add('hidden');
+            updateCount(status, entries.length);
+
+            if (entries.length === 0) {
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            entries.forEach(entry => {
+                container.appendChild(renderEntryCard(entry, status));
+            });
+        } catch (err) {
+            loading.classList.add('hidden');
+            if (err.message !== 'Unauthorized') {
+                container.innerHTML = `<p class="text-red-400 text-center py-8">Failed to load entries: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+    }
+
+    async function loadCounts() {
+        const statuses = ['pending', 'verified', 'rejected'];
+        for (const status of statuses) {
+            if (status === currentTab) continue; // already loaded by loadEntries
+            try {
+                const data = await apiFetch(`/api/admin/entries?status=${status}`);
+                const entries = data.entries || data;
+                cache[status] = entries;
+                updateCount(status, entries.length);
+            } catch (err) {
+                // silent fail on counts
+            }
+        }
+    }
+
+    function updateCount(status, count) {
+        const el = document.getElementById(`count-${status}`);
+        if (el) el.textContent = count;
+    }
+
+    // ==================== ENTRY ACTIONS ====================
+    async function approveEntry(id, cardEl) {
+        try {
+            await apiFetch(`/api/admin/entries/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ status: 'verified' })
+            });
+            fadeOutCard(cardEl);
+            adjustCount('pending', -1);
+            adjustCount('verified', 1);
+            cache.verified = null; // invalidate
+            showToast('Entry approved.');
+        } catch (err) {
+            if (err.message !== 'Unauthorized') showToast('Failed to approve: ' + err.message, true);
+        }
+    }
+
+    async function rejectEntry(id, cardEl) {
+        try {
+            await apiFetch(`/api/admin/entries/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ status: 'rejected' })
+            });
+            fadeOutCard(cardEl);
+            if (currentTab === 'pending') {
+                adjustCount('pending', -1);
+                adjustCount('rejected', 1);
+            } else if (currentTab === 'verified') {
+                adjustCount('verified', -1);
+                adjustCount('rejected', 1);
+            }
+            cache.rejected = null;
+            cache.verified = null;
+            showToast('Entry rejected.');
+        } catch (err) {
+            if (err.message !== 'Unauthorized') showToast('Failed to reject: ' + err.message, true);
+        }
+    }
+
+    async function deleteEntry(id, cardEl) {
+        if (!confirm('Permanently delete this entry? This cannot be undone.')) return;
+        try {
+            await apiFetch(`/api/admin/entries/${id}`, { method: 'DELETE' });
+            fadeOutCard(cardEl);
+            adjustCount(currentTab, -1);
+            showToast('Entry deleted.');
+        } catch (err) {
+            if (err.message !== 'Unauthorized') showToast('Failed to delete: ' + err.message, true);
+        }
+    }
+
+    async function addEntry(formData) {
+        const body = {};
+        for (const [key, value] of formData.entries()) {
+            if (value) body[key] = value;
+        }
+        if (body.bodyweight) body.bodyweight = parseFloat(body.bodyweight);
+        if (body.age) body.age = parseInt(body.age, 10);
+
+        try {
+            const result = await apiFetch('/api/admin/entries', {
+                method: 'POST',
+                body: JSON.stringify(body)
+            });
+            const entry = result.entry || result;
+            document.getElementById('add-share-id').textContent = entry.share_id || entry.id || 'N/A';
+            document.getElementById('add-success').classList.remove('hidden');
+            document.getElementById('add-form').reset();
+
+            // Invalidate caches
+            cache.pending = null;
+            cache.verified = null;
+            showToast('Entry created.');
+        } catch (err) {
+            if (err.message !== 'Unauthorized') showToast('Failed to create entry: ' + err.message, true);
+        }
+    }
+
+    // ==================== RENDER ====================
+    function renderEntryCard(entry, tab) {
+        const card = document.createElement('div');
+        card.className = 'entry-card bg-brand-slate rounded-lg border border-white/10 p-4 sm:p-5';
+        card.dataset.id = entry.id;
+
+        const proofHtml = renderProof(entry.proof_url);
+        const gymHtml = entry.gym_name
+            ? `<div class="text-sm text-brand-gray">
+                <span class="text-brand-light/60">Trains at:</span>
+                ${entry.gym_url
+                    ? `<a href="${escapeHtml(entry.gym_url)}" target="_blank" rel="noopener" class="text-brand-gray hover:text-brand-light underline">${escapeHtml(entry.gym_name)}</a>`
+                    : escapeHtml(entry.gym_name)
+                }
+               </div>`
+            : '';
+        const sourceHtml = entry.source
+            ? `<div class="text-sm text-brand-gray"><span class="text-brand-light/60">Source:</span> ${escapeHtml(entry.source)}</div>`
+            : '';
+        const submittedDate = entry.created_at
+            ? new Date(entry.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })
+            : '';
+
+        let actionsHtml = '';
+        if (tab === 'pending') {
+            actionsHtml = `
+                <button onclick="approveEntry('${entry.id}', this.closest('.entry-card'))"
+                    class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer">
+                    Approve
+                </button>
+                <button onclick="rejectEntry('${entry.id}', this.closest('.entry-card'))"
+                    class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer">
+                    Reject
+                </button>`;
+        } else if (tab === 'verified') {
+            actionsHtml = `
+                <button onclick="rejectEntry('${entry.id}', this.closest('.entry-card'))"
+                    class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer">
+                    Reject
+                </button>
+                <button onclick="deleteEntry('${entry.id}', this.closest('.entry-card'))"
+                    class="px-4 py-2 bg-transparent border border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-sm font-medium rounded-lg transition-colors cursor-pointer">
+                    Delete
+                </button>`;
+        } else if (tab === 'rejected') {
+            actionsHtml = `
+                <button onclick="approveEntry('${entry.id}', this.closest('.entry-card'))"
+                    class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer">
+                    Approve
+                </button>
+                <button onclick="deleteEntry('${entry.id}', this.closest('.entry-card'))"
+                    class="px-4 py-2 bg-transparent border border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-sm font-medium rounded-lg transition-colors cursor-pointer">
+                    Delete
+                </button>`;
+        }
+
+        card.innerHTML = `
+            <div class="flex flex-col lg:flex-row gap-4">
+                <!-- Entry Info -->
+                <div class="flex-1 min-w-0 space-y-2">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h3 class="font-heading text-lg uppercase tracking-wider">${escapeHtml(entry.name)}</h3>
+                        <span class="text-xs px-2 py-0.5 rounded-full ${entry.gender === 'male' ? 'bg-blue-900/40 text-blue-300' : 'bg-pink-900/40 text-pink-300'}">${escapeHtml(entry.gender || '')}</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-white/10 text-brand-gray">${escapeHtml(entry.category || '')}</span>
+                        ${entry.age ? `<span class="text-xs px-2 py-0.5 rounded-full bg-white/10 text-brand-gray">Age: ${escapeHtml(String(entry.age))}</span>` : ''}
+                    </div>
+                    <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                        <div>
+                            <span class="text-brand-light/60 text-sm">Event:</span>
+                            <span class="font-medium">${escapeHtml(entry.event)}</span>
+                        </div>
+                        <div>
+                            <span class="text-brand-light/60 text-sm">Result:</span>
+                            <span class="font-heading text-xl text-brand-light">${escapeHtml(entry.result)}</span>
+                        </div>
+                        ${entry.bodyweight ? `<div><span class="text-brand-light/60 text-sm">BW:</span> <span>${escapeHtml(String(entry.bodyweight))} lbs</span></div>` : ''}
+                    </div>
+                    ${entry.email ? `<div class="text-sm text-brand-gray"><span class="text-brand-light/60">Email:</span> ${escapeHtml(entry.email)}</div>` : ''}
+                    ${gymHtml}
+                    ${sourceHtml}
+                    ${submittedDate ? `<div class="text-xs text-brand-gray/60">Submitted ${submittedDate}</div>` : ''}
+                </div>
+
+                <!-- Proof -->
+                ${proofHtml ? `<div class="lg:w-72 shrink-0">${proofHtml}</div>` : ''}
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3 mt-4 pt-3 border-t border-white/5">
+                ${actionsHtml}
+            </div>
+        `;
+
+        return card;
+    }
+
+    function renderProof(url) {
+        if (!url) return '';
+
+        const ytId = extractYouTubeId(url);
+        if (ytId) {
+            return `
+                <div class="space-y-1">
+                    <p class="text-xs uppercase tracking-wider text-brand-gray">Proof Video</p>
+                    <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="block relative group">
+                        <img src="https://img.youtube.com/vi/${ytId}/mqdefault.jpg" alt="Video proof"
+                             class="w-full rounded-lg border border-white/10 group-hover:border-brand-gray transition-colors">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
+                                <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>`;
+        }
+
+        // Instagram / TikTok / generic link
+        let label = 'Proof Link';
+        if (url.includes('instagram.com')) label = 'Instagram';
+        else if (url.includes('tiktok.com')) label = 'TikTok';
+
+        return `
+            <div class="space-y-1">
+                <p class="text-xs uppercase tracking-wider text-brand-gray">${label}</p>
+                <a href="${escapeHtml(url)}" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-1.5 text-sm text-brand-gray hover:text-brand-light transition-colors underline break-all">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                    ${truncateUrl(url)}
+                </a>
+            </div>`;
+    }
+
+    function extractYouTubeId(url) {
+        if (!url) return null;
+        const patterns = [
+            /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/
+        ];
+        for (const p of patterns) {
+            const m = url.match(p);
+            if (m) return m[1];
+        }
+        return null;
+    }
+
+    function truncateUrl(url) {
+        try {
+            const u = new URL(url);
+            const path = u.pathname.length > 30 ? u.pathname.slice(0, 30) + '...' : u.pathname;
+            return escapeHtml(u.hostname + path);
+        } catch {
+            return escapeHtml(url.length > 50 ? url.slice(0, 50) + '...' : url);
+        }
+    }
+
+    // ==================== UI HELPERS ====================
+    function fadeOutCard(cardEl) {
+        if (!cardEl) return;
+        cardEl.style.maxHeight = cardEl.offsetHeight + 'px';
+        // Force reflow
+        cardEl.offsetHeight;
+        cardEl.classList.add('card-fade-out');
+        cardEl.addEventListener('transitionend', () => {
+            cardEl.remove();
+            // Check if list is now empty
+            const container = document.getElementById(`entries-${currentTab}`);
+            if (container && container.children.length === 0) {
+                document.getElementById(`empty-${currentTab}`).classList.remove('hidden');
+            }
+        }, { once: true });
+    }
+
+    function adjustCount(status, delta) {
+        const el = document.getElementById(`count-${status}`);
+        if (!el) return;
+        const current = parseInt(el.textContent) || 0;
+        el.textContent = Math.max(0, current + delta);
+    }
+
+    function showToast(message, isError = false) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${isError ? 'toast-error' : 'toast-success'}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add('show'));
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    // ==================== TAB SWITCHING ====================
+    function switchTab(tab) {
+        currentTab = tab;
+
+        // Update tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            if (btn.dataset.tab === tab) {
+                btn.classList.add('active', 'text-brand-light');
+                btn.classList.remove('text-brand-gray');
+            } else {
+                btn.classList.remove('active', 'text-brand-light');
+                btn.classList.add('text-brand-gray');
+            }
+        });
+
+        // Show/hide tab content
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        document.getElementById(`tab-${tab}`).classList.remove('hidden');
+
+        // Load data for list tabs
+        if (['pending', 'verified', 'rejected'].includes(tab)) {
+            loadEntries(tab);
+        }
+
+        // Hide add success message when switching away
+        if (tab !== 'add') {
+            document.getElementById('add-success').classList.add('hidden');
+        }
+    }
+
+    // ==================== INIT ====================
+    document.addEventListener('DOMContentLoaded', () => {
+        // Login form
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pw = document.getElementById('login-password').value.trim();
+            if (pw) login(pw);
+        });
+
+        // Tab clicks
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        // Add form
+        document.getElementById('add-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            addEntry(new FormData(e.target));
+        });
+
+        // Check existing token
+        if (getToken()) {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('admin-app').classList.remove('hidden');
+            loadEntries('pending');
+            loadCounts();
+        }
+    });
+    </script>
+
+</body>
+</html>

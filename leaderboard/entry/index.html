@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard Entry | Park Ridge Fitness Leaderboard</title>
+    <meta name="description" content="View this verified fitness record on the Park Ridge Fitness Leaderboard. Powered by Moonshot Medical and Performance.">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Park Ridge Fitness Leaderboard">
+    <meta property="og:description" content="View this verified fitness record on the Park Ridge Fitness Leaderboard.">
+    <meta property="og:url" content="https://moonshotmp.com/leaderboard/entry/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Moonshot Medical and Performance">
+    <meta property="og:image" content="https://moonshotmp.com/images/moonshotmedical_cloud.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Park Ridge Fitness Leaderboard">
+    <meta name="twitter:description" content="View this verified fitness record on the Park Ridge Fitness Leaderboard.">
+    <meta name="twitter:image" content="https://moonshotmp.com/images/moonshotmedical_cloud.png">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <style>
+        .stat-card {
+            background-color: var(--brand-slate);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .rank-1 { color: #facc15; }
+        .rank-2 { color: #d1d5db; }
+        .rank-3 { color: #d97706; }
+        .share-btn {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+        .share-btn:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .verified-badge svg {
+            width: 1rem;
+            height: 1rem;
+            color: #22c55e;
+        }
+        .source-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--brand-gray);
+        }
+        .play-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            color: var(--brand-gray);
+            transition: color 0.2s ease;
+        }
+        .play-icon:hover {
+            color: var(--brand-light);
+        }
+        .pulse-placeholder {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <script src="/shared/header.js" defer></script>
+
+    <main id="main-content" class="flex-grow pt-20">
+
+        <!-- Stat Card Section -->
+        <section class="py-16 md:py-24 bg-brand-dark">
+            <div class="max-w-lg mx-auto px-4">
+
+                <!-- Loading State -->
+                <div id="loading-state" class="stat-card rounded-xl p-8 text-center">
+                    <div class="pulse-placeholder">
+                        <div class="h-16 bg-white/5 rounded-lg mb-4 mx-auto w-48"></div>
+                        <div class="h-6 bg-white/5 rounded mb-3 mx-auto w-64"></div>
+                        <div class="h-5 bg-white/5 rounded mb-2 mx-auto w-40"></div>
+                        <div class="h-5 bg-white/5 rounded mx-auto w-32"></div>
+                    </div>
+                    <p class="text-brand-gray text-sm mt-6">Loading entry...</p>
+                </div>
+
+                <!-- Entry Card (hidden until data loads) -->
+                <div id="entry-card" class="stat-card rounded-xl p-8 text-center hidden">
+                    <div id="rank-badge" class="text-lg font-heading font-bold mb-2"></div>
+                    <div id="result-display" class="text-5xl md:text-7xl font-heading font-bold text-white mb-2"></div>
+                    <div id="event-name" class="text-xl font-heading text-brand-gray uppercase tracking-wider mb-6"></div>
+
+                    <div class="border-t border-white/10 pt-6 space-y-3">
+                        <div id="athlete-name" class="text-lg text-brand-light font-medium"></div>
+                        <div id="gym-name" class="text-sm text-brand-gray"></div>
+                        <div id="bodyweight-multiplier" class="text-sm text-brand-gray hidden"></div>
+                        <div id="source-container" class="hidden">
+                            <span id="source-badge" class="source-badge"></span>
+                        </div>
+                        <div id="proof-container" class="hidden mt-2">
+                            <a id="proof-link" href="#" target="_blank" rel="noopener noreferrer" class="play-icon text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                Watch proof video
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error State (hidden by default) -->
+                <div id="error-state" class="stat-card rounded-xl p-8 text-center hidden">
+                    <p class="text-xl text-brand-light font-heading mb-2">Entry not found</p>
+                    <p class="text-brand-gray text-sm mb-6">This entry may have been removed or the link is invalid.</p>
+                    <a href="/leaderboard/" class="btn-primary px-6 py-3">View Full Leaderboard</a>
+                </div>
+
+                <!-- Share Buttons (hidden until data loads) -->
+                <div id="share-buttons" class="flex flex-wrap justify-center gap-3 mt-6 hidden">
+                    <button id="share-twitter" class="share-btn rounded-lg px-4 py-2 flex items-center gap-2 text-sm text-brand-gray cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Share on X
+                    </button>
+                    <button id="share-facebook" class="share-btn rounded-lg px-4 py-2 flex items-center gap-2 text-sm text-brand-gray cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Share on Facebook
+                    </button>
+                    <button id="share-copy" class="share-btn rounded-lg px-4 py-2 flex items-center gap-2 text-sm text-brand-gray cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span id="copy-label">Copy Link</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTAs -->
+        <section class="py-16 bg-brand-dark border-t border-white/10">
+            <div class="max-w-2xl mx-auto px-4 text-center space-y-6">
+                <a href="/leaderboard/" class="btn-outline px-6 py-3 block sm:inline-block">View Full Leaderboard</a>
+                <a href="/leaderboard/#submit" class="btn-primary px-6 py-3 block sm:inline-block sm:ml-4">Think you can beat this?</a>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/shared/footer.js" defer></script>
+
+    <script>
+    (function() {
+        const API_BASE = 'https://owbgtzil2l.execute-api.us-east-1.amazonaws.com';
+
+        const params = new URLSearchParams(window.location.search);
+        const entryId = params.get('id');
+
+        const loadingEl = document.getElementById('loading-state');
+        const cardEl = document.getElementById('entry-card');
+        const errorEl = document.getElementById('error-state');
+        const shareEl = document.getElementById('share-buttons');
+
+        if (!entryId) {
+            showError();
+            return;
+        }
+
+        fetchEntry(entryId);
+
+        async function fetchEntry(id) {
+            try {
+                const res = await fetch(API_BASE + '/api/entries/' + encodeURIComponent(id));
+                if (!res.ok) {
+                    showError();
+                    return;
+                }
+                const data = await res.json();
+                if (!data.entry) {
+                    showError();
+                    return;
+                }
+                renderEntry(data.entry);
+            } catch (err) {
+                console.error('Failed to load entry:', err);
+                showError();
+            }
+        }
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatResult(entry) {
+            if (entry.resultDisplay) return escapeHtml(entry.resultDisplay);
+            var val = entry.resultValue;
+            var unit = entry.unit || '';
+            if (unit === 'lbs') return escapeHtml(val + ' LBS');
+            if (unit === 'reps') return escapeHtml(val + ' REPS');
+            if (unit === 'time') return escapeHtml(val);
+            return escapeHtml(val + (unit ? ' ' + unit.toUpperCase() : ''));
+        }
+
+        function renderEntry(entry) {
+            // Result
+            document.getElementById('result-display').innerHTML = formatResult(entry);
+
+            // Event
+            var eventText = entry.eventName || entry.event || '';
+            document.getElementById('event-name').textContent = eventText;
+
+            // Rank
+            var rankEl = document.getElementById('rank-badge');
+            var rank = entry.rank;
+            if (rank) {
+                var rankClass = '';
+                if (rank === 1) rankClass = 'rank-1';
+                else if (rank === 2) rankClass = 'rank-2';
+                else if (rank === 3) rankClass = 'rank-3';
+                else rankClass = 'text-brand-gray';
+                rankEl.className = 'text-lg font-heading font-bold mb-2 ' + rankClass;
+                rankEl.textContent = '#' + rank + ' in Park Ridge';
+            } else {
+                rankEl.classList.add('hidden');
+            }
+
+            // Athlete name + verified badge
+            var nameEl = document.getElementById('athlete-name');
+            var nameHtml = escapeHtml(entry.name || 'Anonymous');
+            if (entry.verified) {
+                nameHtml += ' <span class="verified-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg></span>';
+            }
+            nameEl.innerHTML = nameHtml;
+
+            // Gym name
+            var gymEl = document.getElementById('gym-name');
+            if (entry.gymName) {
+                if (entry.gymUrl) {
+                    gymEl.innerHTML = 'Trains at <a href="' + escapeHtml(entry.gymUrl) + '" target="_blank" rel="noopener noreferrer" class="underline hover:text-brand-light">' + escapeHtml(entry.gymName) + '</a>';
+                } else {
+                    gymEl.textContent = 'Trains at ' + entry.gymName;
+                }
+            } else {
+                gymEl.classList.add('hidden');
+            }
+
+            // Bodyweight multiplier
+            var bwEl = document.getElementById('bodyweight-multiplier');
+            if (entry.bodyweightMultiplier) {
+                bwEl.textContent = entry.bodyweightMultiplier + 'x bodyweight';
+                bwEl.classList.remove('hidden');
+            }
+
+            // Source badge
+            if (entry.source) {
+                document.getElementById('source-badge').textContent = entry.source;
+                document.getElementById('source-container').classList.remove('hidden');
+            }
+
+            // Proof video
+            if (entry.proofUrl) {
+                document.getElementById('proof-link').href = entry.proofUrl;
+                document.getElementById('proof-container').classList.remove('hidden');
+            }
+
+            // Update page title
+            document.title = (entry.name || 'Entry') + ' — ' + eventText + ' | Park Ridge Fitness Leaderboard';
+
+            // Show card, hide loading
+            loadingEl.classList.add('hidden');
+            cardEl.classList.remove('hidden');
+            shareEl.classList.remove('hidden');
+
+            // Wire up share buttons
+            setupShareButtons(entry);
+        }
+
+        function setupShareButtons(entry) {
+            var pageUrl = window.location.href;
+            var rank = entry.rank ? '#' + entry.rank : '';
+            var result = entry.resultDisplay || entry.resultValue || '';
+            var eventName = entry.eventName || entry.event || '';
+            var shareText = "I'm ranked " + rank + " for " + eventName + " in Park Ridge — " + result + ". Think you can beat it?";
+
+            document.getElementById('share-twitter').addEventListener('click', function() {
+                var twitterUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(pageUrl);
+                window.open(twitterUrl, '_blank', 'width=550,height=420');
+            });
+
+            document.getElementById('share-facebook').addEventListener('click', function() {
+                var fbUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl);
+                window.open(fbUrl, '_blank', 'width=550,height=420');
+            });
+
+            document.getElementById('share-copy').addEventListener('click', function() {
+                var label = document.getElementById('copy-label');
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(pageUrl).then(function() {
+                        label.textContent = 'Copied!';
+                        setTimeout(function() { label.textContent = 'Copy Link'; }, 2000);
+                    }).catch(function() {
+                        fallbackCopy(pageUrl, label);
+                    });
+                } else {
+                    fallbackCopy(pageUrl, label);
+                }
+            });
+        }
+
+        function fallbackCopy(text, label) {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                label.textContent = 'Copied!';
+                setTimeout(function() { label.textContent = 'Copy Link'; }, 2000);
+            } catch (e) {
+                label.textContent = 'Failed';
+                setTimeout(function() { label.textContent = 'Copy Link'; }, 2000);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showError() {
+            loadingEl.classList.add('hidden');
+            errorEl.classList.remove('hidden');
+        }
+    })();
+    </script>
+
+</body>
+</html>

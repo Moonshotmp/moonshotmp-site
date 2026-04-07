@@ -170,6 +170,8 @@
               </div>
             </div>
 
+            <a href="/leaderboard/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Leaderboard</a>
+
             <!-- About Dropdown -->
             <div class="relative inline-block" id="about-menu-wrapper">
               <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
@@ -317,6 +319,9 @@
               <a href="/learn/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">View All &rarr;</a>
             </div>
           </div>
+
+          <!-- Leaderboard Mobile -->
+          <a href="/leaderboard/" class="block px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest text-center">Leaderboard</a>
 
           <!-- About Mobile -->
           <div>
