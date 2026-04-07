@@ -169,20 +169,40 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-8">SUBMISSION STANDARDS</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-brand-light mb-3">STRENGTH (1RM)</h3>
-                        <p class="text-brand-gray text-sm font-light leading-relaxed">Full range of motion required. Squat must break parallel. Bench press requires pause at chest. Deadlift requires full hip extension and lockout. Video must show the full rep from a clear angle.</p>
+                        <h3 class="text-lg font-bold text-brand-light mb-3">BACK SQUAT</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">1 rep max. Barbell on the back. Must break parallel (hip crease below the top of the knee). Full lockout at the top. No box, no bands, no wraps (belt is fine). Video must show full rep from an angle where depth is visible.</p>
                     </div>
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-brand-light mb-3">STRICT PULL-UPS</h3>
-                        <p class="text-brand-gray text-sm font-light leading-relaxed">Arms fully extended at bottom (dead hang). Chin clearly over the bar at top. No kipping, butterfly, or swinging. Each rep must be continuous. Video must show full set.</p>
+                        <h3 class="text-lg font-bold text-brand-light mb-3">DEADLIFT</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">1 rep max. Conventional or sumo, both count. Bar starts on the floor. Full lockout at the top &mdash; hips and knees extended, shoulders behind the bar. No hitching. Belt and straps are fine, no suits. Video must show the full pull.</p>
                     </div>
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-brand-light mb-3">PUSH-UPS IN 2 MINUTES</h3>
-                        <p class="text-brand-gray text-sm font-light leading-relaxed">Chest touches the ground. Arms fully locked out at top. Continuous &mdash; any pause longer than 2 seconds ends the count. Timer must be visible or reps counted audibly.</p>
+                        <h3 class="text-lg font-bold text-brand-light mb-3">BENCH PRESS</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">1 rep max. Bar must make contact with the chest. Full lockout at the top &mdash; elbows fully extended. Butt stays on the bench, feet on the floor. No bounce off the chest. Belt is fine, no bench shirts. Video must show the full rep from the side.</p>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-brand-light mb-3">CLEAN</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">1 rep max. Bar starts on the floor, received in a front rack position. Power clean or squat clean both count. Must stand to full extension with the bar in the front rack. No straps. Video must show the full lift.</p>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-brand-light mb-3">SHOULDER TO OVERHEAD</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">1 rep max. Bar starts in the front rack. Get it overhead however you want &mdash; strict press, push press, push jerk, or split jerk all count. Full lockout overhead with knees, hips, and elbows extended, feet under hips. Video must show the full rep.</p>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-brand-light mb-3">PULL-UPS / CHIN-UPS &mdash; MAX IN 2 MIN</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">Overhand (pull-up) or underhand (chin-up) grip &mdash; both count. Start from a dead hang with arms fully extended. Chin must clear the bar at the top. No kipping, butterfly, or swinging. You have 2 minutes &mdash; rest hanging if you need to, but hands leave the bar and you're done. Timer must be visible. Video must show the full 2 minutes.</p>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-brand-light mb-3">PUSH-UPS &mdash; MAX IN 2 MIN</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">Chest makes contact with the ground at the bottom. Full lockout at the top &mdash; elbows fully extended. Body stays rigid (no sagging or piking). You have 2 minutes &mdash; rest in the top position if you need to, but knees hit the ground and you're done. Timer must be visible. Video must show the full 2 minutes.</p>
                     </div>
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
                         <h3 class="text-lg font-bold text-brand-light mb-3">RUNNING EVENTS</h3>
-                        <p class="text-brand-gray text-sm font-light leading-relaxed">GPS watch screenshot showing distance and time, OR video of timed run at a measured track/course. For 40-yard dash, video must show start and finish.</p>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed"><strong class="text-brand-light">Mile &amp; 400m:</strong> GPS watch screenshot showing distance and time, OR video at a measured track. <strong class="text-brand-light">40-yard dash:</strong> Video must show start and finish &mdash; laser timing preferred but not required. Any surface is fine. Running shoes only (no spikes unless on a track).</p>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-brand-light mb-3">2,000M ROW</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">Concept2 rower (or equivalent). Damper setting is your choice. Video or photo of the monitor showing 2,000m and your time. Must be a single continuous effort.</p>
                     </div>
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
                         <h3 class="text-lg font-bold text-brand-light mb-3">BODY FAT %</h3>
@@ -321,9 +341,9 @@
 
     /* ----- Event definitions per category ----- */
     const EVENT_OPTIONS = {
-        strength: ['Back Squat', 'Deadlift', 'Bench Press', 'Clean', 'Strict Press'],
+        strength: ['Back Squat', 'Deadlift', 'Bench Press', 'Clean', 'Shoulder to Overhead'],
         speed: ['Mile Run', '400m Run', '40-Yard Dash', '2,000m Row'],
-        bodyweight: ['Strict Pull-ups', 'Push-ups in 2 Minutes'],
+        bodyweight: ['Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes'],
         diagnostics: ['Lowest Body Fat %']
     };
 
@@ -374,11 +394,11 @@
         { id: '28', name: 'Tom K.', age: 36, gender: 'male', category: 'speed', event: '400m Run', result: '1:08', resultNumeric: 68, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Track Time' },
         { id: '29', name: 'Edwin G.', age: 38, gender: 'male', category: 'speed', event: '400m Run', result: '1:12', resultNumeric: 72, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Track Time' },
 
-        // Bodyweight - Strict Pull-ups Men
-        { id: '30', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '28 reps', resultNumeric: 28, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
-        { id: '31', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '22 reps', resultNumeric: 22, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
-        { id: '32', name: 'Niko P.', age: 42, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '20 reps', resultNumeric: 20, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '33', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups', result: '18 reps', resultNumeric: 18, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        // Bodyweight - Pull-ups in 2 Minutes Men
+        { id: '30', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '28 reps', resultNumeric: 28, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '31', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '22 reps', resultNumeric: 22, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '32', name: 'Niko P.', age: 42, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '20 reps', resultNumeric: 20, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '33', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '18 reps', resultNumeric: 18, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
 
         // Bodyweight - Push-ups in 2 Min Men
         { id: '34', name: 'Patrick O.', age: 56, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '82 reps', resultNumeric: 82, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
@@ -561,9 +581,9 @@
         html += '<h3 class="text-base font-bold text-brand-light mb-2">HOW SCORING WORKS</h3>';
         html += '<p class="text-brand-gray text-sm font-light leading-relaxed mb-3">Like golf, <strong class="text-brand-light">lower is better</strong>. Your score is the sum of your average rank in each of three pillars:</p>';
         html += '<div class="grid sm:grid-cols-3 gap-3 mb-3">';
-        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean, Strict Press</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean, Shoulder to Overhead</p></div>';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Cardio</span><p class="text-brand-gray text-xs mt-1">Mile Run, 400m Run, 40-Yard Dash, 2,000m Row</p></div>';
-        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Strict Pull-ups, Push-ups in 2 Min</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups in 2 Minutes, Push-ups in 2 Min</p></div>';
         html += '</div>';
         html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Example:</strong> If your avg strength rank is 2.0, avg cardio rank is 2.5, and avg calisthenics rank is 1.5, your score is <strong class="text-brand-light">6.0</strong>. A perfect score of 3.0 means #1 in every event. You must enter at least one event in each pillar to qualify.</p>';
         html += '</div>';
