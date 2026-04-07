@@ -58,10 +58,10 @@
         /* Mobile card layout for leaderboard entries */
         @media (max-width: 767px) {
             .lb-table thead { display: none; }
-            .lb-table tbody tr { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-            .lb-table tbody tr td { padding: 0.125rem 0; }
-            .lb-table tbody tr td:first-child { grid-row: 1 / 3; display: flex; align-items: center; font-size: 1.25rem; }
-            .lb-table tbody tr td[data-label]::before { content: attr(data-label) ": "; color: var(--brand-gray); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.25rem; }
+            .lb-table tbody tr { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); flex-wrap: wrap; }
+            .lb-table tbody tr td { padding: 0; }
+            .lb-table tbody tr td[data-label]::before { display: none; }
+            .lb-table tbody tr td.hidden { display: none !important; }
         }
         /* Toast */
         .toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; padding: 1rem 1.5rem; border-radius: 0.375rem; font-size: 0.875rem; transform: translateY(1rem); opacity: 0; transition: all 0.3s ease; pointer-events: none; }
@@ -645,19 +645,18 @@
         var html = '<tr class="border-b border-white/5">';
 
         // Rank
-        html += '<td class="py-2.5 pr-3 font-heading font-bold text-base ' + rankClass + '">' + rank + '</td>';
+        html += '<td class="py-2.5 pr-2 font-heading font-bold text-base ' + rankClass + '" style="min-width:2rem">' + rank + '</td>';
 
-        // Name + pillar badges
-        html += '<td class="py-2.5 pr-3 text-brand-light" data-label="Name">';
+        // Name + age + pillar count
+        html += '<td class="py-2.5 pr-3 text-brand-light flex-1">';
         html += escapeHtml(athlete.name);
         if (athlete.age) html += ' <span class="text-brand-gray text-xs">(' + athlete.age + ')</span>';
         if (athlete.parkRidgeVerified) html += ' <span class="text-blue-400 text-xs ml-1" title="Park Ridge Resident">&#9679; PR</span>';
-        // Pillar count badge
-        html += ' <span class="text-brand-gray/40 text-xs ml-1">' + athlete.pillarsEntered + '/3</span>';
+        html += ' <span class="text-brand-gray/40 text-xs">' + athlete.pillarsEntered + '/3</span>';
         html += '</td>';
 
-        // Composite Score
-        html += '<td class="py-2.5 pr-3 text-center font-heading font-bold text-lg text-white">' + athlete.compositeScore.toFixed(1) + '</td>';
+        // Composite Score — always visible, inline on mobile
+        html += '<td class="py-2.5 pr-3 text-right font-heading font-bold text-base text-white" style="min-width:3.5rem">' + athlete.compositeScore.toFixed(1) + '</td>';
 
         // Pillar percentiles with color coding
         var hasStr = athlete.pillarPercentiles && athlete.pillarPercentiles.strength.length > 0;
