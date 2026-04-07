@@ -142,8 +142,8 @@
                     </div>
                 </div>
 
-                <!-- Age + Event Filters -->
-                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <!-- Filters -->
+                <div class="flex flex-wrap justify-center items-center gap-3 mb-10">
                     <select id="age-filter" class="bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-1.5 text-sm font-heading uppercase tracking-wider focus:outline-none focus:border-brand-gray transition">
                         <option value="all">All Ages</option>
                         <option value="0-19">Under 20</option>
@@ -152,6 +152,10 @@
                         <option value="40-49">40-49</option>
                         <option value="50-99">50+</option>
                     </select>
+                    <label class="inline-flex items-center gap-2 bg-brand-dark border border-white/20 rounded px-4 py-1.5 cursor-pointer hover:border-brand-gray transition">
+                        <input type="checkbox" id="proof-filter" class="w-3.5 h-3.5 accent-white">
+                        <span class="text-sm font-heading uppercase tracking-wider text-brand-light">Proof Only</span>
+                    </label>
                 </div>
 
                 <!-- Leaderboard Content (rendered by JS) -->
@@ -264,13 +268,16 @@
                         <input type="text" id="source" name="source" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="e.g., 2026 CrossFit Open, USAPL Meet">
                     </div>
                     <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mt-2">
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" id="parkRidgeResident" name="parkRidgeResident" class="mt-1 w-4 h-4 accent-white">
-                            <div>
-                                <span class="text-brand-light text-sm font-semibold">I live in Park Ridge</span>
-                                <p class="text-brand-gray/60 text-xs mt-0.5">Optional. Verified Park Ridge residents get a location badge on the leaderboard. We may ask for zip code confirmation.</p>
-                            </div>
+                        <div class="mb-3">
+                            <span class="text-brand-light text-sm font-semibold">Park Ridge Resident?</span>
+                            <p class="text-brand-gray/60 text-xs mt-0.5">Optional. Upload a photo of your ID (address visible, can blur name/DOB) to earn the Park Ridge badge on the leaderboard.</p>
+                        </div>
+                        <label class="flex items-center gap-3 cursor-pointer bg-brand-dark border border-white/20 rounded px-4 py-3 hover:border-brand-gray transition">
+                            <svg class="w-5 h-5 text-brand-gray flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <span id="idFileName" class="text-brand-gray text-sm">Choose file...</span>
+                            <input type="file" id="parkRidgeId" name="parkRidgeId" accept="image/*" class="hidden">
                         </label>
+                        <p id="idUploadNote" class="text-brand-gray/40 text-xs mt-1.5 hidden">Your ID is only used for address verification and is never displayed publicly.</p>
                     </div>
 
                     <button type="submit" id="submit-btn" class="w-full bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-gray transition">Submit Record</button>
@@ -388,6 +395,7 @@
     var activeCategory = 'fittest';
     var activeGender = 'male';
     var activeAgeRange = 'all';
+    var proofOnly = false;
 
     /* ----- Utility functions ----- */
 
@@ -537,6 +545,11 @@
             var minAge = parseInt(parts[0]);
             var maxAge = parseInt(parts[1]);
             data = data.filter(function(d) { return d.age && d.age >= minAge && d.age <= maxAge; });
+        }
+
+        // Proof filter
+        if (proofOnly) {
+            data = data.filter(function(d) { return d.proofUrl && d.proofUrl !== '#'; });
         }
 
         var scores = computeFittestScores(data, gender);
@@ -806,6 +819,11 @@
             filtered = filtered.filter(function(d) { return d.age && d.age >= minAge && d.age <= maxAge; });
         }
 
+        // Proof filter
+        if (proofOnly) {
+            filtered = filtered.filter(function(d) { return d.proofUrl && d.proofUrl !== '#'; });
+        }
+
         // Group by event
         var events = EVENT_OPTIONS[category] || [];
         var html = '';
@@ -867,6 +885,30 @@
         renderLeaderboard(SEED_DATA, activeCategory, activeGender);
     });
 
+    /* ----- Proof filter ----- */
+    document.getElementById('proof-filter').addEventListener('change', function() {
+        proofOnly = this.checked;
+        renderLeaderboard(SEED_DATA, activeCategory, activeGender);
+    });
+
+    /* ----- Park Ridge ID file input handler ----- */
+    var idInput = document.getElementById('parkRidgeId');
+    var idLabel = document.getElementById('idFileName');
+    var idNote = document.getElementById('idUploadNote');
+    idInput.addEventListener('change', function() {
+        if (idInput.files.length > 0) {
+            idLabel.textContent = idInput.files[0].name;
+            idLabel.classList.remove('text-brand-gray');
+            idLabel.classList.add('text-brand-light');
+            idNote.classList.remove('hidden');
+        } else {
+            idLabel.textContent = 'Choose file...';
+            idLabel.classList.remove('text-brand-light');
+            idLabel.classList.add('text-brand-gray');
+            idNote.classList.add('hidden');
+        }
+    });
+
     /* ----- Dynamic event dropdown in form ----- */
     var categorySelect = document.getElementById('category');
     var eventSelect = document.getElementById('event');
@@ -909,7 +951,7 @@
             gymName: document.getElementById('gymName').value.trim(),
             gymUrl: document.getElementById('gymUrl').value.trim(),
             source: document.getElementById('source').value.trim(),
-            parkRidgeResident: document.getElementById('parkRidgeResident').checked
+            parkRidgeIdFile: document.getElementById('parkRidgeId').files[0] || null
         };
 
         // Basic validation
