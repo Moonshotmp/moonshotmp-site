@@ -684,13 +684,37 @@
     }
 
     /* ----- Render a single event table ----- */
+    /* ----- Movement standards for info tooltips ----- */
+    var STANDARDS = {
+        'Back Squat': 'Must break parallel (hip crease below knee). Full lockout at top. Belt OK, no wraps/bands/box.',
+        'Deadlift': 'Conventional or sumo. Full lockout — hips and knees extended. No hitching. Straps OK.',
+        'Bench Press': 'Bar must touch chest. Full lockout. Butt on bench, feet on floor. No bounce.',
+        'Clean': 'Power or squat clean. Bar from floor to front rack with full extension. No straps.',
+        'Shoulder to Overhead': 'Strict press, push press, push jerk, or split jerk — any style. Full lockout overhead.',
+        'Mile Run': 'GPS watch screenshot or video at a measured track.',
+        '400m Run': 'GPS watch screenshot or video at a measured track.',
+        '40-Yard Dash': 'Video must show start and finish. Laser timing preferred.',
+        '2,000m Row': 'Concept2 or equivalent. Photo/video of monitor showing distance and time.',
+        'Strict Pull-ups in 2 Minutes': 'Pull-ups or chin-ups. Dead hang start, chin over bar. No kipping. Hands leave bar = done.',
+        'Push-ups in 2 Minutes': 'Chest to ground, full lockout. Body rigid. Knees hit ground = done.',
+        'Dips in 2 Minutes': 'Parallel bars or rings. Below parallel, full lockout. No kipping. Feet touch ground = done.',
+        'L-Sit Hold Time': 'Parallettes, bars, or floor. Legs straight, parallel to ground. Time stops when legs drop.'
+    };
+
     function renderEventTable(entries, eventName, category) {
         var sorted = sortEntries(entries, category);
         var isStrength = (category === 'strength');
+        var standard = STANDARDS[eventName] || '';
 
         var html = '<div class="mb-8">';
         html += '<h3 class="text-lg md:text-xl font-bold text-brand-light mb-4">' + escapeHtml(eventName.toUpperCase());
         if (isStrength) html += ' &mdash; 1 REP MAX';
+        if (standard) {
+            html += ' <span class="inline-block relative group cursor-help align-middle">';
+            html += '<svg class="w-4 h-4 inline text-brand-gray/50 hover:text-brand-gray transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path stroke-width="1.5" stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg>';
+            html += '<span class="invisible group-hover:visible absolute left-6 -top-2 z-50 w-64 bg-brand-dark border border-white/20 rounded-lg p-3 text-xs text-brand-gray font-body normal-case tracking-normal shadow-xl">' + escapeHtml(standard) + '</span>';
+            html += '</span>';
+        }
         html += '</h3>';
 
         if (sorted.length === 0) {
