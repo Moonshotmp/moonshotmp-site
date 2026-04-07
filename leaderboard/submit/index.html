@@ -199,6 +199,13 @@
                                 <span class="text-brand-gray text-xs ml-1 w-6">reps</span>
                             </div>
                         </div>
+                        <div class="flex items-center justify-between py-1.5">
+                            <span class="text-brand-light text-sm">Burpees <span class="text-brand-gray text-xs">(2 min)</span></span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-burpees" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">reps</span>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -337,7 +344,8 @@
                 { id: 'score-40-yard-dash', key: '40-yard-dash' },
                 { id: 'score-pull-ups', key: 'pullups-2min' },
                 { id: 'score-push-ups', key: 'pushups-2min' },
-                { id: 'score-dips', key: 'dips-2min' }
+                { id: 'score-dips', key: 'dips-2min' },
+                { id: 'score-burpees', key: 'burpees-2min' }
             ];
 
             simpleFields.forEach(function(f) {
