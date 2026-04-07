@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Scores | Park Ridge Fitness Leaderboard</title>
+    <meta name="description" content="Enter your best lifts, times, and reps to compete on the Park Ridge Fitness Leaderboard. Takes 60 seconds.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moonshotmp.com/leaderboard/submit/">
+
+    <!-- Social Meta -->
+    <meta property="og:site_name" content="Moonshot Medical and Performance">
+    <meta property="og:title" content="Submit Your Scores | Park Ridge Fitness Leaderboard">
+    <meta property="og:description" content="Enter your best lifts, times, and reps to compete on the Park Ridge Fitness Leaderboard. Takes 60 seconds.">
+    <meta property="og:url" content="https://moonshotmp.com/leaderboard/submit/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://moonshotmp.com/images/moonshotmedical_cloud.png">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Submit Your Scores | Park Ridge Fitness Leaderboard">
+    <meta name="twitter:description" content="Enter your best lifts, times, and reps to compete on the Park Ridge Fitness Leaderboard. Takes 60 seconds.">
+    <meta name="twitter:image" content="https://moonshotmp.com/images/moonshotmedical_cloud.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Tailwind CSS + Global Styles -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Submit Your Scores — Park Ridge Fitness Leaderboard",
+        "description": "Enter your best lifts, times, and reps to compete on the Park Ridge Fitness Leaderboard. Takes 60 seconds.",
+        "url": "https://moonshotmp.com/leaderboard/submit/",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Moonshot Medical and Performance",
+            "url": "https://moonshotmp.com",
+            "logo": "https://moonshotmp.com/images/moonshotmptan.png"
+        }
+    }
+    </script>
+
+    <style>
+        /* Step transitions */
+        .step { transition: opacity 0.35s ease, transform 0.35s ease; }
+        .step-hidden { opacity: 0; transform: translateY(12px); pointer-events: none; position: absolute; width: 100%; }
+        .step-visible { opacity: 1; transform: translateY(0); pointer-events: auto; position: relative; }
+
+        /* Gender toggle */
+        .gender-pill { cursor: pointer; transition: all 0.2s ease; }
+        .gender-pill.active { background-color: var(--brand-gray); color: var(--brand-dark); }
+        .gender-pill:not(.active) { background-color: transparent; color: var(--brand-gray); }
+
+        /* Inputs — remove spinner arrows */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; padding: 1rem 1.5rem; border-radius: 0.375rem; font-size: 0.875rem; transform: translateY(1rem); opacity: 0; transition: all 0.3s ease; pointer-events: none; }
+        .toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .toast.success { background: #166534; color: white; }
+        .toast.error { background: #991b1b; color: white; }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <!-- Header (auto-injected) -->
+    <script src="/shared/header.js" defer></script>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-grow pt-20">
+
+        <div class="max-w-2xl mx-auto px-4 py-10">
+
+            <!-- Step Indicator -->
+            <div class="flex items-center justify-center gap-2 mb-8">
+                <div id="dot-1" class="w-2.5 h-2.5 rounded-full bg-brand-light transition-colors duration-300"></div>
+                <div id="dot-2" class="w-2.5 h-2.5 rounded-full bg-white/30 transition-colors duration-300"></div>
+                <div id="dot-3" class="w-2.5 h-2.5 rounded-full bg-white/30 transition-colors duration-300"></div>
+            </div>
+
+            <!-- Steps container (relative for absolute positioning of hidden steps) -->
+            <div class="relative">
+
+                <!-- ========== STEP 1: ENTER YOUR SCORES ========== -->
+                <div id="step-1" class="step step-visible">
+                    <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-6 text-center">Enter Your Scores</h1>
+                    <p class="text-brand-gray text-sm text-center mb-8">Fill in whatever you have. Leave the rest blank.</p>
+
+                    <!-- STRENGTH -->
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-4">
+                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">STRENGTH <span class="text-xs font-body normal-case tracking-normal">(1RM in lbs)</span></h2>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Back Squat</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-back-squat" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">lbs</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Deadlift</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-deadlift" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">lbs</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Bench Press</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-bench-press" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">lbs</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Clean</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-clean" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">lbs</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5">
+                            <span class="text-brand-light text-sm">Shoulder to Overhead</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-shoulder-to-overhead" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">lbs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARDIO -->
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-4">
+                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">CARDIO <span class="text-xs font-body normal-case tracking-normal">(time)</span></h2>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Mile Run</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-mile-run-min" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-14 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="min">
+                                <span class="text-brand-gray text-xs mx-0.5">:</span>
+                                <input type="number" id="score-mile-run-sec" min="0" max="59" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-14 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="sec">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">400m Run</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-400m-run-min" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-14 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="min">
+                                <span class="text-brand-gray text-xs mx-0.5">:</span>
+                                <input type="number" id="score-400m-run-sec" min="0" max="59" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-14 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="sec">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">40-Yard Dash</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-40-yard-dash" step="0.01" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">sec</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5">
+                            <span class="text-brand-light text-sm">2,000m Row</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-2k-row-min" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-14 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="min">
+                                <span class="text-brand-gray text-xs mx-0.5">:</span>
+                                <input type="number" id="score-2k-row-sec" min="0" max="59" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-14 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="sec">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CALISTHENICS -->
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-4">
+                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">CALISTHENICS <span class="text-xs font-body normal-case tracking-normal">(reps in 2 min)</span></h2>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Pull-ups</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-pull-ups" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">reps</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5">
+                            <span class="text-brand-light text-sm">Push-ups</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-push-ups" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">reps</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BODY COMPOSITION -->
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-6">
+                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">BODY COMPOSITION</h2>
+                        <div class="flex items-center justify-between py-1.5">
+                            <span class="text-brand-light text-sm">Body Fat %</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-body-fat" step="0.1" min="0" max="60" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Next Button -->
+                    <button id="btn-next" class="btn-primary w-full rounded text-center text-lg tracking-wider">Next</button>
+                    <p id="step1-error" class="text-red-400 text-xs text-center mt-2 hidden">Enter at least one score to continue.</p>
+                </div>
+
+                <!-- ========== STEP 2: WHO ARE YOU? ========== -->
+                <div id="step-2" class="step step-hidden">
+                    <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-6 text-center">Who Are You?</h1>
+
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-6 space-y-4">
+                        <!-- Name -->
+                        <div>
+                            <label for="input-name" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Full Name</label>
+                            <input type="text" id="input-name" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Jane Smith">
+                        </div>
+                        <!-- Email -->
+                        <div>
+                            <label for="input-email" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Email</label>
+                            <input type="email" id="input-email" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="jane@example.com">
+                            <p class="text-brand-gray/60 text-xs mt-1">We'll send you a magic link to manage your scores. No password needed.</p>
+                        </div>
+                        <!-- Gender -->
+                        <div>
+                            <label class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Gender</label>
+                            <div class="flex gap-2">
+                                <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="M">Male</button>
+                                <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="F">Female</button>
+                            </div>
+                        </div>
+                        <!-- Age -->
+                        <div>
+                            <label for="input-age" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Age</label>
+                            <input type="number" id="input-age" min="13" max="120" required class="w-24 bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="30">
+                        </div>
+                    </div>
+
+                    <p id="step2-error" class="text-red-400 text-xs text-center mb-2 hidden"></p>
+                    <button id="btn-submit" class="btn-primary w-full rounded text-center text-lg tracking-wider">Submit</button>
+                    <button id="btn-back" class="w-full text-center text-brand-gray text-sm mt-3 hover:text-brand-light transition-colors cursor-pointer bg-transparent border-0">Back</button>
+                </div>
+
+                <!-- ========== STEP 3: YOU'RE IN! ========== -->
+                <div id="step-3" class="step step-hidden">
+                    <div class="text-center py-8">
+                        <!-- Checkmark -->
+                        <div class="w-16 h-16 rounded-full border-2 border-green-500 flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-4">You're In!</h1>
+                        <p class="text-brand-gray text-sm mb-2">Your scores have been submitted!</p>
+                        <p class="text-brand-gray text-sm mb-2">Check your email for a magic link to manage your profile, add proof videos, and update your scores.</p>
+                        <p class="text-brand-gray text-sm mb-8">Your entries will appear on the leaderboard once reviewed.</p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <a href="/leaderboard/" class="btn-primary rounded text-center px-8">View Leaderboard</a>
+                            <a href="/leaderboard/profile/" class="btn-outline rounded text-center px-8">Add Proof Videos</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /relative steps container -->
+
+        </div><!-- /max-w-2xl -->
+
+    </main>
+
+    <!-- Footer (auto-injected) -->
+    <script src="/shared/footer.js" defer></script>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+    (function() {
+        var API_BASE = 'https://owbgtzil2l.execute-api.us-east-1.amazonaws.com';
+
+        var currentStep = 1;
+        var selectedGender = null;
+        var collectedScores = {};
+
+        /* ----- DOM refs ----- */
+        var step1 = document.getElementById('step-1');
+        var step2 = document.getElementById('step-2');
+        var step3 = document.getElementById('step-3');
+        var dots = [document.getElementById('dot-1'), document.getElementById('dot-2'), document.getElementById('dot-3')];
+        var btnNext = document.getElementById('btn-next');
+        var btnBack = document.getElementById('btn-back');
+        var btnSubmit = document.getElementById('btn-submit');
+        var step1Error = document.getElementById('step1-error');
+        var step2Error = document.getElementById('step2-error');
+
+        /* ----- Step navigation ----- */
+        function showStep(n) {
+            var steps = [step1, step2, step3];
+            steps.forEach(function(s, i) {
+                if (i === n - 1) {
+                    s.classList.remove('step-hidden');
+                    s.classList.add('step-visible');
+                } else {
+                    s.classList.remove('step-visible');
+                    s.classList.add('step-hidden');
+                }
+            });
+            dots.forEach(function(d, i) {
+                d.className = 'w-2.5 h-2.5 rounded-full transition-colors duration-300 ' + (i < n ? 'bg-brand-light' : 'bg-white/30');
+            });
+            currentStep = n;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ----- Time input helper: convert min + sec fields to total seconds ----- */
+        function getTimeScore(minId, secId) {
+            var minEl = document.getElementById(minId);
+            var secEl = document.getElementById(secId);
+            var min = minEl ? parseInt(minEl.value) : NaN;
+            var sec = secEl ? parseInt(secEl.value) : NaN;
+            if (isNaN(min) && isNaN(sec)) return null;
+            return ((isNaN(min) ? 0 : min) * 60) + (isNaN(sec) ? 0 : sec);
+        }
+
+        /* ----- Collect scores from Step 1 ----- */
+        function collectScores() {
+            var scores = {};
+
+            // Strength (simple number fields)
+            var simpleFields = [
+                { id: 'score-back-squat', key: 'back-squat' },
+                { id: 'score-deadlift', key: 'deadlift' },
+                { id: 'score-bench-press', key: 'bench-press' },
+                { id: 'score-clean', key: 'clean' },
+                { id: 'score-shoulder-to-overhead', key: 'shoulder-to-overhead' },
+                { id: 'score-40-yard-dash', key: '40-yard-dash' },
+                { id: 'score-pull-ups', key: 'pull-ups' },
+                { id: 'score-push-ups', key: 'push-ups' },
+                { id: 'score-body-fat', key: 'body-fat' }
+            ];
+
+            simpleFields.forEach(function(f) {
+                var el = document.getElementById(f.id);
+                var val = el ? parseFloat(el.value) : NaN;
+                if (!isNaN(val) && val > 0) {
+                    scores[f.key] = val;
+                }
+            });
+
+            // Time events (min:sec → total seconds)
+            var timeFields = [
+                { minId: 'score-mile-run-min', secId: 'score-mile-run-sec', key: 'mile-run' },
+                { minId: 'score-400m-run-min', secId: 'score-400m-run-sec', key: '400m-run' },
+                { minId: 'score-2k-row-min', secId: 'score-2k-row-sec', key: '2k-row' }
+            ];
+
+            timeFields.forEach(function(t) {
+                var val = getTimeScore(t.minId, t.secId);
+                if (val !== null && val > 0) {
+                    scores[t.key] = val;
+                }
+            });
+
+            return scores;
+        }
+
+        /* ----- Step 1 → Step 2 ----- */
+        btnNext.addEventListener('click', function() {
+            collectedScores = collectScores();
+            if (Object.keys(collectedScores).length === 0) {
+                step1Error.classList.remove('hidden');
+                return;
+            }
+            step1Error.classList.add('hidden');
+            showStep(2);
+        });
+
+        /* ----- Step 2 → Step 1 (back) ----- */
+        btnBack.addEventListener('click', function() {
+            step2Error.classList.add('hidden');
+            showStep(1);
+        });
+
+        /* ----- Gender toggle ----- */
+        var genderBtns = document.querySelectorAll('.gender-pill');
+        genderBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                genderBtns.forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                selectedGender = btn.getAttribute('data-gender');
+            });
+        });
+
+        /* ----- Step 2 → Submit ----- */
+        btnSubmit.addEventListener('click', function() {
+            var name = document.getElementById('input-name').value.trim();
+            var email = document.getElementById('input-email').value.trim();
+            var age = parseInt(document.getElementById('input-age').value);
+
+            // Validate
+            if (!name) { showStep2Error('Name is required.'); return; }
+            if (!email || email.indexOf('@') === -1) { showStep2Error('Valid email is required.'); return; }
+            if (!selectedGender) { showStep2Error('Select your gender.'); return; }
+            if (isNaN(age) || age < 13 || age > 120) { showStep2Error('Enter a valid age.'); return; }
+
+            step2Error.classList.add('hidden');
+
+            // Loading state
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Submitting...';
+
+            var payload = {
+                name: name,
+                email: email,
+                gender: selectedGender,
+                age: age,
+                scores: collectedScores
+            };
+
+            fetch(API_BASE + '/api/profiles', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res) {
+                if (!res.ok) {
+                    return res.json().then(function(data) {
+                        throw new Error(data.error || 'Submission failed');
+                    });
+                }
+                return res.json();
+            })
+            .then(function() {
+                showStep(3);
+            })
+            .catch(function(err) {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Submit';
+                showToast(err.message || 'Something went wrong. Try again.', true);
+            });
+        });
+
+        function showStep2Error(msg) {
+            step2Error.textContent = msg;
+            step2Error.classList.remove('hidden');
+        }
+
+        function showToast(message, isError) {
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + (isError ? 'error' : 'success') + ' show';
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(function() {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        /* ----- Allow Enter key to advance steps ----- */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                if (currentStep === 1) { btnNext.click(); }
+                else if (currentStep === 2) { btnSubmit.click(); }
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

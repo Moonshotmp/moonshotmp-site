@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Park Ridge Fitness Leaderboard</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Tailwind CSS + Global Styles -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <style>
+        /* Status badges */
+        .badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Oswald', sans-serif; }
+        .badge-pending { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .badge-verified { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .badge-rejected { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-info { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge-neutral { background: rgba(178, 191, 190, 0.15); color: #B2BFBE; border: 1px solid rgba(178, 191, 190, 0.3); }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; padding: 1rem 1.5rem; border-radius: 0.375rem; font-size: 0.875rem; transform: translateY(1rem); opacity: 0; transition: all 0.3s ease; pointer-events: none; }
+        .toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .toast.success { background: #166534; color: white; }
+        .toast.error { background: #991b1b; color: white; }
+
+        /* Spinner */
+        .spinner { border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--brand-gray); border-radius: 50%; width: 2rem; height: 2rem; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Proof upload progress */
+        .proof-progress { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-top: 0.5rem; }
+        .proof-progress-bar { height: 100%; background: white; border-radius: 2px; transition: width 0.2s ease; width: 0%; }
+
+        /* Category header colors */
+        .pillar-strength { border-left: 3px solid #ef4444; }
+        .pillar-speed { border-left: 3px solid #3b82f6; }
+        .pillar-bodyweight { border-left: 3px solid #eab308; }
+        .pillar-diagnostics { border-left: 3px solid #22c55e; }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <!-- Header (auto-injected) -->
+    <script src="/shared/header.js" defer></script>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-grow pt-20">
+
+        <!-- Page Content — swapped between login / loading / dashboard -->
+        <section class="py-12 md:py-16 bg-brand-dark bg-texture-concrete min-h-[60vh]">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Loading state -->
+                <div id="state-loading" class="flex flex-col items-center justify-center py-20">
+                    <div class="spinner mb-4"></div>
+                    <p class="text-brand-gray text-sm">Loading your profile...</p>
+                </div>
+
+                <!-- Login state -->
+                <div id="state-login" class="hidden">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl md:text-5xl font-bold text-brand-light mb-3">MANAGE YOUR SCORES</h1>
+                        <p class="text-brand-gray font-light">Sign in to view your entries, add proof videos, and update your profile.</p>
+                    </div>
+                    <div class="max-w-md mx-auto">
+                        <form id="login-form" class="space-y-4">
+                            <div>
+                                <label for="login-email" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Email Address</label>
+                                <input type="email" id="login-email" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="you@email.com">
+                            </div>
+                            <button type="submit" id="login-btn" class="w-full bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition">Send Magic Link</button>
+                        </form>
+                        <div id="login-success" class="hidden mt-4 bg-green-900/30 border border-green-500/30 rounded p-4 text-center">
+                            <p class="text-green-400 text-sm font-semibold mb-1">Check your email!</p>
+                            <p class="text-brand-gray text-xs">We sent a login link. It expires in 15 minutes.</p>
+                        </div>
+                        <div id="login-error" class="hidden mt-4 bg-red-900/30 border border-red-500/30 rounded p-4 text-center">
+                            <p class="text-red-400 text-sm" id="login-error-msg">Something went wrong.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard state -->
+                <div id="state-dashboard" class="hidden">
+
+                    <!-- Profile Header -->
+                    <div id="profile-header" class="mb-8">
+                        <!-- Rendered by JS -->
+                    </div>
+
+                    <!-- Profile Edit (inline, hidden by default) -->
+                    <div id="profile-edit" class="hidden mb-8">
+                        <div class="bg-brand-slate border border-white/10 rounded-lg p-6">
+                            <h2 class="text-xl font-bold text-brand-light mb-4">EDIT PROFILE</h2>
+                            <form id="edit-form" class="space-y-4">
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Name</label>
+                                        <input type="text" id="edit-name" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition">
+                                    </div>
+                                    <div>
+                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Age</label>
+                                        <input type="number" id="edit-age" min="5" max="100" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition">
+                                    </div>
+                                </div>
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Bodyweight (lbs)</label>
+                                        <input type="number" id="edit-bodyweight" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition">
+                                    </div>
+                                    <div>
+                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Gender</label>
+                                        <select id="edit-gender" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Where Do You Train?</label>
+                                        <input type="text" id="edit-gym-name" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="Gym name">
+                                    </div>
+                                    <div>
+                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Gym Website</label>
+                                        <input type="url" id="edit-gym-url" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="https://...">
+                                    </div>
+                                </div>
+                                <div class="bg-brand-dark border border-white/10 rounded-lg p-4">
+                                    <div class="mb-3">
+                                        <span class="text-brand-light text-sm font-semibold">Park Ridge Resident?</span>
+                                        <p class="text-brand-gray/60 text-xs mt-0.5">Upload a photo of your ID (address visible, can blur name/DOB) to earn the Park Ridge badge.</p>
+                                    </div>
+                                    <label class="flex items-center gap-3 cursor-pointer bg-brand-dark border border-white/20 rounded px-4 py-3 hover:border-brand-gray transition">
+                                        <svg class="w-5 h-5 text-brand-gray flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        <span id="edit-id-filename" class="text-brand-gray text-sm">Choose file...</span>
+                                        <input type="file" id="edit-park-ridge-id" accept="image/*" class="hidden">
+                                    </label>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button type="submit" id="edit-save-btn" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-6 py-2.5 rounded hover:bg-brand-light transition text-sm">Save Changes</button>
+                                    <button type="button" id="edit-cancel-btn" class="btn-outline text-sm px-6 py-2.5">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- My Entries -->
+                    <div id="entries-section" class="mb-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-light mb-4">MY ENTRIES</h2>
+                        <div id="entries-list">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Update Scores -->
+                    <div class="text-center pt-4 border-t border-white/10">
+                        <a href="/leaderboard/#submit" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition inline-block text-sm">Submit New Score</a>
+                        <p class="text-brand-gray/50 text-xs mt-3">Submit a new entry for any event on the main leaderboard page.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (auto-injected) -->
+    <script src="/shared/footer.js" defer></script>
+
+    <!-- Toast container -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Proof upload modal -->
+    <div id="proof-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/70" id="proof-modal-backdrop"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div class="bg-brand-slate border border-white/10 rounded-lg p-6 w-full max-w-md relative">
+                <button type="button" id="proof-modal-close" class="absolute top-4 right-4 text-brand-gray hover:text-brand-light transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                <h3 class="text-lg font-bold text-brand-light mb-4" id="proof-modal-title">ADD PROOF</h3>
+
+                <!-- Proof tabs -->
+                <div class="flex gap-2 mb-4">
+                    <button type="button" id="modal-proof-tab-upload" class="modal-proof-tab bg-white text-brand-dark rounded-full px-4 py-1 text-xs font-heading uppercase tracking-wider font-semibold transition">Upload Video</button>
+                    <button type="button" id="modal-proof-tab-link" class="modal-proof-tab text-brand-gray rounded-full px-4 py-1 text-xs font-heading uppercase tracking-wider hover:text-brand-light transition">Paste Link</button>
+                </div>
+
+                <!-- Upload panel -->
+                <div id="modal-proof-upload-panel">
+                    <label class="flex items-center gap-3 cursor-pointer bg-brand-dark border border-white/20 border-dashed rounded px-4 py-4 hover:border-brand-gray transition">
+                        <svg class="w-6 h-6 text-brand-gray flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                        <div>
+                            <span id="modal-proof-filename" class="text-brand-gray text-sm">Choose video file (max 100MB)</span>
+                            <div id="modal-proof-progress" class="proof-progress hidden">
+                                <div id="modal-proof-progress-bar" class="proof-progress-bar"></div>
+                            </div>
+                        </div>
+                        <input type="file" id="modal-proof-file" accept="video/*" class="hidden">
+                    </label>
+                </div>
+
+                <!-- Link panel -->
+                <div id="modal-proof-link-panel" class="hidden">
+                    <input type="url" id="modal-proof-url" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="YouTube, Instagram, or TikTok link">
+                </div>
+
+                <button type="button" id="proof-modal-submit" class="w-full mt-4 bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-6 py-2.5 rounded hover:bg-brand-light transition text-sm">Save Proof</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    /* =========================================
+       Profile / Dashboard
+       ========================================= */
+
+    const API_BASE = 'https://owbgtzil2l.execute-api.us-east-1.amazonaws.com';
+    const SESSION_KEY = 'leaderboard_session';
+
+    /* ----- State ----- */
+    var currentProfile = null;
+    var currentEntries = [];
+
+    /* ----- DOM refs ----- */
+    var stateLoading = document.getElementById('state-loading');
+    var stateLogin = document.getElementById('state-login');
+    var stateDashboard = document.getElementById('state-dashboard');
+
+    /* =========================================
+       Utility
+       ========================================= */
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function showToast(message, isError) {
+        var toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = 'toast ' + (isError ? 'error' : 'success') + ' show';
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(function() {
+            toast.classList.remove('show');
+        }, 4000);
+    }
+
+    function showState(state) {
+        stateLoading.classList.add('hidden');
+        stateLogin.classList.add('hidden');
+        stateDashboard.classList.add('hidden');
+        if (state === 'loading') stateLoading.classList.remove('hidden');
+        else if (state === 'login') stateLogin.classList.remove('hidden');
+        else if (state === 'dashboard') stateDashboard.classList.remove('hidden');
+    }
+
+    function apiHeaders() {
+        var token = localStorage.getItem(SESSION_KEY);
+        var h = { 'Content-Type': 'application/json' };
+        if (token) h['Authorization'] = 'Bearer ' + token;
+        return h;
+    }
+
+    /* =========================================
+       Authentication
+       ========================================= */
+
+    async function checkAuth() {
+        showState('loading');
+
+        // 1. Check for magic link token in URL
+        var params = new URLSearchParams(window.location.search);
+        var urlToken = params.get('token');
+
+        if (urlToken) {
+            try {
+                var res = await fetch(API_BASE + '/api/profiles/verify?token=' + encodeURIComponent(urlToken));
+                if (res.ok) {
+                    var data = await res.json();
+                    localStorage.setItem(SESSION_KEY, data.sessionToken);
+                    // Clean URL
+                    window.history.replaceState({}, '', window.location.pathname);
+                    return await loadProfile();
+                } else {
+                    // Token invalid — show login with error
+                    showState('login');
+                    var loginError = document.getElementById('login-error');
+                    var loginErrorMsg = document.getElementById('login-error-msg');
+                    loginError.classList.remove('hidden');
+                    loginErrorMsg.textContent = 'Invalid or expired link. Request a new one below.';
+                    return;
+                }
+            } catch (err) {
+                showState('login');
+                return;
+            }
+        }
+
+        // 2. Check localStorage
+        var savedToken = localStorage.getItem(SESSION_KEY);
+        if (savedToken) {
+            return await loadProfile();
+        }
+
+        // 3. No auth — show login
+        showState('login');
+    }
+
+    async function loadProfile() {
+        try {
+            var res = await fetch(API_BASE + '/api/profiles/me', {
+                headers: apiHeaders()
+            });
+
+            if (res.status === 401) {
+                localStorage.removeItem(SESSION_KEY);
+                showState('login');
+                return;
+            }
+
+            if (!res.ok) throw new Error('Failed to load profile');
+
+            var data = await res.json();
+            currentProfile = data.profile;
+            currentEntries = data.entries || [];
+            renderDashboard(currentProfile, currentEntries);
+            showState('dashboard');
+        } catch (err) {
+            showState('login');
+            showToast('Failed to load profile. Please try again.', true);
+        }
+    }
+
+    /* =========================================
+       Magic Link Login
+       ========================================= */
+
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var email = document.getElementById('login-email').value.trim();
+        var btn = document.getElementById('login-btn');
+        var successEl = document.getElementById('login-success');
+        var errorEl = document.getElementById('login-error');
+
+        if (!email) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        successEl.classList.add('hidden');
+        errorEl.classList.add('hidden');
+
+        try {
+            var res = await fetch(API_BASE + '/api/profiles/magic-link', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email })
+            });
+
+            if (!res.ok) {
+                var errData = await res.json();
+                throw new Error(errData.error || 'Failed to send link');
+            }
+
+            successEl.classList.remove('hidden');
+        } catch (err) {
+            errorEl.classList.remove('hidden');
+            document.getElementById('login-error-msg').textContent = err.message;
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Send Magic Link';
+        }
+    });
+
+    /* =========================================
+       Render Dashboard
+       ========================================= */
+
+    function renderDashboard(profile, entries) {
+        renderProfileHeader(profile);
+        renderEntries(entries);
+    }
+
+    function renderProfileHeader(profile) {
+        var container = document.getElementById('profile-header');
+        var html = '';
+
+        html += '<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">';
+
+        // Left: name + details
+        html += '<div>';
+        html += '<h1 class="text-3xl md:text-4xl font-bold text-brand-light mb-2">' + escapeHtml(profile.name) + '</h1>';
+        html += '<p class="text-brand-gray text-sm mb-3">' + escapeHtml(profile.email) + '</p>';
+
+        // Badges
+        html += '<div class="flex flex-wrap gap-2 mb-3">';
+        if (profile.age) html += '<span class="badge badge-neutral">' + profile.age + ' yrs</span>';
+        if (profile.gender) html += '<span class="badge badge-neutral">' + (profile.gender === 'male' ? 'Male' : 'Female') + '</span>';
+        if (profile.bodyweight) html += '<span class="badge badge-neutral">' + profile.bodyweight + ' lbs</span>';
+        if (profile.parkRidgeVerified) html += '<span class="badge badge-info">Park Ridge Verified</span>';
+        html += '</div>';
+
+        if (profile.gymName) {
+            html += '<p class="text-brand-gray text-sm">';
+            html += 'Trains at ';
+            if (profile.gymUrl) {
+                html += '<a href="' + escapeHtml(profile.gymUrl) + '" target="_blank" rel="noopener noreferrer" class="text-brand-light underline hover:text-white transition">' + escapeHtml(profile.gymName) + '</a>';
+            } else {
+                html += '<span class="text-brand-light">' + escapeHtml(profile.gymName) + '</span>';
+            }
+            html += '</p>';
+        }
+        html += '</div>';
+
+        // Right: actions
+        html += '<div class="flex gap-2 flex-shrink-0">';
+        html += '<button type="button" onclick="toggleEditProfile()" class="btn-outline text-xs px-4 py-2">Edit Profile</button>';
+        html += '<button type="button" onclick="logout()" class="text-brand-gray hover:text-red-400 text-xs font-heading uppercase tracking-wider transition px-3 py-2">Logout</button>';
+        html += '</div>';
+
+        html += '</div>';
+
+        container.innerHTML = html;
+    }
+
+    /* =========================================
+       Profile Editing
+       ========================================= */
+
+    function toggleEditProfile() {
+        var editSection = document.getElementById('profile-edit');
+        var isHidden = editSection.classList.contains('hidden');
+
+        if (isHidden && currentProfile) {
+            // Populate fields
+            document.getElementById('edit-name').value = currentProfile.name || '';
+            document.getElementById('edit-age').value = currentProfile.age || '';
+            document.getElementById('edit-bodyweight').value = currentProfile.bodyweight || '';
+            document.getElementById('edit-gender').value = currentProfile.gender || 'male';
+            document.getElementById('edit-gym-name').value = currentProfile.gymName || '';
+            document.getElementById('edit-gym-url').value = currentProfile.gymUrl || '';
+            editSection.classList.remove('hidden');
+            editSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            editSection.classList.add('hidden');
+        }
+    }
+
+    document.getElementById('edit-cancel-btn').addEventListener('click', function() {
+        document.getElementById('profile-edit').classList.add('hidden');
+    });
+
+    // Park Ridge ID file handler
+    var editIdInput = document.getElementById('edit-park-ridge-id');
+    var editIdLabel = document.getElementById('edit-id-filename');
+    editIdInput.addEventListener('change', function() {
+        if (editIdInput.files.length > 0) {
+            editIdLabel.textContent = editIdInput.files[0].name;
+            editIdLabel.classList.remove('text-brand-gray');
+            editIdLabel.classList.add('text-brand-light');
+        } else {
+            editIdLabel.textContent = 'Choose file...';
+            editIdLabel.classList.remove('text-brand-light');
+            editIdLabel.classList.add('text-brand-gray');
+        }
+    });
+
+    document.getElementById('edit-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('edit-save-btn');
+        btn.disabled = true;
+        btn.textContent = 'Saving...';
+
+        try {
+            var payload = {
+                name: document.getElementById('edit-name').value.trim(),
+                age: document.getElementById('edit-age').value ? Number(document.getElementById('edit-age').value) : null,
+                bodyweight: document.getElementById('edit-bodyweight').value ? Number(document.getElementById('edit-bodyweight').value) : null,
+                gender: document.getElementById('edit-gender').value,
+                gymName: document.getElementById('edit-gym-name').value.trim() || null,
+                gymUrl: document.getElementById('edit-gym-url').value.trim() || null
+            };
+
+            // Upload Park Ridge ID if selected
+            if (editIdInput.files.length > 0) {
+                var idUrl = await uploadFile(editIdInput.files[0], 'image');
+                payload.parkRidgeIdUrl = idUrl;
+            }
+
+            var res = await fetch(API_BASE + '/api/profiles/me', {
+                method: 'PUT',
+                headers: apiHeaders(),
+                body: JSON.stringify(payload)
+            });
+
+            if (res.status === 401) {
+                localStorage.removeItem(SESSION_KEY);
+                showState('login');
+                return;
+            }
+
+            if (!res.ok) {
+                var errData = await res.json();
+                throw new Error(errData.error || 'Update failed');
+            }
+
+            var data = await res.json();
+            currentProfile = data.profile || Object.assign(currentProfile, payload);
+            renderProfileHeader(currentProfile);
+            document.getElementById('profile-edit').classList.add('hidden');
+            showToast('Profile updated.');
+        } catch (err) {
+            showToast(err.message || 'Failed to update profile.', true);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Save Changes';
+        }
+    });
+
+    /* =========================================
+       Render Entries
+       ========================================= */
+
+    var PILLAR_LABELS = {
+        strength: 'Strength',
+        speed: 'Speed & Endurance',
+        bodyweight: 'Bodyweight',
+        diagnostics: 'Body Composition'
+    };
+
+    var PILLAR_ORDER = ['strength', 'speed', 'bodyweight', 'diagnostics'];
+
+    function renderEntries(entries) {
+        var container = document.getElementById('entries-list');
+
+        if (!entries || entries.length === 0) {
+            container.innerHTML = '<div class="bg-brand-slate border border-white/10 rounded-lg p-6 text-center">' +
+                '<p class="text-brand-gray mb-3">You haven\'t submitted any entries yet.</p>' +
+                '<a href="/leaderboard/#submit" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-6 py-2.5 rounded hover:bg-brand-light transition inline-block text-sm">Submit Your First Record</a>' +
+                '</div>';
+            return;
+        }
+
+        // Group entries by category
+        var grouped = {};
+        entries.forEach(function(entry) {
+            var cat = entry.category || 'other';
+            if (!grouped[cat]) grouped[cat] = [];
+            grouped[cat].push(entry);
+        });
+
+        var html = '';
+
+        PILLAR_ORDER.forEach(function(cat) {
+            if (!grouped[cat] || grouped[cat].length === 0) return;
+
+            html += '<div class="mb-6">';
+            html += '<h3 class="text-sm font-heading uppercase tracking-wider text-brand-gray mb-3 pl-3 pillar-' + cat + '">' + escapeHtml(PILLAR_LABELS[cat] || cat) + '</h3>';
+            html += '<div class="space-y-3">';
+
+            grouped[cat].forEach(function(entry) {
+                html += renderEntryCard(entry);
+            });
+
+            html += '</div></div>';
+        });
+
+        container.innerHTML = html;
+    }
+
+    function renderEntryCard(entry) {
+        var statusClass = 'badge-pending';
+        var statusLabel = 'Pending';
+        if (entry.status === 'verified') { statusClass = 'badge-verified'; statusLabel = 'Verified'; }
+        else if (entry.status === 'rejected') { statusClass = 'badge-rejected'; statusLabel = 'Rejected'; }
+
+        var html = '<div class="bg-brand-slate border border-white/10 rounded-lg p-4">';
+
+        // Top row: event + status
+        html += '<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">';
+        html += '<div>';
+        html += '<span class="text-brand-light font-semibold">' + escapeHtml(entry.event) + '</span>';
+        html += ' <span class="badge ' + statusClass + ' ml-2">' + statusLabel + '</span>';
+        html += '</div>';
+        html += '<span class="text-brand-light font-heading font-bold text-lg">' + escapeHtml(entry.result) + '</span>';
+        html += '</div>';
+
+        // Details row
+        html += '<div class="flex flex-wrap items-center gap-3 text-xs text-brand-gray">';
+        if (entry.bodyweight) html += '<span>' + entry.bodyweight + ' lbs BW</span>';
+        if (entry.source) html += '<span>' + escapeHtml(entry.source) + '</span>';
+        if (entry.createdAt) {
+            var d = new Date(entry.createdAt);
+            html += '<span>' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '</span>';
+        }
+        html += '</div>';
+
+        // Proof row
+        html += '<div class="mt-3 pt-3 border-t border-white/5 flex flex-wrap items-center gap-2">';
+
+        if (entry.proofUrl && entry.proofUrl !== '#') {
+            // Has proof
+            html += '<a href="' + escapeHtml(entry.proofUrl) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-brand-light hover:text-white text-xs font-heading uppercase tracking-wider border border-white/20 rounded px-2.5 py-1 hover:bg-white/10 transition">';
+            html += '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+            html += 'View Proof';
+            html += '</a>';
+            html += '<button type="button" onclick="openProofModal(\'' + escapeHtml(entry.id) + '\', true)" class="text-brand-gray hover:text-brand-light text-xs font-heading uppercase tracking-wider transition px-2 py-1">Update Proof</button>';
+        } else {
+            // No proof
+            html += '<button type="button" onclick="openProofModal(\'' + escapeHtml(entry.id) + '\', false)" class="inline-flex items-center gap-1.5 bg-white text-brand-dark text-xs font-heading uppercase tracking-wider font-semibold rounded px-3 py-1.5 hover:bg-brand-light transition">';
+            html += '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>';
+            html += 'Add Proof';
+            html += '</button>';
+        }
+
+        // Share button (verified entries only)
+        if (entry.status === 'verified') {
+            html += '<button type="button" onclick="shareEntry(\'' + escapeHtml(entry.id) + '\')" class="text-brand-gray hover:text-brand-light text-xs font-heading uppercase tracking-wider transition px-2 py-1 ml-auto">';
+            html += '<svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>';
+            html += 'Share';
+            html += '</button>';
+        }
+
+        html += '</div>';
+        html += '</div>';
+
+        return html;
+    }
+
+    /* =========================================
+       Proof Upload Modal
+       ========================================= */
+
+    var proofModalEntryId = null;
+    var modalProofMode = 'upload';
+
+    function openProofModal(entryId, isUpdate) {
+        proofModalEntryId = entryId;
+        var modal = document.getElementById('proof-modal');
+        var title = document.getElementById('proof-modal-title');
+        title.textContent = isUpdate ? 'UPDATE PROOF' : 'ADD PROOF';
+
+        // Reset state
+        document.getElementById('modal-proof-file').value = '';
+        document.getElementById('modal-proof-filename').textContent = 'Choose video file (max 100MB)';
+        document.getElementById('modal-proof-filename').classList.remove('text-brand-light');
+        document.getElementById('modal-proof-filename').classList.add('text-brand-gray');
+        document.getElementById('modal-proof-url').value = '';
+        document.getElementById('modal-proof-progress').classList.add('hidden');
+        document.getElementById('modal-proof-progress-bar').style.width = '0%';
+        switchModalProofTab('upload');
+
+        modal.classList.remove('hidden');
+    }
+
+    function closeProofModal() {
+        document.getElementById('proof-modal').classList.add('hidden');
+        proofModalEntryId = null;
+    }
+
+    document.getElementById('proof-modal-close').addEventListener('click', closeProofModal);
+    document.getElementById('proof-modal-backdrop').addEventListener('click', closeProofModal);
+
+    function switchModalProofTab(mode) {
+        modalProofMode = mode;
+        var uploadPanel = document.getElementById('modal-proof-upload-panel');
+        var linkPanel = document.getElementById('modal-proof-link-panel');
+        var tabUpload = document.getElementById('modal-proof-tab-upload');
+        var tabLink = document.getElementById('modal-proof-tab-link');
+
+        if (mode === 'upload') {
+            uploadPanel.classList.remove('hidden');
+            linkPanel.classList.add('hidden');
+            tabUpload.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
+            tabUpload.classList.remove('text-brand-gray');
+            tabLink.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
+            tabLink.classList.add('text-brand-gray');
+        } else {
+            linkPanel.classList.remove('hidden');
+            uploadPanel.classList.add('hidden');
+            tabLink.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
+            tabLink.classList.remove('text-brand-gray');
+            tabUpload.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
+            tabUpload.classList.add('text-brand-gray');
+        }
+    }
+
+    document.getElementById('modal-proof-tab-upload').addEventListener('click', function() { switchModalProofTab('upload'); });
+    document.getElementById('modal-proof-tab-link').addEventListener('click', function() { switchModalProofTab('link'); });
+
+    // File input handler
+    var modalFileInput = document.getElementById('modal-proof-file');
+    var modalFileLabel = document.getElementById('modal-proof-filename');
+
+    modalFileInput.addEventListener('change', function() {
+        if (modalFileInput.files.length > 0) {
+            var file = modalFileInput.files[0];
+            if (file.size > 100 * 1024 * 1024) {
+                showToast('Video must be under 100MB.', true);
+                modalFileInput.value = '';
+                return;
+            }
+            var sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+            modalFileLabel.textContent = file.name + ' (' + sizeMB + ' MB)';
+            modalFileLabel.classList.remove('text-brand-gray');
+            modalFileLabel.classList.add('text-brand-light');
+        } else {
+            modalFileLabel.textContent = 'Choose video file (max 100MB)';
+            modalFileLabel.classList.remove('text-brand-light');
+            modalFileLabel.classList.add('text-brand-gray');
+        }
+    });
+
+    // Submit proof
+    document.getElementById('proof-modal-submit').addEventListener('click', async function() {
+        if (!proofModalEntryId) return;
+        var btn = document.getElementById('proof-modal-submit');
+        btn.disabled = true;
+
+        try {
+            var proofUrl = '';
+
+            if (modalProofMode === 'upload') {
+                if (!modalFileInput.files || modalFileInput.files.length === 0) {
+                    showToast('Please select a video file.', true);
+                    btn.disabled = false;
+                    return;
+                }
+                btn.textContent = 'Uploading...';
+                proofUrl = await uploadFile(modalFileInput.files[0], 'video');
+            } else {
+                proofUrl = document.getElementById('modal-proof-url').value.trim();
+                if (!proofUrl) {
+                    showToast('Please paste a video link.', true);
+                    btn.disabled = false;
+                    return;
+                }
+            }
+
+            btn.textContent = 'Saving...';
+
+            var res = await fetch(API_BASE + '/api/profiles/me/entries/' + proofModalEntryId + '/proof', {
+                method: 'PUT',
+                headers: apiHeaders(),
+                body: JSON.stringify({ proofUrl: proofUrl })
+            });
+
+            if (res.status === 401) {
+                localStorage.removeItem(SESSION_KEY);
+                showState('login');
+                return;
+            }
+
+            if (!res.ok) {
+                var errData = await res.json();
+                throw new Error(errData.error || 'Failed to save proof');
+            }
+
+            // Update local state
+            currentEntries.forEach(function(e) {
+                if (e.id === proofModalEntryId) e.proofUrl = proofUrl;
+            });
+            renderEntries(currentEntries);
+            closeProofModal();
+            showToast('Proof saved.');
+        } catch (err) {
+            showToast(err.message || 'Failed to save proof.', true);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Save Proof';
+        }
+    });
+
+    /* =========================================
+       File Upload (S3 presigned)
+       ========================================= */
+
+    async function uploadFile(file, type) {
+        var progressEl = document.getElementById('modal-proof-progress');
+        var progressBar = document.getElementById('modal-proof-progress-bar');
+
+        // 1. Get presigned URL
+        var presignRes = await fetch(API_BASE + '/api/upload/presign', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                fileName: file.name,
+                fileType: file.type,
+                fileSize: file.size
+            })
+        });
+
+        if (!presignRes.ok) {
+            var err = await presignRes.json();
+            throw new Error(err.error || 'Failed to get upload URL');
+        }
+
+        var data = await presignRes.json();
+        var presignedUrl = data.presignedUrl;
+        var publicUrl = data.publicUrl;
+
+        // 2. Upload directly to S3 with progress
+        if (type === 'video') {
+            progressEl.classList.remove('hidden');
+        }
+
+        await new Promise(function(resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('PUT', presignedUrl);
+            xhr.setRequestHeader('Content-Type', file.type);
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    var pct = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = pct + '%';
+                }
+            });
+            xhr.addEventListener('load', function() {
+                if (xhr.status >= 200 && xhr.status < 300) resolve();
+                else reject(new Error('Upload failed: ' + xhr.status));
+            });
+            xhr.addEventListener('error', function() { reject(new Error('Upload failed')); });
+            xhr.send(file);
+        });
+
+        progressBar.style.width = '100%';
+        return publicUrl;
+    }
+
+    /* =========================================
+       Share Entry
+       ========================================= */
+
+    function shareEntry(entryId) {
+        var entry = currentEntries.find(function(e) { return e.id === entryId; });
+        if (!entry) return;
+
+        var text = 'I just posted ' + entry.result + ' on ' + entry.event + ' on the Park Ridge Fitness Leaderboard! Think you can beat it?';
+        var url = 'https://moonshotmp.com/leaderboard/';
+
+        if (navigator.share) {
+            navigator.share({ title: 'Park Ridge Fitness Leaderboard', text: text, url: url }).catch(function() {});
+        } else {
+            // Fallback: copy to clipboard
+            var fullText = text + '\n' + url;
+            navigator.clipboard.writeText(fullText).then(function() {
+                showToast('Copied to clipboard.');
+            }).catch(function() {
+                showToast('Could not copy. Share this link: ' + url, true);
+            });
+        }
+    }
+
+    /* =========================================
+       Logout
+       ========================================= */
+
+    function logout() {
+        localStorage.removeItem(SESSION_KEY);
+        currentProfile = null;
+        currentEntries = [];
+        showState('login');
+        showToast('Logged out.');
+    }
+
+    /* =========================================
+       Init
+       ========================================= */
+
+    checkAuth();
+
+    </script>
+</body>
+</html>

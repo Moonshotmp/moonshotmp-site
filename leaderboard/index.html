@@ -83,9 +83,9 @@
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-brand-light mb-4">THE PARK RIDGE FITNESS LEADERBOARD</h1>
                 <p class="text-brand-gray text-xl font-light mb-2">Who's the fittest in Park Ridge? Prove it.</p>
-                <p class="text-brand-gray text-base font-light max-w-2xl mx-auto mb-6">Submit your best lifts, fastest times, and most reps. All entries require video proof for verification. Rankings updated weekly.</p>
+                <p class="text-brand-gray text-base font-light max-w-2xl mx-auto mb-6">Submit your best lifts, fastest times, and most reps. Takes 60 seconds. Rankings updated weekly.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#submit" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition inline-block">Submit Your Record</a>
+                    <a href="/leaderboard/submit/" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition inline-block">Log Your Scores</a>
                     <a href="#leaderboard" class="btn-outline">View Rankings</a>
                 </div>
             </div>
@@ -610,7 +610,7 @@
         if (scores.length === 0) {
             html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 text-center">';
             html += '<p class="text-brand-gray">No one has qualified yet. Enter at least one event in Strength, Cardio, and Calisthenics to appear here.</p>';
-            html += '<a href="#submit" class="text-brand-light underline hover:text-white transition text-sm">Submit your first record</a>';
+            html += '<a href="/leaderboard/submit/" class="text-brand-light underline hover:text-white transition text-sm">Submit your scores</a>';
             html += '</div>';
             container.innerHTML = html;
             return;
@@ -726,7 +726,7 @@
 
         if (sorted.length === 0) {
             html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 text-center">';
-            html += '<p class="text-brand-gray">No entries yet. <a href="#submit" class="text-brand-light underline hover:text-white transition">Be the first!</a></p>';
+            html += '<p class="text-brand-gray">No entries yet. <a href="/leaderboard/submit/" class="text-brand-light underline hover:text-white transition">Be the first!</a></p>';
             html += '</div></div>';
             return html;
         }
