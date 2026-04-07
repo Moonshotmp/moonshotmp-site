@@ -45,7 +45,6 @@
         .pillar-strength { border-left: 3px solid #ef4444; }
         .pillar-speed { border-left: 3px solid #3b82f6; }
         .pillar-bodyweight { border-left: 3px solid #eab308; }
-        .pillar-diagnostics { border-left: 3px solid #22c55e; }
     </style>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
@@ -126,15 +125,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="grid sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Where Do You Train?</label>
-                                        <input type="text" id="edit-gym-name" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="Gym name">
-                                    </div>
-                                    <div>
-                                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Gym Website</label>
-                                        <input type="url" id="edit-gym-url" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="https://...">
-                                    </div>
+                                <div>
+                                    <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Where Do You Train?</label>
+                                    <input type="text" id="edit-gym-name" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="Gym name">
                                 </div>
                                 <div class="bg-brand-dark border border-white/10 rounded-lg p-4">
                                     <div class="mb-3">
@@ -416,11 +409,7 @@
         if (profile.gymName) {
             html += '<p class="text-brand-gray text-sm">';
             html += 'Trains at ';
-            if (profile.gymUrl) {
-                html += '<a href="' + escapeHtml(profile.gymUrl) + '" target="_blank" rel="noopener noreferrer" class="text-brand-light underline hover:text-white transition">' + escapeHtml(profile.gymName) + '</a>';
-            } else {
-                html += '<span class="text-brand-light">' + escapeHtml(profile.gymName) + '</span>';
-            }
+            html += '<span class="text-brand-light">' + escapeHtml(profile.gymName) + '</span>';
             html += '</p>';
         }
         html += '</div>';
@@ -451,7 +440,6 @@
             document.getElementById('edit-bodyweight').value = currentProfile.bodyweight || '';
             document.getElementById('edit-gender').value = currentProfile.gender || 'male';
             document.getElementById('edit-gym-name').value = currentProfile.gymName || '';
-            document.getElementById('edit-gym-url').value = currentProfile.gymUrl || '';
             editSection.classList.remove('hidden');
             editSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
@@ -490,8 +478,7 @@
                 age: document.getElementById('edit-age').value ? Number(document.getElementById('edit-age').value) : null,
                 bodyweight: document.getElementById('edit-bodyweight').value ? Number(document.getElementById('edit-bodyweight').value) : null,
                 gender: document.getElementById('edit-gender').value,
-                gymName: document.getElementById('edit-gym-name').value.trim() || null,
-                gymUrl: document.getElementById('edit-gym-url').value.trim() || null
+                gymName: document.getElementById('edit-gym-name').value.trim() || null
             };
 
             // Upload Park Ridge ID if selected
@@ -537,11 +524,10 @@
     var PILLAR_LABELS = {
         strength: 'Strength',
         speed: 'Speed & Endurance',
-        bodyweight: 'Bodyweight',
-        diagnostics: 'Body Composition'
+        bodyweight: 'Bodyweight'
     };
 
-    var PILLAR_ORDER = ['strength', 'speed', 'bodyweight', 'diagnostics'];
+    var PILLAR_ORDER = ['strength', 'speed', 'bodyweight'];
 
     function renderEntries(entries) {
         var container = document.getElementById('entries-list');

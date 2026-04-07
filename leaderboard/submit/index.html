@@ -176,7 +176,7 @@
                     </div>
 
                     <!-- CALISTHENICS -->
-                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-4">
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-6">
                         <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">CALISTHENICS <span class="text-xs font-body normal-case tracking-normal">(reps in 2 min)</span></h2>
                         <div class="flex items-center justify-between py-1.5 border-b border-white/5">
                             <span class="text-brand-light text-sm">Pull-ups</span>
@@ -194,17 +194,6 @@
                         </div>
                     </div>
 
-                    <!-- BODY COMPOSITION -->
-                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-6">
-                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">BODY COMPOSITION</h2>
-                        <div class="flex items-center justify-between py-1.5">
-                            <span class="text-brand-light text-sm">Body Fat %</span>
-                            <div class="flex items-center">
-                                <input type="number" id="score-body-fat" step="0.1" min="0" max="60" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
-                                <span class="text-brand-gray text-xs ml-1 w-6">%</span>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Next Button -->
                     <button id="btn-next" class="btn-primary w-full rounded text-center text-lg tracking-wider">Next</button>
@@ -340,8 +329,7 @@
                 { id: 'score-shoulder-to-overhead', key: 'shoulder-to-overhead' },
                 { id: 'score-40-yard-dash', key: '40-yard-dash' },
                 { id: 'score-pull-ups', key: 'pull-ups' },
-                { id: 'score-push-ups', key: 'push-ups' },
-                { id: 'score-body-fat', key: 'body-fat' }
+                { id: 'score-push-ups', key: 'push-ups' }
             ];
 
             simpleFields.forEach(function(f) {

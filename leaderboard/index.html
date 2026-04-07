@@ -131,7 +131,6 @@
                     <button data-category="strength" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Strength</button>
                     <button data-category="speed" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Speed &amp; Endurance</button>
                     <button data-category="bodyweight" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Bodyweight</button>
-                    <button data-category="diagnostics" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Body Composition</button>
                 </div>
 
                 <!-- Gender Toggle -->
@@ -204,124 +203,15 @@
                         <h3 class="text-lg font-bold text-brand-light mb-3">2,000M ROW</h3>
                         <p class="text-brand-gray text-sm font-light leading-relaxed">Concept2 rower (or equivalent). Damper setting is your choice. Video or photo of the monitor showing 2,000m and your time. Must be a single continuous effort.</p>
                     </div>
-                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-brand-light mb-3">BODY FAT %</h3>
-                        <p class="text-brand-gray text-sm font-light leading-relaxed">DEXA scan report from a certified facility only. No calipers, no bioimpedance, no smart scale readings. Moonshot Medical offers DEXA scans &mdash; <a href="/medical/dexa-scan/" class="text-brand-light underline hover:text-white transition">book yours here</a>.</p>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Submit Form -->
         <section id="submit" class="py-10 bg-brand-dark border-t border-white/5">
-            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-2">SUBMIT YOUR RECORD</h2>
-                <p class="text-brand-gray text-center mb-6">Think you belong on the board? Prove it.</p>
-
-                <form id="submit-form" class="space-y-4">
-                    <div>
-                        <label for="name" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Full Name <span class="text-red-400">*</span></label>
-                        <input type="text" id="name" name="name" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="Your full name">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Email <span class="text-red-400">*</span></label>
-                        <input type="email" id="email" name="email" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="you@email.com">
-                        <p class="text-brand-gray/50 text-xs mt-1">Not displayed publicly.</p>
-                    </div>
-                    <div class="grid sm:grid-cols-3 gap-5">
-                        <div>
-                            <label for="gender" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Gender <span class="text-red-400">*</span></label>
-                            <select id="gender" name="gender" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition">
-                                <option value="">Select</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="age" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Age <span class="text-red-400">*</span></label>
-                            <input type="number" id="age" name="age" required min="5" max="100" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="e.g., 32">
-                        </div>
-                        <div>
-                            <label for="bodyweight" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Bodyweight (lbs)</label>
-                            <input type="number" id="bodyweight" name="bodyweight" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="e.g., 185">
-                            <p class="text-brand-gray/50 text-xs mt-1">Required for strength events.</p>
-                        </div>
-                    </div>
-                    <div class="grid sm:grid-cols-2 gap-5">
-                        <div>
-                            <label for="category" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Category <span class="text-red-400">*</span></label>
-                            <select id="category" name="category" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition">
-                                <option value="">Select category</option>
-                                <option value="strength">Strength</option>
-                                <option value="speed">Speed & Endurance</option>
-                                <option value="bodyweight">Bodyweight</option>
-                                <option value="diagnostics">Body Composition</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="event" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Event <span class="text-red-400">*</span></label>
-                            <select id="event" name="event" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" disabled>
-                                <option value="">Select category first</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="result" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Your Result <span class="text-red-400">*</span></label>
-                        <input type="text" id="result" name="result" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="e.g., 405 lbs, 5:32, 23 reps">
-                    </div>
-                    <div>
-                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Video Proof <span class="text-red-400">*</span></label>
-                        <div class="flex gap-2 mb-2">
-                            <button type="button" id="proof-tab-upload" class="proof-tab bg-white text-brand-dark rounded-full px-4 py-1 text-xs font-heading uppercase tracking-wider font-semibold transition">Upload Video</button>
-                            <button type="button" id="proof-tab-link" class="proof-tab text-brand-gray rounded-full px-4 py-1 text-xs font-heading uppercase tracking-wider hover:text-brand-light transition">Paste Link</button>
-                        </div>
-                        <div id="proof-upload-panel">
-                            <label class="flex items-center gap-3 cursor-pointer bg-brand-dark border border-white/20 border-dashed rounded px-4 py-4 hover:border-brand-gray transition">
-                                <svg class="w-6 h-6 text-brand-gray flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                                <div>
-                                    <span id="proofFileName" class="text-brand-gray text-sm">Choose video file (max 100MB)</span>
-                                    <div id="proofProgress" class="hidden mt-1.5 w-full bg-brand-dark rounded-full h-1.5 border border-white/10">
-                                        <div id="proofProgressBar" class="bg-white h-full rounded-full transition-all" style="width: 0%"></div>
-                                    </div>
-                                </div>
-                                <input type="file" id="proofFile" name="proofFile" accept="video/*" class="hidden">
-                            </label>
-                        </div>
-                        <div id="proof-link-panel" class="hidden">
-                            <input type="url" id="proofUrl" name="proofUrl" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="YouTube, Instagram, or TikTok link">
-                        </div>
-                        <input type="hidden" id="proofUrlFinal" name="proofUrlFinal" value="">
-                    </div>
-                    <div class="grid sm:grid-cols-2 gap-5">
-                        <div>
-                            <label for="gymName" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Where Do You Train?</label>
-                            <input type="text" id="gymName" name="gymName" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="Gym name and city">
-                        </div>
-                        <div>
-                            <label for="gymUrl" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Gym Website</label>
-                            <input type="url" id="gymUrl" name="gymUrl" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="https://...">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="source" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Source</label>
-                        <input type="text" id="source" name="source" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="e.g., 2026 CrossFit Open, USAPL Meet">
-                    </div>
-                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mt-2">
-                        <div class="mb-3">
-                            <span class="text-brand-light text-sm font-semibold">Park Ridge Resident?</span>
-                            <p class="text-brand-gray/60 text-xs mt-0.5">Optional. Upload a photo of your ID (address visible, can blur name/DOB) to earn the Park Ridge badge on the leaderboard.</p>
-                        </div>
-                        <label class="flex items-center gap-3 cursor-pointer bg-brand-dark border border-white/20 rounded px-4 py-3 hover:border-brand-gray transition">
-                            <svg class="w-5 h-5 text-brand-gray flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            <span id="idFileName" class="text-brand-gray text-sm">Choose file...</span>
-                            <input type="file" id="parkRidgeId" name="parkRidgeId" accept="image/*" class="hidden">
-                        </label>
-                        <p id="idUploadNote" class="text-brand-gray/40 text-xs mt-1.5 hidden">Your ID is only used for address verification and is never displayed publicly.</p>
-                    </div>
-
-                    <button type="submit" id="submit-btn" class="w-full bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-gray transition">Submit Record</button>
-                    <p class="text-brand-gray/50 text-xs text-center">All submissions are reviewed before appearing on the leaderboard. Results typically posted within 48 hours.</p>
-                </form>
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-2">THINK YOU BELONG ON THE BOARD?</h2>
+                <p class="text-brand-gray mb-6">Enter all your scores at once. Takes 60 seconds. No account needed to start.</p>
+                <a href="/leaderboard/submit/" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-10 py-4 rounded hover:bg-brand-light transition inline-block text-lg">Log Your Scores</a>
             </div>
         </section>
 
@@ -335,9 +225,9 @@
                         <a href="https://moonshotcrossfit.com" target="_blank" rel="noopener noreferrer" class="btn-primary text-sm px-6 py-2.5">Visit Moonshot CrossFit</a>
                     </div>
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
-                        <h3 class="text-xl font-bold text-brand-light mb-3">NEED A DEXA SCAN?</h3>
-                        <p class="text-brand-gray text-sm font-light mb-4">Get your body fat percentage measured with medical-grade accuracy. DEXA scans available at Moonshot Medical.</p>
-                        <a href="/medical/dexa-scan/" class="btn-primary text-sm px-6 py-2.5">Book a DEXA Scan</a>
+                        <h3 class="text-xl font-bold text-brand-light mb-3">OPTIMIZE YOUR PERFORMANCE</h3>
+                        <p class="text-brand-gray text-sm font-light mb-4">Blood panels, hormone optimization, DEXA scans, and more at Moonshot Medical.</p>
+                        <a href="/medical/" class="btn-primary text-sm px-6 py-2.5">Explore Medical Services</a>
                     </div>
                 </div>
             </div>
@@ -362,8 +252,7 @@
     const EVENT_OPTIONS = {
         strength: ['Back Squat', 'Deadlift', 'Bench Press', 'Clean', 'Shoulder to Overhead'],
         speed: ['Mile Run', '400m Run', '40-Yard Dash', '2,000m Row'],
-        bodyweight: ['Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes'],
-        diagnostics: ['Lowest Body Fat %']
+        bodyweight: ['Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes']
     };
 
     /* ----- Seed Data ----- */
@@ -424,10 +313,6 @@
         { id: '35', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '75 reps', resultNumeric: 75, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '36', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '70 reps', resultNumeric: 70, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
 
-        // Diagnostics - Body Fat Men
-        { id: '40', name: 'Tom K.', age: 36, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '11.2%', resultNumeric: 11.2, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA', parkRidgeVerified: true },
-        { id: '41', name: 'Andrew S.', age: 32, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '12.8%', resultNumeric: 12.8, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA', parkRidgeVerified: true },
-        { id: '42', name: 'Edwin G.', age: 38, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '13.5%', resultNumeric: 13.5, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA', parkRidgeVerified: true }
     ];
 
     /* ----- State ----- */
@@ -457,9 +342,9 @@
         return div.innerHTML;
     }
 
-    /* ----- Determine sort direction (lower is better for speed/diagnostics) ----- */
+    /* ----- Determine sort direction (lower is better for speed) ----- */
     function sortEntries(entries, category) {
-        var lowerIsBetter = (category === 'speed' || category === 'diagnostics');
+        var lowerIsBetter = (category === 'speed');
         return entries.slice().sort(function(a, b) {
             return lowerIsBetter ? a.resultNumeric - b.resultNumeric : b.resultNumeric - a.resultNumeric;
         });
@@ -716,8 +601,6 @@
     function renderEventTable(entries, eventName, category) {
         var sorted = sortEntries(entries, category);
         var isStrength = (category === 'strength');
-        var isSpeed = (category === 'speed');
-        var isDiagnostics = (category === 'diagnostics');
 
         var html = '<div class="mb-8">';
         html += '<h3 class="text-lg md:text-xl font-bold text-brand-light mb-4">' + escapeHtml(eventName.toUpperCase());
@@ -743,9 +626,6 @@
             html += '<th class="text-left py-2 pr-3 hidden md:table-cell">BW</th>';
             html += '<th class="text-left py-2 pr-3 hidden md:table-cell">Multiplier</th>';
         }
-        if (isDiagnostics) {
-            html += '<th class="text-left py-2 pr-3 hidden md:table-cell">Method</th>';
-        }
         html += '<th class="text-left py-2 pr-3 hidden md:table-cell">Where They Train</th>';
         html += '<th class="text-left py-2 pr-3">Proof</th>';
         html += '<th class="text-left py-2 hidden md:table-cell">Source</th>';
@@ -755,7 +635,7 @@
         html += '<tbody>';
         var visibleCount = Math.min(3, sorted.length);
         for (var i = 0; i < visibleCount; i++) {
-            html += renderRow(sorted[i], i + 1, isStrength, isDiagnostics);
+            html += renderRow(sorted[i], i + 1, isStrength);
         }
         html += '</tbody>';
 
@@ -765,7 +645,7 @@
             var expandId = 'expand-' + category + '-' + eventName.replace(/[^a-zA-Z0-9]/g, '-');
             html += '<tbody id="' + expandId + '" class="expandable-rows">';
             for (var j = 3; j < sorted.length; j++) {
-                html += renderRow(sorted[j], j + 1, isStrength, isDiagnostics);
+                html += renderRow(sorted[j], j + 1, isStrength);
             }
             html += '</tbody>';
             html += '</table></div>';
@@ -780,7 +660,7 @@
         return html;
     }
 
-    function renderRow(entry, rank, isStrength, isDiagnostics) {
+    function renderRow(entry, rank, isStrength) {
         var rankClass = getRankStyle(rank);
         var html = '<tr class="border-b border-white/5">';
 
@@ -803,11 +683,6 @@
             html += '<td class="py-2.5 pr-3 text-brand-gray hidden md:table-cell">' + (entry.bodyweight ? entry.bodyweight + ' lbs' : '-') + '</td>';
             var mult = calculateBWMultiplier(entry.resultNumeric, entry.bodyweight);
             html += '<td class="py-2.5 pr-3 text-brand-gray hidden md:table-cell">' + (mult ? mult + 'x' : '-') + '</td>';
-        }
-
-        // Diagnostics extras
-        if (isDiagnostics) {
-            html += '<td class="py-2.5 pr-3 text-brand-gray hidden md:table-cell">DEXA</td>';
         }
 
         // Where they train
@@ -930,241 +805,6 @@
         renderLeaderboard(SEED_DATA, activeCategory, activeGender);
     });
 
-    /* ----- Proof tab switching ----- */
-    var proofMode = 'upload'; // 'upload' or 'link'
-    var proofUploadPanel = document.getElementById('proof-upload-panel');
-    var proofLinkPanel = document.getElementById('proof-link-panel');
-    var proofTabUpload = document.getElementById('proof-tab-upload');
-    var proofTabLink = document.getElementById('proof-tab-link');
-
-    proofTabUpload.addEventListener('click', function() {
-        proofMode = 'upload';
-        proofUploadPanel.classList.remove('hidden');
-        proofLinkPanel.classList.add('hidden');
-        proofTabUpload.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
-        proofTabUpload.classList.remove('text-brand-gray');
-        proofTabLink.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
-        proofTabLink.classList.add('text-brand-gray');
-    });
-
-    proofTabLink.addEventListener('click', function() {
-        proofMode = 'link';
-        proofLinkPanel.classList.remove('hidden');
-        proofUploadPanel.classList.add('hidden');
-        proofTabLink.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
-        proofTabLink.classList.remove('text-brand-gray');
-        proofTabUpload.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
-        proofTabUpload.classList.add('text-brand-gray');
-    });
-
-    /* ----- Proof video file input ----- */
-    var proofFileInput = document.getElementById('proofFile');
-    var proofFileLabel = document.getElementById('proofFileName');
-    var proofProgress = document.getElementById('proofProgress');
-    var proofProgressBar = document.getElementById('proofProgressBar');
-    var uploadedProofUrl = '';
-
-    proofFileInput.addEventListener('change', function() {
-        if (proofFileInput.files.length > 0) {
-            var file = proofFileInput.files[0];
-            if (file.size > 100 * 1024 * 1024) {
-                showToast('Video must be under 100MB.', true);
-                proofFileInput.value = '';
-                return;
-            }
-            var sizeMB = (file.size / (1024 * 1024)).toFixed(1);
-            proofFileLabel.textContent = file.name + ' (' + sizeMB + ' MB)';
-            proofFileLabel.classList.remove('text-brand-gray');
-            proofFileLabel.classList.add('text-brand-light');
-            uploadedProofUrl = ''; // Reset — will upload on form submit
-        } else {
-            proofFileLabel.textContent = 'Choose video file (max 100MB)';
-            proofFileLabel.classList.remove('text-brand-light');
-            proofFileLabel.classList.add('text-brand-gray');
-        }
-    });
-
-    /* ----- Upload proof video to S3 via presigned URL ----- */
-    async function uploadProofVideo(file) {
-        // 1. Get presigned URL
-        var presignRes = await fetch(API_BASE + '/api/upload/presign', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                fileName: file.name,
-                fileType: file.type,
-                fileSize: file.size
-            })
-        });
-        if (!presignRes.ok) {
-            var err = await presignRes.json();
-            throw new Error(err.error || 'Failed to get upload URL');
-        }
-        var { presignedUrl, publicUrl } = await presignRes.json();
-
-        // 2. Upload directly to S3
-        proofProgress.classList.remove('hidden');
-        await new Promise(function(resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('PUT', presignedUrl);
-            xhr.setRequestHeader('Content-Type', file.type);
-            xhr.upload.addEventListener('progress', function(e) {
-                if (e.lengthComputable) {
-                    var pct = Math.round((e.loaded / e.total) * 100);
-                    proofProgressBar.style.width = pct + '%';
-                }
-            });
-            xhr.addEventListener('load', function() {
-                if (xhr.status >= 200 && xhr.status < 300) resolve();
-                else reject(new Error('Upload failed: ' + xhr.status));
-            });
-            xhr.addEventListener('error', function() { reject(new Error('Upload failed')); });
-            xhr.send(file);
-        });
-
-        proofProgressBar.style.width = '100%';
-        return publicUrl;
-    }
-
-    /* ----- Park Ridge ID file input handler ----- */
-    var idInput = document.getElementById('parkRidgeId');
-    var idLabel = document.getElementById('idFileName');
-    var idNote = document.getElementById('idUploadNote');
-    idInput.addEventListener('change', function() {
-        if (idInput.files.length > 0) {
-            idLabel.textContent = idInput.files[0].name;
-            idLabel.classList.remove('text-brand-gray');
-            idLabel.classList.add('text-brand-light');
-            idNote.classList.remove('hidden');
-        } else {
-            idLabel.textContent = 'Choose file...';
-            idLabel.classList.remove('text-brand-light');
-            idLabel.classList.add('text-brand-gray');
-            idNote.classList.add('hidden');
-        }
-    });
-
-    /* ----- Dynamic event dropdown in form ----- */
-    var categorySelect = document.getElementById('category');
-    var eventSelect = document.getElementById('event');
-
-    categorySelect.addEventListener('change', function() {
-        var cat = categorySelect.value;
-        eventSelect.innerHTML = '';
-        if (!cat || !EVENT_OPTIONS[cat]) {
-            eventSelect.innerHTML = '<option value="">Select category first</option>';
-            eventSelect.disabled = true;
-            return;
-        }
-        eventSelect.disabled = false;
-        eventSelect.innerHTML = '<option value="">Select event</option>';
-        EVENT_OPTIONS[cat].forEach(function(ev) {
-            var opt = document.createElement('option');
-            opt.value = ev;
-            opt.textContent = ev;
-            eventSelect.appendChild(opt);
-        });
-    });
-
-    /* ----- Form submission ----- */
-    var submitForm = document.getElementById('submit-form');
-    var submitBtn = document.getElementById('submit-btn');
-
-    submitForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        var name = document.getElementById('name').value.trim();
-        var email = document.getElementById('email').value.trim();
-        var gender = document.getElementById('gender').value;
-        var age = document.getElementById('age').value ? Number(document.getElementById('age').value) : null;
-        var bodyweight = document.getElementById('bodyweight').value ? Number(document.getElementById('bodyweight').value) : null;
-        var category = document.getElementById('category').value;
-        var event = document.getElementById('event').value;
-        var result = document.getElementById('result').value.trim();
-        var gymName = document.getElementById('gymName').value.trim();
-        var gymUrl = document.getElementById('gymUrl').value.trim();
-        var source = document.getElementById('source').value.trim();
-
-        // Get proof URL based on mode
-        var proofUrl = '';
-        if (proofMode === 'link') {
-            proofUrl = document.getElementById('proofUrl').value.trim();
-        }
-
-        // Basic validation
-        if (!name || !email || !gender || !category || !event || !result) {
-            showToast('Please fill in all required fields.', true);
-            return;
-        }
-
-        // Proof validation
-        if (proofMode === 'upload' && (!proofFileInput.files || proofFileInput.files.length === 0)) {
-            showToast('Please upload a video or paste a link for proof.', true);
-            return;
-        }
-        if (proofMode === 'link' && !proofUrl) {
-            showToast('Please paste a video link for proof.', true);
-            return;
-        }
-
-        // Strength events need bodyweight
-        if (category === 'strength' && !bodyweight) {
-            showToast('Bodyweight is required for strength events.', true);
-            return;
-        }
-
-        submitBtn.disabled = true;
-
-        try {
-            // Upload video if in upload mode
-            if (proofMode === 'upload') {
-                submitBtn.textContent = 'Uploading video...';
-                proofUrl = await uploadProofVideo(proofFileInput.files[0]);
-            }
-
-            submitBtn.textContent = 'Submitting...';
-
-            var res = await fetch(API_BASE + '/api/entries', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    gender: gender,
-                    age: age,
-                    bodyweight: bodyweight,
-                    category: category,
-                    event: event,
-                    result: result,
-                    resultNumeric: parseFloat(result) || 0,
-                    proofUrl: proofUrl,
-                    gymName: gymName || null,
-                    gymUrl: gymUrl || null,
-                    source: source || null
-                })
-            });
-
-            if (!res.ok) {
-                var errData = await res.json();
-                throw new Error(errData.error || 'Submission failed');
-            }
-
-            showToast('Record submitted! We\'ll review your entry and post it within 48 hours.');
-            submitForm.reset();
-            eventSelect.innerHTML = '<option value="">Select category first</option>';
-            eventSelect.disabled = true;
-            proofFileLabel.textContent = 'Choose video file (max 100MB)';
-            proofFileLabel.classList.remove('text-brand-light');
-            proofFileLabel.classList.add('text-brand-gray');
-            proofProgress.classList.add('hidden');
-            proofProgressBar.style.width = '0%';
-        } catch (err) {
-            showToast(err.message || 'Something went wrong. Please try again.', true);
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit Record';
-        }
-    });
 
     /* ----- Toast ----- */
     function showToast(message, isError) {

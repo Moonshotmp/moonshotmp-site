@@ -234,15 +234,9 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Where They Train</label>
-                                <input type="text" name="gym_name" placeholder="Gym name" class="input-field w-full rounded-lg">
-                            </div>
-                            <div>
-                                <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Gym URL</label>
-                                <input type="url" name="gym_url" placeholder="https://..." class="input-field w-full rounded-lg">
-                            </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Where They Train</label>
+                            <input type="text" name="gym_name" placeholder="Gym name" class="input-field w-full rounded-lg">
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-brand-gray mb-1">Proof URL</label>
@@ -468,10 +462,7 @@
         const gymHtml = entry.gym_name
             ? `<div class="text-sm text-brand-gray">
                 <span class="text-brand-light/60">Trains at:</span>
-                ${entry.gym_url
-                    ? `<a href="${escapeHtml(entry.gym_url)}" target="_blank" rel="noopener" class="text-brand-gray hover:text-brand-light underline">${escapeHtml(entry.gym_name)}</a>`
-                    : escapeHtml(entry.gym_name)
-                }
+                ${escapeHtml(entry.gym_name)}
                </div>`
             : '';
         const sourceHtml = entry.source
