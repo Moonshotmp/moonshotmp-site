@@ -53,7 +53,9 @@
 
     <style>
         /* Expandable rows transition */
-        html, body { overflow-x: hidden; }
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        main, section, .overflow-x-auto { max-width: 100%; }
+        table { table-layout: fixed; word-break: break-word; }
         .expandable-rows { display: none; }
         .expandable-rows.expanded { display: table-row-group; }
         /* Mobile card layout for leaderboard entries */
@@ -726,7 +728,7 @@
         if (standard) {
             html += ' <span class="inline-block relative group cursor-help align-middle">';
             html += '<svg class="w-4 h-4 inline text-brand-gray/50 hover:text-brand-gray transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path stroke-width="1.5" stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg>';
-            html += '<span class="invisible group-hover:visible absolute left-6 -top-2 z-50 w-64 bg-brand-dark border border-white/20 rounded-lg p-3 text-xs text-brand-gray font-body normal-case tracking-normal shadow-xl">' + escapeHtml(standard) + '</span>';
+            html += '<span class="invisible group-hover:visible absolute left-0 top-6 z-50 w-64 bg-brand-dark border border-white/20 rounded-lg p-3 text-xs text-brand-gray font-body normal-case tracking-normal shadow-xl">' + escapeHtml(standard) + '</span>';
             html += '</span>';
         }
         html += '</h3>';
