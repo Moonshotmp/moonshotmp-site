@@ -270,8 +270,27 @@
                         <input type="text" id="result" name="result" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="e.g., 405 lbs, 5:32, 23 reps">
                     </div>
                     <div>
-                        <label for="proofUrl" class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Link to Video Proof <span class="text-red-400">*</span></label>
-                        <input type="url" id="proofUrl" name="proofUrl" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="YouTube, Instagram, or TikTok link">
+                        <label class="block text-brand-gray text-xs uppercase tracking-wider mb-1.5">Video Proof <span class="text-red-400">*</span></label>
+                        <div class="flex gap-2 mb-2">
+                            <button type="button" id="proof-tab-upload" class="proof-tab bg-white text-brand-dark rounded-full px-4 py-1 text-xs font-heading uppercase tracking-wider font-semibold transition">Upload Video</button>
+                            <button type="button" id="proof-tab-link" class="proof-tab text-brand-gray rounded-full px-4 py-1 text-xs font-heading uppercase tracking-wider hover:text-brand-light transition">Paste Link</button>
+                        </div>
+                        <div id="proof-upload-panel">
+                            <label class="flex items-center gap-3 cursor-pointer bg-brand-dark border border-white/20 border-dashed rounded px-4 py-4 hover:border-brand-gray transition">
+                                <svg class="w-6 h-6 text-brand-gray flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                <div>
+                                    <span id="proofFileName" class="text-brand-gray text-sm">Choose video file (max 100MB)</span>
+                                    <div id="proofProgress" class="hidden mt-1.5 w-full bg-brand-dark rounded-full h-1.5 border border-white/10">
+                                        <div id="proofProgressBar" class="bg-white h-full rounded-full transition-all" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <input type="file" id="proofFile" name="proofFile" accept="video/*" class="hidden">
+                            </label>
+                        </div>
+                        <div id="proof-link-panel" class="hidden">
+                            <input type="url" id="proofUrl" name="proofUrl" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-3 text-sm focus:outline-none focus:border-brand-gray transition" placeholder="YouTube, Instagram, or TikTok link">
+                        </div>
+                        <input type="hidden" id="proofUrlFinal" name="proofUrlFinal" value="">
                     </div>
                     <div class="grid sm:grid-cols-2 gap-5">
                         <div>
@@ -911,6 +930,102 @@
         renderLeaderboard(SEED_DATA, activeCategory, activeGender);
     });
 
+    /* ----- Proof tab switching ----- */
+    var proofMode = 'upload'; // 'upload' or 'link'
+    var proofUploadPanel = document.getElementById('proof-upload-panel');
+    var proofLinkPanel = document.getElementById('proof-link-panel');
+    var proofTabUpload = document.getElementById('proof-tab-upload');
+    var proofTabLink = document.getElementById('proof-tab-link');
+
+    proofTabUpload.addEventListener('click', function() {
+        proofMode = 'upload';
+        proofUploadPanel.classList.remove('hidden');
+        proofLinkPanel.classList.add('hidden');
+        proofTabUpload.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
+        proofTabUpload.classList.remove('text-brand-gray');
+        proofTabLink.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
+        proofTabLink.classList.add('text-brand-gray');
+    });
+
+    proofTabLink.addEventListener('click', function() {
+        proofMode = 'link';
+        proofLinkPanel.classList.remove('hidden');
+        proofUploadPanel.classList.add('hidden');
+        proofTabLink.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
+        proofTabLink.classList.remove('text-brand-gray');
+        proofTabUpload.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
+        proofTabUpload.classList.add('text-brand-gray');
+    });
+
+    /* ----- Proof video file input ----- */
+    var proofFileInput = document.getElementById('proofFile');
+    var proofFileLabel = document.getElementById('proofFileName');
+    var proofProgress = document.getElementById('proofProgress');
+    var proofProgressBar = document.getElementById('proofProgressBar');
+    var uploadedProofUrl = '';
+
+    proofFileInput.addEventListener('change', function() {
+        if (proofFileInput.files.length > 0) {
+            var file = proofFileInput.files[0];
+            if (file.size > 100 * 1024 * 1024) {
+                showToast('Video must be under 100MB.', true);
+                proofFileInput.value = '';
+                return;
+            }
+            var sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+            proofFileLabel.textContent = file.name + ' (' + sizeMB + ' MB)';
+            proofFileLabel.classList.remove('text-brand-gray');
+            proofFileLabel.classList.add('text-brand-light');
+            uploadedProofUrl = ''; // Reset — will upload on form submit
+        } else {
+            proofFileLabel.textContent = 'Choose video file (max 100MB)';
+            proofFileLabel.classList.remove('text-brand-light');
+            proofFileLabel.classList.add('text-brand-gray');
+        }
+    });
+
+    /* ----- Upload proof video to S3 via presigned URL ----- */
+    async function uploadProofVideo(file) {
+        // 1. Get presigned URL
+        var presignRes = await fetch(API_BASE + '/api/upload/presign', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                fileName: file.name,
+                fileType: file.type,
+                fileSize: file.size
+            })
+        });
+        if (!presignRes.ok) {
+            var err = await presignRes.json();
+            throw new Error(err.error || 'Failed to get upload URL');
+        }
+        var { presignedUrl, publicUrl } = await presignRes.json();
+
+        // 2. Upload directly to S3
+        proofProgress.classList.remove('hidden');
+        await new Promise(function(resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('PUT', presignedUrl);
+            xhr.setRequestHeader('Content-Type', file.type);
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    var pct = Math.round((e.loaded / e.total) * 100);
+                    proofProgressBar.style.width = pct + '%';
+                }
+            });
+            xhr.addEventListener('load', function() {
+                if (xhr.status >= 200 && xhr.status < 300) resolve();
+                else reject(new Error('Upload failed: ' + xhr.status));
+            });
+            xhr.addEventListener('error', function() { reject(new Error('Upload failed')); });
+            xhr.send(file);
+        });
+
+        proofProgressBar.style.width = '100%';
+        return publicUrl;
+    }
+
     /* ----- Park Ridge ID file input handler ----- */
     var idInput = document.getElementById('parkRidgeId');
     var idLabel = document.getElementById('idFileName');
@@ -955,75 +1070,100 @@
     var submitForm = document.getElementById('submit-form');
     var submitBtn = document.getElementById('submit-btn');
 
-    submitForm.addEventListener('submit', function(e) {
+    submitForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        var formData = {
-            name: document.getElementById('name').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            gender: document.getElementById('gender').value,
-            age: document.getElementById('age').value ? Number(document.getElementById('age').value) : null,
-            bodyweight: document.getElementById('bodyweight').value ? Number(document.getElementById('bodyweight').value) : null,
-            category: document.getElementById('category').value,
-            event: document.getElementById('event').value,
-            result: document.getElementById('result').value.trim(),
-            proofUrl: document.getElementById('proofUrl').value.trim(),
-            gymName: document.getElementById('gymName').value.trim(),
-            gymUrl: document.getElementById('gymUrl').value.trim(),
-            source: document.getElementById('source').value.trim(),
-            parkRidgeIdFile: document.getElementById('parkRidgeId').files[0] || null
-        };
+        var name = document.getElementById('name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var gender = document.getElementById('gender').value;
+        var age = document.getElementById('age').value ? Number(document.getElementById('age').value) : null;
+        var bodyweight = document.getElementById('bodyweight').value ? Number(document.getElementById('bodyweight').value) : null;
+        var category = document.getElementById('category').value;
+        var event = document.getElementById('event').value;
+        var result = document.getElementById('result').value.trim();
+        var gymName = document.getElementById('gymName').value.trim();
+        var gymUrl = document.getElementById('gymUrl').value.trim();
+        var source = document.getElementById('source').value.trim();
+
+        // Get proof URL based on mode
+        var proofUrl = '';
+        if (proofMode === 'link') {
+            proofUrl = document.getElementById('proofUrl').value.trim();
+        }
 
         // Basic validation
-        if (!formData.name || !formData.email || !formData.gender || !formData.category || !formData.event || !formData.result || !formData.proofUrl) {
+        if (!name || !email || !gender || !category || !event || !result) {
             showToast('Please fill in all required fields.', true);
             return;
         }
 
+        // Proof validation
+        if (proofMode === 'upload' && (!proofFileInput.files || proofFileInput.files.length === 0)) {
+            showToast('Please upload a video or paste a link for proof.', true);
+            return;
+        }
+        if (proofMode === 'link' && !proofUrl) {
+            showToast('Please paste a video link for proof.', true);
+            return;
+        }
+
         // Strength events need bodyweight
-        if (formData.category === 'strength' && !formData.bodyweight) {
+        if (category === 'strength' && !bodyweight) {
             showToast('Bodyweight is required for strength events.', true);
             return;
         }
 
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting...';
 
-        // For now, simulate success (API not deployed yet)
-        setTimeout(function() {
+        try {
+            // Upload video if in upload mode
+            if (proofMode === 'upload') {
+                submitBtn.textContent = 'Uploading video...';
+                proofUrl = await uploadProofVideo(proofFileInput.files[0]);
+            }
+
+            submitBtn.textContent = 'Submitting...';
+
+            var res = await fetch(API_BASE + '/api/entries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    gender: gender,
+                    age: age,
+                    bodyweight: bodyweight,
+                    category: category,
+                    event: event,
+                    result: result,
+                    resultNumeric: parseFloat(result) || 0,
+                    proofUrl: proofUrl,
+                    gymName: gymName || null,
+                    gymUrl: gymUrl || null,
+                    source: source || null
+                })
+            });
+
+            if (!res.ok) {
+                var errData = await res.json();
+                throw new Error(errData.error || 'Submission failed');
+            }
+
             showToast('Record submitted! We\'ll review your entry and post it within 48 hours.');
             submitForm.reset();
             eventSelect.innerHTML = '<option value="">Select category first</option>';
             eventSelect.disabled = true;
+            proofFileLabel.textContent = 'Choose video file (max 100MB)';
+            proofFileLabel.classList.remove('text-brand-light');
+            proofFileLabel.classList.add('text-brand-gray');
+            proofProgress.classList.add('hidden');
+            proofProgressBar.style.width = '0%';
+        } catch (err) {
+            showToast(err.message || 'Something went wrong. Please try again.', true);
+        } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit Record';
-        }, 800);
-
-        /*
-        // Uncomment when API is live:
-        fetch(API_BASE + '/api/entries', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-        .then(function(res) {
-            if (!res.ok) throw new Error('Submission failed');
-            return res.json();
-        })
-        .then(function(data) {
-            showToast('Record submitted! We\'ll review your entry and post it within 48 hours.');
-            submitForm.reset();
-            eventSelect.innerHTML = '<option value="">Select category first</option>';
-            eventSelect.disabled = true;
-        })
-        .catch(function(err) {
-            showToast('Something went wrong. Please try again.', true);
-        })
-        .finally(function() {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit Record';
-        });
-        */
+        }
     });
 
     /* ----- Toast ----- */
