@@ -177,19 +177,33 @@
 
                     <!-- CALISTHENICS -->
                     <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-6">
-                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">CALISTHENICS <span class="text-xs font-body normal-case tracking-normal">(reps in 2 min)</span></h2>
+                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">CALISTHENICS</h2>
                         <div class="flex items-center justify-between py-1.5 border-b border-white/5">
-                            <span class="text-brand-light text-sm">Pull-ups</span>
+                            <span class="text-brand-light text-sm">Pull-ups <span class="text-brand-gray text-xs">(2 min)</span></span>
                             <div class="flex items-center">
                                 <input type="number" id="score-pull-ups" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
                                 <span class="text-brand-gray text-xs ml-1 w-6">reps</span>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between py-1.5">
-                            <span class="text-brand-light text-sm">Push-ups</span>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Push-ups <span class="text-brand-gray text-xs">(2 min)</span></span>
                             <div class="flex items-center">
                                 <input type="number" id="score-push-ups" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
                                 <span class="text-brand-gray text-xs ml-1 w-6">reps</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-brand-light text-sm">Dips <span class="text-brand-gray text-xs">(2 min)</span></span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-dips" min="0" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">reps</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-1.5">
+                            <span class="text-brand-light text-sm">L-Sit Hold</span>
+                            <div class="flex items-center">
+                                <input type="number" id="score-l-sit" min="0" step="0.1" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm text-right w-20 px-2 py-1 focus:outline-none focus:border-brand-gray" placeholder="—">
+                                <span class="text-brand-gray text-xs ml-1 w-6">sec</span>
                             </div>
                         </div>
                     </div>
@@ -328,8 +342,10 @@
                 { id: 'score-clean', key: 'clean' },
                 { id: 'score-shoulder-to-overhead', key: 'shoulder-to-overhead' },
                 { id: 'score-40-yard-dash', key: '40-yard-dash' },
-                { id: 'score-pull-ups', key: 'pull-ups' },
-                { id: 'score-push-ups', key: 'push-ups' }
+                { id: 'score-pull-ups', key: 'pullups-2min' },
+                { id: 'score-push-ups', key: 'pushups-2min' },
+                { id: 'score-dips', key: 'dips-2min' },
+                { id: 'score-l-sit', key: 'l-sit-hold' }
             ];
 
             simpleFields.forEach(function(f) {

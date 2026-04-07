@@ -196,6 +196,14 @@
                         <p class="text-brand-gray text-sm font-light leading-relaxed">Chest makes contact with the ground at the bottom. Full lockout at the top &mdash; elbows fully extended. Body stays rigid (no sagging or piking). You have 2 minutes &mdash; rest in the top position if you need to, but knees hit the ground and you're done. Timer must be visible. Video must show the full 2 minutes.</p>
                     </div>
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-brand-light mb-3">DIPS &mdash; MAX IN 2 MIN</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">Parallel bars or rings. Start at full lockout (arms straight). Lower until shoulder drops below the elbow (below parallel). Press back to full lockout. No swinging or kipping. You have 2 minutes &mdash; rest at the top if you need to, but feet touch the ground and you're done. Timer must be visible. Video must show the full 2 minutes.</p>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-brand-light mb-3">L-SIT HOLD</h3>
+                        <p class="text-brand-gray text-sm font-light leading-relaxed">Parallettes, dip bars, or floor. Legs straight and parallel to the ground (or higher). Arms locked out. No bending the knees &mdash; legs must stay straight. Time starts when legs reach parallel and stops when they drop below. Video must show the full hold with a visible timer.</p>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
                         <h3 class="text-lg font-bold text-brand-light mb-3">RUNNING EVENTS</h3>
                         <p class="text-brand-gray text-sm font-light leading-relaxed"><strong class="text-brand-light">Mile &amp; 400m:</strong> GPS watch screenshot showing distance and time, OR video at a measured track. <strong class="text-brand-light">40-yard dash:</strong> Video must show start and finish &mdash; laser timing preferred but not required. Any surface is fine. Running shoes only (no spikes unless on a track).</p>
                     </div>
@@ -252,7 +260,7 @@
     const EVENT_OPTIONS = {
         strength: ['Back Squat', 'Deadlift', 'Bench Press', 'Clean', 'Shoulder to Overhead'],
         speed: ['Mile Run', '400m Run', '40-Yard Dash', '2,000m Row'],
-        bodyweight: ['Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes']
+        bodyweight: ['Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes', 'Dips in 2 Minutes', 'L-Sit Hold']
     };
 
     /* ----- Live Data ----- */
@@ -294,7 +302,8 @@
                 'back-squat': 'Back Squat', 'deadlift': 'Deadlift', 'bench-press': 'Bench Press',
                 'clean': 'Clean', 'shoulder-to-overhead': 'Shoulder to Overhead',
                 'mile-run': 'Mile Run', '400m-run': '400m Run', '40-yard-dash': '40-Yard Dash', '2k-row': '2,000m Row',
-                'pullups-2min': 'Pull-ups in 2 Minutes', 'pushups-2min': 'Push-ups in 2 Minutes'
+                'pullups-2min': 'Pull-ups in 2 Minutes', 'pushups-2min': 'Push-ups in 2 Minutes',
+                'dips-2min': 'Dips in 2 Minutes', 'l-sit-hold': 'L-Sit Hold'
             };
             LIVE_DATA.forEach(function(e) {
                 if (idToLabel[e.event]) e.event = idToLabel[e.event];
@@ -552,7 +561,7 @@
         html += '<div class="grid sm:grid-cols-3 gap-3 mb-3">';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean, Shoulder to Overhead</p></div>';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Cardio</span><p class="text-brand-gray text-xs mt-1">Mile Run, 400m Run, 40-Yard Dash, 2,000m Row</p></div>';
-        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups in 2 Min, Push-ups in 2 Min</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups, Push-ups, Dips (2 min each), L-Sit Hold</p></div>';
         html += '</div>';
         html += '<p class="text-brand-gray text-xs font-light leading-relaxed mb-1"><strong class="text-brand-light">Score 0-100:</strong> A perfect 100 means #1 in every event. A score of 50 means you\'re right in the middle. Your score for each pillar is the average percentile across your events in that pillar, then the three pillar scores are averaged.</p>';
         html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Missing pillars?</strong> Everyone is ranked. If you haven\'t submitted in a pillar, you\'re scored as tied for last in that category. The more events you enter, the better your score can get.</p>';
