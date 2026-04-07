@@ -260,7 +260,7 @@
     const EVENT_OPTIONS = {
         strength: ['Back Squat', 'Deadlift', 'Bench Press', 'Clean', 'Shoulder to Overhead'],
         speed: ['Mile Run', '400m Run', '40-Yard Dash', '2,000m Row'],
-        bodyweight: ['Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes', 'Dips in 2 Minutes', 'L-Sit Hold']
+        bodyweight: ['Strict Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes', 'Dips in 2 Minutes', 'L-Sit Hold Time']
     };
 
     /* ----- Live Data ----- */
@@ -302,8 +302,8 @@
                 'back-squat': 'Back Squat', 'deadlift': 'Deadlift', 'bench-press': 'Bench Press',
                 'clean': 'Clean', 'shoulder-to-overhead': 'Shoulder to Overhead',
                 'mile-run': 'Mile Run', '400m-run': '400m Run', '40-yard-dash': '40-Yard Dash', '2k-row': '2,000m Row',
-                'pullups-2min': 'Pull-ups in 2 Minutes', 'pushups-2min': 'Push-ups in 2 Minutes',
-                'dips-2min': 'Dips in 2 Minutes', 'l-sit-hold': 'L-Sit Hold'
+                'pullups-2min': 'Strict Pull-ups in 2 Minutes', 'pushups-2min': 'Push-ups in 2 Minutes',
+                'dips-2min': 'Dips in 2 Minutes', 'l-sit-hold': 'L-Sit Hold Time'
             };
             LIVE_DATA.forEach(function(e) {
                 if (idToLabel[e.event]) e.event = idToLabel[e.event];
@@ -360,11 +360,11 @@
         { id: '28', name: 'Tom K.', age: 36, gender: 'male', category: 'speed', event: '400m Run', result: '1:08', resultNumeric: 68, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Track Time' },
         { id: '29', name: 'Edwin G.', age: 38, gender: 'male', category: 'speed', event: '400m Run', result: '1:12', resultNumeric: 72, unit: 'seconds', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Track Time' },
 
-        // Bodyweight - Pull-ups in 2 Minutes Men
-        { id: '30', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '28 reps', resultNumeric: 28, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
-        { id: '31', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '22 reps', resultNumeric: 22, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
-        { id: '32', name: 'Niko P.', age: 42, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '20 reps', resultNumeric: 20, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '33', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Pull-ups in 2 Minutes', result: '18 reps', resultNumeric: 18, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        // Bodyweight - Strict Pull-ups in 2 Minutes Men
+        { id: '30', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups in 2 Minutes', result: '28 reps', resultNumeric: 28, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '31', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups in 2 Minutes', result: '22 reps', resultNumeric: 22, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
+        { id: '32', name: 'Niko P.', age: 42, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups in 2 Minutes', result: '20 reps', resultNumeric: 20, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
+        { id: '33', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Strict Pull-ups in 2 Minutes', result: '18 reps', resultNumeric: 18, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
 
         // Bodyweight - Push-ups in 2 Min Men
         { id: '34', name: 'Patrick O.', age: 56, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '82 reps', resultNumeric: 82, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
@@ -561,7 +561,7 @@
         html += '<div class="grid sm:grid-cols-3 gap-3 mb-3">';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean, Shoulder to Overhead</p></div>';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Cardio</span><p class="text-brand-gray text-xs mt-1">Mile Run, 400m Run, 40-Yard Dash, 2,000m Row</p></div>';
-        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups, Push-ups, Dips (2 min each), L-Sit Hold</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Pull-ups, Push-ups, Dips (2 min each), L-Sit Hold Time</p></div>';
         html += '</div>';
         html += '<p class="text-brand-gray text-xs font-light leading-relaxed mb-1"><strong class="text-brand-light">Score 0-100:</strong> A perfect 100 means #1 in every event. A score of 50 means you\'re right in the middle. Your score for each pillar is the average percentile across your events in that pillar, then the three pillar scores are averaged.</p>';
         html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Missing pillars?</strong> Everyone is ranked. If you haven\'t submitted in a pillar, you\'re scored as tied for last in that category. The more events you enter, the better your score can get.</p>';
