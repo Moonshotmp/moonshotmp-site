@@ -255,9 +255,58 @@
         bodyweight: ['Pull-ups in 2 Minutes', 'Push-ups in 2 Minutes']
     };
 
-    /* ----- Seed Data ----- */
+    /* ----- Live Data ----- */
+    var LIVE_DATA = [];
+
+    async function fetchLeaderboardData() {
+        try {
+            var res = await fetch(API_BASE + '/api/entries');
+            if (!res.ok) throw new Error('Failed to fetch');
+            var data = await res.json();
+            LIVE_DATA = (data.entries || []).map(function(e) {
+                // Normalize API field names to match rendering expectations
+                return {
+                    id: e.id || e.shareId,
+                    name: e.name,
+                    age: e.age || null,
+                    gender: (e.gender || 'unknown').toLowerCase(),
+                    category: e.category,
+                    event: e.event,
+                    result: e.result,
+                    resultNumeric: e.resultNumeric,
+                    bodyweight: e.bodyweight || null,
+                    unit: e.unit,
+                    gymName: e.gymName || null,
+                    gymUrl: e.gymUrl || null,
+                    proofUrl: e.proofUrl || null,
+                    verified: e.status === 'verified' || e.verified === true,
+                    source: e.source || null,
+                    parkRidgeVerified: e.parkRidgeVerified || e.parkRidgeResident || false
+                };
+            });
+            // Map event IDs to labels for display
+            var eventLabelMap = {};
+            Object.keys(EVENT_OPTIONS).forEach(function(cat) {
+                EVENT_OPTIONS[cat].forEach(function(label) { eventLabelMap[label] = label; });
+            });
+            // Also map kebab-case IDs to labels
+            var idToLabel = {
+                'back-squat': 'Back Squat', 'deadlift': 'Deadlift', 'bench-press': 'Bench Press',
+                'clean': 'Clean', 'shoulder-to-overhead': 'Shoulder to Overhead',
+                'mile-run': 'Mile Run', '400m-run': '400m Run', '40-yard-dash': '40-Yard Dash', '2k-row': '2,000m Row',
+                'pullups-2min': 'Pull-ups in 2 Minutes', 'pushups-2min': 'Push-ups in 2 Minutes'
+            };
+            LIVE_DATA.forEach(function(e) {
+                if (idToLabel[e.event]) e.event = idToLabel[e.event];
+            });
+        } catch (err) {
+            console.error('Failed to load leaderboard data:', err);
+        }
+        renderLeaderboard(LIVE_DATA, activeCategory, activeGender);
+    }
+
+    // Placeholder to avoid errors before data loads
     const SEED_DATA = [
-        // Strength - Back Squat Men
         { id: '1', name: 'Andrew S.', age: 32, gender: 'male', category: 'strength', event: 'Back Squat', result: '455 lbs', resultNumeric: 455, bodyweight: 205, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: '2026 CF Open', parkRidgeVerified: true },
         { id: '2', name: 'Edwin G.', age: 38, gender: 'male', category: 'strength', event: 'Back Squat', result: '425 lbs', resultNumeric: 425, bodyweight: 185, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '3', name: 'Tom K.', age: 36, gender: 'male', category: 'strength', event: 'Back Squat', result: '405 lbs', resultNumeric: 405, bodyweight: 195, unit: 'lbs', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
@@ -775,7 +824,7 @@
             });
             tab.classList.remove('border-transparent', 'text-brand-gray');
             tab.classList.add('border-brand-light', 'text-brand-light');
-            renderLeaderboard(SEED_DATA, activeCategory, activeGender);
+            renderLeaderboard(LIVE_DATA, activeCategory, activeGender);
         });
     });
 
@@ -789,20 +838,20 @@
             });
             btn.classList.remove('text-brand-gray');
             btn.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
-            renderLeaderboard(SEED_DATA, activeCategory, activeGender);
+            renderLeaderboard(LIVE_DATA, activeCategory, activeGender);
         });
     });
 
     /* ----- Age filter ----- */
     document.getElementById('age-filter').addEventListener('change', function() {
         activeAgeRange = this.value;
-        renderLeaderboard(SEED_DATA, activeCategory, activeGender);
+        renderLeaderboard(LIVE_DATA, activeCategory, activeGender);
     });
 
     /* ----- Proof filter ----- */
     document.getElementById('proof-filter').addEventListener('change', function() {
         proofOnly = this.checked;
-        renderLeaderboard(SEED_DATA, activeCategory, activeGender);
+        renderLeaderboard(LIVE_DATA, activeCategory, activeGender);
     });
 
 
@@ -828,8 +877,8 @@
         });
     });
 
-    /* ----- Initial render ----- */
-    renderLeaderboard(SEED_DATA, activeCategory, activeGender);
+    /* ----- Initial render — fetch from API ----- */
+    fetchLeaderboardData();
 
     </script>
 </body>
