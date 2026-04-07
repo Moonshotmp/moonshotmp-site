@@ -177,10 +177,6 @@
                         <p class="text-brand-gray text-sm font-light leading-relaxed">Chest touches the ground. Arms fully locked out at top. Continuous &mdash; any pause longer than 2 seconds ends the count. Timer must be visible or reps counted audibly.</p>
                     </div>
                     <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-brand-light mb-3">MAX BOX JUMP</h3>
-                        <p class="text-brand-gray text-sm font-light leading-relaxed">Standing jump onto a box/platform. Must land with both feet on top and reach full hip extension. Measure from ground to top of box. Video must show measurement and the jump.</p>
-                    </div>
-                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
                         <h3 class="text-lg font-bold text-brand-light mb-3">RUNNING EVENTS</h3>
                         <p class="text-brand-gray text-sm font-light leading-relaxed">GPS watch screenshot showing distance and time, OR video of timed run at a measured track/course. For 40-yard dash, video must show start and finish.</p>
                     </div>
@@ -318,9 +314,9 @@
 
     /* ----- Event definitions per category ----- */
     const EVENT_OPTIONS = {
-        strength: ['Back Squat', 'Deadlift', 'Bench Press', 'Clean & Jerk', 'Snatch', 'Strict Press'],
+        strength: ['Back Squat', 'Deadlift', 'Bench Press', 'Clean', 'Strict Press'],
         speed: ['Mile Run', '400m Run', '40-Yard Dash', '2,000m Row'],
-        bodyweight: ['Strict Pull-ups', 'Push-ups in 2 Minutes', 'Max Box Jump'],
+        bodyweight: ['Strict Pull-ups', 'Push-ups in 2 Minutes'],
         diagnostics: ['Lowest Body Fat %']
     };
 
@@ -381,11 +377,6 @@
         { id: '34', name: 'Patrick O.', age: 56, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '82 reps', resultNumeric: 82, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '35', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '75 reps', resultNumeric: 75, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
         { id: '36', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Push-ups in 2 Minutes', result: '70 reps', resultNumeric: 70, unit: 'reps', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-
-        // Bodyweight - Max Box Jump Men
-        { id: '37', name: 'Edwin G.', age: 38, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '52 in', resultNumeric: 52, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
-        { id: '38', name: 'Andrew S.', age: 32, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '50 in', resultNumeric: 50, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR' },
-        { id: '39', name: 'Tom K.', age: 36, gender: 'male', category: 'bodyweight', event: 'Max Box Jump', result: '48 in', resultNumeric: 48, unit: 'inches', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Gym PR', parkRidgeVerified: true },
 
         // Diagnostics - Body Fat Men
         { id: '40', name: 'Tom K.', age: 36, gender: 'male', category: 'diagnostics', event: 'Lowest Body Fat %', result: '11.2%', resultNumeric: 11.2, unit: 'percent', gymName: 'Moonshot CrossFit', gymUrl: 'https://moonshotcrossfit.com', proofUrl: '#', verified: true, source: 'Moonshot Medical DEXA', parkRidgeVerified: true },
@@ -557,9 +548,9 @@
         html += '<h3 class="text-base font-bold text-brand-light mb-2">HOW SCORING WORKS</h3>';
         html += '<p class="text-brand-gray text-sm font-light leading-relaxed mb-3">Like golf, <strong class="text-brand-light">lower is better</strong>. Your score is the sum of your average rank in each of three pillars:</p>';
         html += '<div class="grid sm:grid-cols-3 gap-3 mb-3">';
-        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean & Jerk, Snatch, Strict Press</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Strength</span><p class="text-brand-gray text-xs mt-1">Squat, Deadlift, Bench, Clean, Strict Press</p></div>';
         html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Cardio</span><p class="text-brand-gray text-xs mt-1">Mile Run, 400m Run, 40-Yard Dash, 2,000m Row</p></div>';
-        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Strict Pull-ups, Push-ups in 2 Min, Max Box Jump</p></div>';
+        html += '<div class="bg-brand-dark/50 rounded p-3 border border-white/5"><span class="text-brand-light text-xs font-heading uppercase tracking-wider font-bold">Calisthenics</span><p class="text-brand-gray text-xs mt-1">Strict Pull-ups, Push-ups in 2 Min</p></div>';
         html += '</div>';
         html += '<p class="text-brand-gray text-xs font-light leading-relaxed"><strong class="text-brand-light">Example:</strong> If your avg strength rank is 2.0, avg cardio rank is 2.5, and avg calisthenics rank is 1.5, your score is <strong class="text-brand-light">6.0</strong>. A perfect score of 3.0 means #1 in every event. You must enter at least one event in each pillar to qualify.</p>';
         html += '</div>';
