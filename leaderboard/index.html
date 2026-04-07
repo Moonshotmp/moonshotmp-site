@@ -53,8 +53,8 @@
 
     <style>
         /* Expandable rows transition */
-        .expandable-rows { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease; }
-        .expandable-rows.expanded { max-height: 2000px; opacity: 1; }
+        .expandable-rows { display: none; }
+        .expandable-rows.expanded { display: table-row-group; }
         /* Mobile card layout for leaderboard entries */
         @media (max-width: 767px) {
             .lb-table thead { display: none; }
