@@ -63,9 +63,9 @@ export default async (request, context) => {
     const gymName = entry.gymName ? escapeHtml(entry.gymName) : "Park Ridge";
 
     const title = `${name} — ${rank ? rank + " " : ""}${eventName} in Park Ridge`;
-    const description = `${result} | ${gymName} | Verified on the Park Ridge Fitness Leaderboard`;
+    const description = `${result} | ${gymName} | Park Ridge Fitness Leaderboard #ParkRidgeFit`;
     const pageUrl = `https://moonshotmp.com/leaderboard/entry/?id=${encodeURIComponent(id)}`;
-    const image = "https://moonshotmp.com/images/moonshotmedical_cloud.png";
+    const image = "https://moonshotmp.com/images/moonshotmptan.png";
 
     const html = `<!DOCTYPE html>
 <html lang="en">

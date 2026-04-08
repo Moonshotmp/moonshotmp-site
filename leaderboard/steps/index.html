@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steps Challenge | Park Ridge Fit</title>
+    <meta name="description" content="How many steps can you walk in a day? Join the Park Ridge steps leaderboard. All you need is a phone or smartwatch.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moonshotmp.com/leaderboard/steps/">
+
+    <!-- Social Meta -->
+    <meta property="og:site_name" content="Moonshot Medical and Performance">
+    <meta property="og:title" content="Steps Challenge | Park Ridge Fit">
+    <meta property="og:description" content="How many steps can you walk in a day? Join the Park Ridge steps leaderboard. All you need is a phone or smartwatch.">
+    <meta property="og:url" content="https://moonshotmp.com/leaderboard/steps/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://moonshotmp.com/images/moonshotmedical_cloud.png">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Steps Challenge | Park Ridge Fit">
+    <meta name="twitter:description" content="How many steps can you walk in a day? Join the Park Ridge steps leaderboard. All you need is a phone or smartwatch.">
+    <meta name="twitter:image" content="https://moonshotmp.com/images/moonshotmedical_cloud.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Tailwind CSS + Global Styles -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/tailwind.css">
+    <link rel="stylesheet" href="/shared/styles.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Park Ridge Steps Challenge",
+        "description": "How many steps can you walk in a day? Join the Park Ridge steps leaderboard. All you need is a phone or smartwatch.",
+        "url": "https://moonshotmp.com/leaderboard/steps/",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Moonshot Medical and Performance",
+            "url": "https://moonshotmp.com",
+            "logo": "https://moonshotmp.com/images/moonshotmptan.png"
+        }
+    }
+    </script>
+
+    <style>
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        main, section, .overflow-x-auto { max-width: 100%; }
+        table { table-layout: fixed; word-break: break-word; }
+        .expandable-rows { display: none; }
+        .expandable-rows.expanded { display: table-row-group; }
+
+        /* Mobile card layout */
+        @media (max-width: 767px) {
+            .lb-table thead { display: none; }
+            .lb-table tbody tr { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); flex-wrap: wrap; }
+            .lb-table tbody tr td { padding: 0; }
+            .lb-table tbody tr td.hidden { display: none !important; }
+        }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; padding: 1rem 1.5rem; border-radius: 0.375rem; font-size: 0.875rem; transform: translateY(1rem); opacity: 0; transition: all 0.3s ease; pointer-events: none; }
+        .toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .toast.success { background: #166534; color: white; }
+        .toast.error { background: #991b1b; color: white; }
+
+        /* Gender toggle */
+        .gender-pill { cursor: pointer; transition: all 0.2s ease; }
+        .gender-pill.active { background-color: var(--brand-gray); color: var(--brand-dark); }
+        .gender-pill:not(.active) { background-color: transparent; color: var(--brand-gray); }
+
+        /* Hide number spinners */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+
+        /* Category radio styling */
+        .cat-radio:checked + label { background-color: var(--brand-gray); color: var(--brand-dark); border-color: var(--brand-gray); }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <!-- Park Ridge Fit Header -->
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-14">
+            <a href="/leaderboard/" class="font-heading text-brand-light text-lg tracking-widest font-bold">PARK RIDGE FIT</a>
+            <div class="flex items-center gap-4">
+                <a href="/leaderboard/" class="text-brand-gray hover:text-brand-light text-xs font-heading uppercase tracking-wider transition">Main Leaderboard</a>
+                <a href="/leaderboard/submit/" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold text-xs px-4 py-1.5 rounded hover:bg-brand-light transition">Log Scores</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-grow pt-14">
+
+        <!-- Hero Section -->
+        <section id="hero" class="py-12 md:py-16 bg-brand-dark bg-texture-concrete relative">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-brand-light mb-4">PARK RIDGE STEPS CHALLENGE</h1>
+                <p class="text-brand-gray text-xl font-light mb-2">How far can you walk? All you need is a phone.</p>
+                <p class="text-brand-gray text-base font-light max-w-2xl mx-auto mb-4">Submit your daily or weekly step count with a screenshot from your phone's health app, Apple Watch, Fitbit, or any step tracker. Open to anyone who lives in, works in, or works out in Park Ridge.</p>
+                <p class="text-brand-gray/60 text-sm font-light mb-6">The average American walks 3,000&ndash;4,000 steps per day. Can you beat that?</p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#submit" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition inline-block text-center w-full sm:w-auto">Submit Your Steps</a>
+                    <a href="#leaderboard" class="btn-outline text-center w-full sm:w-auto">View Rankings</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-10 bg-brand-dark">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-6">HOW IT WORKS</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-5">
+                        <div class="text-3xl font-heading font-bold text-brand-light mb-3">1</div>
+                        <h3 class="text-lg font-bold text-brand-light mb-2">WALK</h3>
+                        <p class="text-brand-gray text-sm font-light">Just walk. Your phone or smartwatch tracks your steps automatically. No gym required.</p>
+                    </div>
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-5">
+                        <div class="text-3xl font-heading font-bold text-brand-light mb-3">2</div>
+                        <h3 class="text-lg font-bold text-brand-light mb-2">SCREENSHOT</h3>
+                        <p class="text-brand-gray text-sm font-light">Take a screenshot of your step count from Apple Health, Fitbit, Google Fit, Garmin, or any app that tracks steps.</p>
+                    </div>
+                    <div class="bg-brand-slate border border-white/10 rounded-lg p-5">
+                        <div class="text-3xl font-heading font-bold text-brand-light mb-3">3</div>
+                        <h3 class="text-lg font-bold text-brand-light mb-2">SUBMIT</h3>
+                        <p class="text-brand-gray text-sm font-light">Fill out the form below with your step count, date, and a link to your screenshot. Rankings update in real time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard Section -->
+        <section id="leaderboard" class="py-10 bg-brand-dark">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-4">RANKINGS</h2>
+
+                <!-- Event Tabs (Daily / Weekly) -->
+                <div class="flex flex-wrap justify-center gap-2 mb-4 border-b border-white/10 pb-4">
+                    <button data-event="daily-steps" class="event-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-brand-light text-brand-light transition">Daily Record</button>
+                    <button data-event="weekly-steps" class="event-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Weekly Total</button>
+                </div>
+
+                <!-- Gender Toggle -->
+                <div class="flex justify-center mb-6">
+                    <div class="inline-flex bg-brand-slate rounded-full p-1 border border-white/10">
+                        <button data-gender="male" class="gender-btn bg-white text-brand-dark rounded-full px-6 py-2 text-sm font-heading uppercase tracking-wider transition font-semibold">Men</button>
+                        <button data-gender="female" class="gender-btn text-brand-gray rounded-full px-6 py-2 text-sm font-heading uppercase tracking-wider hover:text-brand-light transition">Women</button>
+                    </div>
+                </div>
+
+                <!-- Age Filter -->
+                <div class="flex flex-wrap justify-center items-center gap-3 mb-6">
+                    <select id="age-filter" class="bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-1.5 text-sm font-heading uppercase tracking-wider focus:outline-none focus:border-brand-gray transition">
+                        <option value="all">All Ages</option>
+                        <option value="0-19">Under 20</option>
+                        <option value="20-29">20-29</option>
+                        <option value="30-39">30-39</option>
+                        <option value="40-49">40-49</option>
+                        <option value="50-99">50+</option>
+                    </select>
+                </div>
+
+                <!-- Leaderboard Content (rendered by JS) -->
+                <div id="leaderboard-content"></div>
+            </div>
+        </section>
+
+        <!-- Submission Standards -->
+        <section class="py-10 bg-brand-slate border-t border-white/5">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-6">WHAT COUNTS</h2>
+                <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-brand-light mb-3">STEP COUNT PROOF</h3>
+                    <p class="text-brand-gray text-sm font-light leading-relaxed mb-4">Submit a screenshot from any step-tracking app showing your step count and the date. We accept Apple Health, Apple Watch, Fitbit, Google Fit, Samsung Health, Garmin, or any app that tracks steps.</p>
+                    <p class="text-brand-gray text-sm font-light leading-relaxed mb-4">Your screenshot must clearly show:</p>
+                    <ul class="text-brand-gray text-sm font-light leading-relaxed list-disc pl-5 space-y-1 mb-4">
+                        <li>The step count</li>
+                        <li>The date the steps were recorded</li>
+                        <li>The app or device name</li>
+                    </ul>
+                    <p class="text-brand-gray text-sm font-light leading-relaxed"><strong class="text-brand-light">Daily Record:</strong> Your best single-day step count. <strong class="text-brand-light">Weekly Total:</strong> Your total steps across 7 consecutive days (Monday&ndash;Sunday).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submit Section -->
+        <section id="submit" class="py-10 bg-brand-dark border-t border-white/5">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-2">SUBMIT YOUR STEPS</h2>
+                <p class="text-brand-gray text-center mb-6">Takes 30 seconds. No account needed.</p>
+
+                <form id="steps-form" class="bg-brand-slate border border-white/10 rounded-lg p-4 md:p-6 space-y-4">
+                    <!-- Name -->
+                    <div>
+                        <label for="input-name" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Full Name</label>
+                        <input type="text" id="input-name" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Jane Smith">
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="input-email" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Email</label>
+                        <input type="email" id="input-email" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="jane@example.com">
+                        <p class="text-brand-gray/50 text-xs mt-1">Only used to manage your submissions. We don't sell data.</p>
+                    </div>
+
+                    <!-- Gender -->
+                    <div>
+                        <label class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Gender</label>
+                        <div class="flex gap-2">
+                            <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="M">Male</button>
+                            <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="F">Female</button>
+                        </div>
+                    </div>
+
+                    <!-- Age -->
+                    <div>
+                        <label for="input-age" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Age</label>
+                        <input type="number" id="input-age" min="18" max="120" required class="w-24 bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="18+">
+                    </div>
+
+                    <!-- Step Count -->
+                    <div>
+                        <label for="input-steps" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Step Count</label>
+                        <input type="number" id="input-steps" min="1" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="e.g. 23456">
+                    </div>
+
+                    <!-- Category: Daily or Weekly -->
+                    <div>
+                        <label class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Category</label>
+                        <div class="flex gap-2">
+                            <input type="radio" name="step-category" id="cat-daily" value="daily-steps" class="cat-radio hidden" checked>
+                            <label for="cat-daily" class="font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20 text-brand-gray cursor-pointer transition hover:border-brand-gray">Daily Record</label>
+                            <input type="radio" name="step-category" id="cat-weekly" value="weekly-steps" class="cat-radio hidden">
+                            <label for="cat-weekly" class="font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20 text-brand-gray cursor-pointer transition hover:border-brand-gray">Weekly Total</label>
+                        </div>
+                    </div>
+
+                    <!-- Date -->
+                    <div>
+                        <label for="input-date" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Date of Steps</label>
+                        <input type="date" id="input-date" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray">
+                    </div>
+
+                    <!-- Screenshot Link -->
+                    <div>
+                        <label for="input-proof" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Link to Screenshot</label>
+                        <input type="url" id="input-proof" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="https://imgur.com/your-screenshot">
+                        <p class="text-brand-gray/50 text-xs mt-1">Upload your screenshot to Imgur, Google Photos, or iCloud and paste the link here.</p>
+                    </div>
+
+                    <!-- Device / App -->
+                    <div>
+                        <label for="input-device" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Device / App</label>
+                        <select id="input-device" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray">
+                            <option value="">Select your device or app</option>
+                            <option value="Apple Watch">Apple Watch</option>
+                            <option value="iPhone Health">iPhone Health</option>
+                            <option value="Fitbit">Fitbit</option>
+                            <option value="Google Fit">Google Fit</option>
+                            <option value="Samsung Health">Samsung Health</option>
+                            <option value="Garmin">Garmin</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Waiver -->
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="waiver" required class="mt-1 w-4 h-4 accent-white flex-shrink-0">
+                        <span class="text-brand-gray text-xs leading-relaxed">I confirm that my step count is accurate and taken from my own device. I release Park Ridge Fit and Moonshot Medical and Performance from liability. <a href="/leaderboard/terms/" class="text-brand-light underline">Terms & Conditions</a> &middot; <a href="/privacy/" class="text-brand-light underline">Privacy Policy</a></span>
+                    </label>
+
+                    <!-- Error -->
+                    <p id="form-error" class="text-red-400 text-xs text-center hidden"></p>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="btn-submit" class="btn-primary w-full rounded text-center text-lg tracking-wider">Submit Steps</button>
+                </form>
+
+                <!-- Success state (hidden by default) -->
+                <div id="success-state" class="hidden text-center py-8">
+                    <div class="w-16 h-16 rounded-full border-2 border-green-500 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-2xl text-brand-light mb-4">Steps Submitted!</h3>
+                    <p class="text-brand-gray text-sm mb-2">Your entry will appear on the leaderboard once reviewed.</p>
+                    <p class="text-brand-gray text-sm mb-6">Keep walking and submit again tomorrow.</p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="#leaderboard" class="btn-primary rounded text-center px-8">View Rankings</a>
+                        <button onclick="resetForm()" class="btn-outline rounded text-center px-8">Submit Another</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cross-sell CTAs -->
+        <section class="py-10 bg-brand-slate">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-brand-light mb-3">READY FOR A BIGGER CHALLENGE?</h3>
+                        <p class="text-brand-gray text-sm font-light mb-4">Submit your lifts, runs, and reps on the main Park Ridge Fitness Leaderboard.</p>
+                        <a href="/leaderboard/" class="btn-primary text-sm px-6 py-2.5">Main Leaderboard</a>
+                    </div>
+                    <div class="bg-brand-dark border border-white/10 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-brand-light mb-3">OPTIMIZE YOUR HEALTH</h3>
+                        <p class="text-brand-gray text-sm font-light mb-4">Blood panels, hormone optimization, DEXA scans, and more at Moonshot Medical.</p>
+                        <a href="/medical/" class="btn-primary text-sm px-6 py-2.5">Explore Medical Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Park Ridge Fit Footer -->
+    <footer class="bg-black border-t border-white/10 py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-brand-gray text-xs mb-2">parkridgefit.com</p>
+            <p class="text-brand-gray/50 text-xs">Built by <a href="https://moonshotmp.com" class="text-brand-gray hover:text-brand-light transition underline">Moonshot Medical and Performance</a> &mdash; 542 Busse Hwy, Park Ridge, IL 60068</p>
+        </div>
+    </footer>
+
+    <!-- Toast container -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+    (function() {
+        /* =========================================
+           Park Ridge Steps Challenge
+           ========================================= */
+
+        var API_BASE = 'https://owbgtzil2l.execute-api.us-east-1.amazonaws.com';
+
+        /* ----- State ----- */
+        var LIVE_DATA = [];
+        var activeEvent = 'daily-steps';
+        var activeGender = 'male';
+        var activeAgeRange = 'all';
+        var selectedGender = null;
+
+        /* ----- Utility functions ----- */
+
+        function formatSteps(num) {
+            if (!num && num !== 0) return '0';
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function getRankStyle(rank) {
+            if (rank === 1) return 'text-yellow-400';
+            if (rank === 2) return 'text-gray-300';
+            if (rank === 3) return 'text-amber-600';
+            return 'text-brand-light';
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+                var d = new Date(dateStr);
+                if (isNaN(d.getTime())) return dateStr;
+                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            } catch (e) { return dateStr; }
+        }
+
+        /* ----- Fetch leaderboard data ----- */
+        async function fetchLeaderboardData() {
+            try {
+                var res = await fetch(API_BASE + '/api/entries?category=steps');
+                if (!res.ok) throw new Error('Failed to fetch');
+                var data = await res.json();
+                LIVE_DATA = (data.entries || []).map(function(e) {
+                    return {
+                        id: e.id || e.shareId,
+                        name: e.name,
+                        age: e.age || null,
+                        gender: (e.gender || 'unknown').toLowerCase(),
+                        category: e.category,
+                        event: e.event,
+                        result: e.result,
+                        resultNumeric: e.resultNumeric,
+                        proofUrl: e.proofUrl || null,
+                        verified: e.status === 'verified' || e.verified === true,
+                        source: e.source || null,
+                        date: e.date || e.createdAt || null,
+                        parkRidgeVerified: e.parkRidgeVerified || e.parkRidgeResident || false
+                    };
+                });
+            } catch (err) {
+                console.error('Failed to load steps data:', err);
+            }
+            renderLeaderboard();
+        }
+
+        /* ----- Render leaderboard table ----- */
+        function renderLeaderboard() {
+            var container = document.getElementById('leaderboard-content');
+            if (!container) return;
+
+            // Filter by event + gender
+            var filtered = LIVE_DATA.filter(function(d) {
+                return d.event === activeEvent && d.gender === activeGender;
+            });
+
+            // Filter by age range
+            if (activeAgeRange !== 'all') {
+                var parts = activeAgeRange.split('-');
+                var minAge = parseInt(parts[0]);
+                var maxAge = parseInt(parts[1]);
+                filtered = filtered.filter(function(d) { return d.age && d.age >= minAge && d.age <= maxAge; });
+            }
+
+            // Sort by steps (higher is better)
+            filtered.sort(function(a, b) { return b.resultNumeric - a.resultNumeric; });
+
+            var html = '';
+
+            if (filtered.length === 0) {
+                html += '<div class="bg-brand-slate border border-white/10 rounded-lg p-5 text-center">';
+                html += '<p class="text-brand-gray mb-2">No entries yet for this category.</p>';
+                html += '<a href="#submit" class="text-brand-light underline hover:text-white transition text-sm">Be the first to submit!</a>';
+                html += '</div>';
+                container.innerHTML = html;
+                return;
+            }
+
+            html += '<div class="overflow-x-auto">';
+            html += '<table class="w-full text-sm lb-table">';
+
+            // Header
+            html += '<thead><tr class="text-brand-gray uppercase tracking-wider text-xs border-b border-white/10">';
+            html += '<th class="text-left py-2 pr-3 w-12">Rank</th>';
+            html += '<th class="text-left py-2 pr-3">Name</th>';
+            html += '<th class="text-left py-2 pr-3">Steps</th>';
+            html += '<th class="text-left py-2 pr-3 hidden md:table-cell">Date</th>';
+            html += '<th class="text-left py-2 pr-3">Proof</th>';
+            html += '<th class="text-left py-2 hidden md:table-cell">Device</th>';
+            html += '</tr></thead>';
+
+            // Top 3 visible
+            html += '<tbody>';
+            var visibleCount = Math.min(3, filtered.length);
+            for (var i = 0; i < visibleCount; i++) {
+                html += renderRow(filtered[i], i + 1);
+            }
+            html += '</tbody>';
+
+            // Expandable rest
+            if (filtered.length > 3) {
+                var extraCount = filtered.length - 3;
+                var expandId = 'expand-' + activeEvent;
+                html += '<tbody id="' + expandId + '" class="expandable-rows">';
+                for (var j = 3; j < filtered.length; j++) {
+                    html += renderRow(filtered[j], j + 1);
+                }
+                html += '</tbody>';
+                html += '</table></div>';
+                html += '<button type="button" class="expand-btn mt-3 text-brand-gray hover:text-brand-light text-sm font-heading uppercase tracking-wider transition" data-target="' + expandId + '" data-count="' + extraCount + '">';
+                html += 'Show All (' + extraCount + ' more)';
+                html += '</button>';
+            } else {
+                html += '</table></div>';
+            }
+
+            container.innerHTML = html;
+
+            // Attach expand handlers
+            container.querySelectorAll('.expand-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var target = document.getElementById(btn.getAttribute('data-target'));
+                    var count = btn.getAttribute('data-count');
+                    if (!target) return;
+                    if (target.classList.contains('expanded')) {
+                        target.classList.remove('expanded');
+                        btn.textContent = 'Show All (' + count + ' more)';
+                    } else {
+                        target.classList.add('expanded');
+                        btn.textContent = 'Show Less';
+                    }
+                });
+            });
+        }
+
+        function renderRow(entry, rank) {
+            var rankClass = getRankStyle(rank);
+            var html = '<tr class="border-b border-white/5">';
+
+            // Rank
+            html += '<td class="py-2.5 pr-3 font-heading font-bold text-base ' + rankClass + '">' + rank + '</td>';
+
+            // Name
+            html += '<td class="py-2.5 pr-3 text-brand-light" data-label="Name">';
+            html += escapeHtml(entry.name);
+            if (entry.age) html += ' <span class="text-brand-gray text-xs">(' + entry.age + ')</span>';
+            if (entry.verified) html += ' <span class="text-green-400 text-xs" title="Verified">&#10003;</span>';
+            if (entry.parkRidgeVerified) html += ' <span class="text-blue-400 text-xs ml-1" title="Park Ridge Resident">&#9679; PR</span>';
+            html += '</td>';
+
+            // Steps
+            html += '<td class="py-2.5 pr-3 text-brand-light font-semibold" data-label="Steps">' + formatSteps(entry.resultNumeric) + '</td>';
+
+            // Date
+            html += '<td class="py-2.5 pr-3 text-brand-gray hidden md:table-cell">' + formatDate(entry.date) + '</td>';
+
+            // Proof
+            html += '<td class="py-2.5 pr-3">';
+            if (entry.proofUrl && entry.proofUrl !== '#') {
+                html += '<a href="' + escapeHtml(entry.proofUrl) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-brand-light hover:text-white text-xs font-heading uppercase tracking-wider border border-white/20 rounded px-2.5 py-1 hover:bg-white/10 transition" title="View screenshot">';
+                html += '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
+                html += 'View';
+                html += '</a>';
+            } else {
+                html += '<span class="text-brand-gray/30 text-xs">No proof</span>';
+            }
+            html += '</td>';
+
+            // Device/Source
+            html += '<td class="py-2.5 text-brand-gray text-xs hidden md:table-cell">' + escapeHtml(entry.source || '') + '</td>';
+
+            html += '</tr>';
+            return html;
+        }
+
+        /* ----- Event tab switching ----- */
+        document.querySelectorAll('.event-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                activeEvent = tab.getAttribute('data-event');
+                document.querySelectorAll('.event-tab').forEach(function(t) {
+                    t.classList.remove('border-brand-light', 'text-brand-light');
+                    t.classList.add('border-transparent', 'text-brand-gray');
+                });
+                tab.classList.remove('border-transparent', 'text-brand-gray');
+                tab.classList.add('border-brand-light', 'text-brand-light');
+                renderLeaderboard();
+            });
+        });
+
+        /* ----- Gender toggle (leaderboard) ----- */
+        document.querySelectorAll('.gender-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                activeGender = btn.getAttribute('data-gender');
+                document.querySelectorAll('.gender-btn').forEach(function(b) {
+                    b.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
+                    b.classList.add('text-brand-gray');
+                });
+                btn.classList.remove('text-brand-gray');
+                btn.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
+                renderLeaderboard();
+            });
+        });
+
+        /* ----- Age filter ----- */
+        document.getElementById('age-filter').addEventListener('change', function() {
+            activeAgeRange = this.value;
+            renderLeaderboard();
+        });
+
+        /* ----- Gender toggle (form) ----- */
+        var genderPills = document.querySelectorAll('.gender-pill');
+        genderPills.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                genderPills.forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                selectedGender = btn.getAttribute('data-gender');
+            });
+        });
+
+        /* ----- Set default date to today ----- */
+        var dateInput = document.getElementById('input-date');
+        if (dateInput) {
+            var today = new Date();
+            var yyyy = today.getFullYear();
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var dd = String(today.getDate()).padStart(2, '0');
+            dateInput.value = yyyy + '-' + mm + '-' + dd;
+            dateInput.max = yyyy + '-' + mm + '-' + dd;
+        }
+
+        /* ----- Form submission ----- */
+        var form = document.getElementById('steps-form');
+        var btnSubmit = document.getElementById('btn-submit');
+        var formError = document.getElementById('form-error');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var name = document.getElementById('input-name').value.trim();
+            var email = document.getElementById('input-email').value.trim();
+            var age = parseInt(document.getElementById('input-age').value);
+            var steps = parseInt(document.getElementById('input-steps').value);
+            var category = document.querySelector('input[name="step-category"]:checked');
+            var eventType = category ? category.value : 'daily-steps';
+            var date = document.getElementById('input-date').value;
+            var proofUrl = document.getElementById('input-proof').value.trim();
+            var device = document.getElementById('input-device').value;
+            var waiver = document.getElementById('waiver');
+
+            // Validate
+            if (!name) { showFormError('Name is required.'); return; }
+            if (!email || email.indexOf('@') === -1) { showFormError('Valid email is required.'); return; }
+            if (!selectedGender) { showFormError('Select your gender.'); return; }
+            if (isNaN(age) || age < 18 || age > 120) { showFormError('Enter a valid age (must be 18+).'); return; }
+            if (isNaN(steps) || steps < 1) { showFormError('Enter a valid step count.'); return; }
+            if (!date) { showFormError('Date is required.'); return; }
+            if (!waiver || !waiver.checked) { showToast('Please agree to the terms.', true); return; }
+
+            formError.classList.add('hidden');
+
+            // Loading state
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Submitting...';
+
+            var payload = {
+                name: name,
+                email: email,
+                gender: selectedGender,
+                age: age,
+                category: 'steps',
+                event: eventType,
+                result: formatSteps(steps) + ' steps',
+                resultNumeric: steps,
+                proofUrl: proofUrl || null,
+                source: device || null,
+                date: date,
+                gymName: null
+            };
+
+            fetch(API_BASE + '/api/entries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res) {
+                if (!res.ok) {
+                    return res.json().then(function(data) {
+                        throw new Error(data.error || 'Submission failed');
+                    });
+                }
+                return res.json();
+            })
+            .then(function() {
+                form.classList.add('hidden');
+                document.getElementById('success-state').classList.remove('hidden');
+                showToast('Steps submitted!', false);
+            })
+            .catch(function(err) {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Submit Steps';
+                showToast(err.message || 'Something went wrong. Try again.', true);
+            });
+        });
+
+        function showFormError(msg) {
+            formError.textContent = msg;
+            formError.classList.remove('hidden');
+        }
+
+        /* ----- Reset form for another submission ----- */
+        window.resetForm = function() {
+            form.reset();
+            form.classList.remove('hidden');
+            document.getElementById('success-state').classList.add('hidden');
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Submit Steps';
+            selectedGender = null;
+            genderPills.forEach(function(b) { b.classList.remove('active'); });
+            formError.classList.add('hidden');
+            // Reset date to today
+            if (dateInput) {
+                var today = new Date();
+                dateInput.value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+            }
+        };
+
+        /* ----- Toast ----- */
+        function showToast(message, isError) {
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + (isError ? 'error' : 'success') + ' show';
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(function() {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        /* ----- Smooth scroll for anchor links ----- */
+        document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                var target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        /* ----- Initial render ----- */
+        fetchLeaderboardData();
+
+    })();
+    </script>
+</body>
+</html>
