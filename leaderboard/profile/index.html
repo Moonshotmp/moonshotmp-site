@@ -513,7 +513,7 @@
 
     var idToLabel = {
         'back-squat': 'Back Squat', 'deadlift': 'Deadlift', 'bench-press': 'Bench Press',
-        'clean': 'Clean', 'shoulder-to-overhead': 'Overhead Press',
+        'clean': 'Clean', 'shoulder-to-overhead': 'Overhead Press', 'overhead-press': 'Overhead Press',
         'mile-run': 'Mile Run', '400m-run': '400m Run', '2k-row': '2,000m Row',
         'pullups-2min': 'Strict Pull-ups', 'pushups-2min': 'Push-ups',
         'dips-2min': 'Dips', 'burpees-2min': 'Burpees'
@@ -578,8 +578,8 @@
         html += '<div class="flex flex-wrap items-center gap-3 text-xs text-brand-gray">';
         if (entry.bodyweight) html += '<span>' + entry.bodyweight + ' lbs BW</span>';
         if (entry.source) html += '<span>' + escapeHtml(entry.source) + '</span>';
-        if (entry.createdAt) {
-            var d = new Date(entry.createdAt);
+        if (entry.submittedAt) {
+            var d = new Date(entry.submittedAt);
             html += '<span>' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '</span>';
         }
         html += '</div>';
@@ -823,8 +823,9 @@
         var entry = currentEntries.find(function(e) { return e.id === entryId; });
         if (!entry) return;
 
-        var text = 'I just posted ' + entry.result + ' on ' + entry.event + ' on the Park Ridge Fitness Leaderboard! Think you can beat it?';
-        var url = 'https://moonshotmp.com/leaderboard/';
+        var eventLabel = idToLabel[entry.event] || entry.event;
+        var text = 'I just posted ' + entry.result + ' on ' + eventLabel + ' on the Park Ridge Fitness Leaderboard! Think you can beat it? #ParkRidgeFit';
+        var url = 'https://moonshotmp.com/leaderboard/entry/?id=' + (entry.shareId || entry.id);
 
         if (navigator.share) {
             navigator.share({ title: 'Park Ridge Fitness Leaderboard', text: text, url: url }).catch(function() {});

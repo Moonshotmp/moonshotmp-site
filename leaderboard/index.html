@@ -316,6 +316,7 @@
                 // Normalize API field names to match rendering expectations
                 return {
                     id: e.id || e.shareId,
+                    shareId: e.shareId || null,
                     name: e.name,
                     age: e.age || null,
                     gender: (e.gender || 'unknown').toLowerCase(),
