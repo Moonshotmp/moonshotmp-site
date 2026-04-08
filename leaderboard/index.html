@@ -109,17 +109,6 @@
     <!-- Main Content Area -->
     <main id="main-content" class="flex-grow pt-20">
 
-        <!-- Under Construction -->
-        <section class="py-24 md:py-32 bg-brand-dark bg-texture-concrete relative">
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold text-brand-light mb-6">COMING SOON</h1>
-                <p class="text-brand-gray text-xl font-light mb-4">The Park Ridge Fitness Leaderboard is being updated.</p>
-                <p class="text-brand-gray text-base font-light max-w-2xl mx-auto mb-8">We're making some changes based on community feedback. Check back soon.</p>
-                <a href="https://moonshotmp.com" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition inline-block text-center">Back to Moonshot</a>
-            </div>
-        </section>
-
-        <!-- ORIGINAL CONTENT HIDDEN - uncomment to restore
         <section id="hero" class="py-12 md:py-16 bg-brand-dark bg-texture-concrete relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-brand-light mb-4">THE PARK RIDGE FITNESS LEADERBOARD</h1>
@@ -128,13 +117,10 @@
                 <p class="text-brand-gray/60 text-sm font-light mb-6">Open to anyone who lives in, works in, or works out in Park Ridge.</p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
                     <a href="/leaderboard/submit/" class="bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold px-8 py-3 rounded hover:bg-brand-light transition inline-block text-center w-full sm:w-auto">Log Your Scores</a>
-                    <a href="#leaderboard" class="btn-outline text-center w-full sm:w-auto">View Rankings</a>
                 </div>
             </div>
         </section>
 
-        <!-- ALL CONTENT BELOW HIDDEN DURING CONSTRUCTION - uncomment to restore -->
-        <!--
         <section id="how-it-works" class="py-10 bg-brand-dark">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-6">HOW IT WORKS</h2>
@@ -168,44 +154,14 @@
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-brand-light text-center mb-4">RANKINGS</h2>
 
-                <!-- Category Tabs -->
-                <div class="flex flex-wrap justify-center gap-2 mb-4 border-b border-white/10 pb-4">
-                    <button data-category="fittest" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-brand-light text-brand-light transition">Fittest</button>
-                    <button data-category="strength" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Strength</button>
-                    <button data-category="speed" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Speed &amp; Endurance</button>
-                    <button data-category="bodyweight" class="cat-tab text-sm font-heading uppercase tracking-wider px-4 py-2 border-b-2 border-transparent text-brand-gray hover:text-brand-light transition">Bodyweight</button>
+                <!-- COMING SOON — tabs/filters/scores hidden while polling members -->
+                <div class="bg-brand-slate border border-white/10 rounded-lg p-10 text-center my-8">
+                    <h3 class="text-2xl font-bold text-brand-light mb-3">COMING SOON</h3>
+                    <p class="text-brand-gray text-base font-light mb-4">We're making some changes to the rankings based on community feedback.</p>
+                    <p class="text-brand-gray text-sm font-light">Scores are still being collected. Check back soon for the updated leaderboard.</p>
                 </div>
-
-                <!-- Gender Toggle -->
-                <div class="flex justify-center mb-6">
-                    <div class="inline-flex bg-brand-slate rounded-full p-1 border border-white/10">
-                        <button data-gender="male" class="gender-btn bg-white text-brand-dark rounded-full px-6 py-2 text-sm font-heading uppercase tracking-wider transition font-semibold">Men</button>
-                        <button data-gender="female" class="gender-btn text-brand-gray rounded-full px-6 py-2 text-sm font-heading uppercase tracking-wider hover:text-brand-light transition">Women</button>
-                    </div>
-                </div>
-
-                <!-- Filters -->
-                <div class="flex flex-wrap justify-center items-center gap-3 mb-6">
-                    <select id="season-filter" class="bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-1.5 text-sm font-heading uppercase tracking-wider focus:outline-none focus:border-brand-gray transition">
-                        <option value="2026">2026 Season</option>
-                        <option value="all-time">All-Time Records</option>
-                    </select>
-                    <select id="age-filter" class="bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-1.5 text-sm font-heading uppercase tracking-wider focus:outline-none focus:border-brand-gray transition">
-                        <option value="all">All Ages</option>
-                        <option value="0-19">Under 20</option>
-                        <option value="20-29">20-29</option>
-                        <option value="30-39">30-39</option>
-                        <option value="40-49">40-49</option>
-                        <option value="50-99">50+</option>
-                    </select>
-                    <label class="inline-flex items-center gap-2 bg-brand-dark border border-white/20 rounded px-4 py-1.5 cursor-pointer hover:border-brand-gray transition">
-                        <input type="checkbox" id="proof-filter" class="w-3.5 h-3.5 accent-white">
-                        <span class="text-sm font-heading uppercase tracking-wider text-brand-light">Proof Only</span>
-                    </label>
-                </div>
-
-                <!-- Leaderboard Content (rendered by JS) -->
-                <div id="leaderboard-content"></div>
+                <!-- Original leaderboard content div — JS won't render into it -->
+                <div id="leaderboard-content" style="display:none"></div>
             </div>
         </section>
 
@@ -287,7 +243,6 @@
                 </div>
             </div>
         </section>
-        END OF HIDDEN CONTENT -->
 
     </main>
 
