@@ -176,6 +176,10 @@
 
                 <!-- Filters -->
                 <div class="flex flex-wrap justify-center items-center gap-3 mb-6">
+                    <select id="season-filter" class="bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-1.5 text-sm font-heading uppercase tracking-wider focus:outline-none focus:border-brand-gray transition">
+                        <option value="2026">2026 Season</option>
+                        <option value="all-time">All-Time Records</option>
+                    </select>
                     <select id="age-filter" class="bg-brand-dark border border-white/20 rounded text-brand-light px-4 py-1.5 text-sm font-heading uppercase tracking-wider focus:outline-none focus:border-brand-gray transition">
                         <option value="all">All Ages</option>
                         <option value="0-19">Under 20</option>
@@ -306,7 +310,7 @@
 
     async function fetchLeaderboardData() {
         try {
-            var res = await fetch(API_BASE + '/api/entries');
+            var res = await fetch(API_BASE + '/api/entries?season=' + activeSeason);
             if (!res.ok) throw new Error('Failed to fetch');
             var data = await res.json();
             LIVE_DATA = (data.entries || []).map(function(e) {
@@ -362,6 +366,7 @@
     /* ----- State ----- */
     var activeCategory = 'fittest';
     var activeGender = 'male';
+    var activeSeason = '2026';
     var activeAgeRange = 'all';
     var proofOnly = false;
 
@@ -895,6 +900,12 @@
             btn.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
             renderLeaderboard(LIVE_DATA, activeCategory, activeGender);
         });
+    });
+
+    /* ----- Season filter ----- */
+    document.getElementById('season-filter').addEventListener('change', function() {
+        activeSeason = this.value;
+        fetchLeaderboardData();
     });
 
     /* ----- Age filter ----- */
