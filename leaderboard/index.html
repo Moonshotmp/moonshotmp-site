@@ -699,10 +699,11 @@
         html += '<h3 class="text-lg md:text-xl font-bold text-brand-light mb-4">' + escapeHtml(eventName.toUpperCase());
         if (isStrength) html += ' &mdash; 1 REP MAX';
         if (standard) {
-            html += ' <span class="inline-block relative group cursor-help align-middle">';
+            var tipId = 'tip-' + category + '-' + eventName.replace(/[^a-zA-Z0-9]/g, '-');
+            html += ' <button type="button" class="inline-block align-middle info-tip-btn" data-tip="' + tipId + '" aria-label="View standards">';
             html += '<svg class="w-4 h-4 inline text-brand-gray/50 hover:text-brand-gray transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path stroke-width="1.5" stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg>';
-            html += '<span class="invisible group-hover:visible absolute left-0 top-6 z-50 w-64 bg-brand-dark border border-white/20 rounded-lg p-3 text-xs text-brand-gray font-body normal-case tracking-normal shadow-xl">' + escapeHtml(standard) + '</span>';
-            html += '</span>';
+            html += '</button>';
+            html += '<div id="' + tipId + '" class="hidden mt-2 mb-3 bg-brand-slate border border-white/10 rounded-lg p-3 text-xs text-brand-gray font-body normal-case tracking-normal">' + escapeHtml(standard) + '</div>';
         }
         html += '</h3>';
 
@@ -872,7 +873,31 @@
                 }
             });
         });
+
+        // Attach info tip click handlers
+        container.querySelectorAll('.info-tip-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var tipId = btn.getAttribute('data-tip');
+                var tip = document.getElementById(tipId);
+                if (!tip) return;
+                // Close all other tips first
+                document.querySelectorAll('.info-tip-btn + div:not(.hidden)').forEach(function(el) {
+                    if (el.id !== tipId) el.classList.add('hidden');
+                });
+                tip.classList.toggle('hidden');
+            });
+        });
     }
+
+    // Close tips when clicking outside
+    document.addEventListener('click', function() {
+        document.querySelectorAll('.info-tip-btn').forEach(function(btn) {
+            var tipId = btn.getAttribute('data-tip');
+            var tip = document.getElementById(tipId);
+            if (tip) tip.classList.add('hidden');
+        });
+    });
 
     /* ----- Tab switching ----- */
     document.querySelectorAll('.cat-tab').forEach(function(tab) {
