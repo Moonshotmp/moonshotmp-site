@@ -194,6 +194,42 @@
             </div>
         </section>
 
+        <!-- Connect Health App -->
+        <section class="py-10 bg-brand-dark border-t border-white/5">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-brand-light text-center mb-2">CONNECT YOUR DEVICE</h2>
+                <p class="text-brand-gray text-sm text-center mb-6">Link your fitness tracker and we'll automatically pull your best step counts. No screenshots needed.</p>
+
+                <div id="connect-form" class="bg-brand-slate border border-white/10 rounded-lg p-5 mb-6">
+                    <div class="space-y-3 mb-4">
+                        <input type="text" id="connect-name" placeholder="Full Name" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray">
+                        <input type="email" id="connect-email" placeholder="Email" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray">
+                        <div class="flex gap-3">
+                            <select id="connect-gender" class="bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray">
+                                <option value="">Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <input type="number" id="connect-age" placeholder="Age" min="18" max="120" class="w-24 bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray">
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="connectGoogle()" class="flex-1 bg-white text-brand-dark font-heading uppercase tracking-wider font-semibold text-sm px-4 py-3 rounded hover:bg-brand-light transition flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                            Connect Google Fit
+                        </button>
+                        <button onclick="connectFitbit()" class="flex-1 bg-[#00B0B9] text-white font-heading uppercase tracking-wider font-semibold text-sm px-4 py-3 rounded hover:opacity-90 transition flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="20" r="2.5"/><circle cx="4" cy="12" r="2"/><circle cx="20" cy="12" r="2"/></svg>
+                            Connect Fitbit
+                        </button>
+                    </div>
+                </div>
+
+                <p class="text-brand-gray/50 text-xs text-center">We only read your step count data. We never modify your health data or access anything else.</p>
+                <p class="text-brand-gray/50 text-xs text-center mt-1">Apple Watch users: Apple Health doesn't support web connections. Use the manual form below or screenshot your step count.</p>
+            </div>
+        </section>
+
         <!-- Submit Section -->
         <section id="submit" class="py-10 bg-brand-dark border-t border-white/5">
             <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -715,6 +751,63 @@
         /* ----- Initial render ----- */
         fetchLeaderboardData();
 
+    })();
+
+    /* =========================================
+       Health App OAuth Connect
+       ========================================= */
+
+    var API_HEALTH = 'https://owbgtzil2l.execute-api.us-east-1.amazonaws.com/api/health';
+
+    function connectGoogle() {
+        var name = document.getElementById('connect-name').value.trim();
+        var email = document.getElementById('connect-email').value.trim();
+        var gender = document.getElementById('connect-gender').value;
+        var age = document.getElementById('connect-age').value;
+        if (!name || !email) { alert('Please enter your name and email first.'); return; }
+        var params = new URLSearchParams({ name: name, email: email, gender: gender, age: age });
+        window.location.href = API_HEALTH + '/google/auth?' + params;
+    }
+
+    function connectFitbit() {
+        var name = document.getElementById('connect-name').value.trim();
+        var email = document.getElementById('connect-email').value.trim();
+        var gender = document.getElementById('connect-gender').value;
+        var age = document.getElementById('connect-age').value;
+        if (!name || !email) { alert('Please enter your name and email first.'); return; }
+        var params = new URLSearchParams({ name: name, email: email, gender: gender, age: age });
+        window.location.href = API_HEALTH + '/fitbit/auth?' + params;
+    }
+
+    // Check for success/error params on page load
+    (function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success')) {
+            var source = urlParams.get('success');
+            var daily = parseInt(urlParams.get('daily')) || 0;
+            var weekly = parseInt(urlParams.get('weekly')) || 0;
+            var msg = 'Connected to ' + source + '! ';
+            if (daily > 0) msg += 'Best day: ' + daily.toLocaleString() + ' steps. ';
+            if (weekly > 0) msg += 'Best week: ' + weekly.toLocaleString() + ' steps.';
+            setTimeout(function() {
+                var toast = document.getElementById('toast');
+                toast.textContent = msg;
+                toast.className = 'toast success show';
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(function() { toast.classList.remove('show'); }, 6000);
+            }, 500);
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+        if (urlParams.get('error')) {
+            setTimeout(function() {
+                var toast = document.getElementById('toast');
+                toast.textContent = 'Connection failed. Please try again.';
+                toast.className = 'toast error show';
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(function() { toast.classList.remove('show'); }, 4000);
+            }, 500);
+            window.history.replaceState({}, '', window.location.pathname);
+        }
     })();
     </script>
 </body>

@@ -54,15 +54,20 @@ export default async (request, context) => {
       return context.next();
     }
 
+    const idToLabel = {
+      'back-squat': 'Back Squat', 'deadlift': 'Deadlift', 'bench-press': 'Bench Press',
+      'clean': 'Clean', 'shoulder-to-overhead': 'Overhead Press', 'overhead-press': 'Overhead Press',
+      'mile-run': 'Mile Run', '400m-run': '400m Run', '2k-row': '2,000m Row',
+      'pullups-2min': 'Strict Pull-ups in 2 Minutes', 'pushups-2min': 'Push-ups in 2 Minutes',
+      'dips-2min': 'Dips in 2 Minutes', 'burpees-2min': 'Burpees in 2 Minutes'
+    };
+
     const name = escapeHtml(entry.name || "Anonymous");
-    const eventName = escapeHtml(entry.eventName || entry.event || "");
-    const result = escapeHtml(
-      entry.resultDisplay || entry.resultValue || ""
-    );
-    const rank = entry.rank ? `#${entry.rank}` : "";
+    const eventName = escapeHtml(idToLabel[entry.event] || entry.event || "");
+    const result = escapeHtml(entry.result || "");
     const gymName = entry.gymName ? escapeHtml(entry.gymName) : "Park Ridge";
 
-    const title = `${name} — ${rank ? rank + " " : ""}${eventName} in Park Ridge`;
+    const title = `${name} — ${eventName} in Park Ridge`;
     const description = `${result} | ${gymName} | Park Ridge Fitness Leaderboard #ParkRidgeFit`;
     const pageUrl = `https://moonshotmp.com/leaderboard/entry/?id=${encodeURIComponent(id)}`;
     const image = "https://moonshotmp.com/images/parkridgefit-og.png";

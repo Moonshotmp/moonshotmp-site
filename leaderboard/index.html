@@ -349,6 +349,8 @@
             LIVE_DATA.forEach(function(e) {
                 if (idToLabel[e.event]) e.event = idToLabel[e.event];
             });
+            // Filter out steps entries (they have their own page)
+            LIVE_DATA = LIVE_DATA.filter(function(e) { return e.category !== 'steps'; });
         } catch (err) {
             console.error('Failed to load leaderboard data:', err);
             var container = document.getElementById('leaderboard-content');
@@ -358,9 +360,6 @@
         }
         renderLeaderboard(LIVE_DATA, activeCategory, activeGender);
     }
-
-    // Placeholder to avoid errors before data loads
-    const SEED_DATA = [];
 
     /* ----- State ----- */
     var activeCategory = 'fittest';
@@ -589,10 +588,10 @@
         html += '</tbody>';
 
         // Expandable rest
-        if (scores.length > 3) {
-            var extraCount = scores.length - 3;
+        if (scores.length > 20) {
+            var extraCount = scores.length - 20;
             html += '<tbody id="expand-fittest" class="expandable-rows">';
-            for (var j = 3; j < scores.length; j++) {
+            for (var j = 20; j < scores.length; j++) {
                 html += renderFittestRow(scores[j], j + 1);
             }
             html += '</tbody>';

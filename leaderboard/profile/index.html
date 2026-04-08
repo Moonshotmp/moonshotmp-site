@@ -285,41 +285,13 @@
     async function checkAuth() {
         showState('loading');
 
-        // 1. Check for magic link token in URL
-        var params = new URLSearchParams(window.location.search);
-        var urlToken = params.get('token');
-
-        if (urlToken) {
-            try {
-                var res = await fetch(API_BASE + '/api/profiles/verify?token=' + encodeURIComponent(urlToken));
-                if (res.ok) {
-                    var data = await res.json();
-                    localStorage.setItem(SESSION_KEY, data.sessionToken);
-                    // Clean URL
-                    window.history.replaceState({}, '', window.location.pathname);
-                    return await loadProfile();
-                } else {
-                    // Token invalid — show login with error
-                    showState('login');
-                    var loginError = document.getElementById('login-error');
-                    var loginErrorMsg = document.getElementById('login-error-msg');
-                    loginError.classList.remove('hidden');
-                    loginErrorMsg.textContent = 'Invalid or expired link. Request a new one below.';
-                    return;
-                }
-            } catch (err) {
-                showState('login');
-                return;
-            }
-        }
-
-        // 2. Check localStorage
+        // Check localStorage for session token
         var savedToken = localStorage.getItem(SESSION_KEY);
         if (savedToken) {
             return await loadProfile();
         }
 
-        // 3. No auth — show login
+        // No auth — show login
         showState('login');
     }
 
@@ -356,7 +328,6 @@
         e.preventDefault();
         var email = document.getElementById('login-email').value.trim();
         var btn = document.getElementById('login-btn');
-        var successEl = document.getElementById('login-success');
         var errorEl = document.getElementById('login-error');
 
         if (!email) return;
@@ -540,6 +511,14 @@
 
     var PILLAR_ORDER = ['strength', 'speed', 'bodyweight'];
 
+    var idToLabel = {
+        'back-squat': 'Back Squat', 'deadlift': 'Deadlift', 'bench-press': 'Bench Press',
+        'clean': 'Clean', 'shoulder-to-overhead': 'Overhead Press',
+        'mile-run': 'Mile Run', '400m-run': '400m Run', '2k-row': '2,000m Row',
+        'pullups-2min': 'Strict Pull-ups', 'pushups-2min': 'Push-ups',
+        'dips-2min': 'Dips', 'burpees-2min': 'Burpees'
+    };
+
     function renderEntries(entries) {
         var container = document.getElementById('entries-list');
 
@@ -589,7 +568,7 @@
         // Top row: event + status
         html += '<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">';
         html += '<div>';
-        html += '<span class="text-brand-light font-semibold">' + escapeHtml(entry.event) + '</span>';
+        html += '<span class="text-brand-light font-semibold">' + escapeHtml(idToLabel[entry.event] || entry.event) + '</span>';
         html += ' <span class="badge ' + statusClass + ' ml-2">' + statusLabel + '</span>';
         html += '</div>';
         html += '<span class="text-brand-light font-heading font-bold text-lg">' + escapeHtml(entry.result) + '</span>';
