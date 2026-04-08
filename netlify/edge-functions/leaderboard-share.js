@@ -65,7 +65,7 @@ export default async (request, context) => {
     const title = `${name} — ${rank ? rank + " " : ""}${eventName} in Park Ridge`;
     const description = `${result} | ${gymName} | Park Ridge Fitness Leaderboard #ParkRidgeFit`;
     const pageUrl = `https://moonshotmp.com/leaderboard/entry/?id=${encodeURIComponent(id)}`;
-    const image = "https://moonshotmp.com/images/moonshotmptan.png";
+    const image = "https://moonshotmp.com/images/parkridgefit-og.png";
 
     const html = `<!DOCTYPE html>
 <html lang="en">
