@@ -214,48 +214,78 @@
 
                 <!-- ========== STEP 2: WHO ARE YOU? ========== -->
                 <div id="step-2" class="step step-hidden">
-                    <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-6 text-center">Who Are You?</h1>
-
-                    <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-6 space-y-4">
-                        <!-- Name -->
-                        <div>
-                            <label for="input-name" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Full Name</label>
-                            <input type="text" id="input-name" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Jane Smith">
-                        </div>
-                        <!-- Email -->
-                        <div>
-                            <label for="input-email" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Email</label>
-                            <input type="email" id="input-email" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="jane@example.com">
-                            <p class="text-brand-gray/50 text-xs mt-1">Your email is only used to manage your scores. We don't sell data. <a href="/privacy/" class="underline">Privacy Policy</a></p>
-                        </div>
-                        <!-- Password -->
-                        <div>
-                            <label for="input-password" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Password</label>
-                            <input type="password" id="input-password" required minlength="6" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Min 6 characters">
-                        </div>
-                        <!-- Gender -->
-                        <div>
-                            <label class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Gender</label>
-                            <div class="flex gap-2">
-                                <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="male">Male</button>
-                                <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="female">Female</button>
-                            </div>
-                        </div>
-                        <!-- Age -->
-                        <div>
-                            <label for="input-age" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Age</label>
-                            <input type="number" id="input-age" min="18" max="120" required class="w-24 bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Must be 18+">
-                        </div>
+                    <!-- Logged-in user banner (hidden by default, shown if session exists) -->
+                    <div id="logged-in-banner" class="hidden">
+                        <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-2 text-center">Add New Scores</h1>
+                        <p class="text-brand-gray text-sm text-center mb-4">Submitting as <strong id="logged-in-name" class="text-brand-light"></strong></p>
+                        <p id="step2-error" class="text-red-400 text-xs text-center mb-2 hidden"></p>
+                        <button id="btn-submit-logged-in" class="btn-primary w-full rounded text-center text-lg tracking-wider">Submit Scores</button>
+                        <button id="btn-back-logged-in" class="w-full text-center text-brand-gray text-sm mt-3 hover:text-brand-light transition-colors cursor-pointer bg-transparent border-0">Back</button>
+                        <p class="text-brand-gray/50 text-xs text-center mt-4">Not you? <button id="btn-switch-account" class="text-brand-light underline bg-transparent border-0 cursor-pointer">Use a different account</button></p>
                     </div>
 
-                    <label class="flex items-start gap-3 mt-4 cursor-pointer">
-                        <input type="checkbox" id="waiver" required class="mt-1 w-4 h-4 accent-white flex-shrink-0">
-                        <span class="text-brand-gray text-xs leading-relaxed">I understand that participation involves physical risk. I confirm I am medically cleared for exercise and I release Park Ridge Fit and Moonshot Medical and Performance from liability for any injury. <a href="/leaderboard/terms/" class="text-brand-light underline">Terms & Conditions</a> · <a href="/privacy/" class="text-brand-light underline">Privacy Policy</a></span>
-                    </label>
+                    <!-- New user / login form (shown by default) -->
+                    <div id="auth-form">
+                        <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-6 text-center">Who Are You?</h1>
 
-                    <p id="step2-error" class="text-red-400 text-xs text-center mb-2 hidden"></p>
-                    <button id="btn-submit" class="btn-primary w-full rounded text-center text-lg tracking-wider">Submit</button>
-                    <button id="btn-back" class="w-full text-center text-brand-gray text-sm mt-3 hover:text-brand-light transition-colors cursor-pointer bg-transparent border-0">Back</button>
+                        <!-- Toggle: Sign Up / Log In -->
+                        <div class="flex justify-center mb-6">
+                            <div class="inline-flex bg-brand-slate rounded-full p-1 border border-white/10">
+                                <button type="button" id="tab-signup" class="auth-tab bg-white text-brand-dark rounded-full px-5 py-1.5 text-sm font-heading uppercase tracking-wider font-semibold transition">New Account</button>
+                                <button type="button" id="tab-login" class="auth-tab text-brand-gray rounded-full px-5 py-1.5 text-sm font-heading uppercase tracking-wider hover:text-brand-light transition">Log In</button>
+                            </div>
+                        </div>
+
+                        <!-- Signup form -->
+                        <div id="signup-form" class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-4 space-y-4">
+                            <div>
+                                <label for="input-name" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Full Name</label>
+                                <input type="text" id="input-name" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Jane Smith">
+                            </div>
+                            <div>
+                                <label for="input-email" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Email</label>
+                                <input type="email" id="input-email" required class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="jane@example.com">
+                                <p class="text-brand-gray/50 text-xs mt-1">Your email is only used to manage your scores. <a href="/privacy/" class="underline">Privacy Policy</a></p>
+                            </div>
+                            <div>
+                                <label for="input-password" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Password</label>
+                                <input type="password" id="input-password" required minlength="6" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Min 6 characters">
+                            </div>
+                            <div>
+                                <label class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Gender</label>
+                                <div class="flex gap-2">
+                                    <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="male">Male</button>
+                                    <button type="button" class="gender-pill font-heading text-sm tracking-wider px-6 py-1.5 rounded border border-white/20" data-gender="female">Female</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="input-age" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Age</label>
+                                <input type="number" id="input-age" min="18" max="120" required class="w-24 bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Must be 18+">
+                            </div>
+                        </div>
+
+                        <!-- Login form (hidden by default) -->
+                        <div id="login-form" class="hidden bg-brand-slate border border-white/10 rounded-lg p-4 mb-4 space-y-4">
+                            <div>
+                                <label for="login-email" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Email</label>
+                                <input type="email" id="login-email" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="jane@example.com">
+                            </div>
+                            <div>
+                                <label for="login-password" class="text-brand-gray text-xs uppercase tracking-wider block mb-1">Password</label>
+                                <input type="password" id="login-password" class="w-full bg-brand-dark border border-white/20 rounded text-brand-light text-sm px-3 py-2 focus:outline-none focus:border-brand-gray" placeholder="Your password">
+                            </div>
+                            <p class="text-brand-gray/50 text-xs">Forgot password? Email <a href="mailto:tom@moonshotmp.com" class="text-brand-light underline">tom@moonshotmp.com</a></p>
+                        </div>
+
+                        <label class="flex items-start gap-3 mt-4 cursor-pointer" id="waiver-label">
+                            <input type="checkbox" id="waiver" required class="mt-1 w-4 h-4 accent-white flex-shrink-0">
+                            <span class="text-brand-gray text-xs leading-relaxed">I understand that participation involves physical risk. I confirm I am medically cleared for exercise and I release Park Ridge Fit and Moonshot Medical and Performance from liability for any injury. <a href="/leaderboard/terms/" class="text-brand-light underline">Terms & Conditions</a> · <a href="/privacy/" class="text-brand-light underline">Privacy Policy</a></span>
+                        </label>
+
+                        <p id="step2-error-auth" class="text-red-400 text-xs text-center mb-2 hidden"></p>
+                        <button id="btn-submit" class="btn-primary w-full rounded text-center text-lg tracking-wider">Submit</button>
+                        <button id="btn-back" class="w-full text-center text-brand-gray text-sm mt-3 hover:text-brand-light transition-colors cursor-pointer bg-transparent border-0">Back</button>
+                    </div>
                 </div>
 
                 <!-- ========== STEP 3: YOU'RE IN! ========== -->
@@ -309,6 +339,9 @@
         var currentStep = 1;
         var selectedGender = null;
         var collectedScores = {};
+        var sessionToken = localStorage.getItem('leaderboard_session');
+        var loggedInProfile = null;
+        var authMode = 'signup'; // 'signup' or 'login'
 
         /* ----- DOM refs ----- */
         var step1 = document.getElementById('step-1');
@@ -392,6 +425,21 @@
             return scores;
         }
 
+        /* ----- Check if already logged in ----- */
+        if (sessionToken) {
+            fetch(API_BASE + '/api/profiles/me', {
+                headers: { 'Authorization': 'Bearer ' + sessionToken }
+            })
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(data) {
+                if (data && data.profile) {
+                    loggedInProfile = data.profile;
+                    document.getElementById('logged-in-name').textContent = data.profile.name;
+                }
+            })
+            .catch(function() { sessionToken = null; });
+        }
+
         /* ----- Step 1 → Step 2 ----- */
         btnNext.addEventListener('click', function() {
             collectedScores = collectScores();
@@ -400,13 +448,65 @@
                 return;
             }
             step1Error.classList.add('hidden');
+
+            // If logged in, show the logged-in banner instead of auth form
+            if (loggedInProfile) {
+                document.getElementById('logged-in-banner').classList.remove('hidden');
+                document.getElementById('auth-form').classList.add('hidden');
+            } else {
+                document.getElementById('logged-in-banner').classList.add('hidden');
+                document.getElementById('auth-form').classList.remove('hidden');
+            }
             showStep(2);
         });
 
         /* ----- Step 2 → Step 1 (back) ----- */
-        btnBack.addEventListener('click', function() {
-            step2Error.classList.add('hidden');
-            showStep(1);
+        var btnBackAll = document.querySelectorAll('#btn-back, #btn-back-logged-in');
+        btnBackAll.forEach(function(b) {
+            b.addEventListener('click', function() {
+                showStep(1);
+            });
+        });
+
+        /* ----- Switch account (logged-in user wants to use different account) ----- */
+        var switchBtn = document.getElementById('btn-switch-account');
+        if (switchBtn) {
+            switchBtn.addEventListener('click', function() {
+                loggedInProfile = null;
+                sessionToken = null;
+                localStorage.removeItem('leaderboard_session');
+                document.getElementById('logged-in-banner').classList.add('hidden');
+                document.getElementById('auth-form').classList.remove('hidden');
+            });
+        }
+
+        /* ----- Auth tab toggle (signup / login) ----- */
+        var tabSignup = document.getElementById('tab-signup');
+        var tabLogin = document.getElementById('tab-login');
+        var signupForm = document.getElementById('signup-form');
+        var loginForm = document.getElementById('login-form');
+        var waiverLabel = document.getElementById('waiver-label');
+
+        tabSignup.addEventListener('click', function() {
+            authMode = 'signup';
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            waiverLabel.classList.remove('hidden');
+            tabSignup.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
+            tabSignup.classList.remove('text-brand-gray');
+            tabLogin.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
+            tabLogin.classList.add('text-brand-gray');
+        });
+
+        tabLogin.addEventListener('click', function() {
+            authMode = 'login';
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            waiverLabel.classList.add('hidden');
+            tabLogin.classList.add('bg-white', 'text-brand-dark', 'font-semibold');
+            tabLogin.classList.remove('text-brand-gray');
+            tabSignup.classList.remove('bg-white', 'text-brand-dark', 'font-semibold');
+            tabSignup.classList.add('text-brand-gray');
         });
 
         /* ----- Gender toggle ----- */
@@ -419,68 +519,126 @@
             });
         });
 
-        /* ----- Step 2 → Submit ----- */
-        btnSubmit.addEventListener('click', function() {
-            var name = document.getElementById('input-name').value.trim();
-            var email = document.getElementById('input-email').value.trim();
-            var age = parseInt(document.getElementById('input-age').value);
+        /* ----- Submit: logged-in user ----- */
+        var btnSubmitLoggedIn = document.getElementById('btn-submit-logged-in');
+        if (btnSubmitLoggedIn) {
+            btnSubmitLoggedIn.addEventListener('click', function() {
+                btnSubmitLoggedIn.disabled = true;
+                btnSubmitLoggedIn.textContent = 'Submitting...';
 
-            // Validate
-            if (!name) { showStep2Error('Name is required.'); return; }
-            if (!email || email.indexOf('@') === -1) { showStep2Error('Valid email is required.'); return; }
-            if (!selectedGender) { showStep2Error('Select your gender.'); return; }
-            if (isNaN(age) || age < 18 || age > 120) { showStep2Error('Enter a valid age (must be 18+).'); return; }
-
-            var waiver = document.getElementById('waiver');
-            if (!waiver || !waiver.checked) {
-                showToast('Please agree to the terms and conditions.', true);
-                return;
-            }
-
-            step2Error.classList.add('hidden');
-
-            // Loading state
-            btnSubmit.disabled = true;
-            btnSubmit.textContent = 'Submitting...';
-
-            var password = document.getElementById('input-password').value;
-            if (!password || password.length < 6) { showStep2Error('Password must be at least 6 characters.'); btnSubmit.disabled = false; btnSubmit.textContent = 'Submit'; return; }
-
-            var payload = {
-                name: name,
-                email: email,
-                password: password,
-                gender: selectedGender,
-                age: age,
-                scores: collectedScores
-            };
-
-            fetch(API_BASE + '/api/profiles', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-            .then(function(res) {
-                if (!res.ok) {
-                    return res.json().then(function(data) {
-                        throw new Error(data.error || 'Submission failed');
-                    });
-                }
-                return res.json();
-            })
-            .then(function() {
-                showStep(3);
-            })
-            .catch(function(err) {
-                btnSubmit.disabled = false;
-                btnSubmit.textContent = 'Submit';
-                showToast(err.message || 'Something went wrong. Try again.', true);
+                fetch(API_BASE + '/api/profiles/me/scores', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionToken
+                    },
+                    body: JSON.stringify({ scores: collectedScores })
+                })
+                .then(function(res) {
+                    if (!res.ok) return res.json().then(function(d) { throw new Error(d.error || 'Failed'); });
+                    return res.json();
+                })
+                .then(function(data) {
+                    showStep(3);
+                })
+                .catch(function(err) {
+                    btnSubmitLoggedIn.disabled = false;
+                    btnSubmitLoggedIn.textContent = 'Submit Scores';
+                    showToast(err.message || 'Something went wrong.', true);
+                });
             });
+        }
+
+        /* ----- Submit: new signup or login ----- */
+        btnSubmit.addEventListener('click', async function() {
+            var waiver = document.getElementById('waiver');
+
+            if (authMode === 'login') {
+                // Login flow
+                var email = document.getElementById('login-email').value.trim();
+                var password = document.getElementById('login-password').value;
+                if (!email || !password) { showStep2Error('Email and password are required.'); return; }
+
+                btnSubmit.disabled = true;
+                btnSubmit.textContent = 'Logging in...';
+
+                try {
+                    // Login
+                    var loginRes = await fetch(API_BASE + '/api/profiles/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email, password: password })
+                    });
+                    var loginData = await loginRes.json();
+                    if (!loginRes.ok) throw new Error(loginData.error || 'Login failed');
+
+                    localStorage.setItem('leaderboard_session', loginData.sessionToken);
+
+                    // Submit scores under their account
+                    var scoresRes = await fetch(API_BASE + '/api/profiles/me/scores', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + loginData.sessionToken
+                        },
+                        body: JSON.stringify({ scores: collectedScores })
+                    });
+                    if (!scoresRes.ok) {
+                        var scoresErr = await scoresRes.json();
+                        throw new Error(scoresErr.error || 'Failed to submit scores');
+                    }
+
+                    showStep(3);
+                } catch (err) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = 'Submit';
+                    showToast(err.message || 'Something went wrong.', true);
+                }
+            } else {
+                // Signup flow
+                var name = document.getElementById('input-name').value.trim();
+                var email = document.getElementById('input-email').value.trim();
+                var age = parseInt(document.getElementById('input-age').value);
+
+                if (!name) { showStep2Error('Name is required.'); return; }
+                if (!email || email.indexOf('@') === -1) { showStep2Error('Valid email is required.'); return; }
+                if (!selectedGender) { showStep2Error('Select your gender.'); return; }
+                if (isNaN(age) || age < 18 || age > 120) { showStep2Error('Enter a valid age (must be 18+).'); return; }
+                if (!waiver || !waiver.checked) { showToast('Please agree to the terms and conditions.', true); return; }
+
+                var password = document.getElementById('input-password').value;
+                if (!password || password.length < 6) { showStep2Error('Password must be at least 6 characters.'); return; }
+
+                btnSubmit.disabled = true;
+                btnSubmit.textContent = 'Submitting...';
+
+                try {
+                    var res = await fetch(API_BASE + '/api/profiles', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: name, email: email, password: password,
+                            gender: selectedGender, age: age, scores: collectedScores
+                        })
+                    });
+                    var data = await res.json();
+                    if (!res.ok) throw new Error(data.error || 'Submission failed');
+
+                    if (data.sessionToken) {
+                        localStorage.setItem('leaderboard_session', data.sessionToken);
+                    }
+                    showStep(3);
+                } catch (err) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = 'Submit';
+                    showToast(err.message || 'Something went wrong.', true);
+                }
+            }
         });
 
         function showStep2Error(msg) {
-            step2Error.textContent = msg;
-            step2Error.classList.remove('hidden');
+            var el = document.getElementById('step2-error-auth') || document.getElementById('step2-error');
+            if (el) { el.textContent = msg; el.classList.remove('hidden'); }
         }
 
         function showToast(message, isError) {
