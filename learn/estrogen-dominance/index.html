@@ -23,8 +23,11 @@
     <link rel="preload" href="/images/womenshormones1.webp" as="image">
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/shared/tailwind.css">
-    <link rel="stylesheet" href="/shared/styles.css">
+    <link rel="preload" href="/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/critical.css">
+    <link rel="stylesheet" href="/shared/tailwind.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/shared/styles.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/shared/tailwind.css"><link rel="stylesheet" href="/shared/styles.css"></noscript>
 
     <script type="application/ld+json">
     {
