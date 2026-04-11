@@ -148,7 +148,7 @@ export default async (req) => {
       await db.from("memberships").insert({
         patient_id: patient.id,
         stripe_subscription_id: subscription.id,
-        plan_type: item.code + (discount_code ? `_${discount_code.toLowerCase()}` : ''),
+        plan_type: item.code + (discount_code ? '_family' : ''),
         amount_cents: item.finalAmount,
         status: subscription.status,
         current_period_start: periodStart,
@@ -172,7 +172,7 @@ export default async (req) => {
                 stripe_payment_intent_id: invoice.payment_intent,
                 stripe_invoice_id: invoice.id,
                 type: item.code,
-                description: item.name + (discount_code ? ` (${discount_code.charAt(0).toUpperCase() + discount_code.slice(1)})` : ''),
+                description: item.name + (discount_code ? ' (Family)' : ''),
                 amount_cents: invoice.amount_paid,
                 status: "succeeded",
               });

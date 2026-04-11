@@ -306,9 +306,7 @@
     // Stripe setup
     let elements, cardElement, clientSecret, patientData;
     let discountApplied = false;
-    let discountPercent = 0;
-    let discountLabel = '';
-    const VALID_CODES = { family: 20, employee: 40 };
+    const DISCOUNT_PERCENT = 40; // 40% off for family
 
     // Base prices (testing)
     const BASE_MEMBERSHIP = 285; // $2.85 in cents
@@ -316,7 +314,7 @@
 
     function getAmount() {
       const base = chargeType === 'membership' ? BASE_MEMBERSHIP : BASE_LAB;
-      return discountApplied ? Math.round(base * (1 - discountPercent / 100)) : base;
+      return discountApplied ? Math.round(base * 0.6) : base;
     }
 
     function formatAmount(cents) {
@@ -327,22 +325,16 @@
       const code = document.getElementById('discountCode').value.trim().toLowerCase();
       const statusEl = document.getElementById('discountStatus');
 
-      if (VALID_CODES[code] !== undefined) {
+      if (code === 'family') {
         discountApplied = true;
-        discountPercent = VALID_CODES[code];
-        discountLabel = code.charAt(0).toUpperCase() + code.slice(1);
-        statusEl.innerHTML = `<span style="color: #51cf66;">✓ ${discountLabel} discount applied (${discountPercent}% off)</span>`;
+        statusEl.innerHTML = '<span style="color: #51cf66;">✓ Family discount applied (40% off)</span>';
         updateChargeSummary();
       } else if (code === '') {
         discountApplied = false;
-        discountPercent = 0;
-        discountLabel = '';
         statusEl.innerHTML = '';
         updateChargeSummary();
       } else {
         discountApplied = false;
-        discountPercent = 0;
-        discountLabel = '';
         statusEl.innerHTML = '<span style="color: #ff6b6b;">Invalid code</span>';
         updateChargeSummary();
       }
@@ -350,7 +342,7 @@
 
     function updateChargeSummary() {
       const amount = getAmount();
-      const discountBadge = discountApplied ? `<span style="background:#51cf66;color:#000;padding:2px 8px;border-radius:4px;font-size:11px;margin-left:8px;">${discountPercent}% OFF</span>` : '';
+      const discountBadge = discountApplied ? '<span style="background:#51cf66;color:#000;padding:2px 8px;border-radius:4px;font-size:11px;margin-left:8px;">40% OFF</span>' : '';
 
       if (chargeType === 'membership') {
         document.getElementById('chargeSummary').innerHTML = `
@@ -472,7 +464,7 @@
           body: JSON.stringify({
             patient_id: patientId,
             payment_method_id: paymentMethodId,
-            discount_code: discountApplied ? document.getElementById('discountCode').value.trim().toLowerCase() : null,
+            discount_code: discountApplied ? 'family' : null,
           })
         });
 
@@ -543,7 +535,7 @@
         const piRes = await fetch(`${API}/membership-terminal-payment`, {
           method: 'POST',
           headers: authHeaders(),
-          body: JSON.stringify({ patient_id: patientId, type: chargeType, discount_code: discountApplied ? document.getElementById('discountCode').value.trim().toLowerCase() : null }),
+          body: JSON.stringify({ patient_id: patientId, type: chargeType, discount_code: discountApplied ? 'family' : null }),
         });
         const piData = await piRes.json();
         if (!piRes.ok) throw new Error(piData.error);
@@ -565,7 +557,7 @@
             payment_intent_id: piData.payment_intent_id,
             patient_id: patientId,
             type: chargeType,
-            discount_code: discountApplied ? document.getElementById('discountCode').value.trim().toLowerCase() : null,
+            discount_code: discountApplied ? 'family' : null,
           }),
         });
         const captureData = await captureRes.json();
