@@ -522,6 +522,52 @@
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
+
+  <!-- Cost / Pricing Guides (April 2026) -->
+  <url>
+    <loc>https://moonshotmp.com/learn/trt-cost/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/semaglutide-cost/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/dexa-scan-cost/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/bhrt-cost/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Reference / Side Effects Guides (April 2026) -->
+  <url>
+    <loc>https://moonshotmp.com/learn/testosterone-levels-by-age/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/trt-side-effects/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/semaglutide-side-effects/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
   <url>
     <loc>https://moonshotmp.com/learn/optimal-vs-normal/</loc>
     <lastmod>2026-03-02</lastmod>
