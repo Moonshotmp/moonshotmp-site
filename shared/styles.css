@@ -380,6 +380,20 @@ summary::-webkit-details-marker {
 }
 
 /* ========================================
+   WCAG AA Contrast Fix
+   ========================================
+   Tailwind's text-brand-gray/60 (#B2BFBE at 60% opacity) yields ~3.5:1
+   contrast on dark backgrounds — fails WCAG AA (4.5:1 minimum).
+   Override low-opacity brand-gray text to use 85% opacity minimum,
+   which brings contrast above 4.5:1 on --brand-dark backgrounds.
+*/
+[class*="text-brand-gray/5"],
+[class*="text-brand-gray/6"],
+[class*="text-brand-gray/7"] {
+    color: rgba(178, 191, 190, 0.85) !important;
+}
+
+/* ========================================
    Print Styles
    ======================================== */
 @media print {

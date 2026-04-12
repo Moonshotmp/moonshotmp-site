@@ -34,20 +34,8 @@
 </head>
 
 <body class="font-body min-h-screen flex flex-col selection:bg-brand-gray selection:text-brand-dark">
-  <!-- Minimal top bar (no dropdown JS needed) -->
-  <header class="w-full border-b border-white/10 bg-brand-dark/95 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <img src="/images/mm+logocloud.png" alt="Moonshot Medical and Performance Logo" class="h-9 w-auto object-contain" width="200" height="168" loading="lazy">
-        <div class="hidden sm:block text-brand-light font-heading text-sm tracking-wide leading-tight">
-          MOONSHOT<br>MEDICAL AND PERFORMANCE
-        </div>
-      </a>
-      <div class="flex items-center gap-3">
-        <a href="/booking/" class="btn-primary text-xs tracking-widest">Book Consult</a>
-      </div>
-    </div>
-  </header>
+  <div id="site-header"></div>
+  <script src="/shared/header.js" defer></script>
 
   <main class="flex-grow">
     <section class="py-20">
@@ -107,21 +95,8 @@
     </section>
   </main>
 
-  <footer class="border-t border-white/10 bg-black py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
-      <div class="text-brand-gray text-xs">
-        © 2026 Moonshot Medical and Performance. All Rights Reserved.
-      </div>
-      <div class="flex gap-5">
-        <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-brand-light text-xs uppercase tracking-wider">
-          Instagram
-        </a>
-        <a href="/contact/" class="text-brand-gray hover:text-brand-light text-xs uppercase tracking-wider">
-          Contact
-        </a>
-      </div>
-    </div>
-  </footer>
+  <div id="site-footer"></div>
+  <script src="/shared/footer.js" defer></script>
 
   <script>
     // Display requested URL (helps users + support)

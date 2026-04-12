@@ -64,22 +64,22 @@
               <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="medical-menu-button" aria-expanded="false" aria-haspopup="true">
                 Medical
-                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="medical-dropdown">
+              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="medical-dropdown" role="menu">
                 <div class="py-2">
-                  <a href="/medical/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">Overview</a>
-                  <a href="/medical/blood-panels/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Blood Panels</a>
-                  <a href="/blood-work/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Blood Work Guide</a>
-                  <a href="/medical/dexa-scan/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">DEXA Scan</a>
-                  <a href="/medical/mens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Men's Hormones</a>
-                  <a href="/medical/tadalafil/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Daily Tadalafil</a>
-                  <a href="/medical/womens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Women's Hormones</a>
-                  <a href="/medical/weight-loss/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Weight Loss</a>
-                  <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Peptides</a>
-                  <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1">Hormone Health Quiz</a>
+                  <a href="/medical/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide" role="menuitem">Overview</a>
+                  <a href="/medical/blood-panels/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Blood Panels</a>
+                  <a href="/blood-work/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Blood Work Guide</a>
+                  <a href="/medical/dexa-scan/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">DEXA Scan</a>
+                  <a href="/medical/mens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Men's Hormones</a>
+                  <a href="/medical/tadalafil/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Daily Tadalafil</a>
+                  <a href="/medical/womens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Women's Hormones</a>
+                  <a href="/medical/weight-loss/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Weight Loss</a>
+                  <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptides</a>
+                  <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1" role="menuitem">Hormone Health Quiz</a>
                 </div>
               </div>
             </div>
@@ -89,18 +89,18 @@
               <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="rehab-menu-button" aria-expanded="false" aria-haspopup="true">
                 Rehab
-                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="rehab-dropdown">
+              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="rehab-dropdown" role="menu">
                 <div class="py-2">
-                  <a href="/rehab/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide">Overview</a>
-                  <a href="/rehab/chiropractic/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Chiropractic</a>
-                  <a href="/rehab/physical-rehab/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Physical Rehab</a>
-                  <a href="/rehab/trigger-point/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Trigger Point</a>
-                  <a href="/rehab/dry-needling/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Dry Needling</a>
-                  <a href="/rehab/shockwave/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Shockwave</a>
+                  <a href="/rehab/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide" role="menuitem">Overview</a>
+                  <a href="/rehab/chiropractic/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Chiropractic</a>
+                  <a href="/rehab/physical-rehab/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Physical Rehab</a>
+                  <a href="/rehab/trigger-point/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Trigger Point</a>
+                  <a href="/rehab/dry-needling/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Dry Needling</a>
+                  <a href="/rehab/shockwave/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Shockwave</a>
                 </div>
               </div>
             </div>
@@ -110,62 +110,62 @@
               <a href="/learn/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="learn-menu-button" aria-expanded="false" aria-haspopup="true">
                 Learn
-                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </a>
-              <div class="absolute right-0 mt-2 w-[850px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown">
+              <div class="absolute right-0 mt-2 w-[850px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown" role="menu">
                 <div class="p-6 grid grid-cols-5 gap-6">
                   <!-- Men Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Men</span>
-                    <a href="/learn/trt-guide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT Guide</a>
-                    <a href="/learn/low-testosterone-symptoms/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Low T Symptoms</a>
-                    <a href="/learn/trt-vs-steroids/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT vs Steroids</a>
-                    <a href="/medical/trt-vs-enclomiphene/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TRT vs Enclomiphene</a>
-                    <a href="/medical/tadalafil/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Daily Tadalafil</a>
+                    <a href="/learn/trt-guide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">TRT Guide</a>
+                    <a href="/learn/low-testosterone-symptoms/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Low T Symptoms</a>
+                    <a href="/learn/trt-vs-steroids/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">TRT vs Steroids</a>
+                    <a href="/medical/trt-vs-enclomiphene/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">TRT vs Enclomiphene</a>
+                    <a href="/medical/tadalafil/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Daily Tadalafil</a>
                   </div>
                   <!-- Women Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Women</span>
-                    <a href="/learn/menopause-perimenopause/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Menopause Guide</a>
-                    <a href="/learn/testosterone-for-women/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Testosterone for Women</a>
-                    <a href="/learn/progesterone/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Progesterone</a>
-                    <a href="/learn/pcos/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">PCOS</a>
-                    <a href="/learn/whi-study-hrt-truth/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">HRT: Myths vs Facts</a>
+                    <a href="/learn/menopause-perimenopause/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Menopause Guide</a>
+                    <a href="/learn/testosterone-for-women/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Testosterone for Women</a>
+                    <a href="/learn/progesterone/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Progesterone</a>
+                    <a href="/learn/pcos/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">PCOS</a>
+                    <a href="/learn/whi-study-hrt-truth/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">HRT: Myths vs Facts</a>
                   </div>
                   <!-- Weight Loss Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Weight Loss</span>
-                    <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Semaglutide vs Tirzepatide</a>
-                    <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">GLP-1 vs Other Methods</a>
-                    <a href="/learn/retatrutide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Retatrutide Guide</a>
+                    <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Semaglutide vs Tirzepatide</a>
+                    <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">GLP-1 vs Other Methods</a>
+                    <a href="/learn/retatrutide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Retatrutide Guide</a>
                   </div>
                   <!-- Peptides Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Peptides</span>
-                    <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptide Therapy Guide</a>
-                    <a href="/learn/bpc-157/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">BPC-157</a>
-                    <a href="/learn/sermorelin/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Sermorelin</a>
-                    <a href="/learn/tb-500/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">TB-500</a>
-                    <a href="/learn/wolverine-blend/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Wolverine Blend</a>
-                    <a href="/learn/pt-141/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">PT-141</a>
-                    <a href="/learn/ghk-cu/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">GHK-Cu</a>
-                    <a href="/quiz/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Peptide Quiz</a>
+                    <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Peptide Therapy Guide</a>
+                    <a href="/learn/bpc-157/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">BPC-157</a>
+                    <a href="/learn/sermorelin/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Sermorelin</a>
+                    <a href="/learn/tb-500/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">TB-500</a>
+                    <a href="/learn/wolverine-blend/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Wolverine Blend</a>
+                    <a href="/learn/pt-141/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">PT-141</a>
+                    <a href="/learn/ghk-cu/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">GHK-Cu</a>
+                    <a href="/quiz/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Peptide Quiz</a>
                   </div>
                   <!-- Rehab & Diagnostics Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Rehab & Diagnostics</span>
-                    <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Dry Needling</a>
-                    <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Shockwave Therapy</a>
-                    <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Trigger Point Injections</a>
-                    <a href="/blood-work/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Blood Work Guide</a>
-                    <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">DEXA vs InBody</a>
-                    <a href="/learn/first-visit/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition">Your First Visit</a>
+                    <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Dry Needling</a>
+                    <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Shockwave Therapy</a>
+                    <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Trigger Point Injections</a>
+                    <a href="/blood-work/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Blood Work Guide</a>
+                    <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">DEXA vs InBody</a>
+                    <a href="/learn/first-visit/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Your First Visit</a>
                   </div>
                 </div>
                 <div class="border-t border-white/10 px-6 py-3">
-                  <a href="/learn/" class="text-sm text-brand-gray hover:text-brand-light transition">View All Resources &rarr;</a>
+                  <a href="/learn/" class="text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">View All Resources &rarr;</a>
                 </div>
               </div>
             </div>
@@ -177,16 +177,16 @@
               <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="about-menu-button" aria-expanded="false" aria-haspopup="true">
                 About
-                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="about-dropdown">
+              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="about-dropdown" role="menu">
                 <div class="py-2">
-                  <a href="/about/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Our Team</a>
-                  <a href="/ourstory/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Tom's Story</a>
-                  <a href="/medical/moonshot-vs-typical-clinic/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">How We're Different</a>
-                  <a href="/contact/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-2">Contact Us</a>
+                  <a href="/about/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">Our Team</a>
+                  <a href="/ourstory/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Tom's Story</a>
+                  <a href="/medical/moonshot-vs-typical-clinic/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">How We're Different</a>
+                  <a href="/contact/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-2" role="menuitem">Contact Us</a>
                 </div>
               </div>
             </div>
@@ -196,15 +196,15 @@
               <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
                       id="quiz-menu-button" aria-expanded="false" aria-haspopup="true">
                 Quiz
-                <svg class="ml-1 h-4 w-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="quiz-dropdown">
+              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="quiz-dropdown" role="menu">
                 <div class="py-2">
-                  <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5">Hormone Health Quiz</a>
-                  <a href="/quiz/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Peptide Quiz</a>
-                  <a href="/quiz/body-comp/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5">Body Comp IQ Quiz</a>
+                  <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">Hormone Health Quiz</a>
+                  <a href="/quiz/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptide Quiz</a>
+                  <a href="/quiz/body-comp/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Body Comp IQ Quiz</a>
                 </div>
               </div>
             </div>
@@ -237,7 +237,7 @@
             <button type="button" id="mobile-medical-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Medical</span>
-              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-medical-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-medical-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
@@ -260,7 +260,7 @@
             <button type="button" id="mobile-rehab-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Rehab</span>
-              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-rehab-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-rehab-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
@@ -279,7 +279,7 @@
             <button type="button" id="mobile-learn-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Learn</span>
-              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-learn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-learn-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
@@ -328,7 +328,7 @@
             <button type="button" id="mobile-about-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">About</span>
-              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-about-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-about-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
@@ -345,7 +345,7 @@
             <button type="button" id="mobile-quiz-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
               <span class="w-4"></span>
               <span class="flex-1 text-center font-bold">Quiz</span>
-              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-quiz-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="h-4 w-4 transition-transform duration-200" id="mobile-quiz-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
@@ -441,19 +441,85 @@
                     if (icon) icon.classList.add('rotate-180');
                 };
 
-                const closeMenu = () => {
-                    closeTimer = setTimeout(() => {
+                const closeMenu = (immediate) => {
+                    if (immediate) {
+                        clearTimeout(closeTimer);
                         dropdown.classList.add('hidden');
                         btn.setAttribute('aria-expanded', 'false');
                         const icon = btn.querySelector('svg');
                         if (icon) icon.classList.remove('rotate-180');
-                    }, 150);
+                    } else {
+                        closeTimer = setTimeout(() => {
+                            dropdown.classList.add('hidden');
+                            btn.setAttribute('aria-expanded', 'false');
+                            const icon = btn.querySelector('svg');
+                            if (icon) icon.classList.remove('rotate-180');
+                        }, 150);
+                    }
                 };
 
+                // Mouse behavior (unchanged)
                 wrapper.addEventListener('mouseenter', openMenu);
-                wrapper.addEventListener('mouseleave', closeMenu);
+                wrapper.addEventListener('mouseleave', () => closeMenu(false));
                 btn.addEventListener('click', (e) => { e.stopPropagation(); openMenu(); });
-                document.addEventListener('click', (e) => { if (!wrapper.contains(e.target)) dropdown.classList.add('hidden'); });
+                document.addEventListener('click', (e) => { if (!wrapper.contains(e.target)) closeMenu(true); });
+
+                // Keyboard: keep dropdown open while focus is inside wrapper
+                wrapper.addEventListener('focusin', () => {
+                    clearTimeout(closeTimer);
+                    if (!dropdown.classList.contains('hidden')) return;
+                    // Don't auto-open on focus alone — user must press Enter/Space or arrow
+                });
+
+                wrapper.addEventListener('focusout', (e) => {
+                    // If focus moves outside wrapper, close the dropdown
+                    setTimeout(() => {
+                        if (!wrapper.contains(document.activeElement)) {
+                            closeMenu(true);
+                        }
+                    }, 0);
+                });
+
+                // Arrow key navigation within dropdown
+                wrapper.addEventListener('keydown', (e) => {
+                    const isOpen = !dropdown.classList.contains('hidden');
+                    const menuItems = dropdown.querySelectorAll('a[role="menuitem"]');
+
+                    if (e.key === 'Escape' && isOpen) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu(true);
+                        btn.focus();
+                        return;
+                    }
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (!isOpen) {
+                            openMenu();
+                            // Focus first item after opening
+                            setTimeout(() => {
+                                const items = dropdown.querySelectorAll('a[role="menuitem"]');
+                                if (items.length) items[0].focus();
+                            }, 0);
+                        } else if (menuItems.length) {
+                            const currentIndex = Array.from(menuItems).indexOf(document.activeElement);
+                            const nextIndex = currentIndex < menuItems.length - 1 ? currentIndex + 1 : 0;
+                            menuItems[nextIndex].focus();
+                        }
+                        return;
+                    }
+
+                    if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (isOpen && menuItems.length) {
+                            const currentIndex = Array.from(menuItems).indexOf(document.activeElement);
+                            const prevIndex = currentIndex > 0 ? currentIndex - 1 : menuItems.length - 1;
+                            menuItems[prevIndex].focus();
+                        }
+                        return;
+                    }
+                });
             }
         }
         setupDesktopDropdown('medical-menu-wrapper', 'medical-menu-button', 'medical-dropdown');
@@ -462,10 +528,24 @@
         setupDesktopDropdown('about-menu-wrapper', 'about-menu-button', 'about-dropdown');
         setupDesktopDropdown('quiz-menu-wrapper', 'quiz-menu-button', 'quiz-dropdown');
 
-        // Close dropdowns on escape
+        // Close dropdowns on escape (global fallback)
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+                const openDropdowns = document.querySelectorAll('[id$="-dropdown"]:not(.hidden)');
+                openDropdowns.forEach(el => {
+                    el.classList.add('hidden');
+                    // Reset aria-expanded on the corresponding button
+                    const wrapperId = el.id.replace('-dropdown', '-menu-wrapper');
+                    const wrapper = document.getElementById(wrapperId);
+                    if (wrapper) {
+                        const triggerBtn = wrapper.querySelector('[aria-expanded]');
+                        if (triggerBtn) {
+                            triggerBtn.setAttribute('aria-expanded', 'false');
+                            const icon = triggerBtn.querySelector('svg');
+                            if (icon) icon.classList.remove('rotate-180');
+                        }
+                    }
+                });
             }
         });
 
@@ -655,16 +735,16 @@
 
     // Booking Modal HTML
     const bookingModalHTML = `
-    <div id="booking-modal" class="fixed inset-0 z-[100] hidden">
+    <div id="booking-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="booking-modal-heading">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeBookingModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
             <div class="bg-brand-dark border border-white/10 rounded-sm max-w-md w-full p-8 relative">
-                <button type="button" onclick="closeBookingModal()" class="absolute top-4 right-4 text-brand-gray hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button type="button" onclick="closeBookingModal()" class="absolute top-4 right-4 text-brand-gray hover:text-white" aria-label="Close booking modal">
+                    <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <h3 class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an Appointment</h3>
+                <h3 id="booking-modal-heading" class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an Appointment</h3>
                 <p class="text-brand-gray text-sm mb-8">Which service are you looking for?</p>
                 <div class="space-y-4">
                     <a href="https://moonshotclinic.com/book/" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">
@@ -701,21 +781,60 @@
     document.body.insertAdjacentHTML('beforeend', bookingModalHTML);
 
     // Global booking modal functions
+    var _bookingModalTrigger = null;
+
     window.openBookingModal = function() {
-        document.getElementById('booking-modal').classList.remove('hidden');
+        _bookingModalTrigger = document.activeElement;
+        var modal = document.getElementById('booking-modal');
+        modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         gtag('event', 'cta_click', {cta_name: 'book_now', page: location.pathname});
+        // Focus first focusable element in modal
+        setTimeout(function() {
+            var focusable = modal.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+            if (focusable.length) focusable[0].focus();
+        }, 50);
     };
 
     window.closeBookingModal = function() {
         document.getElementById('booking-modal').classList.add('hidden');
         document.body.style.overflow = '';
+        // Restore focus to the element that triggered the modal
+        if (_bookingModalTrigger && _bookingModalTrigger.focus) {
+            _bookingModalTrigger.focus();
+            _bookingModalTrigger = null;
+        }
     };
 
-    // Close modals on escape
+    // Focus trap and escape for booking modal
     document.addEventListener('keydown', (e) => {
+        var modal = document.getElementById('booking-modal');
+        if (!modal || modal.classList.contains('hidden')) return;
+
         if (e.key === 'Escape') {
             closeBookingModal();
+            return;
+        }
+
+        if (e.key === 'Tab') {
+            var focusable = modal.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+            if (!focusable.length) return;
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+
+            if (e.shiftKey) {
+                // Shift+Tab: if on first element, wrap to last
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                // Tab: if on last element, wrap to first
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
         }
     });
 

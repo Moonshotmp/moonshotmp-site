@@ -54,7 +54,7 @@ Rules:
 const BASE_CONTEXT = `# Moonshot Medical and Performance — Source of Truth
 
 ## Quick Summary
-Moonshot Medical and Performance is a performance medicine clinic combining medical optimization with physical rehabilitation in Park Ridge, IL. We focus on taking people from "normal" to optimal — not waiting until something is broken to act. Data-driven, proactive, and evidence-based. 5.0 stars on Google with 141 reviews.
+Moonshot Medical and Performance is a performance medicine clinic combining medical optimization with physical rehabilitation in Park Ridge, IL. We focus on taking people from "normal" to optimal — not waiting until something is broken to act. Data-driven, proactive, and evidence-based. 5.0 stars on Google with 147 reviews.
 
 ## Location & Contact
 - Address: 542 Busse Hwy, Park Ridge, IL 60068

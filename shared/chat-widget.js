@@ -119,6 +119,7 @@
 
     <!-- Input -->
     <div class="border-t border-white/10 px-3 py-3 shrink-0">
+      <p class="text-[10px] text-brand-gray/60 leading-tight mb-2 px-1">Do not share personal health information. Messages are processed by AI.</p>
       <form id="ms-chat-form" class="flex gap-2">
         <input
           id="ms-chat-input"
@@ -455,5 +456,30 @@
     window.visualViewport.addEventListener("resize", syncViewportHeight);
     window.visualViewport.addEventListener("scroll", syncViewportHeight);
   }
+
+  // Shift chat button up when sticky mobile CTA bar is visible
+  function adjustBtnForStickyBar() {
+    var stickyBar = document.getElementById("sticky-mobile-cta");
+    if (stickyBar && stickyBar.style.display !== "none") {
+      btn.style.bottom = "5rem";
+    } else {
+      btn.style.bottom = "";
+    }
+  }
+
+  // The sticky bar is injected asynchronously by footer.js, so observe for it
+  var stickyObserver = new MutationObserver(function () {
+    var stickyBar = document.getElementById("sticky-mobile-cta");
+    if (stickyBar) {
+      adjustBtnForStickyBar();
+      // Also watch its style attribute for display changes
+      new MutationObserver(adjustBtnForStickyBar).observe(stickyBar, { attributes: true, attributeFilter: ["style"] });
+      stickyObserver.disconnect();
+    }
+  });
+  stickyObserver.observe(document.body, { childList: true });
+
+  // Also listen to scroll — the bar toggles on scroll, which changes its style.display
+  window.addEventListener("scroll", adjustBtnForStickyBar, { passive: true });
 
 })();

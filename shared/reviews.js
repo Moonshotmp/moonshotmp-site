@@ -52,6 +52,27 @@
             date: 'March 2026',
             tags: ['dexa', 'trt', 'blood-work'],
             text: 'I had an amazing experience at this Park Ridge location. I came in for a DEXA scan, TRT consultation, and a blood draw, and the entire staff was incredibly knowledgeable and professional. They took the time to answer all my questions with patience and care, making sure I fully understood each step of the process. The DEXA scan was quick and informative, the TRT overview was thorough, and the blood draw was done expertly. I highly recommend this place to anyone looking for top-notch service.'
+        },
+        {
+            name: 'Zachary R.',
+            initial: 'Z',
+            date: '2024',
+            tags: ['chiropractic', 'rehab'],
+            text: 'I started seeing Dr. Mike last summer for recurring pain in my trap/shoulder area. After an assessment, Dr. Mike discovered that the pain was caused by a deranged thoracic disc and was not an actual shoulder/trap issue. This explained why previous treatments only eradicated my symptoms for short periods of time. Dr. Mike treated the deranged disc and the pain finally went away for good.'
+        },
+        {
+            name: 'Samantha B.',
+            initial: 'S',
+            date: '2024',
+            tags: ['rehab', 'chiropractic'],
+            text: 'Dr. Mike is thoughtful, personable, and intentional. I tore my calf in 2022 and he helped me get back to my activity level before my injury. He listened to my goals and created a treatment plan to get me there. Throughout treatment, deficiencies in other areas that could lead to injuries were diagnosed, addressed, and I was given tools to continue building strength and mobility.'
+        },
+        {
+            name: 'Verified Patient',
+            initial: '\u2605',
+            date: '2024',
+            tags: ['chiropractic', 'rehab', 'shockwave', 'dry-needling'],
+            text: 'Dr. Michael is fabulous! It is so refreshing to find a practitioner that is pro-weightlifting, pro-CrossFit, and works WITH his patients to rehab. He listens, explains, checks in, and ultimately heals! My nagging knee pain resolved with the great combination of therapies he worked out for me.'
         }
     ];
 

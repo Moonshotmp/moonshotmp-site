@@ -164,8 +164,26 @@
     var nameVal = (form.elements.name.value || '').trim();
     var emailVal = (form.elements.email.value || '').trim();
 
-    if (!emailVal || emailVal.indexOf('@') === -1) {
-      form.elements.email.focus();
+    var emailInput = form.elements.email;
+    var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+    if (!emailValid) {
+      emailInput.style.borderColor = '#ef4444';
+      emailInput.setAttribute('aria-invalid', 'true');
+      var existingErr = form.querySelector('.lm-email-error');
+      if (!existingErr) {
+        var errMsg = document.createElement('p');
+        errMsg.className = 'lm-email-error';
+        errMsg.style.cssText = 'color:#ef4444;font-size:.75rem;margin:0;text-align:left;';
+        errMsg.textContent = 'Please enter a valid email address';
+        emailInput.parentNode.insertBefore(errMsg, emailInput.nextSibling);
+        emailInput.addEventListener('input', function () {
+          emailInput.style.borderColor = '';
+          emailInput.removeAttribute('aria-invalid');
+          var e = form.querySelector('.lm-email-error');
+          if (e) e.remove();
+        });
+      }
+      emailInput.focus();
       return;
     }
 

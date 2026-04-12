@@ -312,6 +312,77 @@
             font-weight: 500;
         }
 
+        /* --- RESPONSIVE MOBILE STYLES --- */
+        @media screen and (max-width: 768px) {
+            body {
+                width: 100%;
+                height: auto;
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .header-logo-center {
+                height: 0.5in;
+            }
+
+            .core-programs {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .program-card {
+                height: auto;
+                padding: 1rem;
+            }
+
+            .program-title {
+                font-size: 14px;
+            }
+
+            .program-price {
+                font-size: 22px;
+            }
+
+            .price-split-amount {
+                font-size: 20px;
+            }
+
+            .included-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+
+            .main-columns {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .add-ons-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-callout {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
+
+            .item-row {
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 11px;
+            }
+        }
+
         /* --- PRINT MEDIA QUERY --- */
         @media print {
             body {
