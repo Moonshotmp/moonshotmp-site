@@ -568,6 +568,46 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <!-- Local SEO — Secondary Cities (April 2026) -->
+  <url>
+    <loc>https://moonshotmp.com/learn/trt-des-plaines/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/chiropractor-niles/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/learn/dexa-scan-skokie/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- New Content Pages (April 2026) -->
+  <url>
+    <loc>https://moonshotmp.com/learn/increase-testosterone-naturally/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/medical/testimonials/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/about/dr-michael-gontarek/</loc>
+    <lastmod>2026-04-12</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <url>
     <loc>https://moonshotmp.com/learn/optimal-vs-normal/</loc>
     <lastmod>2026-03-02</lastmod>
