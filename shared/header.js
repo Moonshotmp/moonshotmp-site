@@ -156,6 +156,7 @@
                   <!-- Rehab & Diagnostics Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Rehab & Diagnostics</span>
+                    <a href="/learn/prp-microneedling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">PRP Microneedling</a>
                     <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Dry Needling</a>
                     <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Shockwave Therapy</a>
                     <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Trigger Point Injections</a>
@@ -169,8 +170,6 @@
                 </div>
               </div>
             </div>
-
-            <a href="/leaderboard/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Leaderboard</a>
 
             <!-- About Dropdown -->
             <div class="relative inline-block" id="about-menu-wrapper">
@@ -310,6 +309,7 @@
               <a href="/learn/ghk-cu/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GHK-Cu</a>
               <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
               <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Rehab & Diagnostics —</span>
+              <a href="/learn/prp-microneedling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PRP Microneedling</a>
               <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
               <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
               <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Injections</a>
@@ -319,9 +319,6 @@
               <a href="/learn/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">View All &rarr;</a>
             </div>
           </div>
-
-          <!-- Leaderboard Mobile -->
-          <a href="/leaderboard/" class="block px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest text-center">Leaderboard</a>
 
           <!-- About Mobile -->
           <div>
@@ -578,6 +575,11 @@
             { title: "Peptides for Gut Healing", desc: "BPC-157 for IBS, leaky gut, NSAID damage", url: "/learn/peptides-for-gut-healing/", cat: "Peptides" },
             { title: "Peptides for Injury Recovery", desc: "BPC-157, TB-500 for tendon and muscle healing", url: "/learn/peptides-for-injury-recovery/", cat: "Peptides" },
             { title: "BPC-157 vs PRP", desc: "Head-to-head comparison", url: "/learn/bpc-157-vs-prp/", cat: "Peptides" },
+            // PRP Microneedling
+            { title: "PRP Microneedling Guide", desc: "How PRP microneedling works, what it treats, results, cost", url: "/learn/prp-microneedling/", cat: "Medical" },
+            { title: "PRP vs Regular Microneedling", desc: "Is PRP worth the extra cost over standard microneedling?", url: "/learn/prp-vs-microneedling/", cat: "Medical" },
+            { title: "PRP After Weight Loss", desc: "Skin tightening after GLP-1 weight loss with PRP microneedling", url: "/learn/prp-microneedling-after-weight-loss/", cat: "Medical" },
+            { title: "PRP Microneedling Cost", desc: "How much PRP microneedling costs in 2026", url: "/learn/prp-microneedling-cost/", cat: "Medical" },
             { title: "Which Peptide Should I Take?", desc: "Decision guide for choosing the right peptide", url: "/learn/which-peptide/", cat: "Peptides" },
             // NAD+
             { title: "NAD+ Therapy", desc: "NAD+ injections for cellular energy and recovery — $60/shot", url: "/medical/nad/", cat: "Medical" },
