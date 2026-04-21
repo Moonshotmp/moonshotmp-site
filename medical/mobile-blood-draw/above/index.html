@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Above Strength & Fitness × Moonshot Medical — Mobile Blood Draw Event</title>
+    <meta name="description" content="Exclusive blood testing event for Above Strength & Fitness members. On-site in Homer Glen, IL. Licensed medical staff, 60+ biomarkers, board-certified provider consultation included.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/critical.css">
+    <link rel="stylesheet" href="/shared/tailwind.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/shared/styles.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/shared/tailwind.css"><link rel="stylesheet" href="/shared/styles.css"></noscript>
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glass-card:hover {
+            border-color: rgba(178, 191, 190, 0.25);
+        }
+        .hero-gradient {
+            background: linear-gradient(180deg, #101921 0%, #1a2730 50%, #2C353E 100%);
+        }
+        .co-brand-divider {
+            width: 2px;
+            height: 2.5rem;
+            background: rgba(178, 191, 190, 0.3);
+        }
+        .pkg-btn {
+            border: 2px solid rgba(44, 53, 62, 0.15);
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+            background: #fff;
+        }
+        .pkg-btn:hover {
+            border-color: rgba(44, 53, 62, 0.4);
+        }
+        .pkg-btn.selected {
+            background: #101921;
+            color: #F0EEE9;
+            border-color: #101921;
+        }
+        .pkg-btn.selected .pkg-price {
+            color: #F0EEE9;
+        }
+        .pkg-btn.selected .pkg-sub {
+            color: #B2BFBE;
+        }
+        .slot-btn {
+            border: 1px solid rgba(44, 53, 62, 0.2);
+            padding: 0.625rem 0.25rem;
+            cursor: pointer;
+            font-size: 0.8125rem;
+            transition: all 0.15s ease;
+            text-align: center;
+            background: #fff;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.75rem;
+        }
+        .slot-btn:hover:not(.taken) {
+            border-color: #101921;
+            background: rgba(16, 25, 33, 0.05);
+        }
+        .slot-btn.selected {
+            background: #101921;
+            color: #F0EEE9;
+            border-color: #101921;
+        }
+        .slot-btn.taken {
+            opacity: 0.35;
+            text-decoration: line-through;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <script src="/shared/header.js" defer></script>
+
+    <main class="flex-grow pt-20">
+
+        <!-- Hero -->
+        <section class="hero-gradient py-20 md:py-28">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+                <!-- Co-Brand Logos -->
+                <div class="flex items-center justify-center gap-5 mb-10">
+                    <div>
+                        <p class="text-brand-light font-bold text-lg tracking-wider" style="font-family: 'Oswald', sans-serif;">MOONSHOT</p>
+                        <p class="text-brand-gray text-[10px] uppercase tracking-[0.2em]">Medical & Performance</p>
+                    </div>
+                    <div class="co-brand-divider"></div>
+                    <img src="/images/above-logo.webp" alt="Above Strength & Fitness" class="h-12 w-auto">
+                </div>
+
+                <p class="text-brand-gray text-xs uppercase tracking-[0.25em] mb-4">Exclusive Member Event</p>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-light mb-6">MOBILE BLOOD DRAW<br>AT ABOVE</h1>
+                <p class="text-brand-gray text-lg md:text-xl font-light max-w-2xl mx-auto mb-4">
+                    Comprehensive blood testing brought directly to your gym. Licensed medical staff, 60+ biomarkers, and a one-on-one provider consultation — exclusive to Above Strength & Fitness members.
+                </p>
+
+                <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-sm px-8 py-3 mt-4 mb-8">
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+                    <span class="text-brand-light font-bold text-sm tracking-wide" style="font-family: 'Oswald', sans-serif;">MONDAY, MAY 4, 2026 &middot; 4:00 &ndash; 8:00 PM</span>
+                </div>
+
+                <div class="block">
+                    <a href="#packages" class="btn-primary text-lg px-8 py-4">View Packages</a>
+                </div>
+
+                <p class="text-brand-gray/50 text-xs mt-8">All results reviewed by Missy Zammichieli, DNP, APRN, FNP-BC — Board-Certified Family Nurse Practitioner</p>
+            </div>
+        </section>
+
+        <!-- Above Photos -->
+        <section class="py-12 bg-brand-slate">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <img src="/images/above-front.webp" alt="Above Strength & Fitness — Homer Glen training floor" class="w-full h-72 object-cover rounded-sm">
+                    <img src="/images/above-inside.webp" alt="Above Strength & Fitness — lifting platforms" class="w-full h-72 object-cover rounded-sm">
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-16 bg-brand-slate">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-10 text-center">HOW IT WORKS</h2>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+                        <h3 class="font-bold text-brand-light mb-2">Pick a Package</h3>
+                        <p class="text-brand-gray text-sm font-light">Choose from three options below. All include a provider follow-up.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+                        <h3 class="font-bold text-brand-light mb-2">Sign Up & Prepay</h3>
+                        <p class="text-brand-gray text-sm font-light">Book your slot online. Quick intake form, payment handled upfront.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+                        <h3 class="font-bold text-brand-light mb-2">Show Up Fasted</h3>
+                        <p class="text-brand-gray text-sm font-light">Come to Above on event day. The draw takes about 10 minutes.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">4</div>
+                        <h3 class="font-bold text-brand-light mb-2">Get Your Results</h3>
+                        <p class="text-brand-gray text-sm font-light">Results in 5-7 business days + one-on-one consultation with a licensed provider.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages -->
+        <section id="packages" class="py-20 bg-brand-light text-brand-dark">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-4">MEMBER EVENT PRICING</h2>
+                <p class="text-brand-slate font-light text-center mb-12 max-w-2xl mx-auto">
+                    Exclusive on-site access for Above members. Every package includes a follow-up consultation with a licensed provider. HSA/FSA eligible.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6">
+
+                    <!-- Basic -->
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8 flex flex-col">
+                        <h3 class="text-2xl font-bold mb-2">Basic Hormone Panel</h3>
+                        <p class="text-4xl font-bold mb-4">$145</p>
+                        <p class="text-brand-slate text-xs font-light mb-4">Best for: anyone who's never had bloodwork beyond a standard physical</p>
+                        <p class="text-brand-slate text-sm font-light mb-6">
+                            Key hormone and metabolic markers — the essential screening to find out where you stand on testosterone, thyroid, cholesterol, and blood sugar.
+                        </p>
+                        <div class="border-t border-brand-slate/10 pt-6 mt-6">
+                            <p class="text-brand-slate text-xs uppercase tracking-widest mb-3">What's Tested</p>
+                            <ul class="text-brand-slate text-sm font-light space-y-2">
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Comprehensive Metabolic Panel</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Lipid Panel <span class="text-brand-slate/50 text-xs ml-1">(cholesterol, triglycerides)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Testosterone (Total)</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Estradiol</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> FSH & LH <span class="text-brand-slate/50 text-xs ml-1">(reproductive hormones)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> SHBG <span class="text-brand-slate/50 text-xs ml-1">(hormone availability)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Progesterone <span class="text-brand-slate/50 text-xs ml-1">(women)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> PSA <span class="text-brand-slate/50 text-xs ml-1">(prostate, men)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Prolactin <span class="text-brand-slate/50 text-xs ml-1">(men)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Hemoglobin & Hematocrit <span class="text-brand-slate/50 text-xs ml-1">(men)</span></li>
+                            </ul>
+                            <p class="text-brand-slate/50 text-xs mt-4">Gender-specific panels — men and women get the markers most relevant to them.</p>
+                        </div>
+                    </div>
+
+                    <!-- Comprehensive (Featured) -->
+                    <div class="bg-white border-2 border-brand-dark rounded-sm p-8 flex flex-col" style="padding-top: 3.5rem;">
+                        <div class="bg-brand-dark text-brand-light text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-sm mb-6" style="margin-top: -4.5rem; width: fit-content;">Most Popular</div>
+                        <h3 class="text-2xl font-bold mb-2">Comprehensive 60+ Panel</h3>
+                        <p class="text-4xl font-bold mb-4">$305</p>
+                        <p class="text-brand-slate text-xs font-light mb-4">Best for: the full picture on hormones, metabolism, heart risk, thyroid, and nutrients</p>
+                        <p class="text-brand-slate text-sm font-light mb-6">
+                            60+ biomarkers that go way beyond what your doctor typically orders. Hormones, cardiovascular risk, thyroid, inflammation, vitamins — the works.
+                        </p>
+                        <div class="border-t border-brand-slate/10 pt-6 mt-6">
+                            <p class="text-brand-slate text-xs uppercase tracking-widest mb-3">Everything in Basic, Plus</p>
+                            <ul class="text-brand-slate text-sm font-light space-y-2">
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> CBC with Differential <span class="text-brand-slate/50 text-xs ml-1">(blood cell health)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Hemoglobin A1c <span class="text-brand-slate/50 text-xs ml-1">(3-month blood sugar average)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Fasting Insulin <span class="text-brand-slate/50 text-xs ml-1">(early diabetes detection)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Apolipoprotein B <span class="text-brand-slate/50 text-xs ml-1">(true heart attack risk)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Lipoprotein(a) <span class="text-brand-slate/50 text-xs ml-1">(genetic heart risk)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> hs-CRP <span class="text-brand-slate/50 text-xs ml-1">(systemic inflammation)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Free & Bioavailable Testosterone</li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> DHEA Sulfate <span class="text-brand-slate/50 text-xs ml-1">(adrenal/stress hormone)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Full Thyroid <span class="text-brand-slate/50 text-xs ml-1">(TSH, Free T3, Free T4, TPO)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Vitamin D <span class="text-brand-slate/50 text-xs ml-1">(bone health, immunity, energy)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Vitamin B12 <span class="text-brand-slate/50 text-xs ml-1">(energy, nerve function)</span></li>
+                                <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Ferritin <span class="text-brand-slate/50 text-xs ml-1">(iron storage)</span></li>
+                            </ul>
+                            <p class="text-brand-slate/50 text-xs mt-4">22+ lab tests per panel. Gender-specific markers included.</p>
+                        </div>
+                    </div>
+
+                    <!-- Elite -->
+                    <div class="bg-brand-dark text-brand-light rounded-sm p-8 flex flex-col" style="padding-top: 3.5rem;">
+                        <div class="bg-brand-gray text-brand-dark text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-sm mb-6" style="margin-top: -4.5rem; width: fit-content;">Best Value</div>
+                        <h3 class="text-2xl font-bold mb-2">Elite Panel + DEXA</h3>
+                        <p class="text-4xl font-bold mb-4">$425</p>
+                        <p class="text-brand-gray text-xs font-light mb-4">Best for: the complete picture — blood work + body composition</p>
+                        <p class="text-brand-gray text-sm font-light mb-6">
+                            Everything in the Comprehensive Panel, plus a DEXA body composition scan — medical-grade body fat %, lean muscle mass per limb, visceral fat, and bone density.
+                        </p>
+                        <div class="border-t border-white/10 pt-6 mt-6">
+                            <p class="text-brand-gray text-xs uppercase tracking-widest mb-3">Everything in Comprehensive, Plus</p>
+                            <ul class="text-brand-gray text-sm font-light space-y-2">
+                                <li class="flex items-start"><span class="text-brand-gray mr-2 mt-0.5">&#10003;</span> DEXA Body Composition Scan</li>
+                                <li class="flex items-start"><span class="text-brand-gray mr-2 mt-0.5">&#10003;</span> Body Fat % (Regional & Total)</li>
+                                <li class="flex items-start"><span class="text-brand-gray mr-2 mt-0.5">&#10003;</span> Lean Muscle Mass (per limb)</li>
+                                <li class="flex items-start"><span class="text-brand-gray mr-2 mt-0.5">&#10003;</span> Visceral Adipose Tissue</li>
+                                <li class="flex items-start"><span class="text-brand-gray mr-2 mt-0.5">&#10003;</span> Bone Mineral Density</li>
+                                <li class="flex items-start"><span class="text-brand-gray mr-2 mt-0.5">&#10003;</span> Detailed PDF Report with Benchmarks</li>
+                            </ul>
+                            <p class="text-brand-gray/60 text-xs mt-4">Blood draw at Above. DEXA scan scheduled separately at our Park Ridge clinic.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Booking Form -->
+                <div id="booking-form" class="mt-12 bg-white border border-brand-slate/10 rounded-sm p-8">
+                    <h3 class="text-2xl font-bold text-center mb-8">BOOK YOUR SLOT</h3>
+
+                    <div id="booking-error" class="hidden bg-red-50 border border-red-200 text-red-800 text-sm p-4 rounded-sm mb-6"></div>
+
+                    <!-- Step 1: Package Selection -->
+                    <div class="mb-8">
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Step 1 — Choose Your Package</p>
+                        <div class="grid md:grid-cols-3 gap-3">
+                            <button type="button" class="pkg-btn rounded-sm" data-pkg="basic" data-name="Basic Hormone Panel" data-price="145">
+                                <p class="font-bold text-sm">Basic Hormone</p>
+                                <p class="pkg-price text-2xl font-bold mt-1">$145</p>
+                                <p class="pkg-sub text-brand-slate text-xs mt-1">14 markers</p>
+                            </button>
+                            <button type="button" class="pkg-btn rounded-sm" data-pkg="comprehensive" data-name="Comprehensive 60+" data-price="305">
+                                <p class="font-bold text-sm">Comprehensive 60+</p>
+                                <p class="pkg-price text-2xl font-bold mt-1">$305</p>
+                                <p class="pkg-sub text-brand-slate text-xs mt-1">60+ markers</p>
+                            </button>
+                            <button type="button" class="pkg-btn rounded-sm" data-pkg="elite" data-name="Elite + DEXA" data-price="425">
+                                <p class="font-bold text-sm">Elite + DEXA</p>
+                                <p class="pkg-price text-2xl font-bold mt-1">$425</p>
+                                <p class="pkg-sub text-brand-slate text-xs mt-1">60+ markers + body comp</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Time Slot -->
+                    <div class="mb-8">
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Step 2 — Pick a Time Slot <span class="normal-case tracking-normal">(Mon, May 4 &middot; 4&ndash;8 PM)</span></p>
+                        <div id="slots-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2">
+                            <p class="col-span-full text-brand-slate text-sm font-light text-center py-4">Loading available times...</p>
+                        </div>
+                        <p class="text-brand-slate/50 text-xs mt-2">Slots are held for 30 minutes during checkout.</p>
+                    </div>
+
+                    <!-- Step 3: Patient Info -->
+                    <div class="mb-8">
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4">Step 3 — Your Information</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">First Name *</label>
+                                <input type="text" id="bf-first" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Last Name *</label>
+                                <input type="text" id="bf-last" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Email *</label>
+                                <input type="email" id="bf-email" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Phone *</label>
+                                <input type="tel" id="bf-phone" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="(708) 555-1234" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Date of Birth *</label>
+                                <input type="date" id="bf-dob" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Biological Sex *</label>
+                                <select id="bf-gender" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark bg-white" required>
+                                    <option value="">Select...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label style="display:flex;align-items:start;gap:8px;margin:16px 0 0;font-size:13px;color:#6b7280;cursor:pointer">
+                            <input type="checkbox" id="sms-consent" style="width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:#101921" checked>
+                            <span>I consent to receive SMS messages about my appointments and lab results</span>
+                        </label>
+                        <p class="text-brand-slate text-xs uppercase tracking-widest mb-4 mt-6">Address <span class="normal-case tracking-normal">(for your patient record)</span></p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-brand-dark mb-1">Street Address *</label>
+                                <input type="text" id="bf-street" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="123 Main St, Apt 4" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-brand-dark mb-1">City *</label>
+                                <input type="text" id="bf-city" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" required>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-brand-dark mb-1">State *</label>
+                                    <input type="text" id="bf-state" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="IL" maxlength="2" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-brand-dark mb-1">ZIP *</label>
+                                    <input type="text" id="bf-zip" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="60491" maxlength="10" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="text-center">
+                        <button type="button" id="booking-submit" disabled class="btn-primary text-lg px-10 py-4 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity">
+                            Select a package & time slot
+                        </button>
+                        <p class="text-brand-slate/50 text-xs mt-3">You'll be redirected to Stripe for secure payment. HSA/FSA eligible.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Get Tested -->
+        <section class="py-20 bg-brand-slate">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-brand-light mb-4 text-center">WHY GET TESTED</h2>
+                <p class="text-brand-gray font-light text-center mb-12 max-w-2xl mx-auto">Most people train hard and eat right — but have no idea what's happening under the surface.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Why Am I Always Tired?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Thyroid dysfunction, low iron, vitamin D deficiency, and blood sugar imbalances are invisible until you test. Most standard physicals don't check.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Is My Heart Healthy?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Standard cholesterol panels miss the real risk markers. We test ApoB, Lp(a), and hs-CRP — the biomarkers that predict cardiovascular events.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Why Can't I Lose Weight?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Insulin resistance, thyroid issues, and hormone imbalances can stall progress no matter how hard you train. Blood work shows what's working against you.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-brand-light font-bold mb-2">"Am I Actually Healthy?"</h3>
+                        <p class="text-brand-gray text-sm font-light">Feeling fine isn't the same as being fine. We test 60+ markers across hormones, metabolism, inflammation, and nutrients — catching problems years early.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fasting Prep -->
+        <section class="py-16 bg-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-6 text-center">FASTING PREP</h2>
+                <p class="text-brand-gray font-light text-center mb-8 max-w-2xl mx-auto">
+                    Accurate results require fasting. For an evening draw, skip lunch — eat a normal breakfast by 8 AM and don't eat again until after your appointment.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-6 bg-white/5 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Fasting Window</p>
+                        <p class="text-3xl font-bold text-brand-light">8-12 hrs</p>
+                        <p class="text-brand-gray text-sm mt-1">Before the blood draw</p>
+                    </div>
+                    <div class="text-center p-6 bg-white/5 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">You Can Have</p>
+                        <p class="text-xl font-bold text-brand-light">Water & Black Coffee</p>
+                        <p class="text-brand-gray text-sm mt-1">No cream, sugar, or food</p>
+                    </div>
+                    <div class="text-center p-6 bg-white/5 rounded-sm">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Draw Time</p>
+                        <p class="text-xl font-bold text-brand-light">~10 Minutes</p>
+                        <p class="text-brand-gray text-sm mt-1">Quick and easy</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-white/5 border border-white/10 rounded-sm p-6">
+                    <h3 class="text-brand-light font-bold mb-3">Tips for Best Results</h3>
+                    <ul class="text-brand-gray text-sm font-light space-y-2">
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Eat a normal breakfast by 8 AM, then no food until after your draw</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Stay hydrated — drink plenty of water. Dehydration makes veins harder to find.</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Take your regular medications unless your doctor says otherwise</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Avoid intense exercise on draw day</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#10003;</span> Wear a short-sleeved shirt or easy-to-roll sleeves</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details -->
+        <section class="py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-10">EVENT DETAILS</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">Location</h3>
+                        <p class="text-brand-slate font-light mb-2">Above Strength & Fitness</p>
+                        <p class="text-brand-slate font-light mb-2">15301 S Bell Rd, Homer Glen, IL 60491</p>
+                        <p class="text-brand-slate/60 text-sm font-light">On-site parking available.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">Date & Time</h3>
+                        <p class="text-brand-slate font-light mb-2">Monday, May 4, 2026</p>
+                        <p class="text-brand-slate/60 text-sm font-light">4:00 &ndash; 8:00 PM CT &middot; Multiple time slots available</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">What to Bring</h3>
+                        <ul class="text-brand-slate text-sm font-light space-y-1">
+                            <li>&#8226; Valid photo ID</li>
+                            <li>&#8226; Short sleeves or easy-to-roll sleeves</li>
+                            <li>&#8226; An empty stomach (fasted 8-12 hours)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 rounded-sm p-8">
+                        <h3 class="font-bold text-lg mb-4">Payment</h3>
+                        <ul class="text-brand-slate text-sm font-light space-y-1">
+                            <li>&#8226; Prepay online when you book</li>
+                            <li>&#8226; Flat-fee, cash-pay — no insurance billing</li>
+                            <li>&#8226; HSA/FSA eligible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust -->
+        <section class="py-16 bg-brand-dark">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-brand-light mb-8 text-center">WHAT YOU SHOULD KNOW</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-brand-slate border border-white/10 p-6 rounded-sm">
+                        <h3 class="text-brand-light font-bold mb-2">Licensed Providers</h3>
+                        <p class="text-brand-gray text-sm font-light">Blood draws by certified phlebotomists or RNs. Every result reviewed by a board-certified family nurse practitioner.</p>
+                    </div>
+                    <div class="bg-brand-slate border border-white/10 p-6 rounded-sm">
+                        <h3 class="text-brand-light font-bold mb-2">HIPAA Compliant</h3>
+                        <p class="text-brand-gray text-sm font-light">Your results are shared only with you and your reviewing provider. Above never sees individual health data.</p>
+                    </div>
+                    <div class="bg-brand-slate border border-white/10 p-6 rounded-sm">
+                        <h3 class="text-brand-light font-bold mb-2">Quest Diagnostics Labs</h3>
+                        <p class="text-brand-gray text-sm font-light">Samples processed by Quest — the same lab your doctor uses. Accurate, reliable, and CLIA-certified.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-10 text-center">COMMON QUESTIONS</h2>
+
+                <div class="space-y-4">
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">Do I need to fast?</h3>
+                        <p class="text-brand-slate font-light text-sm">Yes — 8-12 hours of fasting for the most accurate results. For an evening draw: eat breakfast before 8 AM, then water and black coffee only until your appointment.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">How long does the blood draw take?</h3>
+                        <p class="text-brand-slate font-light text-sm">About 10 minutes per person. You'll pick a time slot when you book so there's no waiting around.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">When do I get results?</h3>
+                        <p class="text-brand-slate font-light text-sm">Typically 5-7 business days. You'll get a notification when results are ready, plus a one-on-one follow-up with a licensed provider to walk through everything.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">What's the follow-up consultation?</h3>
+                        <p class="text-brand-slate font-light text-sm">Every package includes a one-on-one with a licensed provider — in-person at our Park Ridge clinic or via telehealth. They'll explain your numbers, flag anything concerning, and discuss next steps. Not a sales pitch — a real health consultation.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">Is this covered by insurance?</h3>
+                        <p class="text-brand-slate font-light text-sm">This is a flat-fee, cash-pay service — no insurance billing, no surprise bills. All packages are HSA/FSA eligible.</p>
+                    </div>
+                    <div class="bg-white border border-brand-slate/10 p-6">
+                        <h3 class="font-bold text-brand-dark mb-2">What about the DEXA scan (Elite package)?</h3>
+                        <p class="text-brand-slate font-light text-sm">Blood draw happens at Above. The DEXA body composition scan is scheduled separately at Moonshot Medical's Park Ridge clinic (542 Busse Hwy, Park Ridge, IL 60068). We'll coordinate the scheduling.</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <a href="/medical/mobile-blood-draw/" class="text-brand-dark underline decoration-brand-slate/30 hover:decoration-brand-dark transition-colors text-sm font-light">View full biomarker details on our Mobile Blood Draw page &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 bg-brand-slate text-center">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-brand-light mb-6">DON'T MISS THIS EVENT</h2>
+                <p class="text-xl text-brand-gray font-light mb-4">
+                    Exclusive on-site access for Above members. Real health data. Licensed providers. Zero guesswork.
+                </p>
+                <p class="text-brand-gray font-light mb-10">
+                    Limited slots. Prepay to reserve your time.
+                </p>
+                <a href="#booking-form" class="btn-primary text-lg px-10 py-4">Book Your Slot</a>
+                <p class="text-brand-gray/50 text-xs mt-8">Moonshot Medical and Performance &middot; 542 Busse Hwy, Park Ridge, IL 60068 &middot; <a href="tel:+12244354280" class="underline decoration-brand-gray/30 hover:decoration-brand-gray">(224) 435-4280</a></p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/shared/footer.js" defer></script>
+
+    <script>
+    (function () {
+      var PARTNER = 'above';
+      var EVENT_DATE = '2026-05-04';
+
+      let selectedPkg = null;
+      let selectedSlot = null;
+
+      const errorEl = document.getElementById('booking-error');
+      const submitBtn = document.getElementById('booking-submit');
+      const slotsGrid = document.getElementById('slots-grid');
+
+      function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.classList.remove('hidden');
+        errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      function hideError() {
+        errorEl.classList.add('hidden');
+      }
+
+      function updateSubmitBtn() {
+        if (selectedPkg && selectedSlot) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = selectedPkg.name + ' ($' + selectedPkg.price + ') at ' + selectedSlot.display;
+        } else if (selectedPkg) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Select a time slot';
+        } else if (selectedSlot) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Select a package';
+        } else {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Select a package & time slot';
+        }
+      }
+
+      document.querySelectorAll('.pkg-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          hideError();
+          document.querySelectorAll('.pkg-btn').forEach(function (b) { b.classList.remove('selected'); });
+          btn.classList.add('selected');
+          selectedPkg = {
+            key: btn.dataset.pkg,
+            name: btn.dataset.name,
+            price: btn.dataset.price,
+          };
+          updateSubmitBtn();
+        });
+      });
+
+      function loadSlots() {
+        slotsGrid.innerHTML = '<p class="col-span-full text-brand-slate text-sm font-light text-center py-4">Loading available times...</p>';
+
+        fetch('https://api.moonshotclinic.com/api/mobile/slots?event_date=' + EVENT_DATE + '&partner=' + PARTNER, { headers: { 'X-Tenant-Slug': 'moonshot' } })
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (!data.slots || !data.slots.length) {
+              slotsGrid.innerHTML = '<p class="col-span-full text-brand-slate text-sm text-center py-4">No slots available.</p>';
+              return;
+            }
+            slotsGrid.innerHTML = '';
+            data.slots.forEach(function (slot) {
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'slot-btn rounded-sm' + (slot.available ? '' : ' taken');
+              btn.textContent = slot.display;
+              btn.dataset.time = slot.time;
+              btn.dataset.display = slot.display;
+
+              if (slot.available) {
+                btn.addEventListener('click', function () {
+                  hideError();
+                  document.querySelectorAll('.slot-btn.selected').forEach(function (b) { b.classList.remove('selected'); });
+                  btn.classList.add('selected');
+                  selectedSlot = { time: slot.time, display: slot.display };
+                  updateSubmitBtn();
+                });
+              }
+
+              slotsGrid.appendChild(btn);
+            });
+          })
+          .catch(function () {
+            slotsGrid.innerHTML = '<p class="col-span-full text-red-600 text-sm text-center py-4">Failed to load time slots. Please refresh the page.</p>';
+          });
+      }
+
+      loadSlots();
+
+      submitBtn.addEventListener('click', function () {
+        hideError();
+
+        if (!selectedPkg) { showError('Please select a package.'); return; }
+        if (!selectedSlot) { showError('Please select a time slot.'); return; }
+
+        var first = document.getElementById('bf-first').value.trim();
+        var last = document.getElementById('bf-last').value.trim();
+        var email = document.getElementById('bf-email').value.trim();
+        var phone = document.getElementById('bf-phone').value.trim();
+        var dob = document.getElementById('bf-dob').value;
+        var gender = document.getElementById('bf-gender').value;
+        var street = document.getElementById('bf-street').value.trim();
+        var city = document.getElementById('bf-city').value.trim();
+        var state = document.getElementById('bf-state').value.trim().toUpperCase();
+        var zip = document.getElementById('bf-zip').value.trim();
+
+        if (!first) { showError('First name is required.'); return; }
+        if (!last) { showError('Last name is required.'); return; }
+        if (!email || email.indexOf('@') === -1) { showError('A valid email address is required.'); return; }
+        if (!phone) { showError('Phone number is required.'); return; }
+        if (!dob) { showError('Date of birth is required.'); return; }
+        if (!gender) { showError('Biological sex is required for accurate biomarker panels.'); return; }
+        if (!street) { showError('Street address is required for your patient record.'); return; }
+        if (!city) { showError('City is required.'); return; }
+        if (!state || state.length !== 2) { showError('Please enter a 2-letter state abbreviation (e.g. IL).'); return; }
+        if (!zip) { showError('ZIP code is required.'); return; }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Reserving your slot...';
+
+        fetch('https://api.moonshotclinic.com/api/mobile/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Tenant-Slug': 'moonshot' },
+          body: JSON.stringify({
+            partner: PARTNER,
+            package: selectedPkg.key,
+            slot_time: selectedSlot.time,
+            event_date: EVENT_DATE,
+            patient_first_name: first,
+            patient_last_name: last,
+            patient_email: email,
+            patient_phone: phone,
+            patient_dob: dob,
+            patient_gender: gender,
+            patient_address_street: street,
+            patient_address_city: city,
+            patient_address_state: state,
+            patient_address_zip: zip,
+            patient_sms_consent: document.getElementById('sms-consent').checked,
+          }),
+        })
+          .then(function (res) {
+            return res.json().then(function (data) { return { ok: res.ok, status: res.status, data: data }; });
+          })
+          .then(function (result) {
+            if (result.ok && result.data.url) {
+              window.location.href = result.data.url;
+            } else {
+              var msg = result.data.error || 'Something went wrong. Please try again.';
+              if (result.status === 409) {
+                selectedSlot = null;
+                loadSlots();
+              }
+              showError(msg);
+              updateSubmitBtn();
+            }
+          })
+          .catch(function () {
+            showError('Network error. Please check your connection and try again.');
+            updateSubmitBtn();
+          });
+      });
+    })();
+    </script>
+
+</body>
+</html>

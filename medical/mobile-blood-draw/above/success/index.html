@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Booked! — Above × Moonshot Medical</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/critical.css">
+    <link rel="stylesheet" href="/shared/tailwind.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/shared/styles.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/shared/tailwind.css"><link rel="stylesheet" href="/shared/styles.css"></noscript>
+
+    <style>
+        .hero-gradient {
+            background: linear-gradient(180deg, #101921 0%, #1a2730 50%, #2C353E 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .check-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(74, 222, 128, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        .check-circle svg {
+            width: 40px;
+            height: 40px;
+            color: #4ade80;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
+
+    <script src="/shared/header.js" defer></script>
+
+    <main class="flex-grow pt-20">
+
+        <!-- Hero -->
+        <section class="hero-gradient py-20 md:py-28">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="check-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-4">YOU'RE BOOKED!</h1>
+                <p class="text-brand-gray text-lg md:text-xl font-light max-w-xl mx-auto">
+                    Your time slot is confirmed. Fill out your health intake below so our provider can review your results in context.
+                </p>
+            </div>
+        </section>
+
+        <!-- Confirmation Card -->
+        <section class="py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Health Intake Form -->
+                <div id="intake-form" class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-2">HEALTH INTAKE</h2>
+                    <p class="text-brand-slate text-sm font-light mb-6">Help our provider review your results in context. Takes about 2 minutes.</p>
+
+                    <div id="intake-fields">
+                        <div class="grid grid-cols-3 gap-3 mb-5">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Height (ft)</label>
+                                <input type="number" id="in-height-ft" min="3" max="7" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="5">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Height (in)</label>
+                                <input type="number" id="in-height-in" min="0" max="11" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="10">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Weight (lbs)</label>
+                                <input type="number" id="in-weight" min="50" max="600" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="185">
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-2">Any diagnosed conditions?</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="High blood pressure" class="mr-2"> High blood pressure</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="High cholesterol" class="mr-2"> High cholesterol</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Diabetes / prediabetes" class="mr-2"> Diabetes / prediabetes</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Thyroid disorder" class="mr-2"> Thyroid disorder</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Heart disease" class="mr-2"> Heart disease</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Sleep apnea" class="mr-2"> Sleep apnea</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="Anxiety / depression" class="mr-2"> Anxiety / depression</label>
+                                <label class="flex items-center text-sm font-light"><input type="checkbox" name="conditions" value="None of the above" class="mr-2"> None of the above</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-1">Current medications</label>
+                            <textarea id="in-medications" rows="3" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="List any medications, supplements, or hormones you currently take"></textarea>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-1">Drug allergies</label>
+                            <textarea id="in-allergies" rows="2" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="e.g., Penicillin, latex, iodine. Write 'None' if none."></textarea>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-2">Do you plan to fast 8-12 hours before the blood draw? *</label>
+                            <div class="flex gap-6">
+                                <label class="flex items-center text-sm"><input type="radio" name="fasting" value="Yes" class="mr-2"> Yes</label>
+                                <label class="flex items-center text-sm"><input type="radio" name="fasting" value="No" class="mr-2"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium mb-2">History of fainting during blood draws?</label>
+                            <div class="flex gap-6">
+                                <label class="flex items-center text-sm"><input type="radio" name="fainting" value="Yes" class="mr-2"> Yes</label>
+                                <label class="flex items-center text-sm"><input type="radio" name="fainting" value="No" class="mr-2"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium mb-1">Anything else we should know?</label>
+                            <textarea id="in-notes" rows="2" class="w-full border border-brand-slate/20 rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-brand-dark" placeholder="Any concerns, questions, or relevant health info"></textarea>
+                        </div>
+
+                        <div id="intake-error" class="bg-red-50 border border-red-200 text-red-700 rounded-sm p-3 mb-4 text-sm" style="display:none"></div>
+
+                        <div class="text-center">
+                            <button type="button" id="intake-submit" onclick="submitIntake()" class="btn-primary text-lg px-10 py-4">Submit Health Intake</button>
+                        </div>
+                    </div>
+
+                    <div id="intake-success" style="display:none" class="text-center py-8">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-green-600 text-2xl">&#10003;</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Health Intake Complete</h3>
+                        <p class="text-brand-slate font-light text-sm">Thank you! Your provider will review this before your blood draw on May 4.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-6">Event Details</h2>
+                    <div class="space-y-4">
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Event</p>
+                            <p class="font-medium">Above x Moonshot Mobile Blood Draw</p>
+                        </div>
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Date</p>
+                            <p class="font-medium">Monday, May 4, 2026 &middot; 4:00 &ndash; 8:00 PM</p>
+                        </div>
+                        <div class="border-b border-brand-slate/10 pb-3">
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Location</p>
+                            <p class="font-medium">Above Strength & Fitness</p>
+                            <p class="text-sm text-brand-slate font-light">15301 S Bell Rd, Homer Glen, IL 60491</p>
+                        </div>
+                        <div>
+                            <p class="text-brand-slate text-xs uppercase tracking-wider mb-1">Duration</p>
+                            <p class="font-medium">~15 minutes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fasting Prep -->
+                <div class="bg-brand-dark text-brand-light rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-2">Fasting Reminder</h2>
+                    <p class="text-brand-gray font-light text-sm mb-6">Accurate results require fasting. For an evening draw, eat breakfast early and skip lunch.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Fast 8-12 hours</strong> before your appointment. Eat a normal breakfast by 8 AM, then no food until after your draw.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Water and black coffee are fine.</strong> No cream, sugar, juice, or food.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Avoid intense exercise</strong> on draw day. It can skew hormone and metabolic markers.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Wear short sleeves</strong> or easy-to-roll sleeves for the blood draw.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-brand-gray mt-0.5">&#10003;</span>
+                            <p class="text-brand-gray text-sm font-light"><strong class="text-brand-light">Stay hydrated.</strong> Drink plenty of water — dehydration makes veins harder to find.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What to Bring -->
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-4">What to Bring</h2>
+                    <ul class="text-brand-slate text-sm font-light space-y-2">
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#8226;</span> Valid photo ID</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#8226;</span> Short sleeves or easy-to-roll sleeves</li>
+                        <li class="flex items-start"><span class="mr-2 mt-0.5">&#8226;</span> An empty stomach (fasted 8-12 hours)</li>
+                    </ul>
+                </div>
+
+                <!-- What's Next -->
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-8 mb-8">
+                    <h2 class="text-xl font-bold mb-4">What Happens Next</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                            <div>
+                                <p class="font-medium">Show up fasted on May 4</p>
+                                <p class="text-brand-slate text-sm font-light">Arrive at Above at your scheduled time. The draw takes about 10 minutes.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                            <div>
+                                <p class="font-medium">Results in 5-7 business days</p>
+                                <p class="text-brand-slate text-sm font-light">Your samples are sent to Quest Diagnostics. We'll notify you when results are ready.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-dark text-brand-light rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                            <div>
+                                <p class="font-medium">Provider consultation</p>
+                                <p class="text-brand-slate text-sm font-light">A licensed provider walks through your results one-on-one — in person or telehealth. Included with every package.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-white border border-brand-slate/10 rounded-sm p-6 text-center">
+                    <p class="text-brand-slate text-sm font-light">
+                        Questions? Contact Moonshot Medical at
+                        <a href="tel:+12244354280" class="text-brand-dark font-medium underline decoration-brand-slate/30 hover:decoration-brand-dark">(224) 435-4280</a>
+                        or <a href="mailto:hello@moonshotmp.com" class="text-brand-dark font-medium underline decoration-brand-slate/30 hover:decoration-brand-dark">hello@moonshotmp.com</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/shared/footer.js" defer></script>
+
+    <script>
+    function submitIntake() {
+        var params = new URLSearchParams(window.location.search);
+        var sessionId = params.get('session_id');
+        if (!sessionId) { showIntakeError('Missing session. Please use the link from your checkout confirmation.'); return; }
+
+        var fasting = document.querySelector('input[name="fasting"]:checked');
+        if (!fasting) { showIntakeError('Please indicate whether you have fasted.'); return; }
+
+        var responses = {
+            height: (document.getElementById('in-height-ft').value || '') + "'" + (document.getElementById('in-height-in').value || '') + '"',
+            weight: document.getElementById('in-weight').value.trim() ? document.getElementById('in-weight').value.trim() + ' lbs' : '',
+            conditions: Array.from(document.querySelectorAll('input[name="conditions"]:checked')).map(function(c) { return c.value; }),
+            medications: document.getElementById('in-medications').value.trim(),
+            allergies: document.getElementById('in-allergies').value.trim(),
+            fasting: fasting.value,
+            fainting: (document.querySelector('input[name="fainting"]:checked') || {}).value || '',
+            notes: document.getElementById('in-notes').value.trim()
+        };
+
+        var btn = document.getElementById('intake-submit');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+        document.getElementById('intake-error').style.display = 'none';
+
+        fetch('https://api.moonshotclinic.com/api/mobile/intake', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Tenant-Slug': 'moonshot' },
+            body: JSON.stringify({ session_id: sessionId, responses: responses })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.ok) {
+                document.getElementById('intake-fields').style.display = 'none';
+                document.getElementById('intake-success').style.display = 'block';
+            } else {
+                showIntakeError(data.error || 'Something went wrong. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Submit Health Intake';
+            }
+        })
+        .catch(function() {
+            showIntakeError('Network error. Please check your connection and try again.');
+            btn.disabled = false;
+            btn.textContent = 'Submit Health Intake';
+        });
+    }
+
+    function showIntakeError(msg) {
+        var el = document.getElementById('intake-error');
+        el.textContent = msg;
+        el.style.display = 'block';
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    </script>
+
+</body>
+</html>
