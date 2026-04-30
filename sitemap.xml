@@ -342,96 +342,11 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/vs-semaglutide-tirzepatide/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/clinical-trials/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/side-effects/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/muscle-preservation/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/fatty-liver-masld/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/bone-density/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/should-i-wait/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/perimenopause-weight-gain/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/for-women/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/executive-guide/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/training-guide/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/protein-nutrition/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/park-ridge/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/retatrutide/tried-everything/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
+  <!-- Retatrutide cluster removed 2026-04-30 (Phase 0 remediation):
+       9 pages taken down (301 redirects in _redirects),
+       4 pages noindexed (hub, should-i-wait, side-effects, bone-density),
+       2 pages rewritten and noindexed during transition (fatty-liver-masld, muscle-preservation).
+       See /Users/tomkashul/seo-analytics/audits/retatrutide-cluster-decision.md -->
   <url>
     <loc>https://moonshotmp.com/learn/bpc-157/</loc>
     <lastmod>2026-03-24</lastmod>
