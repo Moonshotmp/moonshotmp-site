@@ -12,39 +12,28 @@
  */
 
 (function() {
-    // GA4 dataLayer queue — available immediately so events fire before gtag loads
+    // GA4 dataLayer shim — kept as a harmless no-op so any legacy `gtag(...)`
+    // calls elsewhere in the codebase don't throw. The real tracker scripts
+    // (gtag.js, Ahrefs, Meta CAPI) are NO LONGER loaded from this file.
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function(){dataLayer.push(arguments);};
+    window.gtag = window.gtag || function(){ /* no-op shim */ };
 
-    // Google Analytics 4 — deferred to avoid competing with critical resources
-    var loadAnalytics = function() {
-        const gtagScript = document.createElement('script');
-        gtagScript.async = true;
-        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-TVYS826RW0';
-        document.head.appendChild(gtagScript);
-
-        gtag('js', new Date());
-        gtag('config', 'G-TVYS826RW0');
-        gtag('config', 'AW-18022260388');
-
-        // Ahrefs analytics
-        const ahrefsScript = document.createElement('script');
-        ahrefsScript.async = true;
-        ahrefsScript.src = 'https://analytics.ahrefs.com/analytics.js';
-        ahrefsScript.dataset.key = 'UTkNprdRUfEYySLJJPoA3A';
-        document.head.appendChild(ahrefsScript);
-
-        // Meta CAPI — deferred client-side event tracker
-        const metaScript = document.createElement('script');
-        metaScript.defer = true;
-        metaScript.src = '/shared/meta-tracking.js';
-        document.head.appendChild(metaScript);
-    };
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadAnalytics, { timeout: 3000 });
-    } else {
-        setTimeout(loadAnalytics, 2000);
-    }
+    // === Phase 0 tracker strip (2026-04-30) ===
+    // Health-data pages (/quiz/, /medical/, /learn/, /blood-work/, /rehab/)
+    // historically loaded GA4, Google Ads, Ahrefs Analytics, and a Meta CAPI
+    // relay unconditionally. That pattern is HBNR-violating (cf. GoodRx $1.5M,
+    // BetterHelp $7.8M FTC settlements). We now load NO third-party trackers
+    // from this file — period. Even non-health pages do not load them here
+    // until a consent gate is implemented.
+    //
+    // Generic, non-health funnel measurement now flows through the first-party
+    // endpoint at `/.netlify/functions/quiz-event`. See the audit at
+    // `~/seo-analytics/audits/tracker-audit.md` for the full strip plan.
+    //
+    // DO NOT re-add gtag.js, googletagmanager.com, googleadservices.com,
+    // analytics.ahrefs.com, connect.facebook.net, or graph.facebook.com loaders
+    // to this file without an explicit consent gate AND a path-based exclusion
+    // for /quiz/*, /medical/*, /learn/*, /blood-work/*, /rehab/*, /booking/*.
 
     const headerHTML = `
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand-dark focus:text-brand-light focus:px-4 focus:py-2 focus:border focus:border-white/20">Skip to content</a>
@@ -900,7 +889,16 @@
         var modal = document.getElementById('booking-modal');
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        gtag('event', 'cta_click', {cta_name: 'book_now', page: location.pathname});
+        // First-party generic CTA event — no `page` (URL would expose the
+        // health condition the user was viewing). No quiz context here.
+        try {
+            fetch('/.netlify/functions/quiz-event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ quiz: 'site', event: 'cta_click', timestamp: new Date().toISOString() }),
+                keepalive: true,
+            }).catch(function(){});
+        } catch (e) { /* ignore */ }
         // Focus first focusable element in modal
         setTimeout(function() {
             var focusable = modal.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');

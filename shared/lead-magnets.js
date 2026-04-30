@@ -212,13 +212,13 @@
         // Suppress scroll quiz prompt
         try { sessionStorage.setItem('quiz_prompt_shown', '1'); } catch (e) {}
 
-        // GA4 event
-        if (typeof gtag === 'function') {
-          gtag('event', 'lead_magnet_capture', {
-            magnet_key: magnetKey,
-            page: location.pathname
-          });
-        }
+        // STRIPPED 2026-04-30: previously fired gtag `lead_magnet_capture`
+        // with `magnet_key` + `location.pathname`. The combination of magnet
+        // key (e.g. `peptide_guide`) and the article URL (e.g.
+        // `/learn/peptides-for-gut-healing/`) is HIPAA-adjacent identifiable
+        // health intent. The lead itself still flows server-side via
+        // `/.netlify/functions/lead-magnet-submit` (first-party). No analytics
+        // event is fired here. See ~/seo-analytics/audits/tracker-audit.md.
 
         renderSuccess();
       } else {

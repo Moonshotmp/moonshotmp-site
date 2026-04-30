@@ -147,8 +147,34 @@
 
     // ── Helpers ──────────────────────────────────────────────────────────
 
+    // First-party analytics shim. Body-comp is a knowledge quiz (not a
+    // health quiz), so payloads here are low-sensitivity. We still route
+    // through the first-party endpoint for consistency and drop the
+    // page/score values — only generic funnel signals are forwarded.
+    var EVENT_MAP = {
+        quiz_start:         'quiz_start',
+        quiz_step:          'quiz_step',
+        quiz_email_capture: 'quiz_email_submit',
+        quiz_cta_click:     'quiz_cta_click',
+        quiz_complete:      'quiz_complete'
+    };
     function ga(event, params) {
-        if (window.gtag) window.gtag('event', event, params || {});
+        var mapped = EVENT_MAP[event];
+        if (!mapped) return;
+        var payload = {
+            quiz: 'body-comp',
+            event: mapped,
+            screen: (params && typeof params.step === 'string' && params.step.length <= 24) ? params.step : null,
+            timestamp: new Date().toISOString()
+        };
+        try {
+            fetch('/.netlify/functions/quiz-event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(function(){});
+        } catch (e) { /* ignore */ }
     }
 
     function updateProgress() {

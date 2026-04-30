@@ -1,83 +1,29 @@
 /**
- * Meta CAPI — Client-Side Event Tracker
- * ======================================
- * Lightweight script that auto-detects page type,
- * fires the appropriate Meta conversion event, and
- * sends it to our Netlify function for server-side relay.
+ * Meta CAPI tracker — DISABLED 2026-04-30
+ * ========================================
+ * This file previously auto-detected the page type (`/booking/`, `/quiz/results`,
+ * `/medical/`, `/learn/`, `/blood-work/`, `/rehab/`, `tel:` clicks) and fired
+ * `Schedule`, `CompleteRegistration`, `ViewContent`, and `Contact` events to
+ * `/.netlify/functions/meta-capi`, which relayed to the Meta Graph API with
+ * client IP, user agent, and `_fbp`/`_fbc` cookies — i.e. identifiable
+ * cross-site tracking of health intent.
  *
- * Events:
- *   ViewContent    — service/learn pages
- *   Schedule       — booking pages
- *   CompleteRegistration — quiz result pages
- *   Contact        — phone link clicks
+ * That auto-fire logic has been stripped. The file is retained only so any
+ * lingering `<script src="/shared/meta-tracking.js">` tags don't 404 in the
+ * browser. It is no longer loaded by `shared/header.js`.
  *
- * Load deferred: <script src="/shared/meta-tracking.js" defer></script>
+ * The Netlify function `/.netlify/functions/meta-capi` is now dormant — no
+ * caller exists. It can be deleted in a follow-up task along with the
+ * `META_PIXEL_ID` / `META_CAPI_TOKEN` env vars in the Netlify dashboard.
+ *
+ * Do NOT re-enable Meta tracking from this file. If conversion measurement
+ * for paid Meta campaigns is needed, use server-side Conversions API only
+ * from booking success confirmation pages with hashed user data — never
+ * from health pages, never with event_source_url exposing the visited path.
+ *
+ * See ~/seo-analytics/audits/tracker-audit.md for the full strip plan.
  */
 
 (function () {
-  var ENDPOINT = '/.netlify/functions/meta-capi';
-  var path = location.pathname;
-
-  // Read Meta cookies
-  function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
-    return match ? decodeURIComponent(match[1]) : null;
-  }
-
-  // Generate a unique event ID for deduplication
-  function eventId() {
-    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9);
-  }
-
-  // Send event to our Netlify function
-  function sendEvent(eventName) {
-    var payload = {
-      event_name: eventName,
-      event_source_url: location.href,
-      event_id: eventId(),
-      fbc: getCookie('_fbc'),
-      fbp: getCookie('_fbp'),
-    };
-
-    // Use sendBeacon if available (works on page unload), else fetch
-    var json = JSON.stringify(payload);
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(ENDPOINT, new Blob([json], { type: 'application/json' }));
-    } else {
-      fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: json,
-        keepalive: true,
-      }).catch(function () {});
-    }
-  }
-
-  // --- Auto-detect page type and fire event ---
-
-  // Booking pages → Schedule
-  if (path.indexOf('/booking/') === 0) {
-    sendEvent('Schedule');
-  }
-  // Quiz results → CompleteRegistration
-  else if (path.indexOf('/quiz/results') === 0 || path.indexOf('/quiz/body-comp/results') === 0) {
-    sendEvent('CompleteRegistration');
-  }
-  // Service & learn pages → ViewContent
-  else if (
-    path.indexOf('/medical/') === 0 ||
-    path.indexOf('/learn/') === 0 ||
-    path.indexOf('/blood-work/') === 0 ||
-    path.indexOf('/rehab/') === 0
-  ) {
-    sendEvent('ViewContent');
-  }
-
-  // Phone link clicks → Contact (delegated listener)
-  document.addEventListener('click', function (e) {
-    var link = e.target.closest('a[href^="tel:"]');
-    if (link) {
-      sendEvent('Contact');
-    }
-  });
+  // Intentionally empty — no auto-fire, no event handlers, no network requests.
 })();

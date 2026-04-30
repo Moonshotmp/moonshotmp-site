@@ -169,10 +169,19 @@
         document.body.appendChild(magnetScript);
     }
 
-    // GA4: track phone link clicks
+    // First-party: track phone link clicks as generic site CTA.
+    // We deliberately do NOT include `page`/URL here — it would leak the
+    // health-condition page the user was on (HBNR risk).
     document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
         link.addEventListener('click', function() {
-            gtag('event', 'cta_click', {cta_name: 'call', page: location.pathname});
+            try {
+                fetch('/.netlify/functions/quiz-event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ quiz: 'site', event: 'cta_click', timestamp: new Date().toISOString() }),
+                    keepalive: true,
+                }).catch(function(){});
+            } catch (e) { /* ignore */ }
         });
     });
 

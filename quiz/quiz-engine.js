@@ -228,8 +228,56 @@
 
     // ── Helpers ──────────────────────────────────────────────────────────
 
-    function ga(event, params) {
-        if (window.gtag) window.gtag('event', event, params || {});
+    // First-party analytics shim. Replaces the prior gtag-based helper.
+    // Only generic, NON-HEALTH funnel events are forwarded. The `params`
+    // argument is intentionally IGNORED — the legacy callers passed
+    // gender, age, primary concern, duration, readiness, classification,
+    // and score, none of which may leave the browser as analytics. Health
+    // data still flows through `/.netlify/functions/quiz-submit` for the
+    // email/CRM pipeline (server-side only).
+    var EVENT_MAP = {
+        quiz_start:             'quiz_start',
+        quiz_gender:            'screen_advance',
+        quiz_age:               'screen_advance',
+        quiz_primary_concern:   'screen_advance',
+        quiz_duration:          'screen_advance',
+        quiz_readiness:         'screen_advance',
+        quiz_symptom_complete:  'screen_advance',
+        quiz_step:              'quiz_step',
+        quiz_cta_click:         'quiz_cta_click',
+        quiz_email_submit:      'quiz_email_submit',
+        quiz_results_view:      'quiz_results_view'
+    };
+    var SCREEN_BY_EVENT = {
+        quiz_start:             'welcome',
+        quiz_gender:            'gender',
+        quiz_age:               'age',
+        quiz_primary_concern:   'concern',
+        quiz_duration:          'duration',
+        quiz_readiness:         'readiness',
+        quiz_symptom_complete:  'symptoms',
+        quiz_step:              'lifestyle',
+        quiz_cta_click:         'results',
+        quiz_email_submit:      'email',
+        quiz_results_view:      'results'
+    };
+    function ga(event /*, params -- intentionally ignored */) {
+        var mapped = EVENT_MAP[event];
+        if (!mapped) return;
+        var payload = {
+            quiz: 'hormone',
+            event: mapped,
+            screen: SCREEN_BY_EVENT[event] || null,
+            timestamp: new Date().toISOString()
+        };
+        try {
+            fetch('/.netlify/functions/quiz-event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(function(){});
+        } catch (e) { /* ignore */ }
     }
 
     function updateProgress() {

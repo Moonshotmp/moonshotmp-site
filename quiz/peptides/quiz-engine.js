@@ -362,8 +362,61 @@
 
     // ── Helpers ──────────────────────────────────────────────────────
 
-    function ga(event, params) {
-        if (window.gtag) window.gtag('event', event, params || {});
+    // First-party analytics shim. Replaces the prior gtag-based helper.
+    // Only generic, NON-HEALTH funnel events are forwarded. The `params`
+    // argument is intentionally IGNORED — the legacy callers passed health
+    // values (concern, severity, recommendation, etc.) which must never
+    // leave the browser as analytics. Health data still flows through
+    // `/.netlify/functions/peptide-quiz-submit` for the email/CRM pipeline.
+    var SCREEN_BY_EVENT = {
+        peptide_quiz_start:        'welcome',
+        peptide_quiz_goal:         'goal',
+        peptide_quiz_concern:      'concern',
+        peptide_quiz_severity:     'severity',
+        peptide_quiz_duration:     'duration',
+        peptide_quiz_experience:   'experience',
+        peptide_quiz_therapy:      'therapy',
+        peptide_quiz_convenience:  'convenience',
+        peptide_quiz_budget:       'budget',
+        peptide_quiz_retake:       'retake',
+        peptide_quiz_cta_click:    'results',
+        peptide_quiz_info_submit:  'info',
+        peptide_quiz_results_view: 'results',
+        peptide_quiz_shared_result_cta: 'shared'
+    };
+    var EVENT_MAP = {
+        peptide_quiz_start:        'quiz_start',
+        peptide_quiz_goal:         'screen_advance',
+        peptide_quiz_concern:      'screen_advance',
+        peptide_quiz_severity:     'screen_advance',
+        peptide_quiz_duration:     'screen_advance',
+        peptide_quiz_experience:   'screen_advance',
+        peptide_quiz_therapy:      'screen_advance',
+        peptide_quiz_convenience:  'screen_advance',
+        peptide_quiz_budget:       'screen_advance',
+        peptide_quiz_retake:       'quiz_retake',
+        peptide_quiz_cta_click:    'quiz_cta_click',
+        peptide_quiz_info_submit:  'quiz_info_submit',
+        peptide_quiz_results_view: 'quiz_results_view',
+        peptide_quiz_shared_result_cta: 'quiz_cta_click'
+    };
+    function ga(event /*, params -- intentionally ignored */) {
+        var mapped = EVENT_MAP[event];
+        if (!mapped) return; // Drop anything we don't explicitly map.
+        var payload = {
+            quiz: 'peptide',
+            event: mapped,
+            screen: SCREEN_BY_EVENT[event] || null,
+            timestamp: new Date().toISOString()
+        };
+        try {
+            fetch('/.netlify/functions/quiz-event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(function(){});
+        } catch (e) { /* ignore */ }
     }
 
     function updateProgress() {

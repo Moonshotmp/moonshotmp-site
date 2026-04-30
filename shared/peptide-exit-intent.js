@@ -124,13 +124,10 @@
     shown = true;
     overlay.classList.add('pep-active');
 
-    // GA4 event
-    if (typeof gtag === 'function') {
-      gtag('event', 'exit_intent_shown', {
-        page: path,
-        popup: 'peptide_guide'
-      });
-    }
+    // STRIPPED 2026-04-30: previously fired gtag `exit_intent_shown` with
+    // `page` (a peptide-related URL) and `popup='peptide_guide'`. That tuple
+    // identifies peptide-therapy intent for a specific user. No analytics
+    // event is fired here. See ~/seo-analytics/audits/tracker-audit.md.
   }
 
   function hideModal() {
@@ -221,13 +218,11 @@
         // Suppress scroll quiz prompt (avoid double-popup)
         try { sessionStorage.setItem('quiz_prompt_shown', '1'); } catch (ex) {}
 
-        // GA4
-        if (typeof gtag === 'function') {
-          gtag('event', 'lead_capture', {
-            magnet: 'peptide_guide',
-            page: path
-          });
-        }
+        // STRIPPED 2026-04-30: previously fired gtag `lead_capture` with
+        // `magnet='peptide_guide'` + page path. Identifiable peptide-intent
+        // signal. The lead itself still flows server-side via
+        // `/.netlify/functions/peptide-guide-send` (first-party). No
+        // analytics event is fired here.
 
         // Show success
         var modal = document.getElementById('pep-exit-modal');

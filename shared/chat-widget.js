@@ -379,7 +379,10 @@
     }
 
     if (isOpen) {
-      if (typeof gtag === 'function') gtag('event', 'chat_open');
+      // STRIPPED 2026-04-30: previously fired gtag `chat_open`. Low-risk
+      // signal but the chat content itself can contain symptom disclosures,
+      // so we no longer measure the open via a third-party tracker. See
+      // ~/seo-analytics/audits/tracker-audit.md.
       // Show disclaimer + restore history on first open
       if (messagesEl.children.length === 0) {
         showDisclaimer();
