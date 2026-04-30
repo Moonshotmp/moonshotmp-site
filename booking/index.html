@@ -219,6 +219,8 @@
                 
                 <!-- Headline Block -->
                 <div class="text-center max-w-4xl mx-auto mb-12 md:mb-16">
+                     <!-- Personalized intro for warm-quiz traffic (rendered by booking-attribution.js) -->
+                     <div id="mmp-booking-personalized-intro" class="hidden"></div>
                      <h1 class="text-4xl md:text-6xl font-bold text-brand-dark mb-6 leading-tight">
                         Initial Performance Consultation
                      </h1>
@@ -299,7 +301,13 @@
 
                 <!-- CTA Block -->
                 <div class="text-center max-w-2xl mx-auto mb-20">
+                    <p class="mb-4">
+                        <span class="text-brand-slate text-xs uppercase tracking-widest">Next available</span><br>
+                        <span class="font-bold text-brand-dark text-lg">May 8, 2026</span>
+                    </p>
+
                     <a href="https://moonshotclinic.com/book/"
+                       data-ehr-booker
                        class="inline-block bg-brand-dark text-brand-light font-heading uppercase text-lg tracking-widest font-bold px-10 py-5 hover:bg-brand-slate transform hover:-translate-y-1 transition duration-300 shadow-lg w-full sm:w-auto cursor-pointer text-center no-underline">
                         Book Your First Visit
                     </a>
@@ -309,6 +317,26 @@
                            class="text-sm text-brand-slate/70 hover:text-brand-dark underline decoration-brand-slate/30 underline-offset-4 transition">
                             Already a member or returning patient? Book here
                         </a>
+                    </div>
+
+                    <!-- Fallback callback CTA -->
+                    <div class="mt-10 pt-8 border-t border-brand-dark/10">
+                        <p class="text-sm text-brand-slate mb-4">
+                            <strong class="text-brand-dark">Prefer we call you?</strong>
+                        </p>
+                        <form id="mmp-callback-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                            <label class="sr-only" for="mmp-callback-name">Name</label>
+                            <input id="mmp-callback-name" name="name" type="text" required autocomplete="name" placeholder="Your name"
+                                   class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
+                            <label class="sr-only" for="mmp-callback-phone">Phone</label>
+                            <input id="mmp-callback-phone" name="phone" type="tel" required autocomplete="tel" placeholder="Phone number"
+                                   class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
+                            <button type="submit"
+                                    class="bg-brand-dark text-brand-light font-heading uppercase text-sm tracking-widest font-bold px-6 py-3 hover:bg-brand-slate transition cursor-pointer">
+                                Request callback
+                            </button>
+                        </form>
+                        <p id="mmp-callback-msg" class="hidden mt-4 text-sm text-brand-slate"></p>
                     </div>
 
                     <p class="mt-8 text-sm text-brand-slate">
@@ -458,7 +486,7 @@
                   
                   <!-- Bottom CTA -->
                   <div class="text-center mt-12 mb-8">
-                      <a href="https://moonshotclinic.com/book/" class="btn-primary inline-block cursor-pointer no-underline">Book Your First Visit</a>
+                      <a href="https://moonshotclinic.com/book/" data-ehr-booker class="btn-primary inline-block cursor-pointer no-underline">Book Your First Visit</a>
                   </div>
                 </section>
 
@@ -467,6 +495,7 @@
     </main>
 
     <script src="/shared/footer.js" defer></script>
+    <script src="/booking/booking-attribution.js" defer></script>
 
 </body>
 </html>
