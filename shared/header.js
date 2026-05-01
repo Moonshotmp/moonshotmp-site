@@ -70,6 +70,7 @@
                   <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptides</a>
                   <a href="/quiz/perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1" role="menuitem">Perimenopause Screener</a>
                   <a href="/quiz/low-t/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">TRT Readiness Screener</a>
+                  <a href="/quiz/glp1/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">GLP-1 Readiness Screener</a>
                   <a href="/quiz/bone-density/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">Bone Density Screener</a>
                 </div>
               </div>
@@ -194,6 +195,7 @@
                 <div class="py-2">
                   <a href="/quiz/perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">Perimenopause Screener</a>
                   <a href="/quiz/low-t/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">TRT Readiness Screener</a>
+                  <a href="/quiz/glp1/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">GLP-1 Readiness Screener</a>
                   <a href="/quiz/bone-density/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Bone Density Screener</a>
                   <a href="/quiz/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptide Quiz</a>
                   <a href="/quiz/body-comp/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Body Comp IQ Quiz</a>
@@ -245,6 +247,7 @@
               <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides</a>
               <a href="/quiz/perimenopause/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">Perimenopause Screener &rarr;</a>
               <a href="/quiz/low-t/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">TRT Readiness Screener &rarr;</a>
+              <a href="/quiz/glp1/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">GLP-1 Readiness Screener &rarr;</a>
               <a href="/quiz/bone-density/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Bone Density Screener &rarr;</a>
             </div>
           </div>
@@ -344,6 +347,7 @@
             <div id="mobile-quiz-submenu" class="bg-black/20 hidden">
               <a href="/quiz/perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Perimenopause Screener</a>
               <a href="/quiz/low-t/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT Readiness Screener</a>
+              <a href="/quiz/glp1/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 Readiness Screener</a>
               <a href="/quiz/bone-density/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Bone Density Screener</a>
               <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
               <a href="/quiz/body-comp/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Comp IQ Quiz</a>
@@ -695,6 +699,7 @@
             // Quiz
             { title: "Perimenopause Screener", desc: "Validated 11-item MRS scale + safety screen", url: "/quiz/perimenopause/", cat: "Quiz" },
             { title: "TRT Readiness Screener", desc: "Validated ADAM scale + PSA and IPSS safety check", url: "/quiz/low-t/", cat: "Quiz" },
+            { title: "GLP-1 Readiness Screener", desc: "BMI + comorbidity + 8-category contraindication check", url: "/quiz/glp1/", cat: "Quiz" },
             { title: "Bone Density Screener", desc: "OST formula + AACE/NOF risk factors for DEXA decision", url: "/quiz/bone-density/", cat: "Quiz" },
             { title: "Peptide Quiz", desc: "Find which peptide is right for you", url: "/quiz/peptides/", cat: "Quiz" },
             { title: "Body Comp IQ Quiz", desc: "Test your body composition knowledge", url: "/quiz/body-comp/", cat: "Quiz" },

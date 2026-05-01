@@ -92,6 +92,10 @@
                         <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">TRT READINESS SCREENER</p>
                         <p class="text-brand-light/80 text-xs mt-1">Validated 10-item ADAM scale plus a PSA and IPSS short-form safety check.</p>
                     </a>
+                    <a href="/quiz/glp1/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
+                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">GLP-1 READINESS SCREENER</p>
+                        <p class="text-brand-light/80 text-xs mt-1">BMI, qualifying comorbidities, and an 8-category contraindication safety check for prescription weight-management.</p>
+                    </a>
                     <a href="/quiz/bone-density/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
                         <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BONE DENSITY SCREENER</p>
                         <p class="text-brand-light/80 text-xs mt-1">OST formula plus AACE / NOF risk factors to help you decide whether a DEXA scan makes sense.</p>
@@ -228,6 +232,7 @@
                 '<div class="flex justify-center gap-4 flex-wrap">' +
                 '<a href="/quiz/perimenopause/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Perimenopause Screener</a>' +
                 '<a href="/quiz/low-t/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">TRT Readiness Screener</a>' +
+                '<a href="/quiz/glp1/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">GLP-1 Readiness Screener</a>' +
                 '<a href="/quiz/bone-density/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Bone Density Screener</a>' +
                 '<a href="/quiz/peptides/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Peptide Quiz</a>' +
                 '</div>';

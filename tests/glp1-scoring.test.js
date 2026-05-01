@@ -1250,19 +1250,31 @@ describe('Critical regulatory regression tests', () => {
     });
 });
 
-// ─── Pin the noindex meta (regulatory + commercial) ──────────────────
-// GLP-1 quiz must NEVER be indexed by search engines. This is both a
-// regulatory protection (no organic drug-seeking traffic landing on a
-// "do you qualify" page) and a commercial protection (eligibility flow
-// stays gated behind paid acquisition / direct nav). A regression that
-// removes either meta would fail this test.
+// ─── Pin the indexing posture ────────────────────────────────────────
+// Initial v2 plan called for noindex on the GLP-1 quiz (paid-traffic
+// only, "DR-26 can't win the GLP-1 head-term SERP"). That argument was
+// wrong — failing to win head terms is not a reason to forfeit the
+// long-tail and local-intent organic surface area we already paid to
+// build. The page is regulator-defensible from the COPY (no drug
+// names, "this is not a determination" disclaimer, no compounding-
+// equivalence claims) — not from being un-indexed. Reverted to
+// `index, follow` 2026-05-01.
+//
+// What this test actually protects against now: an accidental
+// regression that puts the page back on noindex. If a future v2-plan-
+// re-read causes someone to flip robots → noindex, this test fails
+// loudly so the decision gets re-litigated, not silently shipped.
 
-describe('Static page noindex meta tags', () => {
-    it('static page contains noindex robots meta', () => {
-        expect(PAGE_HTML).toMatch(/<meta\s+name="robots"\s+content="noindex/);
+describe('Static page robots meta', () => {
+    it('static page indexes (index, follow)', () => {
+        expect(PAGE_HTML).toMatch(/<meta\s+name="robots"\s+content="index, follow"/);
     });
 
-    it('static page contains noindex googlebot meta', () => {
-        expect(PAGE_HTML).toMatch(/<meta\s+name="googlebot"\s+content="noindex/);
+    it('static page does NOT contain noindex robots meta (regression check)', () => {
+        expect(PAGE_HTML).not.toMatch(/<meta\s+name="robots"\s+content="noindex/);
+    });
+
+    it('static page does NOT contain noindex googlebot meta (regression check)', () => {
+        expect(PAGE_HTML).not.toMatch(/<meta\s+name="googlebot"\s+content="noindex/);
     });
 });
