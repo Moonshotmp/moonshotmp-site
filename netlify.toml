@@ -37,23 +37,5 @@
   to = "/partners/store.html"
   status = 200
 
-# Quiz aliases — promised in v2 spec, route legacy URLs to canonical screeners
-[[redirects]]
-  from = "/quiz/menopause/"
-  to = "/quiz/perimenopause/"
-  status = 301
-
-[[redirects]]
-  from = "/quiz/womens-hormones/"
-  to = "/quiz/perimenopause/"
-  status = 301
-
-[[redirects]]
-  from = "/quiz/trt/"
-  to = "/quiz/low-t/"
-  status = 301
-
-[[redirects]]
-  from = "/quiz/osteoporosis-risk/"
-  to = "/quiz/bone-density/"
-  status = 301
+# Quiz alias redirects live in _redirects (the canonical redirects file
+# for this site; netlify.toml is reserved for build/function/edge config).

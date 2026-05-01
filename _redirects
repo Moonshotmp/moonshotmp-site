@@ -17,6 +17,12 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 /learn/understanding-blood-results /blood-work/ 301
 /learn/understanding-blood-results/ /blood-work/ 301
 
+# Quiz aliases — promised in v2 spec, route legacy URLs to canonical screeners (2026-05-01)
+/quiz/menopause/ /quiz/perimenopause/ 301
+/quiz/womens-hormones/ /quiz/perimenopause/ 301
+/quiz/trt/ /quiz/low-t/ 301
+/quiz/osteoporosis-risk/ /quiz/bone-density/ 301
+
 # Retatrutide highest-risk pages — kept as 301 take-downs (Phase 0 remediation 2026-04-30)
 # Per audit /Users/tomkashul/seo-analytics/audits/retatrutide-cluster-decision.md:
 # - park-ridge: LocalBusiness schema + retatrutide H1 + pricing = highest single-page FDA enforcement vector
