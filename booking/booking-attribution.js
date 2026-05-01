@@ -38,7 +38,7 @@
     'bone-density-quiz': 'You completed our Bone Density Screener',
     'glp1-quiz': 'You completed our GLP-1 Readiness Quiz',
     'low-t-quiz': 'You completed our Low Testosterone Quiz',
-    'perimenopause-quiz': 'You completed our Perimenopause Quiz',
+    'perimenopause-quiz': 'You completed our Perimenopause Screener',
     'hormone-quiz': 'You completed our Hormone Quiz',
     'body-comp-quiz': 'You completed our Body Composition Quiz',
     'dexa-scan-park-ridge': 'You read about our DEXA scan service in Park Ridge',
@@ -55,8 +55,9 @@
   function mapSourceToQuizEnum(source) {
     if (!source) return 'site';
     if (source.indexOf('peptide') !== -1) return 'peptide';
+    if (source.indexOf('perimenopause') !== -1) return 'perimenopause';
     if (source.indexOf('hormone') !== -1 || source.indexOf('low-t') !== -1 ||
-        source.indexOf('perimenopause') !== -1 || source.indexOf('trt') !== -1 ||
+        source.indexOf('trt') !== -1 ||
         source.indexOf('glp1') !== -1 || source.indexOf('glp-1') !== -1) {
       return 'hormone';
     }

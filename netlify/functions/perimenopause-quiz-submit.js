@@ -1,57 +1,80 @@
 import { sendEmail } from './send-email.js';
 
-const ALLOWED_TIERS = new Set(['A', 'B', 'C', 'D']);
-
-const TIER_BODY = {
-  A: 'Per AACE, Endocrine Society, and NOF guidelines, a low-trauma fracture after age 40 is itself diagnostic of osteoporosis, even before a DEXA scan. A clinical evaluation is the appropriate next step — it should include a DEXA scan, bone-relevant lab work, and a discussion of treatment options. We offer DEXA scans on-site in Park Ridge ($150) and full clinical evaluation.',
-  B: "Your responses describe risk factors associated with elevated likelihood of low bone density. The most accurate way to know your bones' actual condition is a DEXA scan — it's the medical gold standard. Moonshot offers DEXA scans on-site in Park Ridge for $150, no referral needed.",
-  C: 'You have one or more risk factors for bone density loss. A DEXA scan is reasonable based on these inputs and would establish a baseline you can track over time. For most adults with risk factors, getting a baseline by age 50 (women) or 60 (men) is the standard recommendation.',
-  D: "Based on your responses, your risk factors for low bone density are minimal. A DEXA is reasonable but not urgent based on these inputs. If you're approaching standard screening ages or want a longevity baseline, the scan is still valuable as a reference point."
-};
+const INTERNAL_TIER_VALUES = new Set([
+  'contraindication-identified',
+  'eligibility-factors-present',
+  'eligibility-factors-mixed',
+  'eligibility-factors-not-met'
+]);
 
 // Server-side label lookup. We never trust the client's tierLabel — the engine
 // could be stale, the value could be tampered, and HTML interpolation of any
 // client-controlled string is an XSS vector for Tom's inbox.
 const TIER_LABEL_LOOKUP = {
-  A: 'Eligibility factors present',
-  B: 'Eligibility factors present',
-  C: 'Eligibility factors mixed',
-  D: 'Eligibility factors not met'
-};
-
-const TIER_CTA_SERVICE = {
-  A: 'consult-with-dexa',
-  B: 'dexa',
-  C: 'dexa',
-  D: 'consult'
-};
-
-const TIER_CTA_TEXT = {
-  A: 'Book consult with DEXA included',
-  B: 'Book DEXA scan ($150)',
-  C: 'Book DEXA scan ($150)',
-  D: 'Discuss baseline scan with a clinician'
+  'contraindication-identified': 'Contraindication identified',
+  'eligibility-factors-present': 'Eligibility factors present',
+  'eligibility-factors-mixed':   'Eligibility factors mixed',
+  'eligibility-factors-not-met': 'Eligibility factors not met'
 };
 
 const RESULT_SLUG_LOOKUP = {
-  A: 'clinical-indication',
-  B: 'high',
-  C: 'moderate',
-  D: 'low'
+  'contraindication-identified': 'contraindication',
+  'eligibility-factors-present': 'present',
+  'eligibility-factors-mixed':   'mixed',
+  'eligibility-factors-not-met': 'not-met'
 };
 
+const CTA_TEXT = {
+  'contraindication-identified': 'Book a consultation',
+  'eligibility-factors-present': 'Book hormone consultation',
+  'eligibility-factors-mixed':   'Book a baseline consultation',
+  'eligibility-factors-not-met': 'Book a baseline consultation'
+};
+
+const TIER_BODY_PRESENT_SEVERE = "Your responses indicate significant symptom burden in patterns associated with hormonal change. A clinical evaluation can clarify what's driving symptoms — there are several treatment paths including hormone-based and non-hormone-based options. We'd recommend booking a consultation to review symptoms and order a comprehensive hormone panel.";
+const TIER_BODY_PRESENT_MODERATE = "Your responses indicate moderate symptom burden consistent with patterns associated with perimenopausal or menopausal change. Several evaluation paths exist — comprehensive hormone testing, lifestyle interventions, targeted nutrition. A clinical evaluation can clarify what's right for you.";
+const TIER_BODY_MIXED = "Your symptom burden is mild. Many people in your range benefit from lifestyle and nutritional foundations before considering hormone-based options. If you'd like a baseline panel for reference, a consultation can order one.";
+const TIER_BODY_NOT_MET = "You're reporting few perimenopausal symptoms. If your concern is about future hormonal change, baseline hormone panels can help establish a reference point.";
+const TIER_BODY_CONTRAINDICATION = "Your responses indicate medical history that requires careful clinical evaluation before any hormone-based therapy. Non-hormone-based evaluation paths exist and are part of what a consultation would cover.";
+
+const RED_FLAG_BODY = "Important: palpitations combined with anxiety can have causes beyond hormonal change — including thyroid disease, cardiac arrhythmias (paroxysmal atrial fibrillation), or other conditions. These need to be ruled out before assuming a perimenopausal explanation. If your palpitations are severe, sudden, or accompanied by chest pain, shortness of breath, or fainting — please see your primary care physician or an emergency department.";
+
+// Missy-only attribution — she has FPA. Do NOT add other clinicians here.
 const AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
-const RESULT_DISCLAIMER = 'This is a screening tool, not a diagnosis. Only a DXA scan can diagnose osteoporosis or osteopenia. Your provider can determine whether scanning, treatment, or further workup is appropriate based on your full clinical picture.';
+const RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis. Only a clinician can confirm whether your symptoms are due to perimenopause, menopause, or another cause. Your provider can determine whether further workup, hormone testing, or treatment is appropriate based on your full clinical picture.';
 
 const UNIVERSAL_DISCLAIMER = 'This tool does not, and is not intended to, diagnose any medical condition or recommend any specific treatment, drug, dose, or protocol. Screening tools have known false-positive and false-negative rates. Completing this quiz does not establish a provider-patient or treatment relationship, does not constitute a medical examination, and does not entitle you to any specific treatment, prescription, or service. Medical services are provided by Moonshot Medical, PLLC and are available only to patients physically located in states where our clinicians are licensed (currently Illinois). By proceeding you confirm you are at least 18 years old.';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const SEX_VALUES = new Set(['male', 'female', 'prefer-not']);
-const YES_NO_VALUES = new Set(['yes', 'no']);
-const YES_NO_UNKNOWN_VALUES = new Set(['yes', 'no', 'unknown']);
-const MENOPAUSE_VALUES = new Set(['yes', 'no', 'na']);
 const STATE_REGEX = /^[A-Z]{2}$/;
+
+const MRS_TIER_VALUES = new Set(['none', 'mild', 'moderate', 'severe']);
+
+// Mirrors MENSTRUAL_STATUS_VALUES from quiz/perimenopause/scoring.js — kept in
+// sync manually since this Netlify function is a separate runtime.
+const MENSTRUAL_STATUS_VALUES = new Set([
+  'regular',
+  'irregular',
+  'less-than-12-months-since-lmp',
+  '12-or-more-months-since-lmp',
+  'hyst-with-ovaries',
+  'hyst-with-oophorectomy',
+  'on-hormonal-contraception-or-hrt'
+]);
+
+const CONTRAINDICATION_CATEGORY_VALUES = new Set([
+  'clots',
+  'cancer',
+  'liver',
+  'stroke',
+  'cardiac',
+  'htn',
+  'migraine-aura',
+  'unexplained-bleeding',
+  'pregnancy',
+  'other'
+]);
 
 // Strip HTML-significant characters before any value gets interpolated into an
 // email body. Mail clients render anchors / images / CSS, so an unescaped
@@ -76,6 +99,28 @@ function sanitizeHeaderValue(value) {
 function clampString(value, max) {
   if (typeof value !== 'string') return '';
   return value.slice(0, max);
+}
+
+// Derive an MRS tier from a raw score if the client-supplied tier label is
+// missing or invalid. Cutoffs match scoring.js: ≤4 none, ≤8 mild, ≤16
+// moderate, ≥17 severe.
+function deriveMrsTier(score) {
+  if (typeof score !== 'number' || score < 0) return 'none';
+  if (score <= 4) return 'none';
+  if (score <= 8) return 'mild';
+  if (score <= 16) return 'moderate';
+  return 'severe';
+}
+
+// Pick the patient-facing tier body string. Server-derived only — never let
+// the client pass arbitrary copy.
+function selectTierBody(internalTier, mrsTier) {
+  if (internalTier === 'contraindication-identified') return TIER_BODY_CONTRAINDICATION;
+  if (internalTier === 'eligibility-factors-present') {
+    return mrsTier === 'severe' ? TIER_BODY_PRESENT_SEVERE : TIER_BODY_PRESENT_MODERATE;
+  }
+  if (internalTier === 'eligibility-factors-mixed') return TIER_BODY_MIXED;
+  return TIER_BODY_NOT_MET;
 }
 
 export default async function handler(req) {
@@ -103,7 +148,8 @@ export default async function handler(req) {
     marketingOptIn,
     result,
     profile,
-    ackTimestamp: rawAckTimestamp
+    ackTimestamp: rawAckTimestamp,
+    redFlagAckTimestamp: rawRedFlagAckTimestamp
   } = data || {};
 
   // Length-clamp and basic-shape validate user-controlled string fields.
@@ -111,6 +157,7 @@ export default async function handler(req) {
   const email = clampString(rawEmail, 254).trim();
   const phone = clampString(rawPhone, 32);
   const ackTimestamp = clampString(rawAckTimestamp, 64);
+  const redFlagAckTimestamp = clampString(rawRedFlagAckTimestamp, 64);
 
   if (!email || !EMAIL_REGEX.test(email)) {
     return new Response(JSON.stringify({ error: 'Valid email required' }), {
@@ -119,8 +166,8 @@ export default async function handler(req) {
     });
   }
 
-  const tier = result && result.tier;
-  if (!tier || !ALLOWED_TIERS.has(tier)) {
+  const internalTier = result && result.internalTier;
+  if (!internalTier || !INTERNAL_TIER_VALUES.has(internalTier)) {
     return new Response(JSON.stringify({ error: 'invalid_tier' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' }
@@ -141,36 +188,55 @@ export default async function handler(req) {
     });
   }
 
-  // Derive label and slug from tier — never trust the client's copies. They
-  // could be stale or tampered.
-  const tierLabel = TIER_LABEL_LOOKUP[tier];
-  const resultSlug = RESULT_SLUG_LOOKUP[tier];
+  // Derive label, slug, body, CTA from internalTier — never trust the client's
+  // copies. They could be stale or tampered.
+  const tierLabel = TIER_LABEL_LOOKUP[internalTier];
+  const resultSlug = RESULT_SLUG_LOOKUP[internalTier];
+  const ctaText = CTA_TEXT[internalTier];
 
-  const ostScoreRaw = result && result.ostScore !== undefined ? result.ostScore : null;
-  const ostScore = ostScoreRaw === null || typeof ostScoreRaw === 'number' ? ostScoreRaw : null;
-  const riskFactorCount = result && typeof result.riskFactorCount === 'number' ? result.riskFactorCount : 0;
+  // MRS score: clamp to valid range. Out of range → 0.
+  const rawMrsScore = result && result.mrsScore;
+  const mrsScore = (Number.isFinite(rawMrsScore) && rawMrsScore >= 0 && rawMrsScore <= 44)
+    ? Math.floor(rawMrsScore)
+    : 0;
+
+  // MRS tier: trust client value if it's in the enum, otherwise derive from
+  // the score we just clamped.
+  const rawMrsTier = result && result.mrsTier;
+  const mrsTier = MRS_TIER_VALUES.has(rawMrsTier) ? rawMrsTier : deriveMrsTier(mrsScore);
+
+  const hasHrtContraindication = !!(result && result.hasHrtContraindication === true);
+  const hasRedFlag = !!(result && result.hasRedFlag === true);
+
+  const tierBody = selectTierBody(internalTier, mrsTier);
 
   // Allowlist-validate every profile field before interpolation. Anything that
   // doesn't match its enum is replaced with an empty string for the email.
   const rawProfile = profile || {};
+
+  const rawCategories = Array.isArray(rawProfile.contraindicationCategories)
+    ? rawProfile.contraindicationCategories
+    : [];
+  const safeCategories = [];
+  for (let i = 0; i < rawCategories.length && safeCategories.length < CONTRAINDICATION_CATEGORY_VALUES.size; i++) {
+    const cat = rawCategories[i];
+    if (typeof cat === 'string' && CONTRAINDICATION_CATEGORY_VALUES.has(cat) && safeCategories.indexOf(cat) === -1) {
+      safeCategories.push(cat);
+    }
+  }
+
   const safeProfile = {
-    age: typeof rawProfile.age === 'number' && rawProfile.age >= 18 && rawProfile.age <= 120 ? rawProfile.age : null,
-    sex: SEX_VALUES.has(rawProfile.sex) ? rawProfile.sex : '',
-    weightKg: typeof rawProfile.weightKg === 'number' && rawProfile.weightKg > 0 ? rawProfile.weightKg : null,
-    heightLoss: YES_NO_UNKNOWN_VALUES.has(rawProfile.heightLoss) ? rawProfile.heightLoss : '',
-    priorFragilityFracture: YES_NO_VALUES.has(rawProfile.priorFragilityFracture) ? rawProfile.priorFragilityFracture : '',
-    parentalHipFracture: YES_NO_VALUES.has(rawProfile.parentalHipFracture) ? rawProfile.parentalHipFracture : '',
-    smokingOrAlcohol: YES_NO_VALUES.has(rawProfile.smokingOrAlcohol) ? rawProfile.smokingOrAlcohol : '',
-    medicationCount: typeof rawProfile.medicationCount === 'number' ? rawProfile.medicationCount : 0,
-    prematureMenopause: MENOPAUSE_VALUES.has(rawProfile.prematureMenopause) ? rawProfile.prematureMenopause : '',
-    secondaryConditionCount: typeof rawProfile.secondaryConditionCount === 'number' ? rawProfile.secondaryConditionCount : 0,
+    age: Number.isFinite(rawProfile.age) && rawProfile.age >= 18 && rawProfile.age <= 120 ? rawProfile.age : null,
+    menstrualStatus: MENSTRUAL_STATUS_VALUES.has(rawProfile.menstrualStatus) ? rawProfile.menstrualStatus : '',
+    mrsScore: Number.isFinite(rawProfile.mrsScore) && rawProfile.mrsScore >= 0 && rawProfile.mrsScore <= 44 ? Math.floor(rawProfile.mrsScore) : 0,
+    mrsTier: MRS_TIER_VALUES.has(rawProfile.mrsTier) ? rawProfile.mrsTier : '',
+    contraindicationCount: Number.isFinite(rawProfile.contraindicationCount) && rawProfile.contraindicationCount >= 0 ? Math.floor(rawProfile.contraindicationCount) : 0,
+    contraindicationCategories: safeCategories,
     stateCode: typeof rawProfile.stateCode === 'string' && STATE_REGEX.test(rawProfile.stateCode.toUpperCase()) ? rawProfile.stateCode.toUpperCase() : ''
   };
 
   // ── CTA URL ────────────────────────────────────────────────────────
-  const ctaService = TIER_CTA_SERVICE[tier];
-  const ctaText = TIER_CTA_TEXT[tier];
-  const ctaUrl = `https://moonshotmp.com/booking/?source=bone-density-quiz&result=${encodeURIComponent(resultSlug)}&service=${encodeURIComponent(ctaService)}`;
+  const ctaUrl = `https://moonshotmp.com/booking/?source=perimenopause-quiz&severity=${encodeURIComponent(resultSlug)}`;
 
   // Pre-escaped values for HTML interpolation. Defense-in-depth even though
   // most of these come from server-side enums after validation.
@@ -178,9 +244,22 @@ export default async function handler(req) {
   const safeEmail = escapeHtml(email);
   const safePhone = escapeHtml(phone);
   const safeTierLabel = escapeHtml(tierLabel);
+  const safeTierBody = escapeHtml(tierBody);
+  const safeCtaText = escapeHtml(ctaText);
+  const safeMrsScore = escapeHtml(String(mrsScore));
+  const safeMrsTier = escapeHtml(mrsTier);
   const safeAckTimestamp = escapeHtml(ackTimestamp);
-  const safeOstScore = ostScore == null ? 'N/A' : escapeHtml(String(ostScore));
-  const safeRiskFactorCount = escapeHtml(String(riskFactorCount));
+  const safeRedFlagAckTimestamp = escapeHtml(redFlagAckTimestamp);
+  const safeRedFlagBody = escapeHtml(RED_FLAG_BODY);
+
+  // Optional red-flag block in the user email body.
+  const redFlagBlock = hasRedFlag
+    ? `
+      <div style="background: rgba(255, 99, 71, 0.08); border: 1px solid rgba(255, 99, 71, 0.3); border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+        <p style="color: #F0EEE9; font-weight: 600; font-size: 13px; margin: 0 0 8px;">Please read</p>
+        <p style="color: #B2BFBE; font-size: 13px; line-height: 1.7; margin: 0;">${safeRedFlagBody}</p>
+      </div>`
+    : '';
 
   // ── User Results Email ──────────────────────────────────────────────
 
@@ -195,7 +274,7 @@ export default async function handler(req) {
   <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
     <div style="background: #1a2530; border-radius: 8px; padding: 32px; border: 1px solid rgba(255,255,255,0.1);">
 
-      <h1 style="color: #F0EEE9; margin: 0 0 4px; font-size: 22px;">Your Bone Density Screener Result</h1>
+      <h1 style="color: #F0EEE9; margin: 0 0 4px; font-size: 22px;">Your Perimenopause Screener Result</h1>
       <p style="color: #B2BFBE; margin: 0 0 24px; font-size: 14px;">Moonshot Medical and Performance</p>
 
       <p style="color: #B2BFBE; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">Hi ${safeName || 'there'},</p>
@@ -204,9 +283,10 @@ export default async function handler(req) {
       <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(178,191,190,0.2); border-radius: 8px; padding: 24px; margin-bottom: 24px;">
         <p style="color: #B2BFBE; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px;">Result</p>
         <p style="color: #F0EEE9; font-weight: 700; font-size: 20px; margin: 0 0 16px;">${safeTierLabel}</p>
-        <p style="color: #B2BFBE; font-size: 14px; line-height: 1.7; margin: 0;">${escapeHtml(TIER_BODY[tier])}</p>
+        <p style="color: #B2BFBE; font-size: 14px; line-height: 1.7; margin: 0 0 16px;">${safeTierBody}</p>
+        <p style="color: #B2BFBE; font-size: 13px; line-height: 1.6; margin: 0;">Your MRS symptom score: ${safeMrsScore}</p>
       </div>
-
+${redFlagBlock}
       <!-- Result-page-specific disclaimer -->
       <div style="background: rgba(255,255,255,0.04); border-radius: 6px; padding: 16px; margin-bottom: 24px;">
         <p style="color: #B2BFBE; font-size: 13px; line-height: 1.6; margin: 0;">${escapeHtml(RESULT_DISCLAIMER)}</p>
@@ -214,7 +294,7 @@ export default async function handler(req) {
 
       <!-- CTA -->
       <div style="text-align: center; padding: 24px 0;">
-        <a href="${ctaUrl}" style="display: inline-block; background: #B2BFBE; color: #101921; padding: 14px 32px; font-weight: 700; font-size: 14px; text-decoration: none; border-radius: 4px;">${escapeHtml(ctaText)}</a>
+        <a href="${ctaUrl}" style="display: inline-block; background: #B2BFBE; color: #101921; padding: 14px 32px; font-weight: 700; font-size: 14px; text-decoration: none; border-radius: 4px;">${safeCtaText}</a>
         <p style="color: #B2BFBE; font-size: 13px; margin: 16px 0 0;">Questions? Call <a href="tel:2244354280" style="color: #B2BFBE;">(224) 435-4280</a></p>
       </div>
 
@@ -229,6 +309,9 @@ export default async function handler(req) {
       ${escapeHtml(UNIVERSAL_DISCLAIMER)}
     </p>
     <p style="color: #666; font-size: 11px; text-align: center; margin-top: 16px; line-height: 1.5;">
+      You're receiving this because you completed the Perimenopause Screener on moonshotmp.com.
+    </p>
+    <p style="color: #666; font-size: 11px; text-align: center; margin-top: 16px; line-height: 1.5;">
       Moonshot Medical and Performance &middot; 542 Busse Hwy, Park Ridge, IL 60068
     </p>
     <p style="color: #666; font-size: 11px; text-align: center; margin-top: 16px;">
@@ -239,18 +322,27 @@ export default async function handler(req) {
 </body>
 </html>`.trim();
 
-  const userSubject = 'Your Bone Density Screener Result — Moonshot Medical';
+  const userSubject = 'Your Perimenopause Screener Result — Moonshot Medical';
 
   // ── Lead Score ──────────────────────────────────────────────────────
 
-  let leadScore = '🟢 NEW';
-  if (tier === 'A' || (tier === 'B' && safeProfile.priorFragilityFracture === 'yes')) {
+  let leadScore = '🔵 COLD';
+  if (internalTier === 'eligibility-factors-present' && mrsTier === 'severe') {
     leadScore = '🔥 HOT';
-  } else if (tier === 'B' || tier === 'C') {
+  } else if (
+    (internalTier === 'eligibility-factors-present' && mrsTier === 'moderate') ||
+    internalTier === 'contraindication-identified'
+  ) {
     leadScore = '🟡 WARM';
+  } else if (internalTier === 'eligibility-factors-mixed') {
+    leadScore = '🟢 NEW';
+  } else if (internalTier === 'eligibility-factors-not-met') {
+    leadScore = '🔵 COLD';
   }
 
   // ── Internal Lead Notification Email ────────────────────────────────
+
+  const safeCategoriesJoined = escapeHtml(safeProfile.contraindicationCategories.join(', '));
 
   const internalHtml = `
 <!DOCTYPE html>
@@ -259,7 +351,7 @@ export default async function handler(req) {
 <body style="margin: 0; padding: 0; background-color: #101921; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
   <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
     <div style="background: #1a2530; border-radius: 8px; padding: 32px; border: 1px solid rgba(255,255,255,0.1);">
-      <h1 style="color: #4ade80; margin: 0 0 4px; font-size: 22px;">🦴 New Bone Density Lead</h1>
+      <h1 style="color: #4ade80; margin: 0 0 4px; font-size: 22px;">🌙 New Perimenopause Lead</h1>
       <p style="color: #B2BFBE; margin: 0 0 24px; font-size: 14px;">Lead Score: ${leadScore}</p>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
@@ -272,37 +364,36 @@ export default async function handler(req) {
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Result</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Tier: ${escapeHtml(tier)}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Internal Tier: ${escapeHtml(internalTier)}</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Tier Label: ${safeTierLabel}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">OST Score: ${safeOstScore}</p>
-        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Risk Factor Count: ${safeRiskFactorCount}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">MRS Score: ${safeMrsScore}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">MRS Tier: ${safeMrsTier || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Has HRT Contraindication: ${hasHrtContraindication ? 'Yes' : 'No'}</p>
+        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Has Red Flag (palpitations + anxiety): ${hasRedFlag ? 'Yes' : 'No'}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Profile</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Age: ${safeProfile.age != null ? escapeHtml(String(safeProfile.age)) : 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Sex: ${escapeHtml(safeProfile.sex) || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Weight (kg): ${safeProfile.weightKg != null ? escapeHtml(String(safeProfile.weightKg)) : 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Height Loss: ${escapeHtml(safeProfile.heightLoss) || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Prior Fragility Fracture: ${escapeHtml(safeProfile.priorFragilityFracture) || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Parental Hip Fracture: ${escapeHtml(safeProfile.parentalHipFracture) || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Smoking or Alcohol: ${escapeHtml(safeProfile.smokingOrAlcohol) || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Medication Count: ${escapeHtml(String(safeProfile.medicationCount))}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Premature Menopause: ${escapeHtml(safeProfile.prematureMenopause) || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Secondary Condition Count: ${escapeHtml(String(safeProfile.secondaryConditionCount))}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Menstrual Status: ${escapeHtml(safeProfile.menstrualStatus) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">MRS Score (profile): ${escapeHtml(String(safeProfile.mrsScore))}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">MRS Tier (profile): ${escapeHtml(safeProfile.mrsTier) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Contraindication Count: ${escapeHtml(String(safeProfile.contraindicationCount))}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Contraindication Categories: ${safeCategoriesJoined || 'None'}</p>
         <p style="color: #B2BFBE; margin: 0; font-size: 14px;">State: ${escapeHtml(safeProfile.stateCode) || 'Not specified'}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Acknowledgement</p>
-        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Timestamp: ${safeAckTimestamp || 'Not provided'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Result Ack Timestamp: ${safeAckTimestamp || 'Not provided'}</p>
+        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Red-Flag Ack Timestamp: ${safeRedFlagAckTimestamp || 'Not provided'}</p>
       </div>
     </div>
   </div>
 </body>
 </html>`.trim();
 
-  const internalSubject = sanitizeHeaderValue(`🦴 New Bone Density Lead: ${name || email} — Tier ${tier}`);
+  const internalSubject = sanitizeHeaderValue(`🌙 New Perimenopause Lead: ${name || email} — ${tierLabel || 'tier ?'}`);
 
   // ── Send Both Emails ────────────────────────────────────────────────
 
@@ -336,13 +427,13 @@ export default async function handler(req) {
         name,
         email,
         phone,
-        source: 'bone-density-quiz',
-        recommendation: 'tier-' + tier,
+        source: 'perimenopause-quiz',
+        recommendation: internalTier,
         budget: '',
-        goal: 'bone-density',
+        goal: 'perimenopause',
         concern: tierLabel
       })
-    }).catch(err => console.error('[bone-density-quiz-submit] Clinic lead sync error:', err && err.message));
+    }).catch(err => console.error('[perimenopause-quiz-submit] Clinic lead sync error:', err && err.message));
 
     // Marketing drip webhook
     fetch(clinicApi + '/api/marketing/quiz-complete', {
@@ -351,27 +442,30 @@ export default async function handler(req) {
       body: JSON.stringify({
         email,
         name,
-        quiz_type: 'bone-density',
-        source: 'bone-density-quiz',
-        recommendation: tier,
-        tier: tier,
+        quiz_type: 'perimenopause',
+        source: 'perimenopause-quiz',
+        recommendation: internalTier,
+        tier: internalTier,
         tierLabel: tierLabel,
         resultSlug: resultSlug,
-        ostScore: ostScore,
-        riskFactorCount: riskFactorCount,
+        mrsScore: mrsScore,
+        mrsTier: mrsTier,
+        hasHrtContraindication: hasHrtContraindication,
+        hasRedFlag: hasRedFlag,
         phone: phone || '',
         marketingOptIn: optIn,
         age: safeProfile.age != null ? safeProfile.age : '',
-        sex: safeProfile.sex || '',
+        menstrualStatus: safeProfile.menstrualStatus || '',
+        contraindicationCount: safeProfile.contraindicationCount,
         stateCode: safeProfile.stateCode || '',
-        ackTimestamp: ackTimestamp || ''
+        ackTimestamp: ackTimestamp || '',
+        redFlagAckTimestamp: redFlagAckTimestamp || ''
       })
-    }).catch(err => console.error('[bone-density-quiz-submit] Marketing drip sync error:', err && err.message));
+    }).catch(err => console.error('[perimenopause-quiz-submit] Marketing drip sync error:', err && err.message));
 
     // SMS follow-up — only if phone provided AND marketing opt-in is true.
-    // Bone density traffic is colder than peptide; we are intentionally
-    // more conservative with SMS here than the peptide handler.
-    if (phone && optIn) {
+    // Perimenopause traffic mirrors the bone-density conservative posture.
+    if (phone && optIn === true) {
       try {
         await fetch(clinicApi + '/api/webhooks/quiz-sms', {
           method: 'POST',
@@ -379,13 +473,13 @@ export default async function handler(req) {
           body: JSON.stringify({
             phone: phone,
             name: name,
-            peptide: 'bone-density-tier-' + tier,
-            quiz_type: 'bone-density'
+            peptide: 'perimenopause-' + internalTier,
+            quiz_type: 'perimenopause'
           })
         });
       } catch (e) {
         // Non-fatal — don't block the response
-        console.error('[bone-density-quiz-submit] Quiz SMS webhook error:', e && e.message);
+        console.error('[perimenopause-quiz-submit] Quiz SMS webhook error:', e && e.message);
       }
     }
 
@@ -396,7 +490,7 @@ export default async function handler(req) {
   } catch (err) {
     // Log only the message — Resend's error response may contain the email
     // payload (PHI) and Netlify Function logs are not in the BAA scope.
-    console.error('[bone-density-quiz-submit] Error:', err && err.message);
+    console.error('[perimenopause-quiz-submit] Error:', err && err.message);
     return new Response(JSON.stringify({ ok: false, error: 'Email send failed' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
