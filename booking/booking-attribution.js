@@ -57,9 +57,9 @@
     if (source.indexOf('peptide') !== -1) return 'peptide';
     if (source.indexOf('perimenopause') !== -1) return 'perimenopause';
     if (source.indexOf('low-t') !== -1) return 'low-t';
+    if (source.indexOf('glp1') !== -1 || source.indexOf('glp-1') !== -1) return 'glp1';
     if (source.indexOf('hormone') !== -1 ||
-        source.indexOf('trt') !== -1 ||
-        source.indexOf('glp1') !== -1 || source.indexOf('glp-1') !== -1) {
+        source.indexOf('trt') !== -1) {
       return 'hormone';
     }
     if (source.indexOf('bone-density') !== -1) return 'bone-density';
