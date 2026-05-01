@@ -35,6 +35,7 @@
   // to avoid storing arbitrary attacker-controlled strings.
   var SOURCE_LABELS = {
     'peptide-quiz': 'You completed our Peptide Quiz',
+    'bone-density-quiz': 'You completed our Bone Density Screener',
     'glp1-quiz': 'You completed our GLP-1 Readiness Quiz',
     'low-t-quiz': 'You completed our Low Testosterone Quiz',
     'perimenopause-quiz': 'You completed our Perimenopause Quiz',
@@ -59,6 +60,7 @@
         source.indexOf('glp1') !== -1 || source.indexOf('glp-1') !== -1) {
       return 'hormone';
     }
+    if (source.indexOf('bone-density') !== -1) return 'bone-density';
     if (source.indexOf('body') !== -1 || source.indexOf('dexa') !== -1) {
       return 'body-comp';
     }

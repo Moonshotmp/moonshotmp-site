@@ -18,7 +18,7 @@
 // Allowed quiz slugs (low-cardinality enum). Anything else → 400.
 // `site` is reserved for site-wide generic CTAs (booking modal, phone tap)
 // where there is no quiz context but we still want a generic funnel signal.
-const ALLOWED_QUIZZES = new Set(['peptide', 'hormone', 'body-comp', 'site']);
+const ALLOWED_QUIZZES = new Set(['peptide', 'hormone', 'body-comp', 'bone-density', 'site']);
 
 // Allowed event names (generic funnel only, no health values).
 const ALLOWED_EVENTS = new Set([
