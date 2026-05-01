@@ -279,6 +279,22 @@ export function hasMedConfounder(state) {
  * Compute the full scoring result. Strict precedence ladder — earliest
  * branch wins. ADAM is only consulted after all hard-stops clear.
  */
+// Tadalafil-candidate flag. Derived from the same state used elsewhere.
+// Clinically: tadalafil is FDA-approved for ED (covered by ADAM Q7) and
+// BPH (covered by IPSS), and does NOT suppress fertility (so it stays
+// on the table when TRT is contraindicated for fertility reasons). The
+// flag is informational — surfaces the option to Tom on lead intake
+// and powers conditional supplemental copy in patient-facing tier
+// bodies. Never treated as an exclusion.
+export function isTadalafilCandidate(state) {
+    if (!state) return false;
+    const adam = state.adam;
+    const adamErectionsYes = Array.isArray(adam) && adam[ADAM_ERECTIONS_INDEX] === true;
+    const ipssOver7 = sumIpss(state.ipss) > IPSS_CONCERN_THRESHOLD;
+    const fertilityStop = hasFertilityStop(state);
+    return adamErectionsYes || ipssOver7 || fertilityStop;
+}
+
 export function scoreLowT(state) {
     const adam = state && state.adam;
     const adamPositive = isAdamPositive(adam);
@@ -291,6 +307,7 @@ export function scoreLowT(state) {
     const ipssConcern = hasIpssConcern(state);
     const osaConfounder = hasOsaConfounder(state);
     const medConfounder = hasMedConfounder(state);
+    const tadalafilCandidate = isTadalafilCandidate(state);
 
     let internalTier;
     if (hardStopMedical) {
@@ -322,6 +339,7 @@ export function scoreLowT(state) {
         hasIpssConcern: ipssConcern,
         hasOsaConfounder: osaConfounder,
         hasMedConfounder: medConfounder,
+        tadalafilCandidate,
         internalTier,
         internalTierLabel: INTERNAL_TIER_LABELS[internalTier],
         resultSlug: RESULT_SLUGS[internalTier],

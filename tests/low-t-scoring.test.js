@@ -14,6 +14,7 @@ import {
     hasIpssConcern,
     hasOsaConfounder,
     hasMedConfounder,
+    isTadalafilCandidate,
     scoreLowT,
     ADAM_ITEM_COUNT,
     ADAM_LIBIDO_INDEX,
@@ -964,5 +965,171 @@ describe('REGRESSION: v1 fertility line is permanently retired', () => {
 
     it('submit handler source does not contain "alternatives (Clomid"', () => {
         expect(SUBMIT_CODE).not.toContain('alternatives (clomid');
+    });
+});
+
+// ─── isTadalafilCandidate ───────────────────────────────────────────
+// Tadalafil is FDA-approved for ED (covered by ADAM Q7) and BPH
+// (covered by IPSS), and does NOT suppress fertility. The flag stays
+// out of the patient-facing tier label but powers the conditional
+// supplemental copy AND the internal lead-notification badge so Tom
+// can identify candidates on intake.
+
+describe('isTadalafilCandidate', () => {
+    function adamArray(overrides = {}) {
+        const arr = new Array(10).fill(false);
+        Object.entries(overrides).forEach(([idx, val]) => { arr[idx] = val; });
+        return arr;
+    }
+
+    it('returns false for empty / null / undefined state', () => {
+        expect(isTadalafilCandidate(null)).toBe(false);
+        expect(isTadalafilCandidate(undefined)).toBe(false);
+        expect(isTadalafilCandidate({})).toBe(false);
+    });
+
+    it('returns true when ADAM Q7 (erections) is yes', () => {
+        expect(isTadalafilCandidate({ adam: adamArray({ 6: true }) })).toBe(true);
+    });
+
+    it('returns true when IPSS sum > 7 (BPH territory)', () => {
+        expect(isTadalafilCandidate({ adam: adamArray(), ipss: [3, 3, 3] })).toBe(true);  // sum 9
+    });
+
+    it('returns false when IPSS sum is exactly 7 (boundary, not >)', () => {
+        expect(isTadalafilCandidate({ adam: adamArray(), ipss: [3, 2, 2] })).toBe(false); // sum 7
+    });
+
+    it('returns true when fertilityPlan is currently-trying-or-12mo', () => {
+        expect(isTadalafilCandidate({ adam: adamArray(), fertilityPlan: 'currently-trying-or-12mo' })).toBe(true);
+    });
+
+    it('returns false when no Q7, no IPSS concern, no fertility hard-stop', () => {
+        expect(isTadalafilCandidate({
+            adam: adamArray({ 0: true, 2: true }),  // Q1 + Q3 yes (ADAM positive but not Q7)
+            ipss: [1, 1, 1],
+            fertilityPlan: 'not-planning'
+        })).toBe(false);
+    });
+
+    it('returns true when ANY of the three triggers fire (Q7 alone)', () => {
+        expect(isTadalafilCandidate({ adam: adamArray({ 6: true }), ipss: [0, 0, 0], fertilityPlan: 'not-planning' })).toBe(true);
+    });
+});
+
+describe('scoreLowT — tadalafilCandidate field', () => {
+    function blank() {
+        return {
+            adam: new Array(10).fill(false),
+            ipss: [0, 0, 0],
+            stateCode: 'IL'
+        };
+    }
+
+    it('includes tadalafilCandidate=false on a clean state', () => {
+        const out = scoreLowT(blank());
+        expect(out.tadalafilCandidate).toBe(false);
+    });
+
+    it('includes tadalafilCandidate=true when ADAM Q7 is yes', () => {
+        const s = blank();
+        s.adam[6] = true;
+        const out = scoreLowT(s);
+        expect(out.tadalafilCandidate).toBe(true);
+    });
+
+    it('includes tadalafilCandidate=true when IPSS sum > 7', () => {
+        const s = blank();
+        s.ipss = [4, 4, 4];
+        const out = scoreLowT(s);
+        expect(out.tadalafilCandidate).toBe(true);
+    });
+
+    it('includes tadalafilCandidate=true when fertility-stop tier', () => {
+        const s = blank();
+        s.fertilityPlan = 'currently-trying-or-12mo';
+        const out = scoreLowT(s);
+        expect(out.internalTier).toBe('fertility-stop');
+        expect(out.tadalafilCandidate).toBe(true);
+    });
+
+    it('tadalafilCandidate is independent of the tier ladder — fires alongside hard-stop', () => {
+        // A medical hard-stop wins the tier ladder, but the tadalafil
+        // candidacy flag is computed independently. Q7=yes here, so even
+        // though the tier is hard-stop the tadalafil flag still fires —
+        // this is the case where Tom sees both ⛔ STOP and 💊 Tadalafil
+        // candidate on the lead notification, signaling that traditional
+        // TRT is off the table but tadalafil may be a separate path.
+        const s = blank();
+        s.adam[6] = true;
+        s.medicalHistory = ['severe-untreated-chf'];
+        const out = scoreLowT(s);
+        expect(out.internalTier).toBe('hard-stop');
+        expect(out.tadalafilCandidate).toBe(true);
+    });
+});
+
+// ─── Required verbatim phrasing — tadalafil supplemental copy ────────
+// These phrases anchor the patient-facing Daily Tadalafil mentions in
+// the 4 tiers where it's clinically appropriate (fertility-stop,
+// psa-ipss-concern, eligibility-present, eligibility-mixed). A silent
+// edit removing the FDA-approved framing would fail this test rather
+// than slip into production.
+
+describe('Required verbatim phrasing — tadalafil supplemental copy', () => {
+    it('engine source contains the fertility-stop tadalafil sentence', () => {
+        expect(ENGINE_SRC).toContain("FDA-approved options for erectile and lower-urinary-tract symptoms");
+    });
+
+    it('engine source contains the psa-ipss tadalafil sentence', () => {
+        expect(ENGINE_SRC).toContain('Tadalafil is also FDA-approved for benign prostatic hyperplasia (BPH)');
+    });
+
+    it('engine source contains the eligibility-present tadalafil sentence', () => {
+        // Engine wraps "Daily Tadalafil" in an <a href> for the result page,
+        // so check the bracketing phrase parts instead of the contiguous
+        // sentence. Submit handler keeps the plain-text version and gets
+        // a separate assertion below.
+        expect(ENGINE_SRC).toContain('If erectile or lower-urinary-tract symptoms are a primary concern');
+        expect(ENGINE_SRC).toContain('is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy');
+    });
+
+    it('engine source contains the eligibility-mixed tadalafil sentence', () => {
+        // "you're" is escape-quoted as "you\\'re" in single-quoted JS
+        // source. Test the parts on either side of the apostrophe to avoid
+        // string-escape ambiguity.
+        expect(ENGINE_SRC).toContain('If erectile or lower-urinary-tract symptoms are part of what you');
+        expect(ENGINE_SRC).toContain('is an FDA-approved option some patients use alongside or instead of testosterone-based therapy');
+    });
+
+    it('submit handler contains all 4 tadalafil supplemental sentences', () => {
+        expect(SUBMIT_SRC).toContain("FDA-approved options for erectile and lower-urinary-tract symptoms");
+        expect(SUBMIT_SRC).toContain('Tadalafil is also FDA-approved for benign prostatic hyperplasia (BPH)');
+        expect(SUBMIT_SRC).toContain("Daily Tadalafil is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy");
+        expect(SUBMIT_SRC).toContain("Daily Tadalafil is an FDA-approved option some patients use alongside or instead of testosterone-based therapy");
+    });
+
+    it('static page contains the tadalafil FAQ entry', () => {
+        expect(PAGE_HTML).toContain('What about tadalafil');
+        expect(PAGE_HTML).toContain('FDA-approved for erectile dysfunction, benign prostatic hyperplasia (BPH)');
+    });
+
+    it('hard-stop tier body does NOT mention Daily Tadalafil (most-conservative tier stays drug-name-free)', () => {
+        const hardStopMatch = ENGINE_SRC.match(/internalTier === 'hard-stop'\)\s*\{\s*body = '([^']+)'/);
+        expect(hardStopMatch).not.toBeNull();
+        if (hardStopMatch) {
+            expect(hardStopMatch[1].toLowerCase()).not.toContain('tadalafil');
+        }
+    });
+
+    it('eligibility-not-met tier body does NOT mention Daily Tadalafil (no relevant symptom signal)', () => {
+        // The eligibility-not-met body is escape-quoted in JS source as
+        // 'Your symptom pattern doesn\\'t strongly overlap...' so the
+        // literal apostrophe is preceded by a backslash. Match either form.
+        const notMetMatch = ENGINE_SRC.match(/Your symptom pattern doesn[\\\\]?'t strongly overlap[^]*?want to know definitively\./);
+        expect(notMetMatch).not.toBeNull();
+        if (notMetMatch) {
+            expect(notMetMatch[0].toLowerCase()).not.toContain('tadalafil');
+        }
     });
 });

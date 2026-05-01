@@ -40,10 +40,10 @@ const CTA_TEXT = {
 };
 
 const TIER_BODY_HARD_STOP = 'Your responses describe medical history that requires evaluation before any testosterone-based therapy. Several non-testosterone evaluation paths exist and a consultation can identify the right approach for your situation.';
-const TIER_BODY_FERTILITY_STOP = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility — these require clinical evaluation to determine fit.';
-const TIER_BODY_PSA_IPSS = 'Your responses describe urinary or PSA findings that warrant evaluation by a urologist or primary care physician before testosterone-based therapy is considered. We\'d recommend that workup first; once cleared, a consultation here can address symptoms.';
-const TIER_BODY_PRESENT = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician — alongside a 60+ marker comprehensive panel — is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup.';
-const TIER_BODY_MIXED = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms — sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first.';
+const TIER_BODY_FERTILITY_STOP = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility — these require clinical evaluation to determine fit. FDA-approved options for erectile and lower-urinary-tract symptoms — including Daily Tadalafil — can be evaluated independently and don\'t suppress fertility.';
+const TIER_BODY_PSA_IPSS = 'Your responses describe urinary or PSA findings that warrant evaluation by a urologist or primary care physician before testosterone-based therapy is considered. We\'d recommend that workup first; once cleared, a consultation here can address symptoms. Tadalafil is also FDA-approved for benign prostatic hyperplasia (BPH); Daily Tadalafil is a path your urologist or our clinic can discuss alongside testosterone evaluation.';
+const TIER_BODY_PRESENT = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician — alongside a 60+ marker comprehensive panel — is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup. If erectile or lower-urinary-tract symptoms are a primary concern, Daily Tadalafil is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy.';
+const TIER_BODY_MIXED = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms — sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first. If erectile or lower-urinary-tract symptoms are part of what you\'re tracking, Daily Tadalafil is an FDA-approved option some patients use alongside or instead of testosterone-based therapy.';
 const TIER_BODY_NOT_MET = 'Your symptom pattern doesn\'t strongly overlap with low-testosterone patterns. Several factors can mimic symptoms or low T can be subclinical. A comprehensive lab panel is the answer if you want to know definitively.';
 
 // Missy-only attribution — she has FPA. Do NOT add other clinicians here.
@@ -278,7 +278,15 @@ export default async function handler(req) {
   const safeEmail = escapeHtml(email);
   const safePhone = escapeHtml(phone);
   const safeTierLabel = escapeHtml(tierLabel);
-  const safeTierBody = escapeHtml(tierBody);
+  // Escape first, then post-process the literal "Daily Tadalafil" mention
+  // (which only appears in our hardcoded tier-body constants — never in
+  // user input) into an anchor pointing at the existing service page.
+  // Safe because the body source is a frozen constant we control.
+  const safeTierBodyEscaped = escapeHtml(tierBody);
+  const safeTierBody = safeTierBodyEscaped.replace(
+    /Daily Tadalafil/g,
+    '<a href="https://moonshotmp.com/medical/tadalafil/" style="color: #F0EEE9; text-decoration: underline;">Daily Tadalafil</a>'
+  );
   const safeCtaText = escapeHtml(ctaText);
   const safeAdamYesCount = escapeHtml(String(adamYesCount));
   const safeAckTimestamp = escapeHtml(ackTimestamp);
@@ -368,6 +376,13 @@ export default async function handler(req) {
     leadScore = '⛔ STOP';
   }
 
+  // Tadalafil-candidate flag. Computed in the engine (which has access to
+  // the raw ADAM Q7 value) and forwarded as a boolean — so the handler
+  // never sees individual symptom-level data. Triggers when ADAM Q7
+  // (erections) is yes OR IPSS sum > 7 OR fertility-stop tier.
+  const tadalafilCandidate = !!(result && result.tadalafilCandidate);
+  const tadalafilFlag = tadalafilCandidate ? '💊 Tadalafil candidate' : '';
+
   // ── Internal Lead Notification Email ────────────────────────────────
 
   const safeMedHistoryJoined = escapeHtml(safeProfile.medicalHistoryCategories.join(', '));
@@ -382,7 +397,8 @@ export default async function handler(req) {
   <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
     <div style="background: #1a2530; border-radius: 8px; padding: 32px; border: 1px solid rgba(255,255,255,0.1);">
       <h1 style="color: #4ade80; margin: 0 0 4px; font-size: 22px;">💪 New Low-T Lead</h1>
-      <p style="color: #B2BFBE; margin: 0 0 24px; font-size: 14px;">Lead Score: ${leadScore}</p>
+      <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Lead Score: ${leadScore}</p>
+      ${tadalafilFlag ? `<p style="color: #F59E0B; margin: 0 0 24px; font-size: 14px;">${tadalafilFlag}</p>` : '<p style="margin: 0 0 24px;"></p>'}
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Contact</p>

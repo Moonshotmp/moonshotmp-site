@@ -231,6 +231,19 @@
         return false;
     }
 
+    // Tadalafil-candidate flag (mirrors scoring.js isTadalafilCandidate).
+    // Surfaces Daily Tadalafil to Tom on lead intake AND powers conditional
+    // patient-facing copy in the result body when ED or LUTS symptoms are
+    // present.
+    function isTadalafilCandidate(s) {
+        if (!s) return false;
+        var a = s.adam;
+        var adamErectionsYes = Array.isArray(a) && a[ADAM_ERECTIONS_INDEX] === true;
+        var ipssOver7 = sumIpss(s.ipss) > IPSS_CONCERN_THRESHOLD;
+        var fertilityStop = hasFertilityStop(s);
+        return adamErectionsYes || ipssOver7 || fertilityStop;
+    }
+
     function scoreLowT(s) {
         var adam = s && s.adam;
         var adamPositive = isAdamPositive(adam);
@@ -243,6 +256,7 @@
         var ipssConcern = hasIpssConcern(s);
         var osaConfounder = hasOsaConfounder(s);
         var medConfounder = hasMedConfounder(s);
+        var tadalafilCandidate = isTadalafilCandidate(s);
 
         var internalTier;
         if (hardStopMedical) {
@@ -274,6 +288,7 @@
             hasIpssConcern: ipssConcern,
             hasOsaConfounder: osaConfounder,
             hasMedConfounder: medConfounder,
+            tadalafilCandidate: tadalafilCandidate,
             internalTier: internalTier,
             internalTierLabel: INTERNAL_TIER_LABELS[internalTier],
             resultSlug: RESULT_SLUGS[internalTier],
@@ -1256,18 +1271,21 @@
             ctaLabel = 'Book a consultation';
         } else if (internalTier === 'fertility-stop') {
             // Tom's explicit handoff text. The v1 line that named Clomid +
-            // HCG-based protocols by name is permanently retired.
-            body = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility — these require clinical evaluation to determine fit.';
+            // HCG-based protocols by name is permanently retired. Daily
+            // Tadalafil is named because it's an existing Moonshot service
+            // page and the FDA-approved on-label option for ED/LUTS that
+            // does not suppress fertility.
+            body = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility — these require clinical evaluation to determine fit. FDA-approved options for erectile and lower-urinary-tract symptoms — including <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> — can be evaluated independently and don\'t suppress fertility.';
             ctaLabel = 'Book a fertility-aware consultation';
         } else if (internalTier === 'psa-ipss-concern') {
-            body = 'Your responses describe urinary or PSA findings that warrant evaluation by a urologist or primary care physician before testosterone-based therapy is considered. We\'d recommend that workup first; once cleared, a consultation here can address symptoms.';
+            body = 'Your responses describe urinary or PSA findings that warrant evaluation by a urologist or primary care physician before testosterone-based therapy is considered. We\'d recommend that workup first; once cleared, a consultation here can address symptoms. Tadalafil is also FDA-approved for benign prostatic hyperplasia (BPH); <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is a path your urologist or our clinic can discuss alongside testosterone evaluation.';
             ctaLabel = 'Book a consultation';
         } else if (internalTier === 'eligibility-present') {
             // ADAM ~88% sensitivity / 60% specificity disclosure required.
-            body = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician — alongside a 60+ marker comprehensive panel — is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup.';
+            body = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician — alongside a 60+ marker comprehensive panel — is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup. If erectile or lower-urinary-tract symptoms are a primary concern, <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy.';
             ctaLabel = 'Book lab work + consultation';
         } else if (internalTier === 'eligibility-mixed') {
-            body = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms — sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first.';
+            body = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms — sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first. If erectile or lower-urinary-tract symptoms are part of what you\'re tracking, <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is an FDA-approved option some patients use alongside or instead of testosterone-based therapy.';
             ctaLabel = 'Book a comprehensive evaluation';
         } else {
             // eligibility-not-met
@@ -1511,6 +1529,7 @@
                 hasIpssConcern: result.hasIpssConcern,
                 hasOsaConfounder: result.hasOsaConfounder,
                 hasMedConfounder: result.hasMedConfounder,
+                tadalafilCandidate: result.tadalafilCandidate,
                 resultSlug: result.resultSlug
             },
             profile: {
