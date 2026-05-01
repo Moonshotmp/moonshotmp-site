@@ -68,7 +68,9 @@
                   <a href="/medical/womens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Women's Hormones</a>
                   <a href="/medical/weight-loss/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Weight Loss</a>
                   <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptides</a>
-                  <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1" role="menuitem">Hormone Health Quiz</a>
+                  <a href="/quiz/perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1" role="menuitem">Perimenopause Screener</a>
+                  <a href="/quiz/low-t/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">TRT Readiness Screener</a>
+                  <a href="/quiz/bone-density/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">Bone Density Screener</a>
                 </div>
               </div>
             </div>
@@ -188,9 +190,11 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </button>
-              <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="quiz-dropdown" role="menu">
+              <div class="absolute left-0 mt-2 w-64 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="quiz-dropdown" role="menu">
                 <div class="py-2">
-                  <a href="/quiz/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">Hormone Health Quiz</a>
+                  <a href="/quiz/perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">Perimenopause Screener</a>
+                  <a href="/quiz/low-t/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">TRT Readiness Screener</a>
+                  <a href="/quiz/bone-density/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Bone Density Screener</a>
                   <a href="/quiz/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptide Quiz</a>
                   <a href="/quiz/body-comp/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Body Comp IQ Quiz</a>
                 </div>
@@ -239,7 +243,9 @@
               <a href="/medical/womens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women's Hormones</a>
               <a href="/medical/weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Weight Loss</a>
               <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides</a>
-              <a href="/quiz/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">Hormone Health Quiz &rarr;</a>
+              <a href="/quiz/perimenopause/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">Perimenopause Screener &rarr;</a>
+              <a href="/quiz/low-t/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">TRT Readiness Screener &rarr;</a>
+              <a href="/quiz/bone-density/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Bone Density Screener &rarr;</a>
             </div>
           </div>
 
@@ -336,7 +342,9 @@
               </svg>
             </button>
             <div id="mobile-quiz-submenu" class="bg-black/20 hidden">
-              <a href="/quiz/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Hormone Health Quiz</a>
+              <a href="/quiz/perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Perimenopause Screener</a>
+              <a href="/quiz/low-t/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT Readiness Screener</a>
+              <a href="/quiz/bone-density/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Bone Density Screener</a>
               <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
               <a href="/quiz/body-comp/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Comp IQ Quiz</a>
             </div>
@@ -685,7 +693,9 @@
             { title: "DEXA Scan Near Skokie", desc: "DEXA body composition scan near Skokie, IL", url: "/learn/dexa-scan-skokie/", cat: "Local" },
             { title: "TRT in Des Plaines", desc: "Testosterone therapy in Des Plaines, IL", url: "/learn/trt-des-plaines/", cat: "Local" },
             // Quiz
-            { title: "Hormone Health Quiz", desc: "2-minute hormone assessment", url: "/quiz/", cat: "Quiz" },
+            { title: "Perimenopause Screener", desc: "Validated 11-item MRS scale + safety screen", url: "/quiz/perimenopause/", cat: "Quiz" },
+            { title: "TRT Readiness Screener", desc: "Validated ADAM scale + PSA and IPSS safety check", url: "/quiz/low-t/", cat: "Quiz" },
+            { title: "Bone Density Screener", desc: "OST formula + AACE/NOF risk factors for DEXA decision", url: "/quiz/bone-density/", cat: "Quiz" },
             { title: "Peptide Quiz", desc: "Find which peptide is right for you", url: "/quiz/peptides/", cat: "Quiz" },
             { title: "Body Comp IQ Quiz", desc: "Test your body composition knowledge", url: "/quiz/body-comp/", cat: "Quiz" },
             // Getting Started & General
