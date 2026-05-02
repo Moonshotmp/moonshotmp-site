@@ -166,6 +166,30 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/bone-density/</loc>
+    <lastmod>2026-05-02</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/perimenopause/</loc>
+    <lastmod>2026-05-02</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/low-t/</loc>
+    <lastmod>2026-05-02</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/quiz/glp1/</loc>
+    <lastmod>2026-05-02</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 
   <!-- Quiz Result Pages — Male -->
   <url>
