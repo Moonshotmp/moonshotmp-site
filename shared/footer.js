@@ -258,6 +258,8 @@
                     '<div class="space-y-2">' +
                     '<a href="/quiz/perimenopause/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Perimenopause Screener</a>' +
                     '<a href="/quiz/low-t/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">TRT Readiness Screener</a>' +
+                    '<a href="/quiz/glp1/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">GLP-1 Readiness Screener</a>' +
+                    '<a href="/quiz/bone-density/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Bone Density Screener</a>' +
                     '<a href="/quiz/peptides/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Peptide Quiz</a>' +
                     '</div>';
                 document.body.appendChild(prompt);

@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hormone Health Quiz | Moonshot Medical and Performance</title>
-    <meta name="description" content="Take a free 2-minute hormone health quiz. Identify symptoms of hormonal imbalance and get personalized insights for men and women.">
+    <title>Clinical Screeners | Free Symptom Quizzes | Moonshot Medical</title>
+    <meta name="description" content="Six free clinical screeners: low-T (ADAM), perimenopause (MRS), bone density (FRAX), GLP-1 weight-loss eligibility, peptide selection, and general hormone health. Reviewed by an APRN, FNP-BC. Park Ridge, IL.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://moonshotmp.com/quiz/">
 
-    <meta property="og:title" content="Hormone Health Quiz | Moonshot Medical">
-    <meta property="og:description" content="Free 2-minute quiz: find out if your hormones are holding you back.">
+    <meta property="og:title" content="Clinical Screeners | Free Symptom Quizzes | Moonshot Medical">
+    <meta property="og:description" content="Six free clinical screeners — low-T, perimenopause, bone density, GLP-1, peptides, hormone health. Reviewed by an APRN, FNP-BC. Park Ridge, IL.">
     <meta property="og:url" content="https://moonshotmp.com/quiz/">
+    <meta property="og:image" content="https://moonshotmp.com/images/Missyblack.webp">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Hormone Health Quiz | Moonshot Medical">
-    <meta name="twitter:description" content="Free 2-minute quiz: find out if your hormones are holding you back.">
+    <meta name="twitter:title" content="Clinical Screeners | Free Symptom Quizzes | Moonshot Medical">
+    <meta name="twitter:description" content="Six free clinical screeners — low-T, perimenopause, bone density, GLP-1, peptides, hormone health. Reviewed by an APRN, FNP-BC. Park Ridge, IL.">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
 
@@ -29,20 +30,79 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Quiz",
-        "name": "Hormone Health Quiz",
-        "description": "A 2-minute self-assessment to identify potential symptoms of hormonal imbalance for men and women.",
-        "provider": {
-            "@type": "MedicalBusiness",
-            "name": "Moonshot Medical and Performance",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "542 Busse Hwy",
-                "addressLocality": "Park Ridge",
-                "addressRegion": "IL",
-                "postalCode": "60068"
+        "@type": "ItemList",
+        "name": "Moonshot Medical Clinical Screeners",
+        "description": "Free clinical symptom screeners offered by Moonshot Medical and Performance, Park Ridge, IL.",
+        "itemListOrder": "https://schema.org/ItemListOrderAscending",
+        "numberOfItems": 6,
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "url": "https://moonshotmp.com/quiz/low-t/",
+                "item": {
+                    "@type": "MedicalWebPage",
+                    "name": "TRT Readiness Screener",
+                    "description": "Validated 10-item ADAM symptom check with PSA + IPSS safety screen.",
+                    "url": "https://moonshotmp.com/quiz/low-t/"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "url": "https://moonshotmp.com/quiz/perimenopause/",
+                "item": {
+                    "@type": "MedicalWebPage",
+                    "name": "Perimenopause Symptom Screener",
+                    "description": "Menopause Rating Scale (MRS) symptom check.",
+                    "url": "https://moonshotmp.com/quiz/perimenopause/"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "url": "https://moonshotmp.com/quiz/bone-density/",
+                "item": {
+                    "@type": "MedicalWebPage",
+                    "name": "Bone Density Risk Screener",
+                    "description": "FRAX-aligned bone density risk screener.",
+                    "url": "https://moonshotmp.com/quiz/bone-density/"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "url": "https://moonshotmp.com/quiz/glp1/",
+                "item": {
+                    "@type": "MedicalWebPage",
+                    "name": "GLP-1 Weight-Management Eligibility Screener",
+                    "description": "Weight-management eligibility screener (semaglutide/tirzepatide).",
+                    "url": "https://moonshotmp.com/quiz/glp1/"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 5,
+                "url": "https://moonshotmp.com/quiz/peptides/",
+                "item": {
+                    "@type": "MedicalWebPage",
+                    "name": "Peptide Selection Quiz",
+                    "description": "Find which peptide therapy matches your goals — recovery, anti-aging, gut health, or performance.",
+                    "url": "https://moonshotmp.com/quiz/peptides/"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 6,
+                "url": "https://moonshotmp.com/quiz/hormone/",
+                "item": {
+                    "@type": "MedicalWebPage",
+                    "name": "Hormone Health Screener",
+                    "description": "General hormone health screener — men's and women's.",
+                    "url": "https://moonshotmp.com/quiz/hormone/"
+                }
             }
-        }
+        ]
     }
     </script>
     <script type="application/ld+json">
@@ -51,75 +111,131 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://moonshotmp.com/"},
-            {"@type": "ListItem", "position": 2, "name": "Hormone Health Quiz", "item": "https://moonshotmp.com/quiz/"}
+            {"@type": "ListItem", "position": 2, "name": "Clinical Screeners", "item": "https://moonshotmp.com/quiz/"}
         ]
     }
     </script>
-
-    <style>
-        /* Quiz-specific styles */
-        #quiz-root { min-height: calc(100vh - 5rem); }
-        .quiz-screen { opacity: 0; transform: translateY(12px); transition: opacity 0.3s ease, transform 0.3s ease; position: absolute; inset: 0; pointer-events: none; }
-        .quiz-screen.active { opacity: 1; transform: translateY(0); pointer-events: auto; position: relative; }
-        .quiz-progress { height: 3px; transition: width 0.4s ease; }
-        .severity-pill { transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
-        .severity-pill[data-selected="true"] { color: #F0EEE9; background-color: rgba(178, 191, 190, 0.25); border-color: #B2BFBE; }
-        .quiz-card { cursor: pointer; transition: border-color 0.15s ease, background-color 0.15s ease; }
-        .quiz-card:hover { border-color: rgba(178, 191, 190, 0.4); background-color: rgba(255, 255, 255, 0.03); }
-        .quiz-card.selected { border-color: #B2BFBE; background-color: rgba(178, 191, 190, 0.1); }
-        .toggle-track { width: 44px; height: 24px; border-radius: 12px; background: #4b5563; transition: background-color 0.2s ease; cursor: pointer; position: relative; }
-        .toggle-track.on { background: #B2BFBE; }
-        .toggle-knob { width: 20px; height: 20px; border-radius: 50%; background: #F0EEE9; position: absolute; top: 2px; left: 2px; transition: transform 0.2s ease; }
-        .toggle-track.on .toggle-knob { transform: translateX(20px); }
-        .result-bar { height: 8px; border-radius: 4px; transition: width 0.6s ease; }
-
-        /* Interstitial stat screens */
-        .interstitial-stat { padding: 2rem 0; }
-        .interstitial-stat p { line-height: 1.6; }
-
-        /* Calculating animation markers */
-        .calculating-marker { transition: opacity 0.3s ease; }
-        .calculating-check { transition: border-color 0.3s ease, background-color 0.3s ease; }
-        .calculating-check svg { transition: opacity 0.2s ease; }
-
-        /* Checkmark keyframe animation */
-        @keyframes checkmark {
-            0% { stroke-dashoffset: 24; }
-            100% { stroke-dashoffset: 0; }
-        }
-        .calculating-check svg path {
-            stroke-dasharray: 24;
-            stroke-dashoffset: 24;
-        }
-        .calculating-check svg[style*="opacity: 1"] path,
-        .calculating-check svg[style*="opacity:1"] path {
-            animation: checkmark 0.3s ease forwards;
-        }
-
-        /* Results score ring */
-        .result-score-ring { display: inline-block; }
-        .score-ring-fill { transition: stroke-dasharray 1s ease; }
-
-        /* Gap section checkmarks */
-        .gap-check svg { flex-shrink: 0; }
-    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "Moonshot Medical and Performance",
+        "telephone": "+12244354280",
+        "url": "https://moonshotmp.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "542 Busse Hwy",
+            "addressLocality": "Park Ridge",
+            "addressRegion": "IL",
+            "postalCode": "60068"
+        },
+        "priceRange": "$$"
+    }
+    </script>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
     <script src="/shared/header.js" defer></script>
 
     <main class="flex-grow pt-20">
-        <!-- Progress bar -->
-        <div class="fixed top-20 left-0 right-0 z-40 bg-brand-slate/50">
-            <div id="quiz-progress-bar" class="quiz-progress bg-brand-gray" style="width: 0%"></div>
-        </div>
 
-        <h1 class="text-3xl md:text-4xl font-bold text-brand-light text-center pt-12 pb-4 px-4">Free Hormone Health Quiz for Men &amp; Women</h1>
-        <div id="quiz-root" class="bg-brand-dark relative overflow-hidden"></div>
+        <nav aria-label="Breadcrumb" class="max-w-5xl mx-auto px-4 pt-4">
+            <ol class="flex flex-wrap text-brand-gray text-xs gap-2 list-none p-0 m-0">
+                <li><a href="/" class="hover:text-brand-light underline">Home</a></li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page">Clinical Screeners</li>
+            </ol>
+        </nav>
+
+        <header class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center">
+            <h1 class="text-3xl md:text-5xl font-heading font-bold text-brand-light">Free Clinical Screeners</h1>
+            <p class="mt-4 text-brand-gray text-base md:text-lg">Six short symptom checks that decide whether a clinical evaluation is worth your time. No email gate. No diagnosis. Built around validated instruments where they exist.</p>
+        </header>
+
+        <!-- Card grid -->
+        <section class="max-w-5xl mx-auto px-4 pb-16">
+            <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 list-none p-0 m-0">
+
+                <li>
+                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
+                        <div>
+                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Low Testosterone (TRT)</h2>
+                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Validated 10-item ADAM symptom check with PSA + IPSS safety screen.</p>
+                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
+                        </div>
+                        <a href="/quiz/low-t/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
+                        <div>
+                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Perimenopause</h2>
+                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Menopause Rating Scale (MRS) symptom check.</p>
+                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
+                        </div>
+                        <a href="/quiz/perimenopause/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
+                        <div>
+                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Bone Density Risk</h2>
+                            <p class="text-sm text-brand-gray leading-relaxed mb-3">FRAX-aligned bone density risk screener.</p>
+                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
+                        </div>
+                        <a href="/quiz/bone-density/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
+                        <div>
+                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">GLP-1 Weight Loss</h2>
+                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Weight-management eligibility screener (semaglutide/tirzepatide).</p>
+                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
+                        </div>
+                        <a href="/quiz/glp1/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
+                        <div>
+                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Peptide Selection</h2>
+                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Find which peptide therapy matches your goals — recovery, anti-aging, gut health, or performance.</p>
+                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
+                        </div>
+                        <a href="/quiz/peptides/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
+                        <div>
+                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Hormone Health</h2>
+                            <p class="text-sm text-brand-gray leading-relaxed mb-3">General hormone health screener — men's and women's.</p>
+                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
+                        </div>
+                        <a href="/quiz/hormone/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
+                    </article>
+                </li>
+
+            </ul>
+        </section>
+
+        <!-- What these screeners are -->
+        <section class="max-w-3xl mx-auto px-4 pb-20 text-brand-gray font-body">
+            <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-light mb-4">What these screeners are</h2>
+            <p class="mb-4">Every screener on this page is free, takes a few minutes, and uses validated symptom instruments where they exist (ADAM for low testosterone, MRS for perimenopause, FRAX-aligned inputs for bone density). None of these tools diagnose anything. They are triage tools designed to decide whether a clinical evaluation is worth your time.</p>
+            <p class="mb-4">If a screener flags meaningful eligibility factors, the next step at Moonshot Medical is a structured intake visit with a 60-plus marker comprehensive lab panel and an in-person exam at our clinic in Park Ridge, Illinois — not a video visit and a prescription mailed from out of state. Each screener is reviewed by Missy Zammichieli, DNP, APRN, FNP-BC.</p>
+            <p class="text-xs text-brand-gray/80 leading-relaxed mt-8 pt-6 border-t border-brand-slate/40">These tools do not, and are not intended to, diagnose any medical condition or recommend any specific treatment, drug, dose, or protocol. Screening tools have known false-positive and false-negative rates. Completing a quiz does not establish a provider-patient or treatment relationship, does not constitute a medical examination, and does not entitle you to any specific treatment, prescription, or service. Medical services are provided by Moonshot Medical, PLLC and are available only to patients physically located in states where our clinicians are licensed (currently Illinois). By proceeding you confirm you are at least 18 years old.</p>
+        </section>
+
     </main>
 
     <script src="/shared/footer.js" defer></script>
-    <script src="/quiz/quiz-engine.js"></script>
 
 </body>
 </html>
