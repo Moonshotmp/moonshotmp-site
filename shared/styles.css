@@ -126,6 +126,32 @@ h1, h2, h3, h4, h5, h6 {
     pointer-events: auto;
 }
 
+/* ========================================
+   Quiz screen focus management
+
+   Quiz engines (peptide, bone-density, perimenopause, low-t, glp1) call
+   .focus() programmatically on the new screen's heading after each
+   transition so screen-reader and keyboard users land on the right
+   content. The heading carries tabindex="-1" to make programmatic
+   focus possible.
+
+   The default browser focus ring on a programmatically-focused heading
+   is visually distracting (mouse users see a blue outline appear
+   around the headline they just navigated to). Use :focus-visible to
+   restrict the outline to keyboard navigation. Programmatic .focus()
+   in modern browsers does NOT trigger :focus-visible, so the outline
+   stays hidden for mouse users while remaining visible for keyboard
+   users who Tab into the heading.
+   ======================================== */
+.quiz-screen h2[tabindex="-1"]:focus {
+    outline: none;
+}
+.quiz-screen h2[tabindex="-1"]:focus-visible {
+    outline: 2px dashed currentColor;
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
 .btn-outline {
     background-color: transparent;
     border: 1px solid var(--brand-gray);
