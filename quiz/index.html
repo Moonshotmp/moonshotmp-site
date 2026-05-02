@@ -139,7 +139,7 @@
 
     <main class="flex-grow pt-20">
 
-        <nav aria-label="Breadcrumb" class="max-w-5xl mx-auto px-4 pt-4">
+        <nav aria-label="Breadcrumb" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
             <ol class="flex flex-wrap text-brand-gray text-xs gap-2 list-none p-0 m-0">
                 <li><a href="/" class="hover:text-brand-light underline">Home</a></li>
                 <li aria-hidden="true">/</li>
@@ -147,90 +147,166 @@
             </ol>
         </nav>
 
-        <header class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center">
-            <h1 class="text-3xl md:text-5xl font-heading font-bold text-brand-light">Free Clinical Screeners</h1>
-            <p class="mt-4 text-brand-gray text-base md:text-lg">Six short symptom checks that decide whether a clinical evaluation is worth your time. No email gate. No diagnosis. Built around validated instruments where they exist.</p>
-        </header>
+        <!-- Hero with subtle radial backdrop -->
+        <div class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(178,191,190,0.08),transparent_70%)] pointer-events-none" aria-hidden="true"></div>
+            <header class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-20 pb-8 text-center">
+                <p class="text-[11px] tracking-[0.25em] uppercase text-brand-gray/60 font-medium mb-4">Clinical Triage</p>
+                <h1 class="text-3xl md:text-5xl font-heading font-bold text-brand-light leading-tight">Free Clinical Screeners</h1>
+                <div class="mx-auto mt-5 h-px w-16 bg-brand-gray/40"></div>
+                <p class="mt-6 text-brand-gray text-base md:text-lg font-light leading-relaxed">Six short symptom checks that decide whether a clinical evaluation is worth your time. No email gate. No diagnosis. Built around validated instruments where they exist.</p>
+                <p class="text-brand-gray/70 text-xs mt-5">Reviewed by <a href="/about/missy-zammichieli/" class="underline decoration-brand-gray/30 hover:decoration-brand-gray transition">Missy Zammichieli, DNP, APRN, FNP-BC</a> &middot; Park Ridge, IL</p>
+            </header>
+        </div>
 
-        <!-- Card grid -->
-        <section class="max-w-5xl mx-auto px-4 pb-16">
-            <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 list-none p-0 m-0">
+        <!-- Approach trust band -->
+        <aside class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            <div class="grid sm:grid-cols-3 gap-6 sm:gap-10 py-8 border-y border-brand-slate/40">
+                <div>
+                    <p class="text-brand-light font-heading text-2xl mb-1.5">Validated</p>
+                    <p class="text-brand-gray text-xs font-light leading-relaxed">ADAM, MRS, FRAX-aligned instruments</p>
+                </div>
+                <div>
+                    <p class="text-brand-light font-heading text-2xl mb-1.5">Triage, not diagnosis</p>
+                    <p class="text-brand-gray text-xs font-light leading-relaxed">Tells you whether a workup is worth your time</p>
+                </div>
+                <div>
+                    <p class="text-brand-light font-heading text-2xl mb-1.5">No email gate</p>
+                    <p class="text-brand-gray text-xs font-light leading-relaxed">Results render in-page; nothing collected</p>
+                </div>
+            </div>
+        </aside>
 
-                <li>
-                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
-                        <div>
-                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Low Testosterone (TRT)</h2>
-                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Validated 10-item ADAM symptom check with PSA + IPSS safety screen.</p>
-                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
-                        </div>
-                        <a href="/quiz/low-t/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
-                    </article>
+        <!-- Start here segmenter -->
+        <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-14">
+            <p class="text-center text-brand-gray text-xs uppercase tracking-widest mb-4 font-heading">Start here</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <a href="/quiz/low-t/" class="block p-4 rounded-lg border border-brand-slate/40 bg-brand-slate/10 hover:bg-brand-slate/30 hover:border-brand-gray/60 transition text-center">
+                    <span class="block font-heading font-bold text-brand-light text-base">I'm a man</span>
+                    <span class="block text-xs text-brand-gray mt-1">Low-T screener</span>
+                </a>
+                <a href="/quiz/perimenopause/" class="block p-4 rounded-lg border border-brand-slate/40 bg-brand-slate/10 hover:bg-brand-slate/30 hover:border-brand-gray/60 transition text-center">
+                    <span class="block font-heading font-bold text-brand-light text-base">I'm a woman</span>
+                    <span class="block text-xs text-brand-gray mt-1">Perimenopause screener</span>
+                </a>
+                <a href="/quiz/hormone/" class="block p-4 rounded-lg border border-brand-slate/40 bg-brand-slate/10 hover:bg-brand-slate/30 hover:border-brand-gray/60 transition text-center">
+                    <span class="block font-heading font-bold text-brand-light text-base">Not sure</span>
+                    <span class="block text-xs text-brand-gray mt-1">General hormone screener</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Featured screeners (top 3 high-impact) -->
+        <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+            <p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Most-taken screeners</p>
+            <ul class="grid grid-cols-1 md:grid-cols-3 gap-px bg-brand-slate/40 border border-brand-slate/40 list-none p-0 m-0">
+
+                <li class="bg-brand-dark p-7 hover:bg-brand-slate/20 transition group">
+                    <div class="text-brand-gray/70 mb-5">
+                        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <circle cx="16" cy="16" r="2.5"/>
+                            <ellipse cx="16" cy="16" rx="12" ry="5"/>
+                            <ellipse cx="16" cy="16" rx="12" ry="5" transform="rotate(60 16 16)"/>
+                            <ellipse cx="16" cy="16" rx="12" ry="5" transform="rotate(120 16 16)"/>
+                        </svg>
+                    </div>
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-2">Men's Health</p>
+                    <h2 class="text-xl font-heading font-bold text-brand-light mb-3 leading-tight">Low Testosterone (TRT)</h2>
+                    <p class="text-sm text-brand-gray font-light leading-relaxed mb-6">Validated 10-item ADAM symptom check with PSA + IPSS safety screen.</p>
+                    <a href="/quiz/low-t/" class="inline-flex items-baseline gap-2 text-brand-light text-xs uppercase tracking-widest font-medium border-b border-brand-light/40 pb-1 group-hover:border-brand-light transition">Check my symptoms <span class="text-[10px] opacity-70 normal-case tracking-normal">2 min</span></a>
                 </li>
 
-                <li>
-                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
-                        <div>
-                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Perimenopause</h2>
-                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Menopause Rating Scale (MRS) symptom check.</p>
-                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
-                        </div>
-                        <a href="/quiz/perimenopause/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
-                    </article>
+                <li class="bg-brand-dark p-7 hover:bg-brand-slate/20 transition group">
+                    <div class="text-brand-gray/70 mb-5">
+                        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path d="M22 6a10 10 0 1 0 4 18 8 8 0 0 1-4-18z"/>
+                            <circle cx="16" cy="16" r="13" stroke-dasharray="2 3" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-2">Women's Health</p>
+                    <h2 class="text-xl font-heading font-bold text-brand-light mb-3 leading-tight">Perimenopause</h2>
+                    <p class="text-sm text-brand-gray font-light leading-relaxed mb-6">Menopause Rating Scale (MRS) symptom check.</p>
+                    <a href="/quiz/perimenopause/" class="inline-flex items-baseline gap-2 text-brand-light text-xs uppercase tracking-widest font-medium border-b border-brand-light/40 pb-1 group-hover:border-brand-light transition">Check my symptoms <span class="text-[10px] opacity-70 normal-case tracking-normal">2 min</span></a>
                 </li>
 
-                <li>
-                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
-                        <div>
-                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Bone Density Risk</h2>
-                            <p class="text-sm text-brand-gray leading-relaxed mb-3">FRAX-aligned bone density risk screener.</p>
-                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
-                        </div>
-                        <a href="/quiz/bone-density/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
-                    </article>
-                </li>
-
-                <li>
-                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
-                        <div>
-                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">GLP-1 Weight Loss</h2>
-                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Weight-management eligibility screener (semaglutide/tirzepatide).</p>
-                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
-                        </div>
-                        <a href="/quiz/glp1/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
-                    </article>
-                </li>
-
-                <li>
-                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
-                        <div>
-                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Peptide Selection</h2>
-                            <p class="text-sm text-brand-gray leading-relaxed mb-3">Find which peptide therapy matches your goals — recovery, anti-aging, gut health, or performance.</p>
-                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
-                        </div>
-                        <a href="/quiz/peptides/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
-                    </article>
-                </li>
-
-                <li>
-                    <article class="h-full flex flex-col justify-between p-6 border border-brand-slate/40 rounded-lg bg-brand-slate/20 hover:border-brand-gray/60 transition">
-                        <div>
-                            <h2 class="text-xl font-heading font-bold text-brand-light mb-2">Hormone Health</h2>
-                            <p class="text-sm text-brand-gray leading-relaxed mb-3">General hormone health screener — men's and women's.</p>
-                            <p class="text-xs text-brand-gray/70 mb-5">2-3 min</p>
-                        </div>
-                        <a href="/quiz/hormone/" class="inline-block text-center bg-brand-gray text-brand-dark font-semibold py-2.5 px-4 rounded hover:bg-brand-light transition">Take the screener</a>
-                    </article>
+                <li class="bg-brand-dark p-7 hover:bg-brand-slate/20 transition group">
+                    <div class="text-brand-gray/70 mb-5">
+                        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                            <path d="M16 5v22M6 27h20"/>
+                            <path d="M10 9h12l-3 8h-6z"/>
+                            <circle cx="16" cy="6" r="1.2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-2">Weight &amp; Metabolic</p>
+                    <h2 class="text-xl font-heading font-bold text-brand-light mb-3 leading-tight">GLP-1 Weight Loss</h2>
+                    <p class="text-sm text-brand-gray font-light leading-relaxed mb-6">Weight-management eligibility screener (semaglutide / tirzepatide).</p>
+                    <a href="/quiz/glp1/" class="inline-flex items-baseline gap-2 text-brand-light text-xs uppercase tracking-widest font-medium border-b border-brand-light/40 pb-1 group-hover:border-brand-light transition">Check my eligibility <span class="text-[10px] opacity-70 normal-case tracking-normal">2 min</span></a>
                 </li>
 
             </ul>
         </section>
 
-        <!-- What these screeners are -->
-        <section class="max-w-3xl mx-auto px-4 pb-20 text-brand-gray font-body">
-            <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-light mb-4">What these screeners are</h2>
-            <p class="mb-4">Every screener on this page is free, takes a few minutes, and uses validated symptom instruments where they exist (ADAM for low testosterone, MRS for perimenopause, FRAX-aligned inputs for bone density). None of these tools diagnose anything. They are triage tools designed to decide whether a clinical evaluation is worth your time.</p>
-            <p class="mb-4">If a screener flags meaningful eligibility factors, the next step at Moonshot Medical is a structured intake visit with a 60-plus marker comprehensive lab panel and an in-person exam at our clinic in Park Ridge, Illinois — not a video visit and a prescription mailed from out of state. Each screener is reviewed by Missy Zammichieli, DNP, APRN, FNP-BC.</p>
-            <p class="text-xs text-brand-gray/80 leading-relaxed mt-8 pt-6 border-t border-brand-slate/40">These tools do not, and are not intended to, diagnose any medical condition or recommend any specific treatment, drug, dose, or protocol. Screening tools have known false-positive and false-negative rates. Completing a quiz does not establish a provider-patient or treatment relationship, does not constitute a medical examination, and does not entitle you to any specific treatment, prescription, or service. Medical services are provided by Moonshot Medical, PLLC and are available only to patients physically located in states where our clinicians are licensed (currently Illinois). By proceeding you confirm you are at least 18 years old.</p>
+        <!-- Also available (secondary tier) -->
+        <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+            <p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Also available</p>
+            <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 list-none p-0 m-0">
+                <li>
+                    <a href="/quiz/bone-density/" class="block h-full p-5 bg-white/[0.03] border border-white/[0.08] rounded-md hover:border-brand-gray/40 hover:bg-white/[0.05] transition group">
+                        <div class="text-brand-gray/60 mb-3">
+                            <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <path d="M16 4v24M10 8c0 6-4 8-4 12M22 8c0 6 4 8 4 12"/>
+                                <path d="M9 12h14M8 17h16M9 22h14"/>
+                            </svg>
+                        </div>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-1">Bone &amp; Metabolic</p>
+                        <h3 class="text-base font-heading font-bold text-brand-light mb-1 group-hover:text-white transition">Bone Density Risk</h3>
+                        <p class="text-brand-gray text-xs font-light">FRAX-aligned &middot; 2 min</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/quiz/peptides/" class="block h-full p-5 bg-white/[0.03] border border-white/[0.08] rounded-md hover:border-brand-gray/40 hover:bg-white/[0.05] transition group">
+                        <div class="text-brand-gray/60 mb-3">
+                            <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <path d="M10 4c0 6 12 6 12 12s-12 6-12 12"/>
+                                <path d="M22 4c0 6-12 6-12 12s12 6 12 12"/>
+                                <path d="M11 8h10M11 16h10M11 24h10" opacity="0.6"/>
+                            </svg>
+                        </div>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-1">Performance &amp; Recovery</p>
+                        <h3 class="text-base font-heading font-bold text-brand-light mb-1 group-hover:text-white transition">Peptide Selection</h3>
+                        <p class="text-brand-gray text-xs font-light">Goals match &middot; 2 min</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/quiz/hormone/" class="block h-full p-5 bg-white/[0.03] border border-white/[0.08] rounded-md hover:border-brand-gray/40 hover:bg-white/[0.05] transition group">
+                        <div class="text-brand-gray/60 mb-3">
+                            <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <circle cx="16" cy="16" r="11"/>
+                                <path d="M5 16h22M16 5a14 14 0 0 1 0 22M16 5a14 14 0 0 0 0 22" opacity="0.6"/>
+                            </svg>
+                        </div>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-1">Foundational</p>
+                        <h3 class="text-base font-heading font-bold text-brand-light mb-1 group-hover:text-white transition">Hormone Health</h3>
+                        <p class="text-brand-gray text-xs font-light">Men's &amp; Women's &middot; 2 min</p>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- What these screeners are (closing 2-col block) -->
+        <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16 pt-12 border-t border-brand-slate/40">
+                <div>
+                    <p class="text-brand-gray/60 text-xs uppercase tracking-widest mb-4">Our approach</p>
+                    <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-light leading-tight">What these screeners are &mdash; and aren't.</h2>
+                    <div class="w-12 h-px bg-brand-gray/40 mt-6"></div>
+                </div>
+                <div class="space-y-5 text-brand-gray font-light leading-relaxed">
+                    <p>Free, validated instruments where they exist. ADAM for low testosterone, MRS for perimenopause, FRAX-aligned inputs for bone density. None of them diagnose anything &mdash; they decide whether a clinical evaluation is worth your time.</p>
+                    <p>If a screener flags meaningful eligibility, the next step at Moonshot Medical is a structured intake with a 60-plus marker comprehensive lab panel and an in-person exam in Park Ridge &mdash; not a video visit and a prescription mailed from out of state.</p>
+                    <p class="text-xs text-brand-gray/70 pt-6 border-t border-brand-slate/40">These tools do not, and are not intended to, diagnose any medical condition or recommend any specific treatment, drug, dose, or protocol. Screening tools have known false-positive and false-negative rates. Completing a quiz does not establish a provider-patient or treatment relationship, does not constitute a medical examination, and does not entitle you to any specific treatment, prescription, or service. Medical services are provided by Moonshot Medical, PLLC and are available only to patients physically located in states where our clinicians are licensed (currently Illinois). By proceeding you confirm you are at least 18 years old.</p>
+                </div>
+            </div>
         </section>
 
     </main>
