@@ -740,12 +740,12 @@
             var btns = '';
             for (var j = 0; j < yesNoOptions.length; j++) {
                 var tabIdx = j === 0 ? '0' : '-1';
-                btns += '<button type="button" role="radio" aria-checked="false" tabindex="' + tabIdx + '" class="quiz-card border border-white/10 rounded-sm px-5 py-3 text-brand-light font-medium text-center hover:border-brand-gray/40 flex-1" data-' + attr + '="' + yesNoOptions[j].key + '">' + yesNoOptions[j].label + '</button>';
+                btns += '<button type="button" role="radio" aria-checked="false" tabindex="' + tabIdx + '" class="quiz-card border border-white/10 rounded-sm px-4 py-2 text-brand-light font-medium text-center hover:border-brand-gray/40 min-w-[4.5rem]" data-' + attr + '="' + yesNoOptions[j].key + '">' + yesNoOptions[j].label + '</button>';
             }
             rowsHtml +=
-                '<div class="border border-white/10 rounded-sm p-5 mb-3 text-left">' +
-                    '<p id="' + rowHeadingId + '" class="text-brand-light font-medium mb-3"><span class="text-brand-gray/60 text-xs uppercase tracking-widest mr-2">' + (item.idx + 1) + '.</span>' + item.prompt + '</p>' +
-                    '<div role="radiogroup" aria-labelledby="' + rowHeadingId + '" class="flex gap-3 max-w-sm">' + btns + '</div>' +
+                '<div class="border-b border-white/10 last:border-b-0 py-3 text-left flex flex-col sm:flex-row sm:items-center gap-3">' +
+                    '<p id="' + rowHeadingId + '" class="text-brand-light font-medium sm:flex-1"><span class="text-brand-gray/60 text-xs uppercase tracking-widest mr-2">' + (item.idx + 1) + '.</span>' + item.prompt + '</p>' +
+                    '<div role="radiogroup" aria-labelledby="' + rowHeadingId + '" class="flex gap-2 sm:shrink-0">' + btns + '</div>' +
                 '</div>';
         }
         return screenWrap(SCREEN.ADAM,
