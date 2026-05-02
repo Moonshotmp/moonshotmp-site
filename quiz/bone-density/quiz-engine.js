@@ -426,7 +426,18 @@
             var target = root.querySelector('[data-screen="' + screenIndex + '"]');
             if (target) {
                 target.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Scroll the quiz mount itself into view (not the window top).
+                // The page has ~220px of static content above #quiz-root —
+                // breadcrumb, page H1, author byline. Scrolling to window top
+                // hides the new screen below that content and looks like the
+                // click did nothing. Aligning #quiz-root to the top of the
+                // viewport keeps the active screen in view at every transition.
+                if (root && typeof root.scrollIntoView === 'function') {
+                    try { root.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+                    catch (e) { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
                 // Focus management: focus the heading or first interactive
                 // element on the new screen for screen reader / keyboard users.
                 var heading = target.querySelector('h2');

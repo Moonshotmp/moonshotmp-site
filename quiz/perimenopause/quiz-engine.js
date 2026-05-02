@@ -505,7 +505,15 @@
             var target = root.querySelector('[data-screen="' + screenIndex + '"]');
             if (target) {
                 target.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Scroll the quiz mount into view rather than window top —
+                // the static page has H1 + byline above #quiz-root and a
+                // window-top scroll hides the new active screen below them.
+                if (root && typeof root.scrollIntoView === 'function') {
+                    try { root.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+                    catch (e) { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
                 // Focus management: focus the heading or first interactive
                 // element on the new screen for screen reader / keyboard users.
                 var heading = target.querySelector('h2');
