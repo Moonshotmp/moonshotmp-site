@@ -10,9 +10,11 @@
  * REJECTS any payload that contains health-condition values, symptom severity,
  * peptide/drug names, or medical history terms — even in nested fields.
  *
- * Logs to Netlify Functions console for now.
- * TODO: Replace console logging with Postgres insert once a first-party analytics
- *       DB is provisioned. No raw-event retention beyond 90 days. Aggregate counts only.
+ * Persists each validated event to Netlify Blobs (store: 'quiz-events')
+ * with key `YYYY-MM-DD/HH-MM-SS-sssZ-rand6.json` so events are partitioned
+ * by date for efficient prefix-listing. Also console.logs for live debugging.
+ *
+ * Query via /.netlify/functions/admin-quiz-events (auth-required).
  */
 
 // Allowed quiz slugs (low-cardinality enum). Anything else → 400.
@@ -140,10 +142,6 @@ export default async function handler(req) {
   const scanTarget = { event, screen, timestamp };
   if (deepHasHealthTerm(scanTarget)) return badRequest('disallowed_value');
 
-  // TODO: Replace this console log with a Postgres insert (or Netlify Blobs
-  // append) once a first-party analytics DB is provisioned. Retain raw events
-  // for at most 90 days; aggregate to counts after 24 hours. Never JOIN against
-  // patient records.
   const record = {
     quiz,
     event,
@@ -152,6 +150,23 @@ export default async function handler(req) {
   };
   // eslint-disable-next-line no-console
   console.log('[quiz-event]', JSON.stringify(record));
+
+  // Persist to Netlify Blobs. Key partitioned by date so admin queries can
+  // prefix-list a single day cheaply. Random suffix avoids collisions on
+  // simultaneous writes within the same millisecond.
+  // Never block the response on persistence — best-effort, log-and-continue.
+  try {
+    const { getStore } = await import('@netlify/blobs');
+    const store = getStore('quiz-events');
+    const date = record.ts.slice(0, 10);                                 // YYYY-MM-DD
+    const time = record.ts.slice(11, 23).replace(/[:.]/g, '-');          // HH-MM-SS-sss
+    const rand = Math.random().toString(36).slice(2, 8);                 // 6 chars
+    const key = `${date}/${time}-${rand}.json`;
+    await store.set(key, JSON.stringify(record));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('[quiz-event] blob persist failed:', e?.message || e);
+  }
 
   return new Response(JSON.stringify({ status: 'ok' }), {
     status: 200,
