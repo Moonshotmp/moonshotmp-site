@@ -593,22 +593,72 @@
 
         <!-- Quiz CTAs -->
         <section class="py-16 bg-brand-dark border-y border-white/5">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-10">
-                    <p class="text-brand-gray text-xs uppercase tracking-widest mb-3">Free Assessments</p>
+                    <p class="text-brand-gray text-xs uppercase tracking-widest mb-3">Free Clinical Screeners</p>
                     <h2 class="text-3xl font-bold text-brand-light">NOT SURE WHERE TO START?</h2>
+                    <p class="text-brand-gray font-light mt-3 max-w-2xl mx-auto">Validated 2-3 minute symptom checks. No email gate. Reviewed by Missy Zammichieli, DNP, APRN, FNP-BC.</p>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <a href="/quiz/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-8 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/25 hover:shadow-[0_0_40px_rgba(240,238,233,0.06)] transition-all duration-300 group">
-                        <h3 class="text-white font-heading font-bold text-lg tracking-widest group-hover:text-white transition mb-2">HORMONE HEALTH QUIZ</h3>
-                        <p class="text-brand-light/70 text-sm font-light mb-4">Are your hormones holding you back? Answer a few questions and get a personalized snapshot of where you stand.</p>
-                        <span class="text-brand-light text-xs uppercase tracking-widest group-hover:text-white transition inline-flex items-center gap-1">Take the Quiz <span class="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span></span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                    <a href="/quiz/low-t/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-6 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/25 hover:shadow-[0_0_40px_rgba(240,238,233,0.06)] transition-all duration-300 group h-full">
+                        <div class="text-brand-gray/70 mb-4">
+                            <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <circle cx="16" cy="16" r="2.5"/>
+                                <ellipse cx="16" cy="16" rx="12" ry="5"/>
+                                <ellipse cx="16" cy="16" rx="12" ry="5" transform="rotate(60 16 16)"/>
+                                <ellipse cx="16" cy="16" rx="12" ry="5" transform="rotate(120 16 16)"/>
+                            </svg>
+                        </div>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-2">Men's Health</p>
+                        <h3 class="text-white font-heading font-bold text-base tracking-wider mb-2 leading-tight">LOW TESTOSTERONE (TRT)</h3>
+                        <p class="text-brand-light/70 text-sm font-light mb-4">Validated ADAM symptom check.</p>
+                        <span class="text-brand-light text-xs uppercase tracking-widest group-hover:text-white transition inline-flex items-center gap-1">Take the Screener <span class="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span></span>
                     </a>
-                    <a href="/quiz/body-comp/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-8 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/25 hover:shadow-[0_0_40px_rgba(240,238,233,0.06)] transition-all duration-300 group">
-                        <h3 class="text-white font-heading font-bold text-lg tracking-widest group-hover:text-white transition mb-2">BODY COMP IQ QUIZ</h3>
-                        <p class="text-brand-light/70 text-sm font-light mb-4">Think you know body fat, DEXA scans, and metabolic health? Test your knowledge in 2 minutes.</p>
-                        <span class="text-brand-light text-xs uppercase tracking-widest group-hover:text-white transition inline-flex items-center gap-1">Take the Quiz <span class="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span></span>
+
+                    <a href="/quiz/perimenopause/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-6 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/25 hover:shadow-[0_0_40px_rgba(240,238,233,0.06)] transition-all duration-300 group h-full">
+                        <div class="text-brand-gray/70 mb-4">
+                            <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path d="M22 6a10 10 0 1 0 4 18 8 8 0 0 1-4-18z"/>
+                                <circle cx="16" cy="16" r="13" stroke-dasharray="2 3" opacity="0.4"/>
+                            </svg>
+                        </div>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-2">Women's Health</p>
+                        <h3 class="text-white font-heading font-bold text-base tracking-wider mb-2 leading-tight">PERIMENOPAUSE</h3>
+                        <p class="text-brand-light/70 text-sm font-light mb-4">MRS symptom check.</p>
+                        <span class="text-brand-light text-xs uppercase tracking-widest group-hover:text-white transition inline-flex items-center gap-1">Take the Screener <span class="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span></span>
                     </a>
+
+                    <a href="/quiz/bone-density/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-6 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/25 hover:shadow-[0_0_40px_rgba(240,238,233,0.06)] transition-all duration-300 group h-full">
+                        <div class="text-brand-gray/70 mb-4">
+                            <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <path d="M16 4v24M10 8c0 6-4 8-4 12M22 8c0 6 4 8 4 12"/>
+                                <path d="M9 12h14M8 17h16M9 22h14"/>
+                            </svg>
+                        </div>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-2">Bone &amp; Metabolic</p>
+                        <h3 class="text-white font-heading font-bold text-base tracking-wider mb-2 leading-tight">BONE DENSITY RISK</h3>
+                        <p class="text-brand-light/70 text-sm font-light mb-4">FRAX-aligned risk screener.</p>
+                        <span class="text-brand-light text-xs uppercase tracking-widest group-hover:text-white transition inline-flex items-center gap-1">Take the Screener <span class="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span></span>
+                    </a>
+
+                    <a href="/quiz/glp1/" class="block border border-white/15 border-l-2 border-l-brand-light rounded-sm p-6 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/25 hover:shadow-[0_0_40px_rgba(240,238,233,0.06)] transition-all duration-300 group h-full">
+                        <div class="text-brand-gray/70 mb-4">
+                            <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <path d="M16 5v22M6 27h20"/>
+                                <path d="M10 9h12l-3 8h-6z"/>
+                                <circle cx="16" cy="6" r="1.2" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-brand-gray/60 font-medium mb-2">Weight &amp; Metabolic</p>
+                        <h3 class="text-white font-heading font-bold text-base tracking-wider mb-2 leading-tight">GLP-1 ELIGIBILITY</h3>
+                        <p class="text-brand-light/70 text-sm font-light mb-4">Semaglutide / tirzepatide screener.</p>
+                        <span class="text-brand-light text-xs uppercase tracking-widest group-hover:text-white transition inline-flex items-center gap-1">Take the Screener <span class="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span></span>
+                    </a>
+
+                </div>
+                <div class="text-center mt-8">
+                    <a href="/quiz/" class="text-brand-gray hover:text-brand-light text-sm uppercase tracking-widest font-medium transition inline-flex items-center gap-2">View all 6 screeners <span>&rarr;</span></a>
                 </div>
             </div>
         </section>
