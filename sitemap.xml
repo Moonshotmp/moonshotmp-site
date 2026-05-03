@@ -140,6 +140,44 @@
     <changefreq>monthly</changefreq>
   </url>
 
+  <!-- Park Ridge Local Service Pages -->
+  <url>
+    <loc>https://moonshotmp.com/medical/thyroid-test-park-ridge/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/medical/peptide-therapy-park-ridge/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/medical/semaglutide-park-ridge/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/medical/dysport-park-ridge/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/medical/daily-tadalafil-park-ridge/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://moonshotmp.com/medical/weight-loss-peptide-park-ridge/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <!-- Quiz -->
   <url>
     <loc>https://moonshotmp.com/quiz/</loc>
