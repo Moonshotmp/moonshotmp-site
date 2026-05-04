@@ -35,6 +35,66 @@
     // to this file without an explicit consent gate AND a path-based exclusion
     // for /quiz/*, /medical/*, /learn/*, /blood-work/*, /rehab/*, /booking/*.
 
+    // === Google Ads click-id + UTM capture (first-party only) ===
+    // Reads ?gclid= / ?gbraid= / ?wbraid= and ?utm_* URL params on any page
+    // load and persists in localStorage so the booking handoff can attribute
+    // the conversion server-side via the Google Ads Conversion API and so we
+    // can slice our own bookings by campaign without querying Google.
+    //
+    // PRIVACY: Click IDs and UTM tags are opaque tokens, not health data. They
+    // never co-travel with health-condition signals here — the actual
+    // conversion upload happens server-side from the EHR with a generic
+    // "Booking" event name and dollar value, and explicitly OMITS
+    // appointment_type / service name / condition. localStorage is purely
+    // client-side; we do NOT POST any of this to any third-party from this
+    // file.
+    try {
+      var gAdsParams = new URLSearchParams(window.location.search || '');
+      var gclid = (gAdsParams.get('gclid') || '').trim();
+      var gbraid = (gAdsParams.get('gbraid') || '').trim();
+      var wbraid = (gAdsParams.get('wbraid') || '').trim();
+      var utmSource = (gAdsParams.get('utm_source') || '').trim();
+      var utmMedium = (gAdsParams.get('utm_medium') || '').trim();
+      var utmCampaign = (gAdsParams.get('utm_campaign') || '').trim();
+      var utmTerm = (gAdsParams.get('utm_term') || '').trim();
+      var utmContent = (gAdsParams.get('utm_content') || '').trim();
+
+      // Validate shape: alphanumeric + - and _, max 256 chars for ids;
+      // utm_* allow a slightly looser charset (alphanumeric + - _ . + |),
+      // bounded at 128 chars. Anything else is dropped to avoid persisting
+      // attacker-controlled junk.
+      var validClickId = function (v) { return /^[A-Za-z0-9_-]{1,256}$/.test(v); };
+      var validUtm = function (v) { return /^[A-Za-z0-9_.\-+|]{1,128}$/.test(v); };
+
+      var clickId = gclid || gbraid || wbraid;
+      if (clickId && validClickId(clickId)) {
+        // 90-day TTL matches Google Ads default attribution window.
+        localStorage.setItem('mmp_google_click_id', JSON.stringify({
+          gclid: gclid && validClickId(gclid) ? gclid : null,
+          gbraid: gbraid && validClickId(gbraid) ? gbraid : null,
+          wbraid: wbraid && validClickId(wbraid) ? wbraid : null,
+          ts: Date.now(),
+          landing_path: window.location.pathname,
+        }));
+      }
+
+      // UTMs persist independently of click-id so organic referrers
+      // (e.g., utm_source=newsletter) also get attributed.
+      if (utmSource || utmMedium || utmCampaign || utmTerm || utmContent) {
+        localStorage.setItem('mmp_utm_attribution', JSON.stringify({
+          utm_source: utmSource && validUtm(utmSource) ? utmSource : null,
+          utm_medium: utmMedium && validUtm(utmMedium) ? utmMedium : null,
+          utm_campaign: utmCampaign && validUtm(utmCampaign) ? utmCampaign : null,
+          utm_term: utmTerm && validUtm(utmTerm) ? utmTerm : null,
+          utm_content: utmContent && validUtm(utmContent) ? utmContent : null,
+          ts: Date.now(),
+          landing_path: window.location.pathname,
+        }));
+      }
+    } catch (e) {
+      // Never break page load over attribution capture.
+    }
+
     const headerHTML = `
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand-dark focus:text-brand-light focus:px-4 focus:py-2 focus:border focus:border-white/20">Skip to content</a>
     <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">

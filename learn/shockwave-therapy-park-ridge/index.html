@@ -64,10 +64,11 @@
             "name": "Missy Zammichieli, DNP, APRN, FNP-BC"
         },
         "about": {
-            "@type": "MedicalTherapy",
+            "@type": "MedicalProcedure",
             "name": "Extracorporeal Shockwave Therapy",
             "alternateName": ["ESWT", "EPAT", "Acoustic Wave Therapy"],
-            "relevantSpecialty": "Physical Medicine and Rehabilitation"
+            "procedureType": "https://schema.org/TherapeuticProcedure",
+            "bodyLocation": "Tendon, soft tissue, vascular"
         }
     }
     </script>
@@ -183,9 +184,10 @@
         ],
         "medicalSpecialty": "Chiropractic",
         "availableService": {
-            "@type": "MedicalTherapy",
+            "@type": "MedicalProcedure",
             "name": "Extracorporeal Shockwave Therapy",
-            "alternateName": ["ESWT", "EPAT"]
+            "alternateName": ["ESWT", "EPAT"],
+            "procedureType": "https://schema.org/TherapeuticProcedure"
         },
         "priceRange": "$$",
         "openingHoursSpecification": [
@@ -217,6 +219,10 @@
                             Acoustic pressure waves that restart stalled healing. ESWT/EPAT for chronic tendon injuries — plantar fasciitis, Achilles, tennis elbow, rotator cuff. Low-intensity ESWT for erectile dysfunction and Peyronie's. Provider-supervised, paired with hormone optimization where indicated. BCBS PPO accepted for musculoskeletal indications.
                         </p>
                         <p class="text-brand-gray/60 text-xs mt-4 mb-6">Reviewed by <a href="/about/missy-zammichieli/" class="underline decoration-brand-gray/30 hover:decoration-brand-gray transition-colors">Missy Zammichieli, DNP, APRN, FNP-BC</a> · Updated April 30, 2026</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="/booking/shockwave/" class="btn-primary">Book MSK Shockwave</a>
+                            <a href="/booking/shockwave/?service=ed" class="border border-brand-light/40 text-brand-light px-6 py-3 hover:bg-white/10 transition text-sm">ED Consult — Free 15 min</a>
+                        </div>
                     </div>
                     <div class="aspect-[4/3] bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/shockwave-back-treatment.webp" alt="Shockwave therapy treatment for chronic tendon injury at Moonshot Medical in Park Ridge, IL" class="w-full h-full object-cover" width="1200" height="800" fetchpriority="high">
@@ -225,30 +231,50 @@
             </div>
         </section>
 
-        <!-- From the Provider -->
+        <!-- From Your Providers -->
         <section class="py-16 bg-brand-light text-brand-dark">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-3 gap-10 items-start">
+                <p class="text-xs uppercase tracking-widest text-brand-slate text-center mb-10">From Your Providers</p>
+
+                <!-- Dr. Gontarek — MSK lead -->
+                <div class="grid md:grid-cols-3 gap-10 items-start mb-14">
+                    <div>
+                        <div class="aspect-square bg-brand-slate/10 rounded-sm overflow-hidden mb-3">
+                            <img src="/images/Michaelblack.webp" alt="Dr. Michael Gontarek, DC, MSc, DACBN at Moonshot Medical in Park Ridge" class="w-full h-full object-cover" loading="lazy" width="600" height="600">
+                        </div>
+                        <p class="text-xs uppercase tracking-widest text-brand-slate">Musculoskeletal Shockwave</p>
+                        <p class="font-bold mt-1"><a href="/about/dr-michael-gontarek/" class="hover:underline">Dr. Michael Gontarek, DC, MSc, DACBN</a></p>
+                        <p class="text-xs text-brand-slate font-light mt-1">Partner, Doctor of Chiropractic<br>McKenzie Method Certified</p>
+                    </div>
+                    <div class="md:col-span-2 text-brand-slate font-light leading-relaxed">
+                        <p class="mb-4">
+                            For chronic tendon problems — plantar fasciitis, Achilles, tennis elbow, calcific shoulder, patellar tendinopathy — the patients I see have almost always tried a few rounds of stretching, rest, maybe a cortisone shot. They got short-term relief and the pain came back. That pattern is the textbook setup for shockwave: tissue that stopped healing on its own and needs a controlled mechanical stimulus to restart the process.
+                        </p>
+                        <p class="mb-4">
+                            What I tell every shockwave patient: the wave isn't doing the work alone. The acoustic signal restarts the inflammatory healing cascade — but the durable result comes from pairing shockwave with the corrective load. If a runner has plantar fasciitis, we treat the heel AND rebuild calf endurance and ankle mobility. If a desk worker has tennis elbow, we treat the wrist extensors AND assess the shoulder mechanics that may be feeding the pattern.
+                        </p>
+                        <p>
+                            Standalone "just deliver the wave and send you home" clinics consistently get worse outcomes than what's published in the literature. That's because the published trials combine shockwave with exercise. So do we — through our <a href="/learn/physical-rehab-park-ridge/" class="text-brand-slate underline decoration-brand-slate/30 hover:decoration-brand-slate transition-colors">rehab program</a>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Missy — Men's Health lead -->
+                <div class="grid md:grid-cols-3 gap-10 items-start pt-10 border-t border-brand-slate/15">
                     <div>
                         <div class="aspect-square bg-brand-slate/10 rounded-sm overflow-hidden mb-3">
                             <img src="/images/Missyblack.webp" alt="Missy Zammichieli, DNP, APRN, FNP-BC at Moonshot Medical in Park Ridge" class="w-full h-full object-cover" loading="lazy" width="600" height="600">
                         </div>
-                        <p class="text-xs uppercase tracking-widest text-brand-slate">From the Provider</p>
-                        <p class="font-bold mt-1">Missy Zammichieli, DNP, APRN, FNP-BC</p>
+                        <p class="text-xs uppercase tracking-widest text-brand-slate">Men's Health Shockwave (ED, Peyronie's)</p>
+                        <p class="font-bold mt-1"><a href="/about/missy-zammichieli/" class="hover:underline">Missy Zammichieli, DNP, APRN, FNP-BC</a></p>
                         <p class="text-xs text-brand-slate font-light mt-1">Doctor of Nursing Practice<br>Board-Certified Family Nurse Practitioner</p>
                     </div>
                     <div class="md:col-span-2 text-brand-slate font-light leading-relaxed">
                         <p class="mb-4">
-                            Two very different patient populations come to us for shockwave. The first is the chronic tendon-injury group — plantar fasciitis that won't quit, Achilles pain six months after a half marathon, calcific rotator cuff. Those patients are seen by Dr. Gontarek and the rehab side of the practice. ESWT is one of the most evidence-backed non-surgical options for these conditions, and the protocol is straightforward.
-                        </p>
-                        <p class="mb-4">
-                            The second group is the one I see in the medical clinic: men coming in for low-intensity ESWT for erectile dysfunction or Peyronie's disease. That's where I'd push back on how this treatment is marketed in a lot of Chicago clinics. ED is rarely a single-mechanism problem. The vascular component is real — and yes, low-intensity ESWT improves penile blood flow by stimulating neovascularization, with reasonable evidence behind it. But if the underlying issue is also low <a href="/medical/mens-hormones/" class="text-brand-slate underline decoration-brand-slate/30 hover:decoration-brand-slate transition-colors">testosterone</a>, untreated sleep apnea, poor metabolic control, or significant vascular disease, shockwave alone won't deliver a durable result. You'll get a short-term improvement, then drift back.
-                        </p>
-                        <p class="mb-4">
-                            That's why we don't sell ED shockwave as a standalone procedure here. Before I sign off on a 6-session protocol, I want to know the patient's testosterone, free T, SHBG, lipid panel, fasting insulin, HbA1c, and sleep history. If any of those are off, we treat the systemic issue first or in parallel — because that's what produces lasting outcomes. Shockwave is a tool, not a fix-all.
+                            Men's health is where I'd push back on how this treatment is marketed in a lot of Chicago clinics. ED is rarely a single-mechanism problem. The vascular component is real — and yes, low-intensity ESWT improves penile blood flow by stimulating neovascularization, with reasonable evidence behind it. But if the underlying issue is also low <a href="/medical/mens-hormones/" class="text-brand-slate underline decoration-brand-slate/30 hover:decoration-brand-slate transition-colors">testosterone</a>, untreated sleep apnea, poor metabolic control, or significant vascular disease, shockwave alone won't deliver a durable result. You'll get a short-term improvement, then drift back.
                         </p>
                         <p>
-                            For musculoskeletal cases, the same logic applies in a different form: shockwave works best when paired with corrective rehab, not as a standalone modality. Dr. Gontarek will walk you through the rehab piece. The patients who get the durable wins are the ones who treat the whole pattern, not the spot that hurts.
+                            That's why we don't sell ED shockwave as a standalone procedure. Before I sign off on a 6-session protocol, I want to know the patient's testosterone, free T, SHBG, lipid panel, fasting insulin, HbA1c, and sleep history. If any of those are off, we treat the systemic issue first or in parallel — because that's what produces lasting outcomes. ED shockwave consults at Moonshot start with a free 15-minute call, then labs, then a protocol decision. Not the other way around.
                         </p>
                     </div>
                 </div>
@@ -345,6 +371,22 @@
                     <div class="bg-white border border-brand-slate/10 p-6">
                         <h4 class="font-bold text-sm mb-2">Peyronie's Disease</h4>
                         <p class="text-brand-slate text-xs font-light">For the painful, plaque-driven phase of Peyronie's, low-intensity ESWT may reduce pain and improve plaque-related symptoms. It's not a cure for established curvature, but it can be a reasonable component of a broader treatment plan. We discuss the realistic expectations before starting.</p>
+                    </div>
+                </div>
+
+                <!-- Inline CTA: are you a candidate? -->
+                <div class="mt-12 bg-brand-dark text-brand-light p-8 rounded-sm">
+                    <div class="grid md:grid-cols-3 gap-6 items-center">
+                        <div class="md:col-span-2">
+                            <h3 class="font-bold text-xl mb-2 text-brand-light">See if shockwave is the right call for your case.</h3>
+                            <p class="text-brand-gray text-sm font-light">
+                                Most MSK candidates have had pain for 3+ months and have already tried PT, rest, or a cortisone shot. If that's you, book a $50 refundable deposit slot — Dr. Gontarek confirms candidacy and lays out the protocol at the first visit. Not a candidate? Deposit refunded. ED protocol? Start with a free 15-min consult instead — labs first, then a decision.
+                            </p>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <a href="/booking/shockwave/" class="btn-primary text-center">Book MSK — $50 Deposit</a>
+                            <a href="/booking/shockwave/?service=ed" class="border border-brand-light/40 text-brand-light text-sm text-center px-6 py-3 hover:bg-white/10 transition">ED — Free Consult</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -456,29 +498,44 @@
             </div>
         </section>
 
-        <!-- Insurance & Access -->
+        <!-- Pricing -->
         <section class="py-16 bg-brand-light text-brand-dark">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold mb-8 text-center">INSURANCE &amp; ACCESS</h2>
+                <h2 class="text-3xl font-bold mb-2 text-center">TRANSPARENT PRICING</h2>
+                <p class="text-brand-slate text-center font-light mb-8">No referral. No mystery package upsell. The price is the price.</p>
 
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="bg-brand-dark p-6 rounded-sm">
-                        <h3 class="font-bold text-brand-light text-sm mb-2">BCBS PPO Accepted (MSK)</h3>
-                        <p class="text-brand-gray text-xs font-light">For musculoskeletal indications. Coverage varies by plan — we verify benefits before treatment.</p>
+                <!-- TODO(tom): confirm session and package pricing — placeholders below -->
+                <div class="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <div class="bg-brand-dark p-6 rounded-sm text-center">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Per Session — MSK</p>
+                        <p class="text-3xl font-bold text-brand-light mb-2">$200</p>
+                        <p class="text-brand-gray text-sm font-light">10–15 minute treatment with Dr. Gontarek. BCBS PPO billed when applicable.</p>
                     </div>
-                    <div class="bg-brand-dark p-6 rounded-sm">
-                        <h3 class="font-bold text-brand-light text-sm mb-2">Transparent Cash Pricing</h3>
-                        <p class="text-brand-gray text-xs font-light">For ED/Peyronie's protocols and patients without BCBS PPO. You know the cost before your first session. HSA/FSA accepted.</p>
+                    <div class="bg-brand-dark p-6 rounded-sm text-center">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">3-Session MSK Package</p>
+                        <p class="text-3xl font-bold text-brand-light mb-2">$525</p>
+                        <p class="text-brand-gray text-sm font-light">Most plantar fasciitis, tennis elbow, and Achilles protocols. Includes rehab integration.</p>
                     </div>
-                    <div class="bg-brand-dark p-6 rounded-sm">
-                        <h3 class="font-bold text-brand-light text-sm mb-2">Out-of-Network Superbills</h3>
-                        <p class="text-brand-gray text-xs font-light">Provided for covered indications so you can submit for out-of-network reimbursement.</p>
+                    <div class="bg-brand-dark p-6 rounded-sm text-center">
+                        <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">6-Session MSK Package</p>
+                        <p class="text-3xl font-bold text-brand-light mb-2">$990</p>
+                        <p class="text-brand-gray text-sm font-light">Calcific shoulder, chronic patellar, and stubborn cases needing the full protocol.</p>
                     </div>
                 </div>
 
-                <p class="text-brand-slate text-sm font-light text-center mt-8">
-                    No referral needed. Book directly online.
-                </p>
+                <div class="mt-8 max-w-3xl mx-auto bg-brand-slate/5 border border-brand-slate/15 p-6 rounded-sm">
+                    <h3 class="font-bold text-sm mb-2">Booking deposit: $50, refundable</h3>
+                    <p class="text-brand-slate text-sm font-light">
+                        Reserve your slot online with a $50 deposit applied to your first session. Refunded in full if Dr. Gontarek determines you're not a candidate. Forfeit only on no-show or same-day cancellation. BCBS PPO members: deposit returned when insurance covers the visit.
+                    </p>
+                </div>
+
+                <div class="mt-6 max-w-3xl mx-auto text-center">
+                    <p class="text-brand-slate text-sm font-light">
+                        <strong>ED / Peyronie's protocols</strong> are priced separately and only after a free 15-minute consult and labs — we don't sell standalone packages without confirming the underlying drivers first.
+                    </p>
+                    <p class="text-brand-slate text-xs font-light mt-3">HSA/FSA accepted. Out-of-network superbills provided on request for covered MSK indications.</p>
+                </div>
             </div>
         </section>
 
@@ -626,6 +683,7 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <p class="text-brand-gray text-sm uppercase tracking-widest mb-4">Related Reading</p>
                 <div class="flex flex-wrap gap-4">
+                    <a href="/rehab/shockwave/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Shockwave Service Page &rarr;</a>
                     <a href="/learn/physical-rehab-park-ridge/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Physical Rehab in Park Ridge &rarr;</a>
                     <a href="/learn/trigger-point-injections-park-ridge/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Trigger Point Therapy in Park Ridge &rarr;</a>
                     <a href="/learn/dry-needling-park-ridge/" class="bg-brand-dark px-6 py-3 text-brand-light text-sm hover:bg-white/10 transition">Dry Needling in Park Ridge &rarr;</a>
@@ -644,7 +702,10 @@
                 <p class="text-xl text-brand-gray font-light mb-10">
                     Provider-supervised shockwave for chronic tendon injuries and men's health. 10–15 minutes per session. No referral. BCBS PPO accepted for MSK. Park Ridge, IL.
                 </p>
-                <a href="/booking/?source=shockwave-therapy-park-ridge&service=shockwave-therapy" class="btn-primary text-lg px-8 py-4">Book Shockwave Consultation</a>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="/booking/shockwave/?source=shockwave-therapy-park-ridge" class="btn-primary text-lg px-8 py-4">Book MSK Shockwave — $50 Deposit</a>
+                    <a href="/booking/shockwave/?service=ed&source=shockwave-therapy-park-ridge" class="border border-brand-light/40 text-brand-light text-lg px-8 py-4 hover:bg-white/10 transition">ED Consult — Free 15 min</a>
+                </div>
             </div>
         </section>
 

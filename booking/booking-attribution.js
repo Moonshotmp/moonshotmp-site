@@ -167,19 +167,50 @@
     slot.classList.remove('hidden');
   }
 
-  // -- 5. Propagate source/result to EHR booker URL ----------------------
+  // -- 5. Propagate source/result + Google click-id + UTMs to EHR booker --
+  // Click-id (gclid / gbraid / wbraid) and utm_* tags are captured site-wide
+  // in header.js. We read them back here and forward to the EHR so the
+  // conversion upload can fire server-side after booking confirmation, and
+  // so we can slice our own bookings by campaign. See header.js privacy
+  // notes — opaque tokens only, no health data.
+  var ATTR_TTL = 90 * 24 * 60 * 60 * 1000; // 90-day Google Ads attribution window
+  function loadAttributionFromStorage(key) {
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') return null;
+      if (typeof parsed.ts === 'number' && (Date.now() - parsed.ts) > ATTR_TTL) {
+        return null;
+      }
+      return parsed;
+    } catch (e) {
+      return null;
+    }
+  }
+
   function decorateEhrLinks() {
     var links = document.querySelectorAll('a[data-ehr-booker]');
     if (!links || !links.length) return;
     var src = attribution.source;
     var res = attribution.result;
-    if (!src && !res) return;
+    var click = loadAttributionFromStorage('mmp_google_click_id');
+    var utm = loadAttributionFromStorage('mmp_utm_attribution');
+    if (!src && !res && !click && !utm) return;
     for (var i = 0; i < links.length; i++) {
       var a = links[i];
       try {
         var url = new URL(a.getAttribute('href'), window.location.origin);
         if (src) url.searchParams.set('source', src);
         if (res) url.searchParams.set('result', res);
+        if (click && click.gclid) url.searchParams.set('gclid', click.gclid);
+        if (click && click.gbraid) url.searchParams.set('gbraid', click.gbraid);
+        if (click && click.wbraid) url.searchParams.set('wbraid', click.wbraid);
+        if (utm && utm.utm_source) url.searchParams.set('utm_source', utm.utm_source);
+        if (utm && utm.utm_medium) url.searchParams.set('utm_medium', utm.utm_medium);
+        if (utm && utm.utm_campaign) url.searchParams.set('utm_campaign', utm.utm_campaign);
+        if (utm && utm.utm_term) url.searchParams.set('utm_term', utm.utm_term);
+        if (utm && utm.utm_content) url.searchParams.set('utm_content', utm.utm_content);
         a.setAttribute('href', url.toString());
       } catch (e) {
         // Bad href — leave untouched.
