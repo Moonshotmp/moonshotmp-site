@@ -191,7 +191,6 @@
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Weight Loss</span>
                     <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Semaglutide vs Tirzepatide</a>
                     <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">GLP-1 vs Other Methods</a>
-                    <a href="/learn/retatrutide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Retatrutide Guide</a>
                   </div>
                   <!-- Peptides Column -->
                   <div>
@@ -356,7 +355,6 @@
               <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Weight Loss —</span>
               <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
               <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
-              <a href="/learn/retatrutide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Retatrutide Guide</a>
               <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Peptides —</span>
               <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Therapy Guide</a>
               <a href="/learn/bpc-157/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">BPC-157</a>
@@ -656,21 +654,6 @@
             { title: "GLP-1 vs Other Weight Loss", desc: "How GLP-1s compare to other methods", url: "/medical/glp1-vs-other-weight-loss/", cat: "Weight Loss" },
             { title: "Semaglutide Cost", desc: "GLP-1 pricing breakdown for 2026", url: "/learn/semaglutide-cost/", cat: "Weight Loss" },
             { title: "Semaglutide Side Effects", desc: "What to expect on GLP-1 medication", url: "/learn/semaglutide-side-effects/", cat: "Weight Loss" },
-            // Retatrutide
-            { title: "Retatrutide Guide", desc: "Triple-agonist GLP-1 in clinical trials", url: "/learn/retatrutide/", cat: "Weight Loss" },
-            { title: "Retatrutide & Bone Density", desc: "How GLP-1 weight loss affects bone density and how to protect it", url: "/learn/retatrutide/bone-density/", cat: "Weight Loss" },
-            { title: "Retatrutide Clinical Trials", desc: "Phase 2 and Phase 3 trial results", url: "/learn/retatrutide/clinical-trials/", cat: "Weight Loss" },
-            { title: "Retatrutide Executive Guide", desc: "Next-gen GLP-1 overview for busy professionals", url: "/learn/retatrutide/executive-guide/", cat: "Weight Loss" },
-            { title: "Retatrutide & Fatty Liver", desc: "Remarkable MASLD trial data for liver health", url: "/learn/retatrutide/fatty-liver-masld/", cat: "Weight Loss" },
-            { title: "Retatrutide for Women", desc: "What women need to know about retatrutide", url: "/learn/retatrutide/for-women/", cat: "Weight Loss" },
-            { title: "Retatrutide & Muscle Preservation", desc: "Does retatrutide cause muscle loss? What data shows", url: "/learn/retatrutide/muscle-preservation/", cat: "Weight Loss" },
-            { title: "Retatrutide & Perimenopause Weight", desc: "Why nothing works for perimenopause weight gain and what's changing", url: "/learn/retatrutide/perimenopause-weight-gain/", cat: "Weight Loss" },
-            { title: "Retatrutide & Protein Nutrition", desc: "Why nutrition matters more than the injection", url: "/learn/retatrutide/protein-nutrition/", cat: "Weight Loss" },
-            { title: "Should I Wait for Retatrutide?", desc: "Start Ozempic/Mounjaro now or wait for retatrutide", url: "/learn/retatrutide/should-i-wait/", cat: "Weight Loss" },
-            { title: "Retatrutide Side Effects", desc: "What Phase 2 and Phase 3 trials show", url: "/learn/retatrutide/side-effects/", cat: "Weight Loss" },
-            { title: "Training on GLP-1 Drugs", desc: "How to program exercise on semaglutide/tirzepatide/retatrutide", url: "/learn/retatrutide/training-guide/", cat: "Weight Loss" },
-            { title: "Tried Everything Guide", desc: "The guide to medical weight loss when nothing else worked", url: "/learn/retatrutide/tried-everything/", cat: "Weight Loss" },
-            { title: "Retatrutide vs Semaglutide vs Tirzepatide", desc: "Triple-agonist comparison with current GLP-1s", url: "/learn/retatrutide/vs-semaglutide-tirzepatide/", cat: "Weight Loss" },
             // Rehab
             { title: "Rehab Services", desc: "Physical rehabilitation services at Moonshot", url: "/rehab/", cat: "Rehab" },
             { title: "Chiropractic Care", desc: "McKenzie Method evidence-based care", url: "/rehab/chiropractic/", cat: "Rehab" },
@@ -747,7 +730,6 @@
             { title: "Peptide Therapy in Park Ridge", desc: "Local peptide therapy guide", url: "/learn/peptide-therapy-park-ridge/", cat: "Local" },
             { title: "NAD+ Injections in Park Ridge", desc: "NAD+ therapy in Park Ridge, IL", url: "/learn/nad-injections-park-ridge/", cat: "Local" },
             { title: "Hormone Quiz — Park Ridge", desc: "Hormone imbalance quiz for Park Ridge, IL residents", url: "/learn/hormone-quiz-park-ridge/", cat: "Local" },
-            { title: "Retatrutide in Park Ridge", desc: "Next-gen GLP-1 weight loss in Park Ridge, IL", url: "/learn/retatrutide/park-ridge/", cat: "Local" },
             // Local SEO — Chicago
             { title: "TRT in Chicago", desc: "Testosterone therapy in Chicago, IL", url: "/learn/trt-chicago/", cat: "Local" },
             { title: "DEXA Scan in Chicago", desc: "DEXA body composition scan in Chicago, IL", url: "/learn/dexa-scan-chicago/", cat: "Local" },

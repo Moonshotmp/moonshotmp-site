@@ -263,8 +263,6 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 
 **What happens when I stop GLP-1s?** Without lifestyle changes, weight often returns. We focus on building sustainable habits during treatment.
 
-**Does Moonshot offer retatrutide?** We don't offer retatrutide yet — it's in Phase 3 clinical trials (TRIUMPH program) and is not yet FDA-approved. We currently offer semaglutide and tirzepatide. See our retatrutide resource hub at moonshotmp.com/learn/retatrutide/ for the latest clinical trial data and FDA timeline.
-
 **DEXA frequency:** Every 6 months for optimization patients. Hormone programs include 2 scans/year.
 
 **Chiropractic visits needed:** Most patients improve within 6-8 visits. Goal is to fix the problem, not create dependency.
