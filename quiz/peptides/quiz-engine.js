@@ -1322,6 +1322,14 @@
             }
         };
 
+        // Attach upstream marketing attribution (utm_*, gclid, fbclid,
+        // landing_page, last_page, referrer) — forwarded to the EHR lead webhook.
+        try {
+            payload.attribution = (window.MoonshotAttribution && typeof window.MoonshotAttribution.getFlat === 'function')
+                ? window.MoonshotAttribution.getFlat()
+                : null;
+        } catch (_a) { payload.attribution = null; }
+
         fetch('/.netlify/functions/peptide-quiz-submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

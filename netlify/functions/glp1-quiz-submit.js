@@ -516,7 +516,8 @@ export default async function handler(req) {
         recommendation: internalTier,
         budget: '',
         goal: 'glp1',
-        concern: tierLabel
+        concern: tierLabel,
+        attribution: data && data.attribution && typeof data.attribution === 'object' ? data.attribution : null
       })
     }).catch(err => console.error('[glp1-quiz-submit] Clinic lead sync error:', err && err.message));
 

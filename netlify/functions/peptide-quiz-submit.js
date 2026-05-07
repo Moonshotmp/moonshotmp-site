@@ -220,7 +220,8 @@ export default async function handler(req) {
         recommendation: primary.name || '',
         budget: budget || '',
         goal: goalLabel || '',
-        concern: concernLabel || ''
+        concern: concernLabel || '',
+        attribution: data && data.attribution && typeof data.attribution === 'object' ? data.attribution : null
       })
     }).catch(err => console.error('[peptide-quiz-submit] Clinic lead sync error:', err.message));
 
