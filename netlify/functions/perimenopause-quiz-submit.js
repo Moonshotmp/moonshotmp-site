@@ -431,7 +431,8 @@ ${redFlagBlock}
         recommendation: internalTier,
         budget: '',
         goal: 'perimenopause',
-        concern: tierLabel
+        concern: tierLabel,
+        attribution: data && data.attribution && typeof data.attribution === 'object' ? data.attribution : null
       })
     }).catch(err => console.error('[perimenopause-quiz-submit] Clinic lead sync error:', err && err.message));
 

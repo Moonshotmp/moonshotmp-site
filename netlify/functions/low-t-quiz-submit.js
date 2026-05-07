@@ -486,7 +486,10 @@ export default async function handler(req) {
         recommendation: internalTier,
         budget: '',
         goal: 'low-t',
-        concern: tierLabel
+        concern: tierLabel,
+        // Forward marketing attribution if the client included it. EHR
+        // webhook applies its own allowlist filter — we pass through.
+        attribution: data && data.attribution && typeof data.attribution === 'object' ? data.attribution : null
       })
     }).catch(err => console.error('[low-t-quiz-submit] Clinic lead sync error:', err && err.message));
 

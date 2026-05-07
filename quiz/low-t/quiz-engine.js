@@ -1557,6 +1557,15 @@
             ackTimestamp: state.ackTimestamp
         };
 
+        // Attach upstream marketing attribution (utm_*, gclid, fbclid,
+        // landing_page, last_page, referrer) — captured by attribution-capture.js
+        // and forwarded by the Netlify function to the EHR lead webhook.
+        try {
+            payload.attribution = (window.MoonshotAttribution && typeof window.MoonshotAttribution.getFlat === 'function')
+                ? window.MoonshotAttribution.getFlat()
+                : null;
+        } catch (_a) { payload.attribution = null; }
+
         try {
             fetch('/.netlify/functions/low-t-quiz-submit', {
                 method: 'POST',

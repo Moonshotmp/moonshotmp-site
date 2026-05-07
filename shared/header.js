@@ -95,6 +95,22 @@
       // Never break page load over attribution capture.
     }
 
+    // === Inject /shared/attribution-capture.js on every page ===
+    // Captures the marketing-attribution fields the legacy block above
+    // misses (referrer, landing_page, last_page, fbclid, msclkid) into
+    // sessionStorage. Quiz engines read window.MoonshotAttribution.getFlat()
+    // when constructing the email-capture form payload — the unified flat
+    // object is forwarded to the EHR /api/leads/webhook attribution column.
+    try {
+      if (!document.querySelector('script[data-moonshot-attribution-capture]')) {
+        var attrScript = document.createElement('script');
+        attrScript.src = '/shared/attribution-capture.js';
+        attrScript.defer = true;
+        attrScript.setAttribute('data-moonshot-attribution-capture', '1');
+        (document.head || document.documentElement).appendChild(attrScript);
+      }
+    } catch (_e) { /* never block header render */ }
+
     const headerHTML = `
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand-dark focus:text-brand-light focus:px-4 focus:py-2 focus:border focus:border-white/20">Skip to content</a>
     <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">

@@ -340,7 +340,8 @@ export default async function handler(req) {
         recommendation: 'tier-' + tier,
         budget: '',
         goal: 'bone-density',
-        concern: tierLabel
+        concern: tierLabel,
+        attribution: data && data.attribution && typeof data.attribution === 'object' ? data.attribution : null
       })
     }).catch(err => console.error('[bone-density-quiz-submit] Clinic lead sync error:', err && err.message));
 
