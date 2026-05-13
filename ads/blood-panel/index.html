@@ -42,20 +42,9 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen bg-brand-dark">
 
-    <!-- Minimal nav: logo + phone only -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-brand-dark/95 backdrop-blur-sm border-b border-white/10">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="/ads/blood-panel/" class="flex items-center gap-2">
-                <span class="font-display text-brand-light text-lg font-bold tracking-wider">MOONSHOT</span>
-                <span class="text-brand-gray text-xs uppercase tracking-widest hidden sm:inline">Medical &amp; Performance</span>
-            </a>
-            <a href="tel:+12244354280" class="text-brand-light text-sm sm:text-base font-semibold hover:text-brand-gray transition">
-                (224) 435-4280
-            </a>
-        </div>
-    </header>
+    <script src="/shared/header.js" defer></script>
 
-    <main class="flex-grow pt-16">
+    <main class="flex-grow pt-20">
 
         <!-- Hero -->
         <section class="py-16 md:py-20 bg-brand-dark">
@@ -280,6 +269,8 @@
         </section>
 
     </main>
+
+    <script src="/shared/footer.js" defer></script>
 
     <!-- Attribution capture: forwards gclid + UTMs from URL to EHR booker -->
     <script src="/shared/attribution-capture.js" defer></script>
