@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# Paid-ads landing pages — designed for paid traffic only.
+# Pages also carry noindex meta; this blocks discovery via external backlinks.
+Disallow: /ads/
+
 # Block utility-only partner pages (not useful to crawl)
 Disallow: /partners/login.html
 Disallow: /partners/setup.html
