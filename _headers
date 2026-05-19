@@ -5,11 +5,16 @@
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Shared JS + CSS — keep TTL short. These ship the site header, search
+# index, mega menu, and footer; a 7-day cache bit us hard on launch day
+# when navigation/search changes didn't reach returning visitors. 5 min +
+# must-revalidate is the right shape for "stale revalidates quickly" — the
+# browser sends If-None-Match, Netlify edge ETags do the work.
 /shared/*.js
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=300, must-revalidate
 
 /shared/*.css
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=300, must-revalidate
 
 /*.css
   Cache-Control: public, max-age=86400
