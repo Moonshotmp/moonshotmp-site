@@ -144,6 +144,7 @@
                   <a href="/medical/womens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Women's Hormones</a>
                   <a href="/medical/weight-loss/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Weight Loss</a>
                   <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptides</a>
+                  <a href="/medical/botox-park-ridge/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Botox / Jeuveau</a>
                   <a href="/quiz/perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1" role="menuitem">Perimenopause Screener</a>
                   <a href="/quiz/low-t/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">TRT Readiness Screener</a>
                   <a href="/quiz/glp1/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">GLP-1 Readiness Screener</a>
@@ -320,6 +321,7 @@
               <a href="/medical/womens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women's Hormones</a>
               <a href="/medical/weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Weight Loss</a>
               <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides</a>
+              <a href="/medical/botox-park-ridge/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Botox / Jeuveau</a>
               <a href="/quiz/perimenopause/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">Perimenopause Screener &rarr;</a>
               <a href="/quiz/low-t/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">TRT Readiness Screener &rarr;</a>
               <a href="/quiz/glp1/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">GLP-1 Readiness Screener &rarr;</a>
@@ -633,6 +635,7 @@
             { title: "Women's Hormone Optimization", desc: "Bioidentical hormone replacement therapy", url: "/medical/womens-hormones/", cat: "Medical" },
             { title: "Weight Loss (GLP-1)", desc: "Semaglutide and tirzepatide programs", url: "/medical/weight-loss/", cat: "Medical" },
             { title: "Peptides & Add-On Therapies", desc: "BPC-157, TB-500, Sermorelin, PT-141, GHK-Cu", url: "/medical/peptides/", cat: "Medical" },
+            { title: "Botox / Jeuveau", desc: "Aesthetic injectables in Park Ridge", url: "/medical/botox-park-ridge/", cat: "Medical" },
             { title: "Daily Tadalafil", desc: "Low-dose tadalafil for vascular health", url: "/medical/tadalafil/", cat: "Medical" },
             { title: "Mobile Blood Draw", desc: "On-site blood draw services for businesses", url: "/medical/mobile-blood-draw/", cat: "Medical" },
             { title: "Coalition Mobile Blood Draw", desc: "Coalition partnership mobile blood draw event", url: "/medical/mobile-blood-draw/coalition/", cat: "Medical" },
@@ -771,6 +774,7 @@
             // About & Booking
             { title: "Our Team", desc: "Meet the Moonshot Medical team", url: "/about/", cat: "About" },
             { title: "Missy Zammichieli, DNP", desc: "Medical Director credentials and bio", url: "/about/missy-zammichieli/", cat: "About" },
+            { title: "Ellen Haight, RN", desc: "Aesthetic injector credentials and bio", url: "/about/ellen-haight/", cat: "About" },
             { title: "Our Story", desc: "Tom's story and why Moonshot exists", url: "/ourstory/", cat: "About" },
             { title: "Pricing", desc: "Moonshot Medical service pricing", url: "/pricing/", cat: "About" },
             { title: "Book an Appointment", desc: "Schedule medical or rehab visit", url: "/booking/", cat: "Book" },
