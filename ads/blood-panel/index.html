@@ -42,7 +42,16 @@
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen bg-brand-dark">
 
-    <script src="/shared/header.js" defer></script>
+    <!-- Ad-safe static header. Replaces /shared/header.js to keep the page free
+         of substance mentions the classifier was flagging via the mega-menu. -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-brand-dark/95 backdrop-blur border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <span class="text-brand-light font-bold text-lg tracking-widest">MOONSHOT MEDICAL</span>
+            <a href="tel:+12244354280" class="text-brand-light hover:text-brand-gray text-sm font-medium">
+                <span class="hidden sm:inline">Call </span>(224) 435-4280
+            </a>
+        </div>
+    </header>
 
     <main class="flex-grow pt-20">
 
@@ -270,7 +279,15 @@
 
     </main>
 
-    <script src="/shared/footer.js" defer></script>
+    <!-- Ad-safe static footer. Replaces /shared/footer.js for the same reason
+         as the header. No nav links, no substance mentions. -->
+    <footer class="bg-brand-slate border-t border-white/10 py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-brand-gray text-sm">
+            <p class="mb-2">Moonshot Medical &middot; 542 Busse Hwy, Park Ridge, IL 60068</p>
+            <p class="mb-2"><a href="tel:+12244354280" class="hover:text-brand-light">(224) 435-4280</a></p>
+            <p class="text-xs text-brand-gray/60">HSA/FSA accepted &middot; No referral required</p>
+        </div>
+    </footer>
 
     <!-- Attribution capture: forwards gclid + UTMs from URL to EHR booker -->
     <script src="/shared/attribution-capture.js" defer></script>
