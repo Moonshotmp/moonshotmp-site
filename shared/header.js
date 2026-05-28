@@ -111,6 +111,82 @@
       }
     } catch (_e) { /* never block header render */ }
 
+    // === Decorate clinic /book CTAs with persisted attribution ===
+    // The legacy localStorage capture above (mmp_google_click_id +
+    // mmp_utm_attribution, 90-day TTL) already runs site-wide. What was
+    // missing: nothing READ those stored values back onto outbound clinic
+    // booking links. So if a user landed from an ad, navigated around,
+    // and clicked Book later, the gclid was lost and the appointment
+    // ingested with no attribution — which is why only 2 of ~1700 recent
+    // bookings carried a gclid even though the upload pipeline itself
+    // works end-to-end (see functions/shared/google-ads-conversion.js on
+    // the clinic side).
+    //
+    // This helper appends the persisted gclid/gbraid/wbraid + utm_* to any
+    // anchor whose href points at a moonshotclinic.com /book/* path. It is
+    // idempotent (won't double-append) and runs after the header HTML is
+    // injected so nav-bar CTAs are covered too. The clinic /book page
+    // already reads these params from window.location.search and forwards
+    // them in the POST /api/book/appointment payload (book-appointment.js
+    // lines 1958–1989), so this single rewrite closes the loop.
+    function decorateClinicBookingLinks() {
+      try {
+        var attribution = {};
+        try {
+          var clickRaw = localStorage.getItem('mmp_google_click_id');
+          if (clickRaw) {
+            var clickObj = JSON.parse(clickRaw);
+            if (clickObj && typeof clickObj === 'object') {
+              if (typeof clickObj.gclid === 'string' && clickObj.gclid) attribution.gclid = clickObj.gclid;
+              if (typeof clickObj.gbraid === 'string' && clickObj.gbraid) attribution.gbraid = clickObj.gbraid;
+              if (typeof clickObj.wbraid === 'string' && clickObj.wbraid) attribution.wbraid = clickObj.wbraid;
+            }
+          }
+        } catch (_e) { /* corrupt JSON — skip */ }
+        try {
+          var utmRaw = localStorage.getItem('mmp_utm_attribution');
+          if (utmRaw) {
+            var utmObj = JSON.parse(utmRaw);
+            if (utmObj && typeof utmObj === 'object') {
+              ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) {
+                if (typeof utmObj[k] === 'string' && utmObj[k]) attribution[k] = utmObj[k];
+              });
+            }
+          }
+        } catch (_e) { /* corrupt JSON — skip */ }
+
+        var keys = Object.keys(attribution);
+        if (!keys.length) return;
+        var pairs = keys.map(function (k) {
+          return encodeURIComponent(k) + '=' + encodeURIComponent(attribution[k]);
+        }).join('&');
+
+        // Match any subdomain (moonshot.moonshotclinic.com, branch.moonshotclinic.com,
+        // etc.) under /book/. Substring filter is broad on purpose so we don't
+        // miss future booking subdomains; idempotency check below prevents harm.
+        var anchors = document.querySelectorAll('a[href*="moonshotclinic.com/book"]');
+        for (var i = 0; i < anchors.length; i++) {
+          var a = anchors[i];
+          var href = a.getAttribute('href') || '';
+          if (!href) continue;
+          // Idempotent: skip if any tracked param is already present (covers
+          // both fresh URL params already forwarded by the legacy /ads/*
+          // inline forwarder and prior decoration on this page).
+          if (/[?&](gclid|gbraid|wbraid|utm_source)=/.test(href)) continue;
+          var sep = href.indexOf('?') === -1 ? '?' : '&';
+          a.setAttribute('href', href + sep + pairs);
+        }
+      } catch (_e) { /* never break page render over decoration */ }
+    }
+
+    // Run once now (covers anchors already in the body) and once after the
+    // header HTML is injected below. Also re-run on DOMContentLoaded for
+    // any deferred-script-added anchors.
+    decorateClinicBookingLinks();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', decorateClinicBookingLinks);
+    }
+
     const headerHTML = `
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-brand-dark focus:text-brand-light focus:px-4 focus:py-2 focus:border focus:border-white/20">Skip to content</a>
     <nav class="fixed top-0 w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10" id="navbar">
@@ -445,6 +521,10 @@
         // Prepend to body if no container found
         document.body.insertAdjacentHTML('afterbegin', headerHTML);
     }
+
+    // Decorate the nav-bar clinic booking CTAs that were just injected
+    // (the earlier call only covered anchors already in the body markup).
+    decorateClinicBookingLinks();
 
     // Initialize header interactions after DOM is ready
     function initHeaderInteractions() {
@@ -957,6 +1037,11 @@
 
     // Inject booking modal
     document.body.insertAdjacentHTML('beforeend', bookingModalHTML);
+
+    // Decorate the booking modal's clinic CTA (site-wide "Book an Appointment"
+    // entrypoint -> moonshotclinic.com/book/). This is the highest-traffic
+    // booking link on the site and was previously unattributed.
+    decorateClinicBookingLinks();
 
     // Global booking modal functions
     var _bookingModalTrigger = null;
