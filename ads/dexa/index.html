@@ -69,8 +69,10 @@
                         <div class="flex flex-wrap items-center gap-4 mb-3">
                             <a id="bookCtaTop" href="https://moonshot.moonshotclinic.com/book/dexa"
                                class="btn-primary text-lg px-8 py-4">Book Now &mdash; $150</a>
-                            <span class="text-brand-gray text-sm">15-min visit · Same-day results</span>
+                            <a id="bookCtaConsult" href="https://moonshot.moonshotclinic.com/book/consult"
+                               class="inline-block border border-brand-light text-brand-light px-8 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
                         </div>
+                        <p class="text-brand-gray/80 text-sm mb-1">15-min visit &middot; same-day results. Have questions first? The <strong>consult is free</strong> &mdash; come see the clinic.</p>
                         <p class="text-brand-gray/60 text-sm">No referral required. HSA/FSA accepted.</p>
                     </div>
                     <div class="aspect-[4/5] bg-brand-slate rounded-sm overflow-hidden">
@@ -291,8 +293,12 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-4">STOP GUESSING</h2>
                 <p class="text-brand-gray text-lg font-light mb-8">Get precise data on your body composition.</p>
-                <a id="bookCtaBottom" href="https://moonshot.moonshotclinic.com/book/dexa"
-                   class="btn-primary text-lg px-10 py-4 inline-block">Book Your DEXA Scan &mdash; $150</a>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a id="bookCtaBottom" href="https://moonshot.moonshotclinic.com/book/dexa"
+                       class="btn-primary text-lg px-10 py-4 inline-block">Book Your DEXA Scan &mdash; $150</a>
+                    <a id="bookCtaConsultBottom" href="https://moonshot.moonshotclinic.com/book/consult"
+                       class="inline-block border border-brand-light text-brand-light px-10 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
+                </div>
                 <p class="text-brand-gray/60 text-sm mt-6">
                     Questions? Call or text <a href="tel:+12244354280" class="underline hover:text-brand-light">(224) 435-4280</a>
                 </p>
@@ -328,7 +334,7 @@
                     if (v) qs.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
                 });
                 if (!qs.length) return;
-                ['bookCtaTop', 'bookCtaBundle', 'bookCtaBottom'].forEach(function (id) {
+                ['bookCtaTop', 'bookCtaConsult', 'bookCtaBundle', 'bookCtaBottom', 'bookCtaConsultBottom'].forEach(function (id) {
                     var a = document.getElementById(id);
                     if (!a) return;
                     var sep = a.href.indexOf('?') === -1 ? '?' : '&';

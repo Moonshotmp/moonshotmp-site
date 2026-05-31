@@ -65,11 +65,13 @@
                             Same 60+ biomarkers as the at-home kits. Real venous draw, real MD review, real follow-up &mdash; 5 minutes from Park Ridge. Built for people who'd rather talk to a doctor than a chatbot.
                         </p>
                         <div class="flex flex-wrap items-center gap-4 mb-3">
-                            <a id="bookCtaTop" href="https://moonshot.moonshotclinic.com/book/performance-baseline"
-                               class="btn-primary text-lg px-8 py-4">Book Bundle &mdash; $405</a>
-                            <span class="text-brand-gray text-sm">DEXA + Blood Panel · Save $30</span>
+                            <a id="bookCtaTop" href="https://moonshot.moonshotclinic.com/book/blood-panel"
+                               class="btn-primary text-lg px-8 py-4">Book Your Blood Panel &mdash; $285</a>
+                            <a id="bookCtaConsult" href="https://moonshot.moonshotclinic.com/book/consult"
+                               class="inline-block border border-brand-light text-brand-light px-8 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
                         </div>
-                        <p class="text-brand-gray/60 text-sm">No subscription. No mail. HSA/FSA accepted.</p>
+                        <p class="text-brand-gray/80 text-sm mb-1">Not sure where to start? Come in for a <strong>free, no-commitment consult</strong> &mdash; we'll map out exactly what you need.</p>
+                        <p class="text-brand-gray/60 text-sm">One-time, no subscription. + Add a DEXA scan and <a id="bookCtaBundle" href="https://moonshot.moonshotclinic.com/book/performance-baseline" class="underline hover:text-brand-light">save $30 ($405 bundle)</a> &middot; HSA/FSA accepted.</p>
                     </div>
                     <div class="aspect-square bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/insidetracker-doctor-review.webp" alt="In-person doctor review of blood panel results at Moonshot Medical" class="w-full h-full object-cover" width="1200" height="1200" fetchpriority="high">
@@ -246,10 +248,14 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-4">CLINIC. NOT INBOX.</h2>
                 <p class="text-brand-gray text-lg font-light mb-8">Premium blood work, reviewed in person, 5 minutes from Park Ridge.</p>
-                <a id="bookCtaBottom" href="https://moonshot.moonshotclinic.com/book/performance-baseline"
-                   class="btn-primary text-lg px-10 py-4 inline-block">Book the Bundle &mdash; $405</a>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a id="bookCtaBottom" href="https://moonshot.moonshotclinic.com/book/blood-panel"
+                       class="btn-primary text-lg px-10 py-4 inline-block">Book Your Blood Panel &mdash; $285</a>
+                    <a id="bookCtaConsultBottom" href="https://moonshot.moonshotclinic.com/book/consult"
+                       class="inline-block border border-brand-light text-brand-light px-10 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
+                </div>
                 <p class="text-brand-gray/60 text-sm mt-6">
-                    Or call: <a href="tel:+12244354280" class="underline hover:text-brand-light">(224) 435-4280</a>
+                    Want body composition too? <a href="https://moonshot.moonshotclinic.com/book/performance-baseline" class="underline hover:text-brand-light">Bundle with DEXA &mdash; $405</a> &middot; or call <a href="tel:+12244354280" class="underline hover:text-brand-light">(224) 435-4280</a>
                 </p>
                 <p class="text-brand-gray/40 text-xs mt-4">
                     Moonshot Medical &middot; 542 Busse Hwy, Park Ridge, IL 60068
@@ -280,7 +286,7 @@
                     if (v) qs.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
                 });
                 if (!qs.length) return;
-                ['bookCtaTop', 'bookCtaPanelOnly', 'bookCtaBottom'].forEach(function (id) {
+                ['bookCtaTop', 'bookCtaConsult', 'bookCtaBundle', 'bookCtaPanelOnly', 'bookCtaBottom', 'bookCtaConsultBottom'].forEach(function (id) {
                     var a = document.getElementById(id);
                     if (!a) return;
                     var sep = a.href.indexOf('?') === -1 ? '?' : '&';

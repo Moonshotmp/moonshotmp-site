@@ -65,11 +65,13 @@
                             The biomarker panel built for people who want to optimize, not just screen. 60+ markers across metabolic, cardiovascular, endocrine, and micronutrient health &mdash; reviewed by a real doctor, with a written action plan.
                         </p>
                         <div class="flex flex-wrap items-center gap-4 mb-3">
-                            <a id="bookCtaTop" href="https://moonshot.moonshotclinic.com/book/performance-baseline"
-                               class="btn-primary text-lg px-8 py-4">Book Bundle &mdash; $405</a>
-                            <span class="text-brand-gray text-sm">DEXA + Blood Panel · Save $30</span>
+                            <a id="bookCtaTop" href="https://moonshot.moonshotclinic.com/book/blood-panel"
+                               class="btn-primary text-lg px-8 py-4">Book Your Blood Panel &mdash; $285</a>
+                            <a id="bookCtaConsult" href="https://moonshot.moonshotclinic.com/book/consult"
+                               class="inline-block border border-brand-light text-brand-light px-8 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
                         </div>
-                        <p class="text-brand-gray/60 text-sm">No referral. HSA/FSA accepted. Same-week appointments.</p>
+                        <p class="text-brand-gray/80 text-sm mb-1">Not sure which markers you need? Come in for a <strong>free, no-commitment consult</strong> &mdash; we'll build the right panel for your goals.</p>
+                        <p class="text-brand-gray/60 text-sm">No referral. HSA/FSA accepted. Same-week appointments. + Add a DEXA scan and <a id="bookCtaBundle" href="https://moonshot.moonshotclinic.com/book/performance-baseline" class="underline hover:text-brand-light">save $30 ($405 bundle)</a>.</p>
                     </div>
                     <div class="aspect-square bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/bloodresults.webp" alt="Comprehensive blood panel report at Moonshot Medical in Park Ridge, IL" class="w-full h-full object-cover" width="1200" height="1200" fetchpriority="high">
@@ -84,16 +86,16 @@
                 <div class="bg-brand-dark/60 border border-brand-gray/30 rounded-sm p-6 md:p-8">
                     <div class="flex flex-col md:flex-row md:items-center gap-6">
                         <div class="flex-1">
-                            <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Blood Panel Only</p>
-                            <h2 class="text-xl md:text-2xl font-bold text-brand-light mb-2">Skip the DEXA?</h2>
+                            <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Get the Full Picture</p>
+                            <h2 class="text-xl md:text-2xl font-bold text-brand-light mb-2">Add a DEXA Scan &mdash; Save $30</h2>
                             <p class="text-brand-gray font-light text-sm md:text-base">
-                                Already have body comp data, or just want the labs? Book the standalone Comprehensive Blood Panel.
+                                The blood panel tells you how your body is running. A DEXA scan tells you what it's made of &mdash; fat, lean mass, visceral fat. Bundle both for the complete performance baseline.
                             </p>
                         </div>
                         <div class="md:text-right">
-                            <p class="text-3xl md:text-4xl font-bold text-brand-light mb-1">$285</p>
-                            <a id="bookCtaPanelOnly" href="https://moonshot.moonshotclinic.com/book/blood-panel"
-                               class="inline-block bg-brand-light text-brand-dark px-6 py-3 font-semibold text-sm hover:bg-brand-gray transition whitespace-nowrap">Book Blood Panel</a>
+                            <p class="text-3xl md:text-4xl font-bold text-brand-light mb-1">$405<span class="text-base font-light text-brand-gray"> bundle</span></p>
+                            <a id="bookCtaPanelOnly" href="https://moonshot.moonshotclinic.com/book/performance-baseline"
+                               class="inline-block bg-brand-light text-brand-dark px-6 py-3 font-semibold text-sm hover:bg-brand-gray transition whitespace-nowrap">Book the Bundle</a>
                         </div>
                     </div>
                 </div>
@@ -270,10 +272,14 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-brand-light mb-4">RUN ON DATA, NOT GUESSES</h2>
                 <p class="text-brand-gray text-lg font-light mb-8">Know what's actually happening inside you.</p>
-                <a id="bookCtaBottom" href="https://moonshot.moonshotclinic.com/book/performance-baseline"
-                   class="btn-primary text-lg px-10 py-4 inline-block">Book the Bundle &mdash; $405</a>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a id="bookCtaBottom" href="https://moonshot.moonshotclinic.com/book/blood-panel"
+                       class="btn-primary text-lg px-10 py-4 inline-block">Book Your Blood Panel &mdash; $285</a>
+                    <a id="bookCtaConsultBottom" href="https://moonshot.moonshotclinic.com/book/consult"
+                       class="inline-block border border-brand-light text-brand-light px-10 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
+                </div>
                 <p class="text-brand-gray/60 text-sm mt-6">
-                    Or call us: <a href="tel:+12244354280" class="underline hover:text-brand-light">(224) 435-4280</a>
+                    Prefer the full baseline? <a href="https://moonshot.moonshotclinic.com/book/performance-baseline" class="underline hover:text-brand-light">Bundle with DEXA &mdash; $405</a> &middot; or call <a href="tel:+12244354280" class="underline hover:text-brand-light">(224) 435-4280</a>
                 </p>
                 <p class="text-brand-gray/40 text-xs mt-4">
                     Moonshot Medical &middot; 542 Busse Hwy, Park Ridge, IL 60068
@@ -305,7 +311,7 @@
                     if (v) qs.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
                 });
                 if (!qs.length) return;
-                ['bookCtaTop', 'bookCtaPanelOnly', 'bookCtaBottom'].forEach(function (id) {
+                ['bookCtaTop', 'bookCtaConsult', 'bookCtaBundle', 'bookCtaPanelOnly', 'bookCtaBottom', 'bookCtaConsultBottom'].forEach(function (id) {
                     var a = document.getElementById(id);
                     if (!a) return;
                     var sep = a.href.indexOf('?') === -1 ? '?' : '&';
