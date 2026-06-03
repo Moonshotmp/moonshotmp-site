@@ -52,6 +52,12 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 # Moonshot 90 Tracker — patient pages proxied from clinic EC2
 /tracker/*  https://api.moonshotclinic.com/tracker/:splat  200
 
+# Merged duplicate local pages -> canonical (2026-06-03)
+/learn/chiropractor-niles/*  /learn/chiropractor-park-ridge/  301!
+/learn/chiropractor-niles    /learn/chiropractor-park-ridge/  301!
+/learn/trt-des-plaines/*     /learn/trt-park-ridge/           301!
+/learn/trt-des-plaines       /learn/trt-park-ridge/           301!
+
 # 404 catch-all (must be last)
 /*    /404.html   404
 
