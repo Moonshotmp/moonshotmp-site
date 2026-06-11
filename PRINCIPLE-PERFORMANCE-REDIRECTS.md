@@ -141,7 +141,7 @@ If principleperformancehealth.com is hosted on Netlify (or you can point it ther
 5. Point DNS to Netlify's load balancer
 
 The `_redirects` file is already written and ready at:
-`/Users/tomkashul/Desktop/moonshotmp-site/principle-landing/_redirects`
+`/Users/tomkashul/dev/moonshotmp-site/principle-landing/_redirects`
 
 ### Option B: Cloudflare Page Rules / Redirect Rules
 
