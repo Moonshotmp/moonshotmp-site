@@ -70,11 +70,11 @@ Go to GBP Dashboard > Services > Edit. Add each service under the correct catego
 - Description: Physician-supervised testosterone optimization for men. Includes comprehensive blood work, DEXA body composition scans, and ongoing monitoring. In-person care in Park Ridge, IL — not a telehealth mill.
 
 **2. Women's Hormone Optimization (BHRT)**
-- Price: $265/month
+- Price: $285/month
 - Description: Bioidentical hormone replacement therapy for perimenopause, menopause, and hormone imbalances. Estrogen, progesterone, testosterone, and thyroid optimization. Lab-guided protocols with in-person follow-up.
 
 **3. GLP-1 Medical Weight Loss**
-- Price: $405/month
+- Price: From $195/month (priced by dose — semaglutide from $195, tirzepatide from $235)
 - Description: Medically supervised weight loss using semaglutide or tirzepatide. Includes DEXA body composition tracking, lab monitoring, and physician guidance. Focused on fat loss while preserving lean muscle.
 
 **4. DEXA Body Composition Scan**
@@ -130,8 +130,8 @@ Go to GBP Dashboard > Products > Add. These show as purchasable items in your li
 | DEXA Body Composition Scan | $150 | Diagnostics | Medical-grade body fat, lean mass, bone density, and visceral fat measurement. 10 minutes, results same day. |
 | Comprehensive Blood Panel (60+ markers) | $285 | Diagnostics | Hormones, metabolic, thyroid, liver, kidney, inflammation, vitamins, cardiovascular risk. No insurance needed. |
 | Men's Hormone Optimization (TRT) | $235/mo | Hormone Therapy | Testosterone replacement therapy with labs, DEXA, and monitoring included. |
-| Women's Hormone Optimization (BHRT) | $265/mo | Hormone Therapy | Bioidentical hormone therapy for perimenopause, menopause, and imbalances. |
-| GLP-1 Weight Loss Program | $405/mo | Weight Loss | Semaglutide or tirzepatide with DEXA tracking and physician oversight. |
+| Women's Hormone Optimization (BHRT) | $285/mo | Hormone Therapy | Bioidentical hormone therapy for perimenopause, menopause, and imbalances. |
+| GLP-1 Weight Loss Program | from $195/mo (by dose) | Weight Loss | Semaglutide or tirzepatide with DEXA tracking and physician oversight. |
 
 ---
 
@@ -226,13 +226,13 @@ A: We operate on a transparent, direct-pay model. Pricing is listed on our websi
 A: Testosterone replacement therapy (TRT) is for men with clinically low testosterone causing symptoms like fatigue, brain fog, low libido, muscle loss, or mood changes. We start with comprehensive blood work, diagnose the root cause, and build a physician-supervised protocol. Our men's hormone optimization program is $235/month and includes labs, DEXA scans, and ongoing monitoring.
 
 **Q7: Do you offer medical weight loss with semaglutide or tirzepatide?**
-A: Yes. Our GLP-1 medical weight loss program uses semaglutide or tirzepatide at $405/month. Includes physician oversight, DEXA body composition tracking, and lab monitoring. We focus on fat loss while preserving lean muscle — not just dropping scale weight.
+A: Yes. Our GLP-1 medical weight loss program uses semaglutide from $195/month or tirzepatide from $235/month, priced by dose. Includes physician oversight, DEXA body composition tracking, and lab monitoring. We focus on fat loss while preserving lean muscle — not just dropping scale weight.
 
 **Q8: What's the difference between Moonshot and a telehealth hormone clinic?**
 A: Moonshot is an in-person clinic in Park Ridge, IL. You see the same physician every visit, get blood drawn on-site, and have DEXA scans done in our facility. We don't do cookie-cutter protocols — your treatment is adjusted based on labs, symptoms, and body composition data. Most telehealth clinics can't offer this level of monitoring.
 
 **Q9: Do you treat women's hormones and menopause symptoms?**
-A: Yes. We offer bioidentical hormone replacement therapy (BHRT) for women experiencing perimenopause, menopause, or hormone imbalances. Treatment may include estrogen, progesterone, testosterone, and thyroid optimization. $265/month including labs and monitoring.
+A: Yes. We offer bioidentical hormone replacement therapy (BHRT) for women experiencing perimenopause, menopause, or hormone imbalances. Treatment may include estrogen, progesterone, testosterone, and thyroid optimization. $285/month including labs and monitoring.
 
 **Q10: What rehabilitation services do you offer?**
 A: Our rehab team provides evidence-based chiropractic care, physical rehabilitation, dry needling, shockwave therapy (ESWT), and trigger point injections. We focus on root-cause treatment — not just symptom management. No referral required. Book at moonshotmp.com/booking/rehab.
@@ -263,7 +263,7 @@ Google Posts appear on your listing for 7 days. Post every week. Rotate through 
 
 **Week 3 — Weight Loss / GLP-1**
 - Topic: Semaglutide, tirzepatide, medical weight loss vs diet alone
-- Example: "Losing weight shouldn't mean losing muscle. Our GLP-1 weight loss program pairs semaglutide or tirzepatide with DEXA tracking so you know exactly what you're losing — and keeping. $405/mo with physician oversight."
+- Example: "Losing weight shouldn't mean losing muscle. Our GLP-1 weight loss program pairs semaglutide or tirzepatide with DEXA tracking so you know exactly what you're losing — and keeping. from $195/mo (priced by dose) with physician oversight."
 - CTA: "Book now"
 - Image: DEXA before/after or progress chart
 
@@ -275,7 +275,7 @@ Google Posts appear on your listing for 7 days. Post every week. Rotate through 
 
 **Week 5 — Women's Health**
 - Topic: BHRT, menopause, perimenopause, thyroid
-- Example: "Hot flashes, weight gain, brain fog, insomnia — these aren't things you have to 'just live with.' Bioidentical hormone therapy can restore balance. $265/mo including labs and monitoring."
+- Example: "Hot flashes, weight gain, brain fog, insomnia — these aren't things you have to 'just live with.' Bioidentical hormone therapy can restore balance. $285/mo including labs and monitoring."
 - CTA: "Book now"
 - Image: Female patient consultation
 
