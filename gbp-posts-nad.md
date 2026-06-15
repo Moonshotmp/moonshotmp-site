@@ -80,7 +80,7 @@ Here's why: Hormones like testosterone and estradiol activate metabolic pathways
 
 NAD+ also supports sirtuin activation — a family of proteins involved in DNA repair, inflammation regulation, and metabolic efficiency. Sirtuins are NAD+-dependent. No NAD+, no sirtuin activity, no matter how optimized your hormones are.
 
-For patients already on a hormone optimization plan ($265/month), adding NAD+ at $60/shot is the highest-leverage addition you can make. It supports the same systems your hormones are targeting, and it addresses the cellular energy gap that most optimization protocols miss.
+For patients already on a hormone optimization plan ($235–$285/month), adding NAD+ at $60/shot is the highest-leverage addition you can make. It supports the same systems your hormones are targeting, and it addresses the cellular energy gap that most optimization protocols miss.
 
 Your plan already includes one vitamin injection per month. Adding NAD+ on top of that is straightforward — no new consultation required if you're an existing patient.
 
