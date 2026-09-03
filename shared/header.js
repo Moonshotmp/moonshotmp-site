@@ -219,6 +219,7 @@
                   <a href="/medical/tadalafil/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Daily Tadalafil</a>
                   <a href="/medical/womens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Women's Hormones</a>
                   <a href="/medical/weight-loss/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Weight Loss</a>
+                  <a href="/medical/nutrition-coaching/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Nutrition Coaching</a>
                   <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptides</a>
                   <a href="/medical/botox-park-ridge/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Botox / Jeuveau</a>
                   <a href="/quiz/perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1" role="menuitem">Perimenopause Screener</a>
@@ -396,6 +397,7 @@
               <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
               <a href="/medical/womens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women's Hormones</a>
               <a href="/medical/weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Weight Loss</a>
+              <a href="/medical/nutrition-coaching/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Nutrition Coaching</a>
               <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides</a>
               <a href="/medical/botox-park-ridge/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Botox / Jeuveau</a>
               <a href="/quiz/perimenopause/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">Perimenopause Screener &rarr;</a>
@@ -714,6 +716,7 @@
             { title: "Men's Hormone Optimization", desc: "Testosterone replacement therapy (TRT)", url: "/medical/mens-hormones/", cat: "Medical" },
             { title: "Women's Hormone Optimization", desc: "Bioidentical hormone replacement therapy", url: "/medical/womens-hormones/", cat: "Medical" },
             { title: "Weight Loss (GLP-1)", desc: "Semaglutide and tirzepatide programs", url: "/medical/weight-loss/", cat: "Medical" },
+            { title: "Nutrition Coaching", desc: "One-on-one, behavior-first coaching with Sarah DeCicco", url: "/medical/nutrition-coaching/", cat: "Medical" },
             { title: "Peptides & Add-On Therapies", desc: "BPC-157, TB-500, Sermorelin, PT-141, GHK-Cu", url: "/medical/peptides/", cat: "Medical" },
             { title: "Botox / Jeuveau", desc: "Aesthetic injectables in Park Ridge", url: "/medical/botox-park-ridge/", cat: "Medical" },
             { title: "Daily Tadalafil", desc: "Low-dose tadalafil for vascular health", url: "/medical/tadalafil/", cat: "Medical" },
