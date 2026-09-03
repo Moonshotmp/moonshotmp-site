@@ -762,6 +762,7 @@
             { title: "Chiropractic & McKenzie Method", desc: "Evidence-based chiropractic guide", url: "/learn/chiropractic/", cat: "Rehab" },
             { title: "Dry Needling", desc: "Trigger point release for chronic pain", url: "/learn/dry-needling/", cat: "Rehab" },
             { title: "Dry Needling Services", desc: "In-clinic dry needling at Moonshot", url: "/rehab/dry-needling/", cat: "Rehab" },
+            { title: "Shockwave Therapy Sessions", desc: "$105 ESWT sessions in Park Ridge, book online", url: "/rehab/shockwave/", cat: "Rehab" },
             { title: "Shockwave Therapy", desc: "ESWT for tendon injuries", url: "/learn/shockwave-therapy/", cat: "Rehab" },
             { title: "Shockwave Therapy Services", desc: "In-clinic shockwave therapy at Moonshot", url: "/rehab/shockwave/", cat: "Rehab" },
             { title: "Trigger Point Injections", desc: "Targeted relief for muscle pain", url: "/learn/trigger-point-injections/", cat: "Rehab" },
