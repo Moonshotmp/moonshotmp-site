@@ -1,4 +1,5 @@
 import { sendEmail } from './send-email.js';
+import { checkSubmission, logBlocked, safeName } from './shared/antispam.js';
 
 // ─── 7 Lead Magnet Email Templates ──────────────────────────────────
 
@@ -444,10 +445,21 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400 });
   }
 
-  const { name, email, magnet_key, article_slug, article_url } = data;
+  const { email, magnet_key, article_slug, article_url } = data;
+  const name = typeof data.name === 'string' ? data.name.trim().slice(0, 80) : '';
+  const htmlName = safeName(data.name);
 
   if (!email || !email.includes('@')) {
     return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400 });
+  }
+
+  const guard = checkSubmission(data);
+  if (!guard.ok) {
+    logBlocked('lead-magnet-submit', guard.reason);
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   const generator = MAGNETS[magnet_key];
@@ -456,7 +468,7 @@ export default async function handler(req) {
   }
 
   // Generate resource email
-  const { subject, html } = generator(name);
+  const { subject, html } = generator(htmlName);
 
   // Internal notification email
   const internalHtml = emailWrap(`
@@ -465,7 +477,7 @@ export default async function handler(req) {
 
     <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
       <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Contact</p>
-      <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${name || 'Not provided'}</p>
+      <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${htmlName || 'Not provided'}</p>
       <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Email: ${email}</p>
     </div>
 

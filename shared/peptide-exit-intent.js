@@ -109,6 +109,7 @@
         'side effects, and everything you need to know &mdash; sent straight to your inbox.' +
       '</p>' +
       '<form id="pep-exit-form">' +
+        '<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />' +
         '<input type="text" name="name" placeholder="First name" autocomplete="given-name" />' +
         '<input type="email" name="email" placeholder="Email address" required autocomplete="email" />' +
         '<button type="submit" class="btn-primary">Send Me the Guide</button>' +
@@ -119,9 +120,14 @@
   document.body.appendChild(overlay);
 
   // ─── Show / hide helpers ───────────────────────────────────────
+  // Bot guard: hidden honeypot + shown-to-submit timing, enforced server-side
+  // in netlify/functions/shared/antispam.js.
+  var shownAt = Date.now();
+
   function showModal() {
     if (shown) return;
     shown = true;
+    shownAt = Date.now();
     overlay.classList.add('pep-active');
 
     // STRIPPED 2026-04-30: previously fired gtag `exit_intent_shown` with
@@ -205,7 +211,9 @@
         name: nameVal,
         email: emailVal,
         source_page: path,
-        source_url: location.href
+        source_url: location.href,
+        website: form.elements.website ? form.elements.website.value : '',
+        elapsed_ms: Date.now() - shownAt
       })
     })
     .then(function (res) { return res.json(); })

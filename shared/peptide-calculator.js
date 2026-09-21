@@ -208,6 +208,9 @@
     injectStyles();
 
     var state = { selected: [], submitting: false, submitted: false, error: '' };
+    // Bot guard: hidden honeypot + load-to-submit timing, enforced server-side
+    // in netlify/functions/shared/antispam.js.
+    var loadedAt = Date.now();
 
     function render() {
       var recs = recommend(state.selected);
@@ -296,6 +299,7 @@
         } else {
           html += '<p class="pcc-heading" style="font-size:18px;color:' + BRAND.light + ';margin:0 0 16px 0;text-align:center;">Send This Protocol to Your Inbox</p>';
           html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;" class="pcc-form-grid">';
+          html += '<input id="pcc-website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">';
           html += '<input type="text" class="pcc-input" id="pcc-name" placeholder="First name" autocomplete="given-name">';
           html += '<input type="email" class="pcc-input" id="pcc-email" placeholder="Email address" autocomplete="email">';
           html += '</div>';
@@ -384,7 +388,9 @@
         email: email,
         goals: state.selected,
         protocol: protocolItems,
-        totalMonthly: total
+        totalMonthly: total,
+        website: (root.querySelector('#pcc-website') || {}).value || '',
+        elapsed_ms: Date.now() - loadedAt
       };
 
       fetch('/.netlify/functions/peptide-guide-send', {

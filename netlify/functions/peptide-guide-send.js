@@ -1,4 +1,5 @@
 import { sendEmail } from './send-email.js';
+import { checkSubmission, logBlocked, safeName } from './shared/antispam.js';
 
 export default async function handler(req) {
   if (req.method !== 'POST') {
@@ -18,7 +19,16 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400 });
   }
 
-  const firstName = name ? name.split(' ')[0] : '';
+  const guard = checkSubmission(data);
+  if (!guard.ok) {
+    logBlocked('peptide-guide-send', guard.reason);
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const firstName = safeName(name).split(' ')[0];
   const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
   const sourceLabel = source || 'direct';
 
@@ -40,8 +50,12 @@ export default async function handler(req) {
 
   if (protocol && Array.isArray(protocol) && protocol.length > 0) {
     let rows = '';
-    for (const p of protocol) {
-      const info = peptides[p] || {};
+    for (const item of protocol) {
+      // Calculator sends {name, price, why}; older callers sent the bare name.
+      // Only catalog names render — the value lands in email HTML.
+      const p = typeof item === 'string' ? item : item && item.name;
+      if (typeof p !== 'string' || !Object.hasOwn(peptides, p)) continue;
+      const info = peptides[p];
       const price = info.price || 0;
       protocolTotal += price;
       protocolNames.push(p);
@@ -53,7 +67,7 @@ export default async function handler(req) {
         </tr>`;
     }
 
-    protocolHtml = `
+    if (rows) protocolHtml = `
       <div style="background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74,222,128,0.2); border-radius: 8px; padding: 20px; margin-bottom: 24px;">
         <p style="color: #4ade80; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px;">Your Personalized Protocol</p>
         <p style="color: #B2BFBE; font-size: 14px; line-height: 1.5; margin: 0 0 16px;">Based on your selections, here\u2019s your recommended protocol:</p>
@@ -252,7 +266,7 @@ export default async function handler(req) {
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Contact</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${name || 'Not provided'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${safeName(name) || 'Not provided'}</p>
         <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Email: ${email}</p>
       </div>
 

@@ -113,11 +113,17 @@
   cta.id = 'lead-magnet-cta';
   cta.className = 'my-12 bg-brand-slate text-brand-light p-6 md:p-8 text-center';
 
+  // Bot guard: hidden honeypot + render-to-submit timing, enforced server-side
+  // in netlify/functions/shared/antispam.js.
+  var renderedAt = Date.now();
+
   function renderForm() {
+    renderedAt = Date.now();
     cta.innerHTML =
       '<p class="font-heading font-bold text-lg uppercase tracking-wide mb-2">FREE: ' + magnet.title + '</p>' +
       '<p class="text-brand-gray text-sm font-light mb-5">' + magnet.desc + '</p>' +
       '<form id="lead-magnet-form" class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-lg mx-auto">' +
+        '<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />' +
         '<input type="text" name="name" placeholder="First name" class="w-full sm:w-auto flex-1 px-4 py-3 bg-brand-dark border border-white/15 rounded-sm text-brand-light text-sm placeholder:text-brand-gray/60 focus:outline-none focus:border-brand-gray/50" />' +
         '<input type="email" name="email" placeholder="Email address" required class="w-full sm:w-auto flex-1 px-4 py-3 bg-brand-dark border border-white/15 rounded-sm text-brand-light text-sm placeholder:text-brand-gray/60 focus:outline-none focus:border-brand-gray/50" />' +
         '<button type="submit" class="btn-primary text-xs tracking-widest whitespace-nowrap px-6 py-3">' + magnet.cta + '</button>' +
@@ -200,7 +206,9 @@
         email: emailVal,
         magnet_key: magnetKey,
         article_slug: location.pathname.replace(/^\/learn\//, '').replace(/\/$/, ''),
-        article_url: location.href
+        article_url: location.href,
+        website: form.elements.website ? form.elements.website.value : '',
+        elapsed_ms: Date.now() - renderedAt
       })
     })
     .then(function (res) { return res.json(); })
