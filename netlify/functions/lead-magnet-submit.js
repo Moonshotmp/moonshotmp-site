@@ -508,7 +508,9 @@ export default async function handler(req) {
       await fetch(clinicApi + '/api/leads/webhook', {
         method: 'POST',
         headers: webhookHeaders,
-        body: JSON.stringify({ name, email, source: 'lead_magnet', magnet_key, article_slug, article_url }),
+        // 'website_form' is the clinic webhook's allowlisted value for site forms;
+        // anything off its list is filed as 'quiz'.
+        body: JSON.stringify({ name, email, source: 'website_form', magnet_key, article_slug, article_url }),
       });
     } catch (err) {
       console.error('[lead-magnet-submit] Clinic lead sync error:', err.message);

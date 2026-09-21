@@ -101,6 +101,9 @@ describe('handlers', () => {
     const urls = fetchMock.mock.calls.map((c) => c[0]);
     expect(urls.some((u) => u.endsWith('/api/leads/webhook'))).toBe(true);
     expect(urls.some((u) => u.endsWith('/api/marketing/quiz-complete'))).toBe(true);
+    // Must be a value on the clinic webhook's allowlist, or it is filed as 'quiz'.
+    const leadCall = fetchMock.mock.calls.find((c) => c[0].endsWith('/api/leads/webhook'));
+    expect(JSON.parse(leadCall[1].body).source).toBe('website_form');
   });
 
   it('lead-magnet-submit: markup in the name never reaches the email HTML', async () => {

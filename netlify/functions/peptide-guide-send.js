@@ -318,7 +318,9 @@ export default async function handler(req) {
       body: JSON.stringify({
         name: name || '',
         email,
-        source: `peptide-guide-${sourceLabel}`,
+        // 'website_form' is the clinic webhook's allowlisted value for site
+        // forms; anything off its list is filed as 'quiz'.
+        source: 'website_form',
         notes: `Requested peptide guide.${protocolNames.length > 0 ? ` Protocol: ${protocolNames.join(', ')}` : ''}`
       })
     }).catch(err => console.error('[peptide-guide-send] Clinic lead sync error:', err.message));
