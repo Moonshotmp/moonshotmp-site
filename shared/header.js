@@ -814,7 +814,6 @@
             { title: "Hashimoto's Thyroiditis", desc: "Causes, diagnosis, and treatment options", url: "/learn/hashimotos-thyroiditis/", cat: "Women" },
             { title: "PCOS", desc: "Causes, types, and treatment for polycystic ovary syndrome", url: "/learn/pcos/", cat: "Women" },
             { title: "Estrogen Dominance", desc: "Estrogen-progesterone imbalance symptoms and treatment", url: "/learn/estrogen-dominance/", cat: "Women" },
-            { title: "Pellet Therapy", desc: "How hormone pellet therapy works and what to expect", url: "/learn/pellet-therapy/", cat: "Women" },
             { title: "Progesterone Guide", desc: "The forgotten hormone — why progesterone matters", url: "/learn/progesterone/", cat: "Women" },
             { title: "WHI Study & HRT Truth", desc: "HRT myths vs facts — the WHI study revisited", url: "/learn/whi-study-hrt-truth/", cat: "Women" },
             // Cost Guides (not already listed above)
