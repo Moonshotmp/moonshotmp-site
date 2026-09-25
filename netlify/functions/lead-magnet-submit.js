@@ -1,3 +1,4 @@
+import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
 import { checkSubmission, logBlocked, safeName } from './shared/antispam.js';
 
@@ -433,7 +434,7 @@ function generateGeneral(name) {
 
 // ─── Handler ────────────────────────────────────────────────────
 
-export default async function handler(req) {
+export default async function handler(req, context) {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
   }
@@ -497,6 +498,7 @@ export default async function handler(req) {
 
     // Sync to clinic (non-blocking)
     const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
+    const geo = geoFromContext(context);
     const webhookHeaders = {
       'Content-Type': 'application/json',
       'X-Tenant-Slug': 'moonshot',
@@ -510,7 +512,7 @@ export default async function handler(req) {
         headers: webhookHeaders,
         // 'website_form' is the clinic webhook's allowlisted value for site forms;
         // anything off its list is filed as 'quiz'.
-        body: JSON.stringify({ name, email, source: 'website_form', magnet_key, article_slug, article_url }),
+        body: JSON.stringify({ name, email, source: 'website_form', quiz_type: 'lead_magnet', state: '', geo_state: geo.geo_state, geo_country: geo.geo_country, magnet_key, article_slug, article_url }),
       });
     } catch (err) {
       console.error('[lead-magnet-submit] Clinic lead sync error:', err.message);
@@ -525,6 +527,9 @@ export default async function handler(req) {
           email,
           name,
           quiz_type: 'lead_magnet',
+          state: '',
+          geo_state: geo.geo_state,
+          geo_country: geo.geo_country,
           quiz_data: { magnet_key, article_slug, article_url },
         }),
       });

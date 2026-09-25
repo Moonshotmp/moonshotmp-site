@@ -1,6 +1,7 @@
+import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
 
-export default async function handler(req) {
+export default async function handler(req, context) {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
   }
@@ -247,6 +248,7 @@ export default async function handler(req) {
 
     // ── Webhook syncs (non-blocking) ──────────────────────────────────
     const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
+    const geo = geoFromContext(context);
     const webhookHeaders = {
       'Content-Type': 'application/json',
       'X-Tenant-Slug': 'moonshot',
@@ -259,6 +261,10 @@ export default async function handler(req) {
       headers: webhookHeaders,
       body: JSON.stringify({
         name, email, gender, age,
+        quiz_type: 'hormone',
+        state: '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         totalScore: score,
         maxScore: 100,
         classification,
@@ -275,6 +281,9 @@ export default async function handler(req) {
         email,
         name,
         quiz_type: 'hormone',
+        state: '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         gender,
         score,
         max_score: 100,

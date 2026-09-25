@@ -44,7 +44,7 @@
  *   - Tier labels are the five neutral strings from INTERNAL_TIER_LABELS.
  *   - Acknowledgement screen is a real click-through, timestamped.
  *   - Email capture comes AFTER the result; never gates the result.
- *   - Out-of-state users receive an IL-only message in place of the result.
+ *   - Out-of-state users see the full result and email capture, but no booking CTA.
  *   - Age-gate "No" terminates the quiz with a permanent block screen.
  *   - Free-text "other condition" catch-all triggers contraindication on
  *     any non-empty trimmed string (universal guardrail #9).
@@ -1196,6 +1196,7 @@
             var result = scoreGlp1(state);
             renderResults(result);
             ga('quiz_results_view', SCREEN.RESULTS);
+            if (result.outOfState) ga('quiz_out_of_state', SCREEN.RESULTS);
             show(SCREEN.RESULTS);
             if (progressBar) progressBar.style.width = '100%';
         });
@@ -1249,20 +1250,22 @@
         };
     }
 
+    // Out-of-state visitors (2026-09-25): show the full result and the email
+    // capture, but never offer a booking. Moonshot clinicians are licensed in
+    // Illinois only; demand in other states is being measured for expansion.
+    var OUT_OF_STATE_EMAIL_NOTE = '<p class="text-brand-gray text-sm font-light mb-3">Moonshot Medical is not available in your state yet. Leave your email and we will tell you when it is.</p>';
+    function outOfStateCta() {
+        return '<div class="bg-brand-slate rounded-sm p-8 mb-6 text-center">' +
+            '<h3 class="text-brand-light font-bold mb-4">YOUR NEXT STEP</h3>' +
+            '<p class="text-brand-light font-light leading-relaxed mb-3">Moonshot Medical clinicians are currently licensed in Illinois only, so we cannot book a visit for you today. Please share these results with a clinician licensed in your state.</p>' +
+            '<p class="text-brand-gray text-sm font-light">We are tracking demand by state. Leave your email below and we will reach out if we open in yours.</p>' +
+        '</div>';
+    }
+
     function renderResults(result) {
-        // Out-of-state branch — show IL-only message instead of personalized
-        // result. The tier was still computed above so we have an audit trail
-        // in the submit payload, but the user does not see it.
+        // Everyone sees their result. Out-of-state visitors get a no-booking
+        // CTA and a waitlist note instead of the booking link (2026-09-25).
         var html = '';
-        if (result.outOfState) {
-            html += '<div class="text-center mb-10">' +
-                '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Your Result</p>' +
-                '<h2 id="screen-' + SCREEN.RESULTS + '-heading" class="text-3xl md:text-4xl font-bold text-brand-light mb-4 font-heading">Available to Illinois residents</h2>' +
-            '</div>';
-            html += '<div class="border border-brand-gray/40 rounded-sm p-8 mb-6" style="background: rgba(178, 191, 190, 0.05)">' +
-                '<p class="text-brand-light font-light leading-relaxed">This tool is currently available to residents of Illinois only. Moonshot Medical clinicians are licensed in Illinois only. Please consult a clinician licensed in your state.</p>' +
-            '</div>';
-        } else {
             var copy = tierBody(result);
 
             html += '<div class="text-center mb-8">' +
@@ -1274,25 +1277,29 @@
                 '<p class="text-brand-light font-light text-base leading-relaxed">' + copy.body + '</p>' +
             '</div>';
 
-            // CTA block
+            // CTA block: booking only where Moonshot clinicians are licensed
+            if (!result.outOfState) {
             html += '<div class="bg-brand-slate rounded-sm p-8 mb-6 text-center">' +
                 '<h3 class="text-brand-light font-bold mb-4">YOUR NEXT STEP</h3>' +
                 '<a href="' + buildBookingHref(copy.slug) + '" class="btn-primary text-lg px-10 py-4 inline-block quiz-cta" data-cta="' + copy.slug + '">' + copy.ctaLabel + '</a>' +
                 '<p class="text-brand-gray/60 text-sm mt-4"><a href="tel:+12244354280" class="text-brand-light hover:underline quiz-cta" data-cta="phone">(224) 435-4280</a> if you\'d rather call</p>' +
             '</div>';
-        }
+            } else {
+                html += outOfStateCta();
+            }
 
-        // Result-specific disclaimer (always shown for IL residents).
-        if (!result.outOfState) {
+        // Result-specific disclaimer (always shown).
+        {
             html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-6">' +
                 '<p class="text-brand-gray text-xs italic font-light leading-relaxed">' + RESULT_DISCLAIMER + '</p>' +
             '</div>';
         }
 
         // ── Email capture (post-result, separate opt-in, never gates result)
-        if (!result.outOfState) {
+        {
             html += '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-6">' +
                 '<h3 class="text-brand-light font-bold mb-3">Want a copy of your result?</h3>' +
+                (result.outOfState ? OUT_OF_STATE_EMAIL_NOTE : '') +
                 '<p class="text-brand-gray text-sm font-light mb-4">Optional — you do not need to enter anything to keep this result.</p>' +
                 '<div class="space-y-3 text-left">' +
                     '<label class="flex items-start gap-3 cursor-pointer">' +

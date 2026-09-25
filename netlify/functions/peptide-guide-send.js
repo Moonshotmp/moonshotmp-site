@@ -1,7 +1,8 @@
+import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
 import { checkSubmission, logBlocked, safeName } from './shared/antispam.js';
 
-export default async function handler(req) {
+export default async function handler(req, context) {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
   }
@@ -306,6 +307,7 @@ export default async function handler(req) {
 
     // ── Webhook sync (non-blocking) ─────────────────────────────────
     const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
+    const geo = geoFromContext(context);
     const webhookHeaders = {
       'Content-Type': 'application/json',
       'X-Tenant-Slug': 'moonshot',
@@ -321,6 +323,10 @@ export default async function handler(req) {
         // 'website_form' is the clinic webhook's allowlisted value for site
         // forms; anything off its list is filed as 'quiz'.
         source: 'website_form',
+        quiz_type: 'peptide-guide',
+        state: '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         notes: `Requested peptide guide.${protocolNames.length > 0 ? ` Protocol: ${protocolNames.join(', ')}` : ''}`
       })
     }).catch(err => console.error('[peptide-guide-send] Clinic lead sync error:', err.message));
@@ -333,6 +339,9 @@ export default async function handler(req) {
         email,
         name,
         quiz_type: 'peptide',
+        state: '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         source: source || sourceLabel,
         recommendation: protocolNames.length > 0 ? protocolNames[0] : null,
         goal: null,
