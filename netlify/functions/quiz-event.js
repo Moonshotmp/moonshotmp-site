@@ -33,6 +33,7 @@ const ALLOWED_EVENTS = new Set([
   'quiz_info_submit',
   'quiz_complete',
   'quiz_results_view',
+  'quiz_out_of_state',
   'quiz_cta_click',
   'lead_capture',
   'cta_click',

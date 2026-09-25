@@ -1,3 +1,4 @@
+import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
 
 const INTERNAL_TIER_VALUES = new Set([
@@ -123,7 +124,7 @@ function selectTierBody(internalTier, mrsTier) {
   return TIER_BODY_NOT_MET;
 }
 
-export default async function handler(req) {
+export default async function handler(req, context) {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
@@ -413,6 +414,7 @@ ${redFlagBlock}
 
     // ── Webhook syncs (non-blocking) ──────────────────────────────────
     const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
+    const geo = geoFromContext(context);
     const webhookHeaders = {
       'Content-Type': 'application/json',
       'X-Tenant-Slug': 'moonshot',
@@ -428,6 +430,10 @@ ${redFlagBlock}
         email,
         phone,
         source: 'perimenopause-quiz',
+        quiz_type: 'perimenopause',
+        state: safeProfile.stateCode || '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         recommendation: internalTier,
         budget: '',
         goal: 'perimenopause',
@@ -444,6 +450,9 @@ ${redFlagBlock}
         email,
         name,
         quiz_type: 'perimenopause',
+        state: safeProfile.stateCode || '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         source: 'perimenopause-quiz',
         recommendation: internalTier,
         tier: internalTier,

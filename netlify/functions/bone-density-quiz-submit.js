@@ -1,3 +1,4 @@
+import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
 
 const ALLOWED_TIERS = new Set(['A', 'B', 'C', 'D']);
@@ -78,7 +79,7 @@ function clampString(value, max) {
   return value.slice(0, max);
 }
 
-export default async function handler(req) {
+export default async function handler(req, context) {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
@@ -322,6 +323,7 @@ export default async function handler(req) {
 
     // ── Webhook syncs (non-blocking) ──────────────────────────────────
     const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
+    const geo = geoFromContext(context);
     const webhookHeaders = {
       'Content-Type': 'application/json',
       'X-Tenant-Slug': 'moonshot',
@@ -337,6 +339,10 @@ export default async function handler(req) {
         email,
         phone,
         source: 'bone-density-quiz',
+        quiz_type: 'bone-density',
+        state: safeProfile.stateCode || '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         recommendation: 'tier-' + tier,
         budget: '',
         goal: 'bone-density',
@@ -353,6 +359,9 @@ export default async function handler(req) {
         email,
         name,
         quiz_type: 'bone-density',
+        state: safeProfile.stateCode || '',
+        geo_state: geo.geo_state,
+        geo_country: geo.geo_country,
         source: 'bone-density-quiz',
         recommendation: tier,
         tier: tier,
