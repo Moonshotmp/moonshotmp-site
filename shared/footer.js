@@ -122,6 +122,7 @@
                 <div class="flex gap-6">
                     <a href="/privacy/" class="hover:text-brand-gray transition">Privacy Policy</a>
                     <a href="/terms/" class="hover:text-brand-gray transition">Terms of Service</a>
+                    <a href="/accessibility/" class="hover:text-brand-gray transition">Accessibility</a>
                 </div>
             </div>
         </div>
