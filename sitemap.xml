@@ -8,6 +8,13 @@
     <changefreq>weekly</changefreq>
   </url>
 
+  <url>
+    <loc>https://moonshotmp.com/accessibility/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
   <!-- Main Pages -->
   <url>
     <loc>https://moonshotmp.com/about/</loc>
