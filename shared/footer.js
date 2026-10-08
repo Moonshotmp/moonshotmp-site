@@ -274,18 +274,19 @@
         }, {passive: true});
     }
 
-    // Load chat widget — deferred until idle to avoid competing with critical resources
+    // Website chat (Moonshot EHR module, replaced the site's own OpenAI bot
+    // 2026-10-08). The loader draws the bubble and talks to the clinic's own
+    // catalog; the snippet is the one the clinic's Settings page prints.
+    // Deferred until idle so it never competes with critical resources.
+    function loadChat() {
+        const chatScript = document.createElement('script');
+        chatScript.src = 'https://moonshot.moonshotehr.com/embed/chat.js';
+        chatScript.async = true;
+        document.body.appendChild(chatScript);
+    }
     if ('requestIdleCallback' in window) {
-        requestIdleCallback(function() {
-            const chatScript = document.createElement('script');
-            chatScript.src = '/shared/chat-widget.js';
-            document.body.appendChild(chatScript);
-        }, { timeout: 5000 });
+        requestIdleCallback(loadChat, { timeout: 5000 });
     } else {
-        setTimeout(function() {
-            const chatScript = document.createElement('script');
-            chatScript.src = '/shared/chat-widget.js';
-            document.body.appendChild(chatScript);
-        }, 3000);
+        setTimeout(loadChat, 3000);
     }
 })();
