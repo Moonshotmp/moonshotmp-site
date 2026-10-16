@@ -1,6 +1,6 @@
 # Moonshot Medical and Performance
 
-> A performance medicine and physical rehabilitation clinic in Park Ridge, IL. We offer data-driven medical optimization (blood panels, DEXA scans, hormone therapy, GLP-1 weight loss) and hands-on rehabilitation (chiropractic, dry needling, shockwave therapy, trigger point injections) under one roof. No referral needed.
+> A performance medicine and physical rehabilitation clinic in Park Ridge, IL. We offer data-driven medical optimization (blood panels, DEXA scans, hormone therapy, GLP-1 weight loss) and hands-on rehabilitation (chiropractic, dry needling, shockwave therapy, trigger point therapy) under one roof. No referral needed.
 
 ## Quick Facts
 
@@ -40,7 +40,7 @@ Moonshot Medical and Performance shares a building with Moonshot CrossFit at 542
 - Chiropractic care (McKenzie Method)
 - Physical rehabilitation
 - Dry needling
-- Trigger point injections
+- Trigger point therapy and dry needling (no injections)
 - Shockwave therapy (ESWT)
 - IASTM and soft tissue mobilization
 - **Book:** https://moonshotmp.com/booking/rehab/
@@ -65,7 +65,7 @@ Moonshot Medical and Performance shares a building with Moonshot CrossFit at 542
 - Master of Science in Clinical Nutrition (MSc)
 - Diplomate of the American Clinical Board of Nutrition (DACBN)
 - McKenzie Method Certified
-- Leads all rehabilitation services: chiropractic, dry needling, trigger point injections, shockwave therapy
+- Leads all rehabilitation services: chiropractic, dry needling, trigger point therapy, shockwave therapy
 - Also provides nutritional counseling
 
 ### Sarah — RN, MSN
@@ -103,7 +103,7 @@ Medical-grade body composition analysis using dual-energy X-ray absorptiometry. 
 DEXA scan + comprehensive blood panel together (save $30). Recommended starting point for new patients.
 
 ### Men's Hormone Optimization (TRT) — $235/month
-Testosterone replacement therapy with comprehensive monitoring. Includes medical oversight, 2 DEXA scans per year, comprehensive labs every 6 months, 1 vitamin injection per month, and ongoing dosing adjustments. Treatment options include testosterone cypionate injections, enclomiphene, and thyroid optimization.
+Testosterone replacement therapy with comprehensive monitoring. Includes medical oversight, 2 DEXA scans per year, comprehensive labs every 6 months, 1 vitamin injection per month, and ongoing dosing adjustments. Treatment options include testosterone cypionate injections, enclomiphene ($200 per month add-on), and thyroid optimization. Enclomiphene is available only as a compounded medication. It is not an FDA-approved drug.
 - **Learn more:** https://moonshotmp.com/medical/mens-hormones/
 
 ### Women's Hormone Optimization (BHRT) — $285/month
@@ -111,7 +111,7 @@ Bioidentical hormone replacement therapy for women. Includes estrogen, progester
 - **Learn more:** https://moonshotmp.com/medical/womens-hormones/
 
 ### GLP-1 Weight Loss Program — from $195/month (priced by dose)
-Medically supervised weight loss using semaglutide or tirzepatide, priced by your dose. Semaglutide runs $195–$295/month (0.25–2.4 mg/week); tirzepatide runs $235–$435/month (2.5–15 mg). The monthly price steps up only as your dose is titrated up, so you never pay for more than you're taking. Includes GLP-1 medication, medical oversight, required labs and diagnostics, body composition tracking via DEXA, and dosing adjustments. Focus on muscle preservation during weight loss.
+Clinician-supervised weight loss using compounded semaglutide or tirzepatide, priced by your dose. Semaglutide runs $195–$295/month (0.25–2.4 mg/week); tirzepatide runs $235–$435/month (2.5–15 mg). The monthly price steps up only as your dose is titrated up, so you never pay for more than you're taking. Includes GLP-1 medication, medical oversight, required labs and diagnostics, body composition tracking via DEXA, and dosing adjustments. Focus on muscle preservation during weight loss. Moonshot prescribes semaglutide and tirzepatide prepared by licensed 503A and 503B compounding pharmacies. Compounded medications are not FDA-approved and have not been reviewed by the FDA for safety or effectiveness. If you prefer a brand-name product, we can send a prescription to your pharmacy at retail pricing. The prices listed here are for our compounded program.
 - **Learn more:** https://moonshotmp.com/medical/weight-loss/
 
 ### Medical Oversight Only — $150/month
@@ -140,8 +140,8 @@ Movement restoration and strength rehabilitation. Return-to-sport and return-to-
 Releases tight muscles, reduces trigger points, and improves range of motion. Thin monofilament needles target myofascial trigger points to relieve pain and restore function.
 - **Learn more:** https://moonshotmp.com/rehab/dry-needling/
 
-### Trigger Point Injections
-Targeted relief for chronic muscle pain and tension. Injection of local anesthetic into trigger points to break pain cycles and restore function.
+### Trigger Point Therapy and Dry Needling
+Targeted relief for chronic muscle pain and tension. Manual trigger point release and dry needling to break pain cycles and restore function. Moonshot does not perform anesthetic trigger point injections.
 - **Learn more:** https://moonshotmp.com/rehab/trigger-point/
 
 ### Shockwave Therapy (ESWT)
@@ -181,20 +181,20 @@ Full price list: https://moonshotmp.com/pricing/
 | Initial Consultation | Free (with any diagnostic) |
 | Hormone Optimization (Men) | $235/month |
 | Hormone Optimization (Women) | $285/month |
-| GLP-1 Weight Loss — Semaglutide (incl. medication) | $195–$295/month (by dose) |
-| GLP-1 Weight Loss — Tirzepatide (incl. medication) | $235–$435/month (by dose) |
+| GLP-1 Weight Loss — Compounded Semaglutide (incl. medication) | $195–$295/month (by dose) |
+| GLP-1 Weight Loss — Compounded Tirzepatide (incl. medication) | $235–$435/month (by dose) |
 | Medical Oversight Only | $150/month |
 
 ## Frequently Asked Questions
 
 ### What services does Moonshot Medical and Performance offer?
-Moonshot offers medical optimization and physical rehabilitation under one roof. Medical services include comprehensive blood panels (60+ biomarkers), DEXA body composition scans, men's and women's hormone optimization (TRT and BHRT), and medically supervised weight loss with GLP-1 medications (semaglutide and tirzepatide). Rehabilitation services include chiropractic care (McKenzie Method), physical rehabilitation, dry needling, trigger point injections, and shockwave therapy.
+Moonshot offers medical optimization and physical rehabilitation under one roof. Medical services include comprehensive blood panels (60+ biomarkers), DEXA body composition scans, men's and women's hormone optimization (TRT and BHRT), and medically supervised weight loss with GLP-1 medications (semaglutide and tirzepatide). Rehabilitation services include chiropractic care (McKenzie Method), physical rehabilitation, dry needling, trigger point therapy, and shockwave therapy.
 
 ### How much does TRT cost at Moonshot?
 Men's hormone optimization (TRT) is $235/month. This includes testosterone replacement therapy, medical oversight, comprehensive lab work every 6 months, 2 DEXA body composition scans per year, 1 vitamin injection per month, and ongoing dosing adjustments. There are no hidden fees or surprise lab costs.
 
 ### Do I need a referral to come to Moonshot?
-No referral is needed for any of our services. You can book directly for medical optimization services (blood panels, DEXA scans, hormone therapy, weight loss) or rehabilitation services (chiropractic, dry needling, trigger point injections, shockwave therapy). In Illinois, no referral is required for chiropractic care.
+No referral is needed for any of our services. You can book directly for medical optimization services (blood panels, DEXA scans, hormone therapy, weight loss) or rehabilitation services (chiropractic, dry needling, trigger point therapy, shockwave therapy). In Illinois, no referral is required for chiropractic care.
 
 ### Where is Moonshot Medical located?
 Moonshot Medical and Performance is located at 542 Busse Hwy, Park Ridge, IL 60068. We serve patients throughout the Chicago suburbs and northwest side within approximately a 30-mile radius, including Des Plaines, Niles, Edison Park, Norwood Park, and surrounding areas.
@@ -246,8 +246,8 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - Moonshot vs Typical Clinic: https://moonshotmp.com/medical/moonshot-vs-typical-clinic/
 
 ### Cost & Pricing Guides
-- Semaglutide Cost (how much semaglutide / Ozempic / Wegovy costs; from $195/mo all-inclusive): https://moonshotmp.com/learn/semaglutide-cost/
-- Tirzepatide Cost (how much tirzepatide / Mounjaro / Zepbound costs; from $235/mo all-inclusive): https://moonshotmp.com/learn/tirzepatide-cost/
+- Semaglutide Cost (brand-name retail pricing compared with Moonshot's compounded semaglutide program, from $195/mo all-inclusive): https://moonshotmp.com/learn/semaglutide-cost/
+- Tirzepatide Cost (brand-name retail pricing compared with Moonshot's compounded tirzepatide program, from $235/mo all-inclusive): https://moonshotmp.com/learn/tirzepatide-cost/
 - TRT Cost (men's hormone optimization cost; $235/mo): https://moonshotmp.com/learn/trt-cost/
 - BHRT Cost (women's hormone optimization cost; $285/mo): https://moonshotmp.com/learn/bhrt-cost/
 - DEXA Scan Cost ($150 standalone, $405 bundled with blood panel): https://moonshotmp.com/learn/dexa-scan-cost/
@@ -259,7 +259,7 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - Chiropractic Care: https://moonshotmp.com/rehab/chiropractic/
 - Physical Rehabilitation: https://moonshotmp.com/rehab/physical-rehab/
 - Dry Needling: https://moonshotmp.com/rehab/dry-needling/
-- Trigger Point Injections: https://moonshotmp.com/rehab/trigger-point/
+- Trigger Point Therapy and Dry Needling: https://moonshotmp.com/rehab/trigger-point/
 - Shockwave Therapy: https://moonshotmp.com/rehab/shockwave/
 - Rehab Testimonials: https://moonshotmp.com/rehab/testimonials/
 
@@ -346,7 +346,7 @@ Moonshot Medical (Park Ridge, IL) offers four free clinical screening quizzes th
 - Chiropractor in Park Ridge: https://moonshotmp.com/learn/chiropractor-park-ridge/
 - Dry Needling in Park Ridge: https://moonshotmp.com/learn/dry-needling-park-ridge/
 - Shockwave Therapy in Park Ridge: https://moonshotmp.com/learn/shockwave-therapy-park-ridge/
-- Trigger Point Injections in Park Ridge: https://moonshotmp.com/learn/trigger-point-injections-park-ridge/
+- Trigger Point Treatment in Park Ridge: https://moonshotmp.com/learn/trigger-point-injections-park-ridge/
 - Physical Rehab in Park Ridge: https://moonshotmp.com/learn/physical-rehab-park-ridge/
 - TRT in Chicago: https://moonshotmp.com/learn/trt-chicago/
 - DEXA Scan in Chicago: https://moonshotmp.com/learn/dexa-scan-chicago/
@@ -358,7 +358,6 @@ Bookable, provider-led service pages for high-intent local queries. These pages 
 
 - /medical/thyroid-test-park-ridge/ — Comprehensive thyroid panel (TSH, free T3, free T4, reverse T3, TPO antibodies, thyroglobulin antibodies) at our Park Ridge, IL clinic. For: "thyroid test near me park ridge", "full thyroid panel chicago suburbs", "where to get TSH and free T3 tested", "reverse T3 lab near me", "Hashimoto's antibody test park ridge", "thyroid panel without referral".
 - /medical/semaglutide-park-ridge/ — Medically supervised semaglutide for weight loss in Park Ridge, IL. 60+ marker baseline blood panel + DEXA body composition scan + in-person follow-up included. Not telehealth-only. For: "semaglutide near me", "semaglutide doctor park ridge", "where to get semaglutide chicago suburbs", "in-person semaglutide clinic", "compounded semaglutide park ridge", "GLP-1 doctor park ridge".
-- /medical/dysport-park-ridge/ — Provider-administered Dysport (abobotulinumtoxinA) injections in Park Ridge, IL. Used for glabellar lines, forehead, and crow's feet. Performed by a board-certified nurse practitioner, by appointment, with documented intake. For: "dysport near me", "dysport injection park ridge", "dysport vs botox chicago suburbs", "neuromodulator clinic park ridge", "where to get dysport in northwest chicago".
 - /medical/botox-park-ridge/ — RN-administered Jeuveau (prabotulinumtoxinA-xvfs, also known as "Newtox") injections in Park Ridge, IL at $12/unit. Same drug class as Botox, used for glabellar lines, forehead, and crow's feet. Performed by Ellen Haight, RN, Wednesdays only, by appointment, with documented intake. For: "botox near me", "botox park ridge", "jeuveau park ridge", "newtox chicago suburbs", "botox alternative chicago".
 - /about/ellen-haight/ — Ellen Haight, RN, aesthetic injector at Moonshot Medical in Park Ridge, IL. Wednesdays-only schedule at 542 Busse Hwy for neuromodulator (Jeuveau/Newtox) injections. For: "moonshot medical injector", "RN botox park ridge", "ellen haight moonshot".
 - /medical/daily-tadalafil-park-ridge/ — Daily low-dose tadalafil (generic Cialis) in Park Ridge, IL — FDA-approved for erectile dysfunction, BPH, and the combined ED+BPH indication. Real provider intake, cardiovascular and medication screening, follow-up. For: "daily tadalafil near me", "tadalafil for BPH park ridge", "5mg daily cialis prescription", "low-dose daily tadalafil doctor", "ED and BPH medication park ridge", "PDE-5 inhibitor clinic chicago suburbs".

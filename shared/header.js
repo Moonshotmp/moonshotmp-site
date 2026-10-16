@@ -292,7 +292,7 @@
                     <a href="/learn/prp-microneedling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">PRP Microneedling</a>
                     <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Dry Needling</a>
                     <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Shockwave Therapy</a>
-                    <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Trigger Point Injections</a>
+                    <a href="/learn/trigger-point-injections/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Trigger Point Treatment</a>
                     <a href="/blood-work/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Blood Work Guide</a>
                     <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">DEXA vs InBody</a>
                     <a href="/learn/first-visit/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Your First Visit</a>
@@ -441,7 +441,7 @@
               <a href="/learn/prp-microneedling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PRP Microneedling</a>
               <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
               <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
-              <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Injections</a>
+              <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Treatment</a>
               <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Work Guide</a>
               <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA vs InBody</a>
               <a href="/learn/first-visit/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Your First Visit</a>
@@ -727,8 +727,8 @@
             { title: "Shockwave Therapy Sessions", desc: "$105 ESWT sessions in Park Ridge, book online", url: "/rehab/shockwave/", cat: "Rehab" },
             { title: "Shockwave Therapy", desc: "ESWT for tendon injuries", url: "/learn/shockwave-therapy/", cat: "Rehab" },
             { title: "Shockwave Therapy Services", desc: "In-clinic shockwave therapy at Moonshot", url: "/rehab/shockwave/", cat: "Rehab" },
-            { title: "Trigger Point Injections", desc: "Targeted relief for muscle pain", url: "/learn/trigger-point-injections/", cat: "Rehab" },
-            { title: "Trigger Point Injection Services", desc: "In-clinic trigger point injections", url: "/rehab/trigger-point/", cat: "Rehab" },
+            { title: "Trigger Point Treatment", desc: "Targeted relief for muscle pain", url: "/learn/trigger-point-injections/", cat: "Rehab" },
+            { title: "Trigger Point Therapy and Dry Needling", desc: "Manual trigger point release and dry needling", url: "/rehab/trigger-point/", cat: "Rehab" },
             { title: "Physical Rehabilitation", desc: "Movement restoration and strength rehab", url: "/rehab/physical-rehab/", cat: "Rehab" },
             { title: "Rehab Patient Reviews", desc: "Testimonials from rehab patients", url: "/rehab/testimonials/", cat: "Rehab" },
             // Diagnostics & Blood Work
@@ -783,7 +783,7 @@
             { title: "Women's Hormones in Park Ridge", desc: "Women's hormone optimization in Park Ridge, IL", url: "/learn/womens-hormones-park-ridge/", cat: "Local" },
             { title: "Dry Needling in Park Ridge", desc: "Dry needling therapy in Park Ridge, IL", url: "/learn/dry-needling-park-ridge/", cat: "Local" },
             { title: "Shockwave Therapy in Park Ridge", desc: "ESWT shockwave therapy in Park Ridge, IL", url: "/learn/shockwave-therapy-park-ridge/", cat: "Local" },
-            { title: "Trigger Point Injections in Park Ridge", desc: "Trigger point therapy in Park Ridge, IL", url: "/learn/trigger-point-injections-park-ridge/", cat: "Local" },
+            { title: "Trigger Point Treatment in Park Ridge", desc: "Trigger point therapy in Park Ridge, IL", url: "/learn/trigger-point-injections-park-ridge/", cat: "Local" },
             { title: "Physical Rehab in Park Ridge", desc: "Physical rehabilitation in Park Ridge, IL", url: "/learn/physical-rehab-park-ridge/", cat: "Local" },
             { title: "Blood Work in Park Ridge", desc: "Comprehensive blood panels in Park Ridge, IL", url: "/learn/blood-work-park-ridge/", cat: "Local" },
             { title: "NAD+ Injections in Park Ridge", desc: "NAD+ therapy in Park Ridge, IL", url: "/learn/nad-injections-park-ridge/", cat: "Local" },
