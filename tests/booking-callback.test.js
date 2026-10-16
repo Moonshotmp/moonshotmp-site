@@ -165,6 +165,16 @@ describe('booking-callback', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('keeps a request whose optional email is a heavily dotted Gmail address', async () => {
+    fetchMock = routedFetch();
+    vi.stubGlobal('fetch', fetchMock);
+
+    const res = await bookingCallback(post({ ...human, name: 'Alex Smith', phone: '773-555-0119', email: 'a.l.e.x.smith@gmail.com' }), context);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ ok: true });
+    expect(fetchMock.mock.calls.some((c) => c[0] === 'https://api.resend.com/emails')).toBe(true);
+  });
+
   it('refuses GET', async () => {
     const res = await bookingCallback(new Request('https://moonshotmp.com/.netlify/functions/booking-callback'), context);
     expect(res.status).toBe(405);

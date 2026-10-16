@@ -80,7 +80,10 @@ export default async function handler(req, context) {
     return json({ ok: false, error: 'Name and a 10-digit phone number are required' }, 400);
   }
 
-  const guard = checkSubmission(data);
+  // Timing and honeypot checks only. The Gmail-dots rule exists to stop
+  // forms from mailing third parties; this form mails only our own inbox,
+  // so an unusual optional email must not drop a real phone request.
+  const guard = checkSubmission({ website: data.website, elapsed_ms: data.elapsed_ms });
   if (!guard.ok) {
     logBlocked('booking-callback', guard.reason);
     // A person can trip the timing checks (tab open for hours, autofill and
