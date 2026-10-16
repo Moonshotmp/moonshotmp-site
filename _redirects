@@ -140,6 +140,7 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 /presentation / 301!
 /blood/* /blood-work/ 301!
 /blood /blood-work/ 301!
+/medical/dysport-park-ridge/ /medical/botox-park-ridge/ 301
 
 # 404 catch-all (must be last)
 /*    /404.html   404
