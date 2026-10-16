@@ -9,9 +9,9 @@
  *   <script src="/shared/reviews.js" defer></script>
  *
  * Options (data attributes on the container):
- *   data-filter="trt"         — Show only reviews tagged with that service
- *   data-style="compact"      — Smaller inline version for service pages
- *   data-style="full"         — Full section with header (default)
+ *   data-filter="trt"         - Show only reviews tagged with that service
+ *   data-style="compact"      - Smaller inline version for service pages
+ *   data-style="full"         - Full section with header (default)
  */
 
 (function() {
@@ -24,7 +24,7 @@
             name: 'Nick A.',
             date: 'March 2026',
             tags: ['dexa', 'body-comp'],
-            text: 'I recently got a Dexa Scan at Moonshot Medical and Performance in Park Ridge and it was honestly really cool to see the breakdown of everything. The Dexa Scan shows things like body fat, muscle mass, and overall body composition, which was way more helpful than I expected. The staff were really easy to work with and explained the results in a way that actually made sense. It didn\'t feel like a typical medical appointment\u2014more like a helpful check-in if you\'re focused on fitness, weight loss, or improving performance.'
+            text: 'I recently got a Dexa Scan at Moonshot Medical and Performance in Park Ridge and it was honestly really cool to see the breakdown of everything. The Dexa Scan shows things like body fat, muscle mass, and overall body composition, which was way more helpful than I expected. The staff were really easy to work with and explained the results in a way that actually made sense. It didn\'t feel like a typical medical appointment, more like a helpful check-in if you\'re focused on fitness, weight loss, or improving performance.'
         },
         {
             name: 'Chris G.',
@@ -45,7 +45,7 @@
             name: 'Edwin G.',
             date: 'February 2026',
             tags: ['trt', 'dexa', 'hormones'],
-            text: 'Best place! Since starting TRT here I\'ve noticed a huge change in my energy levels and stamina\u2014total game changer, especially with little kids at home. The team is incredibly nice, knowledgeable, and really guides you through the whole process. I also love that they coordinate with your primary care physician to monitor everything safely. I\'m excited to get my DEXA scan next, which is included with the hormone optimization membership.'
+            text: 'Best place! Since starting TRT here I\'ve noticed a huge change in my energy levels and stamina, total game changer, especially with little kids at home. The team is incredibly nice, knowledgeable, and really guides you through the whole process. I also love that they coordinate with your primary care physician to monitor everything safely. I\'m excited to get my DEXA scan next, which is included with the hormone optimization membership.'
         },
         {
             name: 'Phil P.',

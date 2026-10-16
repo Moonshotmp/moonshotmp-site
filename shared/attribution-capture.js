@@ -1,5 +1,5 @@
 /**
- * shared/attribution-capture.js — Marketing source attribution
+ * shared/attribution-capture.js - Marketing source attribution
  * ============================================================
  *
  * Captures upstream marketing attribution (utm_*, gclid, fbclid, msclkid,
@@ -11,7 +11,7 @@
  *   - Always update last_page to current path (so we know which page
  *     they were on right before submitting any form)
  *
- * SCOPE: this script captures MARKETING channel signals only — no health
+ * SCOPE: this script captures MARKETING channel signals only - no health
  * data, no quiz answers, no symptoms. The captured object is forwarded
  * by the quiz email-capture flow to the clinic lead webhook.
  *
@@ -62,7 +62,7 @@
     try {
       window.sessionStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-      /* private browsing / quota — fail silent */
+      /* private browsing / quota - fail silent */
     }
   }
 
@@ -89,7 +89,7 @@
     try {
       var ref = document.referrer || '';
       if (!ref) return null;
-      // Drop our own domain — internal navigations are not the referrer
+      // Drop our own domain - internal navigations are not the referrer
       // we care about.
       var host = '';
       try { host = new URL(ref).host; } catch (e) { return null; }

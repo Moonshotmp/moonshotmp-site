@@ -1,5 +1,5 @@
 /*
- * Low Testosterone (TRT Readiness) Screener — Pure Scoring Module
+ * Low Testosterone (TRT Readiness) Screener - Pure Scoring Module
  * ================================================================
  *
  * Canonical, tested implementation of the low-T quiz tiering logic.
@@ -8,32 +8,32 @@
  * The browser-side quiz at /quiz/low-t/quiz-engine.js inlines the same
  * logic inside an IIFE for runtime simplicity (no build step). The
  * Vitest suite at tests/low-t-scoring.test.js pins the expected
- * behavior — if this file or the engine drifts, tests break.
+ * behavior - if this file or the engine drifts, tests break.
  *
  * Validated basis:
- *   - ADAM (Androgen Deficiency in Aging Males) — 10 yes/no items.
+ *   - ADAM (Androgen Deficiency in Aging Males) - 10 yes/no items.
  *     Approximately 88% sensitivity, 60% specificity. Positive when
  *     Q1 (libido decrease) OR Q7 (weaker erections) is yes, OR ≥3 of
  *     any other items are yes.
- *   - PSA tier (patient self-reported value, banded for screening) —
+ *   - PSA tier (patient self-reported value, banded for screening) -
  *     >4.0 ng/mL routes to urology referral first; >10.0 ng/mL is
  *     urgent.
  *   - IPSS short-form (3 items, 0-5 each, sum 0-15). Sum >7 indicates
  *     bothersome lower-urinary-tract symptoms warranting workup.
  *
- * Tier precedence (strict — earlier wins):
+ * Tier precedence (strict - earlier wins):
  *
- *   1. hard-stop          — any medical hard-stop contraindication
+ *   1. hard-stop          - any medical hard-stop contraindication
  *                           (untreated male breast cancer, severe
  *                           untreated CHF, active prostate nodule /
  *                           known elevated PSA pending workup)
- *   2. fertility-stop     — currently trying to conceive OR planning
+ *   2. fertility-stop     - currently trying to conceive OR planning
  *                           to in next 12 months (Q5)
- *   3. psa-ipss-concern   — PSA >4.0 ng/mL or IPSS sum >7
- *   4. eligibility-present  — ADAM positive, no confounder, no above
- *   5. eligibility-mixed    — ADAM positive WITH confounder
+ *   3. psa-ipss-concern   - PSA >4.0 ng/mL or IPSS sum >7
+ *   4. eligibility-present  - ADAM positive, no confounder, no above
+ *   5. eligibility-mixed    - ADAM positive WITH confounder
  *                             (untreated severe OSA OR opioid/SSRI use)
- *   6. eligibility-not-met  — ADAM negative
+ *   6. eligibility-not-met  - ADAM negative
  *
  * Patient-facing tier labels collapse the 6 internal tiers into 3
  * neutral guardrail-approved labels (universal guardrail #8):
@@ -45,9 +45,9 @@
  *
  * NEVER name specific drugs in tier output. The v1 line "There are
  * alternatives (Clomid, HCG-based protocols, lifestyle optimization)
- * that preserve fertility" is permanently retired — replaced with the
+ * that preserve fertility" is permanently retired - replaced with the
  * generic "Several non-testosterone-based approaches exist that may
- * preserve fertility — these require clinical evaluation to determine
+ * preserve fertility - these require clinical evaluation to determine
  * fit." (engine + handler render this verbatim).
  *
  * Inputs (state object):
@@ -95,7 +95,7 @@ export const HARD_STOP_MEDICAL = new Set([
     'active-prostate-nodule-or-elevated-psa-pending'
 ]);
 
-// Flag-only medical history keys. NOT a hard stop on their own — these
+// Flag-only medical history keys. NOT a hard stop on their own - these
 // surface in clinical context but don't override ADAM tiering by
 // themselves.
 export const FLAG_MEDICAL = new Set([
@@ -125,7 +125,7 @@ export const MEDS_KEYS = new Set([
 ]);
 
 // Confounder-medications: opioids and SSRIs/SNRIs are documented to
-// suppress testosterone. These don't block — they shift ADAM-positive
+// suppress testosterone. These don't block - they shift ADAM-positive
 // patients into the 'eligibility-mixed' bucket so the result body
 // surfaces the confounder context.
 export const CONFOUNDER_MEDS = new Set(['opioids', 'ssri-snri']);
@@ -140,7 +140,7 @@ export const FERTILITY_PLAN_VALUES = new Set([
 // PSA tier inputs (patient self-reported, banded). >4.0 ng/mL routes
 // to urology referral first; >10.0 ng/mL is urgent. Below 4.0 does not
 // trigger psa-ipss-concern on its own. 'unknown' and 'no-test' are
-// treated as "no PSA flag" — clinician will order one if appropriate.
+// treated as "no PSA flag" - clinician will order one if appropriate.
 export const PSA_TIER_VALUES = new Set([
     'le-2.5', '2.5-4.0', '4.0-10.0', 'gt-10.0', 'unknown', 'no-test'
 ]);
@@ -160,7 +160,7 @@ export const INTERNAL_TIER_VALUES = new Set([
     'eligibility-not-met'
 ]);
 
-// Patient-facing tier labels — three neutral strings (universal
+// Patient-facing tier labels - three neutral strings (universal
 // guardrail #8). Multiple internal tiers map to the same label; the
 // renderer differentiates body copy by internalTier.
 export const INTERNAL_TIER_LABELS = {
@@ -187,7 +187,7 @@ const INCHES_TO_METERS = 0.0254;
 
 /**
  * BMI = weightKg / heightMeters^2. Returns null if either input is
- * not a positive finite number. Used for context only — does not
+ * not a positive finite number. Used for context only - does not
  * influence tier directly. (Future: BMI ≥30 may modify confounder
  * behavior, but per v2 plan it's reported but not scored.)
  */
@@ -217,7 +217,7 @@ export function isAdamPositive(adam) {
     if (!Array.isArray(adam)) return false;
     if (adam[ADAM_LIBIDO_INDEX] === true) return true;
     if (adam[ADAM_ERECTIONS_INDEX] === true) return true;
-    // Count "other" items (excluding Q1 and Q7) — ≥3 triggers positive.
+    // Count "other" items (excluding Q1 and Q7) - ≥3 triggers positive.
     let others = 0;
     for (let i = 0; i < ADAM_ITEM_COUNT; i++) {
         if (i === ADAM_LIBIDO_INDEX || i === ADAM_ERECTIONS_INDEX) continue;
@@ -276,14 +276,14 @@ export function hasMedConfounder(state) {
 }
 
 /**
- * Compute the full scoring result. Strict precedence ladder — earliest
+ * Compute the full scoring result. Strict precedence ladder - earliest
  * branch wins. ADAM is only consulted after all hard-stops clear.
  */
 // Tadalafil-candidate flag. Derived from the same state used elsewhere.
 // Clinically: tadalafil is FDA-approved for ED (covered by ADAM Q7) and
 // BPH (covered by IPSS), and does NOT suppress fertility (so it stays
 // on the table when TRT is contraindicated for fertility reasons). The
-// flag is informational — surfaces the option to Tom on lead intake
+// flag is informational - surfaces the option to Tom on lead intake
 // and powers conditional supplemental copy in patient-facing tier
 // bodies. Never treated as an exclusion.
 export function isTadalafilCandidate(state) {

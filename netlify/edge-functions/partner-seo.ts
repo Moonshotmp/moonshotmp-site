@@ -7,7 +7,7 @@ const FALLBACK_IMAGE = `${SITE}/images/moonshotmptan.png`;
 // Same slug regex used in partner-save.js / partner-get.js
 const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
 
-// Static files that live in /partners/ — skip them entirely
+// Static files that live in /partners/ - skip them entirely
 const STATIC_FILES = new Set([
   "setup.html",
   "login.html",
@@ -61,7 +61,7 @@ async function resolveImageUrl(logoKey?: string): Promise<string> {
 
 function buildMetaTags(partner: Partner, slug: string, imageUrl: string): string {
   const name = escapeHtml(partner.name || partner.contactName || slug);
-  const title = `${name} \u00d7 Moonshot Diagnostics \u2014 DEXA Scans & Blood Work`;
+  const title = `${name} \u00d7 Moonshot Diagnostics | DEXA Scans & Blood Work`;
   const description = `Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through ${name}. Powered by Moonshot Medical and Performance.`;
   const url = `${SITE}/partners/${slug}`;
 
@@ -109,7 +109,7 @@ export default async (_req: Request, context: Context) => {
       try {
         partner = await store.get(`partners/${slug}`, { type: "json" }) as Partner | null;
       } catch {
-        // parse error — try legacy
+        // parse error - try legacy
       }
 
       // Try direct key (legacy format)
@@ -125,7 +125,7 @@ export default async (_req: Request, context: Context) => {
       return context.next();
     }
 
-    // No partner found — let the page render with its default meta tags
+    // No partner found - let the page render with its default meta tags
     if (!partner) {
       return context.next();
     }

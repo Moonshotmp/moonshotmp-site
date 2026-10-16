@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Paid-ads landing pages — designed for paid traffic only.
+# Paid-ads landing pages - designed for paid traffic only.
 # Pages also carry noindex meta; this blocks discovery via external backlinks.
 Disallow: /ads/
 
@@ -17,7 +17,7 @@ Disallow: /partners/cancel.html
 # Block high-churn param patterns (partner slug variations)
 Disallow: /*?slug=
 
-# AI Crawlers — explicitly allowed
+# AI Crawlers - explicitly allowed
 User-agent: GPTBot
 Allow: /
 

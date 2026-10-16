@@ -6,17 +6,17 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" id="canonicalLink" href="https://moonshotmp.com/partners/" />
   <meta name="description" id="metaDescription" content="Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through our trusted partner network." />
-  <title id="pageTitle">Moonshot Diagnostics — Partner Store</title>
+  <title id="pageTitle">Moonshot Diagnostics · Partner Store</title>
 
   <!-- OG / Twitter fallback tags (edge function replaces these for partner slugs) -->
   <meta property="og:site_name" content="Moonshot Medical and Performance">
-  <meta property="og:title" content="Moonshot Diagnostics — Partner Store">
+  <meta property="og:title" content="Moonshot Diagnostics | Partner Store">
   <meta property="og:description" content="Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through our trusted partner network.">
   <meta property="og:url" content="https://moonshotmp.com/partners/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://moonshotmp.com/images/moonshotmptan.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Moonshot Diagnostics — Partner Store">
+  <meta name="twitter:title" content="Moonshot Diagnostics | Partner Store">
   <meta name="twitter:description" content="Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through our trusted partner network.">
   <meta name="twitter:image" content="https://moonshotmp.com/images/moonshotmptan.png">
 
@@ -915,7 +915,7 @@
             </div>
             <div class="mp-faq-content">
               <div class="mp-faq-q">Do I need to be a Moonshot patient?</div>
-              <div class="mp-faq-a">No — partner links give you access to diagnostics without a Moonshot membership. <a href="/learn/first-visit/" class="mp-faq-link">What to expect at your visit &rarr;</a></div>
+              <div class="mp-faq-a">No, partner links give you access to diagnostics without a Moonshot membership. <a href="/learn/first-visit/" class="mp-faq-link">What to expect at your visit &rarr;</a></div>
             </div>
           </div>
           <!-- What happens after I buy? -->
@@ -958,7 +958,7 @@
             </div>
             <div class="mp-faq-content">
               <div class="mp-faq-q">Can I reschedule my appointment?</div>
-              <div class="mp-faq-a">Yes — after booking, you'll receive a link to easily reschedule if needed.</div>
+              <div class="mp-faq-a">Yes, after booking, you'll receive a link to easily reschedule if needed.</div>
             </div>
           </div>
           <!-- Will a clinician review my results? -->
@@ -972,7 +972,7 @@
             </div>
             <div class="mp-faq-content">
               <div class="mp-faq-q">Will a clinician review my results?</div>
-              <div class="mp-faq-a">Yes — all diagnostics are reviewed by a medical professional and shared securely. <a href="/learn/how-to-read-dexa-scan-results/" class="mp-faq-link">How to read DEXA results &rarr;</a> <a href="/learn/what-labs-to-test/" class="mp-faq-link">What labs we test &rarr;</a></div>
+              <div class="mp-faq-a">Yes, all diagnostics are reviewed by a medical professional and shared securely. <a href="/learn/how-to-read-dexa-scan-results/" class="mp-faq-link">How to read DEXA results &rarr;</a> <a href="/learn/what-labs-to-test/" class="mp-faq-link">What labs we test &rarr;</a></div>
             </div>
           </div>
         </div>
@@ -1060,7 +1060,7 @@
     function getSlug() {
       const path = window.location.pathname.replace(/\/$/, '');
       const parts = path.split('/');
-      // Path format: /partners/{slug} — last segment is slug if not a known page
+      // Path format: /partners/{slug} - last segment is slug if not a known page
       const knownPages = ['store.html', 'setup.html', 'login.html', 'manage.html', 'billing.html', 'connect.html', 'success.html', 'cancel.html', 'checkout-success.html', 'terms.html'];
       const lastSegment = parts[parts.length - 1];
       if (parts.length >= 3 && parts[1] === 'partners' && lastSegment && !knownPages.includes(lastSegment)) {
@@ -1277,7 +1277,7 @@
         const titleEl = document.getElementById('pageTitle');
         const descEl = document.getElementById('metaDescription');
         if (canonEl) canonEl.href = `https://moonshotmp.com/partners/${encodeURIComponent(slug)}`;
-        if (titleEl) titleEl.textContent = `${partner ? partner.name + ' \u00d7 ' : ''}Moonshot Diagnostics — DEXA Scans & Blood Work`;
+        if (titleEl) titleEl.textContent = `${partner ? partner.name + ' \u00d7 ' : ''}Moonshot Diagnostics: DEXA Scans & Blood Work`;
         if (partner && descEl) descEl.content = `Book DEXA body composition scans, comprehensive blood panels, and performance diagnostics through ${partner.name}. Powered by Moonshot Medical Performance.`;
       }
 

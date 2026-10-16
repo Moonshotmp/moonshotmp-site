@@ -11,7 +11,7 @@ const INTERNAL_TIER_VALUES = new Set([
   'eligibility-not-met'
 ]);
 
-// Server-side label lookup. We never trust the client's tierLabel — the engine
+// Server-side label lookup. We never trust the client's tierLabel - the engine
 // could be stale, the value could be tampered, and HTML interpolation of any
 // client-controlled string is an XSS vector for Tom's inbox.
 const TIER_LABEL_LOOKUP = {
@@ -42,13 +42,13 @@ const CTA_TEXT = {
 };
 
 const TIER_BODY_HARD_STOP = 'Your responses describe medical history that requires evaluation before any testosterone-based therapy. Several non-testosterone evaluation paths exist and a consultation can identify the right approach for your situation.';
-const TIER_BODY_FERTILITY_STOP = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility — these require clinical evaluation to determine fit. FDA-approved options for erectile and lower-urinary-tract symptoms — including Daily Tadalafil — can be evaluated independently and don\'t suppress fertility.';
+const TIER_BODY_FERTILITY_STOP = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility. These require clinical evaluation to determine fit. FDA-approved options for erectile and lower-urinary-tract symptoms, including Daily Tadalafil, can be evaluated independently and don\'t suppress fertility.';
 const TIER_BODY_PSA_IPSS = 'Your responses describe urinary or PSA findings that warrant evaluation by a urologist or primary care physician before testosterone-based therapy is considered. We\'d recommend that workup first; once cleared, a consultation here can address symptoms. Tadalafil is also FDA-approved for benign prostatic hyperplasia (BPH); Daily Tadalafil is a path your urologist or our clinic can discuss alongside testosterone evaluation.';
-const TIER_BODY_PRESENT = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician — alongside a 60+ marker comprehensive panel — is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup. If erectile or lower-urinary-tract symptoms are a primary concern, Daily Tadalafil is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy.';
-const TIER_BODY_MIXED = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms — sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first. If erectile or lower-urinary-tract symptoms are part of what you\'re tracking, Daily Tadalafil is an FDA-approved option some patients use alongside or instead of testosterone-based therapy.';
+const TIER_BODY_PRESENT = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician, alongside a 60+ marker comprehensive panel, is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup. If erectile or lower-urinary-tract symptoms are a primary concern, Daily Tadalafil is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy.';
+const TIER_BODY_MIXED = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms: sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first. If erectile or lower-urinary-tract symptoms are part of what you\'re tracking, Daily Tadalafil is an FDA-approved option some patients use alongside or instead of testosterone-based therapy.';
 const TIER_BODY_NOT_MET = 'Your symptom pattern doesn\'t strongly overlap with low-testosterone patterns. Several factors can mimic symptoms or low T can be subclinical. A comprehensive lab panel is the answer if you want to know definitively.';
 
-// Missy-only attribution — she has FPA. Do NOT add other clinicians here.
+// Missy-only attribution - she has FPA. Do NOT add other clinicians here.
 const AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
 const RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis. Only a clinician can confirm whether your symptoms are due to low testosterone or another cause. Your provider can determine whether further workup, lab testing, or treatment is appropriate based on your full clinical picture.';
@@ -58,7 +58,7 @@ const UNIVERSAL_DISCLAIMER = 'This tool does not, and is not intended to, diagno
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const STATE_REGEX = /^[A-Z]{2}$/;
 
-// Mirror allowlists from quiz/low-t/scoring.js — kept in sync manually since
+// Mirror allowlists from quiz/low-t/scoring.js - kept in sync manually since
 // this Netlify function is a separate runtime.
 const FERTILITY_PLAN_VALUES = new Set([
   'currently-trying-or-12mo',
@@ -122,7 +122,7 @@ function clampString(value, max) {
   return value.slice(0, max);
 }
 
-// Pick the patient-facing tier body string. Server-derived only — never let
+// Pick the patient-facing tier body string. Server-derived only - never let
 // the client pass arbitrary copy.
 function selectTierBody(internalTier) {
   switch (internalTier) {
@@ -186,7 +186,7 @@ export default async function handler(req, context) {
     });
   }
 
-  // Permissive on marketingOptIn — old browsers may not send it cleanly.
+  // Permissive on marketingOptIn - old browsers may not send it cleanly.
   // Default to false if undefined; reject only if it's explicitly a non-boolean primitive.
   let optIn = false;
   if (marketingOptIn === undefined || marketingOptIn === null) {
@@ -200,14 +200,14 @@ export default async function handler(req, context) {
     });
   }
 
-  // Derive label, slug, body, CTA from internalTier — never trust the client's
+  // Derive label, slug, body, CTA from internalTier - never trust the client's
   // copies. They could be stale or tampered.
   const tierLabel = TIER_LABEL_LOOKUP[internalTier];
   const resultSlug = RESULT_SLUG_LOOKUP[internalTier];
   const ctaText = CTA_TEXT[internalTier];
   const tierBody = selectTierBody(internalTier);
 
-  // Result booleans + summary numbers — defensive coercion. We display these
+  // Result booleans + summary numbers - defensive coercion. We display these
   // in the internal email; never trust raw client values for HTML.
   const adamPositive = !!(result && result.adamPositive === true);
   const rawAdamYesCount = result && result.adamYesCount;
@@ -282,7 +282,7 @@ export default async function handler(req, context) {
   const safePhone = escapeHtml(phone);
   const safeTierLabel = escapeHtml(tierLabel);
   // Escape first, then post-process the literal "Daily Tadalafil" mention
-  // (which only appears in our hardcoded tier-body constants — never in
+  // (which only appears in our hardcoded tier-body constants - never in
   // user input) into an anchor pointing at the existing service page.
   // Safe because the body source is a frozen constant we control.
   const safeTierBodyEscaped = escapeHtml(tierBody);
@@ -360,7 +360,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const userSubject = 'Your TRT Readiness Screener Result — Moonshot Medical';
+  const userSubject = 'Your TRT Readiness Screener Result · Moonshot Medical';
 
   // ── Lead Score ──────────────────────────────────────────────────────
 
@@ -380,7 +380,7 @@ export default async function handler(req, context) {
   }
 
   // Tadalafil-candidate flag. Computed in the engine (which has access to
-  // the raw ADAM Q7 value) and forwarded as a boolean — so the handler
+  // the raw ADAM Q7 value) and forwarded as a boolean - so the handler
   // never sees individual symptom-level data. Triggers when ADAM Q7
   // (erections) is yes OR IPSS sum > 7 OR fertility-stop tier.
   const tadalafilCandidate = !!(result && result.tadalafilCandidate);
@@ -452,7 +452,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const internalSubject = sanitizeHeaderValue(`💪 New Low-T Lead: ${name || email} — ${internalTier}`);
+  const internalSubject = sanitizeHeaderValue(`💪 New Low-T Lead: ${name || email} · ${internalTier}`);
 
   // ── Send Both Emails ────────────────────────────────────────────────
 
@@ -497,7 +497,7 @@ export default async function handler(req, context) {
         goal: 'low-t',
         concern: tierLabel,
         // Forward marketing attribution if the client included it. EHR
-        // webhook applies its own allowlist filter — we pass through.
+        // webhook applies its own allowlist filter - we pass through.
         attribution: data && data.attribution && typeof data.attribution === 'object' ? data.attribution : null
       })
     }).catch(err => console.error('[low-t-quiz-submit] Clinic lead sync error:', err && err.message));
@@ -560,7 +560,7 @@ export default async function handler(req, context) {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (err) {
-    // Log only the message — Resend's error response may contain the email
+    // Log only the message - Resend's error response may contain the email
     // payload (PHI) and Netlify Function logs are not in the BAA scope.
     console.error('[low-t-quiz-submit] Error:', err && err.message);
     return new Response(JSON.stringify({ ok: false, error: 'Email send failed' }), {

@@ -1,5 +1,5 @@
 /*
- * Moonshot Bone Density Screener — Quiz Engine
+ * Moonshot Bone Density Screener - Quiz Engine
  * =============================================
  * Browser-side IIFE that runs the entire bone-density screening flow:
  * welcome → age-gate → age → sex → weight → height → height-loss → prior
@@ -7,7 +7,7 @@
  * → conditions → state → acknowledgement → calculating → results.
  *
  * Scoring logic is INLINED from /quiz/bone-density/scoring.js (the
- * canonical pure module). Both files MUST stay in sync — the Vitest suite
+ * canonical pure module). Both files MUST stay in sync - the Vitest suite
  * pins the contract on the scoring module; this engine reproduces it
  * verbatim because the page loads as a non-module script tag (no ESM imports).
  *
@@ -27,7 +27,7 @@
  *   - Never reference "FRAX" (licensed name).
  *   - Never name specific drug brands in result text (drug CLASS is fine).
  *   - Never tell the user they have osteoporosis / osteopenia / a T-score.
- *   - Tier labels are neutral — no "strong / possible candidate" language.
+ *   - Tier labels are neutral - no "strong / possible candidate" language.
  *   - Acknowledgement screen is a real click-through, timestamped.
  *   - Email capture comes AFTER the result; never gates the result.
  *   - Out-of-state users see the full result and email capture, but no booking CTA.
@@ -38,7 +38,7 @@
 
     // ── Inlined Scoring Logic (mirror of scoring.js) ─────────────────
     // If scoring.js changes, update both files together. Vitest pins the
-    // canonical module — keep this section identical in behavior.
+    // canonical module - keep this section identical in behavior.
 
     var LBS_TO_KG = 0.45359237;
 
@@ -255,7 +255,7 @@
     // The universal footer disclaimer ("This tool does not... By proceeding
     // you confirm you are at least 18 years old.") is rendered by the static
     // HTML below the quiz mount in /quiz/bone-density/index.html. It is NOT
-    // duplicated by this engine — the static placement is canonical and is
+    // duplicated by this engine - the static placement is canonical and is
     // always visible because the quiz is inline (not modal).
 
     var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
@@ -270,11 +270,11 @@
         age: null,                       // number
         sex: null,                       // 'male' | 'female' | 'prefer-not'
         weightKg: null,                  // number (preferred input to scoring)
-        weightLbs: null,                 // number (alternative — converted internally)
+        weightLbs: null,                 // number (alternative - converted internally)
         weightUnit: 'lbs',               // 'lbs' | 'kg' (UI toggle state)
         weightInput: '',                 // raw string the user typed (re-display)
-        heightCm: null,                  // number (context only — not used in tier scoring)
-        heightIn: null,                  // number (context only — not used in tier scoring)
+        heightCm: null,                  // number (context only - not used in tier scoring)
+        heightIn: null,                  // number (context only - not used in tier scoring)
         heightUnit: 'in',                // 'in' | 'cm'
         heightInput: '',
         heightLoss: null,                // 'yes' | 'no' | 'unknown'
@@ -368,7 +368,7 @@
     // ── Progress Bar (skip-aware) ────────────────────────────────────
 
     // Build the ordered list of screens the current user will see, given
-    // their sex selection. AGE_BLOCK is excluded — it's a terminal-only
+    // their sex selection. AGE_BLOCK is excluded - it's a terminal-only
     // path. CALCULATING and RESULTS sit at 100%.
     function activeScreenOrder() {
         var order = [
@@ -427,7 +427,7 @@
             if (target) {
                 target.classList.add('active');
                 // Scroll the quiz mount itself into view (not the window top).
-                // The page has ~220px of static content above #quiz-root —
+                // The page has ~220px of static content above #quiz-root -
                 // breadcrumb, page H1, author byline. Scrolling to window top
                 // hides the new screen below that content and looks like the
                 // click did nothing. Aligning #quiz-root to the top of the
@@ -488,7 +488,7 @@
                 '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">A 2-minute screener that uses public-domain clinical risk factors to help you decide whether a DEXA scan is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start the Screener</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant. We don\'t sell your data or share it with advertisers.</p>' +
-                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical &mdash; a licensed clinic in Park Ridge, IL</p>' +
+                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +
                 '<p class="text-brand-gray/40 text-xs mt-2">For educational purposes only. Not medical advice.</p>' +
             '</div>'
         );
@@ -590,7 +590,7 @@
     }
 
     // Generic single-select radio screen with a Continue button. Per
-    // WCAG 2.2.1 (Timing Adjustable), selections do NOT auto-advance —
+    // WCAG 2.2.1 (Timing Adjustable), selections do NOT auto-advance -
     // the user must explicitly click Continue.
     function buildRadioScreen(index, headline, subhead, optionList, dataAttr) {
         var headingId = 'screen-' + index + '-heading';
@@ -662,7 +662,7 @@
                     '<span>' + optionList[i].label + '</span>' +
                 '</label>';
         }
-        // Exclusive "None of these" option — hint announced via aria-describedby.
+        // Exclusive "None of these" option - hint announced via aria-describedby.
         btns +=
             '<label class="quiz-check-item border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium text-left w-full flex items-start gap-3 cursor-pointer hover:border-brand-gray/40 transition-colors mt-2">' +
                 '<input type="checkbox" class="mt-1 flex-shrink-0" data-' + dataAttr + '-none="true" aria-describedby="' + noneHintId + '">' +
@@ -756,7 +756,7 @@
             '<div class="text-center">' +
                 '<h2 id="screen-' + SCREEN.CALCULATING + '-heading" class="text-2xl font-bold text-brand-light mb-2 font-heading">Calculating your screening result</h2>' +
                 '<p class="text-brand-gray font-light mb-10">This will take just a moment...</p>' +
-                // Visual markers are decorative — the real announcement
+                // Visual markers are decorative - the real announcement
                 // happens via the single live region below.
                 '<div class="max-w-sm mx-auto text-left" aria-hidden="true">' + markers + '</div>' +
                 '<p id="calculating-current-step" class="sr-only" aria-live="polite" aria-atomic="true"></p>' +
@@ -804,7 +804,7 @@
 
     function nextScreenFrom(currentIndex) {
         var order = activeScreenOrder();
-        var calculatingIdx = order.length; // sentinel — past the end
+        var calculatingIdx = order.length; // sentinel - past the end
         var pos = order.indexOf(currentIndex);
         if (pos < 0) return SCREEN.WELCOME;
         if (pos + 1 < order.length) return order[pos + 1];
@@ -996,12 +996,12 @@
             '&service=' + encodeURIComponent(service);
     }
 
-    // Tier-specific body copy. Verbatim from spec — do NOT paraphrase.
+    // Tier-specific body copy. Verbatim from spec - do NOT paraphrase.
     function tierBody(tier) {
         if (tier === 'A') {
             return {
                 heading: 'Eligibility factors present',
-                body: 'Per AACE, Endocrine Society, and NOF guidelines, a low-trauma fracture after age 40 is itself diagnostic of osteoporosis, even before a DEXA scan. A clinical evaluation is the appropriate next step &mdash; it should include a DEXA scan, bone-relevant lab work, and a discussion of treatment options. We offer DEXA scans on-site in Park Ridge ($150) and full clinical evaluation.',
+                body: 'Per AACE, Endocrine Society, and NOF guidelines, a low-trauma fracture after age 40 is itself diagnostic of osteoporosis, even before a DEXA scan. A clinical evaluation is the appropriate next step. It should include a DEXA scan, bone-relevant lab work, and a discussion of treatment options. We offer DEXA scans on-site in Park Ridge ($150) and full clinical evaluation.',
                 primaryCta: { label: 'Book consult with DEXA included', service: 'consult-with-dexa' },
                 secondaryCta: null
             };
@@ -1009,7 +1009,7 @@
         if (tier === 'B') {
             return {
                 heading: 'Eligibility factors present',
-                body: 'Your responses describe risk factors associated with elevated likelihood of low bone density. The most accurate way to know your bones\' actual condition is a DEXA scan &mdash; it\'s the medical gold standard. Moonshot offers DEXA scans on-site in Park Ridge for $150, no referral needed.',
+                body: 'Your responses describe risk factors associated with elevated likelihood of low bone density. The most accurate way to know your bones\' actual condition is a DEXA scan. It\'s the medical gold standard. Moonshot offers DEXA scans on-site in Park Ridge for $150, no referral needed.',
                 primaryCta: { label: 'Book DEXA scan ($150)', service: 'dexa' },
                 secondaryCta: { label: 'Or book a consultation to review your full picture', service: 'consult' }
             };
@@ -1084,7 +1084,7 @@
             html += '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-6">' +
                 '<h3 class="text-brand-light font-bold mb-3">Want a copy of your result?</h3>' +
                 (result.outOfState ? OUT_OF_STATE_EMAIL_NOTE : '') +
-                '<p class="text-brand-gray text-sm font-light mb-4">Optional &mdash; you do not need to enter anything to keep this result.</p>' +
+                '<p class="text-brand-gray text-sm font-light mb-4">Optional: you do not need to enter anything to keep this result.</p>' +
                 '<div class="space-y-3 text-left">' +
                     '<label class="flex items-start gap-3 cursor-pointer">' +
                         '<input type="checkbox" id="quiz-email-optin" class="mt-1 flex-shrink-0">' +
@@ -1115,7 +1115,7 @@
         }
 
         // Universal footer disclaimer is rendered once by the static HTML
-        // below the quiz mount — do NOT duplicate it here. Author attribution
+        // below the quiz mount - do NOT duplicate it here. Author attribution
         // remains result-page-specific.
 
         // Author attribution (always shown)
@@ -1130,7 +1130,7 @@
 
         document.getElementById('quiz-results-inner').innerHTML = html;
 
-        // Update URL for sharing — only the tier letter, not the full state.
+        // Update URL for sharing - only the tier letter, not the full state.
         if (window.history && window.history.replaceState) {
             try {
                 var validTier = result.tier && /^[A-D]$/.test(result.tier);
@@ -1227,7 +1227,7 @@
 
         var msg = document.getElementById('quiz-submit-msg');
         if (msg) {
-            msg.textContent = 'Thanks — we just sent your result to ' + email + '.';
+            msg.textContent = 'Thanks. We just sent your result to ' + email + '.';
             msg.classList.remove('hidden');
         }
         // Hide submit button to prevent duplicate sends
@@ -1236,7 +1236,7 @@
     }
 
     // ── Email submission ─────────────────────────────────────────────
-    // Compact payload — counts only for multi-check fields, not raw arrays.
+    // Compact payload - counts only for multi-check fields, not raw arrays.
     function sendResults(smsConsent) {
         var result = scoreBoneDensity(state);
 
@@ -1270,7 +1270,7 @@
         };
 
         // Attach upstream marketing attribution (utm_*, gclid, fbclid,
-        // landing_page, last_page, referrer) — forwarded to the EHR lead webhook.
+        // landing_page, last_page, referrer) - forwarded to the EHR lead webhook.
         try {
             payload.attribution = (window.MoonshotAttribution && typeof window.MoonshotAttribution.getFlat === 'function')
                 ? window.MoonshotAttribution.getFlat()
@@ -1296,7 +1296,7 @@
             '<div class="max-w-2xl w-full">' +
                 '<div class="text-center mb-8">' +
                     '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Shared Screener Result</p>' +
-                    '<h2 class="text-3xl font-bold text-brand-light mb-4 font-heading">Someone Matched With &mdash; ' + copy.heading + '</h2>' +
+                    '<h2 class="text-3xl font-bold text-brand-light mb-4 font-heading">Someone Matched With: ' + copy.heading + '</h2>' +
                 '</div>' +
                 '<div class="border border-brand-gray/40 rounded-sm p-8 mb-8" style="background: rgba(178, 191, 190, 0.05)">' +
                     '<p class="text-brand-light font-light">' + copy.body + '</p>' +
@@ -1306,7 +1306,7 @@
                     '<button type="button" id="shared-result-cta" class="btn-primary text-lg px-10 py-4">Take the Screener</button>' +
                 '</div>' +
                 // Universal footer disclaimer is rendered by the static HTML
-                // below the quiz mount — not duplicated here.
+                // below the quiz mount - not duplicated here.
             '</div>' +
         '</div>';
 
@@ -1347,7 +1347,7 @@
                 state.ageGate = ageGateBtn.getAttribute('data-age-gate');
                 selectRadio('age-gate', state.ageGate);
                 if (state.ageGate === 'no') {
-                    // No recovery path — advance immediately to terminal block
+                    // No recovery path - advance immediately to terminal block
                     ga('screen_advance', SCREEN.AGE_GATE);
                     show(SCREEN.AGE_BLOCK);
                 }
@@ -1761,7 +1761,7 @@
     // ── Restore from Saved State ─────────────────────────────────────
 
     // Allowlists for enum-typed restored fields. Anything not in the
-    // allowlist is rejected (set null) — protects scoring from corrupted
+    // allowlist is rejected (set null) - protects scoring from corrupted
     // localStorage values planted via DevTools or older schema versions.
     var ENUM_AGE_GATE = { 'yes': 1, 'no': 1 };
     var ENUM_SEX = { 'male': 1, 'female': 1, 'prefer-not': 1 };
@@ -1844,7 +1844,7 @@
         var stateSel = document.getElementById('quiz-state-select');
         if (stateSel && state.stateCode) stateSel.value = state.stateCode;
 
-        // Rehydrate multi-checks — escape attribute values to prevent any
+        // Rehydrate multi-checks - escape attribute values to prevent any
         // hostile string from breaking out of the selector.
         if (state.medications.length) {
             for (var i = 0; i < state.medications.length; i++) {
@@ -1859,7 +1859,7 @@
             }
         }
 
-        // Determine target screen — never restore directly to calculating or
+        // Determine target screen - never restore directly to calculating or
         // results (the result is recomputed on demand). If saved currentScreen
         // is past the ack, send the user to the ack screen so they explicitly
         // re-acknowledge before re-rendering the result.

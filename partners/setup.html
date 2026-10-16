@@ -135,7 +135,7 @@
 
           <div class="terms-check">
             <input type="checkbox" id="termsCheck" />
-            <label for="termsCheck" style="margin-bottom: 0;">I agree to the <a href="/partners/terms.html" target="_blank">Wholesale Partner Terms</a> &mdash; no long-term commitment, cancel anytime.</label>
+            <label for="termsCheck" style="margin-bottom: 0;">I agree to the <a href="/partners/terms.html" target="_blank">Wholesale Partner Terms</a>, no long-term commitment, cancel anytime.</label>
           </div>
 
           <div style="margin-top: 1.25rem;">
@@ -171,7 +171,7 @@
         <div class="card" style="padding: 1.5rem;">
           <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Wholesale Card</h3>
           <div class="muted" style="margin-bottom: 1rem;">
-            Add a card for wholesale diagnostic costs. When a patient buys through your store, we charge your card the wholesale cost — you keep the retail margin.
+            Add a card for wholesale diagnostic costs. When a patient buys through your store, we charge your card the wholesale cost. You keep the retail margin.
           </div>
 
           <div id="billingCardForm">
@@ -288,7 +288,7 @@
       setTimeout(() => { const h = document.querySelector('#step' + step + ' h3'); if (h) { h.setAttribute('tabindex', '-1'); h.focus(); } }, 100);
     }
 
-    // Stepper click navigation — allow clicking completed steps
+    // Stepper click navigation - allow clicking completed steps
     document.getElementById('stepper').addEventListener('click', (e) => {
       const item = e.target.closest('.step-item');
       if (!item) return;
@@ -613,7 +613,7 @@
 
       } catch (err) {
         document.getElementById("step3Status").textContent = err.message || "Failed to save card";
-        // Do NOT null billingClientSecret on error — lets user retry with same SetupIntent
+        // Do NOT null billingClientSecret on error - lets user retry with same SetupIntent
       } finally {
         btn.disabled = false;
         btn.textContent = "Save Payment Method";
@@ -654,7 +654,7 @@
         });
       });
 
-      // Check if Stripe is not connected — show warning
+      // Check if Stripe is not connected - show warning
       if (createdSlug) {
         try {
           const statusRes = await PartnerAPI.apiGet(`/api/partners/connect/status/${encodeURIComponent(createdSlug)}`, { skipAuthRedirect: true });
@@ -754,7 +754,7 @@
         return;
       }
 
-      // Fresh start — step 1
+      // Fresh start - step 1
     })();
 
     // Init billing Stripe when step 3 becomes active

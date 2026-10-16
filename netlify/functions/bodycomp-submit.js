@@ -38,7 +38,7 @@ export default async function handler(req, context) {
           <span style="color: ${color}; font-weight: 700;">${icon}</span>
           <span style="color: #F0EEE9; font-size: 13px; font-weight: 600;"> ${q.question}</span>
         </p>
-        ${!q.correct ? `<p style="color: #B2BFBE; font-size: 12px; margin: 0 0 4px;">Your answer: ${q.userAnswer} &mdash; Correct: ${q.correctAnswer}</p>` : ''}
+        ${!q.correct ? `<p style="color: #B2BFBE; font-size: 12px; margin: 0 0 4px;">Your answer: ${q.userAnswer}. Correct: ${q.correctAnswer}</p>` : ''}
         <p style="color: #B2BFBE; font-size: 12px; margin: 0; font-style: italic;">${q.explanation}</p>
       </div>`;
   }
@@ -76,7 +76,7 @@ export default async function handler(req, context) {
         <p style="color: #F0EEE9; font-weight: 600; font-size: 14px; margin: 0 0 12px;">Key Takeaways</p>
         <ul style="color: #B2BFBE; font-size: 13px; line-height: 1.6; margin: 0; padding-left: 20px;">
           <li style="margin-bottom: 6px;"><strong>DEXA is the gold standard</strong> for measuring body fat, lean mass, bone density, and visceral fat.</li>
-          <li style="margin-bottom: 6px;"><strong>Scale weight is misleading</strong> &mdash; it can't distinguish fat from muscle.</li>
+          <li style="margin-bottom: 6px;"><strong>Scale weight is misleading</strong>: it can't distinguish fat from muscle.</li>
           <li style="margin-bottom: 6px;"><strong>Visceral fat</strong> is the #1 predictor of metabolic disease and is invisible without proper measurement.</li>
           <li><strong>Muscle mass</strong> is the strongest predictor of longevity and quality of life as you age.</li>
         </ul>
@@ -130,7 +130,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const internalSubject = `Body Comp Quiz Lead: ${name || email} — ${score}/${maxScore}`;
+  const internalSubject = `Body Comp Quiz Lead: ${name || email} · ${score}/${maxScore}`;
 
   // ── Send Both Emails ────────────────────────────────────────────────
 

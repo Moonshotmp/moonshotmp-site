@@ -1,5 +1,5 @@
 /*
- * Moonshot Low-T (TRT Readiness) Screener — Quiz Engine
+ * Moonshot Low-T (TRT Readiness) Screener - Quiz Engine
  * ======================================================
  * Browser-side IIFE that runs the entire low-T screening flow:
  * welcome → age-gate → adam (10-row Yes/No) → body (age/height/weight)
@@ -7,7 +7,7 @@
  * → meds (multi-check) → state → ack → calculating → results.
  *
  * Scoring logic is INLINED from /quiz/low-t/scoring.js (the canonical pure
- * module). Both files MUST stay in sync — the Vitest suite pins the contract
+ * module). Both files MUST stay in sync - the Vitest suite pins the contract
  * on the scoring module; this engine reproduces it verbatim because the page
  * loads as a non-module script tag (no ESM imports).
  *
@@ -23,7 +23,7 @@
  *   the strict 4-field contract { quiz: 'low-t', event, screen, timestamp }.
  *   Health data flows through /.netlify/functions/low-t-quiz-submit for the
  *   email and CRM pipeline only. Screen labels are pre-checked against
- *   HEALTH_TERMS — none of our labels (welcome, age-gate, age-block, adam,
+ *   HEALTH_TERMS - none of our labels (welcome, age-gate, age-block, adam,
  *   body, sleep, fertility, history, psa, ipss, meds, state, ack, calc,
  *   results) contain any forbidden substrings.
  *
@@ -32,11 +32,11 @@
  *     enanthate, anastrozole, AndroGel, Testim, Axiron, Striant, DHEA).
  *   - The v1 line "There are alternatives (Clomid, HCG-based protocols,
  *     lifestyle optimization) that preserve fertility" is permanently
- *     retired — replaced by the generic non-testosterone phrasing below.
+ *     retired - replaced by the generic non-testosterone phrasing below.
  *   - Never tell the user they "should start TRT".
  *   - Never tell the user "you have low testosterone" (diagnosis).
  *   - Never give specific dose recommendations.
- *   - Never use "Strong candidate" / "Possible candidate" — neutral labels only.
+ *   - Never use "Strong candidate" / "Possible candidate" - neutral labels only.
  *   - Tier labels are the four neutral strings from INTERNAL_TIER_LABELS.
  *   - Acknowledgement screen is a real click-through, timestamped.
  *   - Email capture comes AFTER the result; never gates the result.
@@ -48,7 +48,7 @@
 
     // ── Inlined Scoring Logic (mirror of scoring.js) ─────────────────
     // If scoring.js changes, update both files together. Vitest pins the
-    // canonical module — keep this section identical in behavior.
+    // canonical module - keep this section identical in behavior.
 
     var ADAM_ITEM_COUNT = 10;
     var ADAM_LIBIDO_INDEX = 0;        // Q1 (decrease in libido)
@@ -128,7 +128,7 @@
         'eligibility-not-met': 1
     };
 
-    // Patient-facing tier labels — neutral strings (universal guardrail).
+    // Patient-facing tier labels - neutral strings (universal guardrail).
     // Multiple internal tiers map to the same label; the renderer differentiates
     // body copy by internalTier.
     var INTERNAL_TIER_LABELS = {
@@ -346,7 +346,7 @@
 
     // ADAM 10-item screener. Indexed 0..9. Q1 (libido) and Q7 (erections)
     // are key items per the validated instrument. Visible question text
-    // intentionally uses the standard ADAM phrasing — the analytics screen
+    // intentionally uses the standard ADAM phrasing - the analytics screen
     // label remains the neutral 'adam' string.
     var adamItems = [
         { idx: 0, prompt: 'Decrease in libido?' },
@@ -369,7 +369,7 @@
         { label: 'Not applicable',                                          key: 'na' }
     ];
 
-    // Medical history multi-check options. Keys are short enums — safe to
+    // Medical history multi-check options. Keys are short enums - safe to
     // include in submit payload's `medicalHistoryCategories`. The 'none'
     // option is rendered separately as an exclusive choice.
     var historyOptions = [
@@ -394,7 +394,7 @@
         { label: 'No, I haven\'t had a PSA test',             key: 'no-test' }
     ];
 
-    // IPSS items — 3 sub-questions each on a 0-5 frequency scale.
+    // IPSS items - 3 sub-questions each on a 0-5 frequency scale.
     var ipssItems = [
         { idx: 0, prompt: 'Over the past month, how often have you had a sensation of not emptying your bladder completely after urinating?' },
         { idx: 1, prompt: 'How often have you had to urinate again less than two hours after finishing?' },
@@ -474,10 +474,10 @@
 
     // The universal footer disclaimer is rendered by the static HTML below
     // the quiz mount in /quiz/low-t/index.html. It is NOT duplicated by this
-    // engine — the static placement is canonical and is always visible
+    // engine - the static placement is canonical and is always visible
     // because the quiz is inline (not modal). Mirrors perimenopause.
 
-    // Author attribution — Missy-only (she has FPA; no collaborator clause).
+    // Author attribution - Missy-only (she has FPA; no collaborator clause).
     var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // ── State ────────────────────────────────────────────────────────
@@ -487,7 +487,7 @@
     var state = {
         currentScreen: 0,
         ageGate: null,                  // 'yes' | 'no'
-        // ADAM 10-item screener — booleans (true=yes, false=no, null=not answered).
+        // ADAM 10-item screener - booleans (true=yes, false=no, null=not answered).
         adam: [null, null, null, null, null, null, null, null, null, null],
         // BODY
         age: null,                       // number 18..100
@@ -555,7 +555,7 @@
     // ── First-Party Analytics Shim ───────────────────────────────────
     // Only generic funnel events are forwarded. The screen label is the
     // short, neutral string from SCREEN_LABEL[]. No health values ever leave
-    // the browser via analytics. quiz-event.js rejects HEALTH_TERMS — our
+    // the browser via analytics. quiz-event.js rejects HEALTH_TERMS - our
     // screen labels are pre-checked to avoid those substrings.
 
     function ga(eventName, screenIndex) {
@@ -645,7 +645,7 @@
             var target = root.querySelector('[data-screen="' + screenIndex + '"]');
             if (target) {
                 target.classList.add('active');
-                // Scroll the quiz mount into view rather than window top —
+                // Scroll the quiz mount into view rather than window top -
                 // the static page has H1 + byline above #quiz-root and a
                 // window-top scroll hides the new active screen below them.
                 if (root && typeof root.scrollIntoView === 'function') {
@@ -693,10 +693,10 @@
             '<div class="text-center">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free TRT Readiness Screener</p>' +
                 '<h2 id="screen-' + SCREEN.WELCOME + '-heading" class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">Should you get a clinical evaluation?</h2>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Takes about 2-3 minutes. Walks through validated symptom and safety questions — the ADAM screener, IPSS urinary symptoms, PSA history, and key medical / medication context — to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Takes about 2-3 minutes. Walks through validated symptom and safety questions (the ADAM screener, IPSS urinary symptoms, PSA history, and key medical / medication context) to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start the Screener</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant. We don\'t sell your data or share it with advertisers.</p>' +
-                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical — a licensed clinic in Park Ridge, IL</p>' +
+                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +
                 '<p class="text-brand-gray/40 text-xs mt-2">For educational purposes only. Not medical advice.</p>' +
             '</div>'
         );
@@ -728,7 +728,7 @@
         );
     }
 
-    // ADAM screen — 10 stacked rows. Each row is its own role="radiogroup"
+    // ADAM screen - 10 stacked rows. Each row is its own role="radiogroup"
     // with a Yes / No pair of role="radio" buttons. Continue enabled only
     // when ALL 10 have a selection.
     function buildAdam() {
@@ -873,7 +873,7 @@
         );
     }
 
-    // IPSS screen — 3 stacked rows, each with a 0-5 frequency radiogroup.
+    // IPSS screen - 3 stacked rows, each with a 0-5 frequency radiogroup.
     // Continue enabled only when ALL 3 have a selection.
     function buildIpss() {
         var rowsHtml = '';
@@ -1259,12 +1259,12 @@
         return '/booking/?source=low-t-quiz&result=' + encodeURIComponent(slug);
     }
 
-    // Tier-specific body copy. VERBATIM from spec — do NOT paraphrase.
+    // Tier-specific body copy. VERBATIM from spec - do NOT paraphrase.
     // Each branch returns { heading, body, ctaLabel, slug }. The renderer
     // uses these to fill the result card. CTA URLs use buildBookingHref().
     //
     // IMPORTANT: tier body strings MUST remain static constants. Do NOT
-    // interpolate user input into tier bodies — they are concatenated into
+    // interpolate user input into tier bodies - they are concatenated into
     // innerHTML on the result page and on the email path with no escaping.
     // User-controlled data goes only through escapeHtml in the netlify
     // handler; the browser engine does not sanitize tier body strings.
@@ -1284,17 +1284,17 @@
             // Tadalafil is named because it's an existing Moonshot service
             // page and the FDA-approved on-label option for ED/LUTS that
             // does not suppress fertility.
-            body = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility — these require clinical evaluation to determine fit. FDA-approved options for erectile and lower-urinary-tract symptoms — including <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> — can be evaluated independently and don\'t suppress fertility.';
+            body = 'Traditional testosterone-based therapy can suppress fertility. Several non-testosterone-based approaches exist that may preserve fertility. These require clinical evaluation to determine fit. FDA-approved options for erectile and lower-urinary-tract symptoms, including <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a>, can be evaluated independently and don\'t suppress fertility.';
             ctaLabel = 'Book a fertility-aware consultation';
         } else if (internalTier === 'psa-ipss-concern') {
             body = 'Your responses describe urinary or PSA findings that warrant evaluation by a urologist or primary care physician before testosterone-based therapy is considered. We\'d recommend that workup first; once cleared, a consultation here can address symptoms. Tadalafil is also FDA-approved for benign prostatic hyperplasia (BPH); <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is a path your urologist or our clinic can discuss alongside testosterone evaluation.';
             ctaLabel = 'Book a consultation';
         } else if (internalTier === 'eligibility-present') {
             // ADAM ~88% sensitivity / 60% specificity disclosure required.
-            body = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician — alongside a 60+ marker comprehensive panel — is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup. If erectile or lower-urinary-tract symptoms are a primary concern, <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy.';
+            body = 'Your symptom pattern overlaps with patterns associated with low testosterone. ADAM has approximately 88% sensitivity and 60% specificity, meaning roughly 40% of positive screens are not associated with biochemical hypogonadism. A serum testosterone test ordered by a clinician, alongside a 60+ marker comprehensive panel, is the only way to determine whether testosterone deficiency is present and what\'s driving symptoms. Book a consultation to begin that workup. If erectile or lower-urinary-tract symptoms are a primary concern, <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is an FDA-approved option that can be evaluated alongside or instead of testosterone-based therapy.';
             ctaLabel = 'Book lab work + consultation';
         } else if (internalTier === 'eligibility-mixed') {
-            body = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms — sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first. If erectile or lower-urinary-tract symptoms are part of what you\'re tracking, <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is an FDA-approved option some patients use alongside or instead of testosterone-based therapy.';
+            body = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms: sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first. If erectile or lower-urinary-tract symptoms are part of what you\'re tracking, <a href="/medical/tadalafil/" class="text-brand-light underline decoration-brand-gray/40 hover:decoration-brand-gray transition">Daily Tadalafil</a> is an FDA-approved option some patients use alongside or instead of testosterone-based therapy.';
             ctaLabel = 'Book a comprehensive evaluation';
         } else {
             // eligibility-not-met
@@ -1360,7 +1360,7 @@
             html += '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-6">' +
                 '<h3 class="text-brand-light font-bold mb-3">Want a copy of your result?</h3>' +
                 (result.outOfState ? OUT_OF_STATE_EMAIL_NOTE : '') +
-                '<p class="text-brand-gray text-sm font-light mb-4">Optional — you do not need to enter anything to keep this result.</p>' +
+                '<p class="text-brand-gray text-sm font-light mb-4">Optional: you do not need to enter anything to keep this result.</p>' +
                 '<div class="space-y-3 text-left">' +
                     '<label class="flex items-start gap-3 cursor-pointer">' +
                         '<input type="checkbox" id="quiz-email-optin" class="mt-1 flex-shrink-0">' +
@@ -1395,7 +1395,7 @@
         }
 
         // Universal footer disclaimer is rendered once by the static HTML
-        // below the quiz mount — do NOT duplicate it here. Author attribution
+        // below the quiz mount - do NOT duplicate it here. Author attribution
         // remains result-page-specific.
 
         // Author attribution (always shown)
@@ -1410,7 +1410,7 @@
 
         document.getElementById('quiz-results-inner').innerHTML = html;
 
-        // Update URL for sharing — only the result slug, not the full state.
+        // Update URL for sharing - only the result slug, not the full state.
         if (window.history && window.history.replaceState) {
             try {
                 var validSlug = result.resultSlug && /^(hard-stop|fertility-stop|psa-ipss|present|mixed|not-met)$/.test(result.resultSlug);
@@ -1432,7 +1432,7 @@
 
         // Clear PII from in-memory state after the result has rendered. The
         // email opt-in form below reads directly from input.value, so it
-        // captures fresh input — these zeroed fields don't break it. Protects
+        // captures fresh input - these zeroed fields don't break it. Protects
         // shared-device users from seeing prefilled fields if they hit Retake.
         state.name = '';
         state.email = '';
@@ -1518,7 +1518,7 @@
             // Use textContent (not innerHTML) and a literal Unicode em-dash
             // (not the HTML entity) to avoid an injected entity rendering
             // as a string.
-            msg.textContent = 'Thanks — we just sent your result to ' + email + '.';
+            msg.textContent = 'Thanks. We just sent your result to ' + email + '.';
             msg.classList.remove('hidden');
         }
         // Hide submit button to prevent duplicate sends, then clear saved
@@ -1529,7 +1529,7 @@
     }
 
     // ── Email submission ─────────────────────────────────────────────
-    // Compact payload — counts and sanitized enums only for multi-check
+    // Compact payload - counts and sanitized enums only for multi-check
     // fields, NEVER raw symptom values or individual ADAM item answers.
     function sendResults(smsConsent) {
         var result = scoreLowT(state);
@@ -1563,7 +1563,7 @@
                 fertilityPlan: state.fertilityPlan,
                 sleepHours: state.sleepHours,
                 medicalHistoryCount: Array.isArray(state.medicalHistory) ? state.medicalHistory.length : 0,
-                // Send sanitized keys only (short enum strings — safe).
+                // Send sanitized keys only (short enum strings - safe).
                 medicalHistoryCategories: Array.isArray(state.medicalHistory) ? state.medicalHistory.slice() : [],
                 psaTier: state.psaTier,
                 medicationCount: Array.isArray(state.medications) ? state.medications.length : 0,
@@ -1574,7 +1574,7 @@
         };
 
         // Attach upstream marketing attribution (utm_*, gclid, fbclid,
-        // landing_page, last_page, referrer) — captured by attribution-capture.js
+        // landing_page, last_page, referrer) - captured by attribution-capture.js
         // and forwarded by the Netlify function to the EHR lead webhook.
         try {
             payload.attribution = (window.MoonshotAttribution && typeof window.MoonshotAttribution.getFlat === 'function')
@@ -1601,7 +1601,7 @@
         }
         // The slug being valid is enough to confirm someone took the screener;
         // the actual tier-specific copy stays private. Render only a neutral
-        // non-personalized message — no tier body, no ADAM stats, no
+        // non-personalized message - no tier body, no ADAM stats, no
         // eligibility framing. This avoids exposing what reads like a
         // personalized clinical recommendation to out-of-state visitors who
         // cannot access the clinic.
@@ -1613,7 +1613,7 @@
                 '</div>' +
                 '<div class="border border-brand-gray/40 rounded-sm p-8 mb-8" style="background: rgba(178, 191, 190, 0.05)">' +
                     '<p class="text-brand-light font-light leading-relaxed">' +
-                    'Someone shared a screener result category with you. Take the screener yourself to get your own context and recommended next step. Moonshot Medical clinicians are licensed in Illinois only — patients in other states should consult a clinician licensed in their state.' +
+                    'Someone shared a screener result category with you. Take the screener yourself to get your own context and recommended next step. Moonshot Medical clinicians are licensed in Illinois only. Patients in other states should consult a clinician licensed in their state.' +
                     '</p>' +
                 '</div>' +
                 '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-8 text-center">' +
@@ -1661,7 +1661,7 @@
                 state.ageGate = ageGateBtn.getAttribute('data-age-gate');
                 selectRadio('age-gate', state.ageGate);
                 if (state.ageGate === 'no') {
-                    // No recovery path — advance immediately to terminal block.
+                    // No recovery path - advance immediately to terminal block.
                     ga('screen_advance', SCREEN.AGE_GATE);
                     show(SCREEN.AGE_BLOCK);
                 }
@@ -2019,7 +2019,7 @@
     // ── Restore from Saved State ─────────────────────────────────────
 
     // Allowlists for enum-typed restored fields. Anything not in the
-    // allowlist is rejected — protects scoring from corrupted localStorage
+    // allowlist is rejected - protects scoring from corrupted localStorage
     // values planted via DevTools or older schema versions.
     var ENUM_AGE_GATE = { 'yes': 1, 'no': 1 };
     var ENUM_FERTILITY = FERTILITY_PLAN_VALUES;
@@ -2052,7 +2052,7 @@
         return Object.prototype.hasOwnProperty.call(allow, value) ? value : fallback;
     }
 
-    // CSS.escape polyfill for very old browsers — Tom's audience is modern,
+    // CSS.escape polyfill for very old browsers - Tom's audience is modern,
     // but harmless to fall back to a regex-based escape.
     function safeAttrEscape(value) {
         if (typeof value !== 'string') return '';
@@ -2063,7 +2063,7 @@
         return value.replace(/["\\\]]/g, '\\$&');
     }
 
-    // Validate a saved adam array — must be 10 entries of boolean or null.
+    // Validate a saved adam array - must be 10 entries of boolean or null.
     function pickAdamArray(saved) {
         var out = [null, null, null, null, null, null, null, null, null, null];
         if (!Array.isArray(saved)) return out;
@@ -2074,7 +2074,7 @@
         return out;
     }
 
-    // Validate a saved ipss array — must be 3 entries of integer 0-5 or null.
+    // Validate a saved ipss array - must be 3 entries of integer 0-5 or null.
     function pickIpssArray(saved) {
         var out = [null, null, null];
         if (!Array.isArray(saved)) return out;
@@ -2137,7 +2137,7 @@
         state.marketingOptIn = !!saved.marketingOptIn;
         state.emailOptIn = !!saved.emailOptIn;
 
-        // Rehydrate UI selections — single-select cards.
+        // Rehydrate UI selections - single-select cards.
         if (state.ageGate) selectRadio('age-gate', state.ageGate);
         if (state.fertilityPlan) selectRadio('fertility', state.fertilityPlan);
         if (state.psaTier) selectRadio('psa', state.psaTier);
@@ -2171,7 +2171,7 @@
         var stateSel = document.getElementById('quiz-state-select');
         if (stateSel && state.stateCode) stateSel.value = state.stateCode;
 
-        // Rehydrate multi-checks — escape attribute values to prevent any
+        // Rehydrate multi-checks - escape attribute values to prevent any
         // hostile string from breaking out of the selector.
         if (state.medicalHistory.length) {
             for (var ci = 0; ci < state.medicalHistory.length; ci++) {
@@ -2192,7 +2192,7 @@
             if (noneMedsEl) noneMedsEl.checked = true;
         }
 
-        // Determine target screen — never restore directly to calculating or
+        // Determine target screen - never restore directly to calculating or
         // results. If the saved currentScreen is past the ack, send the user
         // to ack so they explicitly re-acknowledge before re-rendering.
         var target = (typeof saved.currentScreen === 'number') ? saved.currentScreen : SCREEN.WELCOME;

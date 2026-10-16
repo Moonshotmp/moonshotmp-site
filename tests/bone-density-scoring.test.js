@@ -463,8 +463,8 @@ describe('Tier label allowlist (universal guardrail)', () => {
 // banned drug names, candidacy language, or licensed FRAX nomenclature.
 
 const EXPECTED_TIER_BODIES = {
-    A: 'Per AACE, Endocrine Society, and NOF guidelines, a low-trauma fracture after age 40 is itself diagnostic of osteoporosis, even before a DEXA scan. A clinical evaluation is the appropriate next step — it should include a DEXA scan, bone-relevant lab work, and a discussion of treatment options. We offer DEXA scans on-site in Park Ridge ($150) and full clinical evaluation.',
-    B: "Your responses describe risk factors associated with elevated likelihood of low bone density. The most accurate way to know your bones' actual condition is a DEXA scan — it's the medical gold standard. Moonshot offers DEXA scans on-site in Park Ridge for $150, no referral needed.",
+    A: 'Per AACE, Endocrine Society, and NOF guidelines, a low-trauma fracture after age 40 is itself diagnostic of osteoporosis, even before a DEXA scan. A clinical evaluation is the appropriate next step. It should include a DEXA scan, bone-relevant lab work, and a discussion of treatment options. We offer DEXA scans on-site in Park Ridge ($150) and full clinical evaluation.',
+    B: "Your responses describe risk factors associated with elevated likelihood of low bone density. The most accurate way to know your bones' actual condition is a DEXA scan. It's the medical gold standard. Moonshot offers DEXA scans on-site in Park Ridge for $150, no referral needed.",
     C: 'You have one or more risk factors for bone density loss. A DEXA scan is reasonable based on these inputs and would establish a baseline you can track over time. For most adults with risk factors, getting a baseline by age 50 (women) or 60 (men) is the standard recommendation.',
     D: "Based on your responses, your risk factors for low bone density are minimal. A DEXA is reasonable but not urgent based on these inputs. If you're approaching standard screening ages or want a longevity baseline, the scan is still valuable as a reference point."
 };

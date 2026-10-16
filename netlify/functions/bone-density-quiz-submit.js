@@ -5,13 +5,13 @@ import { sendQuizSmsIfConsented } from './shared/sms-consent.js';
 const ALLOWED_TIERS = new Set(['A', 'B', 'C', 'D']);
 
 const TIER_BODY = {
-  A: 'Per AACE, Endocrine Society, and NOF guidelines, a low-trauma fracture after age 40 is itself diagnostic of osteoporosis, even before a DEXA scan. A clinical evaluation is the appropriate next step — it should include a DEXA scan, bone-relevant lab work, and a discussion of treatment options. We offer DEXA scans on-site in Park Ridge ($150) and full clinical evaluation.',
-  B: "Your responses describe risk factors associated with elevated likelihood of low bone density. The most accurate way to know your bones' actual condition is a DEXA scan — it's the medical gold standard. Moonshot offers DEXA scans on-site in Park Ridge for $150, no referral needed.",
+  A: 'Per AACE, Endocrine Society, and NOF guidelines, a low-trauma fracture after age 40 is itself diagnostic of osteoporosis, even before a DEXA scan. A clinical evaluation is the appropriate next step. It should include a DEXA scan, bone-relevant lab work, and a discussion of treatment options. We offer DEXA scans on-site in Park Ridge ($150) and full clinical evaluation.',
+  B: "Your responses describe risk factors associated with elevated likelihood of low bone density. The most accurate way to know your bones' actual condition is a DEXA scan. It's the medical gold standard. Moonshot offers DEXA scans on-site in Park Ridge for $150, no referral needed.",
   C: 'You have one or more risk factors for bone density loss. A DEXA scan is reasonable based on these inputs and would establish a baseline you can track over time. For most adults with risk factors, getting a baseline by age 50 (women) or 60 (men) is the standard recommendation.',
   D: "Based on your responses, your risk factors for low bone density are minimal. A DEXA is reasonable but not urgent based on these inputs. If you're approaching standard screening ages or want a longevity baseline, the scan is still valuable as a reference point."
 };
 
-// Server-side label lookup. We never trust the client's tierLabel — the engine
+// Server-side label lookup. We never trust the client's tierLabel - the engine
 // could be stale, the value could be tampered, and HTML interpolation of any
 // client-controlled string is an XSS vector for Tom's inbox.
 const TIER_LABEL_LOOKUP = {
@@ -130,7 +130,7 @@ export default async function handler(req, context) {
     });
   }
 
-  // Permissive on marketingOptIn — old browsers may not send it cleanly.
+  // Permissive on marketingOptIn - old browsers may not send it cleanly.
   // Default to false if undefined; reject only if it's explicitly a non-boolean primitive.
   let optIn = false;
   if (marketingOptIn === undefined || marketingOptIn === null) {
@@ -144,7 +144,7 @@ export default async function handler(req, context) {
     });
   }
 
-  // Derive label and slug from tier — never trust the client's copies. They
+  // Derive label and slug from tier - never trust the client's copies. They
   // could be stale or tampered.
   const tierLabel = TIER_LABEL_LOOKUP[tier];
   const resultSlug = RESULT_SLUG_LOOKUP[tier];
@@ -242,7 +242,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const userSubject = 'Your Bone Density Screener Result — Moonshot Medical';
+  const userSubject = 'Your Bone Density Screener Result · Moonshot Medical';
 
   // ── Lead Score ──────────────────────────────────────────────────────
 
@@ -306,7 +306,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const internalSubject = sanitizeHeaderValue(`🦴 New Bone Density Lead: ${name || email} — Tier ${tier}`);
+  const internalSubject = sanitizeHeaderValue(`🦴 New Bone Density Lead: ${name || email} · Tier ${tier}`);
 
   // ── Send Both Emails ────────────────────────────────────────────────
 
@@ -398,7 +398,7 @@ export default async function handler(req, context) {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (err) {
-    // Log only the message — Resend's error response may contain the email
+    // Log only the message - Resend's error response may contain the email
     // payload (PHI) and Netlify Function logs are not in the BAA scope.
     console.error('[bone-density-quiz-submit] Error:', err && err.message);
     return new Response(JSON.stringify({ ok: false, error: 'Email send failed' }), {

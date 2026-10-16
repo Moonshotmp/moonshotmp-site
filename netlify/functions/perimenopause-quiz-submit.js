@@ -9,7 +9,7 @@ const INTERNAL_TIER_VALUES = new Set([
   'eligibility-factors-not-met'
 ]);
 
-// Server-side label lookup. We never trust the client's tierLabel — the engine
+// Server-side label lookup. We never trust the client's tierLabel - the engine
 // could be stale, the value could be tampered, and HTML interpolation of any
 // client-controlled string is an XSS vector for Tom's inbox.
 const TIER_LABEL_LOOKUP = {
@@ -33,15 +33,15 @@ const CTA_TEXT = {
   'eligibility-factors-not-met': 'Book a baseline consultation'
 };
 
-const TIER_BODY_PRESENT_SEVERE = "Your responses indicate significant symptom burden in patterns associated with hormonal change. A clinical evaluation can clarify what's driving symptoms — there are several treatment paths including hormone-based and non-hormone-based options. We'd recommend booking a consultation to review symptoms and order a comprehensive hormone panel.";
-const TIER_BODY_PRESENT_MODERATE = "Your responses indicate moderate symptom burden consistent with patterns associated with perimenopausal or menopausal change. Several evaluation paths exist — comprehensive hormone testing, lifestyle interventions, targeted nutrition. A clinical evaluation can clarify what's right for you.";
+const TIER_BODY_PRESENT_SEVERE = "Your responses indicate significant symptom burden in patterns associated with hormonal change. A clinical evaluation can clarify what's driving symptoms. There are several treatment paths including hormone-based and non-hormone-based options. We'd recommend booking a consultation to review symptoms and order a comprehensive hormone panel.";
+const TIER_BODY_PRESENT_MODERATE = "Your responses indicate moderate symptom burden consistent with patterns associated with perimenopausal or menopausal change. Several evaluation paths exist: comprehensive hormone testing, lifestyle interventions, targeted nutrition. A clinical evaluation can clarify what's right for you.";
 const TIER_BODY_MIXED = "Your symptom burden is mild. Many people in your range benefit from lifestyle and nutritional foundations before considering hormone-based options. If you'd like a baseline panel for reference, a consultation can order one.";
 const TIER_BODY_NOT_MET = "You're reporting few perimenopausal symptoms. If your concern is about future hormonal change, baseline hormone panels can help establish a reference point.";
 const TIER_BODY_CONTRAINDICATION = "Your responses indicate medical history that requires careful clinical evaluation before any hormone-based therapy. Non-hormone-based evaluation paths exist and are part of what a consultation would cover.";
 
-const RED_FLAG_BODY = "Important: palpitations combined with anxiety can have causes beyond hormonal change — including thyroid disease, cardiac arrhythmias (paroxysmal atrial fibrillation), or other conditions. These need to be ruled out before assuming a perimenopausal explanation. If your palpitations are severe, sudden, or accompanied by chest pain, shortness of breath, or fainting — please see your primary care physician or an emergency department.";
+const RED_FLAG_BODY = "Important: palpitations combined with anxiety can have causes beyond hormonal change, including thyroid disease, cardiac arrhythmias (paroxysmal atrial fibrillation), or other conditions. These need to be ruled out before assuming a perimenopausal explanation. If your palpitations are severe, sudden, or accompanied by chest pain, shortness of breath, or fainting, please see your primary care physician or an emergency department.";
 
-// Missy-only attribution — she has FPA. Do NOT add other clinicians here.
+// Missy-only attribution - she has FPA. Do NOT add other clinicians here.
 const AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
 const RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis. Only a clinician can confirm whether your symptoms are due to perimenopause, menopause, or another cause. Your provider can determine whether further workup, hormone testing, or treatment is appropriate based on your full clinical picture.';
@@ -53,7 +53,7 @@ const STATE_REGEX = /^[A-Z]{2}$/;
 
 const MRS_TIER_VALUES = new Set(['none', 'mild', 'moderate', 'severe']);
 
-// Mirrors MENSTRUAL_STATUS_VALUES from quiz/perimenopause/scoring.js — kept in
+// Mirrors MENSTRUAL_STATUS_VALUES from quiz/perimenopause/scoring.js - kept in
 // sync manually since this Netlify function is a separate runtime.
 const MENSTRUAL_STATUS_VALUES = new Set([
   'regular',
@@ -114,7 +114,7 @@ function deriveMrsTier(score) {
   return 'severe';
 }
 
-// Pick the patient-facing tier body string. Server-derived only — never let
+// Pick the patient-facing tier body string. Server-derived only - never let
 // the client pass arbitrary copy.
 function selectTierBody(internalTier, mrsTier) {
   if (internalTier === 'contraindication-identified') return TIER_BODY_CONTRAINDICATION;
@@ -177,7 +177,7 @@ export default async function handler(req, context) {
     });
   }
 
-  // Permissive on marketingOptIn — old browsers may not send it cleanly.
+  // Permissive on marketingOptIn - old browsers may not send it cleanly.
   // Default to false if undefined; reject only if it's explicitly a non-boolean primitive.
   let optIn = false;
   if (marketingOptIn === undefined || marketingOptIn === null) {
@@ -191,7 +191,7 @@ export default async function handler(req, context) {
     });
   }
 
-  // Derive label, slug, body, CTA from internalTier — never trust the client's
+  // Derive label, slug, body, CTA from internalTier - never trust the client's
   // copies. They could be stale or tampered.
   const tierLabel = TIER_LABEL_LOOKUP[internalTier];
   const resultSlug = RESULT_SLUG_LOOKUP[internalTier];
@@ -325,7 +325,7 @@ ${redFlagBlock}
 </body>
 </html>`.trim();
 
-  const userSubject = 'Your Perimenopause Screener Result — Moonshot Medical';
+  const userSubject = 'Your Perimenopause Screener Result · Moonshot Medical';
 
   // ── Lead Score ──────────────────────────────────────────────────────
 
@@ -397,7 +397,7 @@ ${redFlagBlock}
 </body>
 </html>`.trim();
 
-  const internalSubject = sanitizeHeaderValue(`🌙 New Perimenopause Lead: ${name || email} — ${tierLabel || 'tier ?'}`);
+  const internalSubject = sanitizeHeaderValue(`🌙 New Perimenopause Lead: ${name || email} · ${tierLabel || 'tier ?'}`);
 
   // ── Send Both Emails ────────────────────────────────────────────────
 
@@ -493,7 +493,7 @@ ${redFlagBlock}
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (err) {
-    // Log only the message — Resend's error response may contain the email
+    // Log only the message - Resend's error response may contain the email
     // payload (PHI) and Netlify Function logs are not in the BAA scope.
     console.error('[perimenopause-quiz-submit] Error:', err && err.message);
     return new Response(JSON.stringify({ ok: false, error: 'Email send failed' }), {

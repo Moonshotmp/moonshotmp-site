@@ -1,12 +1,12 @@
 // Bot guard for the email-only lead magnet capture form.
 //
-// Owner: Tom. Incident: 2026-09-15 subscription-bombing run — a botnet used
+// Owner: Tom. Incident: 2026-09-15 subscription-bombing run - a botnet used
 // these forms to mail real third-party addresses (gibberish first name,
 // dot-scattered Gmail variants) and enrolled them in the drip.
 //
 // The matching client fields are added by shared/lead-magnets.js:
-//   website    — honeypot input, hidden from people, must stay empty
-//   elapsed_ms — ms between form render and submit
+//   website    - honeypot input, hidden from people, must stay empty
+//   elapsed_ms - ms between form render and submit
 //
 // Callers answer a blocked submission with the normal 200 {ok:true} and do
 // nothing else, so the bot gets no signal to adapt to.
@@ -41,7 +41,7 @@ export function checkSubmission(data) {
   return { ok: true, reason: null };
 }
 
-// Log the reason only — never the address. Function logs are outside the BAA.
+// Log the reason only - never the address. Function logs are outside the BAA.
 export function logBlocked(fn, reason) {
   console.warn(`[antispam] blocked fn=${fn} reason=${reason}`);
 }
