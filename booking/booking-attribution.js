@@ -216,67 +216,107 @@
   }
 
   // -- 6. Callback form ---------------------------------------------------
+  // Posts to /.netlify/functions/booking-callback, which mails the front desk.
+  // The receipt shows only once the function answers ok; any failure tells
+  // the visitor to call or text instead, so no request is silently lost.
+  var callbackRenderedAt = Date.now();
+
+  function showCallbackMessage(msgEl, ok) {
+    if (!msgEl) return;
+    msgEl.textContent = '';
+    msgEl.classList.remove('hidden', 'text-brand-slate');
+    msgEl.classList.add('font-bold');
+    if (ok) {
+      msgEl.style.color = '';
+      msgEl.classList.add('text-brand-dark');
+      msgEl.textContent = "Got it. We'll call you within 1 business day.";
+      return;
+    }
+    // Error red inline: the compiled tailwind.css has no red utilities.
+    msgEl.style.color = '#b91c1c';
+    msgEl.appendChild(document.createTextNode("We couldn't send that. Call or text "));
+    var tel = document.createElement('a');
+    tel.href = 'tel:+12244354280';
+    tel.className = 'underline font-bold';
+    tel.textContent = '224-435-4280';
+    msgEl.appendChild(tel);
+    msgEl.appendChild(document.createTextNode(" and we'll get you booked."));
+  }
+
   function wireCallbackForm() {
     var form = document.getElementById('mmp-callback-form');
     if (!form) return;
+    var sending = false;
     form.addEventListener('submit', function (evt) {
       evt.preventDefault();
+      if (sending) return;
       var nameEl = form.querySelector('[name="name"]');
       var phoneEl = form.querySelector('[name="phone"]');
+      var trapEl = form.querySelector('[name="website"]');
+      var emailEl = form.querySelector('[name="email"]');
+      var button = form.querySelector('button[type="submit"]');
       var msgEl = document.getElementById('mmp-callback-msg');
       var name = (nameEl && nameEl.value || '').trim();
       var phone = (phoneEl && phoneEl.value || '').trim();
-      if (!name || !phone) {
+      var digits = phone.replace(/\D/g, '');
+      var phoneOk = digits.length === 10 || (digits.length === 11 && digits.charAt(0) === '1');
+      if (!name || !phoneOk) {
         if (msgEl) {
-          msgEl.textContent = 'Please enter your name and phone number.';
-          msgEl.classList.remove('hidden');
+          msgEl.textContent = 'Please enter your name and a 10-digit phone number.';
+          msgEl.classList.remove('hidden', 'text-brand-dark', 'font-bold');
+          msgEl.style.color = '#b91c1c';
         }
         return;
       }
-      var stub = {
+
+      sending = true;
+      var label = button ? button.textContent : '';
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending...';
+      }
+      if (msgEl) msgEl.classList.add('hidden');
+
+      var payload = {
         name: name,
         phone: phone,
+        email: (emailEl && emailEl.value || '').trim(),
         source: attribution.source || '',
         result: attribution.result || '',
-        ts: new Date().toISOString(),
+        page_url: window.location.origin + window.location.pathname,
+        website: trapEl ? trapEl.value : '',
+        elapsed_ms: Date.now() - callbackRenderedAt,
       };
-      // Best-effort POST — Tom can wire a real Netlify Function later.
-      // For now we attempt the endpoint; on any failure we still show the
-      // confirmation message so the user knows we received the request
-      // (their submission is queued in localStorage for manual recovery).
-      try {
-        if (typeof fetch === 'function') {
-          fetch('/.netlify/functions/booking-callback', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(stub),
-            keepalive: true,
-          }).catch(function () {
-            if (typeof console !== 'undefined') {
-              console.log('booking_callback_fallback', stub);
-            }
-          });
-        }
-      } catch (e) {
-        if (typeof console !== 'undefined') {
-          console.log('booking_callback_fallback', stub);
-        }
-      }
-      // Local backup so a missing endpoint doesn't lose the lead.
-      try {
-        var pending = JSON.parse(localStorage.getItem('mmp_callback_pending') || '[]');
-        pending.push(stub);
-        localStorage.setItem('mmp_callback_pending', JSON.stringify(pending));
-      } catch (e) { /* ignore */ }
 
-      form.reset();
-      form.classList.add('hidden');
-      if (msgEl) {
-        msgEl.textContent = "Thanks — we'll call you within 1 business day.";
-        msgEl.classList.remove('hidden');
-        msgEl.classList.remove('text-red-700');
-        msgEl.classList.add('text-brand-dark', 'font-bold');
+      function done(ok) {
+        sending = false;
+        if (button) {
+          button.disabled = false;
+          button.textContent = label;
+        }
+        if (ok) {
+          form.reset();
+          form.classList.add('hidden');
+        }
+        showCallbackMessage(msgEl, ok);
       }
+
+      if (typeof fetch !== 'function') {
+        done(false);
+        return;
+      }
+      fetch('/.netlify/functions/booking-callback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (res) {
+        if (!res.ok) return { ok: false };
+        return res.json().catch(function () { return { ok: false }; });
+      }).then(function (body) {
+        done(!!(body && body.ok === true));
+      }).catch(function () {
+        done(false);
+      });
     });
   }
 
