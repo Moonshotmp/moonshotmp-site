@@ -144,6 +144,7 @@
         if (/\/(mens-hormones|trt|testosterone|enclomiphene)/.test(reviewsPath)) reviewFilter = 'trt';
         else if (/\/(dexa|body-comp)/.test(reviewsPath)) reviewFilter = 'dexa';
         else if (/\/(blood-panel|blood-work|blood-draw)/.test(reviewsPath)) reviewFilter = 'blood-work';
+        else if (/^\/(booking\/)?rehab\//.test(reviewsPath)) reviewFilter = 'rehab';
 
         // Determine theme — light sections get light reviews
         var mainEl = document.querySelector('main');
@@ -194,10 +195,16 @@
         });
     });
 
-    // Sticky mobile CTA bar on content pages
+    // Sticky mobile Book/Call bar on every page except the booking pages,
+    // which are their own call to action.
     var path = location.pathname;
-    if (/^\/(learn|medical|rehab)\//.test(path)) {
-        requestIdleCallback(function() {
+    // Safari has no requestIdleCallback; an unguarded call threw there and
+    // stopped the rest of this script.
+    var whenIdle = 'requestIdleCallback' in window
+        ? function(fn) { requestIdleCallback(fn); }
+        : function(fn) { setTimeout(fn, 1); };
+    if (!/^\/booking(\/|$)/.test(path)) {
+        whenIdle(function() {
             var bar = document.createElement('div');
             bar.id = 'sticky-mobile-cta';
             bar.className = 'fixed bottom-0 left-0 right-0 z-[80] bg-brand-dark/95 backdrop-blur-md border-t border-white/10 px-4 py-3 flex items-center justify-center gap-4 md:hidden';
