@@ -253,6 +253,7 @@
       var nameEl = form.querySelector('[name="name"]');
       var phoneEl = form.querySelector('[name="phone"]');
       var trapEl = form.querySelector('[name="website"]');
+      var emailEl = form.querySelector('[name="email"]');
       var button = form.querySelector('button[type="submit"]');
       var msgEl = document.getElementById('mmp-callback-msg');
       var name = (nameEl && nameEl.value || '').trim();
@@ -279,6 +280,7 @@
       var payload = {
         name: name,
         phone: phone,
+        email: (emailEl && emailEl.value || '').trim(),
         source: attribution.source || '',
         result: attribution.result || '',
         page_url: window.location.origin + window.location.pathname,

@@ -93,6 +93,13 @@ export default async function handler(req, context) {
     return json({ ok: true });
   }
 
+  // Optional. The clinic lead webhook files a lead only with an email (its
+  // phone-only path is reserved for the chat and voice agents), so the CRM
+  // sync runs only when the visitor gives one; the email to the front desk
+  // is the record either way.
+  const rawEmail = typeof data.email === 'string' ? data.email.trim() : '';
+  const email = rawEmail.length <= 254 && /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(rawEmail) ? rawEmail : '';
+
   const source = slug(data.source);
   const result = slug(data.result);
   const page = pageUrl(data.page_url);
@@ -110,6 +117,7 @@ export default async function handler(req, context) {
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Contact</p>
         ${row('Name', htmlName)}
         ${row('Phone', `<a href="tel:+1${phone.slice(-10)}" style="color: #F0EEE9;">${displayPhone}</a>`)}
+        ${row('Email', email || 'not given')}
       </div>
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Source</p>
@@ -135,32 +143,35 @@ export default async function handler(req, context) {
 
   // The email above is the receipt of record; a CRM sync failure is logged
   // and does not fail the request.
-  const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
-  try {
-    const res = await fetch(clinicApi + '/api/leads/webhook', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Tenant-Slug': 'moonshot',
-        'X-Webhook-Key': process.env.CLINIC_LEAD_WEBHOOK_KEY || '',
-      },
-      // 'website_form' is the clinic webhook's allowlisted value for site forms.
-      body: JSON.stringify({
-        name,
-        phone,
-        source: 'website_form',
-        quiz_type: 'callback_request',
-        state: '',
-        geo_state: geo.geo_state,
-        geo_country: geo.geo_country,
-        booking_source: source,
-        booking_result: result,
-        page_url: page,
-      }),
-    });
-    if (!res.ok) console.error('[booking-callback] clinic lead sync status', res.status);
-  } catch (err) {
-    console.error('[booking-callback] clinic lead sync error:', err.message);
+  if (email) {
+    const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';
+    try {
+      const res = await fetch(clinicApi + '/api/leads/webhook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Tenant-Slug': 'moonshot',
+          'X-Webhook-Key': process.env.CLINIC_LEAD_WEBHOOK_KEY || '',
+        },
+        // 'website_form' is the clinic webhook's allowlisted value for site forms.
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          source: 'website_form',
+          quiz_type: 'callback_request',
+          state: '',
+          geo_state: geo.geo_state,
+          geo_country: geo.geo_country,
+          booking_source: source,
+          booking_result: result,
+          page_url: page,
+        }),
+      });
+      if (!res.ok) console.error('[booking-callback] clinic lead sync status', res.status);
+    } catch (err) {
+      console.error('[booking-callback] clinic lead sync error:', err.message);
+    }
   }
 
   return json({ ok: true });

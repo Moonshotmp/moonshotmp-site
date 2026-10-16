@@ -62,6 +62,7 @@ describe('booking-callback', () => {
       ...human,
       name: 'Daniel Kowalczyk',
       phone: '(847) 555-0142',
+      email: 'dkowalczyk@comcast.net',
       source: 'low-t-quiz',
       result: 'tier-2',
       page_url: 'https://moonshotmp.com/booking/?source=low-t-quiz&result=tier-2'
@@ -85,6 +86,7 @@ describe('booking-callback', () => {
     const lead = JSON.parse(leadCall[1].body);
     expect(lead).toMatchObject({
       name: 'Daniel Kowalczyk',
+      email: 'dkowalczyk@comcast.net',
       phone: '8475550142',
       source: 'website_form',
       quiz_type: 'callback_request',
@@ -93,11 +95,24 @@ describe('booking-callback', () => {
     });
   });
 
+  it('phone-only request: emails the front desk and skips the CRM, which requires an email', async () => {
+    fetchMock = routedFetch();
+    vi.stubGlobal('fetch', fetchMock);
+
+    const res = await bookingCallback(post({ ...human, name: 'Priya Raman', phone: '224-555-0187', email: 'not-an-email' }), context);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ ok: true });
+    const urls = fetchMock.mock.calls.map((c) => String(c[0]));
+    expect(urls).toEqual(['https://api.resend.com/emails']);
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).html).toContain('Email: not given');
+  });
+
   it('still answers ok when the clinic sync fails after the email went out', async () => {
     fetchMock = routedFetch({ webhookStatus: 400 });
     vi.stubGlobal('fetch', fetchMock);
 
-    const res = await bookingCallback(post({ ...human, name: 'Priya Raman', phone: '224-555-0187' }), context);
+    const res = await bookingCallback(post({ ...human, name: 'Priya Raman', phone: '224-555-0187', email: 'priya.raman@outlook.com' }), context);
+    expect(fetchMock.mock.calls.some((c) => String(c[0]).endsWith('/api/leads/webhook'))).toBe(true);
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true });
   });

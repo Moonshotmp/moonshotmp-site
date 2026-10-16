@@ -317,12 +317,15 @@
                     <p class="text-sm text-brand-slate mb-4">
                         <strong class="text-brand-dark">Prefer we call you?</strong>
                     </p>
-                    <form id="mmp-callback-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <form id="mmp-callback-form" class="flex flex-col gap-3 max-w-md mx-auto">
                         <label class="sr-only" for="mmp-callback-name">Name</label>
                         <input id="mmp-callback-name" name="name" type="text" required autocomplete="name" placeholder="Your name"
                                class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
                         <label class="sr-only" for="mmp-callback-phone">Phone</label>
                         <input id="mmp-callback-phone" name="phone" type="tel" required autocomplete="tel" placeholder="Phone number"
+                               class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
+                        <label class="sr-only" for="mmp-callback-email">Email (optional)</label>
+                        <input id="mmp-callback-email" name="email" type="email" autocomplete="email" placeholder="Email (optional)"
                                class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
                         <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
                         <button type="submit"
