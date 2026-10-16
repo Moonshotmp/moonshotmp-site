@@ -1,589 +1,306 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, follow" />
-    <link rel="canonical" href="https://moonshotmp.com/pricing/" />
-    <title>Moonshot Medical and Performance Pricing</title>
-    
+    <title>Pricing | Moonshot Medical</title>
+    <meta name="description" content="Moonshot Medical prices in Park Ridge, IL: GLP-1 weight loss from $195/mo, TRT $235/mo, BHRT $285/mo, DEXA $150, blood panel $285, NAD+ $60.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moonshotmp.com/pricing/">
 
-    <style>
-        /* --- VARIABLES & RESET --- */
-        :root {
-            /* Premium Light Theme */
-            --bg-color: #ffffff;      /* Changed from #F0EEE9 to White */
-            --text-main: #101921;     /* Dark Navy */
-            --text-muted: #66716f;    /* Muted Slate */
-            --border-color: #B2BFBE;  /* Cool Gray */
-            
-            --font-heading: 'Oswald', sans-serif;
-            --font-body: 'Poppins', sans-serif;
-        }
+    <meta property="og:title" content="Pricing | Moonshot Medical">
+    <meta property="og:description" content="Transparent prices for weight loss, hormones, diagnostics, injections and aesthetics at Moonshot Medical in Park Ridge, IL.">
+    <meta property="og:url" content="https://moonshotmp.com/pricing/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pricing | Moonshot Medical">
+    <meta name="twitter:description" content="Transparent prices for weight loss, hormones, diagnostics, injections and aesthetics at Moonshot Medical in Park Ridge, IL.">
+    <meta property="og:image" content="https://moonshotmp.com/images/weighloss.webp">
+    <meta name="twitter:image" content="https://moonshotmp.com/images/weighloss.webp">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
+    <link rel="icon" href="/favicon.ico" sizes="any">
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            width: 8.5in;
-            height: 11in;
-            margin: 0 auto;
-            padding: 0.5in 0.75in; /* Reduced top padding slightly to 0.5in */
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+    <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/shared/critical.css">
+    <link rel="stylesheet" href="/shared/tailwind.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/shared/styles.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/shared/tailwind.css"><link rel="stylesheet" href="/shared/styles.css"></noscript>
 
-        /* --- TYPOGRAPHY --- */
-        h1, h2, h3, h4 {
-            font-family: var(--font-heading);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            line-height: 1.1;
-            color: var(--text-main);
-        }
-
-        .text-muted { color: var(--text-muted); }
-        
-        /* --- 1. HEADER --- */
-        header {
-            text-align: center;
-            margin-bottom: 0.3in; /* Reduced slightly */
-            padding-bottom: 0.15in; /* Reduced slightly */
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        /* Center Logo Styles */
-        .logo-wrapper-center {
-            display: block;
-            margin-bottom: 0.15in;
-            text-align: center;
-        }
-
-        .header-logo-center {
-            height: 0.7in; /* Adjusted size for the full logo */
-            display: inline-block;
-        }
-
-        .logo-fallback-center {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 22px;
-            letter-spacing: 0.1em;
-            color: var(--text-main);
-            text-transform: uppercase;
-        }
-        
-        /* REMOVED CORNER LOGO STYLES */
-
-        header h1 {
-            font-size: 32px;
-            font-weight: 500;
-            margin-bottom: 0.05in;
-            letter-spacing: 0.1em;
-        }
-
-        header .subline {
-            font-family: var(--font-body);
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-weight: 500;
-        }
-
-        /* --- 2. CORE PROGRAMS --- */
-        .core-programs {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0.2in;
-            margin-bottom: 0.25in;
-        }
-
-        .program-card {
-            border: 1px solid var(--border-color);
-            padding: 0.2in;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 1.8in; /* Adjusted height */
-            text-align: left;
-            position: relative;
-        }
-
-        .program-title {
-            font-family: var(--font-heading);
-            font-size: 16px;
-            color: var(--text-main);
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        .program-price {
-            font-family: var(--font-heading);
-            font-size: 26px;
-            color: var(--text-main);
-            font-weight: 400;
-            margin-top: auto;
-        }
-
-        .program-period {
-            font-family: var(--font-body);
-            font-size: 9px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: block;
-            margin-top: 2px;
-        }
-
-        /* Sub-details for Weight Loss Card */
-        .card-subtext {
-            font-size: 9px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            line-height: 1.3;
-            font-weight: 300;
-        }
-
-        /* Gender price split */
-        .price-split {
-            margin-top: auto;
-        }
-        .price-split-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            font-family: var(--font-heading);
-        }
-        .price-split-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-family: var(--font-body);
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .price-split-amount {
-            font-size: 22px;
-            color: var(--text-main);
-            font-weight: 400;
-        }
-        .price-split-row + .price-split-row {
-            margin-top: 2px;
-        }
-        .price-split .program-period {
-            margin-top: 4px;
-        }
-
-        /* --- NEW SECTION: WHAT'S INCLUDED --- */
-        .included-section {
-            margin-bottom: 0.3in; /* Reduced slightly */
-            padding-bottom: 0.15in;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .included-header {
-            font-family: var(--font-heading);
-            font-size: 12px;
-            color: var(--text-main);
-            margin-bottom: 0.15in;
-            letter-spacing: 0.1em;
-        }
-
-        .included-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 Columns now */
-            gap: 0.2in;
-        }
-
-        .included-item h3 {
-            font-size: 11px;
-            margin-bottom: 3px;
-        }
-        
-        .included-item p {
-            font-size: 10px;
-            color: var(--text-muted);
-            line-height: 1.3;
-        }
-
-        .value-line {
-            margin-top: 0.15in;
-            font-size: 10px;
-            color: var(--text-muted);
-            font-style: italic;
-            border-top: 1px dashed var(--border-color);
-            padding-top: 6px;
-            display: block;
-        }
-
-        /* --- 3. COMMON LIST STYLES --- */
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: 12px;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 4px;
-            margin-bottom: 10px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 6px;
-            font-size: 11px;
-        }
-
-        .item-name {
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .item-price {
-            color: var(--text-muted);
-            font-weight: 400;
-            text-align: right;
-        }
-
-        /* --- LAYOUT COLUMNS --- */
-        .main-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.4in;
-            flex-grow: 1; 
-        }
-
-        .add-ons-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0 0.2in;
-        }
-
-        /* --- FOOTER CALLOUT --- */
-        .footer-callout {
-            margin-top: auto; /* Push to bottom of flex container */
-            margin-bottom: auto; /* Center vertically if there is extra space */
-            border: 1px solid var(--border-color); /* Changed from var(--text-main) to var(--border-color) */
-            padding: 0.2in;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-            align-self: stretch; /* Ensure it takes full width */
-        }
-
-        .footer-left h3 {
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-        .footer-left p {
-            font-size: 10px;
-            color: var(--text-muted);
-        }
-
-        .footer-right {
-            text-align: right;
-        }
-        
-        .market-val {
-            font-size: 10px;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 1px;
-        }
-
-        .your-price {
-            font-family: var(--font-heading);
-            font-size: 18px;
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        /* --- RESPONSIVE MOBILE STYLES --- */
-        @media screen and (max-width: 768px) {
-            body {
-                width: 100%;
-                height: auto;
-                padding: 1rem;
-            }
-
-            header h1 {
-                font-size: 24px;
-            }
-
-            .header-logo-center {
-                height: 0.5in;
-            }
-
-            .core-programs {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-
-            .program-card {
-                height: auto;
-                padding: 1rem;
-            }
-
-            .program-title {
-                font-size: 14px;
-            }
-
-            .program-price {
-                font-size: 22px;
-            }
-
-            .price-split-amount {
-                font-size: 20px;
-            }
-
-            .included-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.75rem;
-            }
-
-            .main-columns {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .add-ons-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-callout {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.75rem;
-            }
-
-            .footer-right {
-                text-align: center;
-            }
-
-            .item-row {
-                font-size: 13px;
-            }
-
-            .section-title {
-                font-size: 11px;
-            }
-        }
-
-        /* --- PRINT MEDIA QUERY --- */
-        @media print {
-            body {
-                width: 8.5in;
-                height: 11in;
-                padding: 0.5in 0.75in;
-                /* Force background color print */
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            @page {
-                size: 8.5in 11in;
-                margin: 0;
-            }
-        }
-    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://moonshotmp.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://moonshotmp.com/pricing/"}
+        ]
+    }
+    </script>
 </head>
-<body>
+<body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen">
 
-    <!-- 1. HEADER -->
-    <header>
-        <!-- Center Logo (Full Logo) -->
-        <div class="logo-wrapper-center">
-            <img src="/images/fulllogodark.png" alt="Moonshot Medical + Performance" class="header-logo-center" width="1972" height="1454" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-            <div class="logo-fallback-center" style="display:none;">MOONSHOT MEDICAL + PERFORMANCE</div>
-        </div>
-        
-        <!-- REMOVED CORNER LOGO -->
+    <script src="/shared/header.js" defer></script>
 
-        <h1>Pricing Overview</h1>
-        <div class="subline">Performance Medicine • Hormones • Body Composition</div>
-    </header>
+    <main class="flex-grow pt-20">
 
-    <!-- 2. CORE PROGRAMS -->
-    <main>
-    <section class="core-programs">
-        <div class="program-card">
-            <div class="program-title">HORMONE<br>OPTIMIZATION</div>
-            <div class="price-split">
-                <div class="price-split-row">
-                    <span class="price-split-label">Men</span>
-                    <span class="price-split-amount">$235</span>
-                </div>
-                <div class="price-split-row">
-                    <span class="price-split-label">Women</span>
-                    <span class="price-split-amount">$285</span>
-                </div>
-                <span class="program-period">Per Month</span>
+        <!-- Hero -->
+        <section class="py-16 md:py-20 bg-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Moonshot Medical &middot; Park Ridge, IL</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6">PRICING</h1>
+                <p class="text-brand-gray text-lg font-light max-w-2xl mx-auto mb-8">
+                    Every price we charge, in one place. Programs are monthly with no long-term contract; scans, labs and injections are pay as you go. HSA/FSA accepted.
+                </p>
+                <nav aria-label="Pricing sections" class="flex flex-wrap justify-center gap-2 text-sm">
+                    <a href="#weight-loss" class="bg-white/5 border border-white/10 px-4 py-2 text-brand-light hover:bg-white/10 transition">Weight Loss</a>
+                    <a href="#hormones" class="bg-white/5 border border-white/10 px-4 py-2 text-brand-light hover:bg-white/10 transition">Hormones</a>
+                    <a href="#diagnostics" class="bg-white/5 border border-white/10 px-4 py-2 text-brand-light hover:bg-white/10 transition">Diagnostics</a>
+                    <a href="#injections" class="bg-white/5 border border-white/10 px-4 py-2 text-brand-light hover:bg-white/10 transition">Injections</a>
+                    <a href="#aesthetics" class="bg-white/5 border border-white/10 px-4 py-2 text-brand-light hover:bg-white/10 transition">Aesthetics</a>
+                </nav>
             </div>
-        </div>
-        <div class="program-card">
-            <div class="program-title">WEIGHT LOSS &<br>METABOLIC</div>
-            
-            <!-- Clarification Subtext -->
-            <div style="margin-bottom: auto; margin-top: 8px;">
-                <p class="card-subtext">• Includes prescribed medication</p>
-                <p class="card-subtext">• Includes monthly nutrition coaching</p>
-                <p class="card-subtext">• Priced by dose — semaglutide from $195, tirzepatide from $235</p>
-                <p class="card-subtext">• Monthly price steps up as your dose increases</p>
-            </div>
+        </section>
 
-            <div class="program-price">
-                From $195
-                <span class="program-period">Per Month</span>
-            </div>
-        </div>
-        <div class="program-card">
-            <div class="program-title">COMBINED<br>PROGRAM</div>
-            <div class="price-split">
-                <div class="price-split-row">
-                    <span class="price-split-label">Men</span>
-                    <span class="price-split-amount">From $360</span>
-                </div>
-                <div class="price-split-row">
-                    <span class="price-split-label">Women</span>
-                    <span class="price-split-amount">From $410</span>
-                </div>
-                <span class="program-period">Per Month</span>
-            </div>
-        </div>
-    </section>
+        <!-- Weight Loss -->
+        <section id="weight-loss" class="py-16 md:py-20 bg-brand-light text-brand-dark scroll-mt-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-brand-slate text-xs uppercase tracking-widest mb-2">GLP-1 Weight Loss</p>
+                <h2 class="text-3xl font-bold mb-4">YOU PAY FOR THE DOSE YOU NEED</h2>
+                <p class="text-brand-slate font-light mb-8 max-w-2xl">
+                    Your monthly price follows your dose. You and your provider find the lowest dose that works for your body, and that is all you pay for. Every tier includes your medication, provider visits, labs, DEXA tracking and nutrition coaching. Brand-name GLP-1s at retail run <span class="line-through">$1,000 to $1,500 a month</span> without insurance.
+                </p>
 
-    <!-- NEW SECTION: WHAT'S INCLUDED -->
-    <section class="included-section">
-        <h2 class="included-header">WHAT’S INCLUDED (IN ABOVE PROGRAMS)</h2>
-        <div class="included-grid">
-            <div class="included-item">
-                <h3>DEXA Scan</h3>
-                <p>1 scan per quarter included<br>for tracking body composition.</p>
-            </div>
-            <div class="included-item">
-                <h3>Comprehensive Bloodwork</h3>
-                <p>Detailed panels every 6 months<br>included in membership.</p>
-            </div>
-            <div class="included-item">
-                <h3>Medical Oversight</h3>
-                <p>Licensed providers, ongoing<br>monitoring & personalized care.</p>
-            </div>
-            <div class="included-item">
-                <h3>Vitamin Injection</h3>
-                <p>1 complimentary injection<br>per month included.</p>
-            </div>
-        </div>
-        <div class="value-line">
-            Estimated annual value of included services: $1,500+
-        </div>
-    </section>
-
-    <!-- 3. SPLIT COLUMNS -->
-    <div class="main-columns">
-        
-        <!-- LEFT COLUMN -->
-        <div>
-            <!-- ADD-ONS -->
-            <div style="margin-bottom: 0.25in;">
-                <h3 class="section-title">ADD-ON THERAPIES</h3>
-                <div class="add-ons-grid">
-                    <div class="item-row">
-                        <span class="item-name">NAD+</span>
-                        <span class="item-price">$60 / shot</span>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-brand-dark text-brand-light p-6 sm:p-8 rounded-sm">
+                        <h3 class="text-xl font-bold mb-1">Semaglutide</h3>
+                        <p class="text-brand-gray text-sm font-light mb-4">From $195/mo, up to $295/mo</p>
+                        <table class="w-full text-sm text-brand-gray font-light">
+                            <tbody>
+                                <tr class="border-b border-white/10"><td class="py-2">0.25 to 0.5 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$195/mo</td></tr>
+                                <tr class="border-b border-white/10"><td class="py-2">1.0 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$235/mo</td></tr>
+                                <tr class="border-b border-white/10"><td class="py-2">1.7 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$265/mo</td></tr>
+                                <tr><td class="py-2">2.4 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$295/mo</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="item-row">
-                        <span class="item-name">Glutathione</span>
-                        <span class="item-price">$30 / shot</span>
-                    </div>
-                    <div class="item-row">
-                        <span class="item-name">MIC B</span>
-                        <span class="item-price">$30 / shot</span>
-                    </div>
-                    <div class="item-row">
-                        <span class="item-name">Vitamin C</span>
-                        <span class="item-price">$30 / shot</span>
-                    </div>
-                    <div class="item-row">
-                        <span class="item-name">B12</span>
-                        <span class="item-price">$30 / shot</span>
+                    <div class="bg-brand-dark text-brand-light p-6 sm:p-8 rounded-sm">
+                        <h3 class="text-xl font-bold mb-1">Tirzepatide</h3>
+                        <p class="text-brand-gray text-sm font-light mb-4">From $235/mo, up to $435/mo</p>
+                        <table class="w-full text-sm text-brand-gray font-light">
+                            <tbody>
+                                <tr class="border-b border-white/10"><td class="py-2">2.5 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$235/mo</td></tr>
+                                <tr class="border-b border-white/10"><td class="py-2">5 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$275/mo</td></tr>
+                                <tr class="border-b border-white/10"><td class="py-2">7.5 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$315/mo</td></tr>
+                                <tr class="border-b border-white/10"><td class="py-2">10 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$355/mo</td></tr>
+                                <tr class="border-b border-white/10"><td class="py-2">12.5 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$395/mo</td></tr>
+                                <tr><td class="py-2">15 mg/week</td><td class="py-2 text-right text-brand-light font-bold">$435/mo</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
 
-            <!-- MEDICATIONS -->
-            <div>
-                <h3 class="section-title">MEDICATIONS & MONITORING</h3>
-                <div class="item-row">
-                    <span class="item-name">HCG</span>
-                    <span class="item-price">$350 / month</span>
-                </div>
-                <div class="item-row">
-                    <span class="item-name">Enclomiphene</span>
-                    <span class="item-price">$200 / month</span>
-                </div>
-                <div class="item-row">
-                    <span class="item-name">Tadalafil</span>
-                    <span class="item-price">$70 / month</span>
+                <p class="text-brand-slate text-sm font-light mt-6">Insurance already covers your GLP-1? <a href="#hormones-addons" class="underline decoration-brand-slate/30 hover:decoration-brand-slate">Medical Oversight</a> is $150/mo and we manage the labs, DEXA and dosing while you fill through your plan.</p>
+
+                <p class="text-brand-slate text-xs font-light mt-6">Compounded preparations are not FDA-approved drugs.</p>
+
+                <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <a href="https://moonshot.moonshotehr.com/book/consult" class="btn-primary text-center">Book Your Free Consult</a>
+                    <p class="text-brand-slate text-sm font-light">or call <a href="tel:+12244354280" class="underline decoration-brand-slate/30 hover:decoration-brand-slate">224-435-4280</a> &middot; <a href="/medical/weight-loss/" class="underline decoration-brand-slate/30 hover:decoration-brand-slate">How the program works</a></p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- RIGHT COLUMN -->
-        <div>
-            <!-- DIAGNOSTICS -->
-            <div>
-                <h3 class="section-title">DIAGNOSTICS</h3>
-                <div class="item-row">
-                    <span class="item-name">DEXA Scan</span>
-                    <span class="item-price">$150</span>
+        <!-- Hormones -->
+        <section id="hormones" class="py-16 md:py-20 bg-brand-dark scroll-mt-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Hormone Optimization</p>
+                <h2 class="text-3xl font-bold text-brand-light mb-4">ONE MONTHLY PRICE</h2>
+                <p class="text-brand-gray font-light mb-8 max-w-2xl">
+                    Hormone programs include your medication, provider visits, comprehensive labs every 6 months, 2 DEXA scans per year and 1 vitamin injection per month.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white/5 border border-white/10 p-6 sm:p-8 rounded-sm">
+                        <h3 class="text-xl font-bold text-brand-light mb-1"><a href="/medical/mens-hormones/" class="hover:underline">Men&rsquo;s Hormone Optimization (TRT)</a></h3>
+                        <p class="text-3xl font-bold text-brand-light">$235<span class="text-lg font-normal text-brand-gray">/mo</span></p>
+                        <p class="text-brand-gray text-sm font-light mt-2">All-inclusive.</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 p-6 sm:p-8 rounded-sm">
+                        <h3 class="text-xl font-bold text-brand-light mb-1"><a href="/medical/womens-hormones/" class="hover:underline">Women&rsquo;s Hormone Optimization (BHRT)</a></h3>
+                        <p class="text-3xl font-bold text-brand-light">$285<span class="text-lg font-normal text-brand-gray">/mo</span></p>
+                        <p class="text-brand-gray text-sm font-light mt-2">All-inclusive.</p>
+                    </div>
                 </div>
-                <div class="item-row">
-                    <span class="item-name">DEXA Scan (2-pack)</span>
-                    <span class="item-price">$225</span>
-                </div>
-                <div class="item-row">
-                    <span class="item-name">Hormone Panel</span>
-                    <span class="item-price">$90</span>
+
+                <h3 class="text-lg font-bold text-brand-light mt-10 mb-1">Hormones + GLP-1 weight loss</h3>
+                <p class="text-brand-gray text-sm font-light mb-4">Combined programs save $70/mo against buying both separately. Prices shown are starting doses.</p>
+                <table class="w-full text-sm text-brand-gray font-light">
+                    <tbody>
+                        <tr class="border-b border-white/10"><td class="py-2">Men&rsquo;s Hormones + Semaglutide</td><td class="py-2 text-right text-brand-light font-bold">$360/mo</td></tr>
+                        <tr class="border-b border-white/10"><td class="py-2">Men&rsquo;s Hormones + Tirzepatide</td><td class="py-2 text-right text-brand-light font-bold">$400/mo</td></tr>
+                        <tr class="border-b border-white/10"><td class="py-2">Women&rsquo;s Hormones + Semaglutide</td><td class="py-2 text-right text-brand-light font-bold">$410/mo</td></tr>
+                        <tr><td class="py-2">Women&rsquo;s Hormones + Tirzepatide</td><td class="py-2 text-right text-brand-light font-bold">$450/mo</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 id="hormones-addons" class="text-lg font-bold text-brand-light mt-10 mb-4 scroll-mt-24">Add-ons and oversight</h3>
+                <table class="w-full text-sm text-brand-gray font-light">
+                    <tbody>
+                        <tr class="border-b border-white/10"><td class="py-2">Medical Oversight<br><span class="text-xs">When insurance covers your medication: prescription to your pharmacy, 2 DEXA scans per year, blood panels every 6 months, 1 vitamin shot per month</span></td><td class="py-2 text-right text-brand-light font-bold align-top">$150/mo</td></tr>
+                        <tr class="border-b border-white/10"><td class="py-2">Enclomiphene</td><td class="py-2 text-right text-brand-light font-bold">$200/mo</td></tr>
+                        <tr class="border-b border-white/10"><td class="py-2">Tadalafil (daily)</td><td class="py-2 text-right text-brand-light font-bold">$70/mo</td></tr>
+                        <tr><td class="py-2">HCG (fertility preservation)</td><td class="py-2 text-right text-brand-light font-bold">$350/mo</td></tr>
+                    </tbody>
+                </table>
+
+                <p class="text-brand-gray/70 text-xs font-light mt-6">Compounded preparations are not FDA-approved drugs.</p>
+
+                <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <a href="https://moonshot.moonshotehr.com/book/consult" class="btn-primary text-center">Book Your Free Consult</a>
+                    <p class="text-brand-gray text-sm font-light">or call <a href="tel:+12244354280" class="underline decoration-brand-gray/30 hover:decoration-brand-gray">224-435-4280</a></p>
                 </div>
             </div>
-        </div>
+        </section>
 
-    </div>
+        <!-- Diagnostics -->
+        <section id="diagnostics" class="py-16 md:py-20 bg-brand-light text-brand-dark scroll-mt-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-brand-slate text-xs uppercase tracking-widest mb-2">Diagnostics</p>
+                <h2 class="text-3xl font-bold mb-4">SCANS AND LABS</h2>
+                <p class="text-brand-slate font-light mb-8 max-w-2xl">No referral and no insurance needed. Results are reviewed with a provider.</p>
 
-    <!-- Spacer to help vertical centering of footer in remaining space -->
-    <div style="flex-grow: 1;"></div>
+                <table class="w-full text-sm text-brand-slate font-light">
+                    <tbody>
+                        <tr class="border-b border-brand-slate/20"><td class="py-3"><a href="/medical/dexa-scan/" class="text-brand-dark font-normal underline decoration-brand-slate/30 hover:decoration-brand-slate">DEXA Scan</a><br><span class="text-xs">Body composition, bone density, visceral fat</span></td><td class="py-3 text-right text-brand-dark font-bold align-top">$150</td></tr>
+                        <tr class="border-b border-brand-slate/20"><td class="py-3"><span class="text-brand-dark font-normal">DEXA Scan 2-pack</span><br><span class="text-xs">A baseline and a follow-up scan</span></td><td class="py-3 text-right text-brand-dark font-bold align-top">$225</td></tr>
+                        <tr class="border-b border-brand-slate/20"><td class="py-3"><a href="/medical/blood-panels/" class="text-brand-dark font-normal underline decoration-brand-slate/30 hover:decoration-brand-slate">Comprehensive Blood Panel</a><br><span class="text-xs">60+ biomarkers</span></td><td class="py-3 text-right text-brand-dark font-bold align-top">$285</td></tr>
+                        <tr class="border-b border-brand-slate/20"><td class="py-3"><span class="text-brand-dark font-normal">Hormone Panel (basic)</span><br><span class="text-xs">Core hormone markers between full panels</span></td><td class="py-3 text-right text-brand-dark font-bold align-top">$90</td></tr>
+                        <tr><td class="py-3"><span class="text-brand-dark font-normal">Performance Baseline Bundle</span><br><span class="text-xs">DEXA + Comprehensive Blood Panel + consult</span></td><td class="py-3 text-right text-brand-dark font-bold align-top">$405</td></tr>
+                    </tbody>
+                </table>
 
-    <!-- 4. FOOTER CALLOUT -->
-    <div style="text-align:center; padding:8px 0 4px; font-size:12.5px; font-weight:600;">
-        Ready to start? Book a free consult: <a href="https://moonshotmp.com/booking/medical/" style="color:inherit;">moonshotmp.com/booking</a> &nbsp;|&nbsp; Not sure you qualify? Free GLP-1 quiz: <a href="https://moonshotmp.com/quiz/glp1/" style="color:inherit;">moonshotmp.com/quiz/glp1</a>
-    </div>
+                <p class="text-brand-slate text-sm font-light mt-6">Want the draw at your home or office? See <a href="/medical/mobile-blood-draw/" class="underline decoration-brand-slate/30 hover:decoration-brand-slate">mobile blood draw pricing</a>.</p>
+
+                <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <a href="https://moonshot.moonshotehr.com/book/dexa" class="btn-primary text-center">Book a DEXA Scan</a>
+                    <p class="text-brand-slate text-sm font-light">or <a href="https://moonshot.moonshotehr.com/book/blood-panel" class="underline decoration-brand-slate/30 hover:decoration-brand-slate">book a blood panel</a> &middot; call <a href="tel:+12244354280" class="underline decoration-brand-slate/30 hover:decoration-brand-slate">224-435-4280</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Injections -->
+        <section id="injections" class="py-16 md:py-20 bg-brand-dark scroll-mt-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Injections</p>
+                <h2 class="text-3xl font-bold text-brand-light mb-4">NAD+ AND VITAMIN SHOTS</h2>
+                <p class="text-brand-gray font-light mb-8 max-w-2xl">Five-minute subcutaneous or intramuscular shots. No IV chair, no membership required.</p>
+
+                <table class="w-full text-sm text-brand-gray font-light">
+                    <tbody>
+                        <tr class="border-b border-white/10"><td class="py-3"><a href="/medical/nad/" class="text-brand-light font-normal underline decoration-brand-gray/30 hover:decoration-brand-gray">NAD+</a></td><td class="py-3 text-right text-brand-light font-bold">$60 per shot</td></tr>
+                        <tr class="border-b border-white/10"><td class="py-3"><span class="text-brand-light font-normal">NAD+ Monthly Membership</span></td><td class="py-3 text-right text-brand-light font-bold">$205/mo</td></tr>
+                        <tr class="border-b border-white/10"><td class="py-3"><span class="text-brand-light font-normal">Glutathione</span></td><td class="py-3 text-right text-brand-light font-bold">$30 per shot</td></tr>
+                        <tr><td class="py-3"><span class="text-brand-light font-normal">Vitamin C</span></td><td class="py-3 text-right text-brand-light font-bold">$30 per shot</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <a href="https://moonshot.moonshotehr.com/book/consult" class="btn-primary text-center">Book a Visit</a>
+                    <p class="text-brand-gray text-sm font-light">or call <a href="tel:+12244354280" class="underline decoration-brand-gray/30 hover:decoration-brand-gray">224-435-4280</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aesthetics -->
+        <section id="aesthetics" class="py-16 md:py-20 bg-brand-light text-brand-dark scroll-mt-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-brand-slate text-xs uppercase tracking-widest mb-2">Aesthetics</p>
+                <h2 class="text-3xl font-bold mb-4">PRICED PER UNIT</h2>
+                <table class="w-full text-sm text-brand-slate font-light">
+                    <tbody>
+                        <tr><td class="py-3"><a href="/medical/botox-park-ridge/" class="text-brand-dark font-normal underline decoration-brand-slate/30 hover:decoration-brand-slate">Jeuveau</a><br><span class="text-xs">You pay for the units you use</span></td><td class="py-3 text-right text-brand-dark font-bold align-top">$12/unit</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <a href="https://moonshot.moonshotehr.com/book/aesthetics" class="btn-primary text-center">Book Aesthetics</a>
+                    <p class="text-brand-slate text-sm font-light">or call <a href="tel:+12244354280" class="underline decoration-brand-slate/30 hover:decoration-brand-slate">224-435-4280</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Closing -->
+        <section class="py-16 bg-brand-dark text-center">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="text-brand-light text-sm font-semibold">Free initial consult &middot; No long-term contract &middot; Cancel anytime &middot; HSA/FSA accepted</p>
+                <p class="text-brand-gray text-sm font-light mt-2">Not sure where to start? Take the free <a href="/quiz/glp1/" class="underline decoration-brand-gray/30 hover:decoration-brand-gray">GLP-1 quiz</a> or <a href="/quiz/low-t/" class="underline decoration-brand-gray/30 hover:decoration-brand-gray">Low-T quiz</a>.</p>
+            </div>
+        </section>
+
     </main>
-    <footer class="footer-callout">
-        <div class="footer-left">
-            <h3>INITIAL COMPREHENSIVE LABS</h3>
-            <p>Required for all new patients • 50+ Biomarkers</p>
+
+    <!-- Static crawlable footer (replaced by footer.js for JS visitors) -->
+    <div id="site-footer" class="bg-black border-t border-white/10 py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-4 gap-8 text-sm">
+            <nav aria-label="Medical">
+                <p class="text-brand-light font-bold mb-3">Medical</p>
+                <ul class="space-y-1 text-brand-gray">
+                    <li><a href="/medical/">Medical Optimization</a></li>
+                    <li><a href="/medical/mens-hormones/">Men&rsquo;s Hormones / TRT</a></li>
+                    <li><a href="/medical/womens-hormones/">Women&rsquo;s Hormones</a></li>
+                    <li><a href="/medical/weight-loss/">GLP-1 Weight Loss</a></li>
+                    <li><a href="/medical/dexa-scan/">DEXA Body Composition</a></li>
+                    <li><a href="/medical/blood-panels/">Comprehensive Blood Panels</a></li>
+                    <li><a href="/medical/nad/">NAD+ Therapy</a></li>
+                </ul>
+            </nav>
+            <nav aria-label="Rehab and recovery">
+                <p class="text-brand-light font-bold mb-3">Rehab &amp; Recovery</p>
+                <ul class="space-y-1 text-brand-gray">
+                    <li><a href="/rehab/">Physical Rehabilitation</a></li>
+                    <li><a href="/rehab/chiropractic/">Chiropractic Care</a></li>
+                    <li><a href="/rehab/physical-rehab/">Physical Rehab</a></li>
+                    <li><a href="/rehab/shockwave/">Shockwave Therapy</a></li>
+                    <li><a href="/rehab/dry-needling/">Dry Needling</a></li>
+                    <li><a href="/rehab/trigger-point/">Trigger Point Injections</a></li>
+                </ul>
+            </nav>
+            <nav aria-label="Learn and data">
+                <p class="text-brand-light font-bold mb-3">Learn &amp; Lab Data</p>
+                <ul class="space-y-1 text-brand-gray">
+                    <li><a href="/blood-work/">Blood Work Explained</a></li>
+                    <li><a href="/learn/what-labs-to-test/">What Labs to Test</a></li>
+                    <li><a href="/learn/trt-guide/">TRT Guide</a></li>
+                    <li><a href="/learn/testosterone-levels-by-age/">Testosterone by Age</a></li>
+                    <li><a href="/learn/thyroid-optimization/">Thyroid Optimization</a></li>
+                    <li><a href="/learn/menopause-perimenopause/">Menopause &amp; Perimenopause</a></li>
+                    <li><a href="/blood-work/cardiovascular-lipids/">Cardiovascular &amp; Lipids</a></li>
+                    <li><a href="/blood-work/metabolic-blood-sugar/">Metabolic &amp; Blood Sugar</a></li>
+                    <li><a href="/learn/">All Articles</a></li>
+                </ul>
+            </nav>
+            <nav aria-label="Company and quizzes">
+                <p class="text-brand-light font-bold mb-3">Company</p>
+                <ul class="space-y-1 text-brand-gray">
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="/ourstory/">Our Story</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                    <li><a href="/pricing/">Pricing</a></li>
+                    <li><a href="/quiz/low-t/">Low-T Quiz</a></li>
+                    <li><a href="/quiz/perimenopause/">Perimenopause Quiz</a></li>
+                    <li><a href="/quiz/glp1/">GLP-1 Quiz</a></li>
+                    <li><a href="/quiz/body-comp/">Body Composition Quiz</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="footer-right">
-            <span class="market-val">Market value: $450</span>
-            <span class="your-price">Your price: $285</span>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 mt-8 pt-6 border-t border-white/5 text-xs text-brand-gray/70">
+            <p><strong>Moonshot Medical and Performance</strong> &mdash; 542 Busse Hwy, Park Ridge, IL 60068 &middot; <a href="tel:+12244354280">224-435-4280</a> &middot; <a href="mailto:hello@moonshotmp.com">hello@moonshotmp.com</a></p>
+            <p class="mt-1">Performance medicine &amp; physical rehabilitation in Park Ridge, IL.</p>
+            <nav aria-label="Park Ridge services" class="mt-3"><p>Park Ridge: <a href="/learn/trt-park-ridge/">TRT</a> &middot; <a href="/medical/semaglutide-park-ridge/">Semaglutide</a> &middot; <a href="/medical/thyroid-test-park-ridge/">Thyroid Test</a> &middot; <a href="/medical/daily-tadalafil-park-ridge/">Daily Tadalafil</a> &middot; <a href="/learn/dexa-scan-park-ridge/">DEXA Scan</a> &middot; <a href="/learn/physical-rehab-park-ridge/">Physical Rehab</a> &middot; <a href="/learn/shockwave-therapy-park-ridge/">Shockwave Therapy</a> &middot; <a href="/learn/hormone-quiz-park-ridge/">Hormone Testing</a></p></nav>
         </div>
-    </footer>
-    
-    <!-- Spacer to help vertical centering of footer in remaining space -->
-    <div style="flex-grow: 1;"></div>
+    </div>
+    <script src="/shared/footer.js" defer></script>
 
 </body>
 </html>

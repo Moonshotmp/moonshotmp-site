@@ -111,6 +111,12 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://moonshotmp.com/pricing/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://moonshotmp.com/medical/nad/</loc>
     <lastmod>2026-10-15</lastmod>
     <priority>0.8</priority>

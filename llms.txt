@@ -171,6 +171,8 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 
 ## Pricing Summary
 
+Full price list: https://moonshotmp.com/pricing/
+
 | Service | Price |
 |---------|-------|
 | DEXA Body Composition Scan | $150 |
@@ -261,7 +263,7 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - Shockwave Therapy: https://moonshotmp.com/rehab/shockwave/
 - Rehab Testimonials: https://moonshotmp.com/rehab/testimonials/
 
-### Blood Work Education Series (10 domains, 62 biomarkers)
+### Blood Work Education Series (10 domains, 60+ biomarkers)
 - Blood Work Guide (hub): https://moonshotmp.com/blood-work/
 - Cardiovascular & Lipids: https://moonshotmp.com/blood-work/cardiovascular-lipids/
 - Metabolic & Blood Sugar: https://moonshotmp.com/blood-work/metabolic-blood-sugar/
