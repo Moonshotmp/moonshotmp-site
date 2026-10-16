@@ -83,6 +83,13 @@ export default async function handler(req, context) {
   const guard = checkSubmission(data);
   if (!guard.ok) {
     logBlocked('booking-callback', guard.reason);
+    // A person can trip the timing checks (tab open for hours, autofill and
+    // an instant submit). Answer those with an error so the page tells them
+    // to call or text instead of showing a receipt for a dropped request.
+    // Honeypot and missing guard fields stay silent, so a bot learns nothing.
+    if (guard.reason === 'too_fast' || guard.reason === 'stale') {
+      return json({ ok: false, error: 'Please call or text us' }, 422);
+    }
     return json({ ok: true });
   }
 

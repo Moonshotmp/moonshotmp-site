@@ -138,6 +138,18 @@ describe('booking-callback', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('answers a timing failure with an error so a real person is not shown a false receipt', async () => {
+    fetchMock = routedFetch();
+    vi.stubGlobal('fetch', fetchMock);
+
+    const stale = await bookingCallback(post({ website: '', elapsed_ms: 7 * 60 * 60 * 1000, name: 'Priya Raman', phone: '224-555-0187' }), context);
+    expect(stale.status).toBe(422);
+    expect((await stale.json()).ok).toBe(false);
+    const fast = await bookingCallback(post({ website: '', elapsed_ms: 900, name: 'Priya Raman', phone: '224-555-0187' }), context);
+    expect(fast.status).toBe(422);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it('refuses GET', async () => {
     const res = await bookingCallback(new Request('https://moonshotmp.com/.netlify/functions/booking-callback'), context);
     expect(res.status).toBe(405);
