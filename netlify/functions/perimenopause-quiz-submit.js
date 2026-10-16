@@ -1,5 +1,6 @@
 import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
+import { sendQuizSmsIfConsented } from './shared/sms-consent.js';
 
 const INTERNAL_TIER_VALUES = new Set([
   'contraindication-identified',
@@ -147,6 +148,7 @@ export default async function handler(req, context) {
     email: rawEmail,
     phone: rawPhone,
     marketingOptIn,
+    sms_consent: smsConsent,
     result,
     profile,
     ackTimestamp: rawAckTimestamp,
@@ -360,7 +362,8 @@ ${redFlagBlock}
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${safeName || 'Not provided'}</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Email: ${safeEmail}</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Phone: ${safePhone || 'Not provided'}</p>
-        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Marketing Opt-In: ${optIn ? 'Yes' : 'No'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Marketing Opt-In (email): ${optIn ? 'Yes' : 'No'}</p>
+        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">SMS Consent: ${smsConsent === true ? 'Yes' : 'No'}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
@@ -473,24 +476,17 @@ ${redFlagBlock}
       })
     }).catch(err => console.error('[perimenopause-quiz-submit] Marketing drip sync error:', err && err.message));
 
-    // SMS follow-up — only if phone provided AND marketing opt-in is true.
-    // Perimenopause traffic mirrors the bone-density conservative posture.
-    if (phone && optIn === true) {
-      try {
-        await fetch(clinicApi + '/api/webhooks/quiz-sms', {
-          method: 'POST',
-          headers: webhookHeaders,
-          body: JSON.stringify({
-            phone: phone,
-            name: name,
-            quiz_type: 'perimenopause'
-          })
-        });
-      } catch (e) {
-        // Non-fatal — don't block the response
-        console.error('[perimenopause-quiz-submit] Quiz SMS webhook error:', e && e.message);
-      }
-    }
+    // SMS follow-up: only with a phone AND the separate, unticked SMS consent
+    // box ticked. The email-updates box (marketingOptIn) never sends a text.
+    await sendQuizSmsIfConsented({
+      clinicApi,
+      headers: webhookHeaders,
+      phone,
+      name,
+      quizType: 'perimenopause',
+      smsConsent,
+      logTag: 'perimenopause-quiz-submit'
+    });
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
