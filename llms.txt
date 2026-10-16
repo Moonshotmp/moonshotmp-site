@@ -1,6 +1,6 @@
 # Moonshot Medical and Performance
 
-> A performance medicine and physical rehabilitation clinic in Park Ridge, IL. We offer data-driven medical optimization (blood panels, DEXA scans, hormone therapy, GLP-1 weight loss) and hands-on rehabilitation (chiropractic, dry needling, shockwave therapy, trigger point injections) under one roof. No referral needed.
+> A performance medicine and physical rehabilitation clinic in Park Ridge, IL. We offer data-driven medical optimization (blood panels, DEXA scans, hormone therapy, GLP-1 weight loss) and hands-on rehabilitation (chiropractic, dry needling, shockwave therapy, trigger point therapy) under one roof. No referral needed.
 
 ## Quick Facts
 
@@ -40,7 +40,7 @@ Moonshot Medical and Performance shares a building with Moonshot CrossFit at 542
 - Chiropractic care (McKenzie Method)
 - Physical rehabilitation
 - Dry needling
-- Trigger point injections
+- Trigger point therapy and dry needling (no injections)
 - Shockwave therapy (ESWT)
 - IASTM and soft tissue mobilization
 - **Book:** https://moonshotmp.com/booking/rehab/
@@ -65,7 +65,7 @@ Moonshot Medical and Performance shares a building with Moonshot CrossFit at 542
 - Master of Science in Clinical Nutrition (MSc)
 - Diplomate of the American Clinical Board of Nutrition (DACBN)
 - McKenzie Method Certified
-- Leads all rehabilitation services: chiropractic, dry needling, trigger point injections, shockwave therapy
+- Leads all rehabilitation services: chiropractic, dry needling, trigger point therapy, shockwave therapy
 - Also provides nutritional counseling
 
 ### Sarah — RN, MSN
@@ -140,8 +140,8 @@ Movement restoration and strength rehabilitation. Return-to-sport and return-to-
 Releases tight muscles, reduces trigger points, and improves range of motion. Thin monofilament needles target myofascial trigger points to relieve pain and restore function.
 - **Learn more:** https://moonshotmp.com/rehab/dry-needling/
 
-### Trigger Point Injections
-Targeted relief for chronic muscle pain and tension. Injection of local anesthetic into trigger points to break pain cycles and restore function.
+### Trigger Point Therapy and Dry Needling
+Targeted relief for chronic muscle pain and tension. Manual trigger point release and dry needling to break pain cycles and restore function. Moonshot does not perform anesthetic trigger point injections.
 - **Learn more:** https://moonshotmp.com/rehab/trigger-point/
 
 ### Shockwave Therapy (ESWT)
@@ -186,13 +186,13 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 ## Frequently Asked Questions
 
 ### What services does Moonshot Medical and Performance offer?
-Moonshot offers medical optimization and physical rehabilitation under one roof. Medical services include comprehensive blood panels (60+ biomarkers), DEXA body composition scans, men's and women's hormone optimization (TRT and BHRT), and medically supervised weight loss with GLP-1 medications (semaglutide and tirzepatide). Rehabilitation services include chiropractic care (McKenzie Method), physical rehabilitation, dry needling, trigger point injections, and shockwave therapy.
+Moonshot offers medical optimization and physical rehabilitation under one roof. Medical services include comprehensive blood panels (60+ biomarkers), DEXA body composition scans, men's and women's hormone optimization (TRT and BHRT), and medically supervised weight loss with GLP-1 medications (semaglutide and tirzepatide). Rehabilitation services include chiropractic care (McKenzie Method), physical rehabilitation, dry needling, trigger point therapy, and shockwave therapy.
 
 ### How much does TRT cost at Moonshot?
 Men's hormone optimization (TRT) is $235/month. This includes testosterone replacement therapy, medical oversight, comprehensive lab work every 6 months, 2 DEXA body composition scans per year, 1 vitamin injection per month, and ongoing dosing adjustments. There are no hidden fees or surprise lab costs.
 
 ### Do I need a referral to come to Moonshot?
-No referral is needed for any of our services. You can book directly for medical optimization services (blood panels, DEXA scans, hormone therapy, weight loss) or rehabilitation services (chiropractic, dry needling, trigger point injections, shockwave therapy). In Illinois, no referral is required for chiropractic care.
+No referral is needed for any of our services. You can book directly for medical optimization services (blood panels, DEXA scans, hormone therapy, weight loss) or rehabilitation services (chiropractic, dry needling, trigger point therapy, shockwave therapy). In Illinois, no referral is required for chiropractic care.
 
 ### Where is Moonshot Medical located?
 Moonshot Medical and Performance is located at 542 Busse Hwy, Park Ridge, IL 60068. We serve patients throughout the Chicago suburbs and northwest side within approximately a 30-mile radius, including Des Plaines, Niles, Edison Park, Norwood Park, and surrounding areas.
@@ -257,7 +257,7 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - Chiropractic Care: https://moonshotmp.com/rehab/chiropractic/
 - Physical Rehabilitation: https://moonshotmp.com/rehab/physical-rehab/
 - Dry Needling: https://moonshotmp.com/rehab/dry-needling/
-- Trigger Point Injections: https://moonshotmp.com/rehab/trigger-point/
+- Trigger Point Therapy and Dry Needling: https://moonshotmp.com/rehab/trigger-point/
 - Shockwave Therapy: https://moonshotmp.com/rehab/shockwave/
 - Rehab Testimonials: https://moonshotmp.com/rehab/testimonials/
 
@@ -344,7 +344,7 @@ Moonshot Medical (Park Ridge, IL) offers four free clinical screening quizzes th
 - Chiropractor in Park Ridge: https://moonshotmp.com/learn/chiropractor-park-ridge/
 - Dry Needling in Park Ridge: https://moonshotmp.com/learn/dry-needling-park-ridge/
 - Shockwave Therapy in Park Ridge: https://moonshotmp.com/learn/shockwave-therapy-park-ridge/
-- Trigger Point Injections in Park Ridge: https://moonshotmp.com/learn/trigger-point-injections-park-ridge/
+- Trigger Point Treatment in Park Ridge: https://moonshotmp.com/learn/trigger-point-injections-park-ridge/
 - Physical Rehab in Park Ridge: https://moonshotmp.com/learn/physical-rehab-park-ridge/
 - TRT in Chicago: https://moonshotmp.com/learn/trt-chicago/
 - DEXA Scan in Chicago: https://moonshotmp.com/learn/dexa-scan-chicago/
