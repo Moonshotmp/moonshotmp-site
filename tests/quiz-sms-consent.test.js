@@ -148,3 +148,19 @@ describe.each(FUNNELS)('$name SMS consent gate', ({ handler, quizType, result, p
     expect(smsCalls(fetchMock)).toHaveLength(0);
   });
 });
+
+// The consent version string proves which words the person agreed to. Pin the
+// label in every engine so a wording change cannot ship without a version bump.
+describe('SMS consent label is pinned to its version', () => {
+  const LABEL = 'Text me my results and next steps. Message frequency varies. Message and data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy/"';
+
+  it.each(['glp1', 'low-t', 'bone-density', 'perimenopause'])('%s engine carries the v1 label, unticked', async (quiz) => {
+    const { readFileSync } = await import('node:fs');
+    const src = readFileSync(new URL('../quiz/' + quiz + '/quiz-engine.js', import.meta.url), 'utf8');
+    expect(SMS_CONSENT_VERSION).toBe('sms-consent-v1-2026-10-16');
+    expect(src).toContain(LABEL);
+    expect(src).toContain('<input type="checkbox" id="quiz-sms-consent" name="sms_consent" class="mt-1 flex-shrink-0">');
+    expect(src).toContain('Email me occasional updates');
+    expect(src).not.toContain('Send me occasional updates');
+  });
+});
