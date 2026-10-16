@@ -549,7 +549,6 @@ export default async function handler(req, context) {
           body: JSON.stringify({
             phone: phone,
             name: name,
-            peptide: 'low-t-' + internalTier,
             quiz_type: 'low-t'
           })
         });

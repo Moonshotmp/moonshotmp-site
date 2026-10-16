@@ -379,8 +379,6 @@ export default async function handler(req, context) {
     }).catch(err => console.error('[bone-density-quiz-submit] Marketing drip sync error:', err && err.message));
 
     // SMS follow-up — only if phone provided AND marketing opt-in is true.
-    // Bone density traffic is colder than peptide; we are intentionally
-    // more conservative with SMS here than the peptide handler.
     if (phone && optIn) {
       try {
         await fetch(clinicApi + '/api/webhooks/quiz-sms', {
@@ -389,7 +387,6 @@ export default async function handler(req, context) {
           body: JSON.stringify({
             phone: phone,
             name: name,
-            peptide: 'bone-density-tier-' + tier,
             quiz_type: 'bone-density'
           })
         });

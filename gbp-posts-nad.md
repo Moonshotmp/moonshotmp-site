@@ -8,7 +8,7 @@ The problem: NAD+ levels decline roughly 50% between ages 40 and 60. Oral supple
 
 At Moonshot Medical and Performance, we offer NAD+ subcutaneous injections for $60 per shot. No IV required. No 2-hour drip session. Five minutes, near-complete bioavailability, and you're out the door.
 
-NAD+ is relevant for anyone dealing with chronic fatigue, cognitive decline, poor recovery from exercise, or anyone over 40 who wants to maintain cellular function as they age. It also stacks well with hormone optimization, peptide therapy, and GLP-1 weight loss programs.
+NAD+ is relevant for anyone dealing with chronic fatigue, cognitive decline, poor recovery from exercise, or anyone over 40 who wants to maintain cellular function as they age. It also stacks well with hormone optimization and GLP-1 weight loss programs.
 
 We don't guess — we test, track, and optimize. If you're curious whether NAD+ belongs in your protocol, book a consultation.
 
@@ -42,9 +42,9 @@ You train hard. You eat right. You sleep enough. But recovery still lags — sor
 
 NAD+ plays a direct role in mitochondrial biogenesis (building new mitochondria), oxidative stress management, and cellular repair after exercise-induced damage. Athletes with adequate NAD+ levels recover faster, maintain higher energy output, and experience less systemic inflammation.
 
-At Moonshot Medical, we see this firsthand. We share a building with Moonshot CrossFit, and many of our patients are serious athletes — CrossFit competitors, runners, lifters, endurance athletes. NAD+ at $60 per shot has become one of the most popular add-ons for people already on peptide or hormone protocols.
+At Moonshot Medical, we see this firsthand. We share a building with Moonshot CrossFit, and many of our patients are serious athletes — CrossFit competitors, runners, lifters, endurance athletes. NAD+ at $60 per shot has become one of the most popular add-ons for people already on hormone protocols.
 
-The protocol is simple: subcutaneous injection, 5 minutes, done. Loading phase of 2x/week for 2-4 weeks, then maintain based on training volume and goals. Stacks well with BPC-157, TB-500, and Sermorelin for a comprehensive recovery protocol.
+The protocol is simple: subcutaneous injection, 5 minutes, done. Loading phase of 2x/week for 2-4 weeks, then maintain based on training volume and goals.
 
 If you're already investing in your training, invest in the recovery to match.
 

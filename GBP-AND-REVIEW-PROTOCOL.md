@@ -51,7 +51,7 @@ Google allows 750 characters. Use every character. Front-load keywords.
 
 **Copy this exactly:**
 
-> Moonshot Medical and Performance is a medical optimization and physical rehabilitation clinic in Park Ridge, IL. We offer testosterone replacement therapy (TRT), bioidentical hormone replacement therapy (BHRT), GLP-1 medical weight loss (semaglutide and tirzepatide), DEXA body composition scans, comprehensive 60+ biomarker blood panels, peptide therapy, daily tadalafil, and NAD+ injections. Our rehabilitation team provides evidence-based chiropractic care, physical rehab, dry needling, shockwave therapy (ESWT), and trigger point injections. No referrals needed. Walk-in blood draws and DEXA scans available. Serving Park Ridge, Des Plaines, Edison Park, Niles, Norwood Park, Rosemont, and greater Chicago.
+> Moonshot Medical and Performance is a medical optimization and physical rehabilitation clinic in Park Ridge, IL. We offer testosterone replacement therapy (TRT), bioidentical hormone replacement therapy (BHRT), GLP-1 medical weight loss (semaglutide and tirzepatide), DEXA body composition scans, comprehensive 60+ biomarker blood panels, daily tadalafil, and NAD+ injections. Our rehabilitation team provides evidence-based chiropractic care, physical rehab, dry needling, shockwave therapy (ESWT), and trigger point injections. No referrals needed. Walk-in blood draws and DEXA scans available. Serving Park Ridge, Des Plaines, Edison Park, Niles, Norwood Park, Rosemont, and greater Chicago.
 
 **Character count:** ~734
 
@@ -85,37 +85,33 @@ Go to GBP Dashboard > Services > Edit. Add each service under the correct catego
 - Price: $285
 - Description: 60+ biomarker blood test covering hormones, metabolic markers, thyroid, liver, kidney, inflammation, vitamins, and cardiovascular risk. Results reviewed in person with optimization recommendations.
 
-**6. Peptide Therapy**
-- Price: Varies
-- Description: Medical-grade peptide protocols including sermorelin, PT-141, BPC-157, and NAD+ injections. Physician-prescribed for recovery, performance, and optimization goals.
-
-**7. Daily Tadalafil**
+**6. Daily Tadalafil**
 - Price: Varies
 - Description: Daily low-dose tadalafil prescribed for cardiovascular and performance benefits beyond ED treatment. Physician-supervised with lab monitoring. Available as add-on to hormone optimization programs.
 
-**8. NAD+ & Vitamin Injections**
+**7. NAD+ & Vitamin Injections**
 - Price: Varies
 - Description: NAD+ infusions and vitamin injections for energy, recovery, and cellular health. Administered in-clinic by medical staff.
 
 #### Rehabilitation Services
 
-**9. Chiropractic Care**
+**8. Chiropractic Care**
 - Price: Varies
 - Description: Evidence-based chiropractic care using McKenzie Method and functional assessment. Focused on root-cause diagnosis and lasting correction — not indefinite adjustments. No referral required in Illinois.
 
-**10. Dry Needling**
+**9. Dry Needling**
 - Price: Varies
 - Description: Trigger point dry needling for chronic pain, muscle tension, and movement dysfunction. Targets myofascial pain patterns using thin filament needles. Often combined with rehab protocols.
 
-**11. Shockwave Therapy (ESWT)**
+**10. Shockwave Therapy (ESWT)**
 - Price: Varies
 - Description: Extracorporeal shockwave therapy for tendinopathy, plantar fasciitis, chronic pain, and tissue healing. Non-invasive, no downtime. Typically 4-6 sessions.
 
-**12. Trigger Point Injections**
+**11. Trigger Point Injections**
 - Price: Varies
 - Description: Targeted injections for myofascial pain relief. Treats muscle knots and referred pain patterns. Quick in-office procedure with immediate relief for most patients.
 
-**13. Physical Rehabilitation**
+**12. Physical Rehabilitation**
 - Price: Varies
 - Description: Functional physical rehabilitation combining manual therapy, corrective exercise, and movement assessment. Treats the root cause — not just symptoms. No referral needed.
 
@@ -328,7 +324,6 @@ Reviews are most powerful when patients mention specific services and location. 
 | DEXA scan results review | DEXA | Visual, concrete data — easy to talk about |
 | GLP-1 progress check (with DEXA) | Weight Loss | Patient sees fat loss with muscle preserved |
 | Post-rehab course completion | Rehab | Pain resolved, function restored |
-| Peptide therapy check-in (4-6 weeks) | Peptides | Patient noticing improvements |
 
 **When NOT to ask:**
 - First visit (they haven't experienced results yet)

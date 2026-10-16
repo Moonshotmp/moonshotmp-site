@@ -6,7 +6,7 @@ import { defineConfig } from 'vitest/config';
 // We deliberately use the `node` environment — no jsdom — to avoid
 // accidentally importing browser IIFEs that touch `document` on load.
 // Quiz UI engines must NOT be imported in tests; only the extracted
-// pure modules (e.g. quiz/peptides/recommendation.js) are testable.
+// pure modules (e.g. quiz scoring modules) are testable.
 export default defineConfig({
     test: {
         environment: 'node',

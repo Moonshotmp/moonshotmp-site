@@ -7,7 +7,6 @@ vi.mock('../netlify/functions/send-email.js', () => ({
 import { sendEmail } from '../netlify/functions/send-email.js';
 import { checkSubmission, safeName } from '../netlify/functions/shared/antispam.js';
 import leadMagnetSubmit from '../netlify/functions/lead-magnet-submit.js';
-import peptideGuideSend from '../netlify/functions/peptide-guide-send.js';
 
 const human = { website: '', elapsed_ms: 9000 };
 
@@ -113,27 +112,5 @@ describe('handlers', () => {
     for (const call of sendEmail.mock.calls) {
       expect(call[0].html).not.toContain('<img/src=x>');
     }
-  });
-
-  it('peptide-guide-send: honeypot payload sends nothing', async () => {
-    const res = await peptideGuideSend(post({
-      name: 'Vuas', email: 'admin@example.com', website: 'x', elapsed_ms: 9000
-    }));
-    expect(res.status).toBe(200);
-    expect(sendEmail).not.toHaveBeenCalled();
-    expect(fetchMock).not.toHaveBeenCalled();
-  });
-
-  it('peptide-guide-send: calculator protocol renders catalog names only', async () => {
-    const res = await peptideGuideSend(post({
-      ...human, name: 'Kelly', email: 'kelly@example.com',
-      protocol: [{ name: 'BPC-157', price: 250, why: 'x' }, { name: '<b>evil</b>' }, 'Sermorelin']
-    }));
-    expect(res.status).toBe(200);
-    const userHtml = sendEmail.mock.calls.find((c) => c[0].to === 'kelly@example.com')[0].html;
-    expect(userHtml).toContain('Your Personalized Protocol');
-    expect(userHtml).toContain('$500/mo');
-    expect(userHtml).not.toContain('<b>evil</b>');
-    expect(userHtml).not.toContain('[object Object]');
   });
 });
