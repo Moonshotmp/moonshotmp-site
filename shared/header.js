@@ -743,10 +743,6 @@
             { title: "Blood Work Patterns", desc: "How your markers connect and what patterns mean", url: "/blood-work/patterns/", cat: "Blood Work" },
             { title: "Thyroid Function", desc: "TSH, T4, T3 and TPO thyroid testing explained", url: "/blood-work/thyroid-function/", cat: "Blood Work" },
             { title: "Vitamins & Nutrients", desc: "Vitamin and nutrient blood work results explained", url: "/blood-work/vitamins-nutrients/", cat: "Blood Work" },
-            { title: "Men's Blood Panel", desc: "Comprehensive blood panel guide for men", url: "/blood/men/", cat: "Blood Work" },
-            { title: "Women's Blood Panel", desc: "Comprehensive blood panel guide for women", url: "/blood/women/", cat: "Blood Work" },
-            { title: "Men's Hormone Pathways", desc: "Men's hormone optimization treatment pathways", url: "/blood/men/bhrt/", cat: "Blood Work" },
-            { title: "Women's Hormone Pathways", desc: "Women's hormone optimization treatment pathways", url: "/blood/women/bhrt/", cat: "Blood Work" },
             { title: "DEXA vs InBody", desc: "Body composition scan comparison", url: "/medical/dexa-scan/dexa-vs-inbody/", cat: "Diagnostics" },
             { title: "Optimal vs Normal Ranges", desc: "Why normal isn't always optimal", url: "/learn/optimal-vs-normal/", cat: "Diagnostics" },
             { title: "DEXA Scan Cost", desc: "$150 DEXA scan at Moonshot Medical", url: "/learn/dexa-scan-cost/", cat: "Diagnostics" },
@@ -755,7 +751,6 @@
             { title: "DEXA Scan vs Bod Pod", desc: "Which body composition method is more accurate", url: "/learn/dexa-scan-vs-bod-pod/", cat: "Diagnostics" },
             { title: "Sample DEXA Report", desc: "Walkthrough of a real DEXA scan report", url: "/learn/sample-dexa-report/", cat: "Diagnostics" },
             { title: "What Labs to Test", desc: "What labs you should actually be testing beyond the standard panel", url: "/learn/what-labs-to-test/", cat: "Diagnostics" },
-            { title: "Understanding Blood Results", desc: "How to interpret your blood work results", url: "/learn/understanding-blood-results/", cat: "Diagnostics" },
             { title: "Cardiovascular & Lipid Optimization", desc: "Beyond cholesterol — advanced lipid management", url: "/learn/cardiovascular-lipid-optimization/", cat: "Diagnostics" },
             { title: "Vitamin D & Micronutrients", desc: "Hidden health bottlenecks from deficiencies", url: "/learn/vitamin-d-micronutrients/", cat: "Diagnostics" },
             { title: "Thyroid Optimization", desc: "Why normal thyroid isn't optimal", url: "/learn/thyroid-optimization/", cat: "Diagnostics" },
@@ -798,9 +793,7 @@
             { title: "DEXA Scan in Chicago", desc: "DEXA body composition scan in Chicago, IL", url: "/learn/dexa-scan-chicago/", cat: "Local" },
             { title: "GLP-1 Weight Loss in Chicago", desc: "Semaglutide and tirzepatide in Chicago, IL", url: "/learn/glp1-weight-loss-chicago/", cat: "Local" },
             // Local SEO — Other suburbs
-            { title: "Chiropractor Near Niles", desc: "Evidence-based chiropractic near Niles, IL", url: "/learn/chiropractor-niles/", cat: "Local" },
             { title: "DEXA Scan Near Skokie", desc: "DEXA body composition scan near Skokie, IL", url: "/learn/dexa-scan-skokie/", cat: "Local" },
-            { title: "TRT in Des Plaines", desc: "Testosterone therapy in Des Plaines, IL", url: "/learn/trt-des-plaines/", cat: "Local" },
             // Quiz
             { title: "Perimenopause Screener", desc: "Validated 11-item MRS scale + safety screen", url: "/quiz/perimenopause/", cat: "Quiz" },
             { title: "TRT Readiness Screener", desc: "Validated ADAM scale + PSA and IPSS safety check", url: "/quiz/low-t/", cat: "Quiz" },

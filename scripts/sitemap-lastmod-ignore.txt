@@ -1,0 +1,6 @@
+# Commits that touched every page's boilerplate (footer/header) without changing
+# page content. sitemap-lastmod.mjs skips them so lastmod stays meaningful.
+# One full SHA per line; text after the SHA is a note.
+05c3f822ecbfcb96a83b79d831df642ff6f4efc1 static footer Park Ridge row (2026-10-15)
+d385d743c7abcf85ba73ded40a0d3861412b1608 static footer peptide links + inline disclaimer reword (2026-10-15)
+d4ca52ef07734d1dec1147e86c3dce3355760b59 static crawlable footer added (2026-06-03)

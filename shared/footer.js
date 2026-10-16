@@ -113,6 +113,10 @@
                 </p>
             </div>
 
+            <nav aria-label="Park Ridge services" class="mt-6 pt-6 border-t border-white/5 text-xs text-brand-gray text-center">
+                <p>Park Ridge: <a href="/learn/trt-park-ridge/" class="hover:text-brand-light transition">TRT</a> &middot; <a href="/medical/semaglutide-park-ridge/" class="hover:text-brand-light transition">Semaglutide</a> &middot; <a href="/medical/thyroid-test-park-ridge/" class="hover:text-brand-light transition">Thyroid Test</a> &middot; <a href="/medical/daily-tadalafil-park-ridge/" class="hover:text-brand-light transition">Daily Tadalafil</a> &middot; <a href="/learn/dexa-scan-park-ridge/" class="hover:text-brand-light transition">DEXA Scan</a> &middot; <a href="/learn/physical-rehab-park-ridge/" class="hover:text-brand-light transition">Physical Rehab</a> &middot; <a href="/learn/shockwave-therapy-park-ridge/" class="hover:text-brand-light transition">Shockwave Therapy</a> &middot; <a href="/learn/hormone-quiz-park-ridge/" class="hover:text-brand-light transition">Hormone Testing</a></p>
+            </nav>
+
             <div class="mt-6 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-brand-gray">
                 <span>&copy; ${currentYear} Moonshot Medical and Performance. All Rights Reserved.</span>
                 <div class="flex gap-6">

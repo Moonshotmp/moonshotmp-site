@@ -14,7 +14,7 @@
  * with key `YYYY-MM-DD/HH-MM-SS-sssZ-rand6.json` so events are partitioned
  * by date for efficient prefix-listing. Also console.logs for live debugging.
  *
- * Query via /.netlify/functions/admin-quiz-events (auth-required).
+ * Read the events from the Netlify Blobs store (Netlify UI or `netlify blobs:list quiz-events`).
  */
 
 // Allowed quiz slugs (low-cardinality enum). Anything else → 400.

@@ -5,8 +5,9 @@
 *.bak
 *.bak_*
 
-# Netlify local artifacts
+# Netlify local artifacts (netlify/functions and netlify/edge-functions are tracked source)
 .netlify
-netlify/
+netlify/state/
+netlify/*.log
 node_modules/
 tailwindcss
