@@ -111,12 +111,6 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://moonshotmp.com/medical/peptides/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>https://moonshotmp.com/medical/nad/</loc>
     <lastmod>2026-03-24</lastmod>
     <priority>0.8</priority>
@@ -161,12 +155,6 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://moonshotmp.com/medical/peptide-therapy-park-ridge/</loc>
-    <lastmod>2026-05-03</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>https://moonshotmp.com/medical/semaglutide-park-ridge/</loc>
     <lastmod>2026-05-03</lastmod>
     <priority>0.8</priority>
@@ -180,12 +168,6 @@
   </url>
   <url>
     <loc>https://moonshotmp.com/medical/daily-tadalafil-park-ridge/</loc>
-    <lastmod>2026-05-03</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/medical/weight-loss-peptide-park-ridge/</loc>
     <lastmod>2026-05-03</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
@@ -208,12 +190,6 @@
   <url>
     <loc>https://moonshotmp.com/quiz/results/</loc>
     <lastmod>2026-02-03</lastmod>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/quiz/peptides/</loc>
-    <lastmod>2026-03-24</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -412,93 +388,10 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://moonshotmp.com/learn/peptides/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <!-- Retatrutide cluster removed 2026-04-30 (Phase 0 remediation):
-       9 pages taken down (301 redirects in _redirects),
-       4 pages noindexed (hub, should-i-wait, side-effects, bone-density),
-       2 pages rewritten and noindexed during transition (fatty-liver-masld, muscle-preservation).
-       See /Users/tomkashul/seo-analytics/audits/retatrutide-cluster-decision.md -->
-  <url>
-    <loc>https://moonshotmp.com/learn/bpc-157/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/ghk-cu/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/tb-500/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/wolverine-blend/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/sermorelin/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/pt-141/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/peptide-therapy-park-ridge/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://moonshotmp.com/about/missy-zammichieli/</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/glow-stack/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/peptides-for-gut-healing/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/peptides-for-injury-recovery/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/bpc-157-vs-prp/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://moonshotmp.com/learn/which-peptide/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://moonshotmp.com/learn/trt-guide/</loc>
