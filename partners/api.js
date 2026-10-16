@@ -1,6 +1,6 @@
 /**
  * Moonshot Partner API Client
- * Shared helper for all partner portal pages — handles auth, tenant header, error handling.
+ * Shared helper for all partner portal pages - handles auth, tenant header, error handling.
  */
 
 const API_BASE = 'https://api.moonshotclinic.com';
@@ -49,7 +49,7 @@ async function apiFetch(path, options = {}) {
     headers,
   });
 
-  // Handle 401 — redirect to login
+  // Handle 401 - redirect to login
   if (res.status === 401 && !options.skipAuthRedirect) {
     clearToken();
     window.location.href = '/partners/login.html';

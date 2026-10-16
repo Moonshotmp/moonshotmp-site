@@ -2,7 +2,7 @@
  * Moonshot Hormone Health Quiz Engine v2
  * =======================================
  * 18-screen flow with interstitials, severity scoring, and calculating animation.
- * Vanilla JS IIFE — no dependencies.
+ * Vanilla JS IIFE - no dependencies.
  */
 (function() {
     'use strict';
@@ -125,7 +125,7 @@
         male: {
             energy_physical: 'Energy and physical performance are among the most testosterone-sensitive functions. When T drops, your mitochondria produce less ATP and recovery slows.',
             mental_mood: 'Testosterone directly supports neurotransmitter function and cerebral blood flow. Brain fog and mood changes are well-documented effects of low T.',
-            sleep_sexual: 'Low T disrupts sleep architecture, and poor sleep further suppresses testosterone \u2014 creating a cycle that\'s hard to break without addressing the hormonal component.'
+            sleep_sexual: 'Low T disrupts sleep architecture, and poor sleep further suppresses testosterone, creating a cycle that\'s hard to break without addressing the hormonal component.'
         },
         female: {
             energy_physical: 'Fatigue and physical changes are often the first signs of hormonal shifts. Estrogen, progesterone, and thyroid all directly regulate energy production.',
@@ -152,7 +152,7 @@
             male: '1 in 4 men over 30 has testosterone below the optimal range. Most don\'t know it.',
             female: 'Hormonal shifts can start 10 years before menopause. Most women are told it\'s \u201Cjust stress.\u201D'
         },
-        screen7: '\u201CNormal\u201D lab ranges are designed to rule out disease \u2014 not to identify where you function best. That\u2019s why you can feel terrible and still be told your labs are \u201Cnormal.\u201D',
+        screen7: '\u201CNormal\u201D lab ranges are designed to rule out disease, not to identify where you function best. That\u2019s why you can feel terrible and still be told your labs are \u201Cnormal.\u201D',
         screen10: 'Patients with similar profiles who got tested discovered an average of 4 actionable findings. Most had been told their labs were \u201Cnormal.\u201D'
     };
 
@@ -230,7 +230,7 @@
 
     // First-party analytics shim. Replaces the prior gtag-based helper.
     // Only generic, NON-HEALTH funnel events are forwarded. The `params`
-    // argument is intentionally IGNORED — the legacy callers passed
+    // argument is intentionally IGNORED - the legacy callers passed
     // gender, age, primary concern, duration, readiness, classification,
     // and score, none of which may leave the browser as analytics. Health
     // data still flows through `/.netlify/functions/quiz-submit` for the
@@ -410,7 +410,7 @@
     }
 
     function buildInterstitial1() {
-        // Gender-specific — content filled after gender is known
+        // Gender-specific - content filled after gender is known
         return screenWrap(SCREEN.INTERSTITIAL_1,
             '<div class="text-center">' +
                 '<div class="interstitial-stat">' +
@@ -633,7 +633,7 @@
 
         // ── Personalized Summary ───────────────────────────────────────
         html += '<div class="bg-white/5 rounded-sm p-6 mb-8 text-center">' +
-            '<p class="text-brand-gray font-light">Your responses suggest multiple areas where hormone optimization could make a meaningful difference \u2014 especially in <strong class="text-brand-light">' + topCategory.label + '</strong>.</p>' +
+            '<p class="text-brand-gray font-light">Your responses suggest multiple areas where hormone optimization could make a meaningful difference, especially in <strong class="text-brand-light">' + topCategory.label + '</strong>.</p>' +
         '</div>';
 
         // ── Top 3 Areas ────────────────────────────────────────────────
@@ -941,11 +941,11 @@
     }
 
     function bindSeverityPills() {
-        // Use delegated handler — already bound on root, but we need specific pill logic
+        // Use delegated handler - already bound on root, but we need specific pill logic
         // This is handled via the root click listener below
     }
 
-    // Severity pill handler — needs to be in the root delegated listener
+    // Severity pill handler - needs to be in the root delegated listener
     // We add it separately since pills are populated dynamically
     function handleSeverityPill(pill) {
         var groupKey = pill.getAttribute('data-group');
@@ -1139,7 +1139,7 @@
         // Determine which screen to show
         var targetScreen = saved.currentScreen || 0;
 
-        // Don't restore to calculating or results — go to email instead
+        // Don't restore to calculating or results - go to email instead
         if (targetScreen >= SCREEN.CALCULATING) {
             targetScreen = SCREEN.EMAIL;
         }

@@ -1,12 +1,12 @@
 /**
- * shared/ads-click-forward.js — Ad-safe Google Ads click-id forwarder
+ * shared/ads-click-forward.js - Ad-safe Google Ads click-id forwarder
  * ===================================================================
  *
  * WHY: The /ads/* landing pages use an "ad-safe static header" and load
  * neither shared/header.js (which captures gclid → localStorage) nor
  * booking-attribution.js (which decorates the EHR booker links). So a paid
  * click landing on /ads/dexa/?gclid=XYZ and clicking "Book" arrived at the
- * clinic booker with NO gclid — the click-id was dropped at the very first
+ * clinic booker with NO gclid - the click-id was dropped at the very first
  * hop, on the page where 100% of paid clicks land. Measured gclid capture
  * rate was ~19%; this closes that leak.
  *
@@ -79,7 +79,7 @@
         ts: Date.now(),
         landing_path: window.location.pathname,
       }));
-    } catch (e) { /* private mode / quota — fail silent */ }
+    } catch (e) { /* private mode / quota - fail silent */ }
   }
 
   // -- 2. Resolve UTMs: URL first, then persisted fallback ----------------
@@ -128,7 +128,7 @@
         }
         a.setAttribute('href', u.toString());
       } catch (e) {
-        // Bad href — leave untouched.
+        // Bad href - leave untouched.
       }
     }
   }

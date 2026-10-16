@@ -1,7 +1,7 @@
 /**
- * booking-attribution.js — Source-attributed booking flow
+ * booking-attribution.js - Source-attributed booking flow
  * =======================================================
- * Phase 0 — TASK T5
+ * Phase 0 - TASK T5
  *
  * Reads ?source= and ?result= URL params on /booking/, stores attribution
  * in localStorage, fires a HBNR-compliant first-party analytics event,
@@ -15,7 +15,7 @@
  *
  *   The first-party /.netlify/functions/quiz-event endpoint enforces a
  *   strict allowlist on `quiz` and `event` and rejects health terms even
- *   in nested fields. We send only the minimum allowed payload — the slug
+ *   in nested fields. We send only the minimum allowed payload - the slug
  *   string is NOT forwarded over the network. localStorage is purely
  *   client-side and used only to render a personalized intro.
  */
@@ -73,7 +73,7 @@
       if (!raw) return null;
       var parsed = JSON.parse(raw);
       if (!parsed || typeof parsed !== 'object') return null;
-      // TTL — discard if older than 30 days.
+      // TTL - discard if older than 30 days.
       if (typeof parsed.ts === 'number' && (Date.now() - parsed.ts) > TTL_MS) {
         return null;
       }
@@ -112,7 +112,7 @@
   //   - event: 'cta_click' (closest allowed event for "landed on booking")
   //   - screen: 'booking' (24-char limit, no health terms)
   // We DO NOT forward the raw `source` slug or `result` tier over the
-  // network — those stay client-side for personalization only.
+  // network - those stay client-side for personalization only.
   function fireAttributionEvent() {
     try {
       var payload = {
@@ -128,7 +128,7 @@
           body: JSON.stringify(payload),
           keepalive: true,
         }).catch(function () {
-          // Network errors are non-fatal — analytics is best-effort.
+          // Network errors are non-fatal - analytics is best-effort.
           if (typeof console !== 'undefined') {
             console.log('booking_attribution_fallback', payload);
           }
@@ -149,7 +149,7 @@
     var src = attribution.source;
     if (!src) return;
     var label = SOURCE_LABELS[src] || 'You showed interest in our services';
-    // Build text node — we explicitly avoid innerHTML with any user-controlled
+    // Build text node - we explicitly avoid innerHTML with any user-controlled
     // value. The provider name is a static string template.
     var p = document.createElement('p');
     p.className = 'text-brand-dark text-base md:text-lg mb-4 max-w-3xl mx-auto';
@@ -169,7 +169,7 @@
   // in header.js. We read them back here and forward to the EHR so the
   // conversion upload can fire server-side after booking confirmation, and
   // so we can slice our own bookings by campaign. See header.js privacy
-  // notes — opaque tokens only, no health data.
+  // notes - opaque tokens only, no health data.
   var ATTR_TTL = 90 * 24 * 60 * 60 * 1000; // 90-day Google Ads attribution window
   function loadAttributionFromStorage(key) {
     try {
@@ -210,7 +210,7 @@
         if (utm && utm.utm_content) url.searchParams.set('utm_content', utm.utm_content);
         a.setAttribute('href', url.toString());
       } catch (e) {
-        // Bad href — leave untouched.
+        // Bad href - leave untouched.
       }
     }
   }

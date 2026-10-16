@@ -1,5 +1,5 @@
 /*
- * GLP-1 Readiness Screener — Pure Scoring Module
+ * GLP-1 Readiness Screener - Pure Scoring Module
  * ===============================================
  *
  * Canonical, tested implementation of the GLP-1 quiz tiering logic.
@@ -8,7 +8,7 @@
  * The browser-side quiz at /quiz/glp1/quiz-engine.js inlines the same
  * logic inside an IIFE for runtime simplicity (no build step). The
  * Vitest suite at tests/glp1-scoring.test.js pins the expected
- * behavior — if this file or the engine drifts, tests break.
+ * behavior - if this file or the engine drifts, tests break.
  *
  * Validated basis:
  *   - FDA labeling for prescription weight-management medications
@@ -23,19 +23,19 @@
  *     severe diabetic retinopathy on insulin. Pregnancy is a separate
  *     hard-stop.
  *   - Bariatric-surgery history routes to a specialist-evaluation
- *     tier (modifier — does not block, but redirects the consult).
+ *     tier (modifier - does not block, but redirects the consult).
  *
- * Tier precedence (strict — earlier wins):
+ * Tier precedence (strict - earlier wins):
  *
- *   1. contraindication-identified  — any medical hard-stop OR pregnancy
+ *   1. contraindication-identified  - any medical hard-stop OR pregnancy
  *                                     OR free-text "other" catch-all
- *   2. specialist-evaluation        — bariatric-surgery modifier
- *   3. eligibility-not-met-bmi      — BMI <27, FDA labeling threshold
+ *   2. specialist-evaluation        - bariatric-surgery modifier
+ *   3. eligibility-not-met-bmi      - BMI <27, FDA labeling threshold
  *                                     not met
- *   4. eligibility-mixed            — BMI 27-30 without comorbidity, OR
+ *   4. eligibility-mixed            - BMI 27-30 without comorbidity, OR
  *                                     BMI ≥27 missing prior attempt or
  *                                     readiness ≥3
- *   5. eligibility-present          — BMI ≥30 OR (BMI ≥27 + comorbidity),
+ *   5. eligibility-present          - BMI ≥30 OR (BMI ≥27 + comorbidity),
  *                                     prior weight-loss attempt yes,
  *                                     readiness ≥3
  *
@@ -55,7 +55,7 @@
  *   heightInches:         number
  *   weightLbs:            number
  *   comorbidities:        string[]   subset of COMORBIDITY_KEYS
- *   ascvd:                { totalCholesterol?, ldl?, hdl? } — optional;
+ *   ascvd:                { totalCholesterol?, ldl?, hdl? } - optional;
  *                         only collected if Q4 includes 'high-cholesterol'
  *   priorAttempt:         'yes' | 'no' | 'prefer-not'
  *   medicalHistory:       string[]   subset of MED_HISTORY_KEYS (incl
@@ -88,7 +88,7 @@
  *   }
  */
 
-// 8 hard-stop medical history keys — any single one routes to
+// 8 hard-stop medical history keys - any single one routes to
 // contraindication-identified. Drawn from FDA labeling + REMS-style
 // warnings. T1D and severe ESRD added per P0 #16 review (v1 missed).
 export const HARD_STOP_MEDICAL = new Set([
@@ -146,7 +146,7 @@ export const INTERNAL_TIER_VALUES = new Set([
     'eligibility-present'
 ]);
 
-// Patient-facing tier labels — four neutral strings (guardrail #8).
+// Patient-facing tier labels - four neutral strings (guardrail #8).
 // Specialist-evaluation gets its own neutral label since it's not a
 // contraindication and not an eligibility tier.
 export const INTERNAL_TIER_LABELS = {
@@ -275,7 +275,7 @@ export function bmiBelowThreshold(state) {
 }
 
 /**
- * Compute the full scoring result. Strict precedence ladder — earliest
+ * Compute the full scoring result. Strict precedence ladder - earliest
  * branch wins. The bariatric modifier comes BEFORE BMI checks because
  * post-bariatric weight management is a specialist conversation
  * regardless of current BMI.
@@ -308,7 +308,7 @@ export function scoreGlp1(state) {
         // BMI threshold met but missing prior-attempt OR readiness.
         internalTier = 'eligibility-mixed';
     } else {
-        // BMI not computable / state incomplete — default to mixed
+        // BMI not computable / state incomplete - default to mixed
         // rather than present (safer when state is partial).
         internalTier = 'eligibility-mixed';
     }

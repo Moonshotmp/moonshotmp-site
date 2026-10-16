@@ -41,7 +41,7 @@ export default async function handler(req, context) {
       female: 'Estrogen and progesterone influence serotonin, GABA, and dopamine pathways. Hormonal shifts can cause mood changes that feel completely out of character.'
     },
     sleep_sexual: {
-      male: 'Low T disrupts sleep architecture, and poor sleep further suppresses testosterone \u2014 creating a cycle that\'s hard to break without addressing the hormonal component.',
+      male: 'Low T disrupts sleep architecture, and poor sleep further suppresses testosterone, creating a cycle that\'s hard to break without addressing the hormonal component.',
       female: 'Sleep disruption and intimacy changes are strongly linked to declining estrogen and progesterone. These hormones have natural calming, sleep-supporting properties.'
     }
   };
@@ -236,7 +236,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const internalSubject = `Quiz Lead: ${name || email} \u2014 ${classification} (${score}/100)`;
+  const internalSubject = `Quiz Lead: ${name || email} · ${classification} (${score}/100)`;
 
   // ── Send Both Emails ────────────────────────────────────────────────
 
@@ -255,7 +255,7 @@ export default async function handler(req, context) {
       'X-Webhook-Key': process.env.CLINIC_LEAD_WEBHOOK_KEY || ''
     };
 
-    // Lead webhook — map score → totalScore for backward compat
+    // Lead webhook - map score → totalScore for backward compat
     fetch(clinicApi + '/api/leads/webhook', {
       method: 'POST',
       headers: webhookHeaders,

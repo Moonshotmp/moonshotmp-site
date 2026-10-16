@@ -1,5 +1,5 @@
 /*
- * Moonshot GLP-1 Readiness Screener — Quiz Engine
+ * Moonshot GLP-1 Readiness Screener - Quiz Engine
  * ================================================
  * Browser-side IIFE that runs the entire GLP-1 screening flow:
  * welcome → age-gate → demo (sex/age) → body (height/weight) → conditions
@@ -9,7 +9,7 @@
  * calculating → results.
  *
  * Scoring logic is INLINED from /quiz/glp1/scoring.js (the canonical pure
- * module). Both files MUST stay in sync — the Vitest suite pins the contract
+ * module). Both files MUST stay in sync - the Vitest suite pins the contract
  * on the scoring module; this engine reproduces it verbatim because the page
  * loads as a non-module script tag (no ESM imports).
  *
@@ -25,7 +25,7 @@
  *   the strict 4-field contract { quiz: 'glp1', event, screen, timestamp }.
  *   Health data flows through /.netlify/functions/glp1-quiz-submit for the
  *   email and CRM pipeline only. Screen labels are pre-checked against
- *   HEALTH_TERMS — none of our labels (welcome, age-gate, age-block, demo,
+ *   HEALTH_TERMS - none of our labels (welcome, age-gate, age-block, demo,
  *   body, conditions, ascvd, attempts, history, pregnancy, bariatric,
  *   other, readiness, state, ack, calc, results) contain any forbidden
  *   substrings.
@@ -34,12 +34,12 @@
  *   - Never name specific GLP-1 drugs in result output. Banned terms:
  *     semaglutide, tirzepatide, Wegovy, Ozempic, Zepbound, Mounjaro,
  *     Saxenda, Victoza, Trulicity, Rybelsus.
- *   - Never claim "you qualify for [drug]" — only a clinician determines
+ *   - Never claim "you qualify for [drug]" - only a clinician determines
  *     candidacy after a comprehensive in-person evaluation.
  *   - Never claim "compounded versions are equivalent to FDA-approved".
  *     Moonshot does not market or sell compounded substitutes.
  *   - Never use "Strong candidate" / "Possible candidate" / "Likely
- *     candidate" — neutral guardrail labels only.
+ *     candidate" - neutral guardrail labels only.
  *   - Never give specific dose recommendations or cost figures.
  *   - Tier labels are the five neutral strings from INTERNAL_TIER_LABELS.
  *   - Acknowledgement screen is a real click-through, timestamped.
@@ -54,9 +54,9 @@
 
     // ── Inlined Scoring Logic (mirror of scoring.js) ─────────────────
     // If scoring.js changes, update both files together. Vitest pins the
-    // canonical module — keep this section identical in behavior.
+    // canonical module - keep this section identical in behavior.
 
-    // 8 hard-stop medical history keys — any single one routes to
+    // 8 hard-stop medical history keys - any single one routes to
     // contraindication-identified. Drawn from FDA labeling + REMS-style
     // warnings.
     var HARD_STOP_MEDICAL = {
@@ -121,7 +121,7 @@
         'eligibility-present': 1
     };
 
-    // Patient-facing tier labels — five neutral strings (guardrail #8).
+    // Patient-facing tier labels - five neutral strings (guardrail #8).
     var INTERNAL_TIER_LABELS = {
         'contraindication-identified': 'Contraindication identified',
         'specialist-evaluation':       'Specialist evaluation indicated',
@@ -250,7 +250,7 @@
             // BMI threshold met but missing prior-attempt OR readiness.
             internalTier = 'eligibility-mixed';
         } else {
-            // BMI not computable / state incomplete — default to mixed
+            // BMI not computable / state incomplete - default to mixed
             // rather than present (safer when state is partial).
             internalTier = 'eligibility-mixed';
         }
@@ -336,7 +336,7 @@
         { label: 'Prefer not to say', key: 'prefer-not' }
     ];
 
-    // Comorbidity multi-check options. Keys are short enums — safe to send
+    // Comorbidity multi-check options. Keys are short enums - safe to send
     // as `comorbidityCategories` in the submit payload. The 'none' option
     // is rendered separately as an exclusive choice.
     var comorbidityOptions = [
@@ -356,7 +356,7 @@
         { label: 'Prefer not to say',  key: 'prefer-not' }
     ];
 
-    // Medical history multi-check options. Keys are short enums — safe to
+    // Medical history multi-check options. Keys are short enums - safe to
     // include in submit payload's `medicalHistoryCategories`. The 'none'
     // option is rendered separately as an exclusive choice.
     var historyOptions = [
@@ -434,12 +434,12 @@
 
     // ── Universal Disclaimers (verbatim from spec) ───────────────────
 
-    // Result-page-specific disclaimer. NOTE this one is GLP-1-specific —
+    // Result-page-specific disclaimer. NOTE this one is GLP-1-specific -
     // mentions compounding directly because the regulatory exposure on
     // compounded substitutes is unique to this category.
     var RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis or prescription. We do not market or sell compounded versions of FDA-approved medications as substitutes for those products. Eligibility for any specific medication is determined by a licensed clinician after a comprehensive in-person evaluation.';
 
-    // Author attribution — Missy-only (she has FPA; no collaborator clause).
+    // Author attribution - Missy-only (she has FPA; no collaborator clause).
     var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // ── State ────────────────────────────────────────────────────────
@@ -468,7 +468,7 @@
         // PREGNANCY / BARIATRIC
         pregnancyOrPlanning: null,       // 'yes' | 'no'
         bariatricHistory: null,          // 'yes' | 'no'
-        // OTHER (free-text catch-all — non-empty triggers contraind)
+        // OTHER (free-text catch-all - non-empty triggers contraind)
         otherCondition: '',
         // READINESS
         readiness: null,                 // number 1..5
@@ -525,7 +525,7 @@
     // ── First-Party Analytics Shim ───────────────────────────────────
     // Only generic funnel events are forwarded. The screen label is the
     // short, neutral string from SCREEN_LABEL[]. No health values ever leave
-    // the browser via analytics. quiz-event.js rejects HEALTH_TERMS — our
+    // the browser via analytics. quiz-event.js rejects HEALTH_TERMS - our
     // screen labels are pre-checked to avoid those substrings.
 
     function ga(eventName, screenIndex) {
@@ -618,7 +618,7 @@
             var target = root.querySelector('[data-screen="' + screenIndex + '"]');
             if (target) {
                 target.classList.add('active');
-                // Scroll the quiz mount into view rather than window top —
+                // Scroll the quiz mount into view rather than window top -
                 // the static page has H1 + byline above #quiz-root and a
                 // window-top scroll hides the new active screen below them.
                 if (root && typeof root.scrollIntoView === 'function') {
@@ -666,10 +666,10 @@
             '<div class="text-center">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free Readiness Screener</p>' +
                 '<h2 id="screen-' + SCREEN.WELCOME + '-heading" class="text-3xl md:text-4xl font-bold text-brand-light mb-6 font-heading">Am I a candidate for prescription weight-management?</h2>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Takes about 2-3 minutes. Walks through BMI, qualifying weight-related conditions, an 8-category safety panel, and a short readiness check — the same eligibility framework a clinician uses — to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Takes about 2-3 minutes. Walks through BMI, qualifying weight-related conditions, an 8-category safety panel, and a short readiness check, the same eligibility framework a clinician uses, to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start the Screener</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant. We don\'t sell your data or share it with advertisers.</p>' +
-                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical — a licensed clinic in Park Ridge, IL</p>' +
+                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +
                 '<p class="text-brand-gray/40 text-xs mt-2">For educational purposes only. Not medical advice.</p>' +
             '</div>'
         );
@@ -701,7 +701,7 @@
         );
     }
 
-    // DEMO screen — sex (radiogroup) + age (number input) on one screen.
+    // DEMO screen - sex (radiogroup) + age (number input) on one screen.
     function buildDemo() {
         var sexBtns = '';
         for (var i = 0; i < sexOptions.length; i++) {
@@ -729,7 +729,7 @@
         );
     }
 
-    // BODY screen — height (inches) + weight (pounds) on one screen.
+    // BODY screen - height (inches) + weight (pounds) on one screen.
     function buildBody() {
         return screenWrap(SCREEN.BODY,
             '<div class="text-center">' +
@@ -780,7 +780,7 @@
         );
     }
 
-    // ASCVD screen — three OPTIONAL number inputs. Continue is always
+    // ASCVD screen - three OPTIONAL number inputs. Continue is always
     // enabled. Empty values save as null; non-empty values are validated
     // against range and saved as numbers.
     function buildAscvd() {
@@ -788,7 +788,7 @@
             '<div class="text-center">' +
                 '<p class="sr-only" aria-live="polite">An optional cholesterol question was added based on your previous selection.</p>' +
                 '<h2 id="screen-' + SCREEN.ASCVD + '-heading" class="text-3xl font-bold text-brand-light mb-2 font-heading">Recent cholesterol numbers (optional)</h2>' +
-                '<p class="text-brand-gray font-light mb-8 max-w-lg mx-auto">If you have recent labs, enter what you remember. All three fields are optional — you can skip any field or all of them and click Continue.</p>' +
+                '<p class="text-brand-gray font-light mb-8 max-w-lg mx-auto">If you have recent labs, enter what you remember. All three fields are optional. You can skip any field or all of them and click Continue.</p>' +
                 '<div class="max-w-md mx-auto space-y-4 text-left">' +
                     '<div>' +
                         '<label for="quiz-tc-input" class="block text-brand-gray text-xs uppercase tracking-widest mb-1">Total cholesterol (mg/dL)</label>' +
@@ -804,7 +804,7 @@
                     '</div>' +
                     '<p id="quiz-ascvd-error" role="alert" class="text-red-500 text-xs mt-2 hidden"></p>' +
                     '<button type="button" id="quiz-ascvd-continue" class="btn-primary w-full py-3 mt-4">Continue</button>' +
-                    '<p class="text-brand-gray/60 text-xs">Skip any field you don\'t know — these inputs only refine the triage estimate.</p>' +
+                    '<p class="text-brand-gray/60 text-xs">Skip any field you don\'t know. These inputs only refine the triage estimate.</p>' +
                 '</div>' +
             '</div>'
         );
@@ -848,7 +848,7 @@
         return screenWrap(SCREEN.HISTORY,
             '<div class="text-center">' +
                 '<h2 id="' + headingId + '" class="text-3xl font-bold text-brand-light mb-2 font-heading">Do any of these apply to you?</h2>' +
-                '<p id="' + dataAttr + '-help" class="text-brand-gray font-light mb-10">Select all that apply. This is the safety panel — flagging these helps us route you to the right next step before any prescription weight-management option is considered.</p>' +
+                '<p id="' + dataAttr + '-help" class="text-brand-gray font-light mb-10">Select all that apply. This is the safety panel. Flagging these helps us route you to the right next step before any prescription weight-management option is considered.</p>' +
                 '<div aria-labelledby="' + headingId + '" class="flex flex-col gap-2 max-w-md mx-auto text-left">' + btns + '</div>' +
                 '<div class="mt-8"><button type="button" id="quiz-hx-continue" class="btn-primary px-10 py-3" data-' + dataAttr + '-continue="true">Continue</button></div>' +
             '</div>'
@@ -887,7 +887,7 @@
         );
     }
 
-    // OTHER screen — free-text catch-all. Continue always enabled. Any
+    // OTHER screen - free-text catch-all. Continue always enabled. Any
     // non-empty trimmed string routes to contraindication-identified.
     function buildOther() {
         return screenWrap(SCREEN.OTHER,
@@ -896,7 +896,7 @@
                 '<p class="text-brand-gray font-light mb-8 max-w-lg mx-auto">Are there any other medical conditions or medications you\'ve been told affect medication choices? (Optional)</p>' +
                 '<div class="max-w-md mx-auto text-left">' +
                     '<label for="quiz-other-input" class="sr-only">Other conditions or medications (optional)</label>' +
-                    '<textarea id="quiz-other-input" maxlength="200" rows="4" placeholder="Optional — leave blank if none." aria-describedby="quiz-other-help" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-base"></textarea>' +
+                    '<textarea id="quiz-other-input" maxlength="200" rows="4" placeholder="Optional, leave blank if none." aria-describedby="quiz-other-help" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-base"></textarea>' +
                     '<p id="quiz-other-help" class="text-brand-gray/60 text-xs mt-1">Up to 200 characters. Anything you flag here will route your result toward a clinical-attention path.</p>' +
                     '<button type="button" id="quiz-other-continue" class="btn-primary w-full py-3 mt-4">Continue</button>' +
                 '</div>' +
@@ -904,7 +904,7 @@
         );
     }
 
-    // READINESS screen — 1-5 Likert radiogroup.
+    // READINESS screen - 1-5 Likert radiogroup.
     function buildReadiness() {
         var btns = '';
         for (var i = 0; i < readinessOptions.length; i++) {
@@ -1208,12 +1208,12 @@
         return '/booking/?source=glp1-quiz&result=' + encodeURIComponent(slug);
     }
 
-    // Tier-specific body copy. VERBATIM from spec — do NOT paraphrase.
+    // Tier-specific body copy. VERBATIM from spec - do NOT paraphrase.
     // Each branch returns { heading, body, ctaLabel, slug }. The renderer
     // uses these to fill the result card. CTA URLs use buildBookingHref().
     //
     // IMPORTANT: tier body strings MUST remain static constants. Do NOT
-    // interpolate user input into tier bodies — they are concatenated into
+    // interpolate user input into tier bodies - they are concatenated into
     // innerHTML on the result page and on the email path with no escaping.
     // User-controlled data goes only through escapeHtml in the netlify
     // handler; the browser engine does not sanitize tier body strings.
@@ -1228,16 +1228,16 @@
             body = 'Based on your responses, your medical history requires clinical attention before any prescription weight-management medication is considered. Please discuss with your primary care physician or the appropriate specialist. We recommend a non-prescription evaluation path until any contraindications are addressed.';
             ctaLabel = 'Book a non-prescription evaluation';
         } else if (internalTier === 'specialist-evaluation') {
-            body = 'Your responses describe prior bariatric surgery. Medical weight management after bariatric surgery typically requires specialist evaluation — a consultation can identify whether on-site care or a referral path fits your situation.';
+            body = 'Your responses describe prior bariatric surgery. Medical weight management after bariatric surgery typically requires specialist evaluation. A consultation can identify whether on-site care or a referral path fits your situation.';
             ctaLabel = 'Book a consultation';
         } else if (internalTier === 'eligibility-not-met-bmi') {
-            body = 'Based on your responses, the FDA labeling threshold for prescription weight-management medications (BMI of 30 or higher, or BMI of 27 or higher with a weight-related condition) is not met. Comprehensive evaluation can still be useful — a consultation can review the full clinical picture and identify which evaluation paths fit your goals.';
+            body = 'Based on your responses, the FDA labeling threshold for prescription weight-management medications (BMI of 30 or higher, or BMI of 27 or higher with a weight-related condition) is not met. Comprehensive evaluation can still be useful. A consultation can review the full clinical picture and identify which evaluation paths fit your goals.';
             ctaLabel = 'Book a comprehensive evaluation';
         } else if (internalTier === 'eligibility-mixed') {
-            body = 'Your responses describe a mix of factors. Some elements meet the FDA labeling expectations for prescription weight-management medications, and others — including documented prior weight-loss attempts and current readiness — require clinical evaluation to determine whether prescription therapy is appropriate. Book a consultation to discuss which evaluation path fits your situation.';
+            body = 'Your responses describe a mix of factors. Some elements meet the FDA labeling expectations for prescription weight-management medications, and others, including documented prior weight-loss attempts and current readiness, require clinical evaluation to determine whether prescription therapy is appropriate. Book a consultation to discuss which evaluation path fits your situation.';
             ctaLabel = 'Book a consultation';
         } else {
-            // eligibility-present — bold disclaimer is REQUIRED here.
+            // eligibility-present - bold disclaimer is REQUIRED here.
             body = 'Your responses describe characteristics that the FDA labeling for prescription weight-management medications lists as relevant to candidacy. <strong class="text-brand-light">This is not a determination that you are a candidate.</strong> Only a licensed clinician, after a comprehensive in-person evaluation including medical history and laboratory testing, can determine whether any prescription therapy is appropriate. Book a consultation to begin that evaluation.';
             ctaLabel = 'Book a comprehensive consultation';
         }
@@ -1300,7 +1300,7 @@
             html += '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-6">' +
                 '<h3 class="text-brand-light font-bold mb-3">Want a copy of your result?</h3>' +
                 (result.outOfState ? OUT_OF_STATE_EMAIL_NOTE : '') +
-                '<p class="text-brand-gray text-sm font-light mb-4">Optional — you do not need to enter anything to keep this result.</p>' +
+                '<p class="text-brand-gray text-sm font-light mb-4">Optional: you do not need to enter anything to keep this result.</p>' +
                 '<div class="space-y-3 text-left">' +
                     '<label class="flex items-start gap-3 cursor-pointer">' +
                         '<input type="checkbox" id="quiz-email-optin" class="mt-1 flex-shrink-0">' +
@@ -1335,7 +1335,7 @@
         }
 
         // Universal footer disclaimer is rendered once by the static HTML
-        // below the quiz mount — do NOT duplicate it here. Author attribution
+        // below the quiz mount - do NOT duplicate it here. Author attribution
         // remains result-page-specific.
 
         // Author attribution (always shown)
@@ -1350,7 +1350,7 @@
 
         document.getElementById('quiz-results-inner').innerHTML = html;
 
-        // Update URL for sharing — only the result slug, not the full state.
+        // Update URL for sharing - only the result slug, not the full state.
         if (window.history && window.history.replaceState) {
             try {
                 var validSlug = result.resultSlug && /^(contraindication|specialist|not-met|mixed|present)$/.test(result.resultSlug);
@@ -1372,7 +1372,7 @@
 
         // Clear PII from in-memory state after the result has rendered. The
         // email opt-in form below reads directly from input.value, so it
-        // captures fresh input — these zeroed fields don't break it. Protects
+        // captures fresh input - these zeroed fields don't break it. Protects
         // shared-device users from seeing prefilled fields if they hit Retake.
         state.name = '';
         state.email = '';
@@ -1458,7 +1458,7 @@
             // Use textContent (not innerHTML) and a literal Unicode em-dash
             // (not the HTML entity) to avoid an injected entity rendering
             // as a string.
-            msg.textContent = 'Thanks — we just sent your result to ' + email + '.';
+            msg.textContent = 'Thanks. We just sent your result to ' + email + '.';
             msg.classList.remove('hidden');
         }
         // Hide submit button to prevent duplicate sends, then clear saved
@@ -1469,8 +1469,8 @@
     }
 
     // ── Email submission ─────────────────────────────────────────────
-    // Compact payload — counts and sanitized enums only for multi-check
-    // fields. CRITICAL: never send raw `otherCondition` free-text — only
+    // Compact payload - counts and sanitized enums only for multi-check
+    // fields. CRITICAL: never send raw `otherCondition` free-text - only
     // its length. Free-text could contain unsanitizeable PHI; the engine
     // already derived `hasOtherConditionHardStop` from non-empty length and
     // the handler trusts that boolean.
@@ -1505,7 +1505,7 @@
                 heightInches: state.heightInches,
                 weightLbs: state.weightLbs,
                 comorbidityCount: Array.isArray(state.comorbidities) ? state.comorbidities.length : 0,
-                // Send sanitized keys only (short enum strings — safe).
+                // Send sanitized keys only (short enum strings - safe).
                 comorbidityCategories: Array.isArray(state.comorbidities) ? state.comorbidities.slice() : [],
                 ascvd: {
                     totalCholesterol: (state.ascvd && Number.isFinite(state.ascvd.totalCholesterol)) ? state.ascvd.totalCholesterol : null,
@@ -1517,7 +1517,7 @@
                 medicalHistoryCategories: Array.isArray(state.medicalHistory) ? state.medicalHistory.slice() : [],
                 pregnancyOrPlanning: state.pregnancyOrPlanning,
                 bariatricHistory: state.bariatricHistory,
-                // Length only — NEVER send raw free-text. The boolean
+                // Length only - NEVER send raw free-text. The boolean
                 // hasOtherConditionHardStop above is the only signal the
                 // handler should rely on.
                 otherConditionLength: (typeof state.otherCondition === 'string') ? state.otherCondition.trim().length : 0,
@@ -1528,7 +1528,7 @@
         };
 
         // Attach upstream marketing attribution (utm_*, gclid, fbclid,
-        // landing_page, last_page, referrer) — forwarded to the EHR lead webhook.
+        // landing_page, last_page, referrer) - forwarded to the EHR lead webhook.
         try {
             payload.attribution = (window.MoonshotAttribution && typeof window.MoonshotAttribution.getFlat === 'function')
                 ? window.MoonshotAttribution.getFlat()
@@ -1554,7 +1554,7 @@
         }
         // The slug being valid is enough to confirm someone took the screener;
         // the actual tier-specific copy stays private. Render only a neutral
-        // non-personalized message — no tier body, no eligibility framing.
+        // non-personalized message - no tier body, no eligibility framing.
         // This avoids exposing what reads like a personalized clinical
         // recommendation to out-of-state visitors who cannot access the clinic.
         var html = '<div class="flex items-start justify-center min-h-[calc(100vh-5rem)] px-4 py-12">' +
@@ -1565,7 +1565,7 @@
                 '</div>' +
                 '<div class="border border-brand-gray/40 rounded-sm p-8 mb-8" style="background: rgba(178, 191, 190, 0.05)">' +
                     '<p class="text-brand-light font-light leading-relaxed">' +
-                    'Someone shared a screener result category with you. Take the screener yourself to get your own context and recommended next step. Moonshot Medical clinicians are licensed in Illinois only — patients in other states should consult a clinician licensed in their state.' +
+                    'Someone shared a screener result category with you. Take the screener yourself to get your own context and recommended next step. Moonshot Medical clinicians are licensed in Illinois only. Patients in other states should consult a clinician licensed in their state.' +
                     '</p>' +
                 '</div>' +
                 '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-8 text-center">' +
@@ -1613,7 +1613,7 @@
                 state.ageGate = ageGateBtn.getAttribute('data-age-gate');
                 selectRadio('age-gate', state.ageGate);
                 if (state.ageGate === 'no') {
-                    // No recovery path — advance immediately to terminal block.
+                    // No recovery path - advance immediately to terminal block.
                     ga('screen_advance', SCREEN.AGE_GATE);
                     show(SCREEN.AGE_BLOCK);
                 }
@@ -1915,7 +1915,7 @@
         });
     }
 
-    // ASCVD screen handler — three OPTIONAL inputs. Empty = null. Out-of-
+    // ASCVD screen handler - three OPTIONAL inputs. Empty = null. Out-of-
     // range = inline error. Continue is always enabled (Continue button
     // never disabled), but if a field IS filled, it must be valid.
     function bindAscvdScreen() {
@@ -2084,7 +2084,7 @@
     // ── Restore from Saved State ─────────────────────────────────────
 
     // Allowlists for enum-typed restored fields. Anything not in the
-    // allowlist is rejected — protects scoring from corrupted localStorage
+    // allowlist is rejected - protects scoring from corrupted localStorage
     // values planted via DevTools or older schema versions.
     var ENUM_AGE_GATE = { 'yes': 1, 'no': 1 };
     var ENUM_SEX = SEX_VALUES;
@@ -2119,7 +2119,7 @@
         return Object.prototype.hasOwnProperty.call(allow, value) ? value : fallback;
     }
 
-    // CSS.escape polyfill for very old browsers — Tom's audience is modern,
+    // CSS.escape polyfill for very old browsers - Tom's audience is modern,
     // but harmless to fall back to a regex-based escape.
     function safeAttrEscape(value) {
         if (typeof value !== 'string') return '';
@@ -2144,7 +2144,7 @@
         return out;
     }
 
-    // Validate a saved ASCVD object — each numeric field must be finite
+    // Validate a saved ASCVD object - each numeric field must be finite
     // and in range, otherwise null.
     function pickAscvd(saved) {
         var out = { totalCholesterol: null, ldl: null, hdl: null };
@@ -2198,7 +2198,7 @@
         state.marketingOptIn = !!saved.marketingOptIn;
         state.emailOptIn = !!saved.emailOptIn;
 
-        // Rehydrate UI selections — single-select cards.
+        // Rehydrate UI selections - single-select cards.
         if (state.ageGate) selectRadio('age-gate', state.ageGate);
         if (state.sex) selectRadioRow('sex', state.sex);
         if (state.priorAttempt) selectRadio('attempt', state.priorAttempt);
@@ -2224,7 +2224,7 @@
         var stateSel = document.getElementById('quiz-state-select');
         if (stateSel && state.stateCode) stateSel.value = state.stateCode;
 
-        // Rehydrate multi-checks — escape attribute values to prevent any
+        // Rehydrate multi-checks - escape attribute values to prevent any
         // hostile string from breaking out of the selector.
         if (state.comorbidities.length) {
             for (var ci = 0; ci < state.comorbidities.length; ci++) {
@@ -2248,7 +2248,7 @@
         // Sync gated Continue buttons with rehydrated state.
         refreshConditionsContinue();
 
-        // Determine target screen — never restore directly to calculating or
+        // Determine target screen - never restore directly to calculating or
         // results. If the saved currentScreen is past the ack, send the user
         // to ack so they explicitly re-acknowledge before re-rendering.
         // Also: if the user previously selected high-cholesterol but the

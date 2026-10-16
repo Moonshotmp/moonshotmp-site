@@ -1,5 +1,5 @@
 /*
- * Moonshot Perimenopause Screener — Quiz Engine
+ * Moonshot Perimenopause Screener - Quiz Engine
  * ==============================================
  * Browser-side IIFE that runs the entire perimenopause screening flow:
  * welcome → age-gate → age → menstrual status → 11 MRS items (Q3..Q13)
@@ -7,7 +7,7 @@
  * → state → acknowledgement → calculating → results.
  *
  * Scoring logic is INLINED from /quiz/perimenopause/scoring.js (the canonical
- * pure module). Both files MUST stay in sync — the Vitest suite pins the
+ * pure module). Both files MUST stay in sync - the Vitest suite pins the
  * contract on the scoring module; this engine reproduces it verbatim because
  * the page loads as a non-module script tag (no ESM imports).
  *
@@ -26,7 +26,7 @@
  * Compliance rails:
  *   - Never name specific drugs or hormones in result output.
  *   - Never tell the user they "should start HRT".
- *   - Never use "Strong candidate" / "Possible candidate" — neutral labels only.
+ *   - Never use "Strong candidate" / "Possible candidate" - neutral labels only.
  *   - Never predict cause ("estrogen dominance", "low testosterone").
  *   - Tier labels are the four neutral strings from INTERNAL_TIER_LABELS.
  *   - Acknowledgement screen is a real click-through, timestamped.
@@ -41,7 +41,7 @@
 
     // ── Inlined Scoring Logic (mirror of scoring.js) ─────────────────
     // If scoring.js changes, update both files together. Vitest pins the
-    // canonical module — keep this section identical in behavior.
+    // canonical module - keep this section identical in behavior.
 
     var MRS_INDEX = {
         Q3_HOT_FLUSHES:        0,
@@ -118,7 +118,7 @@
 
     // Number.isFinite rejects NaN AND ±Infinity. A plain typeof check
     // would let NaN through (typeof NaN === 'number') and every <=
-    // comparison would fail, returning 'severe' on corrupted state —
+    // comparison would fail, returning 'severe' on corrupted state -
     // exactly the wrong direction for a clinical screener.
     function mrsTier(score) {
         if (!Number.isFinite(score) || score < 0) return 'none';
@@ -178,7 +178,7 @@
 
     // ── Screen Constants ─────────────────────────────────────────────
     // The 11 MRS items render as 11 sequential numbered q-N screens.
-    // INTERSTITIAL_REDFLAG is conditional — only shown when hasRedFlag(state.mrs)
+    // INTERSTITIAL_REDFLAG is conditional - only shown when hasRedFlag(state.mrs)
     // returns true after the HISTORY screen.
 
     var SCREEN = {
@@ -240,7 +240,7 @@
         { label: 'No',                    key: 'no' }
     ];
 
-    // Cycle / menstrual status — keys match MENSTRUAL_STATUS_VALUES exactly.
+    // Cycle / menstrual status - keys match MENSTRUAL_STATUS_VALUES exactly.
     var cycleOptions = [
         { label: 'I have regular cycles',                                                key: 'regular' },
         { label: 'My cycles are irregular',                                              key: 'irregular' },
@@ -262,7 +262,7 @@
         { label: 'All the time (4)',   key: '4' }
     ];
 
-    // 11 MRS items — index, prompt, and (if relevant) red-flag tag. The
+    // 11 MRS items - index, prompt, and (if relevant) red-flag tag. The
     // prompts go through to the patient as headlines on each q-N screen.
     var mrsItems = [
         { idx: 0,  screen: 5,  prompt: 'How often do you experience hot flushes or sweating?' },
@@ -279,7 +279,7 @@
     ];
 
     // Contraindication multi-check options (HISTORY screen). Keys are short
-    // enums — safe to include in the submit payload's `contraindicationCategories`.
+    // enums - safe to include in the submit payload's `contraindicationCategories`.
     var contraindicationOptions = [
         { label: 'History of blood clots, DVT, or PE',                                         key: 'clots' },
         { label: 'Personal history of breast, endometrial, or ovarian cancer',                 key: 'cancer' },
@@ -337,14 +337,14 @@
 
     // The universal footer disclaimer is rendered by the static HTML below
     // the quiz mount in /quiz/perimenopause/index.html. It is NOT duplicated
-    // by this engine — the static placement is canonical and is always
+    // by this engine - the static placement is canonical and is always
     // visible because the quiz is inline (not modal). Mirrors bone-density.
 
     var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // Red-flag interstitial copy (verbatim from spec). Surfaces between the
     // HISTORY screen and the STATE screen if Q4 ≥3 AND Q8 ≥3.
-    var REDFLAG_INTERSTITIAL_COPY = 'palpitations combined with anxiety can have causes beyond hormonal change &mdash; including thyroid disease, cardiac arrhythmias (paroxysmal atrial fibrillation), or other conditions. These need to be ruled out before assuming a perimenopausal explanation. If your palpitations are severe, sudden, or accompanied by chest pain, shortness of breath, or fainting &mdash; please see your primary care physician or an emergency department. Click below to continue with the screening result, but please raise these symptoms specifically with a clinician.';
+    var REDFLAG_INTERSTITIAL_COPY = 'palpitations combined with anxiety can have causes beyond hormonal change, including thyroid disease, cardiac arrhythmias (paroxysmal atrial fibrillation), or other conditions. These need to be ruled out before assuming a perimenopausal explanation. If your palpitations are severe, sudden, or accompanied by chest pain, shortness of breath, or fainting, please see your primary care physician or an emergency department. Click below to continue with the screening result, but please raise these symptoms specifically with a clinician.';
 
     // ── State ────────────────────────────────────────────────────────
 
@@ -357,7 +357,7 @@
         menstrualStatus: null,           // string in MENSTRUAL_STATUS_VALUES
         mrs: [null, null, null, null, null, null, null, null, null, null, null], // 0..4 each
         contraindications: [],           // string[] (subset of contraindication keys)
-        contraindicationsNoneSelected: false, // UI flag — true if user explicitly picked "None of these"
+        contraindicationsNoneSelected: false, // UI flag - true if user explicitly picked "None of these"
         stateCode: '',                    // 'IL' | 'CA' | ...
         ackTimestamp: null,                // ISO string set on Ack-screen continue
         redFlagAckTimestamp: null,         // ISO string set on red-flag interstitial continue
@@ -410,7 +410,7 @@
     // ── First-Party Analytics Shim ───────────────────────────────────
     // Only generic funnel events are forwarded. The screen label is the
     // short, neutral string from SCREEN_LABEL[]. No health values ever leave
-    // the browser via analytics. quiz-event.js rejects HEALTH_TERMS — our
+    // the browser via analytics. quiz-event.js rejects HEALTH_TERMS - our
     // screen labels are pre-checked to avoid those substrings.
 
     function ga(eventName, screenIndex) {
@@ -444,7 +444,7 @@
 
     // Build the ordered list of screens the current user will see. The
     // INTERSTITIAL_REDFLAG screen is included only if hasRedFlag(state.mrs)
-    // returns true at the time the user is past the HISTORY screen — but we
+    // returns true at the time the user is past the HISTORY screen - but we
     // always include it in the order conditionally so the progress bar
     // denominator reflects the user's actual remaining path.
     function activeScreenOrder() {
@@ -505,7 +505,7 @@
             var target = root.querySelector('[data-screen="' + screenIndex + '"]');
             if (target) {
                 target.classList.add('active');
-                // Scroll the quiz mount into view rather than window top —
+                // Scroll the quiz mount into view rather than window top -
                 // the static page has H1 + byline above #quiz-root and a
                 // window-top scroll hides the new active screen below them.
                 if (root && typeof root.scrollIntoView === 'function') {
@@ -557,10 +557,10 @@
             '<div class="text-center">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free Perimenopause Screener</p>' +
                 '<h2 id="screen-' + SCREEN.WELCOME + '-heading" class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">Are my symptoms perimenopause?</h2>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">A 3-minute screener built on the Menopause Rating Scale &mdash; a public-domain validated instrument &mdash; to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">A 3-minute screener built on the Menopause Rating Scale, a public-domain validated instrument, to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start the Screener</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant. We don\'t sell your data or share it with advertisers.</p>' +
-                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical &mdash; a licensed clinic in Park Ridge, IL</p>' +
+                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +
                 '<p class="text-brand-gray/40 text-xs mt-2">For educational purposes only. Not medical advice.</p>' +
             '</div>'
         );
@@ -659,7 +659,7 @@
                     '<span>' + contraindicationOptions[i].label + '</span>' +
                 '</label>';
         }
-        // Exclusive "None of these" option — hint announced via aria-describedby.
+        // Exclusive "None of these" option - hint announced via aria-describedby.
         btns +=
             '<label class="quiz-check-item border border-white/10 rounded-sm px-6 py-4 text-brand-light font-medium text-left w-full flex items-start gap-3 cursor-pointer hover:border-brand-gray/40 transition-colors mt-2">' +
                 '<input type="checkbox" class="mt-1 flex-shrink-0" data-' + dataAttr + '-none="true" aria-describedby="' + noneHintId + '">' +
@@ -687,7 +687,7 @@
                     '<p class="text-brand-light font-light leading-relaxed"><strong class="text-brand-light">Important: ' + REDFLAG_INTERSTITIAL_COPY + '</strong></p>' +
                 '</div>' +
                 '<div class="text-center">' +
-                    '<button type="button" id="quiz-redflag-continue" class="btn-primary px-10 py-3">I understand &mdash; continue</button>' +
+                    '<button type="button" id="quiz-redflag-continue" class="btn-primary px-10 py-3">I understand, continue</button>' +
                     '<p class="text-brand-gray/60 text-xs mt-4">By clicking Continue you confirm you have read this notice.</p>' +
                 '</div>' +
             '</div>'
@@ -741,7 +741,7 @@
             '<div class="text-center">' +
                 '<h2 id="screen-' + SCREEN.CALCULATING + '-heading" class="text-2xl font-bold text-brand-light mb-2 font-heading">Calculating your screening result</h2>' +
                 '<p class="text-brand-gray font-light mb-10">This will take just a moment...</p>' +
-                // Visual markers are decorative — the real announcement
+                // Visual markers are decorative - the real announcement
                 // happens via the single live region below.
                 '<div class="max-w-sm mx-auto text-left" aria-hidden="true">' + markers + '</div>' +
                 '<p id="calculating-current-step" class="sr-only" aria-live="polite" aria-atomic="true"></p>' +
@@ -972,7 +972,7 @@
         return '/booking/?source=perimenopause-quiz&severity=' + encodeURIComponent(slug);
     }
 
-    // Tier-specific body copy. Verbatim from spec — do NOT paraphrase.
+    // Tier-specific body copy. Verbatim from spec - do NOT paraphrase.
     // The contraindication overlay is appended (not replaced) when
     // hasHrtContraindication is true. Within eligibility-factors-present we
     // branch on mrsTier to differentiate severe (≥17) vs moderate (9-16) body.
@@ -984,17 +984,17 @@
         var slug = result.resultSlug;
 
         if (internalTier === 'contraindication-identified') {
-            // The contraindication branch wins regardless of MRS — patient
+            // The contraindication branch wins regardless of MRS - patient
             // is routed to the contraindication path. Body covers safety.
             body = 'Your responses indicate medical history that requires careful clinical evaluation before any hormone-based therapy. Non-hormone-based evaluation paths exist and are part of what a consultation would cover. A clinician can review your full picture, order appropriate workup, and discuss options that fit your situation safely.';
             ctaLabel = 'Book a consultation';
         } else if (internalTier === 'eligibility-factors-present') {
-            // Two body variants by mrsTier — severe vs moderate.
+            // Two body variants by mrsTier - severe vs moderate.
             if (result.mrsTier === 'severe') {
-                body = 'Your responses indicate significant symptom burden in patterns associated with hormonal change. A clinical evaluation can clarify what\'s driving symptoms &mdash; there are several treatment paths including hormone-based and non-hormone-based options. We\'d recommend booking a consultation to review symptoms and order a comprehensive hormone panel.';
+                body = 'Your responses indicate significant symptom burden in patterns associated with hormonal change. A clinical evaluation can clarify what\'s driving symptoms. There are several treatment paths including hormone-based and non-hormone-based options. We\'d recommend booking a consultation to review symptoms and order a comprehensive hormone panel.';
             } else {
                 // moderate
-                body = 'Your responses indicate moderate symptom burden consistent with patterns associated with perimenopausal or menopausal change. Several evaluation paths exist &mdash; comprehensive hormone testing, lifestyle interventions, targeted nutrition. A clinical evaluation can clarify what\'s right for you.';
+                body = 'Your responses indicate moderate symptom burden consistent with patterns associated with perimenopausal or menopausal change. Several evaluation paths exist: comprehensive hormone testing, lifestyle interventions, targeted nutrition. A clinical evaluation can clarify what\'s right for you.';
             }
             ctaLabel = 'Book hormone consultation';
         } else if (internalTier === 'eligibility-factors-mixed') {
@@ -1074,7 +1074,7 @@
             html += '<div class="bg-white/5 border border-white/10 rounded-sm p-6 mb-6">' +
                 '<h3 class="text-brand-light font-bold mb-3">Want a copy of your result?</h3>' +
                 (result.outOfState ? OUT_OF_STATE_EMAIL_NOTE : '') +
-                '<p class="text-brand-gray text-sm font-light mb-4">Optional &mdash; you do not need to enter anything to keep this result.</p>' +
+                '<p class="text-brand-gray text-sm font-light mb-4">Optional: you do not need to enter anything to keep this result.</p>' +
                 '<div class="space-y-3 text-left">' +
                     '<label class="flex items-start gap-3 cursor-pointer">' +
                         '<input type="checkbox" id="quiz-email-optin" class="mt-1 flex-shrink-0">' +
@@ -1109,7 +1109,7 @@
         }
 
         // Universal footer disclaimer is rendered once by the static HTML
-        // below the quiz mount — do NOT duplicate it here. Author attribution
+        // below the quiz mount - do NOT duplicate it here. Author attribution
         // remains result-page-specific.
 
         // Author attribution (always shown)
@@ -1124,7 +1124,7 @@
 
         document.getElementById('quiz-results-inner').innerHTML = html;
 
-        // Update URL for sharing — only the result slug, not the full state.
+        // Update URL for sharing - only the result slug, not the full state.
         if (window.history && window.history.replaceState) {
             try {
                 var validSlug = result.resultSlug && /^(contraindication|present|mixed|not-met)$/.test(result.resultSlug);
@@ -1146,7 +1146,7 @@
 
         // Clear PII from in-memory state after the result has rendered. The
         // email opt-in form below reads directly from input.value, so it
-        // captures fresh input — these zeroed fields don't break it. This
+        // captures fresh input - these zeroed fields don't break it. This
         // protects shared-device users from seeing prefilled fields if they
         // hit Retake. Saved state was already cleared on email submit; this
         // covers the case where the result was rendered without submitting.
@@ -1231,7 +1231,7 @@
 
         var msg = document.getElementById('quiz-submit-msg');
         if (msg) {
-            msg.textContent = 'Thanks — we just sent your result to ' + email + '.';
+            msg.textContent = 'Thanks. We just sent your result to ' + email + '.';
             msg.classList.remove('hidden');
         }
         // Hide submit button to prevent duplicate sends, then clear saved
@@ -1242,7 +1242,7 @@
     }
 
     // ── Email submission ─────────────────────────────────────────────
-    // Compact payload — counts and sanitized enums only for multi-check
+    // Compact payload - counts and sanitized enums only for multi-check
     // fields, NEVER raw symptom values or individual MRS item scores.
     function sendResults(smsConsent) {
         var result = scorePerimenopause(state);
@@ -1268,7 +1268,7 @@
                 mrsScore: result.mrsScore,
                 mrsTier: result.mrsTier,
                 contraindicationCount: Array.isArray(state.contraindications) ? state.contraindications.length : 0,
-                // Send sanitized keys only (short enum strings — safe).
+                // Send sanitized keys only (short enum strings - safe).
                 // Never send the human-readable contraindication labels.
                 contraindicationCategories: Array.isArray(state.contraindications) ? state.contraindications.slice() : [],
                 stateCode: state.stateCode
@@ -1278,7 +1278,7 @@
         };
 
         // Attach upstream marketing attribution (utm_*, gclid, fbclid,
-        // landing_page, last_page, referrer) — forwarded to the EHR lead webhook.
+        // landing_page, last_page, referrer) - forwarded to the EHR lead webhook.
         try {
             payload.attribution = (window.MoonshotAttribution && typeof window.MoonshotAttribution.getFlat === 'function')
                 ? window.MoonshotAttribution.getFlat()
@@ -1327,7 +1327,7 @@
             '<div class="max-w-2xl w-full">' +
                 '<div class="text-center mb-8">' +
                     '<p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Shared Screener Result</p>' +
-                    '<h2 class="text-3xl font-bold text-brand-light mb-4 font-heading">Shared screener result &mdash; ' + copy.heading + '</h2>' +
+                    '<h2 class="text-3xl font-bold text-brand-light mb-4 font-heading">Shared screener result: ' + copy.heading + '</h2>' +
                 '</div>' +
                 '<div class="border border-brand-gray/40 rounded-sm p-8 mb-8" style="background: rgba(178, 191, 190, 0.05)">' +
                     '<p class="text-brand-light font-light">' + copy.body + '</p>' +
@@ -1337,7 +1337,7 @@
                     '<button type="button" id="shared-result-cta" class="btn-primary text-lg px-10 py-4">Take the Screener</button>' +
                 '</div>' +
                 // Universal footer disclaimer is rendered by the static HTML
-                // below the quiz mount — not duplicated here.
+                // below the quiz mount - not duplicated here.
             '</div>' +
         '</div>';
 
@@ -1378,7 +1378,7 @@
                 state.ageGate = ageGateBtn.getAttribute('data-age-gate');
                 selectRadio('age-gate', state.ageGate);
                 if (state.ageGate === 'no') {
-                    // No recovery path — advance immediately to terminal block
+                    // No recovery path - advance immediately to terminal block
                     ga('screen_advance', SCREEN.AGE_GATE);
                     show(SCREEN.AGE_BLOCK);
                 }
@@ -1406,7 +1406,7 @@
             }
 
             // ── 11 MRS items: data-mrs-N="0..4" (radio cards) ──────────
-            // Loop check — find any data-mrs-{idx} attribute on the closest
+            // Loop check - find any data-mrs-{idx} attribute on the closest
             // button. Storing the value as an integer 0-4 in state.mrs[idx].
             for (var mi = 0; mi < mrsItems.length; mi++) {
                 var attr = 'mrs-' + mi;
@@ -1608,7 +1608,7 @@
     // ── Restore from Saved State ─────────────────────────────────────
 
     // Allowlists for enum-typed restored fields. Anything not in the
-    // allowlist is rejected (set null) — protects scoring from corrupted
+    // allowlist is rejected (set null) - protects scoring from corrupted
     // localStorage values planted via DevTools or older schema versions.
     var ENUM_AGE_GATE = { 'yes': 1, 'no': 1 };
     var ENUM_CYCLE = MENSTRUAL_STATUS_VALUES;
@@ -1634,7 +1634,7 @@
         return value.replace(/["\\\]]/g, '\\$&');
     }
 
-    // Validate a saved mrs array — must be 11 entries of integer 0-4 or null.
+    // Validate a saved mrs array - must be 11 entries of integer 0-4 or null.
     // Anything else for a slot is reset to null.
     function pickMrsArray(saved) {
         var out = [null, null, null, null, null, null, null, null, null, null, null];
@@ -1648,7 +1648,7 @@
         return out;
     }
 
-    // Validate a saved contraindications array — keep only allowlisted keys.
+    // Validate a saved contraindications array - keep only allowlisted keys.
     function pickContraindicationArray(saved) {
         if (!Array.isArray(saved)) return [];
         var out = [];
@@ -1691,7 +1691,7 @@
         state.marketingOptIn = !!saved.marketingOptIn;
         state.emailOptIn = !!saved.emailOptIn;
 
-        // Rehydrate UI selections — single-select cards.
+        // Rehydrate UI selections - single-select cards.
         if (state.ageGate) selectRadio('age-gate', state.ageGate);
         if (state.menstrualStatus) selectRadio('cycle', state.menstrualStatus);
         for (var mi = 0; mi < MRS_ITEM_COUNT; mi++) {
@@ -1706,7 +1706,7 @@
         var stateSel = document.getElementById('quiz-state-select');
         if (stateSel && state.stateCode) stateSel.value = state.stateCode;
 
-        // Rehydrate multi-checks — escape attribute values to prevent any
+        // Rehydrate multi-checks - escape attribute values to prevent any
         // hostile string from breaking out of the selector.
         if (state.contraindications.length) {
             for (var ci = 0; ci < state.contraindications.length; ci++) {
@@ -1718,7 +1718,7 @@
             if (noneEl) noneEl.checked = true;
         }
 
-        // Determine target screen — never restore directly to calculating or
+        // Determine target screen - never restore directly to calculating or
         // results (the result is recomputed on demand). If saved currentScreen
         // is past the ack, send the user to the ack screen so they explicitly
         // re-acknowledge before re-rendering the result.
@@ -1728,7 +1728,7 @@
         }
         // Clamp into a valid index range [WELCOME .. ACK]. The
         // INTERSTITIAL_REDFLAG screen is only valid if hasRedFlag(state.mrs)
-        // — if the saved screen is the interstitial but the user's MRS doesn't
+        // - if the saved screen is the interstitial but the user's MRS doesn't
         // currently trigger it, snap them back to HISTORY.
         if (target < SCREEN.WELCOME) target = SCREEN.WELCOME;
         if (target > SCREEN.ACK) target = SCREEN.ACK;

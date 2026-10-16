@@ -14,7 +14,7 @@
    Self-Hosted Google Fonts
    ======================================== */
 
-/* Oswald — Variable font (weight 400-700) */
+/* Oswald - Variable font (weight 400-700) */
 @font-face {
     font-family: 'Oswald';
     font-style: normal;
@@ -23,7 +23,7 @@
     src: url('/fonts/oswald-variable.woff2') format('woff2');
 }
 
-/* Poppins — 300 */
+/* Poppins - 300 */
 @font-face {
     font-family: 'Poppins';
     font-style: normal;
@@ -32,7 +32,7 @@
     src: url('/fonts/poppins-300.woff2') format('woff2');
 }
 
-/* Poppins — 400 */
+/* Poppins - 400 */
 @font-face {
     font-family: 'Poppins';
     font-style: normal;
@@ -41,7 +41,7 @@
     src: url('/fonts/poppins-400.woff2') format('woff2');
 }
 
-/* Poppins — 500 */
+/* Poppins - 500 */
 @font-face {
     font-family: 'Poppins';
     font-style: normal;
@@ -50,7 +50,7 @@
     src: url('/fonts/poppins-500.woff2') format('woff2');
 }
 
-/* Poppins — 600 */
+/* Poppins - 600 */
 @font-face {
     font-family: 'Poppins';
     font-style: normal;
@@ -59,7 +59,7 @@
     src: url('/fonts/poppins-600.woff2') format('woff2');
 }
 
-/* Poppins — 700 */
+/* Poppins - 700 */
 @font-face {
     font-family: 'Poppins';
     font-style: normal;
@@ -130,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
 
    Quiz engines call .focus() programmatically on the new screen's H2
    after each transition so screen readers land on the right content.
-   The heading carries tabindex="-1" — programmatically focusable but
+   The heading carries tabindex="-1" - programmatically focusable but
    NOT in the keyboard tab order, so users cannot Tab to it. Suppress
    the focus ring entirely; Safari matches :focus-visible on programmatic
    focus and shows a dashed outline that has no purpose here.
@@ -406,7 +406,7 @@ summary::-webkit-details-marker {
    WCAG AA Contrast Fix
    ========================================
    Tailwind's text-brand-gray/60 (#B2BFBE at 60% opacity) yields ~3.5:1
-   contrast on dark backgrounds — fails WCAG AA (4.5:1 minimum).
+   contrast on dark backgrounds - fails WCAG AA (4.5:1 minimum).
    Override low-opacity brand-gray text to use 85% opacity minimum,
    which brings contrast above 4.5:1 on --brand-dark backgrounds.
 */

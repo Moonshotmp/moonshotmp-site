@@ -12,7 +12,7 @@
  */
 
 (function() {
-    // GA4 dataLayer shim — kept as a harmless no-op so any legacy `gtag(...)`
+    // GA4 dataLayer shim - kept as a harmless no-op so any legacy `gtag(...)`
     // calls elsewhere in the codebase don't throw. The real tracker scripts
     // (gtag.js, Ahrefs, Meta CAPI) are NO LONGER loaded from this file.
     window.dataLayer = window.dataLayer || [];
@@ -23,7 +23,7 @@
     // historically loaded GA4, Google Ads, Ahrefs Analytics, and a Meta CAPI
     // relay unconditionally. That pattern is HBNR-violating (cf. GoodRx $1.5M,
     // BetterHelp $7.8M FTC settlements). We now load NO third-party trackers
-    // from this file — period. Even non-health pages do not load them here
+    // from this file - period. Even non-health pages do not load them here
     // until a consent gate is implemented.
     //
     // Generic, non-health funnel measurement now flows through the first-party
@@ -42,7 +42,7 @@
     // can slice our own bookings by campaign without querying Google.
     //
     // PRIVACY: Click IDs and UTM tags are opaque tokens, not health data. They
-    // never co-travel with health-condition signals here — the actual
+    // never co-travel with health-condition signals here - the actual
     // conversion upload happens server-side from the EHR with a generic
     // "Booking" event name and dollar value, and explicitly OMITS
     // appointment_type / service name / condition. localStorage is purely
@@ -99,7 +99,7 @@
     // Captures the marketing-attribution fields the legacy block above
     // misses (referrer, landing_page, last_page, fbclid, msclkid) into
     // sessionStorage. Quiz engines read window.MoonshotAttribution.getFlat()
-    // when constructing the email-capture form payload — the unified flat
+    // when constructing the email-capture form payload - the unified flat
     // object is forwarded to the EHR /api/leads/webhook attribution column.
     try {
       if (!document.querySelector('script[data-moonshot-attribution-capture]')) {
@@ -117,7 +117,7 @@
     // missing: nothing READ those stored values back onto outbound clinic
     // booking links. So if a user landed from an ad, navigated around,
     // and clicked Book later, the gclid was lost and the appointment
-    // ingested with no attribution — which is why only 2 of ~1700 recent
+    // ingested with no attribution - which is why only 2 of ~1700 recent
     // bookings carried a gclid even though the upload pipeline itself
     // works end-to-end (see functions/shared/google-ads-conversion.js on
     // the clinic side).
@@ -142,7 +142,7 @@
               if (typeof clickObj.wbraid === 'string' && clickObj.wbraid) attribution.wbraid = clickObj.wbraid;
             }
           }
-        } catch (_e) { /* corrupt JSON — skip */ }
+        } catch (_e) { /* corrupt JSON - skip */ }
         try {
           var utmRaw = localStorage.getItem('mmp_utm_attribution');
           if (utmRaw) {
@@ -153,7 +153,7 @@
               });
             }
           }
-        } catch (_e) { /* corrupt JSON — skip */ }
+        } catch (_e) { /* corrupt JSON - skip */ }
 
         var keys = Object.keys(attribution);
         if (!keys.length) return;
@@ -422,22 +422,22 @@
               </svg>
             </button>
             <div id="mobile-learn-submenu" class="bg-black/20 hidden">
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide">— Men —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide">Men</span>
               <a href="/learn/trt-guide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT Guide</a>
               <a href="/learn/low-testosterone-symptoms/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Low T Symptoms</a>
               <a href="/learn/trt-vs-steroids/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Steroids</a>
               <a href="/medical/trt-vs-enclomiphene/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Enclomiphene</a>
               <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Women —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Women</span>
               <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Menopause Guide</a>
               <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Testosterone for Women</a>
               <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone</a>
               <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS</a>
               <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Weight Loss —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Weight Loss</span>
               <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
               <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">— Rehab & Diagnostics —</span>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Rehab & Diagnostics</span>
               <a href="/learn/prp-microneedling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PRP Microneedling</a>
               <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
               <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
@@ -600,7 +600,7 @@
                 wrapper.addEventListener('focusin', () => {
                     clearTimeout(closeTimer);
                     if (!dropdown.classList.contains('hidden')) return;
-                    // Don't auto-open on focus alone — user must press Enter/Space or arrow
+                    // Don't auto-open on focus alone - user must press Enter/Space or arrow
                 });
 
                 wrapper.addEventListener('focusout', (e) => {
@@ -705,13 +705,13 @@
             { title: "PRP After Weight Loss", desc: "Skin tightening after GLP-1 weight loss with PRP microneedling", url: "/learn/prp-microneedling-after-weight-loss/", cat: "Medical" },
             { title: "PRP Microneedling Cost", desc: "How much PRP microneedling costs in 2026", url: "/learn/prp-microneedling-cost/", cat: "Medical" },
             // NAD+
-            { title: "NAD+ Therapy", desc: "NAD+ injections for cellular energy and recovery — $60/shot", url: "/medical/nad/", cat: "Medical" },
+            { title: "NAD+ Therapy", desc: "NAD+ injections for cellular energy and recovery, $60/shot", url: "/medical/nad/", cat: "Medical" },
             { title: "NAD+ Protocol Guide", desc: "What to expect: loading phase, maintenance, stacking", url: "/learn/nad-protocol/", cat: "NAD+" },
             { title: "NAD+ for Anti-Aging", desc: "Science of NAD+ decline, sirtuins, DNA repair", url: "/learn/nad-anti-aging/", cat: "NAD+" },
             { title: "NAD+ for Athletes", desc: "Recovery, mitochondrial biogenesis, performance", url: "/learn/nad-athletic-recovery/", cat: "NAD+" },
-            { title: "NAD+ Injections vs IV Drips", desc: "$60 SubQ vs $250-1000+ IV — cost and bioavailability comparison", url: "/learn/nad-injections-vs-iv/", cat: "NAD+" },
+            { title: "NAD+ Injections vs IV Drips", desc: "$60 SubQ vs $250-1000+ IV: cost and bioavailability comparison", url: "/learn/nad-injections-vs-iv/", cat: "NAD+" },
             { title: "NAD+ Therapy Cost", desc: "IV vs injections vs supplements pricing comparison", url: "/learn/nad-therapy-cost/", cat: "NAD+" },
-            { title: "NAD+ vs NMN vs NR", desc: "Injections vs supplements — which boosts NAD+ best", url: "/learn/nad-vs-nmn/", cat: "NAD+" },
+            { title: "NAD+ vs NMN vs NR", desc: "Injections vs supplements: which boosts NAD+ best", url: "/learn/nad-vs-nmn/", cat: "NAD+" },
             { title: "NAD+ & Vitamin Injections", desc: "Evidence-based guide to NAD+ and vitamin shots", url: "/learn/nad-vitamin-injections/", cat: "NAD+" },
             // Weight Loss
             { title: "Semaglutide vs Tirzepatide", desc: "GLP-1 medication comparison", url: "/learn/semaglutide-vs-tirzepatide/", cat: "Weight Loss" },
@@ -746,23 +746,23 @@
             { title: "DEXA vs InBody", desc: "Body composition scan comparison", url: "/medical/dexa-scan/dexa-vs-inbody/", cat: "Diagnostics" },
             { title: "Optimal vs Normal Ranges", desc: "Why normal isn't always optimal", url: "/learn/optimal-vs-normal/", cat: "Diagnostics" },
             { title: "DEXA Scan Cost", desc: "$150 DEXA scan at Moonshot Medical", url: "/learn/dexa-scan-cost/", cat: "Diagnostics" },
-            { title: "DEXA Scan for Weight Loss", desc: "Why the scale isn't enough — track real progress", url: "/learn/dexa-scan-for-weight-loss/", cat: "Diagnostics" },
+            { title: "DEXA Scan for Weight Loss", desc: "Why the scale isn't enough: track real progress", url: "/learn/dexa-scan-for-weight-loss/", cat: "Diagnostics" },
             { title: "How to Read DEXA Results", desc: "Understanding your DEXA scan report", url: "/learn/how-to-read-dexa-scan-results/", cat: "Diagnostics" },
             { title: "DEXA Scan vs Bod Pod", desc: "Which body composition method is more accurate", url: "/learn/dexa-scan-vs-bod-pod/", cat: "Diagnostics" },
             { title: "Sample DEXA Report", desc: "Walkthrough of a real DEXA scan report", url: "/learn/sample-dexa-report/", cat: "Diagnostics" },
             { title: "What Labs to Test", desc: "What labs you should actually be testing beyond the standard panel", url: "/learn/what-labs-to-test/", cat: "Diagnostics" },
-            { title: "Cardiovascular & Lipid Optimization", desc: "Beyond cholesterol — advanced lipid management", url: "/learn/cardiovascular-lipid-optimization/", cat: "Diagnostics" },
+            { title: "Cardiovascular & Lipid Optimization", desc: "Beyond cholesterol: advanced lipid management", url: "/learn/cardiovascular-lipid-optimization/", cat: "Diagnostics" },
             { title: "Vitamin D & Micronutrients", desc: "Hidden health bottlenecks from deficiencies", url: "/learn/vitamin-d-micronutrients/", cat: "Diagnostics" },
             { title: "Thyroid Optimization", desc: "Why normal thyroid isn't optimal", url: "/learn/thyroid-optimization/", cat: "Diagnostics" },
             { title: "Sleep Optimization", desc: "How sleep affects hormones and health", url: "/learn/sleep-optimization/", cat: "Diagnostics" },
             // Men's Health
-            { title: "TRT Guide", desc: "Testosterone replacement therapy — benefits, risks, dosing, cost", url: "/learn/trt-guide/", cat: "Men" },
+            { title: "TRT Guide", desc: "Testosterone replacement therapy: benefits, risks, dosing, cost", url: "/learn/trt-guide/", cat: "Men" },
             { title: "Low Testosterone Symptoms", desc: "Signs of low T in men", url: "/learn/low-testosterone-symptoms/", cat: "Men" },
             { title: "TRT vs Steroids", desc: "Understanding the difference", url: "/learn/trt-vs-steroids/", cat: "Men" },
-            { title: "TRT Cost", desc: "How much TRT costs — pricing guide for 2026", url: "/learn/trt-cost/", cat: "Men" },
+            { title: "TRT Cost", desc: "How much TRT costs: pricing guide for 2026", url: "/learn/trt-cost/", cat: "Men" },
             { title: "TRT Side Effects", desc: "What to expect on testosterone therapy", url: "/learn/trt-side-effects/", cat: "Men" },
             { title: "Testosterone Levels by Age", desc: "Normal vs optimal testosterone by age group", url: "/learn/testosterone-levels-by-age/", cat: "Men" },
-            { title: "How Long Does TRT Take to Work?", desc: "TRT timeline — when to expect results", url: "/learn/how-long-does-trt-take-to-work/", cat: "Men" },
+            { title: "How Long Does TRT Take to Work?", desc: "TRT timeline: when to expect results", url: "/learn/how-long-does-trt-take-to-work/", cat: "Men" },
             { title: "Testosterone Therapy After 40", desc: "Low T facts vs hype for men over 40", url: "/learn/testosterone-therapy-over-40/", cat: "Men" },
             // Women's Health
             { title: "Menopause Guide", desc: "Perimenopause and menopause explained", url: "/learn/menopause-perimenopause/", cat: "Women" },
@@ -771,11 +771,11 @@
             { title: "Hashimoto's Thyroiditis", desc: "Causes, diagnosis, and treatment options", url: "/learn/hashimotos-thyroiditis/", cat: "Women" },
             { title: "PCOS", desc: "Causes, types, and treatment for polycystic ovary syndrome", url: "/learn/pcos/", cat: "Women" },
             { title: "Estrogen Dominance", desc: "Estrogen-progesterone imbalance symptoms and treatment", url: "/learn/estrogen-dominance/", cat: "Women" },
-            { title: "Progesterone Guide", desc: "The forgotten hormone — why progesterone matters", url: "/learn/progesterone/", cat: "Women" },
-            { title: "WHI Study & HRT Truth", desc: "HRT myths vs facts — the WHI study revisited", url: "/learn/whi-study-hrt-truth/", cat: "Women" },
+            { title: "Progesterone Guide", desc: "The forgotten hormone: why progesterone matters", url: "/learn/progesterone/", cat: "Women" },
+            { title: "WHI Study & HRT Truth", desc: "HRT myths vs facts: the WHI study revisited", url: "/learn/whi-study-hrt-truth/", cat: "Women" },
             // Cost Guides (not already listed above)
             // (TRT Cost under Men, BHRT Cost under Women, DEXA Cost under Diagnostics, Semaglutide Cost under Weight Loss, NAD Cost under NAD+)
-            // Local SEO — Park Ridge
+            // Local SEO - Park Ridge
             { title: "TRT in Park Ridge", desc: "Testosterone therapy in Park Ridge, IL", url: "/learn/trt-park-ridge/", cat: "Local" },
             { title: "DEXA Scan in Park Ridge", desc: "DEXA body composition scan in Park Ridge, IL", url: "/learn/dexa-scan-park-ridge/", cat: "Local" },
             { title: "Chiropractor in Park Ridge", desc: "Evidence-based chiropractic in Park Ridge, IL", url: "/learn/chiropractor-park-ridge/", cat: "Local" },
@@ -787,12 +787,12 @@
             { title: "Physical Rehab in Park Ridge", desc: "Physical rehabilitation in Park Ridge, IL", url: "/learn/physical-rehab-park-ridge/", cat: "Local" },
             { title: "Blood Work in Park Ridge", desc: "Comprehensive blood panels in Park Ridge, IL", url: "/learn/blood-work-park-ridge/", cat: "Local" },
             { title: "NAD+ Injections in Park Ridge", desc: "NAD+ therapy in Park Ridge, IL", url: "/learn/nad-injections-park-ridge/", cat: "Local" },
-            { title: "Hormone Quiz — Park Ridge", desc: "Hormone imbalance quiz for Park Ridge, IL residents", url: "/learn/hormone-quiz-park-ridge/", cat: "Local" },
-            // Local SEO — Chicago
+            { title: "Hormone Quiz · Park Ridge", desc: "Hormone imbalance quiz for Park Ridge, IL residents", url: "/learn/hormone-quiz-park-ridge/", cat: "Local" },
+            // Local SEO - Chicago
             { title: "TRT in Chicago", desc: "Testosterone therapy in Chicago, IL", url: "/learn/trt-chicago/", cat: "Local" },
             { title: "DEXA Scan in Chicago", desc: "DEXA body composition scan in Chicago, IL", url: "/learn/dexa-scan-chicago/", cat: "Local" },
             { title: "GLP-1 Weight Loss in Chicago", desc: "Semaglutide and tirzepatide in Chicago, IL", url: "/learn/glp1-weight-loss-chicago/", cat: "Local" },
-            // Local SEO — Other suburbs
+            // Local SEO - Other suburbs
             { title: "DEXA Scan Near Skokie", desc: "DEXA body composition scan near Skokie, IL", url: "/learn/dexa-scan-skokie/", cat: "Local" },
             // Quiz
             { title: "Perimenopause Screener", desc: "Validated 11-item MRS scale + safety screen", url: "/quiz/perimenopause/", cat: "Quiz" },
@@ -805,7 +805,7 @@
             { title: "Best Hormone Clinic Near Me", desc: "What to look for and what to avoid", url: "/learn/best-hormone-clinic-near-me/", cat: "About" },
             { title: "Function Health Next Steps", desc: "Got Function Health results? Here's what to do", url: "/learn/function-health-results-next-steps/", cat: "Diagnostics" },
             { title: "InsideTracker Next Steps", desc: "Got InsideTracker results? Here's what to do", url: "/learn/insidetracker-results-next-steps/", cat: "Diagnostics" },
-            { title: "Learn — All Articles", desc: "Browse all health resources and guides", url: "/learn/", cat: "About" },
+            { title: "Learn · All Articles", desc: "Browse all health resources and guides", url: "/learn/", cat: "About" },
             { title: "Supplements", desc: "Personalized supplement plan at Moonshot", url: "/supplements/", cat: "Medical" },
             // About & Booking
             { title: "Our Team", desc: "Meet the Moonshot Medical team", url: "/about/", cat: "About" },
@@ -1007,7 +1007,7 @@
         var modal = document.getElementById('booking-modal');
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        // First-party generic CTA event — no `page` (URL would expose the
+        // First-party generic CTA event - no `page` (URL would expose the
         // health condition the user was viewing). No quiz context here.
         try {
             fetch('/.netlify/functions/quiz-event', {

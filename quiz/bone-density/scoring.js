@@ -1,5 +1,5 @@
 /*
- * Bone Density Screener — Pure Scoring Module
+ * Bone Density Screener - Pure Scoring Module
  * ============================================
  *
  * Canonical, tested implementation of the bone-density quiz tiering logic.
@@ -8,15 +8,15 @@
  * The browser-side quiz at /quiz/bone-density/quiz-engine.js inlines the
  * same logic inside an IIFE for runtime simplicity (no build step). The
  * Vitest suite at tests/bone-density-scoring.test.js pins the expected
- * behavior — if this file or the engine drifts, tests break.
+ * behavior - if this file or the engine drifts, tests break.
  *
- * Validated basis: Osteoporosis Self-Assessment Tool (OST) — public domain.
+ * Validated basis: Osteoporosis Self-Assessment Tool (OST) - public domain.
  *   ostScore = 0.2 * (weightKg - ageYears)
  *   OST <2 cutoff applies ONLY to women ≥45.
  * Plus a custom risk-factor count drawn from AACE / Endocrine Society / NOF
  * clinical guidelines (public-domain factors, not FRAX scoring weights).
  *
- * NEVER reference "FRAX" — that name is licensed by University of Sheffield.
+ * NEVER reference "FRAX" - that name is licensed by University of Sheffield.
  *
  * Inputs (state object):
  *   age:                     number (years, ≥18 enforced upstream)
@@ -115,14 +115,14 @@ export function countRiskFactors(state) {
 /**
  * Compute the final tier and metadata for rendering.
  *
- * Tier rules (stratified — NOT OR-logic):
+ * Tier rules (stratified - NOT OR-logic):
  *   1. priorFragilityFracture === 'yes'     → TIER A (clinical indication)
  *   2. (woman ≥45 AND ostScore < 2)         → TIER B (high risk)
  *   3. riskFactorCount >= 3                 → TIER B (high risk)
  *   4. riskFactorCount >= 1                 → TIER C (moderate)
  *   5. else                                 → TIER D (low)
  *
- * Out-of-state users still receive a tier — the engine separately renders
+ * Out-of-state users still receive a tier - the engine separately renders
  * an IL-gating message instead of the personalized result. Surfacing
  * `outOfState: true` lets the engine make that routing decision.
  */

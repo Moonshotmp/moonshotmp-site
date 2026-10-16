@@ -151,7 +151,7 @@
         else if (/\/(blood-panel|blood-work|blood-draw)/.test(reviewsPath)) reviewFilter = 'blood-work';
         else if (/^\/(booking\/)?rehab\//.test(reviewsPath)) reviewFilter = 'rehab';
 
-        // Determine theme — light sections get light reviews
+        // Determine theme - light sections get light reviews
         var mainEl = document.querySelector('main');
         var lastSection = mainEl ? mainEl.querySelector('section:last-of-type') : null;
         var reviewTheme = 'dark';
@@ -185,7 +185,7 @@
     }
 
     // First-party: track phone link clicks as generic site CTA.
-    // We deliberately do NOT include `page`/URL here — it would leak the
+    // We deliberately do NOT include `page`/URL here - it would leak the
     // health-condition page the user was on (HBNR risk).
     document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
         link.addEventListener('click', function() {

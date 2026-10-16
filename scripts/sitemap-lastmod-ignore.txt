@@ -4,3 +4,4 @@
 05c3f822ecbfcb96a83b79d831df642ff6f4efc1 static footer Park Ridge row (2026-10-15)
 d385d743c7abcf85ba73ded40a0d3861412b1608 static footer peptide links + inline disclaimer reword (2026-10-15)
 d4ca52ef07734d1dec1147e86c3dce3355760b59 static crawlable footer added (2026-06-03)
+fdfc59b2531a8270c89b263fea7aa3d9c5cd50e0 em dash punctuation sweep, no content change (2026-10-16)

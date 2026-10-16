@@ -1,4 +1,4 @@
-/* Critical CSS — loaded synchronously, kept small for fast first paint */
+/* Critical CSS - loaded synchronously, kept small for fast first paint */
 @font-face{font-family:'Oswald';font-style:normal;font-weight:400 700;font-display:swap;src:url('/fonts/oswald-variable.woff2') format('woff2')}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/poppins-300.woff2') format('woff2')}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/poppins-400.woff2') format('woff2')}

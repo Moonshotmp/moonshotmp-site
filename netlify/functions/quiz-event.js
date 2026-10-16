@@ -1,5 +1,5 @@
 /**
- * quiz-event.js — First-party analytics endpoint
+ * quiz-event.js - First-party analytics endpoint
  * ==============================================
  * Replaces the third-party tracker stack (GA4 / Google Ads / Meta CAPI / Ahrefs)
  * for quiz funnel measurement on health-data pages.
@@ -8,7 +8,7 @@
  *   { quiz: 'hormone' | 'body-comp' | 'bone-density' | 'perimenopause' | 'low-t' | 'glp1' | 'site', event: '<slug>', screen?: string|number, timestamp?: ISO string }
  *
  * REJECTS any payload that contains health-condition values, symptom severity,
- * drug names, or medical history terms — even in nested fields.
+ * drug names, or medical history terms - even in nested fields.
  *
  * Persists each validated event to Netlify Blobs (store: 'quiz-events')
  * with key `YYYY-MM-DD/HH-MM-SS-sssZ-rand6.json` so events are partitioned
@@ -133,7 +133,7 @@ export default async function handler(req) {
 
   // Only the four documented fields are allowed; reject any extra fields.
   // `quiz` is a trusted enum (validated above) so we exclude it from the
-  // health-term scan — the slug `hormone` is a category label here, not a
+  // health-term scan - the slug `hormone` is a category label here, not a
   // health-condition value attached to a user. The OTHER fields must be
   // free of health terms.
   const allowedKeys = new Set(['quiz', 'event', 'screen', 'timestamp']);
@@ -155,7 +155,7 @@ export default async function handler(req) {
   // Persist to Netlify Blobs. Key partitioned by date so admin queries can
   // prefix-list a single day cheaply. Random suffix avoids collisions on
   // simultaneous writes within the same millisecond.
-  // Never block the response on persistence — best-effort, log-and-continue.
+  // Never block the response on persistence - best-effort, log-and-continue.
   try {
     const { getStore } = await import('@netlify/blobs');
     const store = getStore('quiz-events');

@@ -10,7 +10,7 @@ const INTERNAL_TIER_VALUES = new Set([
   'eligibility-present'
 ]);
 
-// Server-side label lookup. We never trust the client's tierLabel — the engine
+// Server-side label lookup. We never trust the client's tierLabel - the engine
 // could be stale, the value could be tampered, and HTML interpolation of any
 // client-controlled string is an XSS vector for Tom's inbox.
 const TIER_LABEL_LOOKUP = {
@@ -37,23 +37,23 @@ const CTA_TEXT = {
   'eligibility-present':         'Book a comprehensive consultation'
 };
 
-// Tier body strings — server-side constants only. Drug-name guardrails apply:
+// Tier body strings - server-side constants only. Drug-name guardrails apply:
 // no semaglutide / tirzepatide / Wegovy / Zepbound / Ozempic / Mounjaro /
 // Saxenda / Victoza / Trulicity / Rybelsus. Use FDA-labeling framing only.
 const TIER_BODY_CONTRAINDICATION = "Based on your responses, your medical history requires clinical attention before any prescription weight-management medication is considered. Please discuss with your primary care physician or the appropriate specialist. We recommend a non-prescription evaluation path until any contraindications are addressed.";
-const TIER_BODY_SPECIALIST = "Your responses describe prior bariatric surgery. Medical weight management after bariatric surgery typically requires specialist evaluation — a consultation can identify whether on-site care or a referral path fits your situation.";
-const TIER_BODY_NOT_MET = "Based on your responses, the FDA labeling threshold for prescription weight-management medications (BMI of 30 or higher, or BMI of 27 or higher with a weight-related condition) is not met. Comprehensive evaluation can still be useful — a consultation can review the full clinical picture and identify which evaluation paths fit your goals.";
-const TIER_BODY_MIXED = "Your responses describe a mix of factors. Some elements meet the FDA labeling expectations for prescription weight-management medications, and others — including documented prior weight-loss attempts and current readiness — require clinical evaluation to determine whether prescription therapy is appropriate. Book a consultation to discuss which evaluation path fits your situation.";
+const TIER_BODY_SPECIALIST = "Your responses describe prior bariatric surgery. Medical weight management after bariatric surgery typically requires specialist evaluation. A consultation can identify whether on-site care or a referral path fits your situation.";
+const TIER_BODY_NOT_MET = "Based on your responses, the FDA labeling threshold for prescription weight-management medications (BMI of 30 or higher, or BMI of 27 or higher with a weight-related condition) is not met. Comprehensive evaluation can still be useful. A consultation can review the full clinical picture and identify which evaluation paths fit your goals.";
+const TIER_BODY_MIXED = "Your responses describe a mix of factors. Some elements meet the FDA labeling expectations for prescription weight-management medications, and others, including documented prior weight-loss attempts and current readiness, require clinical evaluation to determine whether prescription therapy is appropriate. Book a consultation to discuss which evaluation path fits your situation.";
 const TIER_BODY_PRESENT = "Your responses describe characteristics that the FDA labeling for prescription weight-management medications lists as relevant to candidacy. This is not a determination that you are a candidate. Only a licensed clinician, after a comprehensive in-person evaluation including medical history and laboratory testing, can determine whether any prescription therapy is appropriate. Book a consultation to begin that evaluation.";
 
-// No-compounding disclaimer — required on every GLP-1 patient-facing message
+// No-compounding disclaimer - required on every GLP-1 patient-facing message
 // per universal guardrail. We do not market or sell compounded versions of
 // FDA-approved medications as substitutes.
 const NO_COMPOUNDING_DISCLAIMER = "We do not market or sell compounded versions of FDA-approved medications as substitutes for those products. Eligibility for any specific medication is determined by a licensed clinician after a comprehensive in-person evaluation.";
 
 const RESULT_DISCLAIMER = "This is a screening tool, not a clinical diagnosis or prescription. " + NO_COMPOUNDING_DISCLAIMER;
 
-// Missy-only attribution — she has FPA. Do NOT add other clinicians here.
+// Missy-only attribution - she has FPA. Do NOT add other clinicians here.
 const AUTHOR_ATTRIBUTION = "Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.";
 
 const UNIVERSAL_DISCLAIMER = 'This tool does not, and is not intended to, diagnose any medical condition or recommend any specific treatment, drug, dose, or protocol. Screening tools have known false-positive and false-negative rates. Completing this quiz does not establish a provider-patient or treatment relationship, does not constitute a medical examination, and does not entitle you to any specific treatment, prescription, or service. Medical services are provided by Moonshot Medical, PLLC and are available only to patients physically located in states where our clinicians are licensed (currently Illinois). By proceeding you confirm you are at least 18 years old.';
@@ -61,7 +61,7 @@ const UNIVERSAL_DISCLAIMER = 'This tool does not, and is not intended to, diagno
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const STATE_REGEX = /^[A-Z]{2}$/;
 
-// Mirror allowlists from quiz/glp1/scoring.js — kept in sync manually since
+// Mirror allowlists from quiz/glp1/scoring.js - kept in sync manually since
 // this Netlify function is a separate runtime.
 const SEX_VALUES = new Set(['male', 'female', 'prefer-not']);
 const PRIOR_ATTEMPT_VALUES = new Set(['yes', 'no', 'prefer-not']);
@@ -121,7 +121,7 @@ function clampString(value, max) {
 }
 
 // Recompute BMI server-side from allowlist-validated height/weight. Never trust
-// the client's `result.bmi` — a tampered or buggy client could submit a value
+// the client's `result.bmi` - a tampered or buggy client could submit a value
 // that doesn't match the height/weight shown elsewhere in the lead email.
 function serverComputeBmi(heightInches, weightLbs) {
   if (!Number.isFinite(heightInches) || heightInches <= 0) return null;
@@ -131,7 +131,7 @@ function serverComputeBmi(heightInches, weightLbs) {
   return kg / (meters * meters);
 }
 
-// Pick the patient-facing tier body string. Server-derived only — never let
+// Pick the patient-facing tier body string. Server-derived only - never let
 // the client pass arbitrary copy.
 function selectTierBody(internalTier) {
   switch (internalTier) {
@@ -194,7 +194,7 @@ export default async function handler(req, context) {
     });
   }
 
-  // Permissive on marketingOptIn — old browsers may not send it cleanly.
+  // Permissive on marketingOptIn - old browsers may not send it cleanly.
   // Default to false if undefined; reject only if it's explicitly a non-boolean primitive.
   let optIn = false;
   if (marketingOptIn === undefined || marketingOptIn === null) {
@@ -208,7 +208,7 @@ export default async function handler(req, context) {
     });
   }
 
-  // Derive label, slug, body, CTA from internalTier — never trust the client's
+  // Derive label, slug, body, CTA from internalTier - never trust the client's
   // copies. They could be stale or tampered.
   const tierLabel = TIER_LABEL_LOOKUP[internalTier];
   const resultSlug = RESULT_SLUG_LOOKUP[internalTier];
@@ -241,7 +241,7 @@ export default async function handler(req, context) {
     }
   }
 
-  // ASCVD numbers — each validated independently; out-of-range → null.
+  // ASCVD numbers - each validated independently; out-of-range → null.
   const rawAscvd = (rawProfile.ascvd && typeof rawProfile.ascvd === 'object') ? rawProfile.ascvd : {};
   const totalCholesterol = (Number.isFinite(rawAscvd.totalCholesterol) && rawAscvd.totalCholesterol >= 50 && rawAscvd.totalCholesterol <= 500)
     ? rawAscvd.totalCholesterol
@@ -278,7 +278,7 @@ export default async function handler(req, context) {
   };
 
   // Server-derived BMI from the allowlist-validated height/weight. Never trust
-  // `result.bmi` — recompute so the lead email and webhook payloads cannot be
+  // `result.bmi` - recompute so the lead email and webhook payloads cannot be
   // tricked into showing a falsified value.
   const bmi = serverComputeBmi(safeProfile.heightInches, safeProfile.weightLbs);
 
@@ -312,7 +312,7 @@ export default async function handler(req, context) {
   const safeCtaText = escapeHtml(ctaText);
   const safeAckTimestamp = escapeHtml(ackTimestamp);
 
-  // BMI line — only render when computable.
+  // BMI line - only render when computable.
   const bmiBlock = Number.isFinite(bmi)
     ? `<p style="color: #B2BFBE; font-size: 13px; line-height: 1.6; margin: 0;">Your BMI: ${escapeHtml(bmi.toFixed(1))}</p>`
     : '';
@@ -378,7 +378,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const userSubject = 'Your GLP-1 Readiness Screener Result — Moonshot Medical';
+  const userSubject = 'Your GLP-1 Readiness Screener Result · Moonshot Medical';
 
   // ── Lead Score ──────────────────────────────────────────────────────
 
@@ -411,9 +411,9 @@ export default async function handler(req, context) {
       </div>`
     : '';
 
-  // Catch-all flag — Q9 free-text was non-empty. Length only; raw text never sent.
+  // Catch-all flag - Q9 free-text was non-empty. Length only; raw text never sent.
   const catchAllBlock = (otherConditionLength > 0)
-    ? `<p style="color: #F59E0B; margin: 0 0 24px; font-size: 14px;">⚠️ Catch-all triggered — patient flagged something not in the structured options (${escapeHtml(String(otherConditionLength))} chars). Ask about it on consult.</p>`
+    ? `<p style="color: #F59E0B; margin: 0 0 24px; font-size: 14px;">⚠️ Catch-all triggered: patient flagged something not in the structured options (${escapeHtml(String(otherConditionLength))} chars). Ask about it on consult.</p>`
     : '<p style="margin: 0 0 24px;"></p>';
 
   const internalHtml = `
@@ -482,7 +482,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const internalSubject = sanitizeHeaderValue(`⚖️ New GLP-1 Lead: ${name || email} — ${internalTier}`);
+  const internalSubject = sanitizeHeaderValue(`⚖️ New GLP-1 Lead: ${name || email} · ${internalTier}`);
 
   // ── Send Both Emails ────────────────────────────────────────────────
 
@@ -592,7 +592,7 @@ export default async function handler(req, context) {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (err) {
-    // Log only the message — Resend's error response may contain the email
+    // Log only the message - Resend's error response may contain the email
     // payload (PHI) and Netlify Function logs are not in the BAA scope.
     console.error('[glp1-quiz-submit] Error:', err && err.message);
     return new Response(JSON.stringify({ ok: false, error: 'Email send failed' }), {

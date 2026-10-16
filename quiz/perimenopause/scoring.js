@@ -1,5 +1,5 @@
 /*
- * Perimenopause Screener — Pure Scoring Module
+ * Perimenopause Screener - Pure Scoring Module
  * =============================================
  *
  * Canonical, tested implementation of the perimenopause-quiz tiering
@@ -8,10 +8,10 @@
  * The browser-side quiz at /quiz/perimenopause/quiz-engine.js inlines the
  * same logic inside an IIFE for runtime simplicity (no build step). The
  * Vitest suite at tests/perimenopause-scoring.test.js pins the expected
- * behavior — if this file or the engine drifts, tests break.
+ * behavior - if this file or the engine drifts, tests break.
  *
  * Validated basis:
- *   Menopause Rating Scale (MRS) — Heinemann et al. 11-item validated
+ *   Menopause Rating Scale (MRS) - Heinemann et al. 11-item validated
  *   instrument, public domain. Each item scored 0-4. Total interpretation:
  *
  *     0-4   none
@@ -21,7 +21,7 @@
  *
  * Plus: full HRT contraindication screen (9 items + catch-all). Plus:
  * cardiac/thyroid red-flag override when Q4 (palpitations) ≥3 AND Q8
- * (anxiety) ≥3 — interstitial warning surfaces before the result and the
+ * (anxiety) ≥3 - interstitial warning surfaces before the result and the
  * red-flag flag travels with the submit payload.
  *
  * NEVER name specific drugs or hormones in tier output. NEVER tell the
@@ -32,7 +32,7 @@
  * Inputs (state object):
  *   age:                  number (years, ≥18 enforced upstream)
  *   menstrualStatus:      enum (see MENSTRUAL_STATUS_VALUES below)
- *   mrs:                  number[11] — values 0-4 each, indexed Q3..Q13
+ *   mrs:                  number[11] - values 0-4 each, indexed Q3..Q13
  *                         in the spec (mrs[0]=Q3 hot flushes, mrs[1]=Q4
  *                         palpitations, ..., mrs[5]=Q8 anxiety, ...)
  *   contraindications:    string[]   (multi-check, ANY entry triggers
@@ -53,7 +53,7 @@
  */
 
 // MRS item indices into the 11-element mrs array. Q3 in the spec is
-// mrs[0] in code — we keep the spec-numbered names so reviewers can
+// mrs[0] in code - we keep the spec-numbered names so reviewers can
 // cross-check against Heinemann et al. without translating offsets.
 export const MRS_INDEX = {
     Q3_HOT_FLUSHES:        0,
@@ -109,7 +109,7 @@ export const RESULT_SLUGS = {
     'eligibility-factors-not-met': 'not-met'
 };
 
-// MRS tier cutoffs. Heinemann et al. — DO NOT alter without re-citing.
+// MRS tier cutoffs. Heinemann et al. - DO NOT alter without re-citing.
 // 16+ is wrong (v1's mistake); ≥17 is correct.
 export const MRS_TIER_CUTOFFS = {
     NONE_MAX:     4,
@@ -123,7 +123,7 @@ export const RED_FLAG_MIN = 3;
 
 /**
  * Coerce a single MRS item value to an integer 0-4. Out-of-range or
- * non-numeric inputs become 0 (defensive — never let an injected string
+ * non-numeric inputs become 0 (defensive - never let an injected string
  * skew the score). Returns 0 for null/undefined.
  */
 function clampMrsValue(v) {
@@ -136,7 +136,7 @@ function clampMrsValue(v) {
 /**
  * Sum the 11 MRS items. If `mrs` isn't an array of the expected shape
  * (or has fewer than 11 entries), missing slots count as 0. Extra
- * entries beyond 11 are ignored — we never sum past the validated set.
+ * entries beyond 11 are ignored - we never sum past the validated set.
  */
 export function sumMrs(mrs) {
     if (!Array.isArray(mrs)) return 0;
@@ -151,7 +151,7 @@ export function sumMrs(mrs) {
  * Map raw MRS total to one of four validated tiers. Boundary values
  * (4, 8, 16) belong to the LOWER tier. The tests pin every boundary.
  *
- * Use Number.isFinite — `typeof NaN === 'number'` is true, so a plain
+ * Use Number.isFinite - `typeof NaN === 'number'` is true, so a plain
  * typeof check would let NaN fall through every comparison and land in
  * the 'severe' branch. That's the worst possible failure mode for a
  * clinical screener: corrupted state escalates the patient to the
@@ -168,7 +168,7 @@ export function mrsTier(score) {
 /**
  * Detect the cardiac/thyroid red-flag combination. Q4 (palpitations) AND
  * Q8 (anxiety) both ≥3. Triggers the interstitial warning screen before
- * the result renders — this routes patients with potentially serious
+ * the result renders - this routes patients with potentially serious
  * non-hormonal causes (paroxysmal AFib, thyroid disease) to a clinician
  * before they default to a perimenopausal explanation.
  */
@@ -202,7 +202,7 @@ export function hasHrtContraindication(contraindications) {
  * with severe symptoms AND a contraindication is routed to the
  * contraindication path (that's the safer clinical default).
  *
- * The red-flag flag is independent of internalTier — it controls whether
+ * The red-flag flag is independent of internalTier - it controls whether
  * the engine renders the interstitial warning before the result, but
  * does not change the tier itself. A red-flag patient with severe MRS
  * still receives the severe-symptom result; the interstitial just

@@ -2,7 +2,7 @@
  * Moonshot Body Comp IQ Quiz Engine
  * ==================================
  * Knowledge-based quiz (right/wrong answers).
- * Vanilla JS IIFE — same architecture as hormone quiz.
+ * Vanilla JS IIFE - same architecture as hormone quiz.
  */
 (function() {
     'use strict';
@@ -14,55 +14,55 @@
             question: 'Which body composition measurement method is considered the gold standard for accuracy?',
             options: ['BMI calculator', 'DEXA scan', 'InBody / BIA scale', 'Skin fold calipers'],
             correct: 1,
-            explanation: 'DEXA (Dual-Energy X-ray Absorptiometry) is the gold standard — it directly measures fat, lean mass, and bone density with medical-grade precision.'
+            explanation: 'DEXA (Dual-Energy X-ray Absorptiometry) is the gold standard. It directly measures fat, lean mass, and bone density with medical-grade precision.'
         },
         {
             question: 'BMI (Body Mass Index) accounts for which of the following?',
             options: ['Height and weight only', 'Body fat percentage', 'Muscle mass vs fat mass', 'Bone density'],
             correct: 0,
-            explanation: 'BMI is simply weight divided by height squared. It cannot distinguish between muscle and fat — a lean, muscular person can have the same BMI as someone who is obese.'
+            explanation: 'BMI is simply weight divided by height squared. It cannot distinguish between muscle and fat. A lean, muscular person can have the same BMI as someone who is obese.'
         },
         {
             question: 'What is visceral fat?',
             options: ['Fat stored under the skin', 'Fat around internal organs', 'Fat in your legs and arms', 'Essential fat for brain function'],
             correct: 1,
-            explanation: 'Visceral fat surrounds your organs in the abdominal cavity. It\'s the most metabolically dangerous type of fat and is strongly linked to heart disease, diabetes, and inflammation. You can\'t see or feel it — you can only measure it.'
+            explanation: 'Visceral fat surrounds your organs in the abdominal cavity. It\'s the most metabolically dangerous type of fat and is strongly linked to heart disease, diabetes, and inflammation. You can\'t see or feel it. You can only measure it.'
         },
         {
             question: 'Two people weigh the same on a scale. What can you conclude about their body composition?',
-            options: ['They have similar body fat %', 'They have similar muscle mass', 'Nothing — scale weight doesn\'t reveal composition', 'The taller person has less body fat'],
+            options: ['They have similar body fat %', 'They have similar muscle mass', 'Nothing: scale weight doesn\'t reveal composition', 'The taller person has less body fat'],
             correct: 2,
-            explanation: 'Scale weight tells you nothing about composition. One person could be 18% body fat with high muscle mass, while the other could be 35% body fat with low muscle mass — at the exact same weight.'
+            explanation: 'Scale weight tells you nothing about composition. One person could be 18% body fat with high muscle mass, while the other could be 35% body fat with low muscle mass, at the exact same weight.'
         },
         {
             question: 'What is the main limitation of bioelectrical impedance (InBody, smart scales)?',
             options: ['It can\'t measure body fat at all', 'Results vary significantly with hydration, food, and time of day', 'It uses dangerous radiation', 'It only works for men'],
             correct: 1,
-            explanation: 'BIA sends an electrical current through your body and estimates composition based on resistance. Hydration levels, recent meals, exercise, and even time of day can swing results by 3-5% body fat — making it unreliable for precise tracking.'
+            explanation: 'BIA sends an electrical current through your body and estimates composition based on resistance. Hydration levels, recent meals, exercise, and even time of day can swing results by 3-5% body fat, making it unreliable for precise tracking.'
         },
         {
             question: 'After age 30, how much muscle mass does the average person lose per decade without resistance training?',
             options: ['Less than 1%', '3-8%', '15-20%', 'Muscle loss doesn\'t start until age 50'],
             correct: 1,
-            explanation: 'Sarcopenia (age-related muscle loss) begins around age 30. Without active resistance training, you lose 3-8% of muscle mass per decade — and the rate accelerates after 60. This is one of the strongest predictors of frailty and mortality.'
+            explanation: 'Sarcopenia (age-related muscle loss) begins around age 30. Without active resistance training, you lose 3-8% of muscle mass per decade, and the rate accelerates after 60. This is one of the strongest predictors of frailty and mortality.'
         },
         {
             question: 'Which metric is a better predictor of metabolic health than total body fat percentage?',
             options: ['Total body weight', 'Visceral fat level', 'Arm circumference', 'Resting heart rate'],
             correct: 1,
-            explanation: 'Visceral fat is a far better predictor of metabolic disease than overall body fat percentage. Someone with a "normal" body fat percentage can still have dangerous levels of visceral fat — a condition sometimes called "skinny fat."'
+            explanation: 'Visceral fat is a far better predictor of metabolic disease than overall body fat percentage. Someone with a "normal" body fat percentage can still have dangerous levels of visceral fat, a condition sometimes called "skinny fat."'
         },
         {
             question: 'You lose 5 lbs on the scale in a week. What most likely happened?',
             options: ['You lost 5 lbs of pure fat', 'You lost mostly water weight', 'You lost equal parts fat and muscle', 'Your metabolism permanently increased'],
             correct: 1,
-            explanation: 'Losing 5 lbs in a single week is almost entirely water weight. Fat loss of 1-2 lbs per week is a realistic, sustainable rate. Rapid scale drops from aggressive dieting often include muscle loss alongside water — which is counterproductive.'
+            explanation: 'Losing 5 lbs in a single week is almost entirely water weight. Fat loss of 1-2 lbs per week is a realistic, sustainable rate. Rapid scale drops from aggressive dieting often include muscle loss alongside water, which is counterproductive.'
         },
         {
             question: 'What does a DEXA scan measure that most other methods cannot?',
             options: ['Total body weight', 'Regional body composition (left arm vs right arm, trunk, legs)', 'Cardiovascular fitness', 'Blood pressure'],
             correct: 1,
-            explanation: 'DEXA provides a regional breakdown showing fat and lean mass in each body segment — arms, legs, trunk, and android/gynoid regions. This reveals asymmetries, injury risk, and visceral fat distribution that no other common method can detect.'
+            explanation: 'DEXA provides a regional breakdown showing fat and lean mass in each body segment: arms, legs, trunk, and android/gynoid regions. This reveals asymmetries, injury risk, and visceral fat distribution that no other common method can detect.'
         },
         {
             question: 'Which of these statements about body fat percentage is FALSE?',
@@ -74,7 +74,7 @@
             question: 'What is the android/gynoid ratio, and why does it matter?',
             options: [
                 'Ratio of upper body to lower body strength',
-                'Ratio of abdominal fat to hip/thigh fat — predicts metabolic risk',
+                'Ratio of abdominal fat to hip/thigh fat, predicts metabolic risk',
                 'Ratio of muscle to bone mass',
                 'Ratio of visceral to subcutaneous fat'
             ],
@@ -90,7 +90,7 @@
                 'It only matters for professional athletes'
             ],
             correct: 1,
-            explanation: 'Osteoporosis affects 1 in 3 women and 1 in 5 men over 50, often with zero symptoms until a fracture occurs. DEXA is the gold standard for bone density measurement — catching decline early allows intervention through nutrition, exercise, and sometimes medication.'
+            explanation: 'Osteoporosis affects 1 in 3 women and 1 in 5 men over 50, often with zero symptoms until a fracture occurs. DEXA is the gold standard for bone density measurement. Catching decline early allows intervention through nutrition, exercise, and sometimes medication.'
         }
     ];
 
@@ -150,7 +150,7 @@
     // First-party analytics shim. Body-comp is a knowledge quiz (not a
     // health quiz), so payloads here are low-sensitivity. We still route
     // through the first-party endpoint for consistency and drop the
-    // page/score values — only generic funnel signals are forwarded.
+    // page/score values - only generic funnel signals are forwarded.
     var EVENT_MAP = {
         quiz_start:         'quiz_start',
         quiz_step:          'quiz_step',
@@ -324,7 +324,7 @@
                     '<div>' +
                         '<p class="text-brand-light text-sm font-medium mb-1">Q' + (i + 1) + ': ' + q.question + '</p>' +
                         '<p class="text-brand-gray text-xs">' +
-                            (isCorrect ? 'Correct!' : 'You answered: ' + q.options[userAnswer] + ' — Correct answer: ' + q.options[q.correct]) +
+                            (isCorrect ? 'Correct!' : 'You answered: ' + q.options[userAnswer] + '. Correct answer: ' + q.options[q.correct]) +
                         '</p>' +
                     '</div>' +
                 '</div>' +
@@ -338,7 +338,7 @@
             '<div class="space-y-3 text-brand-gray text-sm">' +
                 '<p><strong class="text-brand-light">Scale weight is misleading.</strong> It can\'t distinguish fat from muscle. Two people at the same weight can have completely different health profiles.</p>' +
                 '<p><strong class="text-brand-light">DEXA is the gold standard.</strong> It\'s the only widely available method that measures fat, lean mass, bone density, and visceral fat with medical-grade accuracy.</p>' +
-                '<p><strong class="text-brand-light">Visceral fat matters most.</strong> The fat you can\'t see — around your organs — is the strongest predictor of metabolic disease. Only DEXA quantifies it reliably.</p>' +
+                '<p><strong class="text-brand-light">Visceral fat matters most.</strong> The fat you can\'t see, around your organs, is the strongest predictor of metabolic disease. Only DEXA quantifies it reliably.</p>' +
                 '<p><strong class="text-brand-light">Muscle is longevity.</strong> After 30, you lose muscle every decade without resistance training. Lean mass is the #1 predictor of healthspan.</p>' +
             '</div>' +
         '</div>';
@@ -346,7 +346,7 @@
         // CTA
         html += '<div class="bg-brand-slate rounded-sm p-8 mb-8">' +
             '<h3 class="text-brand-light font-bold mb-4">SEE YOUR REAL NUMBERS</h3>' +
-            '<p class="text-brand-gray text-sm mb-6">A single DEXA scan gives you body fat %, lean mass, bone density, visceral fat, and regional breakdown — in about 10 minutes.</p>' +
+            '<p class="text-brand-gray text-sm mb-6">A single DEXA scan gives you body fat %, lean mass, bone density, visceral fat, and regional breakdown, in about 10 minutes.</p>' +
             '<div class="text-center">' +
                 '<a href="/medical/dexa-body-composition/" class="btn-primary text-lg px-8 py-4 inline-block quiz-cta" data-cta="book_dexa">Book a DEXA Scan</a>' +
             '</div>' +
@@ -366,9 +366,9 @@
     }
 
     function getGradeSummary(pct) {
-        if (pct >= 80) return 'Strong body composition knowledge. You understand what matters beyond the scale — now make sure you have the data to match.';
+        if (pct >= 80) return 'Strong body composition knowledge. You understand what matters beyond the scale. Now make sure you have the data to match.';
         if (pct >= 60) return 'Solid foundation, but some common misconceptions are still in play. The emails we send over the next couple weeks will fill in the gaps.';
-        if (pct >= 40) return 'You\'re not alone — most people have significant blind spots about body composition. We\'ll break down what actually matters over the next couple weeks.';
+        if (pct >= 40) return 'You\'re not alone. Most people have significant blind spots about body composition. We\'ll break down what actually matters over the next couple weeks.';
         return 'A lot of what most people believe about body composition is wrong. The good news: we\'ll cover everything you need to know in your inbox over the next couple weeks.';
     }
 

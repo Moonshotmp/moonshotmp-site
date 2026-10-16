@@ -12,22 +12,22 @@
   var MAGNETS = {
     mens_hormone: {
       title: 'Low T Warning Signs Checklist',
-      desc: '10 symptoms most men ignore — and what your labs should actually show.',
+      desc: '10 symptoms most men ignore, and what your labs should actually show.',
       cta: 'Get the Checklist'
     },
     womens_hormone: {
       title: 'Hormone Balance Guide for Women',
-      desc: 'Perimenopause, estrogen, progesterone — what to test and when to act.',
+      desc: 'Perimenopause, estrogen, progesterone: what to test and when to act.',
       cta: 'Get the Guide'
     },
     weight_loss: {
       title: 'GLP-1 Decision Guide',
-      desc: 'Semaglutide vs. tirzepatide — candidacy, costs, and what to expect.',
+      desc: 'Semaglutide vs. tirzepatide: candidacy, costs, and what to expect.',
       cta: 'Get the Guide'
     },
     body_comp: {
       title: 'Body Composition Testing Guide',
-      desc: 'DEXA vs. InBody vs. calipers — what actually matters and why.',
+      desc: 'DEXA vs. InBody vs. calipers: what actually matters and why.',
       cta: 'Get the Guide'
     },
     diagnostics: {
@@ -37,7 +37,7 @@
     },
     rehab: {
       title: 'Rehab Treatment Comparison',
-      desc: 'Chiropractic vs. dry needling vs. shockwave — when to use what.',
+      desc: 'Chiropractic vs. dry needling vs. shockwave: when to use what.',
       cta: 'Get the Comparison'
     },
     general: {
@@ -83,7 +83,7 @@
     for (var i = 0; i < tagEls.length; i++) {
       var text = (tagEls[i].textContent || '').trim().toLowerCase();
       if (!text || text.indexOf('back to') !== -1 || text.indexOf('related') !== -1 || text.indexOf('reference') !== -1) continue;
-      // Skip local guide tags — fall through to slug matching
+      // Skip local guide tags - fall through to slug matching
       if (text.indexOf('local guide') !== -1) break;
       if (CATEGORY_MAP[text]) return CATEGORY_MAP[text];
     }

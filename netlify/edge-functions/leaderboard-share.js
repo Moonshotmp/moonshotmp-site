@@ -1,5 +1,5 @@
 /**
- * Leaderboard Share — Netlify Edge Function
+ * Leaderboard Share - Netlify Edge Function
  * ==========================================
  * Intercepts requests to /leaderboard/entry/* and detects social media
  * crawler user agents. For bots, fetches entry data from the API and
@@ -67,7 +67,7 @@ export default async (request, context) => {
     const result = escapeHtml(entry.result || "");
     const gymName = entry.gymName ? escapeHtml(entry.gymName) : "Park Ridge";
 
-    const title = `${name} — ${eventName} in Park Ridge`;
+    const title = `${name} | ${eventName} in Park Ridge`;
     const description = `${result} | ${gymName} | Park Ridge Fitness Leaderboard #ParkRidgeFit`;
     const pageUrl = `https://moonshotmp.com/leaderboard/entry/?id=${encodeURIComponent(id)}`;
     const image = "https://moonshotmp.com/images/parkridgefit-og.png";
