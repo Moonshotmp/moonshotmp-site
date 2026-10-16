@@ -14,6 +14,12 @@
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
   </url>
+  <url>
+    <loc>https://moonshotmp.com/privacy/notice-of-privacy-practices/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
+  </url>
 
   <!-- Main Pages -->
   <url>
