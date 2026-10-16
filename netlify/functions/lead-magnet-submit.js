@@ -364,7 +364,7 @@ function generateRehab(name) {
     ])}
     ${para('<strong>How it works:</strong> Acoustic pressure waves stimulate blood flow, break down calcifications, and trigger the body\'s tissue repair response. Most effective as a series of 3-6 sessions.')}
 
-    ${subhead('Trigger Point Injections')}
+    ${subhead('Trigger Point Therapy')}
     ${sectionBox('Best For', [
       'Severe muscle knots that don\'t respond to dry needling alone',
       'Acute muscle spasms causing significant pain',
