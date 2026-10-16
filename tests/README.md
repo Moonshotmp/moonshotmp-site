@@ -5,13 +5,11 @@ instruments behind the Moonshot Medical quiz funnel.
 
 ## Why this exists
 
-The peptide quiz at `/quiz/peptides/` converts at 10.3% CTR. Every new
-quiz we ship (menopause, andropause, sleep apnea, bone density) will
+Every quiz we ship (menopause, andropause, sleep apnea, bone density) will
 include an algorithmic component — a scoring instrument or a
 recommendation engine. **An algorithm that misclassifies a patient is
 medico-legal exposure.** A STOP-BANG that calls a high-risk OSA patient
-"low risk", an MRS that calls a severe-symptom patient "moderate", or a
-peptide engine that recommends Wolverine to someone who can't afford it
+"low risk", or an MRS that calls a severe-symptom patient "moderate"
 — each one is a defensible-design problem.
 
 This harness pins behavior in CI so we can ship fast without breaking
@@ -30,9 +28,6 @@ the Node environment (no jsdom — tests target pure logic, not DOM).
 
 ## Files
 
-- `tests/peptide-recommendation.test.js` — pins the peptide quiz
-  recommendation engine. Covers every goal × concern × budget branch,
-  the budget guard, and catalog integrity.
 - `tests/scoring-helpers.test.js` — `it.todo()` placeholders for
   validated screening instruments (MRS, ADAM, STOP-BANG, OST, BMI).
   The expected behavior is encoded in the test names. When the
@@ -48,32 +43,10 @@ lookups, event listeners, `getElementById('quiz-root')`, etc. You
 
 ### How we handle this
 
-For the peptide quiz we **extracted the pure recommendation logic** to
-a sibling module:
-
-- `quiz/peptides/quiz-engine.js` — the live IIFE (UI, state, events,
-  recommendation logic)
-- `quiz/peptides/recommendation.js` — a pure ESM module exporting just
-  `getRecommendation`, `budgetValue`, `PEPTIDES`, and `secondaryMap`
-
-`recommendation.js` is the canonical, tested copy. `quiz-engine.js`
-keeps a private duplicate of the logic so it can run as a non-module
-script tag without a build step. **The two MUST stay in sync.**
-
-When you change recommendation logic:
-1. Edit `quiz/peptides/recommendation.js` (the canonical copy).
-2. Mirror the change in `quiz/peptides/quiz-engine.js` (the IIFE copy).
-3. Update tests if behavior changed; otherwise tests should still pass.
-4. Run `npm run test:run` and confirm zero failures.
-5. Manually QA the live quiz at `/quiz/peptides/` — load the page,
-   complete the flow with a known input, verify the recommendation
-   matches the test fixture for that input.
-
-For **future quizzes**, do not duplicate. Build the new quiz so the
-non-module IIFE consumes a global exposed by an ESM module loaded
-through a separate `<script type="module">` tag, or just adopt a build
-step. Duplication was a pragmatic one-time choice for the existing
-peptide engine to avoid risk to a production conversion surface.
+Build each quiz so the non-module IIFE consumes a global exposed by an
+ESM module loaded through a separate `<script type="module">` tag (or
+adopt a build step), and test the pure module. The `*-scoring.test.js`
+files show the pattern.
 
 ## Adding tests for a new quiz
 
@@ -85,13 +58,12 @@ Template:
    functions. No DOM, no globals, no side effects.
 
 2. **Create the test file.** `tests/<topic>-recommendation.test.js`
-   following the structure in `peptide-recommendation.test.js`:
+   following the structure of the existing `*-scoring.test.js` files:
    - Describe block per logical surface (mapping fns, primary
      selection, secondary selection, edge cases).
    - Use `it.each` for table-driven tests covering every branch.
    - Test names should read like patient scenarios so failures
-     diagnose themselves: `"injury + tendon at premium budget
-     recommends Wolverine Blend"` not `"test case 14"`.
+     diagnose themselves, not `"test case 14"`.
 
 3. **Cover boundary conditions explicitly.** Off-by-one errors in
    threshold logic (e.g. STOP-BANG count of 3 = intermediate, not low)
@@ -103,8 +75,7 @@ Template:
    screen.
 
 5. **Cover the dead-code defensive branches.** If the logic has a
-   guard for a case that doesn't currently fire (e.g. the peptide
-   engine's premium-secondary downgrade), assert that fact so a
+   guard for a case that doesn't currently fire, assert that fact so a
    future change that activates the guard is detected.
 
 ## What NOT to test
