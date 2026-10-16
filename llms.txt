@@ -103,7 +103,7 @@ Medical-grade body composition analysis using dual-energy X-ray absorptiometry. 
 DEXA scan + comprehensive blood panel together (save $30). Recommended starting point for new patients.
 
 ### Men's Hormone Optimization (TRT) — $235/month
-Testosterone replacement therapy with comprehensive monitoring. Includes medical oversight, 2 DEXA scans per year, comprehensive labs every 6 months, 1 vitamin injection per month, and ongoing dosing adjustments. Treatment options include testosterone cypionate injections, enclomiphene, and thyroid optimization.
+Testosterone replacement therapy with comprehensive monitoring. Includes medical oversight, 2 DEXA scans per year, comprehensive labs every 6 months, 1 vitamin injection per month, and ongoing dosing adjustments. Treatment options include testosterone cypionate injections, enclomiphene ($200 per month add-on), and thyroid optimization. Enclomiphene is available only as a compounded medication. It is not an FDA-approved drug.
 - **Learn more:** https://moonshotmp.com/medical/mens-hormones/
 
 ### Women's Hormone Optimization (BHRT) — $285/month
@@ -111,7 +111,7 @@ Bioidentical hormone replacement therapy for women. Includes estrogen, progester
 - **Learn more:** https://moonshotmp.com/medical/womens-hormones/
 
 ### GLP-1 Weight Loss Program — from $195/month (priced by dose)
-Medically supervised weight loss using semaglutide or tirzepatide, priced by your dose. Semaglutide runs $195–$295/month (0.25–2.4 mg/week); tirzepatide runs $235–$435/month (2.5–15 mg). The monthly price steps up only as your dose is titrated up, so you never pay for more than you're taking. Includes GLP-1 medication, medical oversight, required labs and diagnostics, body composition tracking via DEXA, and dosing adjustments. Focus on muscle preservation during weight loss.
+Clinician-supervised weight loss using compounded semaglutide or tirzepatide, priced by your dose. Semaglutide runs $195–$295/month (0.25–2.4 mg/week); tirzepatide runs $235–$435/month (2.5–15 mg). The monthly price steps up only as your dose is titrated up, so you never pay for more than you're taking. Includes GLP-1 medication, medical oversight, required labs and diagnostics, body composition tracking via DEXA, and dosing adjustments. Focus on muscle preservation during weight loss. Moonshot prescribes semaglutide and tirzepatide prepared by licensed 503A and 503B compounding pharmacies. Compounded medications are not FDA-approved and have not been reviewed by the FDA for safety or effectiveness. If you prefer a brand-name product, we can send a prescription to your pharmacy at retail pricing. The prices listed here are for our compounded program.
 - **Learn more:** https://moonshotmp.com/medical/weight-loss/
 
 ### Medical Oversight Only — $150/month
@@ -179,8 +179,8 @@ Instrument-assisted soft tissue mobilization to break up scar tissue, improve ti
 | Initial Consultation | Free (with any diagnostic) |
 | Hormone Optimization (Men) | $235/month |
 | Hormone Optimization (Women) | $285/month |
-| GLP-1 Weight Loss — Semaglutide (incl. medication) | $195–$295/month (by dose) |
-| GLP-1 Weight Loss — Tirzepatide (incl. medication) | $235–$435/month (by dose) |
+| GLP-1 Weight Loss — Compounded Semaglutide (incl. medication) | $195–$295/month (by dose) |
+| GLP-1 Weight Loss — Compounded Tirzepatide (incl. medication) | $235–$435/month (by dose) |
 | Medical Oversight Only | $150/month |
 
 ## Frequently Asked Questions
@@ -244,8 +244,8 @@ The Moonshot Ecosystem refers to the integrated health and fitness services avai
 - Moonshot vs Typical Clinic: https://moonshotmp.com/medical/moonshot-vs-typical-clinic/
 
 ### Cost & Pricing Guides
-- Semaglutide Cost (how much semaglutide / Ozempic / Wegovy costs; from $195/mo all-inclusive): https://moonshotmp.com/learn/semaglutide-cost/
-- Tirzepatide Cost (how much tirzepatide / Mounjaro / Zepbound costs; from $235/mo all-inclusive): https://moonshotmp.com/learn/tirzepatide-cost/
+- Semaglutide Cost (brand-name retail pricing compared with Moonshot's compounded semaglutide program, from $195/mo all-inclusive): https://moonshotmp.com/learn/semaglutide-cost/
+- Tirzepatide Cost (brand-name retail pricing compared with Moonshot's compounded tirzepatide program, from $235/mo all-inclusive): https://moonshotmp.com/learn/tirzepatide-cost/
 - TRT Cost (men's hormone optimization cost; $235/mo): https://moonshotmp.com/learn/trt-cost/
 - BHRT Cost (women's hormone optimization cost; $285/mo): https://moonshotmp.com/learn/bhrt-cost/
 - DEXA Scan Cost ($150 standalone, $405 bundled with blood panel): https://moonshotmp.com/learn/dexa-scan-cost/
