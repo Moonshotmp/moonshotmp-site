@@ -483,7 +483,6 @@ ${redFlagBlock}
           body: JSON.stringify({
             phone: phone,
             name: name,
-            peptide: 'perimenopause-' + internalTier,
             quiz_type: 'perimenopause'
           })
         });

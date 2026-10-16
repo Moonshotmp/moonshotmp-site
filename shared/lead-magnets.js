@@ -59,7 +59,6 @@
     "diagnostics & optimization": 'diagnostics',
     "rehab & recovery":         'rehab',
     "performance & recovery":   'general',
-    "peptides & performance":   'general',
     "hormone therapy":          'general',
     "metabolic health":         'general',
     "thyroid & autoimmune":     'general',
@@ -222,8 +221,8 @@
 
         // STRIPPED 2026-04-30: previously fired gtag `lead_magnet_capture`
         // with `magnet_key` + `location.pathname`. The combination of magnet
-        // key (e.g. `peptide_guide`) and the article URL (e.g.
-        // `/learn/peptides-for-gut-healing/`) is HIPAA-adjacent identifiable
+        // key (e.g. `weight_loss`) and the article URL (e.g.
+        // `/learn/semaglutide-cost/`) is HIPAA-adjacent identifiable
         // health intent. The lead itself still flows server-side via
         // `/.netlify/functions/lead-magnet-submit` (first-party). No analytics
         // event is fired here. See ~/seo-analytics/audits/tracker-audit.md.
