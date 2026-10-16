@@ -287,35 +287,35 @@ function generateDiagnostics(name) {
 
     ${subhead('Hormones')}
     ${sectionBox('Key Markers', [
-      '<strong>Total Testosterone (Men)</strong>: Normal: 264-916 ng/dL | Optimal: 600-900 ng/dL',
-      '<strong>Free Testosterone (Men)</strong>: Normal: 5-21 ng/dL | Optimal: 15-20 ng/dL',
-      '<strong>Estradiol (Men)</strong>: Normal: 10-40 pg/mL | Optimal: 20-30 pg/mL',
-      '<strong>Estradiol (Women, pre-meno)</strong>: Varies by cycle | Optimal: interpreted in context',
-      '<strong>Progesterone (Women, luteal)</strong>: Normal: 2-25 ng/mL | Optimal: 10-20 ng/mL',
-      '<strong>DHEA-S</strong>: Varies by age | Optimal: upper half of age-adjusted range',
+      '<strong>Total Testosterone (Men)</strong> · Normal: 264-916 ng/dL | Optimal: 600-900 ng/dL',
+      '<strong>Free Testosterone (Men)</strong> · Normal: 5-21 ng/dL | Optimal: 15-20 ng/dL',
+      '<strong>Estradiol (Men)</strong> · Normal: 10-40 pg/mL | Optimal: 20-30 pg/mL',
+      '<strong>Estradiol (Women, pre-meno)</strong> · Varies by cycle | Optimal: interpreted in context',
+      '<strong>Progesterone (Women, luteal)</strong> · Normal: 2-25 ng/mL | Optimal: 10-20 ng/mL',
+      '<strong>DHEA-S</strong> · Varies by age | Optimal: upper half of age-adjusted range',
     ])}
 
     ${subhead('Thyroid')}
     ${sectionBox('Key Markers', [
-      '<strong>TSH</strong>: Normal: 0.4-4.5 mIU/L | Optimal: 1.0-2.0 mIU/L',
-      '<strong>Free T3</strong>: Normal: 2.3-4.2 pg/mL | Optimal: 3.0-4.0 pg/mL',
-      '<strong>Free T4</strong>: Normal: 0.8-1.8 ng/dL | Optimal: 1.1-1.5 ng/dL',
+      '<strong>TSH</strong> · Normal: 0.4-4.5 mIU/L | Optimal: 1.0-2.0 mIU/L',
+      '<strong>Free T3</strong> · Normal: 2.3-4.2 pg/mL | Optimal: 3.0-4.0 pg/mL',
+      '<strong>Free T4</strong> · Normal: 0.8-1.8 ng/dL | Optimal: 1.1-1.5 ng/dL',
       '<strong>Key insight:</strong> A TSH of 4.0 is "normal" but often symptomatic. Many providers won\'t act until TSH is >10. That\'s too late.',
     ])}
 
     ${subhead('Metabolic')}
     ${sectionBox('Key Markers', [
-      '<strong>Fasting Glucose</strong>: Normal: 65-99 mg/dL | Optimal: 75-90 mg/dL',
-      '<strong>HbA1c</strong>: Normal: <5.7% | Optimal: <5.3%',
-      '<strong>Fasting Insulin</strong>: Normal: 2-25 uIU/mL | Optimal: 3-8 uIU/mL',
+      '<strong>Fasting Glucose</strong> · Normal: 65-99 mg/dL | Optimal: 75-90 mg/dL',
+      '<strong>HbA1c</strong> · Normal: <5.7% | Optimal: <5.3%',
+      '<strong>Fasting Insulin</strong> · Normal: 2-25 uIU/mL | Optimal: 3-8 uIU/mL',
       '<strong>Key insight:</strong> Insulin resistance develops years before blood sugar goes "abnormal." Fasting insulin is the early warning, and most doctors don\'t order it.',
     ])}
 
     ${subhead('Inflammation & Lipids')}
     ${sectionBox('Key Markers', [
-      '<strong>hs-CRP</strong>: Normal: <3.0 mg/L | Optimal: <1.0 mg/L',
+      '<strong>hs-CRP</strong> · Normal: <3.0 mg/L | Optimal: <1.0 mg/L',
       '<strong>LDL-C</strong>: Context-dependent; particle count (LDL-P) is more predictive than concentration',
-      '<strong>Triglycerides</strong>: Normal: <150 mg/dL | Optimal: <100 mg/dL',
+      '<strong>Triglycerides</strong> · Normal: <150 mg/dL | Optimal: <100 mg/dL',
       '<strong>ApoB</strong>: The single best lipid marker for cardiovascular risk. Optimal: <90 mg/dL',
     ])}
 

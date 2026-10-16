@@ -90,7 +90,7 @@
                 'It only matters for professional athletes'
             ],
             correct: 1,
-            explanation: 'Osteoporosis affects 1 in 3 women and 1 in 5 men over 50, often with zero symptoms until a fracture occurs. DEXA is the gold standard for bone density measurement, catching decline early allows intervention through nutrition, exercise, and sometimes medication.'
+            explanation: 'Osteoporosis affects 1 in 3 women and 1 in 5 men over 50, often with zero symptoms until a fracture occurs. DEXA is the gold standard for bone density measurement. Catching decline early allows intervention through nutrition, exercise, and sometimes medication.'
         }
     ];
 
