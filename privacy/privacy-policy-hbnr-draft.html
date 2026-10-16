@@ -102,12 +102,12 @@
 
                         <h3 class="text-base font-bold text-brand-dark mb-2 mt-6">2.2 Quiz, Screening, and Pre-Patient Inputs (held by Moonshot MSO, LLC)</h3>
                         <p class="text-sm leading-relaxed mb-2">
-                            When you use a quiz or screening tool on this website (for example, our hormone health quiz, peptide quiz, weight loss quiz, or sleep quiz), you may submit information such as:
+                            When you use a quiz or screening tool on this website (for example, our hormone health quiz, weight loss quiz, or sleep quiz), you may submit information such as:
                         </p>
                         <ul class="list-disc pl-5 space-y-1 text-sm marker:text-brand-slate/50">
                             <li><strong>Symptom selections</strong> (e.g., low energy, low libido, brain fog)</li>
                             <li><strong>Screening responses</strong> (e.g., self-reported sleep duration, weight, height, body composition goals)</li>
-                            <li><strong>Service interest indicators</strong> (e.g., interest in TRT, GLP-1, peptides, DEXA scan, NAD+)</li>
+                            <li><strong>Service interest indicators</strong> (e.g., interest in TRT, GLP-1, DEXA scan, NAD+)</li>
                             <li><strong>Email address and, optionally, phone number</strong> to receive your results</li>
                             <li><strong>Demographic data you choose to share</strong> (age, sex)</li>
                         </ul>
@@ -277,7 +277,7 @@
 
                         <h3 class="text-base font-bold text-brand-dark mb-2 mt-4">6.1 What quizzes are for</h3>
                         <p class="text-sm leading-relaxed mb-4">
-                            Our quizzes are educational screening tools. They help you understand whether a particular service (TRT, GLP-1, peptides, DEXA, etc.) might be relevant to your situation, and they let us send you a personalized informational result. They are <strong>not</strong> diagnostic tools, they are <strong>not</strong> a substitute for a medical evaluation by a licensed clinician, and submitting a quiz does <strong>not</strong> establish a clinician-patient relationship.
+                            Our quizzes are educational screening tools. They help you understand whether a particular service (TRT, GLP-1, DEXA, etc.) might be relevant to your situation, and they let us send you a personalized informational result. They are <strong>not</strong> diagnostic tools, they are <strong>not</strong> a substitute for a medical evaluation by a licensed clinician, and submitting a quiz does <strong>not</strong> establish a clinician-patient relationship.
                         </p>
 
                         <h3 class="text-base font-bold text-brand-dark mb-2 mt-4">6.2 Where quiz data goes</h3>
@@ -665,7 +665,7 @@ D. SERVER-SIDE ANALYTICS GUARDRAILS (BLOCKING for Section 4 historic
      - Health-topic pages (/learn, /blood-work, /quiz, /supplements, etc.)
        MUST NOT load any analytics or advertising tag, even with consent.
 3. Verify with automated test:
-     - Playwright test that visits /quiz/peptide, /learn/trt, /blood-work,
+     - Playwright test that visits /quiz/glp1, /learn/trt, /blood-work,
        and asserts no requests fire to googletagmanager.com,
        google-analytics.com, doubleclick.net, facebook.com, connect.facebook.net,
        analytics.tiktok.com, ads.linkedin.com, ahrefs-related domains.
