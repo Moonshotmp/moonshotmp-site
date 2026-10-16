@@ -216,16 +216,30 @@
         <section class="py-12 md:py-16 bg-brand-light text-brand-dark min-h-[80vh] flex flex-col justify-center">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 
-                <!-- Headline Block -->
+                <!-- Headline Block: the first screen books -->
                 <div class="text-center max-w-4xl mx-auto mb-12 md:mb-16">
                      <!-- Personalized intro for warm-quiz traffic (rendered by booking-attribution.js) -->
                      <div id="mmp-booking-personalized-intro" class="hidden"></div>
                      <h1 class="text-4xl md:text-6xl font-bold text-brand-dark mb-6 leading-tight">
                         Initial Performance Consultation
                      </h1>
-                     <p class="text-xl md:text-2xl text-brand-slate font-light leading-relaxed max-w-3xl mx-auto">
-                        No guesswork. Just data. We use blood work and diagnostics to build a clear plan for hormones, body composition, recovery, and long-term performance.
-                    </p>
+                     <p class="text-lg md:text-2xl text-brand-slate font-light leading-relaxed max-w-3xl mx-auto mb-8">
+                        Blood work and diagnostics first, then a clear plan for hormones, body composition, recovery, and long-term performance.
+                     </p>
+                     <a href="https://moonshot.moonshotehr.com/book/consult"
+                        data-ehr-booker
+                        class="inline-block bg-brand-dark text-brand-light font-heading uppercase text-lg tracking-widest font-bold px-10 py-5 hover:bg-brand-slate transform hover:-translate-y-1 transition duration-300 shadow-lg w-full sm:w-auto cursor-pointer text-center no-underline">
+                        Book your first visit
+                     </a>
+                     <p class="mt-6 text-base text-brand-slate">
+                        Call or text <a href="tel:+12244354280" class="font-bold text-brand-dark underline">224-435-4280</a>
+                     </p>
+                     <p class="mt-3">
+                        <a href="https://moonshotclinic.com/portal/"
+                           class="text-sm text-brand-slate/70 hover:text-brand-dark underline decoration-brand-slate/30 underline-offset-4 transition">
+                            Already a member or returning patient? Book here
+                        </a>
+                     </p>
                 </div>
 
                 <!-- Three Core Sections -->
@@ -298,57 +312,42 @@
                     </div>
                 </div>
 
-                <!-- CTA Block -->
-                <div class="text-center max-w-2xl mx-auto mb-20">
-                    <p class="mb-4">
-                        <span class="text-brand-slate text-xs uppercase tracking-widest">Next available</span><br>
-                        <span class="font-bold text-brand-dark text-lg">May 8, 2026</span>
+                <!-- Callback Block -->
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <p class="text-sm text-brand-slate mb-4">
+                        <strong class="text-brand-dark">Prefer we call you?</strong>
                     </p>
-
-                    <a href="https://moonshot.moonshotclinic.com/book/"
-                       data-ehr-booker
-                       class="inline-block bg-brand-dark text-brand-light font-heading uppercase text-lg tracking-widest font-bold px-10 py-5 hover:bg-brand-slate transform hover:-translate-y-1 transition duration-300 shadow-lg w-full sm:w-auto cursor-pointer text-center no-underline">
-                        Book Your First Visit
-                    </a>
-
-                    <div class="mt-6">
-                        <a href="https://moonshotclinic.com/portal/"
-                           class="text-sm text-brand-slate/70 hover:text-brand-dark underline decoration-brand-slate/30 underline-offset-4 transition">
-                            Already a member or returning patient? Book here
-                        </a>
-                    </div>
-
-                    <!-- Fallback callback CTA -->
-                    <div class="mt-10 pt-8 border-t border-brand-dark/10">
-                        <p class="text-sm text-brand-slate mb-4">
-                            <strong class="text-brand-dark">Prefer we call you?</strong>
-                        </p>
-                        <form id="mmp-callback-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                            <label class="sr-only" for="mmp-callback-name">Name</label>
-                            <input id="mmp-callback-name" name="name" type="text" required autocomplete="name" placeholder="Your name"
-                                   class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
-                            <label class="sr-only" for="mmp-callback-phone">Phone</label>
-                            <input id="mmp-callback-phone" name="phone" type="tel" required autocomplete="tel" placeholder="Phone number"
-                                   class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
-                            <button type="submit"
-                                    class="bg-brand-dark text-brand-light font-heading uppercase text-sm tracking-widest font-bold px-6 py-3 hover:bg-brand-slate transition cursor-pointer">
-                                Request callback
-                            </button>
-                        </form>
-                        <p id="mmp-callback-msg" class="hidden mt-4 text-sm text-brand-slate"></p>
-                    </div>
+                    <form id="mmp-callback-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                        <label class="sr-only" for="mmp-callback-name">Name</label>
+                        <input id="mmp-callback-name" name="name" type="text" required autocomplete="name" placeholder="Your name"
+                               class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
+                        <label class="sr-only" for="mmp-callback-phone">Phone</label>
+                        <input id="mmp-callback-phone" name="phone" type="tel" required autocomplete="tel" placeholder="Phone number"
+                               class="flex-1 px-4 py-3 text-sm bg-white border border-brand-dark/20 text-brand-dark placeholder-brand-slate/60 focus:outline-none focus:border-brand-dark rounded-sm">
+                        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+                        <button type="submit"
+                                class="bg-brand-dark text-brand-light font-heading uppercase text-sm tracking-widest font-bold px-6 py-3 hover:bg-brand-slate transition cursor-pointer">
+                            Request callback
+                        </button>
+                    </form>
+                    <p id="mmp-callback-msg" class="hidden mt-4 text-sm text-brand-slate" role="status" aria-live="polite"></p>
 
                     <p class="mt-8 text-sm text-brand-slate">
                         Not sure if this is for you? <a href="/ourstory/" class="underline hover:text-brand-dark transition">See how it worked for our founder →</a>
                     </p>
-
-                    <p class="mt-8 text-xs text-brand-slate/80">
-                        Questions? Call or text <a href="tel:+12244354280" class="underline hover:text-brand-dark">224-435-4280</a>
-                    </p>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Reviews sit below the booking block (rendered by reviews.js) -->
+        <div id="reviews-section" data-theme="dark"></div>
+
+        <section class="py-12 md:py-16 bg-brand-light text-brand-dark">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+
                 <!-- FAQ Section -->
-                <section class="max-w-3xl mx-auto mt-16 px-4 border-t border-brand-dark/10 pt-16">
+                <section class="max-w-3xl mx-auto px-4">
                   <h2 class="text-2xl font-heading font-bold text-brand-dark mb-8 text-center uppercase tracking-wide">Before You Book</h2>
                   <div class="space-y-4">
                     
@@ -485,7 +484,7 @@
                   
                   <!-- Bottom CTA -->
                   <div class="text-center mt-12 mb-8">
-                      <a href="https://moonshot.moonshotclinic.com/book/" data-ehr-booker class="btn-primary inline-block cursor-pointer no-underline">Book Your First Visit</a>
+                      <a href="https://moonshot.moonshotehr.com/book/consult" data-ehr-booker class="btn-primary inline-block cursor-pointer no-underline">Book your first visit</a>
                   </div>
                 </section>
 
@@ -553,6 +552,7 @@
         </div>
     </div>
     <script src="/shared/footer.js" defer></script>
+    <script src="/shared/reviews.js" defer></script>
     <script src="/booking/booking-attribution.js" defer></script>
 
 </body>
