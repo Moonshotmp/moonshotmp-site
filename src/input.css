@@ -1,4 +1,19 @@
-@import "tailwindcss";
+/*
+ * Tailwind v4 entry point. Built on every Netlify deploy by `npm run build:css`
+ * (netlify.toml), output committed at shared/tailwind.css.
+ *
+ * source("..") pins automatic content detection to the repo root no matter
+ * where the CLI is run from. Detection scans every non-gitignored file
+ * (all *.html pages, shared/*.js that build markup in strings) and skips
+ * node_modules. Check coverage with `npm run check:css`.
+ *
+ * The compiled output is excluded so a stale shared/tailwind.css can never
+ * feed tokens back into the next build; tests/ and scripts/ hold no markup.
+ */
+@import "tailwindcss" source("..");
+@source not "../shared/tailwind.css";
+@source not "../scripts";
+@source not "../tests";
 
 @theme {
   --color-brand-dark: #101921;
@@ -10,6 +25,4 @@
 
   --font-heading: 'Oswald', sans-serif;
   --font-body: 'Poppins', sans-serif;
-
-  --font-size-xxs: 0.65rem;
 }
