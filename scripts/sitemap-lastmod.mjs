@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Rewrites every <lastmod> in sitemap.xml to the date of the last commit that
-// touched the page's file (git log -1 --format=%cs -- <file>).
+// touched the page's file, skipping the boilerplate-only commits listed in
+// scripts/sitemap-lastmod-ignore.txt.
 // Run from the repo root after committing page changes:
 //   node scripts/sitemap-lastmod.mjs          rewrite sitemap.xml
 //   node scripts/sitemap-lastmod.mjs --check  exit 1 if any lastmod is stale or a page file is missing
@@ -16,8 +17,21 @@ function fileFor(loc) {
   return path === '' || path.endsWith('/') ? `${path}index.html` : path;
 }
 
+// Site-wide boilerplate commits (see scripts/sitemap-lastmod-ignore.txt) do not count as a page change.
+const IGNORE_FILE = 'scripts/sitemap-lastmod-ignore.txt';
+const ignored = new Set(
+  existsSync(IGNORE_FILE)
+    ? readFileSync(IGNORE_FILE, 'utf8').split('\n').map((l) => l.trim().split(/\s+/)[0]).filter((sha) => /^[0-9a-f]{40}$/.test(sha))
+    : []
+);
+
 function lastCommitDate(file) {
-  return execFileSync('git', ['log', '-1', '--format=%cs', '--', file], { encoding: 'utf8' }).trim();
+  const log = execFileSync('git', ['log', '--format=%H %cs', '--', file], { encoding: 'utf8' });
+  for (const line of log.split('\n')) {
+    const [sha, date] = line.split(' ');
+    if (sha && !ignored.has(sha)) return date;
+  }
+  return '';
 }
 
 const xml = readFileSync(SITEMAP, 'utf8');
