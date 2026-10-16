@@ -112,7 +112,7 @@
       utm.utm_source || utm.utm_medium || utm.utm_campaign || utm.utm_term || utm.utm_content;
     if (!haveSomething) return;
 
-    var links = document.querySelectorAll('a[href*="moonshotclinic.com/book"]');
+    var links = document.querySelectorAll('a[href*="moonshotehr.com/book"], a[href*="moonshotclinic.com/book"]');
     for (var k = 0; k < links.length; k++) {
       var a = links[k];
       var href = a.getAttribute('href');

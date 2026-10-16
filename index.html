@@ -82,6 +82,7 @@
     .space-y-2>:not(:first-child){margin-top:.5rem}.space-y-6>:not(:first-child){margin-top:1.5rem}
     .underline{text-decoration:underline}.cursor-pointer{cursor:pointer}
     .btn-primary{background-color:#B2BFBE;color:#101921;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;padding:.75rem 2rem;display:inline-block;cursor:pointer;border:none}
+    .btn-outline{background-color:transparent;border:1px solid #B2BFBE;color:#F0EEE9;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:500;padding:.75rem 2rem;display:inline-block;cursor:pointer}.btn-outline:hover{border-color:#F0EEE9}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     details>.accordion-content{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease-out,opacity .3s ease-out;opacity:0}
     details[open]>.accordion-content{grid-template-rows:1fr;opacity:1}.accordion-inner{overflow:hidden}summary{list-style:none}summary::-webkit-details-marker{display:none}
@@ -413,6 +414,10 @@
                     <p class="text-brand-gray text-lg md:text-xl font-light max-w-2xl mx-auto">
                         One destination. One team. Coordinated care.
                     </p>
+                    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button type="button" onclick="openBookingModal()" class="btn-primary text-lg px-10 py-4 w-full sm:w-auto">Book Now</button>
+                        <a href="tel:+12244354280" class="btn-outline text-lg px-10 py-4 w-full sm:w-auto text-center">Call 224-435-4280</a>
+                    </div>
                 </div>
 
                 <!-- Two Path Cards -->
@@ -467,11 +472,6 @@
 
                 <!-- Trust Badge -->
                 <div class="text-center mt-8 mb-4" data-reviews-trust></div>
-
-                <!-- Single CTA -->
-                <div class="text-center mt-4">
-                    <button type="button" onclick="openBookingModal()" class="btn-primary text-lg px-10 py-4">Book Now</button>
-                </div>
             </div>
         </section>
 

@@ -123,7 +123,7 @@
     // the clinic side).
     //
     // This helper appends the persisted gclid/gbraid/wbraid + utm_* to any
-    // anchor whose href points at a moonshotclinic.com /book/* path. It is
+    // anchor whose href points at a clinic booker /book/* path. It is
     // idempotent (won't double-append) and runs after the header HTML is
     // injected so nav-bar CTAs are covered too. The clinic /book page
     // already reads these params from window.location.search and forwards
@@ -161,10 +161,11 @@
           return encodeURIComponent(k) + '=' + encodeURIComponent(attribution[k]);
         }).join('&');
 
-        // Match any subdomain (moonshot.moonshotclinic.com, branch.moonshotclinic.com,
-        // etc.) under /book/. Substring filter is broad on purpose so we don't
-        // miss future booking subdomains; idempotency check below prevents harm.
-        var anchors = document.querySelectorAll('a[href*="moonshotclinic.com/book"]');
+        // Match any clinic booker subdomain (moonshot.moonshotehr.com, and the
+        // legacy moonshotclinic.com hosts that 301 to it) under /book/.
+        // Substring filter is broad on purpose so we don't miss future booking
+        // subdomains; idempotency check below prevents harm.
+        var anchors = document.querySelectorAll('a[href*="moonshotehr.com/book"], a[href*="moonshotclinic.com/book"]');
         for (var i = 0; i < anchors.length; i++) {
           var a = anchors[i];
           var href = a.getAttribute('href') || '';
@@ -967,7 +968,7 @@
                 <h3 id="booking-modal-heading" class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an Appointment</h3>
                 <p class="text-brand-gray text-sm mb-8">Which service are you looking for?</p>
                 <div class="space-y-4">
-                    <a href="https://moonshotclinic.com/book/" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">
+                    <a href="https://moonshot.moonshotehr.com/book/consult" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">
                         <span class="font-bold block">Medical</span>
                         <span class="text-brand-gray text-sm">Labs, DEXA, hormones, weight loss</span>
                     </a>
@@ -1001,7 +1002,7 @@
     document.body.insertAdjacentHTML('beforeend', bookingModalHTML);
 
     // Decorate the booking modal's clinic CTA (site-wide "Book an Appointment"
-    // entrypoint -> moonshotclinic.com/book/). This is the highest-traffic
+    // entrypoint -> moonshot.moonshotehr.com/book/consult). This is the highest-traffic
     // booking link on the site and was previously unattributed.
     decorateClinicBookingLinks();
 

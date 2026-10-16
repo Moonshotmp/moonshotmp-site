@@ -80,7 +80,7 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-4">Book Medical Services</h1>
                 <p class="text-brand-gray text-lg font-light max-w-2xl mx-auto">
-                    Schedule your medical optimization appointment below.
+                    Pick a visit below. Booking opens on our secure scheduling page.
                 </p>
             </div>
         </section>
@@ -89,34 +89,29 @@
         <section class="py-12 bg-brand-light">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <!-- Clinic booking system -->
-                <div class="rounded-sm overflow-hidden" style="min-height:700px">
-                    <iframe id="medical-booking-iframe"
-                            src="https://moonshot.moonshotclinic.com/book/?embed=true&flow=new-patient&slug=moonshot"
-                            title="Book an appointment at Moonshot Medical"
-                            style="width:100%;height:700px;border:none;border-radius:4px"
-                            loading="lazy"
-                            allow="payment"></iframe>
+                <!-- Link out to the clinic booker (it refuses to load inside a frame) -->
+                <div class="grid md:grid-cols-3 gap-4">
+                    <a href="https://moonshot.moonshotehr.com/book/consult" data-ehr-booker
+                       class="block bg-white border border-brand-slate/10 p-6 rounded-sm hover:border-brand-slate/30 transition text-brand-dark no-underline">
+                        <span class="block font-heading font-bold text-xl uppercase tracking-wide mb-2">New Patient Consult</span>
+                        <span class="block text-brand-slate text-sm font-light mb-4">Start here for hormones, weight loss, or a full optimization plan. 45 to 60 minutes.</span>
+                        <span class="inline-block bg-brand-dark text-brand-light font-heading uppercase text-sm tracking-widest font-bold px-6 py-3">Book</span>
+                    </a>
+                    <a href="https://moonshot.moonshotehr.com/book/dexa" data-ehr-booker
+                       class="block bg-white border border-brand-slate/10 p-6 rounded-sm hover:border-brand-slate/30 transition text-brand-dark no-underline">
+                        <span class="block font-heading font-bold text-xl uppercase tracking-wide mb-2">DEXA Scan</span>
+                        <span class="block text-brand-slate text-sm font-light mb-4">Body fat, lean mass, visceral fat, and bone density in about 10 minutes.</span>
+                        <span class="inline-block bg-brand-dark text-brand-light font-heading uppercase text-sm tracking-widest font-bold px-6 py-3">Book</span>
+                    </a>
+                    <a href="https://moonshot.moonshotehr.com/book/blood-panel" data-ehr-booker
+                       class="block bg-white border border-brand-slate/10 p-6 rounded-sm hover:border-brand-slate/30 transition text-brand-dark no-underline">
+                        <span class="block font-heading font-bold text-xl uppercase tracking-wide mb-2">Blood Panel</span>
+                        <span class="block text-brand-slate text-sm font-light mb-4">A comprehensive lab draw at the clinic. Fasting recommended.</span>
+                        <span class="inline-block bg-brand-dark text-brand-light font-heading uppercase text-sm tracking-widest font-bold px-6 py-3">Book</span>
+                    </a>
                 </div>
-                <script>
-                window.addEventListener('message', function(e) {
-                    if (e.data && e.data.type === 'moonshot-book-height') {
-                        var iframe = document.getElementById('medical-booking-iframe');
-                        if (iframe) iframe.style.height = e.data.height + 'px';
-                    }
-                });
-                document.querySelectorAll('iframe').forEach(function(iframe) {
-                    iframe.addEventListener('error', function() {
-                        this.style.display = 'none';
-                        var fallback = document.createElement('div');
-                        fallback.className = 'text-center py-12';
-                        fallback.innerHTML = '<p class="text-brand-slate text-lg mb-4">Booking is temporarily unavailable.</p><p class="text-brand-slate">Please call <a href="tel:+12244354280" class="underline font-bold hover:text-brand-dark">224-435-4280</a> or <a href="/contact/" class="underline font-bold hover:text-brand-dark">use our contact form</a> to schedule.</p>';
-                        this.parentNode.appendChild(fallback);
-                    });
-                });
-                </script>
-                <p class="text-center text-brand-slate/50 text-xs mt-4">
-                    Questions? Call or text <a href="tel:+12244354280" class="underline hover:text-brand-dark">224-435-4280</a>
+                <p class="text-center text-brand-slate text-sm mt-6">
+                    Not sure which one? Call or text <a href="tel:+12244354280" class="underline hover:text-brand-dark">224-435-4280</a>
                 </p>
 
             </div>
@@ -238,6 +233,7 @@
         </div>
     </div>
     <script src="/shared/footer.js" defer></script>
+    <script src="/booking/booking-attribution.js" defer></script>
 
 </body>
 </html>
