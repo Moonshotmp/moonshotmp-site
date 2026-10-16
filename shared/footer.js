@@ -119,8 +119,9 @@
 
             <div class="mt-6 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-brand-gray">
                 <span>&copy; ${currentYear} Moonshot Medical and Performance. All Rights Reserved.</span>
-                <div class="flex gap-6">
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
                     <a href="/privacy/" class="hover:text-brand-gray transition">Privacy Policy</a>
+                    <a href="/privacy/notice-of-privacy-practices/" class="hover:text-brand-gray transition">Notice of Privacy Practices</a>
                     <a href="/terms/" class="hover:text-brand-gray transition">Terms of Service</a>
                     <a href="/accessibility/" class="hover:text-brand-gray transition">Accessibility</a>
                 </div>

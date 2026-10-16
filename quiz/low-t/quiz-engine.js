@@ -1368,7 +1368,7 @@
                     '</label>' +
                     '<label class="flex items-start gap-3 cursor-pointer">' +
                         '<input type="checkbox" id="quiz-marketing-optin" class="mt-1 flex-shrink-0">' +
-                        '<span class="text-brand-light text-sm font-light">Send me occasional updates from Moonshot Medical (no spam)</span>' +
+                        '<span class="text-brand-light text-sm font-light">Email me occasional updates</span>' +
                     '</label>' +
                 '</div>' +
                 '<div id="quiz-email-fields" class="hidden mt-4 space-y-3 max-w-sm">' +
@@ -1382,6 +1382,10 @@
                     '</div>' +
                     '<label for="quiz-phone" class="sr-only">Phone (optional)</label>' +
                     '<input type="tel" id="quiz-phone" maxlength="32" placeholder="Phone (optional)" autocomplete="tel" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
+                    '<label for="quiz-sms-consent" class="flex items-start gap-3 cursor-pointer text-left">' +
+                        '<input type="checkbox" id="quiz-sms-consent" name="sms_consent" class="mt-1 flex-shrink-0">' +
+                        '<span class="text-brand-gray text-xs font-light leading-relaxed">Text me my results and next steps. Message frequency varies. Message and data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy/" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-brand-light">Privacy Policy</a>.</span>' +
+                    '</label>' +
                     '<p id="quiz-email-error" role="alert" class="text-red-500 text-xs hidden">Please enter a valid email address.</p>' +
                     '<p id="quiz-name-error" role="alert" class="text-red-500 text-xs hidden">Please enter your first name.</p>' +
                     '<p id="quiz-submit-msg" role="status" aria-live="polite" class="text-brand-gray text-xs hidden"></p>' +
@@ -1501,9 +1505,13 @@
         state.name = name;
         state.email = email;
         state.phone = phone;
+        // SMS consent is read fresh at submit and never persisted: it only
+        // counts when the box is ticked AND a phone was entered.
+        var smsBox = document.getElementById('quiz-sms-consent');
+        var smsConsent = !!(phone && smsBox && smsBox.checked);
 
         ga('quiz_email_submit', SCREEN.RESULTS);
-        sendResults();
+        sendResults(smsConsent);
 
         var msg = document.getElementById('quiz-submit-msg');
         if (msg) {
@@ -1523,7 +1531,7 @@
     // ── Email submission ─────────────────────────────────────────────
     // Compact payload — counts and sanitized enums only for multi-check
     // fields, NEVER raw symptom values or individual ADAM item answers.
-    function sendResults() {
+    function sendResults(smsConsent) {
         var result = scoreLowT(state);
 
         var payload = {
@@ -1531,6 +1539,7 @@
             email: state.email,
             phone: state.phone || null,
             marketingOptIn: !!state.marketingOptIn,
+            sms_consent: smsConsent === true,
             result: {
                 internalTier: result.internalTier,
                 internalTierLabel: result.internalTierLabel,

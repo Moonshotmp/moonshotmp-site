@@ -1,5 +1,6 @@
 import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
+import { sendQuizSmsIfConsented } from './shared/sms-consent.js';
 
 const INTERNAL_TIER_VALUES = new Set([
   'contraindication-identified',
@@ -166,6 +167,7 @@ export default async function handler(req, context) {
     email: rawEmail,
     phone: rawPhone,
     marketingOptIn,
+    sms_consent: smsConsent,
     result,
     profile,
     ackTimestamp: rawAckTimestamp
@@ -430,7 +432,8 @@ export default async function handler(req, context) {
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${safeName || 'Not provided'}</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Email: ${safeEmail}</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Phone: ${safePhone || 'Not provided'}</p>
-        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Marketing Opt-In: ${optIn ? 'Yes' : 'No'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Marketing Opt-In (email): ${optIn ? 'Yes' : 'No'}</p>
+        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">SMS Consent: ${smsConsent === true ? 'Yes' : 'No'}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
@@ -572,23 +575,17 @@ export default async function handler(req, context) {
       })
     }).catch(err => console.error('[glp1-quiz-submit] Marketing drip sync error:', err && err.message));
 
-    // SMS follow-up — only if phone provided AND marketing opt-in is true.
-    if (phone && optIn === true) {
-      try {
-        await fetch(clinicApi + '/api/webhooks/quiz-sms', {
-          method: 'POST',
-          headers: webhookHeaders,
-          body: JSON.stringify({
-            phone: phone,
-            name: name,
-            quiz_type: 'glp1'
-          })
-        });
-      } catch (e) {
-        // Non-fatal — don't block the response
-        console.error('[glp1-quiz-submit] Quiz SMS webhook error:', e && e.message);
-      }
-    }
+    // SMS follow-up: only with a phone AND the separate, unticked SMS consent
+    // box ticked. The email-updates box (marketingOptIn) never sends a text.
+    await sendQuizSmsIfConsented({
+      clinicApi,
+      headers: webhookHeaders,
+      phone,
+      name,
+      quizType: 'glp1',
+      smsConsent,
+      logTag: 'glp1-quiz-submit'
+    });
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
