@@ -28,6 +28,15 @@ the Node environment (no jsdom — tests target pure logic, not DOM).
 
 ## Files
 
+- `tests/peptide-recommendation.test.js`: pins the peptide quiz
+  recommendation engine (`quiz/peptides/recommendation.js`). Covers every
+  goal x concern x budget branch, the budget guard, and catalog integrity.
+  `quiz/peptides/quiz-engine.js` keeps a private copy of the same logic;
+  the two must stay in sync.
+- `tests/peptide-quiz-submit.test.js`: the peptide quiz function renders
+  recommendations from the server-side catalog (keys only from the browser),
+  escapes free text in both emails, and returns 500 when the results email
+  is rejected.
 - `tests/scoring-helpers.test.js` — `it.todo()` placeholders for
   validated screening instruments (MRS, ADAM, STOP-BANG, OST, BMI).
   The expected behavior is encoded in the test names. When the

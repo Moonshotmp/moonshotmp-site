@@ -221,6 +221,7 @@
                   <a href="/medical/womens-hormones/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Women's Hormones</a>
                   <a href="/medical/weight-loss/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Weight Loss</a>
                   <a href="/medical/nutrition-coaching/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Nutrition Coaching</a>
+                  <a href="/medical/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptides</a>
                   <a href="/medical/botox-park-ridge/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Botox / Jeuveau</a>
                   <a href="/quiz/perimenopause/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/10 mt-1" role="menuitem">Perimenopause Screener</a>
                   <a href="/quiz/low-t/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5" role="menuitem">TRT Readiness Screener</a>
@@ -261,7 +262,7 @@
                 </svg>
               </a>
               <div class="absolute right-0 mt-2 w-[850px] bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="learn-dropdown" role="menu">
-                <div class="p-6 grid grid-cols-4 gap-6">
+                <div class="p-6 grid grid-cols-5 gap-6">
                   <!-- Men Column -->
                   <div>
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Men</span>
@@ -285,6 +286,18 @@
                     <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Weight Loss</span>
                     <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Semaglutide vs Tirzepatide</a>
                     <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">GLP-1 vs Other Methods</a>
+                  </div>
+                  <!-- Peptides Column -->
+                  <div>
+                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Peptides</span>
+                    <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Peptide Therapy Guide</a>
+                    <a href="/learn/bpc-157/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">BPC-157</a>
+                    <a href="/learn/sermorelin/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Sermorelin</a>
+                    <a href="/learn/tb-500/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">TB-500</a>
+                    <a href="/learn/wolverine-blend/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Wolverine Blend</a>
+                    <a href="/learn/pt-141/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">PT-141</a>
+                    <a href="/learn/ghk-cu/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">GHK-Cu</a>
+                    <a href="/quiz/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Peptide Quiz</a>
                   </div>
                   <!-- Rehab & Diagnostics Column -->
                   <div>
@@ -338,6 +351,7 @@
                   <a href="/quiz/low-t/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">TRT Readiness Screener</a>
                   <a href="/quiz/glp1/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">GLP-1 Readiness Screener</a>
                   <a href="/quiz/bone-density/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Bone Density Screener</a>
+                  <a href="/quiz/peptides/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Peptide Quiz</a>
                   <a href="/quiz/body-comp/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Body Comp IQ Quiz</a>
                 </div>
               </div>
@@ -385,6 +399,7 @@
               <a href="/medical/womens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women's Hormones</a>
               <a href="/medical/weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Weight Loss</a>
               <a href="/medical/nutrition-coaching/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Nutrition Coaching</a>
+              <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides</a>
               <a href="/medical/botox-park-ridge/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Botox / Jeuveau</a>
               <a href="/quiz/perimenopause/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">Perimenopause Screener &rarr;</a>
               <a href="/quiz/low-t/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">TRT Readiness Screener &rarr;</a>
@@ -437,6 +452,15 @@
               <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Weight Loss</span>
               <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
               <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
+              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Peptides</span>
+              <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Therapy Guide</a>
+              <a href="/learn/bpc-157/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">BPC-157</a>
+              <a href="/learn/sermorelin/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Sermorelin</a>
+              <a href="/learn/tb-500/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TB-500</a>
+              <a href="/learn/wolverine-blend/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Wolverine Blend</a>
+              <a href="/learn/pt-141/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PT-141</a>
+              <a href="/learn/ghk-cu/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GHK-Cu</a>
+              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
               <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Rehab & Diagnostics</span>
               <a href="/learn/prp-microneedling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PRP Microneedling</a>
               <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
@@ -480,6 +504,7 @@
               <a href="/quiz/low-t/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT Readiness Screener</a>
               <a href="/quiz/glp1/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 Readiness Screener</a>
               <a href="/quiz/bone-density/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Bone Density Screener</a>
+              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
               <a href="/quiz/body-comp/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Comp IQ Quiz</a>
             </div>
           </div>
@@ -693,17 +718,31 @@
             { title: "Women's Hormone Optimization", desc: "Bioidentical hormone replacement therapy", url: "/medical/womens-hormones/", cat: "Medical" },
             { title: "Weight Loss (GLP-1)", desc: "Semaglutide and tirzepatide programs", url: "/medical/weight-loss/", cat: "Medical" },
             { title: "Nutrition Coaching", desc: "One-on-one, behavior-first coaching with Sarah DeCicco", url: "/medical/nutrition-coaching/", cat: "Medical" },
+            { title: "Peptides & Add-On Therapies", desc: "BPC-157, TB-500, Sermorelin, PT-141, GHK-Cu", url: "/medical/peptides/", cat: "Medical" },
             { title: "Botox / Jeuveau", desc: "Aesthetic injectables in Park Ridge", url: "/medical/botox-park-ridge/", cat: "Medical" },
             { title: "Daily Tadalafil", desc: "Low-dose tadalafil for vascular health", url: "/medical/tadalafil/", cat: "Medical" },
             { title: "Mobile Blood Draw", desc: "On-site blood draw services for businesses", url: "/medical/mobile-blood-draw/", cat: "Medical" },
             { title: "Coalition Mobile Blood Draw", desc: "Coalition partnership mobile blood draw event", url: "/medical/mobile-blood-draw/coalition/", cat: "Medical" },
             { title: "Moonshot vs Typical Clinics", desc: "What makes Moonshot different from typical hormone and weight loss clinics", url: "/medical/moonshot-vs-typical-clinic/", cat: "Medical" },
             { title: "TRT vs Enclomiphene", desc: "Which testosterone treatment is right for you", url: "/medical/trt-vs-enclomiphene/", cat: "Medical" },
+            // Peptides
+            { title: "BPC-157 Guide", desc: "Benefits, dosing, side effects, how to get it", url: "/learn/bpc-157/", cat: "Peptides" },
+            { title: "TB-500 Guide", desc: "Thymosin beta-4 for tissue repair", url: "/learn/tb-500/", cat: "Peptides" },
+            { title: "Sermorelin Guide", desc: "Growth hormone optimization", url: "/learn/sermorelin/", cat: "Peptides" },
+            { title: "PT-141 Guide", desc: "Bremelanotide for sexual desire and arousal", url: "/learn/pt-141/", cat: "Peptides" },
+            { title: "GHK-Cu Guide", desc: "Copper peptide for skin and anti-aging", url: "/learn/ghk-cu/", cat: "Peptides" },
+            { title: "Wolverine Blend", desc: "BPC-157 + TB-500 combination therapy", url: "/learn/wolverine-blend/", cat: "Peptides" },
+            { title: "Glow Stack", desc: "GHK-Cu + BPC-157 + TB-500 triple protocol", url: "/learn/glow-stack/", cat: "Peptides" },
+            { title: "Peptide Therapy Guide", desc: "Benefits, side effects, FDA regulation", url: "/learn/peptides/", cat: "Peptides" },
+            { title: "Peptides for Gut Healing", desc: "BPC-157 for IBS, leaky gut, NSAID damage", url: "/learn/peptides-for-gut-healing/", cat: "Peptides" },
+            { title: "Peptides for Injury Recovery", desc: "BPC-157, TB-500 for tendon and muscle healing", url: "/learn/peptides-for-injury-recovery/", cat: "Peptides" },
+            { title: "BPC-157 vs PRP", desc: "Head-to-head comparison", url: "/learn/bpc-157-vs-prp/", cat: "Peptides" },
             // PRP Microneedling
             { title: "PRP Microneedling Guide", desc: "How PRP microneedling works, what it treats, results, cost", url: "/learn/prp-microneedling/", cat: "Medical" },
             { title: "PRP vs Regular Microneedling", desc: "Is PRP worth the extra cost over standard microneedling?", url: "/learn/prp-vs-microneedling/", cat: "Medical" },
             { title: "PRP After Weight Loss", desc: "Skin tightening after GLP-1 weight loss with PRP microneedling", url: "/learn/prp-microneedling-after-weight-loss/", cat: "Medical" },
             { title: "PRP Microneedling Cost", desc: "How much PRP microneedling costs in 2026", url: "/learn/prp-microneedling-cost/", cat: "Medical" },
+            { title: "Which Peptide Should I Take?", desc: "Decision guide for choosing the right peptide", url: "/learn/which-peptide/", cat: "Peptides" },
             // NAD+
             { title: "NAD+ Therapy", desc: "NAD+ injections for cellular energy and recovery, $60/shot", url: "/medical/nad/", cat: "Medical" },
             { title: "NAD+ Protocol Guide", desc: "What to expect: loading phase, maintenance, stacking", url: "/learn/nad-protocol/", cat: "NAD+" },
@@ -786,6 +825,7 @@
             { title: "Trigger Point Treatment in Park Ridge", desc: "Trigger point therapy in Park Ridge, IL", url: "/learn/trigger-point-injections-park-ridge/", cat: "Local" },
             { title: "Physical Rehab in Park Ridge", desc: "Physical rehabilitation in Park Ridge, IL", url: "/learn/physical-rehab-park-ridge/", cat: "Local" },
             { title: "Blood Work in Park Ridge", desc: "Comprehensive blood panels in Park Ridge, IL", url: "/learn/blood-work-park-ridge/", cat: "Local" },
+            { title: "Peptide Therapy in Park Ridge", desc: "Local peptide therapy guide", url: "/learn/peptide-therapy-park-ridge/", cat: "Local" },
             { title: "NAD+ Injections in Park Ridge", desc: "NAD+ therapy in Park Ridge, IL", url: "/learn/nad-injections-park-ridge/", cat: "Local" },
             { title: "Hormone Quiz · Park Ridge", desc: "Hormone imbalance quiz for Park Ridge, IL residents", url: "/learn/hormone-quiz-park-ridge/", cat: "Local" },
             // Local SEO - Chicago
@@ -799,6 +839,7 @@
             { title: "TRT Readiness Screener", desc: "Validated ADAM scale + PSA and IPSS safety check", url: "/quiz/low-t/", cat: "Quiz" },
             { title: "GLP-1 Readiness Screener", desc: "BMI + comorbidity + 8-category contraindication check", url: "/quiz/glp1/", cat: "Quiz" },
             { title: "Bone Density Screener", desc: "OST formula + AACE/NOF risk factors for DEXA decision", url: "/quiz/bone-density/", cat: "Quiz" },
+            { title: "Peptide Quiz", desc: "Find which peptide is right for you", url: "/quiz/peptides/", cat: "Quiz" },
             { title: "Body Comp IQ Quiz", desc: "Test your body composition knowledge", url: "/quiz/body-comp/", cat: "Quiz" },
             // Getting Started & General
             { title: "Your First Visit", desc: "What to expect at your first Moonshot appointment", url: "/learn/first-visit/", cat: "About" },
@@ -963,7 +1004,7 @@
                 <div class="space-y-4">
                     <a href="https://moonshot.moonshotehr.com/book/consult" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">
                         <span class="font-bold block">Medical</span>
-                        <span class="text-brand-gray text-sm">Labs, DEXA, hormones, weight loss</span>
+                        <span class="text-brand-gray text-sm">Labs, DEXA, hormones, weight loss, peptides</span>
                     </a>
                     <a href="/booking/rehab/" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">
                         <span class="font-bold block">Rehab</span>

@@ -1,0 +1,255 @@
+/*
+ * Peptide Exit-Intent Popup
+ * =========================
+ * Shows a "Get Our Free Peptide Guide" email capture modal when the
+ * visitor shows exit intent (mouse toward top on desktop, 45s timer
+ * on mobile). Only fires on peptide-related pages. Dismissed for 30
+ * days via cookie, permanently after submission via localStorage.
+ *
+ * Usage:
+ *   <script src="/shared/peptide-exit-intent.js" defer></script>
+ */
+(function () {
+  // ─── Only run on peptide pages ──────────────────────────────────
+  var path = window.location.pathname;
+  var peptidePages = ['/peptide', '/bpc-157', '/tb-500', '/wolverine-blend', '/ghk-cu', '/glow-stack', '/pt-141', '/sermorelin', '/peptides-for-gut', '/peptides-for-injury', '/bpc-157-vs-prp', '/peptide-therapy-park-ridge'];
+  if (!peptidePages.some(function (p) { return path.includes(p); })) return;
+
+  // ─── Don't show if already dismissed (cookie) ──────────────────
+  if (document.cookie.indexOf('mmp_peptide_exit_dismissed=1') !== -1) return;
+
+  // ─── Don't show if already submitted ───────────────────────────
+  try { if (localStorage.getItem('mmp_peptide_guide_sent')) return; } catch (e) {}
+
+  var shown = false;
+
+  // ─── Inject styles ─────────────────────────────────────────────
+  var style = document.createElement('style');
+  style.textContent =
+    '#pep-exit-overlay{' +
+      'position:fixed;inset:0;z-index:9999;' +
+      'background:rgba(0,0,0,.6);' +
+      'backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);' +
+      'display:flex;align-items:center;justify-content:center;' +
+      'opacity:0;transition:opacity .3s ease;' +
+      'pointer-events:none;' +
+    '}' +
+    '#pep-exit-overlay.pep-active{opacity:1;pointer-events:auto;}' +
+    '#pep-exit-modal{' +
+      'background:#101921;' +
+      'max-width:28rem;width:calc(100% - 2rem);' +
+      'border-radius:.5rem;' +
+      'padding:2.5rem 2rem;' +
+      'position:relative;' +
+      'border:1px solid rgba(255,255,255,.08);' +
+      'box-shadow:0 25px 50px -12px rgba(0,0,0,.5);' +
+      'transform:translateY(1rem) scale(.97);' +
+      'transition:transform .3s ease;' +
+    '}' +
+    '#pep-exit-overlay.pep-active #pep-exit-modal{transform:translateY(0) scale(1);}' +
+    '#pep-exit-close{' +
+      'position:absolute;top:.75rem;right:1rem;' +
+      'background:none;border:none;cursor:pointer;' +
+      'color:#8B8B83;font-size:1.5rem;line-height:1;' +
+      'transition:color .2s;padding:.25rem;' +
+    '}' +
+    '#pep-exit-close:hover{color:#F0EEE9;}' +
+    '#pep-exit-modal .pep-emoji{font-size:2rem;margin-bottom:.75rem;}' +
+    '#pep-exit-modal .pep-heading{' +
+      'color:#F0EEE9;' +
+      'font-family:var(--font-heading,ui-sans-serif,system-ui,sans-serif);' +
+      'font-weight:700;font-size:1.5rem;' +
+      'letter-spacing:.05em;text-transform:uppercase;' +
+      'margin-bottom:.75rem;line-height:1.2;' +
+    '}' +
+    '#pep-exit-modal .pep-body{' +
+      'color:#8B8B83;font-size:.95rem;line-height:1.6;' +
+      'margin-bottom:1.5rem;' +
+    '}' +
+    '#pep-exit-form{display:flex;flex-direction:column;gap:.75rem;}' +
+    '#pep-exit-form input{' +
+      'width:100%;' +
+      'padding:.75rem 1rem;' +
+      'background:#0a1017;' +
+      'border:1px solid rgba(255,255,255,.12);' +
+      'border-radius:.25rem;' +
+      'color:#F0EEE9;font-size:.875rem;' +
+      'outline:none;transition:border-color .2s;' +
+    '}' +
+    '#pep-exit-form input::placeholder{color:rgba(139,139,131,.6);}' +
+    '#pep-exit-form input:focus{border-color:rgba(139,139,131,.5);}' +
+    '#pep-exit-form button{' +
+      'width:100%;' +
+      'padding:.875rem 1.5rem;' +
+      'font-size:.75rem;font-weight:700;' +
+      'letter-spacing:.15em;text-transform:uppercase;' +
+      'cursor:pointer;transition:opacity .2s;' +
+    '}' +
+    '#pep-exit-form button:disabled{opacity:.6;cursor:not-allowed;}' +
+    '#pep-exit-modal .pep-disclaimer{' +
+      'color:#8B8B83;font-size:.75rem;' +
+      'text-align:center;margin-top:1rem;' +
+    '}' +
+    '#pep-exit-modal .pep-success{' +
+      'color:#F0EEE9;font-size:1rem;text-align:center;line-height:1.6;' +
+    '}' +
+    '#pep-exit-modal .pep-success strong{display:block;font-size:1.125rem;margin-bottom:.5rem;}';
+  document.head.appendChild(style);
+
+  // ─── Build overlay + modal ─────────────────────────────────────
+  var overlay = document.createElement('div');
+  overlay.id = 'pep-exit-overlay';
+  overlay.innerHTML =
+    '<div id="pep-exit-modal">' +
+      '<button type="button" id="pep-exit-close" aria-label="Close">&times;</button>' +
+      '<div class="pep-emoji">&#129516;</div>' +
+      '<div class="pep-heading">Before You Go&hellip;</div>' +
+      '<p class="pep-body">' +
+        'Get our free Peptide Therapy Guide with pricing, dosing protocols, ' +
+        'side effects, and everything you need to know, sent straight to your inbox.' +
+      '</p>' +
+      '<form id="pep-exit-form">' +
+        '<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />' +
+        '<input type="text" name="name" placeholder="First name" autocomplete="given-name" />' +
+        '<input type="email" name="email" placeholder="Email address" required autocomplete="email" />' +
+        '<button type="submit" class="btn-primary">Send Me the Guide</button>' +
+      '</form>' +
+      '<p class="pep-disclaimer">No spam. Unsubscribe anytime.</p>' +
+      '<p class="pep-disclaimer" style="margin-top:6px;">For educational purposes only. Not medical advice.</p>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  // ─── Show / hide helpers ───────────────────────────────────────
+  // Bot guard: hidden honeypot + shown-to-submit timing, enforced server-side
+  // in netlify/functions/shared/antispam.js.
+  var shownAt = Date.now();
+
+  function showModal() {
+    if (shown) return;
+    shown = true;
+    shownAt = Date.now();
+    overlay.classList.add('pep-active');
+
+    // STRIPPED 2026-04-30: previously fired gtag `exit_intent_shown` with
+    // `page` (a peptide-related URL) and `popup='peptide_guide'`. That tuple
+    // identifies peptide-therapy intent for a specific user. No analytics
+    // event is fired here. See ~/seo-analytics/audits/tracker-audit.md.
+  }
+
+  function hideModal() {
+    overlay.classList.remove('pep-active');
+  }
+
+  function dismiss() {
+    hideModal();
+    document.cookie = 'mmp_peptide_exit_dismissed=1;max-age=2592000;path=/;SameSite=Lax';
+  }
+
+  // ─── Close handlers ────────────────────────────────────────────
+  document.getElementById('pep-exit-close').addEventListener('click', dismiss);
+
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) dismiss();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('pep-active')) dismiss();
+  });
+
+  // ─── Desktop: mouseout near top of viewport ───────────────────
+  document.addEventListener('mouseout', function (e) {
+    if (e.clientY < 10 && !shown) {
+      showModal();
+    }
+  });
+
+  // ─── Mobile: timer fallback (45 seconds) ──────────────────────
+  if ('ontouchstart' in window) {
+    setTimeout(function () {
+      if (!shown) showModal();
+    }, 45000);
+  }
+
+  // ─── Form submit ──────────────────────────────────────────────
+  document.getElementById('pep-exit-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = e.target;
+    var nameVal = (form.elements.name.value || '').trim();
+    var emailVal = (form.elements.email.value || '').trim();
+
+    var emailInput = form.elements.email;
+    var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+    if (!emailValid) {
+      emailInput.style.borderColor = '#ef4444';
+      emailInput.setAttribute('aria-invalid', 'true');
+      var existingErr = form.querySelector('.pep-email-error');
+      if (!existingErr) {
+        var errMsg = document.createElement('p');
+        errMsg.className = 'pep-email-error';
+        errMsg.style.cssText = 'color:#ef4444;font-size:.75rem;margin:0;text-align:left;';
+        errMsg.textContent = 'Please enter a valid email address';
+        emailInput.parentNode.insertBefore(errMsg, emailInput.nextSibling);
+        emailInput.addEventListener('input', function () {
+          emailInput.style.borderColor = '';
+          emailInput.removeAttribute('aria-invalid');
+          var e = form.querySelector('.pep-email-error');
+          if (e) e.remove();
+        });
+      }
+      emailInput.focus();
+      return;
+    }
+
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'SENDING...';
+
+    fetch('/.netlify/functions/peptide-guide-send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: nameVal,
+        email: emailVal,
+        source_page: path,
+        source_url: location.href,
+        website: form.elements.website ? form.elements.website.value : '',
+        elapsed_ms: Date.now() - shownAt
+      })
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (data.ok) {
+        // Persist so it never shows again
+        try { localStorage.setItem('mmp_peptide_guide_sent', '1'); } catch (ex) {}
+        document.cookie = 'mmp_peptide_exit_dismissed=1;max-age=2592000;path=/;SameSite=Lax';
+
+        // Suppress scroll quiz prompt (avoid double-popup)
+        try { sessionStorage.setItem('quiz_prompt_shown', '1'); } catch (ex) {}
+
+        // STRIPPED 2026-04-30: previously fired gtag `lead_capture` with
+        // `magnet='peptide_guide'` + page path. Identifiable peptide-intent
+        // signal. The lead itself still flows server-side via
+        // `/.netlify/functions/peptide-guide-send` (first-party). No
+        // analytics event is fired here.
+
+        // Show success
+        var modal = document.getElementById('pep-exit-modal');
+        modal.innerHTML =
+          '<button type="button" id="pep-exit-close" aria-label="Close">&times;</button>' +
+          '<div class="pep-success">' +
+            '<div style="font-size:2.5rem;margin-bottom:.75rem;">&#9989;</div>' +
+            '<strong>Check your inbox!</strong>' +
+            'Your Peptide Therapy Guide is on its way.' +
+          '</div>';
+        document.getElementById('pep-exit-close').addEventListener('click', hideModal);
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'SEND ME THE GUIDE';
+      }
+    })
+    .catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'SEND ME THE GUIDE';
+    });
+  });
+})();

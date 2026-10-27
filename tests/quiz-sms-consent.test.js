@@ -11,6 +11,7 @@ import glp1Submit from '../netlify/functions/glp1-quiz-submit.js';
 import lowTSubmit from '../netlify/functions/low-t-quiz-submit.js';
 import boneDensitySubmit from '../netlify/functions/bone-density-quiz-submit.js';
 import perimenopauseSubmit from '../netlify/functions/perimenopause-quiz-submit.js';
+import peptideSubmit from '../netlify/functions/peptide-quiz-submit.js';
 import { SMS_CONSENT_VERSION } from '../netlify/functions/shared/sms-consent.js';
 
 const SMS_URL = 'https://api.moonshotclinic.test/api/webhooks/quiz-sms';
@@ -45,6 +46,19 @@ const FUNNELS = [
     quizType: 'perimenopause',
     result: { internalTier: 'eligibility-factors-present' },
     profile: { stateCode: 'IL', age: 47 }
+  },
+  {
+    name: 'peptide-quiz-submit',
+    handler: peptideSubmit,
+    quizType: 'peptide',
+    result: undefined,
+    profile: undefined,
+    extra: {
+      goal: 'recovery',
+      concern: 'tendon',
+      budget: 'moderate',
+      primaryRecommendation: { key: 'bpc157', name: 'BPC-157', price: 250 }
+    }
   }
 ];
 
@@ -80,7 +94,7 @@ function internalEmailHtml(fetchMock) {
   return JSON.parse(call[1].body).html;
 }
 
-describe.each(FUNNELS)('$name SMS consent gate', ({ handler, quizType, result, profile }) => {
+describe.each(FUNNELS)('$name SMS consent gate', ({ handler, quizType, result, profile, extra }) => {
   let fetchMock;
 
   beforeEach(() => {
@@ -97,7 +111,8 @@ describe.each(FUNNELS)('$name SMS consent gate', ({ handler, quizType, result, p
     phone: '(847) 555-0193',
     result,
     profile,
-    ackTimestamp: '2026-10-16T14:02:11.000Z'
+    ackTimestamp: '2026-10-16T14:02:11.000Z',
+    ...(extra || {})
   };
 
   it('sends the quiz text with consent proof when sms_consent is true', async () => {
@@ -162,5 +177,15 @@ describe('SMS consent label is pinned to its version', () => {
     expect(src).toContain('<input type="checkbox" id="quiz-sms-consent" name="sms_consent" class="mt-1 flex-shrink-0">');
     expect(src).toContain('Email me occasional updates');
     expect(src).not.toContain('Send me occasional updates');
+  });
+
+  // The peptide quiz has no email-updates box (its email is the result), so
+  // only the SMS label and the unticked checkbox are pinned.
+  it('peptides engine carries the v1 label, unticked', async () => {
+    const { readFileSync } = await import('node:fs');
+    const src = readFileSync(new URL('../quiz/peptides/quiz-engine.js', import.meta.url), 'utf8');
+    expect(src).toContain(LABEL);
+    expect(src).toContain('<input type="checkbox" id="quiz-sms-consent" name="sms_consent" class="mt-1 flex-shrink-0">');
+    expect(src).toContain('sms_consent: smsConsent === true');
   });
 });

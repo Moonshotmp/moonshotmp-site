@@ -10,8 +10,8 @@
  *
  * PRIVACY (HBNR):
  *   We persist only quiz NAME (e.g. "glp1-quiz") and result TIER slug
- *   (e.g. "tier-1") in localStorage. We DO NOT capture symptoms,
- *   medication names, severity values, or any other health data.
+ *   (e.g. "tier-1") in localStorage. We DO NOT capture symptoms, peptide
+ *   names, medication names, severity values, or any other health data.
  *
  *   The first-party /.netlify/functions/quiz-event endpoint enforces a
  *   strict allowlist on `quiz` and `event` and rejects health terms even
@@ -34,6 +34,7 @@
   // a generic warm-traffic message but does NOT get persisted as a label
   // to avoid storing arbitrary attacker-controlled strings.
   var SOURCE_LABELS = {
+    'peptide-quiz': 'You completed our Peptide Quiz',
     'bone-density-quiz': 'You completed our Bone Density Screener',
     'glp1-quiz': 'You completed our GLP-1 Readiness Quiz',
     'low-t-quiz': 'You completed our Low Testosterone Quiz',
@@ -45,13 +46,15 @@
     'dexa-scan': 'You read about our DEXA scan service',
     'trt-park-ridge': 'You read about our TRT service in Park Ridge',
     'glp1-park-ridge': 'You read about our medical weight loss service in Park Ridge',
+    'peptides-park-ridge': 'You read about our peptide therapy in Park Ridge',
   };
 
   // Map from arbitrary `source` slug to the strict `quiz` enum the
   // /.netlify/functions/quiz-event endpoint accepts.
-  // Endpoint allowlist: hormone | body-comp | bone-density | perimenopause | low-t | glp1 | site
+  // Endpoint allowlist: peptide | hormone | body-comp | bone-density | perimenopause | low-t | glp1 | site
   function mapSourceToQuizEnum(source) {
     if (!source) return 'site';
+    if (source.indexOf('peptide') !== -1) return 'peptide';
     if (source.indexOf('perimenopause') !== -1) return 'perimenopause';
     if (source.indexOf('low-t') !== -1) return 'low-t';
     if (source.indexOf('glp1') !== -1 || source.indexOf('glp-1') !== -1) return 'glp1';
@@ -108,7 +111,7 @@
   // The /.netlify/functions/quiz-event endpoint accepts ONLY the four-field
   // contract { quiz, event, screen?, timestamp? } and rejects any payload
   // containing health terms. We send the minimum safe signal:
-  //   - quiz: mapped low-cardinality enum (hormone / body-comp / glp1 / ... / site)
+  //   - quiz: mapped low-cardinality enum (peptide / hormone / body-comp / glp1 / ... / site)
   //   - event: 'cta_click' (closest allowed event for "landed on booking")
   //   - screen: 'booking' (24-char limit, no health terms)
   // We DO NOT forward the raw `source` slug or `result` tier over the

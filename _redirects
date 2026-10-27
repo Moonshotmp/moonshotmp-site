@@ -69,63 +69,10 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 /learn/trt-des-plaines/*     /learn/trt-park-ridge/           301!
 /learn/trt-des-plaines       /learn/trt-park-ridge/           301!
 
-# Peptide therapy removed from the public site (Tom, 2026-10-15 peptide spin-down)
-/medical/peptides/* /medical/ 301!
-/medical/peptides/ /medical/ 301!
-/medical/peptides /medical/ 301!
-/medical/peptide-therapy-park-ridge/* /medical/ 301!
-/medical/peptide-therapy-park-ridge/ /medical/ 301!
-/medical/peptide-therapy-park-ridge /medical/ 301!
-/medical/weight-loss-peptide-park-ridge/* /medical/weight-loss/ 301!
-/medical/weight-loss-peptide-park-ridge/ /medical/weight-loss/ 301!
-/medical/weight-loss-peptide-park-ridge /medical/weight-loss/ 301!
-/quiz/peptides/* /quiz/ 301!
-/quiz/peptides/ /quiz/ 301!
-/quiz/peptides /quiz/ 301!
+# Retatrutide stays off the public site (Tom, 2026-10-15; peptide pages restored 2026-10-27 without it)
 /learn/retatrutide/* /learn/ 301!
 /learn/retatrutide/ /learn/ 301!
 /learn/retatrutide /learn/ 301!
-/learn/bpc-157/* /learn/ 301!
-/learn/bpc-157/ /learn/ 301!
-/learn/bpc-157 /learn/ 301!
-/learn/peptides/* /learn/ 301!
-/learn/peptides/ /learn/ 301!
-/learn/peptides /learn/ 301!
-/learn/peptides-for-injury-recovery/* /learn/ 301!
-/learn/peptides-for-injury-recovery/ /learn/ 301!
-/learn/peptides-for-injury-recovery /learn/ 301!
-/learn/pt-141/* /learn/ 301!
-/learn/pt-141/ /learn/ 301!
-/learn/pt-141 /learn/ 301!
-/learn/ghk-cu/* /learn/ 301!
-/learn/ghk-cu/ /learn/ 301!
-/learn/ghk-cu /learn/ 301!
-/learn/tb-500/* /learn/ 301!
-/learn/tb-500/ /learn/ 301!
-/learn/tb-500 /learn/ 301!
-/learn/sermorelin/* /learn/ 301!
-/learn/sermorelin/ /learn/ 301!
-/learn/sermorelin /learn/ 301!
-/learn/peptides-for-gut-healing/* /learn/ 301!
-/learn/peptides-for-gut-healing/ /learn/ 301!
-/learn/peptides-for-gut-healing /learn/ 301!
-/learn/glow-stack/* /learn/ 301!
-/learn/glow-stack/ /learn/ 301!
-/learn/glow-stack /learn/ 301!
-/learn/which-peptide/* /learn/ 301!
-/learn/which-peptide/ /learn/ 301!
-/learn/which-peptide /learn/ 301!
-/learn/bpc-157-vs-prp/* /learn/ 301!
-/learn/bpc-157-vs-prp/ /learn/ 301!
-/learn/bpc-157-vs-prp /learn/ 301!
-/learn/peptide-therapy-park-ridge/* /learn/ 301!
-/learn/peptide-therapy-park-ridge/ /learn/ 301!
-/learn/peptide-therapy-park-ridge /learn/ 301!
-/learn/wolverine-blend/* /learn/ 301!
-/learn/wolverine-blend/ /learn/ 301!
-/learn/wolverine-blend /learn/ 301!
-/guides/peptide-guide.html /learn/ 301!
-/guides/peptide-guide /learn/ 301!
 
 # Deleted dead surfaces (site cleanup 2026-10-15)
 /pricing/new/* /pricing/ 301!
