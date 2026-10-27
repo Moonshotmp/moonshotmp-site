@@ -131,8 +131,8 @@
     var budgetOptions = [
         { label: 'Under $200/month', key: 'under-200' },
         { label: '$200\u2013300/month', key: '200-300' },
-        { label: '$300\u2013400/month', key: '300-400' },
-        { label: '$400+/month', key: '400+' }
+        { label: '$300\u2013450/month', key: '300-400' },
+        { label: '$450+/month', key: '400+' }
     ];
 
     var calculatingSteps = [

@@ -133,7 +133,8 @@ export default async function handler(req, context) {
   // ── Lead Score ──────────────────────────────────────────────────────
 
   let leadScore = '\uD83D\uDFE2 NEW';
-  if (budget === '300+' || budget === '300-500' || budget === '500+' || experience === 'current' || experience === 'past' || therapy === 'yes-moonshot') {
+  // Budget keys come from quiz-engine.js budgetOptions.
+  if (budget === '300-400' || budget === '400+' || experience === 'current' || experience === 'past' || therapy === 'yes-moonshot') {
     leadScore = '\uD83D\uDD25 HOT';
   } else if ((budget === '200-300') && (convenience === 'very' || convenience === 'somewhat')) {
     leadScore = '\uD83D\uDFE1 WARM';

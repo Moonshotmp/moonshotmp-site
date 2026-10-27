@@ -729,7 +729,7 @@
             { title: "BPC-157 Guide", desc: "Benefits, dosing, side effects, how to get it", url: "/learn/bpc-157/", cat: "Peptides" },
             { title: "TB-500 Guide", desc: "Thymosin beta-4 for tissue repair", url: "/learn/tb-500/", cat: "Peptides" },
             { title: "Sermorelin Guide", desc: "Growth hormone optimization", url: "/learn/sermorelin/", cat: "Peptides" },
-            { title: "PT-141 Guide", desc: "Sexual health peptide, FDA-approved", url: "/learn/pt-141/", cat: "Peptides" },
+            { title: "PT-141 Guide", desc: "Bremelanotide for sexual desire and arousal", url: "/learn/pt-141/", cat: "Peptides" },
             { title: "GHK-Cu Guide", desc: "Copper peptide for skin and anti-aging", url: "/learn/ghk-cu/", cat: "Peptides" },
             { title: "Wolverine Blend", desc: "BPC-157 + TB-500 combination therapy", url: "/learn/wolverine-blend/", cat: "Peptides" },
             { title: "Glow Stack", desc: "GHK-Cu + BPC-157 + TB-500 triple protocol", url: "/learn/glow-stack/", cat: "Peptides" },
