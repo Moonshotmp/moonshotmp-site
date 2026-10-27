@@ -37,10 +37,10 @@ export default async function handler(req, context) {
   const peptides = {
     'BPC-157':       { price: 250, category: 'Healing & Repair',          desc: 'Accelerates tendon, ligament, muscle, and gut healing by upregulating growth factors at the injury site.', dosing: 'Daily injection', cycle: '4-12 weeks' },
     'TB-500':        { price: 250, category: 'Recovery & Mobility',       desc: 'Reduces systemic inflammation, improves flexibility, and accelerates soft tissue recovery.', dosing: '2x/week injection', cycle: '6-12 weeks' },
-    'Wolverine Blend': { price: 375, category: 'Healing + Recovery',      desc: 'BPC-157 + TB-500 combined for maximum regenerative effect \u2014 localized repair plus systemic recovery.', dosing: 'Daily/EOD injection', cycle: '4-12 weeks' },
+    'Wolverine Blend': { price: 425, category: 'Healing + Recovery',      desc: 'BPC-157 + TB-500 combined for maximum regenerative effect, localized repair plus systemic recovery.', dosing: 'Daily/EOD injection', cycle: '4-12 weeks' },
     'GHK-Cu':        { price: 175, category: 'Skin & Anti-Aging',        desc: 'Copper peptide that stimulates collagen and elastin production for improved skin firmness, texture, and wound healing.', dosing: 'Daily injection', cycle: '3-6 months' },
-    'Glow Stack':    { price: 400, category: 'Skin + Hair + Nails',      desc: 'GHK-Cu plus complementary peptides targeting collagen, follicular health, and skin radiance.', dosing: 'Daily/EOD injection', cycle: '3-6 months' },
-    'Sermorelin':    { price: 250, category: 'Growth Hormone Optimization', desc: 'Stimulates your pituitary to produce its own growth hormone \u2014 better sleep, body composition, recovery, and energy.', dosing: 'Daily injection (bedtime)', cycle: 'Ongoing' },
+    'Glow Stack':    { price: 450, category: 'Skin + Hair + Nails',      desc: 'GHK-Cu plus complementary peptides targeting collagen, follicular health, and skin radiance.', dosing: 'Daily/EOD injection', cycle: '3-6 months' },
+    'Sermorelin':    { price: 250, category: 'Growth Hormone Optimization', desc: 'Stimulates your pituitary to produce its own growth hormone: better sleep, body composition, recovery, and energy.', dosing: 'Daily injection (bedtime)', cycle: 'Ongoing' },
     'PT-141':        { price: 250, category: 'Sexual Health',             desc: 'Works through the brain to increase sexual desire and arousal. Effective for both men and women.', dosing: 'As needed', cycle: 'As needed' },
   };
 
@@ -53,7 +53,7 @@ export default async function handler(req, context) {
     let rows = '';
     for (const item of protocol) {
       // Calculator sends {name, price, why}; older callers sent the bare name.
-      // Only catalog names render — the value lands in email HTML.
+      // Only catalog names render - the value lands in email HTML.
       const p = typeof item === 'string' ? item : item && item.name;
       if (typeof p !== 'string' || !Object.hasOwn(peptides, p)) continue;
       const info = peptides[p];
@@ -63,7 +63,7 @@ export default async function handler(req, context) {
       rows += `
         <tr>
           <td style="padding: 10px 12px; color: #F0EEE9; font-weight: 600; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);">${p}</td>
-          <td style="padding: 10px 12px; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">${info.dosing || '\u2014'}</td>
+          <td style="padding: 10px 12px; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">${info.dosing || '-'}</td>
           <td style="padding: 10px 12px; color: #F0EEE9; font-weight: 600; font-size: 14px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">$${price}/mo</td>
         </tr>`;
     }
@@ -117,9 +117,9 @@ export default async function handler(req, context) {
           <td style="padding: 6px; color: #B2BFBE; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05);">Price</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
-          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$375</td>
+          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$425</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$175</td>
-          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$400</td>
+          <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$450</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
           <td style="padding: 6px; text-align: center; color: #F0EEE9; border-bottom: 1px solid rgba(255,255,255,0.05);">$250</td>
         </tr>
@@ -173,7 +173,7 @@ export default async function handler(req, context) {
       <p style="color: #B2BFBE; margin: 0 0 24px; font-size: 14px;">Moonshot Medical and Performance</p>
 
       <p style="color: #B2BFBE; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">${greeting}</p>
-      <p style="color: #B2BFBE; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">Here\u2019s your complete peptide therapy guide from Moonshot Medical. Everything you need to know about our peptide protocols \u2014 what they do, what they cost, and how to get started.</p>
+      <p style="color: #B2BFBE; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">Here\u2019s your complete peptide therapy guide from Moonshot Medical. Everything you need to know about our peptide protocols: what they do, what they cost, and how to get started.</p>
 
       ${protocolHtml}
 
@@ -215,7 +215,7 @@ export default async function handler(req, context) {
       <div style="text-align: center; padding: 24px 0;">
         <a href="https://moonshotmp.com/booking/" style="display: inline-block; background: #B2BFBE; color: #101921; padding: 14px 32px; font-weight: 700; font-size: 14px; text-decoration: none; border-radius: 4px;">Book Your Peptide Consultation</a>
         <p style="color: #B2BFBE; font-size: 13px; margin: 16px 0 8px;">
-          <a href="https://moonshotmp.com/guides/peptide-guide/" style="color: #B2BFBE;">View the full guide online</a>
+          <a href="https://moonshotmp.com/guides/peptide-guide" style="color: #B2BFBE;">View the full guide online</a>
         </p>
         <p style="color: #B2BFBE; font-size: 13px; margin: 0;">Questions? Call <a href="tel:2244354280" style="color: #B2BFBE;">(224) 435-4280</a></p>
       </div>
@@ -235,12 +235,12 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const userSubject = 'Your Peptide Therapy Guide \u2014 Moonshot Medical';
+  const userSubject = 'Your Peptide Therapy Guide \u00b7 Moonshot Medical';
 
   // ── Internal Notification Email ───────────────────────────────────
 
   const protocolList = protocolNames.length > 0 ? protocolNames.join(', ') : 'None (browsing)';
-  const protocolTotalStr = protocolTotal > 0 ? `$${protocolTotal}/mo` : '\u2014';
+  const protocolTotalStr = protocolTotal > 0 ? `$${protocolTotal}/mo` : '-';
 
   const sourceLabels = {
     'exit-intent': 'Exit Intent Popup',

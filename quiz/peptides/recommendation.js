@@ -1,5 +1,5 @@
 /*
- * Moonshot Peptide Recommendation Engine — Pure Logic Module
+ * Moonshot Peptide Recommendation Engine - Pure Logic Module
  * ==========================================================
  *
  * This is the canonical, tested implementation of the peptide quiz
@@ -10,7 +10,7 @@
  * own private copy of this logic inside an IIFE for runtime simplicity
  * (no build step, single script tag). That copy MUST be kept in sync
  * with this file. The Vitest suite at tests/peptide-recommendation.test.js
- * pins the expected behavior — if this file or quiz-engine.js drifts,
+ * pins the expected behavior - if this file or quiz-engine.js drifts,
  * tests break.
  *
  * Why a parallel copy instead of an import?
@@ -19,7 +19,7 @@
  *   require either a build step or a second <script> tag, both of which
  *   add risk to a 10.3% CTR conversion surface. The pure module here
  *   exists so future quizzes (menopause, andropause, sleep apnea,
- *   bone density) can consume it directly via ESM imports — and so
+ *   bone density) can consume it directly via ESM imports - and so
  *   the existing peptide engine logic is testable in CI without
  *   touching the live runtime.
  *
@@ -49,7 +49,7 @@ export const PEPTIDES = {
         name: 'Wolverine Blend',
         fullName: 'BPC-157 + TB-500 Combination',
         category: 'Premium Recovery',
-        price: 375,
+        price: 425,
         tagline: 'Two healing pathways. One injection.'
     },
     'ghk-cu': {
@@ -63,7 +63,7 @@ export const PEPTIDES = {
         name: 'Glow Stack',
         fullName: 'GHK-Cu + BPC-157 + TB-500',
         category: 'Premium Beauty + Healing',
-        price: 400,
+        price: 450,
         tagline: 'Skin repair, tissue healing, and recovery in one.'
     },
     sermorelin: {
@@ -84,7 +84,7 @@ export const PEPTIDES = {
         name: 'NAD+',
         fullName: 'Nicotinamide Adenine Dinucleotide',
         category: 'Cellular Energy & Recovery',
-        price: 60,
+        price: 205,
         tagline: 'Restore the fuel your cells run on.'
     }
 };

@@ -40,7 +40,7 @@ export default async function handler(req, context) {
         <p style="color: #F0EEE9; font-weight: 700; font-size: 18px; margin: 0 0 6px;">${secondary.name || ''}</p>
         <p style="color: #B2BFBE; font-size: 14px; line-height: 1.5; margin: 0 0 10px;">${secondary.tagline || ''}</p>
         ${secondary.matchText ? `<p style="color: #B2BFBE; font-size: 13px; line-height: 1.5; margin: 0 0 10px;">${secondary.matchText}</p>` : ''}
-        <p style="color: #F0EEE9; font-size: 14px; font-weight: 600; margin: 0;">$${secondary.price || '—'}/month</p>
+        <p style="color: #F0EEE9; font-size: 14px; font-weight: 600; margin: 0;">$${secondary.price || '-'}/month</p>
       </div>`;
   }
 
@@ -77,19 +77,19 @@ export default async function handler(req, context) {
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
             <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">Monthly Cost</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">$${primary.price || '—'}/month</td>
+            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">$${primary.price || '-'}/month</td>
           </tr>
           <tr>
             <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">Expected Timeline</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">${primary.timeline || '—'}</td>
+            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">${primary.timeline || '-'}</td>
           </tr>
           <tr>
             <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">Dosing Protocol</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">${primary.dosing || '—'}</td>
+            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">${primary.dosing || '-'}</td>
           </tr>
           <tr>
             <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px;">Typical Cycle</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right;">${primary.cycle || '—'}</td>
+            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right;">${primary.cycle || '-'}</td>
           </tr>
         </table>
       </div>
@@ -129,7 +129,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const userSubject = 'Your Peptide Protocol Recommendation \u2014 Moonshot Medical';
+  const userSubject = 'Your Peptide Protocol Recommendation \u00b7 Moonshot Medical';
 
   // ── Lead Score ──────────────────────────────────────────────────────
 
@@ -178,7 +178,7 @@ export default async function handler(req, context) {
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Recommendation</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Primary: ${primary.name || '—'} at $${primary.price || '—'}/mo</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Primary: ${primary.name || '-'} at $${primary.price || '-'}/mo</p>
         <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Secondary: ${secondary ? `${secondary.name} at $${secondary.price}/mo` : 'None'}</p>
       </div>
     </div>
@@ -186,7 +186,7 @@ export default async function handler(req, context) {
 </body>
 </html>`.trim();
 
-  const internalSubject = `\uD83E\uDDEC New Peptide Quiz Lead: ${name || email} \u2014 ${primary.name || 'Unknown'}`;
+  const internalSubject = `\uD83E\uDDEC New Peptide Quiz Lead: ${name || email} · ${primary.name || 'Unknown'}`;
 
   // ── Send Both Emails ────────────────────────────────────────────────
 

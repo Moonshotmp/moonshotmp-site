@@ -106,7 +106,7 @@
       '<div class="pep-heading">Before You Go&hellip;</div>' +
       '<p class="pep-body">' +
         'Get our free Peptide Therapy Guide with pricing, dosing protocols, ' +
-        'side effects, and everything you need to know &mdash; sent straight to your inbox.' +
+        'side effects, and everything you need to know, sent straight to your inbox.' +
       '</p>' +
       '<form id="pep-exit-form">' +
         '<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />' +

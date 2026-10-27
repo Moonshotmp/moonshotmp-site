@@ -2,7 +2,7 @@
  * Moonshot Peptide Quiz Engine v2
  * ================================
  * 13-screen flow with recommendation engine, calculating animation, and personalized results.
- * Vanilla JS IIFE — no dependencies.
+ * Vanilla JS IIFE - no dependencies.
  */
 (function() {
     'use strict';
@@ -95,10 +95,10 @@
     };
 
     var severityOptions = [
-        { label: 'Mild \u2014 Noticeable but manageable', key: 'mild' },
-        { label: 'Moderate \u2014 Affecting quality of life', key: 'moderate' },
-        { label: 'Significant \u2014 Major daily impact', key: 'significant' },
-        { label: 'Severe \u2014 Limiting what I can do', key: 'severe' }
+        { label: 'Mild: Noticeable but manageable', key: 'mild' },
+        { label: 'Moderate: Affecting quality of life', key: 'moderate' },
+        { label: 'Significant: Major daily impact', key: 'significant' },
+        { label: 'Severe: Limiting what I can do', key: 'severe' }
     ];
 
     var durationOptions = [
@@ -109,7 +109,7 @@
     ];
 
     var experienceOptions = [
-        { label: 'Never \u2014 this is all new to me', key: 'never' },
+        { label: 'Never: this is all new to me', key: 'never' },
         { label: 'I\'ve researched but never tried', key: 'researched' },
         { label: 'I\'ve used peptides from an online source', key: 'online' },
         { label: 'I\'ve used peptides through a medical provider', key: 'medical' }
@@ -123,9 +123,9 @@
     ];
 
     var convenienceOptions = [
-        { label: 'Very \u2014 I want the fewest injections possible', key: 'very' },
-        { label: 'Somewhat \u2014 I\'m flexible', key: 'somewhat' },
-        { label: 'Not important \u2014 I\'ll do what works best', key: 'not-important' }
+        { label: 'Very: I want the fewest injections possible', key: 'very' },
+        { label: 'Somewhat: I\'m flexible', key: 'somewhat' },
+        { label: 'Not important: I\'ll do what works best', key: 'not-important' }
     ];
 
     var budgetOptions = [
@@ -160,9 +160,9 @@
             frequency: 'Daily injection',
             learnUrl: '/learn/bpc-157/',
             matchText: {
-                injury: 'BPC-157 is the most studied peptide for tendon, ligament, and joint healing \u2014 with over 100 published studies showing accelerated repair.',
-                gut: 'BPC-157 was originally derived from a protective protein in gastric juice. It\'s the most researched peptide for gut healing \u2014 protecting and repairing the GI lining.',
-                athletic: 'BPC-157 targets the specific tissue types that athletes damage most \u2014 tendons, ligaments, and muscle. It creates new blood vessels at injury sites to accelerate repair.'
+                injury: 'BPC-157 is the most studied peptide for tendon, ligament, and joint healing, with over 100 published studies showing accelerated repair.',
+                gut: 'BPC-157 was originally derived from a protective protein in gastric juice. It\'s the most researched peptide for gut healing, protecting and repairing the GI lining.',
+                athletic: 'BPC-157 targets the specific tissue types that athletes damage most: tendons, ligaments, and muscle. It creates new blood vessels at injury sites to accelerate repair.'
             }
         },
         tb500: {
@@ -171,14 +171,14 @@
             category: 'Recovery & Repair',
             price: 250,
             tagline: 'Mobilize your body\'s repair system.',
-            description: 'TB-500 accelerates tissue repair by upregulating actin \u2014 a protein critical for cell migration to injury sites. Reduces inflammation and supports muscle, tendon, and ligament healing.',
+            description: 'TB-500 accelerates tissue repair by upregulating actin, a protein critical for cell migration to injury sites. Reduces inflammation and supports muscle, tendon, and ligament healing.',
             timeline: 'Initial improvement in 2\u20134 weeks during loading phase. Full benefits over 6\u201312 weeks.',
             dosing: 'Loading: 2.5mg twice/week for 4\u20136 weeks. Maintenance: 2.5mg once/week.',
             cycle: '6\u201312 weeks',
             frequency: '1\u20132 injections per week',
             learnUrl: '/learn/tb-500/',
             matchText: {
-                injury: 'TB-500 excels at muscle and tissue repair \u2014 it mobilizes your body\'s repair cells to the injury site while reducing inflammation.',
+                injury: 'TB-500 excels at muscle and tissue repair. It mobilizes your body\'s repair cells to the injury site while reducing inflammation.',
                 athletic: 'TB-500 is popular among athletes for its ability to accelerate recovery between sessions and resolve nagging injuries that won\'t heal on their own.'
             }
         },
@@ -186,7 +186,7 @@
             name: 'Wolverine Blend',
             fullName: 'BPC-157 + TB-500 Combination',
             category: 'Premium Recovery',
-            price: 375,
+            price: 425,
             tagline: 'Two healing pathways. One injection.',
             description: 'Combines BPC-157 and TB-500 in a single vial for dual-pathway healing. BPC-157 builds the blood supply and growth factors while TB-500 mobilizes repair cells to the site.',
             timeline: 'Many patients notice improvement within 1\u20133 weeks. Full benefits over 6\u201312 weeks.',
@@ -195,7 +195,7 @@
             frequency: 'Daily or every other day',
             learnUrl: '/learn/wolverine-blend/',
             matchText: {
-                injury: 'The Wolverine Blend attacks healing from two directions \u2014 BPC-157 builds new blood supply while TB-500 moves repair cells to the site. It\'s our most comprehensive recovery protocol.',
+                injury: 'The Wolverine Blend attacks healing from two directions. BPC-157 builds new blood supply while TB-500 moves repair cells to the site. It\'s our most comprehensive recovery protocol.',
                 athletic: 'Named for its regenerative properties, the Wolverine Blend is our top recommendation for athletes who want maximum recovery in one simple daily injection.'
             }
         },
@@ -212,24 +212,24 @@
             frequency: 'Daily injection',
             learnUrl: '/learn/ghk-cu/',
             matchText: {
-                skin: 'GHK-Cu is one of the most researched peptides in dermatology \u2014 multiple human studies confirm its effects on skin thickness, elasticity, and collagen density.',
-                general: 'GHK-Cu addresses aging at the cellular level \u2014 restoring the collagen and tissue repair capacity that declines naturally after 30.'
+                skin: 'GHK-Cu is one of the most researched peptides in dermatology. Multiple human studies confirm its effects on skin thickness, elasticity, and collagen density.',
+                general: 'GHK-Cu addresses aging at the cellular level, restoring the collagen and tissue repair capacity that declines naturally after 30.'
             }
         },
         'glow-stack': {
             name: 'Glow Stack',
             fullName: 'GHK-Cu + BPC-157 + TB-500',
             category: 'Premium Beauty + Healing',
-            price: 400,
+            price: 450,
             tagline: 'Skin repair, tissue healing, and recovery in one.',
-            description: 'Our most comprehensive peptide protocol combines GHK-Cu for skin and collagen, BPC-157 for tissue healing, and TB-500 for recovery \u2014 all in a single injection.',
+            description: 'Our most comprehensive peptide protocol combines GHK-Cu for skin and collagen, BPC-157 for tissue healing, and TB-500 for recovery, all in a single injection.',
             timeline: 'Healing effects in 1\u20133 weeks, skin improvements in 4\u20138 weeks, full results in 3\u20136 months.',
             dosing: '0.3ml subcutaneous injection daily or every other day',
             cycle: '3\u20136 months',
             frequency: 'Daily or every other day',
             learnUrl: '/medical/peptides/',
             matchText: {
-                skin: 'The Glow Stack targets skin from multiple angles \u2014 GHK-Cu rebuilds collagen, BPC-157 heals damaged tissue, and TB-500 accelerates cellular repair. Our most comprehensive anti-aging protocol.'
+                skin: 'The Glow Stack targets skin from multiple angles: GHK-Cu rebuilds collagen, BPC-157 heals damaged tissue, and TB-500 accelerates cellular repair. Our most comprehensive anti-aging protocol.'
             }
         },
         sermorelin: {
@@ -241,11 +241,11 @@
             description: 'Stimulates your body\'s natural growth hormone production. Supports sleep quality, body composition, recovery, and overall vitality.',
             timeline: 'Improved sleep often noticed within 1\u20132 weeks. Body composition changes over 3\u20136 months.',
             dosing: 'Daily subcutaneous injection, typically before bed',
-            cycle: 'Ongoing \u2014 benefits continue with consistent use',
+            cycle: 'Ongoing: benefits continue with consistent use',
             frequency: 'Daily injection (before bed)',
             learnUrl: '/learn/peptides/',
             matchText: {
-                general: 'Sermorelin works with your body\'s natural rhythm \u2014 stimulating growth hormone release during deep sleep. It\'s our go-to for patients who want better sleep, recovery, and body composition without synthetic hormones.'
+                general: 'Sermorelin works with your body\'s natural rhythm, stimulating growth hormone release during deep sleep. It\'s our go-to for patients who want better sleep, recovery, and body composition without synthetic hormones.'
             }
         },
         pt141: {
@@ -254,21 +254,21 @@
             category: 'Sexual Health',
             price: 250,
             tagline: 'Desire starts in the brain, not the bloodstream.',
-            description: 'PT-141 works on the central nervous system to increase sexual desire and arousal \u2014 a fundamentally different mechanism than Viagra or Cialis. The active compound (bremelanotide) is the same molecule in the FDA-approved medication Vyleesi. The compounded version is not an FDA-approved product. Works for both men and women.',
+            description: 'PT-141 works on the central nervous system to increase sexual desire and arousal, a fundamentally different mechanism than Viagra or Cialis. The active compound (bremelanotide) is the same molecule in the FDA-approved medication Vyleesi. The compounded version is not an FDA-approved product. Works for both men and women.',
             timeline: 'Effects typically noticed within 1\u20132 hours of administration.',
             dosing: 'As-needed subcutaneous injection, 1\u20132 hours before desired effect',
-            cycle: 'As needed \u2014 not a daily protocol',
+            cycle: 'As needed: not a daily protocol',
             frequency: 'As needed (not daily)',
             learnUrl: '/learn/peptides/',
             matchText: {
-                sexual: 'PT-141 works through the brain\'s melanocortin system \u2014 increasing actual desire, not just blood flow. The active compound (bremelanotide) is the same molecule in the FDA-approved medication Vyleesi. The compounded version is not an FDA-approved product. It\'s the only peptide that addresses the neurological root of low libido.'
+                sexual: 'PT-141 works through the brain\'s melanocortin system, increasing actual desire, not just blood flow. The active compound (bremelanotide) is the same molecule in the FDA-approved medication Vyleesi. The compounded version is not an FDA-approved product. It\'s the only peptide that addresses the neurological root of low libido.'
             }
         },
         'nad': {
             name: 'NAD+',
             fullName: 'Nicotinamide Adenine Dinucleotide',
             category: 'Cellular Energy & Recovery',
-            price: 60,
+            price: 205,
             tagline: 'Restore the fuel your cells run on.',
             description: 'NAD+ is a coenzyme in every living cell, essential for energy production, DNA repair, and anti-aging pathways. Levels decline 50%+ by age 60. Subcutaneous injections bypass gut absorption for near-complete bioavailability at a fraction of IV drip costs.',
             timeline: 'Energy improvements in 1\u20132 weeks. Recovery and cognitive benefits over 3\u20134 weeks. Cumulative results over 2\u20133 months.',
@@ -277,8 +277,8 @@
             frequency: '1\u20132x per week (loading), then weekly/biweekly/monthly',
             learnUrl: '/medical/nad/',
             matchText: {
-                general: 'NAD+ restores the cellular energy production that declines with age. It activates sirtuins \u2014 your body\'s master regulators of aging, metabolism, and repair. At $60/shot, it\'s the highest-value entry point for optimization.',
-                athletic: 'NAD+ fuels mitochondrial energy production and recovery pathways. Athletes deplete NAD+ faster through intense training \u2014 replenishing it supports faster recovery, reduced inflammation, and sustained performance.',
+                general: 'NAD+ restores the cellular energy production that declines with age. It activates sirtuins, your body\'s master regulators of aging, metabolism, and repair. At $60/shot, it\'s the highest-value entry point for optimization.',
+                athletic: 'NAD+ fuels mitochondrial energy production and recovery pathways. Athletes deplete NAD+ faster through intense training; replenishing it supports faster recovery, reduced inflammation, and sustained performance.',
                 skin: 'NAD+ activates sirtuins that regulate collagen production and DNA repair at the cellular level. It addresses aging from the inside out, complementing topical peptides like GHK-Cu.'
             }
         }
@@ -364,7 +364,7 @@
 
     // First-party analytics shim. Replaces the prior gtag-based helper.
     // Only generic, NON-HEALTH funnel events are forwarded. The `params`
-    // argument is intentionally IGNORED — the legacy callers passed health
+    // argument is intentionally IGNORED - the legacy callers passed health
     // values (concern, severity, recommendation, etc.) which must never
     // leave the browser as analytics. Health data still flows through
     // `/.netlify/functions/peptide-quiz-submit` for the email/CRM pipeline.
@@ -577,10 +577,10 @@
             '<div class="text-center">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Personalized in Under 2 Minutes</p>' +
                 '<h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">Which Peptide Will Work for You?</h1>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Tell us what you\'re dealing with. We\'ll show you the exact peptide, dosing protocol, timeline, and cost \u2014 matched to your goals.</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Tell us what you\'re dealing with. We\'ll show you the exact peptide, dosing protocol, timeline, and cost, matched to your goals.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start My Assessment</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant.</p>' +
-                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical \u2014 a licensed clinic in Park Ridge, IL</p>' +
+                '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +
                 '<p class="text-brand-gray/40 text-xs mt-2">For educational purposes only. Not medical advice.</p>' +
             '</div>'
         );
@@ -603,7 +603,7 @@
     }
 
     function buildSpecificConcern() {
-        // Dynamic content — populated after goal is selected
+        // Dynamic content - populated after goal is selected
         return screenWrap(SCREEN.SPECIFIC_CONCERN,
             '<div class="text-center">' +
                 '<h2 id="concern-question" class="text-3xl font-bold text-brand-light mb-2 font-heading"></h2>' +
@@ -621,7 +621,7 @@
         return screenWrap(SCREEN.SEVERITY,
             '<div class="text-center">' +
                 '<h2 class="text-3xl font-bold text-brand-light mb-2 font-heading">How much is this affecting your daily life?</h2>' +
-                '<p class="text-brand-gray font-light mb-10">No wrong answers \u2014 just helps us understand your situation.</p>' +
+                '<p class="text-brand-gray font-light mb-10">No wrong answers: just helps us understand your situation.</p>' +
                 '<div class="flex flex-col gap-3 max-w-md mx-auto">' + btns + '</div>' +
             '</div>'
         );
@@ -741,7 +741,7 @@
         return screenWrap(SCREEN.INFO_CAPTURE,
             '<div class="text-center">' +
                 '<h2 class="text-2xl font-bold text-brand-light mb-2 font-heading">We Matched You with ' + primary.name + '</h2>' +
-                '<p class="text-brand-gray font-light mb-8">Enter your info below to see your full protocol \u2014 dosing, timeline, cost breakdown, and personalized recommendations.</p>' +
+                '<p class="text-brand-gray font-light mb-8">Enter your info below to see your full protocol: dosing, timeline, cost breakdown, and personalized recommendations.</p>' +
                 previewCard +
                 '<div class="max-w-sm mx-auto space-y-4">' +
                     '<input type="text" id="quiz-name" placeholder="First name" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
@@ -827,7 +827,7 @@
                 '<div>' +
                     '<p class="text-brand-gray text-xs uppercase tracking-widest mb-1">Recommended For You</p>' +
                     '<h3 class="text-2xl font-bold text-brand-light font-heading">' + primary.name + '</h3>' +
-                    '<p class="text-brand-gray/70 text-sm">' + primary.fullName + ' \u2014 ' + primary.category + '</p>' +
+                    '<p class="text-brand-gray/70 text-sm">' + primary.fullName + ' · ' + primary.category + '</p>' +
                 '</div>' +
                 '<div class="text-right">' +
                     '<span class="text-2xl font-bold text-brand-light">$' + primary.price + '</span>' +
@@ -850,17 +850,17 @@
         }
         if (state.experience === 'never') {
             html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
-                '<p class="text-brand-light text-sm font-light">New to peptides? Most of our patients are. Your first visit includes hands-on injection training \u2014 you\'ll leave confident.</p>' +
+                '<p class="text-brand-light text-sm font-light">New to peptides? Most of our patients are. Your first visit includes hands-on injection training. You\'ll leave confident.</p>' +
             '</div>';
         }
         if (state.experience === 'online') {
             html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
-                '<p class="text-brand-light text-sm font-light">Coming from online peptides? Pharmaceutical-grade compounds from licensed pharmacies are a different experience \u2014 consistent potency, sterility testing, and medical oversight.</p>' +
+                '<p class="text-brand-light text-sm font-light">Coming from online peptides? Pharmaceutical-grade compounds from licensed pharmacies are a different experience: consistent potency, sterility testing, and medical oversight.</p>' +
             '</div>';
         }
         if (state.therapy === 'moonshot') {
             html += '<div class="bg-white/5 border-l-2 border-brand-gray/50 rounded-sm p-4 mb-4">' +
-                '<p class="text-brand-light text-sm font-light">As a current Moonshot patient, adding peptides to your protocol is simple \u2014 just book a quick add-on visit.</p>' +
+                '<p class="text-brand-light text-sm font-light">As a current Moonshot patient, adding peptides to your protocol is simple: just book a quick add-on visit.</p>' +
             '</div>';
         }
 
@@ -945,7 +945,7 @@
             '<div class="space-y-6">' +
                 '<div>' +
                     '<p class="text-brand-light font-medium text-sm mb-1">Do I really have to inject myself?</p>' +
-                    '<p class="text-brand-gray font-light text-sm">Yes, but it\'s a tiny insulin needle \u2014 most patients say they barely feel it. We do hands-on injection training at your first visit.</p>' +
+                    '<p class="text-brand-gray font-light text-sm">Yes, but it\'s a tiny insulin needle. Most patients say they barely feel it. We do hands-on injection training at your first visit.</p>' +
                 '</div>' +
                 '<div>' +
                     '<p class="text-brand-light font-medium text-sm mb-1">Where do the peptides come from?</p>' +
@@ -961,11 +961,11 @@
         // ── CTA ─────────────────────────────────────────────────────
         html += '<div class="bg-brand-slate rounded-sm p-8 mb-8 text-center">' +
             '<h3 class="text-brand-light font-bold mb-4">YOUR NEXT STEP</h3>' +
-            '<p class="text-brand-gray font-light mb-2">Your provider will review your protocol, confirm the right peptide, and walk you through injection training \u2014 usually in a single 15-minute visit.</p>' +
+            '<p class="text-brand-gray font-light mb-2">Your provider will review your protocol, confirm the right peptide, and walk you through injection training, usually in a single 15-minute visit.</p>' +
             '<p class="text-brand-gray/70 text-xs mb-6">All peptide therapies require a medical evaluation. This quiz is for educational purposes and does not constitute medical advice.</p>' +
             '<a href="/booking/" class="btn-primary text-lg px-10 py-4 inline-block quiz-cta" data-cta="book_peptide_consultation">Book My Free Consultation</a>' +
             '<p class="text-brand-gray/60 text-sm mt-4"><a href="tel:+12244354280" class="text-brand-light hover:underline">(224) 435-4280</a> if you\'d rather call</p>' +
-            '<p class="text-brand-gray/50 text-xs mt-3">Not ready? Reply to the email we just sent \u2014 we answer every one.</p>' +
+            '<p class="text-brand-gray/50 text-xs mt-3">Not ready? Reply to the email we just sent. We answer every one.</p>' +
         '</div>';
 
         // ── Learn More Links ────────────────────────────────────────
@@ -1333,7 +1333,7 @@
         };
 
         // Attach upstream marketing attribution (utm_*, gclid, fbclid,
-        // landing_page, last_page, referrer) — forwarded to the EHR lead webhook.
+        // landing_page, last_page, referrer) - forwarded to the EHR lead webhook.
         try {
             payload.attribution = (window.MoonshotAttribution && typeof window.MoonshotAttribution.getFlat === 'function')
                 ? window.MoonshotAttribution.getFlat()
@@ -1486,7 +1486,7 @@
         // Determine which screen to show
         var targetScreen = saved.currentScreen || 0;
 
-        // Don't restore to calculating or results — go to info capture instead
+        // Don't restore to calculating or results - go to info capture instead
         if (targetScreen >= SCREEN.CALCULATING) {
             targetScreen = SCREEN.INFO_CAPTURE;
         }
