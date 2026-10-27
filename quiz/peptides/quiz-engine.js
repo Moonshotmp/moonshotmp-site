@@ -701,8 +701,8 @@
         return screenWrap(SCREEN.SOCIAL_PROOF,
             '<div class="text-center">' +
                 '<h2 class="text-3xl font-bold text-brand-light mb-8 font-heading">You\'re in good company.</h2>' +
-                '<p class="text-5xl font-bold text-brand-light mb-4">300+</p>' +
-                '<p class="text-brand-gray text-lg font-light mb-8">patients have started peptide therapy at Moonshot Medical</p>' +
+                '<p class="text-5xl font-bold text-brand-light mb-4">5.0 <span class="text-3xl" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>' +
+                '<p class="text-brand-gray text-lg font-light mb-8">163 Google reviews from Moonshot Medical patients</p>' +
                 '<p class="text-brand-gray/60 text-sm font-light">Medically supervised. Pharmaceutical-grade. Park Ridge, IL.</p>' +
             '</div>'
         );
