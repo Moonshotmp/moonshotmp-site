@@ -31,7 +31,7 @@ export default async function handler(req, context) {
 
   const firstName = safeName(name).split(' ')[0];
   const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
-  const sourceLabel = source || 'direct';
+  const sourceLabel = safeName(source) || 'direct';
 
   // ── Peptide catalog ───────────────────────────────────────────────
   const peptides = {
@@ -292,7 +292,7 @@ export default async function handler(req, context) {
   // ── Send Both Emails ──────────────────────────────────────────────
 
   try {
-    await Promise.all([
+    const [userSend, internalSend] = await Promise.all([
       sendEmail({
         to: email,
         subject: userSubject,
@@ -304,6 +304,14 @@ export default async function handler(req, context) {
       }),
       sendEmail({ to: 'hello@moonshotmp.com', subject: internalSubject, html: internalHtml })
     ]);
+    // sendEmail resolves { ok: false } instead of throwing; the popup must not
+    // say "sent" when nothing went out.
+    if (!internalSend || !internalSend.ok) {
+      console.error('[peptide-guide-send] Internal lead email failed:', internalSend && internalSend.error);
+    }
+    if (!userSend || !userSend.ok) {
+      throw new Error('Guide email failed: ' + ((userSend && userSend.error) || 'unknown'));
+    }
 
     // ── Webhook sync (non-blocking) ─────────────────────────────────
     const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';

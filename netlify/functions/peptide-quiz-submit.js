@@ -1,6 +1,20 @@
 import { geoFromContext } from './shared/geo.js';
 import { sendEmail } from './send-email.js';
 import { sendQuizSmsIfConsented } from './shared/sms-consent.js';
+import { safeName } from './shared/antispam.js';
+import { PEPTIDES } from '../../quiz/peptides/recommendation.js';
+
+// Escape any client-supplied text before it lands in email HTML.
+const esc = (v, max = 120) => (typeof v === 'string' || typeof v === 'number')
+  ? String(v).trim().slice(0, max)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+  : '';
+
+// The browser sends only peptide keys; names, prices and copy come from the
+// server-side catalog so a direct POST cannot put its own content in an email.
+const fromCatalog = (key) =>
+  (typeof key === 'string' && Object.hasOwn(PEPTIDES, key)) ? { key, ...PEPTIDES[key] } : null;
 
 export default async function handler(req, context) {
   if (req.method !== 'POST') {
@@ -21,15 +35,17 @@ export default async function handler(req, context) {
     concern, concernLabel,
     severity, duration, experience,
     therapy, convenience, budget,
-    primaryRecommendation, secondaryRecommendation
+    recommendation
   } = data;
+  const rec = recommendation && typeof recommendation === 'object' ? recommendation : {};
 
   if (!email || !email.includes('@')) {
     return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400 });
   }
 
-  const primary = primaryRecommendation || {};
-  const secondary = secondaryRecommendation || null;
+  const primary = fromCatalog(rec.primary) || {};
+  const secondary = fromCatalog(rec.secondary);
+  const displayName = safeName(name);
 
   // ── Secondary Recommendation Card (if present) ─────────────────────
   let secondaryHtml = '';
@@ -39,7 +55,6 @@ export default async function handler(req, context) {
         <p style="color: #B2BFBE; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px;">Also Worth Considering</p>
         <p style="color: #F0EEE9; font-weight: 700; font-size: 18px; margin: 0 0 6px;">${secondary.name || ''}</p>
         <p style="color: #B2BFBE; font-size: 14px; line-height: 1.5; margin: 0 0 10px;">${secondary.tagline || ''}</p>
-        ${secondary.matchText ? `<p style="color: #B2BFBE; font-size: 13px; line-height: 1.5; margin: 0 0 10px;">${secondary.matchText}</p>` : ''}
         <p style="color: #F0EEE9; font-size: 14px; font-weight: 600; margin: 0;">$${secondary.price || '-'}/month</p>
       </div>`;
   }
@@ -60,7 +75,7 @@ export default async function handler(req, context) {
       <h1 style="color: #F0EEE9; margin: 0 0 4px; font-size: 22px;">Your Peptide Protocol Recommendation</h1>
       <p style="color: #B2BFBE; margin: 0 0 24px; font-size: 14px;">Moonshot Medical and Performance</p>
 
-      <p style="color: #B2BFBE; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">Hi ${name || 'there'},</p>
+      <p style="color: #B2BFBE; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">Hi ${displayName || 'there'},</p>
       <p style="color: #B2BFBE; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">Based on your answers, here\u2019s your personalized peptide recommendation.</p>
 
       <!-- Primary Recommendation Card -->
@@ -68,28 +83,12 @@ export default async function handler(req, context) {
         <p style="color: #B2BFBE; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px;">${primary.category || 'Recommended Peptide'}</p>
         <p style="color: #F0EEE9; font-weight: 700; font-size: 24px; margin: 0 0 4px;">${primary.name || ''}</p>
         ${primary.fullName ? `<p style="color: #B2BFBE; font-size: 13px; margin: 0 0 16px;">${primary.fullName}</p>` : ''}
-
-        <div style="background: rgba(178,191,190,0.1); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
-          <p style="color: #F0EEE9; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px;">Why This Is Your Match</p>
-          <p style="color: #B2BFBE; font-size: 14px; line-height: 1.6; margin: 0;">${primary.matchText || ''}</p>
-        </div>
+        ${primary.tagline ? `<p style="color: #B2BFBE; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">${primary.tagline}</p>` : ''}
 
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
-            <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">Monthly Cost</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">$${primary.price || '-'}/month</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">Expected Timeline</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">${primary.timeline || '-'}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);">Dosing Protocol</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);">${primary.dosing || '-'}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px;">Typical Cycle</td>
-            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right;">${primary.cycle || '-'}</td>
+            <td style="padding: 8px 0; color: #B2BFBE; font-size: 13px;">Monthly Cost</td>
+            <td style="padding: 8px 0; color: #F0EEE9; font-size: 14px; font-weight: 600; text-align: right;">$${primary.price || '-'}/month</td>
           </tr>
         </table>
       </div>
@@ -154,26 +153,26 @@ export default async function handler(req, context) {
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Contact</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${name || 'Not provided'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Email: ${email}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Phone: ${phone || 'Not provided'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${displayName || 'Not provided'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Email: ${esc(email, 254)}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Phone: ${esc(phone, 40) || 'Not provided'}</p>
         <p style="color: #B2BFBE; margin: 0; font-size: 14px;">SMS Consent: ${smsConsent === true ? 'Yes' : 'No'}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Goal &amp; Concern</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Goal: ${goalLabel || goal || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Concern: ${concernLabel || concern || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Goal: ${esc(goalLabel || goal) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Concern: ${esc(concernLabel || concern) || 'Not specified'}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Profile</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Severity: ${severity || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Duration: ${duration || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Peptide Experience: ${experience || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Current Therapy: ${therapy || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Budget: ${budget || 'Not specified'}</p>
-        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Convenience: ${convenience || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Severity: ${esc(severity) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Duration: ${esc(duration) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Peptide Experience: ${esc(experience) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Current Therapy: ${esc(therapy) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Budget: ${esc(budget) || 'Not specified'}</p>
+        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Convenience: ${esc(convenience) || 'Not specified'}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px;">
@@ -191,7 +190,7 @@ export default async function handler(req, context) {
   // ── Send Both Emails ────────────────────────────────────────────────
 
   try {
-    await Promise.all([
+    const [userSend, internalSend] = await Promise.all([
       sendEmail({
         to: email,
         subject: userSubject,
@@ -203,6 +202,13 @@ export default async function handler(req, context) {
       }),
       sendEmail({ to: 'hello@moonshotmp.com', subject: internalSubject, html: internalHtml })
     ]);
+    // sendEmail resolves { ok: false } instead of throwing; surface it.
+    if (!internalSend || !internalSend.ok) {
+      console.error('[peptide-quiz-submit] Internal lead email failed:', internalSend && internalSend.error);
+    }
+    if (!userSend || !userSend.ok) {
+      throw new Error('Results email failed: ' + ((userSend && userSend.error) || 'unknown'));
+    }
 
     // ── Webhook syncs (non-blocking) ──────────────────────────────────
     const clinicApi = process.env.CLINIC_API_BASE || 'https://api.moonshotclinic.com';

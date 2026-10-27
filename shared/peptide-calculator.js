@@ -371,6 +371,9 @@
         return;
       }
 
+      // Read the honeypot before render() rebuilds the form and empties it.
+      var website = (root.querySelector('#pcc-website') || {}).value || '';
+
       var recs = recommend(state.selected);
       var total = 0;
       var protocolItems = recs.map(function (r) {
@@ -389,7 +392,7 @@
         goals: state.selected,
         protocol: protocolItems,
         totalMonthly: total,
-        website: (root.querySelector('#pcc-website') || {}).value || '',
+        website: website,
         elapsed_ms: Date.now() - loadedAt
       };
 
