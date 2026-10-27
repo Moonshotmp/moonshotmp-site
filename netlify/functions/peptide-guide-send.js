@@ -268,7 +268,7 @@ export default async function handler(req, context) {
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #F0EEE9; font-weight: 600; margin: 0 0 8px;">Contact</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${safeName(name) || 'Not provided'}</p>
-        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Email: ${email}</p>
+        <p style="color: #B2BFBE; margin: 0; font-size: 14px;">Email: ${String(email).slice(0, 254).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')}</p>
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 16px; margin-bottom: 16px;">

@@ -5,3 +5,4 @@
 d385d743c7abcf85ba73ded40a0d3861412b1608 static footer peptide links + inline disclaimer reword (2026-10-15)
 d4ca52ef07734d1dec1147e86c3dce3355760b59 static crawlable footer added (2026-06-03)
 fdfc59b2531a8270c89b263fea7aa3d9c5cd50e0 em dash punctuation sweep, no content change (2026-10-16)
+80c7f0442cc73378514bd6e83013364cb94c3392 revert of #15 restoring peptide pages; footer disclaimer and nav boilerplate on every page (2026-10-27)
