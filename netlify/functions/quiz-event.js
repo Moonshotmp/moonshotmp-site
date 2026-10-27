@@ -5,7 +5,7 @@
  * for quiz funnel measurement on health-data pages.
  *
  * Accepts ONLY generic, non-health funnel events:
- *   { quiz: 'hormone' | 'body-comp' | 'bone-density' | 'perimenopause' | 'low-t' | 'glp1' | 'site', event: '<slug>', screen?: string|number, timestamp?: ISO string }
+ *   { quiz: 'peptide' | 'hormone' | 'body-comp' | 'bone-density' | 'perimenopause' | 'low-t' | 'glp1' | 'site', event: '<slug>', screen?: string|number, timestamp?: ISO string }
  *
  * REJECTS any payload that contains health-condition values, symptom severity,
  * drug names, or medical history terms - even in nested fields.
@@ -20,7 +20,7 @@
 // Allowed quiz slugs (low-cardinality enum). Anything else → 400.
 // `site` is reserved for site-wide generic CTAs (booking modal, phone tap)
 // where there is no quiz context but we still want a generic funnel signal.
-const ALLOWED_QUIZZES = new Set(['hormone', 'body-comp', 'bone-density', 'perimenopause', 'low-t', 'glp1', 'site']);
+const ALLOWED_QUIZZES = new Set(['peptide', 'hormone', 'body-comp', 'bone-density', 'perimenopause', 'low-t', 'glp1', 'site']);
 
 // Allowed event names (generic funnel only, no health values).
 const ALLOWED_EVENTS = new Set([
@@ -53,7 +53,7 @@ const HEALTH_TERMS = [
   'depression', 'anxiety', 'insomnia', 'inflammation',
   // Severity / chronicity values
   'mild', 'moderate', 'significant', 'severe',
-  // Drug names (privacy denylist for analytics payloads; never rendered)
+  // Peptide / drug names (privacy denylist for analytics payloads; never rendered)
   'bpc-157', 'bpc157', 'tb-500', 'tb500', 'ghk-cu', 'ghk',
   'pt-141', 'pt141', 'sermorelin', 'ipamorelin', 'cjc-1295', 'cjc1295',
   'wolverine', 'glow-stack', 'glow stack', 'semaglutide', 'tirzepatide',

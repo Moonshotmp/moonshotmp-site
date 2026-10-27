@@ -100,6 +100,10 @@
                         <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BONE DENSITY SCREENER</p>
                         <p class="text-brand-light/80 text-xs mt-1">OST formula plus AACE / NOF risk factors to help you decide whether a DEXA scan makes sense.</p>
                     </a>
+                    <a href="/quiz/peptides/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
+                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">PEPTIDE QUIZ</p>
+                        <p class="text-brand-light/80 text-xs mt-1">Which peptide is right for you? Get a personalized protocol recommendation.</p>
+                    </a>
                     <a href="/quiz/body-comp/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
                         <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BODY COMP IQ QUIZ</p>
                         <p class="text-brand-light/80 text-xs mt-1">Test what you know about body fat, DEXA scans, and metabolic health.</p>
@@ -109,7 +113,7 @@
 
             <div class="mt-6 pt-6 border-t border-white/5">
                 <p class="text-brand-gray/50 text-[10px] leading-relaxed max-w-4xl mx-auto text-center">
-                    Content on this site is for informational purposes only and does not constitute medical advice, diagnosis, or treatment. Compounded preparations discussed on this site are not FDA-approved drugs. Results vary. Always consult a qualified healthcare provider before starting any therapy. No provider-patient relationship is established by viewing this content.
+                    Content on this site is for informational purposes only and does not constitute medical advice, diagnosis, or treatment. Peptide therapies and compounded preparations discussed on this site are not FDA-approved drugs. Results vary. Always consult a qualified healthcare provider before starting any therapy. No provider-patient relationship is established by viewing this content.
                 </p>
             </div>
 
@@ -243,9 +247,43 @@
                 '<a href="/quiz/low-t/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">TRT Readiness Screener</a>' +
                 '<a href="/quiz/glp1/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">GLP-1 Readiness Screener</a>' +
                 '<a href="/quiz/bone-density/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Bone Density Screener</a>' +
+                '<a href="/quiz/peptides/" class="text-brand-light text-sm border border-white/15 rounded-sm px-5 py-2 hover:bg-white/5 transition">Peptide Quiz</a>' +
                 '</div>';
             lastCta.insertAdjacentElement('afterend', quizNudge);
         }
+    }
+
+    // Scroll-depth quiz prompt on content pages (60%+ scroll, once per session)
+    if (/\/(peptide|bpc-157|tb-500|wolverine-blend|ghk-cu|glow-stack)/.test(path) && !sessionStorage.getItem('quiz_prompt_shown')) {
+        var promptShown = false;
+        window.addEventListener('scroll', function() {
+            if (promptShown) return;
+            var scrollPct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+            if (scrollPct >= 0.85) {
+                promptShown = true;
+                sessionStorage.setItem('quiz_prompt_shown', '1');
+                var prompt = document.createElement('div');
+                prompt.id = 'quiz-scroll-prompt';
+                prompt.className = 'fixed bottom-4 right-4 z-[70] bg-brand-dark border border-white/10 rounded-sm p-5 shadow-2xl max-w-xs transition-all duration-300 translate-y-4 opacity-0 hidden md:block';
+                prompt.innerHTML = '<button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-3 text-brand-gray hover:text-white text-lg leading-none">&times;</button>' +
+                    '<p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-1">CURIOUS?</p>' +
+                    '<p class="text-brand-gray text-xs mb-3">Take a free 2-min quiz and get personalized insights.</p>' +
+                    '<div class="space-y-2">' +
+                    '<a href="/quiz/perimenopause/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Perimenopause Screener</a>' +
+                    '<a href="/quiz/low-t/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">TRT Readiness Screener</a>' +
+                    '<a href="/quiz/glp1/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">GLP-1 Readiness Screener</a>' +
+                    '<a href="/quiz/bone-density/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Bone Density Screener</a>' +
+                    '<a href="/quiz/peptides/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Peptide Quiz</a>' +
+                    '</div>';
+                document.body.appendChild(prompt);
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        prompt.style.opacity = '1';
+                        prompt.style.transform = 'translateY(0)';
+                    });
+                });
+            }
+        }, {passive: true});
     }
 
     // Website chat (Moonshot EHR module, replaced the site's own OpenAI bot

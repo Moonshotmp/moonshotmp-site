@@ -1,10 +1,11 @@
-// Bot guard for the email-only lead magnet capture form.
+// Bot guard for the email-only capture forms (lead magnet, peptide guide).
 //
 // Owner: Tom. Incident: 2026-09-15 subscription-bombing run - a botnet used
 // these forms to mail real third-party addresses (gibberish first name,
 // dot-scattered Gmail variants) and enrolled them in the drip.
 //
-// The matching client fields are added by shared/lead-magnets.js:
+// The matching client fields are added by shared/lead-magnets.js,
+// shared/peptide-exit-intent.js and shared/peptide-calculator.js:
 //   website    - honeypot input, hidden from people, must stay empty
 //   elapsed_ms - ms between form render and submit
 //
