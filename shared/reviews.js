@@ -16,7 +16,7 @@
 
 (function() {
     var GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=7766394185852799175';
-    var TOTAL_REVIEWS = 147;
+    var TOTAL_REVIEWS = 163;
     var RATING = '5.0';
 
     var reviews = [
