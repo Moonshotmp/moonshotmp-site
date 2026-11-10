@@ -277,9 +277,18 @@
         </div>
     </footer>
 
+    <!-- Mobile sticky booking bar. Hidden until the hero button scrolls away (ads-sticky-cta.js). -->
+    <div class="md:hidden" style="height: 84px;" aria-hidden="true"></div>
+    <div id="adsStickyCta" class="md:hidden" aria-hidden="true"
+         style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(16, 25, 33, 0.97); border-top: 1px solid rgba(255, 255, 255, 0.12); transform: translateY(110%); transition: transform 0.2s ease;">
+        <a id="bookCtaSticky" href="https://moonshot.moonshotehr.com/book/consult"
+           class="btn-primary text-lg py-3" style="display: block; text-align: center;">Book a Free Consult</a>
+    </div>
+
     <!-- Attribution capture: forwards gclid + UTMs from URL to EHR booker -->
     <script src="/shared/attribution-capture.js" defer></script>
     <script src="/shared/ads-click-forward.js" defer></script>
+    <script src="/shared/ads-sticky-cta.js" defer></script>
 
 </body>
 </html>
