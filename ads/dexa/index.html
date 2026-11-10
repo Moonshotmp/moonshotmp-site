@@ -72,6 +72,7 @@
                             <a id="bookCtaConsult" href="https://moonshot.moonshotehr.com/book/consult"
                                class="inline-block border border-brand-light text-brand-light px-8 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
                         </div>
+                        <p class="text-sm mb-3"><span class="text-yellow-500" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span class="text-brand-light font-semibold">5.0 on Google</span><span class="text-brand-gray/80"> &middot; 163 reviews</span></p>
                         <p class="text-brand-gray/80 text-sm mb-1">15-min visit &middot; same-day results. Have questions first? The <strong>consult is free</strong>, come see the clinic.</p>
                         <p class="text-brand-gray/60 text-sm">No referral required. HSA/FSA accepted.</p>
                     </div>
@@ -320,9 +321,18 @@
         </div>
     </footer>
 
+    <!-- Mobile sticky booking bar. Hidden until the hero button scrolls away (ads-sticky-cta.js). -->
+    <div class="md:hidden" style="height: 84px;" aria-hidden="true"></div>
+    <div id="adsStickyCta" class="md:hidden" aria-hidden="true"
+         style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(16, 25, 33, 0.97); border-top: 1px solid rgba(255, 255, 255, 0.12); transform: translateY(110%); transition: transform 0.2s ease;">
+        <a id="bookCtaSticky" href="https://moonshot.moonshotehr.com/book/dexa"
+           class="btn-primary text-lg py-3" style="display: block; text-align: center;">Book Now, $150</a>
+    </div>
+
     <!-- Attribution capture: forwards gclid + UTMs from URL to EHR booker -->
     <script src="/shared/attribution-capture.js" defer></script>
     <script src="/shared/ads-click-forward.js" defer></script>
+    <script src="/shared/ads-sticky-cta.js" defer></script>
 
 </body>
 </html>
