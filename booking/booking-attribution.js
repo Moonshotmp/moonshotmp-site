@@ -160,7 +160,7 @@
     bold.textContent = label + '.';
     p.appendChild(bold);
     p.appendChild(document.createTextNode(
-      ' Your 45-minute consult with Missy Zammichieli, DNP, FNP-BC will ' +
+      ' Your 45-minute consult with Nichole Jakupovic, MSN, APRN-FPA, FNP-BC will ' +
       'cover your specific situation, lab review, and treatment options.'
     ));
     slot.appendChild(p);

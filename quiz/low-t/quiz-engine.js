@@ -477,8 +477,8 @@
     // engine - the static placement is canonical and is always visible
     // because the quiz is inline (not modal). Mirrors perimenopause.
 
-    // Author attribution - Missy-only (she has FPA; no collaborator clause).
-    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+    // Author attribution - no named clinician (2026-11-10); naming one needs owner sign-off. No collaborator clause.
+    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // ── State ────────────────────────────────────────────────────────
 

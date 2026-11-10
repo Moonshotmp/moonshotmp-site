@@ -340,7 +340,7 @@
     // by this engine - the static placement is canonical and is always
     // visible because the quiz is inline (not modal). Mirrors bone-density.
 
-    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // Red-flag interstitial copy (verbatim from spec). Surfaces between the
     // HISTORY screen and the STATE screen if Q4 ≥3 AND Q8 ≥3.

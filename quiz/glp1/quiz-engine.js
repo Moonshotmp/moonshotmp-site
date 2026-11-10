@@ -439,8 +439,8 @@
     // compounded substitutes is unique to this category.
     var RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis or prescription. We do not market or sell compounded versions of FDA-approved medications as substitutes for those products. Eligibility for any specific medication is determined by a licensed clinician after a comprehensive in-person evaluation.';
 
-    // Author attribution - Missy-only (she has FPA; no collaborator clause).
-    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+    // Author attribution - no named clinician (2026-11-10); naming one needs owner sign-off. No collaborator clause.
+    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // ── State ────────────────────────────────────────────────────────
 

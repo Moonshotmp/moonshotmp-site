@@ -850,7 +850,7 @@
             { title: "Supplements", desc: "Personalized supplement plan at Moonshot", url: "/supplements/", cat: "Medical" },
             // About & Booking
             { title: "Our Team", desc: "Meet the Moonshot Medical team", url: "/about/", cat: "About" },
-            { title: "Missy Zammichieli, DNP", desc: "Medical Director credentials and bio", url: "/about/missy-zammichieli/", cat: "About" },
+            { title: "Nichole Jakupovic, NP", desc: "Lead Medical Provider credentials", url: "/about/nichole-jakupovic/", cat: "About" },
             { title: "Ellen Haight, RN", desc: "Aesthetic injector credentials and bio", url: "/about/ellen-haight/", cat: "About" },
             { title: "Our Story", desc: "Tom's story and why Moonshot exists", url: "/ourstory/", cat: "About" },
             { title: "Pricing", desc: "Moonshot Medical service pricing", url: "/pricing/", cat: "About" },

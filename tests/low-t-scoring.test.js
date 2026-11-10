@@ -925,14 +925,14 @@ describe('Required verbatim phrasing — engine source', () => {
 
 describe('Required verbatim phrasing — submit handler + static page', () => {
     it('submit handler source contains the verbatim author attribution', () => {
-        expect(SUBMIT_SRC).toContain('Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC');
+        expect(SUBMIT_SRC).toContain('Clinical content directed by Moonshot Medical, PLLC clinicians.');
     });
 
     it('static page (index.html) includes universal footer disclaimer', () => {
         expect(PAGE_HTML).toContain('Screening tools have known false-positive and false-negative rates');
     });
 
-    it("engine + submit handler do NOT contain 'in collaboration with' (Missy has FPA — placeholder retired)", () => {
+    it("engine + submit handler do NOT contain 'in collaboration with' (placeholder retired)", () => {
         expect(ENGINE_CODE).not.toContain('in collaboration with');
         expect(SUBMIT_CODE).not.toContain('in collaboration with');
     });
