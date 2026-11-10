@@ -485,7 +485,7 @@
             '<div class="text-center">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free Bone Density Screener</p>' +
                 '<h2 id="screen-' + SCREEN.WELCOME + '-heading" class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">Should I get a DEXA bone density scan?</h2>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">A 2-minute screener that uses public-domain clinical risk factors to help you decide whether a DEXA scan is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">A 2-minute screener that uses public-domain clinical risk factors to help you decide whether a DEXA scan is worth your time.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start the Screener</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant. We don\'t sell your data or share it with advertisers.</p>' +
                 '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +
