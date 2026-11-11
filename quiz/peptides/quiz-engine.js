@@ -312,7 +312,7 @@
     ];
 
     function stateOptionsHtml(selected) {
-        var html = '<option value=""' + (selected ? '' : ' selected') + ' disabled>State you live in</option>';
+        var html = '<option value=""' + (selected ? '' : ' selected') + '>State you live in (optional)</option>';
         for (var i = 0; i < US_STATES.length; i++) {
             html += '<option value="' + US_STATES[i][0] + '"' + (selected === US_STATES[i][0] ? ' selected' : '') + '>' + US_STATES[i][1] + '</option>';
         }
@@ -778,7 +778,6 @@
                     '</label>' +
                     '<p id="quiz-name-error" class="text-red-500 text-xs text-left hidden">Please enter your first name.</p>' +
                     '<p id="quiz-email-error" class="text-red-500 text-xs text-left hidden">Please enter a valid email address.</p>' +
-                    '<p id="quiz-state-error" class="text-red-500 text-xs text-left hidden">Please choose the state you live in.</p>' +
                     '<button type="button" id="quiz-submit-info" class="btn-primary w-full py-3">Show My Protocol</button>' +
                 '</div>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">We\'ll also email you a copy. No spam, no sales calls. Unsubscribe anytime.</p>' +
@@ -1255,7 +1254,6 @@
                 var nameError = document.getElementById('quiz-name-error');
                 var emailError = document.getElementById('quiz-email-error');
                 var stateInput = document.getElementById('quiz-state');
-                var stateError = document.getElementById('quiz-state-error');
 
                 state.name = (nameInput.value || '').trim();
                 state.email = (emailInput.value || '').trim();
@@ -1265,8 +1263,6 @@
                 // Reset error states
                 nameInput.style.borderColor = '';
                 emailInput.style.borderColor = '';
-                if (stateInput) stateInput.style.borderColor = '';
-                if (stateError) stateError.classList.add('hidden');
                 if (nameError) nameError.classList.add('hidden');
                 if (emailError) emailError.classList.add('hidden');
 
@@ -1285,14 +1281,6 @@
                     emailInput.style.borderColor = '#dc2626';
                     if (emailError) emailError.classList.remove('hidden');
                     if (!hasError) emailInput.focus();
-                    hasError = true;
-                }
-
-                // Validate state of residence
-                if (stateInput && !state.residenceState) {
-                    stateInput.style.borderColor = '#dc2626';
-                    if (stateError) stateError.classList.remove('hidden');
-                    if (!hasError) stateInput.focus();
                     hasError = true;
                 }
 
