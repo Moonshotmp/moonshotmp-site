@@ -74,6 +74,34 @@ describe('peptide-quiz-submit', () => {
     expect(userEmail().html).toContain('&lt;a href=');
   });
 
+  it('sends the chosen state of residence to the lead email and both clinic webhooks', async () => {
+    const fetchMock = routedFetch();
+    vi.stubGlobal('fetch', fetchMock);
+    const res = await peptideQuizSubmit(post({ ...engineBody, state: 'wi' }), context);
+    expect(res.status).toBe(200);
+    const internal = sent.find((m) => m.subject && m.subject.includes('New Peptide Quiz Lead'));
+    expect(internal.html).toContain('State: WI');
+    const webhookBodies = fetchMock.mock.calls
+      .filter(([url]) => url.includes('/api/leads/webhook') || url.includes('/api/marketing/quiz-complete'))
+      .map(([, init]) => JSON.parse(init.body));
+    expect(webhookBodies).toHaveLength(2);
+    for (const b of webhookBodies) {
+      expect(b.state).toBe('WI');
+      expect(b.geo_state).toBe('IL');
+    }
+  });
+
+  it('drops a state value that is not a US state code', async () => {
+    const fetchMock = routedFetch();
+    vi.stubGlobal('fetch', fetchMock);
+    const res = await peptideQuizSubmit(post({ ...engineBody, state: '<b>Illinois</b>' }), context);
+    expect(res.status).toBe(200);
+    const internal = sent.find((m) => m.subject && m.subject.includes('New Peptide Quiz Lead'));
+    expect(internal.html).toContain('State: Not provided');
+    const lead = fetchMock.mock.calls.find(([url]) => url.includes('/api/leads/webhook'));
+    expect(JSON.parse(lead[1].body).state).toBe('');
+  });
+
   it('reports failure when the results email is rejected', async () => {
     vi.stubGlobal('fetch', routedFetch({ resendStatus: 503 }));
     vi.spyOn(console, 'error').mockImplementation(() => {});
