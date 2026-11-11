@@ -16,6 +16,9 @@ const esc = (v, max = 120) => (typeof v === 'string' || typeof v === 'number')
 const fromCatalog = (key) =>
   (typeof key === 'string' && Object.hasOwn(PEPTIDES, key)) ? { key, ...PEPTIDES[key] } : null;
 
+const US_STATE_CODES = new Set(('AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT '
+  + 'NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY').split(' '));
+
 export default async function handler(req, context) {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
@@ -30,6 +33,7 @@ export default async function handler(req, context) {
 
   const {
     name, email, phone,
+    state: rawState,
     sms_consent: smsConsent,
     goal, goalLabel,
     concern, concernLabel,
@@ -38,6 +42,12 @@ export default async function handler(req, context) {
     recommendation
   } = data;
   const rec = recommendation && typeof recommendation === 'object' ? recommendation : {};
+  // Self-reported state of residence from the quiz select. Anything that is not
+  // a known two-letter code is dropped, so nothing free-form reaches the email
+  // or the clinic webhooks.
+  const residenceState = typeof rawState === 'string' && US_STATE_CODES.has(rawState.toUpperCase())
+    ? rawState.toUpperCase()
+    : '';
 
   if (!email || !email.includes('@')) {
     return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400 });
@@ -157,6 +167,7 @@ export default async function handler(req, context) {
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Name: ${displayName || 'Not provided'}</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Email: ${esc(email, 254)}</p>
         <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">Phone: ${esc(phone, 40) || 'Not provided'}</p>
+        <p style="color: #B2BFBE; margin: 0 0 4px; font-size: 14px;">State: ${residenceState || 'Not provided'}</p>
         <p style="color: #B2BFBE; margin: 0; font-size: 14px;">SMS Consent: ${smsConsent === true ? 'Yes' : 'No'}</p>
       </div>
 
@@ -230,7 +241,7 @@ export default async function handler(req, context) {
         phone,
         source: 'peptide-quiz',
         quiz_type: 'peptide',
-        state: '',
+        state: residenceState,
         geo_state: geo.geo_state,
         geo_country: geo.geo_country,
         recommendation: primary.name || '',
@@ -249,7 +260,7 @@ export default async function handler(req, context) {
         email,
         name,
         quiz_type: 'peptide',
-        state: '',
+        state: residenceState,
         geo_state: geo.geo_state,
         geo_country: geo.geo_country,
         source: 'peptide-quiz',
