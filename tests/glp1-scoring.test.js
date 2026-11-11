@@ -1233,11 +1233,11 @@ describe('Critical regulatory regression tests', () => {
         );
     });
 
-    it("engine does NOT contain 'in collaboration with' (Missy has FPA — placeholder retired)", () => {
+    it("engine does NOT contain 'in collaboration with' (placeholder retired)", () => {
         expect(ENGINE_CODE).not.toContain('in collaboration with');
     });
 
-    it("submit handler does NOT contain 'in collaboration with' (Missy has FPA — placeholder retired)", () => {
+    it("submit handler does NOT contain 'in collaboration with' (placeholder retired)", () => {
         expect(SUBMIT_CODE).not.toContain('in collaboration with');
     });
 

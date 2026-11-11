@@ -48,8 +48,8 @@ const TIER_BODY_PRESENT = 'Your symptom pattern overlaps with patterns associate
 const TIER_BODY_MIXED = 'Your symptoms overlap with patterns associated with low testosterone, but several factors can produce similar symptoms: sleep apnea, certain medications, sleep quality. A comprehensive evaluation will identify which factors are driving symptoms and which need to be addressed first. If erectile or lower-urinary-tract symptoms are part of what you\'re tracking, Daily Tadalafil is an FDA-approved option some patients use alongside or instead of testosterone-based therapy.';
 const TIER_BODY_NOT_MET = 'Your symptom pattern doesn\'t strongly overlap with low-testosterone patterns. Several factors can mimic symptoms or low T can be subclinical. A comprehensive lab panel is the answer if you want to know definitively.';
 
-// Missy-only attribution - she has FPA. Do NOT add other clinicians here.
-const AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+// No named clinician: the prior named attribution left with that clinician (2026-11-10). Naming a clinician here needs owner sign-off.
+const AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
 const RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis. Only a clinician can confirm whether your symptoms are due to low testosterone or another cause. Your provider can determine whether further workup, lab testing, or treatment is appropriate based on your full clinical picture.';
 

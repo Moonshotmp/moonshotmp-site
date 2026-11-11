@@ -34,6 +34,9 @@ https://register.moonshotmp.com/* https://onboarding.evexias.com/welcome/9660b1f
 /learn/understanding-blood-results/ /blood-work/ 301
 /learn/pellet-therapy /learn/bhrt-cost/ 301
 /learn/pellet-therapy/ /learn/bhrt-cost/ 301
+# Former provider profile; she left the practice (2026-11-10)
+/about/missy-zammichieli /about/ 301
+/about/missy-zammichieli/ /about/ 301
 
 # Quiz aliases — promised in v2 spec, route legacy URLs to canonical screeners (2026-05-01)
 /quiz/menopause/ /quiz/perimenopause/ 301

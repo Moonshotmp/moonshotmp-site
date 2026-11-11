@@ -41,8 +41,8 @@ const TIER_BODY_CONTRAINDICATION = "Your responses indicate medical history that
 
 const RED_FLAG_BODY = "Important: palpitations combined with anxiety can have causes beyond hormonal change, including thyroid disease, cardiac arrhythmias (paroxysmal atrial fibrillation), or other conditions. These need to be ruled out before assuming a perimenopausal explanation. If your palpitations are severe, sudden, or accompanied by chest pain, shortness of breath, or fainting, please see your primary care physician or an emergency department.";
 
-// Missy-only attribution - she has FPA. Do NOT add other clinicians here.
-const AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+// No named clinician: the prior named attribution left with that clinician (2026-11-10). Naming a clinician here needs owner sign-off.
+const AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
 const RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis. Only a clinician can confirm whether your symptoms are due to perimenopause, menopause, or another cause. Your provider can determine whether further workup, hormone testing, or treatment is appropriate based on your full clinical picture.';
 

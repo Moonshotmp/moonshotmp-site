@@ -53,8 +53,8 @@ const NO_COMPOUNDING_DISCLAIMER = "We do not market or sell compounded versions 
 
 const RESULT_DISCLAIMER = "This is a screening tool, not a clinical diagnosis or prescription. " + NO_COMPOUNDING_DISCLAIMER;
 
-// Missy-only attribution - she has FPA. Do NOT add other clinicians here.
-const AUTHOR_ATTRIBUTION = "Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.";
+// No named clinician: the prior named attribution left with that clinician (2026-11-10). Naming a clinician here needs owner sign-off.
+const AUTHOR_ATTRIBUTION = "Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.";
 
 const UNIVERSAL_DISCLAIMER = 'This tool does not, and is not intended to, diagnose any medical condition or recommend any specific treatment, drug, dose, or protocol. Screening tools have known false-positive and false-negative rates. Completing this quiz does not establish a provider-patient or treatment relationship, does not constitute a medical examination, and does not entitle you to any specific treatment, prescription, or service. Medical services are provided by Moonshot Medical, PLLC and are available only to patients physically located in states where our clinicians are licensed (currently Illinois). By proceeding you confirm you are at least 18 years old.';
 

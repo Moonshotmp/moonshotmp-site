@@ -688,7 +688,7 @@ describe('Required verbatim phrasing — engine source', () => {
 
 describe('Required verbatim phrasing — submit handler', () => {
     it('submit handler source contains the verbatim author attribution', () => {
-        expect(SUBMIT_SRC).toContain('Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC');
+        expect(SUBMIT_SRC).toContain('Clinical content directed by Moonshot Medical, PLLC clinicians.');
     });
 
     it('submit handler source includes the universal footer disclaimer text', () => {

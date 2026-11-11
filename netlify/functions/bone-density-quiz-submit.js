@@ -42,7 +42,7 @@ const RESULT_SLUG_LOOKUP = {
   D: 'low'
 };
 
-const AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+const AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
 const RESULT_DISCLAIMER = 'This is a screening tool, not a diagnosis. Only a DXA scan can diagnose osteoporosis or osteopenia. Your provider can determine whether scanning, treatment, or further workup is appropriate based on your full clinical picture.';
 

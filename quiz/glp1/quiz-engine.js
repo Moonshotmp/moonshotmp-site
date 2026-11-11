@@ -439,8 +439,8 @@
     // compounded substitutes is unique to this category.
     var RESULT_DISCLAIMER = 'This is a screening tool, not a clinical diagnosis or prescription. We do not market or sell compounded versions of FDA-approved medications as substitutes for those products. Eligibility for any specific medication is determined by a licensed clinician after a comprehensive in-person evaluation.';
 
-    // Author attribution - Missy-only (she has FPA; no collaborator clause).
-    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+    // Author attribution - no named clinician (2026-11-10); naming one needs owner sign-off. No collaborator clause.
+    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // ── State ────────────────────────────────────────────────────────
 
@@ -666,7 +666,7 @@
             '<div class="text-center">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free Readiness Screener</p>' +
                 '<h2 id="screen-' + SCREEN.WELCOME + '-heading" class="text-3xl md:text-4xl font-bold text-brand-light mb-6 font-heading">Am I a candidate for prescription weight-management?</h2>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Takes about 2-3 minutes. Walks through BMI, qualifying weight-related conditions, an 8-category safety panel, and a short readiness check, the same eligibility framework a clinician uses, to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">Takes about 2-3 minutes. Walks through BMI, qualifying weight-related conditions, an 8-category safety panel, and a short readiness check, the same eligibility framework a clinician uses, to help you decide whether a clinical evaluation is worth your time.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start the Screener</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant. We don\'t sell your data or share it with advertisers.</p>' +
                 '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +

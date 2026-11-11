@@ -340,7 +340,7 @@
     // by this engine - the static placement is canonical and is always
     // visible because the quiz is inline (not modal). Mirrors bone-density.
 
-    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Missy Zammichieli, DNP, APRN, FNP-BC. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
+    var AUTHOR_ATTRIBUTION = 'Clinical content directed by Moonshot Medical, PLLC clinicians. This review is of the tool, not of your individual responses. You have not been examined or treated by Moonshot Medical.';
 
     // Red-flag interstitial copy (verbatim from spec). Surfaces between the
     // HISTORY screen and the STATE screen if Q4 ≥3 AND Q8 ≥3.
@@ -557,7 +557,7 @@
             '<div class="text-center">' +
                 '<p class="text-brand-gray text-xs uppercase tracking-widest mb-6">Free Perimenopause Screener</p>' +
                 '<h2 id="screen-' + SCREEN.WELCOME + '-heading" class="text-4xl md:text-5xl font-bold text-brand-light mb-6 font-heading">Are my symptoms perimenopause?</h2>' +
-                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">A 3-minute screener built on the Menopause Rating Scale, a public-domain validated instrument, to help you decide whether a clinical evaluation is worth your time. Reviewed by a Doctor of Nursing Practice.</p>' +
+                '<p class="text-brand-gray text-lg font-light mb-10 max-w-lg mx-auto">A 3-minute screener built on the Menopause Rating Scale, a public-domain validated instrument, to help you decide whether a clinical evaluation is worth your time.</p>' +
                 '<button type="button" id="quiz-start-btn" class="btn-primary text-lg px-10 py-4">Start the Screener</button>' +
                 '<p class="text-brand-gray/50 text-xs mt-4">No account needed. Results are instant. We don\'t sell your data or share it with advertisers.</p>' +
                 '<p class="text-brand-gray/60 text-xs mt-6">Created by the medical team at Moonshot Medical, a licensed clinic in Park Ridge, IL</p>' +
