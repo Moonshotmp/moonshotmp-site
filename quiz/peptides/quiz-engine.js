@@ -297,6 +297,28 @@
         'nad': { general: 'sermorelin', athletic: 'bpc157', skin: 'ghk-cu' }
     };
 
+    // Two-letter codes for the "State you live in" select on the info screen.
+    var US_STATES = [
+        ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],['CO','Colorado'],
+        ['CT','Connecticut'],['DE','Delaware'],['DC','District of Columbia'],['FL','Florida'],['GA','Georgia'],
+        ['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],
+        ['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],['MA','Massachusetts'],
+        ['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],['MO','Missouri'],['MT','Montana'],
+        ['NE','Nebraska'],['NV','Nevada'],['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],
+        ['NY','New York'],['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],
+        ['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],['SD','South Dakota'],
+        ['TN','Tennessee'],['TX','Texas'],['UT','Utah'],['VT','Vermont'],['VA','Virginia'],['WA','Washington'],
+        ['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']
+    ];
+
+    function stateOptionsHtml(selected) {
+        var html = '<option value=""' + (selected ? '' : ' selected') + '>State you live in (optional)</option>';
+        for (var i = 0; i < US_STATES.length; i++) {
+            html += '<option value="' + US_STATES[i][0] + '"' + (selected === US_STATES[i][0] ? ' selected' : '') + '>' + US_STATES[i][1] + '</option>';
+        }
+        return html;
+    }
+
     // ── State ────────────────────────────────────────────────────────
 
     var state = {
@@ -311,7 +333,8 @@
         budget: null,
         name: '',
         email: '',
-        phone: ''
+        phone: '',
+        residenceState: ''
     };
 
     var root = document.getElementById('quiz-root');
@@ -337,6 +360,7 @@
                 name: state.name,
                 email: state.email,
                 phone: state.phone,
+                residenceState: state.residenceState,
                 savedAt: Date.now()
             }));
         } catch(e) {}
@@ -747,6 +771,7 @@
                     '<input type="text" id="quiz-name" placeholder="First name" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<input type="email" id="quiz-email" placeholder="Email address" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
                     '<input type="tel" id="quiz-phone" placeholder="Phone (optional)" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light placeholder-brand-gray/50 focus:outline-none focus:border-brand-gray/50 text-sm">' +
+                    '<select id="quiz-state" aria-label="State you live in" class="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-brand-light focus:outline-none focus:border-brand-gray/50 text-sm" style="color-scheme: dark;">' + stateOptionsHtml(state.residenceState) + '</select>' +
                     '<label for="quiz-sms-consent" class="flex items-start gap-3 cursor-pointer text-left">' +
                         '<input type="checkbox" id="quiz-sms-consent" name="sms_consent" class="mt-1 flex-shrink-0">' +
                         '<span class="text-brand-gray text-xs font-light leading-relaxed">Text me my results and next steps. Message frequency varies. Message and data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy/" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-brand-light">Privacy Policy</a>.</span>' +
@@ -1200,6 +1225,7 @@
                 state.name = '';
                 state.email = '';
                 state.phone = '';
+                state.residenceState = '';
                 clearSavedState();
                 // Rebuild screens to clear all selected states
                 buildAllScreens();
@@ -1227,10 +1253,12 @@
                 var phoneInput = document.getElementById('quiz-phone');
                 var nameError = document.getElementById('quiz-name-error');
                 var emailError = document.getElementById('quiz-email-error');
+                var stateInput = document.getElementById('quiz-state');
 
                 state.name = (nameInput.value || '').trim();
                 state.email = (emailInput.value || '').trim();
                 state.phone = (phoneInput.value || '').trim();
+                state.residenceState = stateInput ? (stateInput.value || '') : '';
 
                 // Reset error states
                 nameInput.style.borderColor = '';
@@ -1315,6 +1343,7 @@
             name: state.name || null,
             email: state.email,
             phone: state.phone || null,
+            state: state.residenceState || null,
             sms_consent: smsConsent === true,
             goal: state.goal,
             concern: state.concern,
