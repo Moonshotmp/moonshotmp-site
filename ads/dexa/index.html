@@ -40,6 +40,40 @@
         }
     }
     </script>
+    <!-- Open-time chips under the hero button (ads-open-times.js). Inline, not
+         Tailwind: the stylesheet loads async and the reserved height must hold
+         from first paint so the chips never move anything. -->
+    <style>
+        /* Hero geometry before the async Tailwind sheet lands (same values it
+           sets), so an early first paint cannot shift the hero: the photo was
+           painting at its intrinsic 1500px height until then. */
+        .hero-grid{gap:2.5rem}
+        .hero-photo{aspect-ratio:4/5;overflow:hidden}
+        .hero-photo>img{display:block;width:100%;height:100%;object-fit:cover}
+        #adsOpenTimes{min-height:188px;margin:16px 0 12px;max-width:26rem}
+        #adsOpenTimes .ads-times-label{color:#B2BFBE;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px;line-height:16px}
+        #adsOpenTimes [data-open-times-list]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+        .ads-time-chip,.ads-time-chip-skel{min-height:52px;border:1px solid rgb(178 191 190/.45);border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4px 6px}
+        .ads-time-chip{color:#F0EEE9;text-decoration:none;background:rgb(255 255 255/.04)}
+        .ads-time-chip:hover,.ads-time-chip:focus-visible{background:#F0EEE9;color:#101921;border-color:#F0EEE9}
+        .ads-time-chip-skel{border-style:dashed;border-color:rgb(178 191 190/.2)}
+        .ads-time-chip-day{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;line-height:14px}
+        .ads-time-chip-time{font-size:15px;font-weight:600;line-height:20px;white-space:nowrap}
+        #adsOpenTimes .ads-times-all{grid-column:1/-1;color:#B2BFBE;font-size:14px;line-height:44px;text-decoration:underline}
+        /* From md: one row, three times plus "See all times" as the fourth cell.
+           A short block keeps the text column shorter than the scanner photo,
+           so the late Tailwind load cannot move the section. */
+        /* Failed, slow or no times: the block goes invisible but keeps its
+           space, at every width, so nothing below it ever moves. */
+        #adsOpenTimes[data-state=failed]{visibility:hidden}
+        @media (min-width:768px){
+            #adsOpenTimes{min-height:76px;max-width:30rem}
+            #adsOpenTimes [data-open-times-list]{grid-template-columns:repeat(4,minmax(0,1fr))}
+            #adsOpenTimes [data-open-times-list]>:nth-child(n+4):not(.ads-times-all){display:none}
+            #adsOpenTimes .ads-times-all{grid-column:auto;display:flex;align-items:center;justify-content:center;min-height:52px;text-align:center;line-height:18px}
+        }
+    </style>
+    <noscript><style>#adsOpenTimes{display:none}</style></noscript>
 </head>
 <body class="font-body selection:bg-brand-gray selection:text-brand-dark flex flex-col min-h-screen bg-brand-dark">
 
@@ -59,24 +93,34 @@
         <!-- Hero -->
         <section class="py-16 md:py-20 bg-brand-dark">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="hero-grid grid md:grid-cols-2 gap-10 items-center">
                     <div>
                         <p class="text-brand-gray text-xs uppercase tracking-widest mb-4">Park Ridge, IL · Hologic Horizon</p>
                         <h1 class="text-4xl md:text-5xl font-bold text-brand-light mb-6">DEXA Body Composition Scan</h1>
                         <p class="text-brand-gray text-lg font-light mb-6">
                             The gold standard for body composition. Know exactly how much muscle, fat, and bone you have, and track changes over time.
                         </p>
-                        <div class="flex flex-wrap items-center gap-4 mb-3">
+                        <div class="mb-3">
                             <a id="bookCtaTop" href="https://moonshot.moonshotehr.com/book/dexa"
                                class="btn-primary text-lg px-8 py-4">Book Now, $150</a>
-                            <a id="bookCtaConsult" href="https://moonshot.moonshotehr.com/book/consult"
-                               class="inline-block border border-brand-light text-brand-light px-8 py-4 text-lg font-semibold hover:bg-brand-light hover:text-brand-dark transition">Book a Free Consult</a>
+                        </div>
+                        <!-- Next open times (ads-open-times.js). Hidden if the read fails, is slow or finds none.
+                             data-type-id must be the appointment type the clinic's "dexa" booking link books
+                             (Settings > Custom Booking Links); if that link is repointed, update it here, or delete the
+                             attribute to read it from the link each time. A stale id shows only "just taken". -->
+                        <div id="adsOpenTimes" data-api="https://api.moonshotehr.com" data-tenant="moonshot" data-link="dexa" data-type-id="61452a65-d353-44f3-a55c-4e2ced60e852" data-cta="bookCtaTop" aria-live="polite">
+                            <p class="ads-times-label">Next open times</p>
+                            <div data-open-times-list>
+                                <span class="ads-time-chip-skel" aria-hidden="true"></span><span class="ads-time-chip-skel" aria-hidden="true"></span><span class="ads-time-chip-skel" aria-hidden="true"></span>
+                                <span class="ads-time-chip-skel" aria-hidden="true"></span><span class="ads-time-chip-skel" aria-hidden="true"></span><span class="ads-time-chip-skel" aria-hidden="true"></span>
+                                <a class="ads-times-all" data-open-times-all href="https://moonshot.moonshotehr.com/book/dexa">See all times</a>
+                            </div>
                         </div>
                         <p class="text-sm mb-3"><span class="text-yellow-500" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span class="text-brand-light font-semibold">5.0 on Google</span><span class="text-brand-gray/80"> &middot; 163 reviews</span></p>
                         <p class="text-brand-gray/80 text-sm mb-1">15-min visit &middot; same-day results. Have questions first? The <strong>consult is free</strong>, come see the clinic.</p>
                         <p class="text-brand-gray/60 text-sm">No referral required. HSA/FSA accepted.</p>
                     </div>
-                    <div class="aspect-[4/5] bg-brand-slate rounded-sm overflow-hidden">
+                    <div class="hero-photo aspect-[4/5] bg-brand-slate rounded-sm overflow-hidden">
                         <img src="/images/dexa-hologic-front.webp" alt="Hologic Horizon DEXA scanner at Moonshot Medical in Park Ridge, IL" class="w-full h-full object-cover" width="1200" height="1500" fetchpriority="high">
                     </div>
                 </div>
@@ -213,52 +257,6 @@
             </div>
         </section>
 
-        <!-- Performance Baseline Bundle pre-sell -->
-        <section class="py-12 bg-brand-slate border-y border-white/10">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-brand-dark/60 border border-brand-gray/30 rounded-sm p-6 md:p-8">
-                    <div class="flex flex-col md:flex-row md:items-center gap-6">
-                        <div class="flex-1">
-                            <p class="text-brand-gray text-xs uppercase tracking-widest mb-2">Most Popular &middot; Save $30</p>
-                            <h2 class="text-xl md:text-2xl font-bold text-brand-light mb-2">Performance Baseline Bundle</h2>
-                            <p class="text-brand-gray font-light text-sm md:text-base">
-                                Pair your DEXA with a 60+ biomarker comprehensive blood panel. Same visit, full picture. The data foundation for everything that comes next.
-                            </p>
-                            <p class="text-brand-gray/60 text-xs mt-2">DEXA Scan ($150) + Comprehensive Blood Panel ($285) = $405 instead of $435</p>
-                        </div>
-                        <div class="md:text-right">
-                            <p class="text-3xl md:text-4xl font-bold text-brand-light mb-1">$405</p>
-                            <a id="bookCtaBundle" href="https://moonshot.moonshotehr.com/book/performance-baseline"
-                               class="inline-block bg-brand-light text-brand-dark px-6 py-3 font-semibold text-sm hover:bg-brand-gray transition whitespace-nowrap">Book Bundle</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2-scan pack -->
-        <section class="py-12 bg-brand-light border-b border-brand-slate/10">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white border border-brand-slate/10 rounded-sm p-6 md:p-8">
-                    <div class="flex flex-col md:flex-row md:items-center gap-6">
-                        <div class="flex-1">
-                            <p class="text-brand-slate text-xs uppercase tracking-widest mb-2">Tracking Progress &middot; Save $75</p>
-                            <h2 class="text-xl md:text-2xl font-bold text-brand-dark mb-2">2-Scan Pack</h2>
-                            <p class="text-brand-slate font-light text-sm md:text-base">
-                                One scan is a snapshot. Two shows what changed. Scan now, scan again after your training or nutrition block, and see exactly how much muscle and fat moved.
-                            </p>
-                            <p class="text-brand-slate/70 text-xs mt-2">Two DEXA scans for $225 instead of $300. Use the second within 12 months. Choose the 2-scan pack when you book.</p>
-                        </div>
-                        <div class="md:text-right">
-                            <p class="text-3xl md:text-4xl font-bold text-brand-dark mb-1">$225</p>
-                            <a id="bookCtaPack" href="https://moonshot.moonshotehr.com/book/dexa"
-                               class="inline-block bg-brand-dark text-brand-light px-6 py-3 font-semibold text-sm hover:bg-brand-slate transition whitespace-nowrap">Book 2-Scan Pack</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- How It Works -->
         <section class="py-16 bg-brand-light text-brand-dark">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -284,6 +282,27 @@
                         </div>
                         <h3 class="font-bold mb-2">Get Your Report</h3>
                         <p class="text-brand-slate text-sm font-light">Detailed results same day. We walk you through every metric.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ways to save: the booker offers both, so one compact block (was two full sections) -->
+        <section class="py-10 bg-brand-slate border-y border-white/10">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-brand-gray text-xs uppercase tracking-widest mb-4">Ways to save</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-brand-dark/60 border border-brand-gray/30 rounded-sm p-5">
+                        <p class="text-brand-light font-bold mb-1">Performance Baseline Bundle, $405</p>
+                        <p class="text-brand-gray font-light text-sm mb-3">DEXA Scan ($150) + 60+ biomarker blood panel ($285), same visit. $405 instead of $435.</p>
+                        <a id="bookCtaBundle" href="https://moonshot.moonshotehr.com/book/performance-baseline"
+                           class="inline-block bg-brand-light text-brand-dark px-5 py-3 font-semibold text-sm hover:bg-brand-gray transition">Book Bundle</a>
+                    </div>
+                    <div class="bg-brand-dark/60 border border-brand-gray/30 rounded-sm p-5">
+                        <p class="text-brand-light font-bold mb-1">2-Scan Pack, $225</p>
+                        <p class="text-brand-gray font-light text-sm mb-3">Two DEXA scans for $225 instead of $300. Use the second within 12 months. Choose the 2-scan pack when you book.</p>
+                        <a id="bookCtaPack" href="https://moonshot.moonshotehr.com/book/dexa"
+                           class="inline-block bg-brand-light text-brand-dark px-5 py-3 font-semibold text-sm hover:bg-brand-gray transition">Book 2-Scan Pack</a>
                     </div>
                 </div>
             </div>
@@ -394,6 +413,7 @@
     <script src="/shared/attribution-capture.js" defer></script>
     <script src="/shared/ads-click-forward.js" defer></script>
     <script src="/shared/ads-sticky-cta.js" defer></script>
+    <script src="/shared/ads-open-times.js" defer></script>
 
 </body>
 </html>
