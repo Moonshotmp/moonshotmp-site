@@ -6,7 +6,7 @@
  * real open times on the landing page lets a visitor pick one before leaving.
  *
  * WHAT: reads the clinic booker's own public reads (the same calls
- * moonshot.moonshotehr.com/book/dexa makes) and renders up to six open times,
+ * moonshot.moonshotehr.com/book/dexa makes; data-type-id skips the link config read) and renders up to six open times,
  * soonest first, each linking to the booker with ?slot=YYYY-MM-DDTHH:MM so it
  * opens on that time. The booker re-checks the time and, if it is gone, opens
  * its calendar with one line; a booker without ?slot= support simply opens
@@ -35,6 +35,10 @@
   var API = box.getAttribute('data-api');
   var TENANT = box.getAttribute('data-tenant');
   var LINK = box.getAttribute('data-link');
+  // The link's appointment type, when the page knows it, saves one serial
+  // round trip (and its CORS preflight). If it is stale the booker re-checks
+  // the time against its own service, so a wrong id can only show "taken".
+  var TYPE_ID = box.getAttribute('data-type-id');
   var cta = document.getElementById(box.getAttribute('data-cta') || 'bookCtaTop');
   var list = box.querySelector('[data-open-times-list]');
   var allLink = box.querySelector('[data-open-times-all]');
@@ -43,10 +47,9 @@
   var BUDGET_MS = 2500;
   var done = false;
 
-  // Failed, slow or empty: hide the block. On phones it takes no space (only
-  // what is below the button moves up); from md it keeps its reserved height,
-  // invisible, because the text column is centred against the photo and any
-  // change in its height would move the Book button.
+  // Failed, slow or empty: the block goes invisible and keeps its reserved
+  // height (the page CSS), so nothing below it, or the centred desktop
+  // column, ever moves.
   function remove() {
     if (done) return;
     done = true;
@@ -55,7 +58,7 @@
     var links = box.querySelectorAll('a');
     for (var i = 0; i < links.length; i++) links[i].setAttribute('tabindex', '-1');
   }
-  if (!API || !TENANT || !LINK || !cta || !list || !window.fetch || !window.Promise) return remove();
+  if (!API || !TENANT || (!LINK && !TYPE_ID) || !cta || !list || !window.fetch || !window.Promise) return remove();
   var timer = setTimeout(remove, BUDGET_MS);
   var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
 
@@ -70,13 +73,17 @@
     });
   }
 
-  // YYYY-MM-DD in the clinic zone, offset by `days`.
-  function clinicDay(days) {
+  // YYYY-MM-DD in the clinic zone, `days` calendar days from today there
+  // (calendar arithmetic, so a DST night never skips or repeats a day).
+  var todayParts = (function () {
     var parts = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' })
-      .formatToParts(new Date(Date.now() + days * 86400000));
+      .formatToParts(new Date());
     var o = {};
     for (var i = 0; i < parts.length; i++) o[parts[i].type] = parts[i].value;
-    return o.year + '-' + o.month + '-' + o.day;
+    return o;
+  })();
+  function clinicDay(days) {
+    return new Date(Date.UTC(+todayParts.year, +todayParts.month - 1, +todayParts.day + days, 12)).toISOString().slice(0, 10);
   }
   // Labels come from the date string itself (UTC noon), never the device zone.
   function dayLabel(ymd, today, tomorrow) {
@@ -100,7 +107,9 @@
   var tomorrow = clinicDay(1);
   var typeId = null;
 
-  get('/api/book/config-by-slug/' + encodeURIComponent(LINK) + '?probe=1') // probe: not counted as a link open
+  (TYPE_ID
+    ? Promise.resolve({ config: { appointment_type_id: TYPE_ID } })
+    : get('/api/book/config-by-slug/' + encodeURIComponent(LINK) + '?probe=1')) // probe: not counted as a link open
     .then(function (cfg) {
       typeId = cfg && cfg.config && cfg.config.appointment_type_id;
       if (!typeId) throw new Error('no appointment type');
@@ -109,7 +118,7 @@
     })
     .then(function (d) {
       var s = (d && d.summary) || {};
-      var days = Object.keys(s).filter(function (k) { return k >= today && s[k] > 0; }).sort().slice(0, 2);
+      var days = Object.keys(s).filter(function (k) { return /^\d{4}-\d{2}-\d{2}$/.test(k) && k >= today && s[k] > 0; }).sort().slice(0, 2);
       if (!days.length) throw new Error('no open days');
       return Promise.all(days.map(function (day) {
         return get('/api/book/slots?date=' + day + '&appointment_type_id=' + encodeURIComponent(typeId))

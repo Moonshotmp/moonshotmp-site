@@ -50,7 +50,7 @@
         .hero-grid{gap:2.5rem}
         .hero-photo{aspect-ratio:4/5;overflow:hidden}
         .hero-photo>img{display:block;width:100%;height:100%;object-fit:cover}
-        #adsOpenTimes{min-height:172px;margin:16px 0 12px;max-width:26rem}
+        #adsOpenTimes{min-height:188px;margin:16px 0 12px;max-width:26rem}
         #adsOpenTimes .ads-times-label{color:#B2BFBE;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px;line-height:16px}
         #adsOpenTimes [data-open-times-list]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
         .ads-time-chip,.ads-time-chip-skel{min-height:52px;border:1px solid rgb(178 191 190/.45);border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4px 6px}
@@ -59,14 +59,15 @@
         .ads-time-chip-skel{border-style:dashed;border-color:rgb(178 191 190/.2)}
         .ads-time-chip-day{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;line-height:14px}
         .ads-time-chip-time{font-size:15px;font-weight:600;line-height:20px;white-space:nowrap}
-        #adsOpenTimes .ads-times-all{grid-column:1/-1;color:#B2BFBE;font-size:14px;line-height:28px;text-decoration:underline}
+        #adsOpenTimes .ads-times-all{grid-column:1/-1;color:#B2BFBE;font-size:14px;line-height:44px;text-decoration:underline}
         /* From md: one row, three times plus "See all times" as the fourth cell.
            A short block keeps the text column shorter than the scanner photo,
            so the late Tailwind load cannot move the section. */
-        #adsOpenTimes[data-state=failed]{display:none}
+        /* Failed, slow or no times: the block goes invisible but keeps its
+           space, at every width, so nothing below it ever moves. */
+        #adsOpenTimes[data-state=failed]{visibility:hidden}
         @media (min-width:768px){
             #adsOpenTimes{min-height:76px;max-width:30rem}
-            #adsOpenTimes[data-state=failed]{display:block;visibility:hidden}
             #adsOpenTimes [data-open-times-list]{grid-template-columns:repeat(4,minmax(0,1fr))}
             #adsOpenTimes [data-open-times-list]>:nth-child(n+4):not(.ads-times-all){display:none}
             #adsOpenTimes .ads-times-all{grid-column:auto;display:flex;align-items:center;justify-content:center;min-height:52px;text-align:center;line-height:18px}
@@ -104,7 +105,7 @@
                                class="btn-primary text-lg px-8 py-4">Book Now, $150</a>
                         </div>
                         <!-- Next open times (ads-open-times.js). Hidden if the read fails, is slow or finds none. -->
-                        <div id="adsOpenTimes" data-api="https://api.moonshotehr.com" data-tenant="moonshot" data-link="dexa" data-cta="bookCtaTop" aria-live="polite">
+                        <div id="adsOpenTimes" data-api="https://api.moonshotehr.com" data-tenant="moonshot" data-link="dexa" data-type-id="61452a65-d353-44f3-a55c-4e2ced60e852" data-cta="bookCtaTop" aria-live="polite">
                             <p class="ads-times-label">Next open times</p>
                             <div data-open-times-list>
                                 <span class="ads-time-chip-skel" aria-hidden="true"></span><span class="ads-time-chip-skel" aria-hidden="true"></span><span class="ads-time-chip-skel" aria-hidden="true"></span>
