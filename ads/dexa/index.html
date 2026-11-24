@@ -104,7 +104,10 @@
                             <a id="bookCtaTop" href="https://moonshot.moonshotehr.com/book/dexa"
                                class="btn-primary text-lg px-8 py-4">Book Now, $150</a>
                         </div>
-                        <!-- Next open times (ads-open-times.js). Hidden if the read fails, is slow or finds none. -->
+                        <!-- Next open times (ads-open-times.js). Hidden if the read fails, is slow or finds none.
+                             data-type-id must be the appointment type the clinic's "dexa" booking link books
+                             (Settings > Booking links); if that link is repointed, update it here, or delete the
+                             attribute to read it from the link each time. A stale id shows only "just taken". -->
                         <div id="adsOpenTimes" data-api="https://api.moonshotehr.com" data-tenant="moonshot" data-link="dexa" data-type-id="61452a65-d353-44f3-a55c-4e2ced60e852" data-cta="bookCtaTop" aria-live="polite">
                             <p class="ads-times-label">Next open times</p>
                             <div data-open-times-list>
