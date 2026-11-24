@@ -138,4 +138,10 @@
   } else {
     decorate();
   }
+
+  // Booker links added after load (the /ads/dexa/ open-time chips,
+  // ads-open-times.js) call this once they are in the DOM. It is the same
+  // pass, and it never stamps a param a link already carries, so calling it
+  // again over decorated links is a no-op.
+  window.MMPAdsForward = { decorate: decorate };
 })();
