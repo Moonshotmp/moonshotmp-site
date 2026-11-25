@@ -194,16 +194,13 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
           <a href="/" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-            <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain" width="200" height="168">
-            <div class="hidden sm:block text-brand-light font-heading text-sm tracking-wide leading-tight ml-3">
-              MOONSHOT<br>MEDICAL AND PERFORMANCE
-            </div>
+            <img src="/images/moonshotmptan.png" alt="Moonshot Medical + Performance" class="h-[26px] md:h-[30px] w-auto" width="1973" height="335">
           </a>
 
-          <div class="hidden lg:flex space-x-6 items-center">
+          <div class="hidden lg:flex space-x-8 items-center">
             <!-- Medical Dropdown -->
             <div class="relative inline-block" id="medical-menu-wrapper">
-              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-[15px] font-normal transition flex items-center focus:outline-none"
                       id="medical-menu-button" aria-expanded="false" aria-haspopup="true">
                 Medical
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,7 +209,7 @@
               </button>
               <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="medical-dropdown" role="menu">
                 <div class="py-2">
-                  <a href="/medical/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide" role="menuitem">Overview</a>
+                  <a href="/medical/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5" role="menuitem">Overview</a>
                   <a href="/medical/blood-panels/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Blood Panels</a>
                   <a href="/blood-work/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Blood Work Guide</a>
                   <a href="/medical/dexa-scan/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">DEXA Scan</a>
@@ -233,7 +230,7 @@
 
             <!-- Rehab Dropdown -->
             <div class="relative inline-block" id="rehab-menu-wrapper">
-              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-[15px] font-normal transition flex items-center focus:outline-none"
                       id="rehab-menu-button" aria-expanded="false" aria-haspopup="true">
                 Rehab
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -242,7 +239,7 @@
               </button>
               <div class="absolute left-0 mt-2 w-56 bg-brand-dark border border-white/10 shadow-xl rounded-sm hidden" id="rehab-dropdown" role="menu">
                 <div class="py-2">
-                  <a href="/rehab/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5 uppercase tracking-wide" role="menuitem">Overview</a>
+                  <a href="/rehab/" class="block px-4 py-3 text-sm text-brand-light hover:bg-white/5" role="menuitem">Overview</a>
                   <a href="/rehab/chiropractic/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Chiropractic</a>
                   <a href="/rehab/physical-rehab/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Physical Rehab</a>
                   <a href="/rehab/trigger-point/" class="block px-4 py-3 text-sm text-brand-gray hover:text-brand-light hover:bg-white/5 border-t border-white/5" role="menuitem">Trigger Point</a>
@@ -254,7 +251,7 @@
 
             <!-- Learn Mega Menu -->
             <div class="relative inline-block" id="learn-menu-wrapper">
-              <a href="/learn/" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <a href="/learn/" class="nav-link text-brand-light hover:text-brand-gray text-[15px] font-normal transition flex items-center focus:outline-none"
                       id="learn-menu-button" aria-expanded="false" aria-haspopup="true">
                 Learn
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -265,7 +262,7 @@
                 <div class="p-6 grid grid-cols-5 gap-6">
                   <!-- Men Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Men</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-[.14em] mb-3 font-medium">Men</span>
                     <a href="/learn/trt-guide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">TRT Guide</a>
                     <a href="/learn/low-testosterone-symptoms/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Low T Symptoms</a>
                     <a href="/learn/trt-vs-steroids/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">TRT vs Steroids</a>
@@ -274,7 +271,7 @@
                   </div>
                   <!-- Women Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Women</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-[.14em] mb-3 font-medium">Women</span>
                     <a href="/learn/menopause-perimenopause/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Menopause Guide</a>
                     <a href="/learn/testosterone-for-women/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Testosterone for Women</a>
                     <a href="/learn/progesterone/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Progesterone</a>
@@ -283,13 +280,13 @@
                   </div>
                   <!-- Weight Loss Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Weight Loss</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-[.14em] mb-3 font-medium">Weight Loss</span>
                     <a href="/learn/semaglutide-vs-tirzepatide/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Semaglutide vs Tirzepatide</a>
                     <a href="/medical/glp1-vs-other-weight-loss/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">GLP-1 vs Other Methods</a>
                   </div>
                   <!-- Peptides Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Peptides</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-[.14em] mb-3 font-medium">Peptides</span>
                     <a href="/learn/peptides/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Peptide Therapy Guide</a>
                     <a href="/learn/bpc-157/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">BPC-157</a>
                     <a href="/learn/sermorelin/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Sermorelin</a>
@@ -301,7 +298,7 @@
                   </div>
                   <!-- Rehab & Diagnostics Column -->
                   <div>
-                    <span class="block text-xs text-brand-gray uppercase tracking-widest mb-3 font-medium">Rehab & Diagnostics</span>
+                    <span class="block text-xs text-brand-gray uppercase tracking-[.14em] mb-3 font-medium">Rehab & Diagnostics</span>
                     <a href="/learn/prp-microneedling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">PRP Microneedling</a>
                     <a href="/learn/dry-needling/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Dry Needling</a>
                     <a href="/learn/shockwave-therapy/" class="block py-2 text-sm text-brand-gray hover:text-brand-light transition" role="menuitem">Shockwave Therapy</a>
@@ -319,7 +316,7 @@
 
             <!-- About Dropdown -->
             <div class="relative inline-block" id="about-menu-wrapper">
-              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-[15px] font-normal transition flex items-center focus:outline-none"
                       id="about-menu-button" aria-expanded="false" aria-haspopup="true">
                 About
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -338,7 +335,7 @@
 
             <!-- Quiz Dropdown -->
             <div class="relative inline-block" id="quiz-menu-wrapper">
-              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition flex items-center focus:outline-none"
+              <button type="button" class="nav-link text-brand-light hover:text-brand-gray text-[15px] font-normal transition flex items-center focus:outline-none"
                       id="quiz-menu-button" aria-expanded="false" aria-haspopup="true">
                 Quiz
                 <svg class="ml-1 h-4 w-4 transition-transform duration-200" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -360,8 +357,8 @@
             <button type="button" id="search-toggle" aria-label="Search" class="text-brand-light hover:text-brand-gray transition cursor-pointer" onclick="var so=document.getElementById('search-overlay');so.style.display='block';document.body.style.overflow='hidden';var si=document.getElementById('search-input');si.value='';document.getElementById('search-results').innerHTML='';setTimeout(function(){si.focus()},100);">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
-            <a href="https://moonshot.moonshotclinic.com/portal" class="nav-link text-brand-light hover:text-brand-gray text-sm uppercase tracking-wider font-medium transition">Login</a>
-            <a href="/booking/medical/" class="btn-primary text-xs tracking-widest" onclick="event.preventDefault(); openBookingModal();">Book Now</a>
+            <a href="https://moonshot.moonshotclinic.com/portal" class="nav-link text-brand-light hover:text-brand-gray text-[15px] font-normal transition">Login</a>
+            <a href="/booking/medical/" class="text-[15px] text-brand-light hover:opacity-75 transition border-b border-white pb-[3px]" onclick="event.preventDefault(); openBookingModal();">Book a Visit</a>
           </div>
 
           <div class="lg:hidden flex items-center gap-3">
@@ -378,139 +375,134 @@
       </div>
 
       <div id="mobile-menu" class="lg:hidden bg-brand-dark border-b border-white/10 hidden max-h-[calc(100vh-5rem)] overflow-y-auto">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+        <div class="px-5 pt-4 pb-8 sm:px-6 text-left">
 
           <!-- Medical Mobile -->
           <div>
-            <button type="button" id="mobile-medical-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
-              <span class="w-4"></span>
-              <span class="flex-1 text-center font-bold">Medical</span>
+            <button type="button" id="mobile-medical-btn" class="w-full flex items-center py-3 text-brand-light font-serif font-medium text-[28px] leading-tight focus:outline-none">
+              <span class="flex-1 text-left">Medical</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-medical-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
-            <div id="mobile-medical-submenu" class="bg-black/20 hidden">
-              <a href="/medical/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Overview</a>
-              <a href="/medical/blood-panels/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Panels</a>
-              <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Work Guide</a>
-              <a href="/medical/dexa-scan/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA Scan</a>
-              <a href="/medical/mens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Men's Hormones</a>
-              <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
-              <a href="/medical/womens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Women's Hormones</a>
-              <a href="/medical/weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Weight Loss</a>
-              <a href="/medical/nutrition-coaching/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Nutrition Coaching</a>
-              <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptides</a>
-              <a href="/medical/botox-park-ridge/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Botox / Jeuveau</a>
-              <a href="/quiz/perimenopause/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">Perimenopause Screener &rarr;</a>
-              <a href="/quiz/low-t/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">TRT Readiness Screener &rarr;</a>
-              <a href="/quiz/glp1/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">GLP-1 Readiness Screener &rarr;</a>
-              <a href="/quiz/bone-density/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Bone Density Screener &rarr;</a>
+            <div id="mobile-medical-submenu" class="hidden pb-3 pl-1">
+              <a href="/medical/" class="block w-full text-brand-light py-2 text-[15px]">Overview</a>
+              <a href="/medical/blood-panels/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Blood Panels</a>
+              <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Blood Work Guide</a>
+              <a href="/medical/dexa-scan/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">DEXA Scan</a>
+              <a href="/medical/mens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Men's Hormones</a>
+              <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Daily Tadalafil</a>
+              <a href="/medical/womens-hormones/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Women's Hormones</a>
+              <a href="/medical/weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Weight Loss</a>
+              <a href="/medical/nutrition-coaching/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Nutrition Coaching</a>
+              <a href="/medical/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Peptides</a>
+              <a href="/medical/botox-park-ridge/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Botox / Jeuveau</a>
+              <a href="/quiz/perimenopause/" class="block w-full text-brand-light py-2 text-[15px] mt-2">Perimenopause Screener &rarr;</a>
+              <a href="/quiz/low-t/" class="block w-full text-brand-light py-2 text-[15px]">TRT Readiness Screener &rarr;</a>
+              <a href="/quiz/glp1/" class="block w-full text-brand-light py-2 text-[15px]">GLP-1 Readiness Screener &rarr;</a>
+              <a href="/quiz/bone-density/" class="block w-full text-brand-light py-2 text-[15px]">Bone Density Screener &rarr;</a>
             </div>
           </div>
 
           <!-- Rehab Mobile -->
           <div>
-            <button type="button" id="mobile-rehab-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
-              <span class="w-4"></span>
-              <span class="flex-1 text-center font-bold">Rehab</span>
+            <button type="button" id="mobile-rehab-btn" class="w-full flex items-center py-3 text-brand-light font-serif font-medium text-[28px] leading-tight focus:outline-none">
+              <span class="flex-1 text-left">Rehab</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-rehab-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
-            <div id="mobile-rehab-submenu" class="bg-black/20 hidden">
-              <a href="/rehab/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide font-bold">Overview</a>
-              <a href="/rehab/chiropractic/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Chiropractic</a>
-              <a href="/rehab/physical-rehab/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Physical Rehab</a>
-              <a href="/rehab/trigger-point/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point</a>
-              <a href="/rehab/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
-              <a href="/rehab/shockwave/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave</a>
+            <div id="mobile-rehab-submenu" class="hidden pb-3 pl-1">
+              <a href="/rehab/" class="block w-full text-brand-light py-2 text-[15px]">Overview</a>
+              <a href="/rehab/chiropractic/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Chiropractic</a>
+              <a href="/rehab/physical-rehab/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Physical Rehab</a>
+              <a href="/rehab/trigger-point/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Trigger Point</a>
+              <a href="/rehab/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Dry Needling</a>
+              <a href="/rehab/shockwave/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Shockwave</a>
             </div>
           </div>
 
           <!-- Learn Mobile -->
           <div>
-            <button type="button" id="mobile-learn-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
-              <span class="w-4"></span>
-              <span class="flex-1 text-center font-bold">Learn</span>
+            <button type="button" id="mobile-learn-btn" class="w-full flex items-center py-3 text-brand-light font-serif font-medium text-[28px] leading-tight focus:outline-none">
+              <span class="flex-1 text-left">Learn</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-learn-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
-            <div id="mobile-learn-submenu" class="bg-black/20 hidden">
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide">Men</span>
-              <a href="/learn/trt-guide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT Guide</a>
-              <a href="/learn/low-testosterone-symptoms/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Low T Symptoms</a>
-              <a href="/learn/trt-vs-steroids/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Steroids</a>
-              <a href="/medical/trt-vs-enclomiphene/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT vs Enclomiphene</a>
-              <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Daily Tadalafil</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Women</span>
-              <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Menopause Guide</a>
-              <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Testosterone for Women</a>
-              <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Progesterone</a>
-              <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PCOS</a>
-              <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">HRT: Myths vs Facts</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Weight Loss</span>
-              <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Semaglutide vs Tirzepatide</a>
-              <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 vs Other Methods</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Peptides</span>
-              <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Therapy Guide</a>
-              <a href="/learn/bpc-157/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">BPC-157</a>
-              <a href="/learn/sermorelin/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Sermorelin</a>
-              <a href="/learn/tb-500/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TB-500</a>
-              <a href="/learn/wolverine-blend/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Wolverine Blend</a>
-              <a href="/learn/pt-141/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PT-141</a>
-              <a href="/learn/ghk-cu/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GHK-Cu</a>
-              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
-              <span class="block w-full text-brand-gray py-2 text-xs uppercase tracking-wide mt-2">Rehab & Diagnostics</span>
-              <a href="/learn/prp-microneedling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">PRP Microneedling</a>
-              <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Dry Needling</a>
-              <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Shockwave Therapy</a>
-              <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Trigger Point Treatment</a>
-              <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Blood Work Guide</a>
-              <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">DEXA vs InBody</a>
-              <a href="/learn/first-visit/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Your First Visit</a>
-              <a href="/learn/" class="block w-full text-brand-light py-2 text-xs uppercase tracking-wide mt-2 font-bold">View All &rarr;</a>
+            <div id="mobile-learn-submenu" class="hidden pb-3 pl-1">
+              <span class="block w-full text-brand-gray py-2 text-[15px]">Men</span>
+              <a href="/learn/trt-guide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">TRT Guide</a>
+              <a href="/learn/low-testosterone-symptoms/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Low T Symptoms</a>
+              <a href="/learn/trt-vs-steroids/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">TRT vs Steroids</a>
+              <a href="/medical/trt-vs-enclomiphene/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">TRT vs Enclomiphene</a>
+              <a href="/medical/tadalafil/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Daily Tadalafil</a>
+              <span class="block w-full text-brand-gray py-2 text-[15px] mt-2">Women</span>
+              <a href="/learn/menopause-perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Menopause Guide</a>
+              <a href="/learn/testosterone-for-women/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Testosterone for Women</a>
+              <a href="/learn/progesterone/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Progesterone</a>
+              <a href="/learn/pcos/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">PCOS</a>
+              <a href="/learn/whi-study-hrt-truth/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">HRT: Myths vs Facts</a>
+              <span class="block w-full text-brand-gray py-2 text-[15px] mt-2">Weight Loss</span>
+              <a href="/learn/semaglutide-vs-tirzepatide/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Semaglutide vs Tirzepatide</a>
+              <a href="/medical/glp1-vs-other-weight-loss/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">GLP-1 vs Other Methods</a>
+              <span class="block w-full text-brand-gray py-2 text-[15px] mt-2">Peptides</span>
+              <a href="/learn/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Peptide Therapy Guide</a>
+              <a href="/learn/bpc-157/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">BPC-157</a>
+              <a href="/learn/sermorelin/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Sermorelin</a>
+              <a href="/learn/tb-500/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">TB-500</a>
+              <a href="/learn/wolverine-blend/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Wolverine Blend</a>
+              <a href="/learn/pt-141/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">PT-141</a>
+              <a href="/learn/ghk-cu/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">GHK-Cu</a>
+              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Peptide Quiz</a>
+              <span class="block w-full text-brand-gray py-2 text-[15px] mt-2">Rehab & Diagnostics</span>
+              <a href="/learn/prp-microneedling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">PRP Microneedling</a>
+              <a href="/learn/dry-needling/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Dry Needling</a>
+              <a href="/learn/shockwave-therapy/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Shockwave Therapy</a>
+              <a href="/learn/trigger-point-injections/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Trigger Point Treatment</a>
+              <a href="/blood-work/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Blood Work Guide</a>
+              <a href="/medical/dexa-scan/dexa-vs-inbody/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">DEXA vs InBody</a>
+              <a href="/learn/first-visit/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Your First Visit</a>
+              <a href="/learn/" class="block w-full text-brand-light py-2 text-[15px] mt-2">View All &rarr;</a>
             </div>
           </div>
 
           <!-- About Mobile -->
           <div>
-            <button type="button" id="mobile-about-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
-              <span class="w-4"></span>
-              <span class="flex-1 text-center font-bold">About</span>
+            <button type="button" id="mobile-about-btn" class="w-full flex items-center py-3 text-brand-light font-serif font-medium text-[28px] leading-tight focus:outline-none">
+              <span class="flex-1 text-left">About</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-about-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
-            <div id="mobile-about-submenu" class="bg-black/20 hidden">
-              <a href="/about/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Our Team</a>
-              <a href="/ourstory/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Tom's Story</a>
-              <a href="/medical/moonshot-vs-typical-clinic/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">How We're Different</a>
-              <a href="/contact/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Contact Us</a>
+            <div id="mobile-about-submenu" class="hidden pb-3 pl-1">
+              <a href="/about/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Our Team</a>
+              <a href="/ourstory/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Tom's Story</a>
+              <a href="/medical/moonshot-vs-typical-clinic/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">How We're Different</a>
+              <a href="/contact/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Contact Us</a>
             </div>
           </div>
 
           <!-- Quiz Mobile -->
           <div>
-            <button type="button" id="mobile-quiz-btn" class="w-full flex items-center px-2 py-3 text-brand-light hover:bg-white/5 text-sm uppercase tracking-widest focus:outline-none">
-              <span class="w-4"></span>
-              <span class="flex-1 text-center font-bold">Quiz</span>
+            <button type="button" id="mobile-quiz-btn" class="w-full flex items-center py-3 text-brand-light font-serif font-medium text-[28px] leading-tight focus:outline-none">
+              <span class="flex-1 text-left">Quiz</span>
               <svg class="h-4 w-4 transition-transform duration-200" id="mobile-quiz-arrow" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
-            <div id="mobile-quiz-submenu" class="bg-black/20 hidden">
-              <a href="/quiz/perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Perimenopause Screener</a>
-              <a href="/quiz/low-t/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">TRT Readiness Screener</a>
-              <a href="/quiz/glp1/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">GLP-1 Readiness Screener</a>
-              <a href="/quiz/bone-density/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Bone Density Screener</a>
-              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Peptide Quiz</a>
-              <a href="/quiz/body-comp/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-xs uppercase tracking-wide">Body Comp IQ Quiz</a>
+            <div id="mobile-quiz-submenu" class="hidden pb-3 pl-1">
+              <a href="/quiz/perimenopause/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Perimenopause Screener</a>
+              <a href="/quiz/low-t/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">TRT Readiness Screener</a>
+              <a href="/quiz/glp1/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">GLP-1 Readiness Screener</a>
+              <a href="/quiz/bone-density/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Bone Density Screener</a>
+              <a href="/quiz/peptides/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Peptide Quiz</a>
+              <a href="/quiz/body-comp/" class="block w-full text-brand-gray hover:text-brand-light py-2 text-[15px]">Body Comp IQ Quiz</a>
             </div>
           </div>
 
-          <a href="https://moonshot.moonshotclinic.com/portal" class="block w-full text-brand-gray hover:text-brand-light py-3 text-sm uppercase tracking-widest mt-2">Login</a>
-          <a href="#" onclick="event.preventDefault(); openBookingModal();" class="block w-full text-brand-light bg-brand-gray/10 hover:bg-brand-gray/20 py-3 text-sm uppercase tracking-widest mt-2 font-bold">Book Now</a>
+          <a href="https://moonshot.moonshotclinic.com/portal" class="block w-full text-brand-gray hover:text-brand-light py-3 text-[15px] mt-4 border-t border-white/15 pt-5">Login</a>
+          <a href="#" onclick="event.preventDefault(); openBookingModal();" class="inline-block text-brand-light text-[15px] py-2 border-b border-white">Book a Visit</a>
         </div>
       </div>
     </nav>
@@ -999,7 +991,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <h3 id="booking-modal-heading" class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an appointment</h3>
+                <h3 id="booking-modal-heading" class="text-2xl font-bold text-brand-light mb-2 ">Book an appointment</h3>
                 <p class="text-brand-gray text-sm mb-8">Which service are you looking for?</p>
                 <div class="space-y-4">
                     <a href="https://moonshot.moonshotehr.com/book/consult" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">

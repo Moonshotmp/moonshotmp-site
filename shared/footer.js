@@ -15,7 +15,7 @@
     const currentYear = new Date().getFullYear();
 
     const footerHTML = `
-    <footer class="bg-black border-t border-white/10 py-12">
+    <footer class="bg-brand-dark border-t border-white/10 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8">
                 <!-- Brand -->
@@ -23,7 +23,7 @@
                     <a href="/" class="flex items-center gap-2 mb-2">
                          <img src="/images/mm+logocloud.png" alt="MM+ Logo" class="h-8 md:h-10 w-auto object-contain">
                     </a>
-                    <div class="text-brand-light font-heading font-bold text-xl tracking-widest">Moonshot Medical and Performance</div>
+                    <div class="text-brand-light font-serif font-medium text-2xl leading-tight">Moonshot Medical and Performance</div>
                     <p class="text-brand-gray text-xs mt-2">
                         542 Busse Hwy, Park Ridge, IL 60068
                     </p>
@@ -31,7 +31,7 @@
 
                 <!-- Resources -->
                 <div>
-                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">Resources</h3>
+                    <h3 class="text-brand-light font-body font-medium text-xs uppercase tracking-[.14em] mb-4">Resources</h3>
                     <div class="space-y-2 text-sm">
                         <p class="text-brand-gray">
                             <a href="/blood-work/" class="hover:text-brand-light transition py-2 inline-block">Blood Work Guide</a>
@@ -50,7 +50,7 @@
 
                 <!-- Contact -->
                 <div>
-                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">Contact</h3>
+                    <h3 class="text-brand-light font-body font-medium text-xs uppercase tracking-[.14em] mb-4">Contact</h3>
                     <div class="space-y-2 text-sm">
                         <p class="text-brand-gray">
                             <a href="tel:+12244354280" class="hover:text-brand-light transition py-2 inline-block">224-435-4280</a>
@@ -63,17 +63,17 @@
 
                 <!-- Social -->
                 <div>
-                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">Follow</h3>
+                    <h3 class="text-brand-light font-body font-medium text-xs uppercase tracking-[.14em] mb-4">Follow</h3>
                     <div class="space-y-2">
-                        <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
+                        <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm flex items-center gap-2 py-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                             Instagram
                         </a>
-                        <a href="https://www.facebook.com/people/Moonshot-Medical-and-Performance/61587482906784/" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
+                        <a href="https://www.facebook.com/people/Moonshot-Medical-and-Performance/61587482906784/" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm flex items-center gap-2 py-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                             Facebook
                         </a>
-                        <a href="https://www.linkedin.com/company/moonshot-medical-and-performance" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
+                        <a href="https://www.linkedin.com/company/moonshot-medical-and-performance" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm flex items-center gap-2 py-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                             LinkedIn
                         </a>
@@ -82,30 +82,30 @@
             </div>
             <!-- Quiz CTAs -->
             <div class="mt-8 pt-8 border-t border-white/5">
-                <p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">FREE QUIZZES</p>
+                <p class="text-brand-light font-body font-medium text-xs uppercase tracking-[.14em] mb-4">FREE QUIZZES</p>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <a href="/quiz/perimenopause/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
-                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">PERIMENOPAUSE SCREENER</p>
+                        <p class="text-white font-serif font-medium text-xl leading-tight group-hover:text-white transition">Perimenopause screener</p>
                         <p class="text-brand-light/80 text-xs mt-1">Validated 11-item MRS scale plus a safety screen for hormone-therapy contraindications.</p>
                     </a>
                     <a href="/quiz/low-t/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
-                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">TRT READINESS SCREENER</p>
+                        <p class="text-white font-serif font-medium text-xl leading-tight group-hover:text-white transition">TRT readiness screener</p>
                         <p class="text-brand-light/80 text-xs mt-1">Validated 10-item ADAM scale plus a PSA and IPSS short-form safety check.</p>
                     </a>
                     <a href="/quiz/glp1/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
-                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">GLP-1 READINESS SCREENER</p>
+                        <p class="text-white font-serif font-medium text-xl leading-tight group-hover:text-white transition">GLP-1 readiness screener</p>
                         <p class="text-brand-light/80 text-xs mt-1">BMI, qualifying comorbidities, and an 8-category contraindication safety check for prescription weight-management.</p>
                     </a>
                     <a href="/quiz/bone-density/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
-                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BONE DENSITY SCREENER</p>
+                        <p class="text-white font-serif font-medium text-xl leading-tight group-hover:text-white transition">Bone density screener</p>
                         <p class="text-brand-light/80 text-xs mt-1">OST formula plus AACE / NOF risk factors to help you decide whether a DEXA scan makes sense.</p>
                     </a>
                     <a href="/quiz/peptides/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
-                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">PEPTIDE QUIZ</p>
+                        <p class="text-white font-serif font-medium text-xl leading-tight group-hover:text-white transition">Peptide quiz</p>
                         <p class="text-brand-light/80 text-xs mt-1">Which peptide is right for you? Get a personalized protocol recommendation.</p>
                     </a>
                     <a href="/quiz/body-comp/" class="block border border-white/20 border-l-2 border-l-brand-light rounded-sm p-5 bg-brand-slate hover:bg-brand-slate/80 hover:border-white/30 transition-all duration-300 group">
-                        <p class="text-white font-heading font-bold text-sm tracking-widest group-hover:text-white transition">BODY COMP IQ QUIZ</p>
+                        <p class="text-white font-serif font-medium text-xl leading-tight group-hover:text-white transition">Body comp IQ quiz</p>
                         <p class="text-brand-light/80 text-xs mt-1">Test what you know about body fat, DEXA scans, and metabolic health.</p>
                     </a>
                 </div>
@@ -266,7 +266,7 @@
                 prompt.id = 'quiz-scroll-prompt';
                 prompt.className = 'fixed bottom-4 right-4 z-[70] bg-brand-dark border border-white/10 rounded-sm p-5 shadow-2xl max-w-xs transition-all duration-300 translate-y-4 opacity-0 hidden md:block';
                 prompt.innerHTML = '<button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-3 text-brand-gray hover:text-white text-lg leading-none">&times;</button>' +
-                    '<p class="text-brand-light font-heading font-bold text-sm tracking-widest mb-1">CURIOUS?</p>' +
+                    '<p class="text-brand-light font-body font-medium text-xs uppercase tracking-[.14em] mb-1">CURIOUS?</p>' +
                     '<p class="text-brand-gray text-xs mb-3">Take a free 2-min quiz and get personalized insights.</p>' +
                     '<div class="space-y-2">' +
                     '<a href="/quiz/perimenopause/" class="block text-brand-light text-xs border border-white/15 rounded-sm px-4 py-2 hover:bg-white/5 transition text-center">Perimenopause Screener</a>' +
