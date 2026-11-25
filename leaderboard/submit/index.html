@@ -30,7 +30,7 @@
 
     <!-- Tailwind CSS + Global Styles -->
     <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/cormorant-garamond-var.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/shared/critical.css">
     <link rel="stylesheet" href="/shared/tailwind.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="/shared/styles.css" media="print" onload="this.media='all'">
@@ -102,7 +102,7 @@
 
                 <!-- ========== STEP 1: ENTER YOUR SCORES ========== -->
                 <div id="step-1" class="step step-visible">
-                    <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-2 text-center">Enter Your Scores</h1>
+                    <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-2 text-center">Enter your scores</h1>
                     <p class="text-brand-gray text-sm text-center mb-1">Fill in whatever you have. Leave the rest blank.</p>
                     <p class="text-brand-gray/50 text-xs text-center mb-4">Open to anyone who lives in, works in, or works out in Park Ridge.</p>
                     <p class="text-brand-gray/50 text-xs text-center mb-6">Returning? Just enter your new scores. You'll log in on the next step.</p>
@@ -178,7 +178,7 @@
 
                     <!-- CALISTHENICS -->
                     <div class="bg-brand-slate border border-white/10 rounded-lg p-4 mb-6">
-                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">CALISTHENICS</h2>
+                        <h2 class="font-heading text-sm text-brand-gray tracking-widest mb-3">Calisthenics</h2>
                         <div class="flex items-center justify-between py-1.5 border-b border-white/5">
                             <span class="text-brand-light text-sm">Strict Pull-ups <span class="text-brand-gray text-xs">(2 min)</span></span>
                             <div class="flex items-center">
@@ -219,7 +219,7 @@
                 <div id="step-2" class="step step-hidden">
                     <!-- Logged-in user banner (hidden by default, shown if session exists) -->
                     <div id="logged-in-banner" class="hidden">
-                        <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-2 text-center">Add New Scores</h1>
+                        <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-2 text-center">Add new scores</h1>
                         <p class="text-brand-gray text-sm text-center mb-4">Submitting as <strong id="logged-in-name" class="text-brand-light"></strong></p>
                         <p id="step2-error" class="text-red-400 text-xs text-center mb-2 hidden"></p>
                         <button id="btn-submit-logged-in" class="btn-primary w-full rounded text-center text-lg tracking-wider">Submit Scores</button>
@@ -229,7 +229,7 @@
 
                     <!-- New user / login form (shown by default) -->
                     <div id="auth-form">
-                        <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-6 text-center">Who Are You?</h1>
+                        <h1 class="font-heading text-2xl md:text-3xl text-brand-light mb-6 text-center">Who are you?</h1>
 
                         <!-- Toggle: Sign Up / Log In -->
                         <div class="flex justify-center mb-6">

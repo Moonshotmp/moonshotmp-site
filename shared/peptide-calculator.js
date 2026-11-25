@@ -171,7 +171,7 @@
     var style = document.createElement('style');
     style.textContent = [
       '.pcc-wrap { font-family: "Poppins", sans-serif; }',
-      '.pcc-heading { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }',
+      '.pcc-heading { font-family: "Poppins", sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }',
       '.pcc-goal-btn { background:' + BRAND.white5 + '; border:1px solid ' + BRAND.white10 + '; color:' + BRAND.light + '; padding:14px 20px; cursor:pointer; transition:all .25s ease; display:flex; align-items:center; gap:12px; font-family:"Poppins",sans-serif; font-size:15px; font-weight:400; width:100%; text-align:left; }',
       '.pcc-goal-btn:hover { border-color:' + BRAND.gray + '; }',
       '.pcc-goal-btn.selected { border-color:' + BRAND.green + '; background:' + BRAND.greenDim + '; }',
@@ -184,7 +184,7 @@
       '.pcc-input { background:' + BRAND.white5 + '; border:1px solid ' + BRAND.white10 + '; color:' + BRAND.light + '; padding:12px 16px; font-family:"Poppins",sans-serif; font-size:15px; width:100%; transition:border-color .3s ease; box-sizing:border-box; }',
       '.pcc-input:focus { outline:none; border-color:' + BRAND.gray + '; }',
       '.pcc-input::placeholder { color:' + BRAND.white50 + '; }',
-      '.pcc-btn { background:' + BRAND.gray + '; color:' + BRAND.dark + '; font-family:"Oswald",sans-serif; text-transform:uppercase; font-weight:600; padding:14px 32px; border:none; cursor:pointer; transition:all .3s ease; font-size:16px; letter-spacing:0.05em; width:100%; }',
+      '.pcc-btn { background:' + BRAND.gray + '; color:' + BRAND.dark + '; font-family:"Poppins",sans-serif; text-transform:uppercase; font-weight:600; padding:14px 32px; border:none; cursor:pointer; transition:all .3s ease; font-size:16px; letter-spacing:0.05em; width:100%; }',
       '.pcc-btn:hover { background:' + BRAND.light + '; transform:translateY(-2px); }',
       '.pcc-btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }',
       '.pcc-summary { background:' + BRAND.slate + '; padding:32px; }',
