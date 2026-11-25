@@ -999,7 +999,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <h3 id="booking-modal-heading" class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an Appointment</h3>
+                <h3 id="booking-modal-heading" class="text-2xl font-bold text-brand-light mb-2 font-heading uppercase">Book an appointment</h3>
                 <p class="text-brand-gray text-sm mb-8">Which service are you looking for?</p>
                 <div class="space-y-4">
                     <a href="https://moonshot.moonshotehr.com/book/consult" class="block w-full bg-brand-slate hover:bg-brand-slate/80 text-brand-light p-4 rounded-sm transition">

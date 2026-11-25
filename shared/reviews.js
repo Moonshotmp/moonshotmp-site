@@ -181,7 +181,7 @@
         '.mn-rv-section-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;}' +
         '.mn-rv-eyebrow{color:#B2BFBE;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.25rem;}' +
         '.mn-rv-light .mn-rv-eyebrow{color:#2C353E;}' +
-        '.mn-rv-title{color:#F0EEE9;font-family:"Oswald",sans-serif;font-size:1.875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}' +
+        '.mn-rv-title{color:#F0EEE9;font-family:"Poppins",sans-serif;font-size:1.875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}' +
         '.mn-rv-light .mn-rv-title{color:#101921;}' +
 
         /* Google badge */

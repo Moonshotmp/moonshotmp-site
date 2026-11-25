@@ -1,5 +1,6 @@
 /* Critical CSS - loaded synchronously, kept small for fast first paint */
-@font-face{font-family:'Oswald';font-style:normal;font-weight:400 700;font-display:swap;src:url('/fonts/oswald-variable.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 700;font-display:swap;src:url('/fonts/cormorant-garamond-var.woff2') format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:300 700;font-display:swap;src:url('/fonts/cormorant-garamond-italic-var.woff2') format('woff2')}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:300;font-display:swap;src:url('/fonts/poppins-300.woff2') format('woff2')}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/poppins-400.woff2') format('woff2')}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/poppins-500.woff2') format('woff2')}
@@ -7,7 +8,7 @@
 @font-face{font-family:'Poppins';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/poppins-700.woff2') format('woff2')}
 :root{--brand-dark:#101921;--brand-light:#F0EEE9;--brand-gray:#B2BFBE;--brand-slate:#2C353E}
 *,*::before,*::after{box-sizing:border-box}body{margin:0;background-color:#101921;color:#F0EEE9;font-family:'Poppins',ui-sans-serif,system-ui,sans-serif}
-h1,h2,h3,h4,h5,h6{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;margin:0}
+h1,h2,h3,h4,h5,h6{font-family:'Cormorant Garamond','Iowan Old Style','Palatino Linotype',Georgia,serif;font-weight:500;letter-spacing:-.005em;line-height:1.12;font-size-adjust:.44;margin:0}:is(h1,h2,h3,h4,h5,h6).font-bold,:is(h1,h2,h3,h4,h5,h6).font-semibold{font-weight:600}
 img{max-width:100%;display:block}a{color:inherit;text-decoration:inherit}
 .flex{display:flex}.flex-col{flex-direction:column}.flex-grow{flex-grow:1}.flex-shrink-0{flex-shrink:0}
 .items-center{align-items:center}.justify-between{justify-content:space-between}.items-start{align-items:flex-start}.justify-center{justify-content:center}
@@ -46,9 +47,9 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:inherit}
 .object-contain{object-fit:contain}.object-cover{object-fit:cover}
 .space-y-2>:not(:first-child){margin-top:.5rem}.space-y-4>:not(:first-child){margin-top:1rem}.space-y-6>:not(:first-child){margin-top:1.5rem}
 .underline{text-decoration:underline}.no-underline{text-decoration:none}.cursor-pointer{cursor:pointer}.list-none{list-style:none}
-.btn-primary{background-color:#B2BFBE;color:#101921;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;padding:.75rem 2rem;display:inline-block;cursor:pointer;border:none}
-.btn-outline{background-color:transparent;border:1px solid #B2BFBE;color:#B2BFBE;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:500;padding:.75rem 2rem;display:inline-block;cursor:pointer}
-.btn-secondary{background-color:#101921;color:#F0EEE9;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;padding:.75rem 2rem;display:inline-block;cursor:pointer;border:none}
+.btn-primary{background-color:#B2BFBE;color:#101921;font-family:'Poppins',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:.8125rem;font-weight:600;padding:.75rem 2rem;display:inline-block;cursor:pointer;border:none}
+.btn-outline{background-color:transparent;border:1px solid #B2BFBE;color:#B2BFBE;font-family:'Poppins',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:.8125rem;font-weight:500;padding:.75rem 2rem;display:inline-block;cursor:pointer}
+.btn-secondary{background-color:#101921;color:#F0EEE9;font-family:'Poppins',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:.8125rem;font-weight:600;padding:.75rem 2rem;display:inline-block;cursor:pointer;border:none}
 .section-dark{background-color:#101921;color:#F0EEE9}.section-light{background-color:#F0EEE9;color:#101921}.section-slate{background-color:#2C353E;color:#F0EEE9}
 .card{background-color:rgb(255 255 255/.05);border:1px solid rgb(255 255 255/.05);padding:1.5rem}
 .card-light{background-color:rgb(255 255 255/.5);border:1px solid rgb(16 25 33/.1);padding:1.5rem}

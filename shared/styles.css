@@ -14,13 +14,20 @@
    Self-Hosted Google Fonts
    ======================================== */
 
-/* Oswald - Variable font (weight 400-700) */
+/* Cormorant Garamond - variable font (weight 300-700), headings */
 @font-face {
-    font-family: 'Oswald';
+    font-family: 'Cormorant Garamond';
     font-style: normal;
-    font-weight: 400 700;
+    font-weight: 300 700;
     font-display: swap;
-    src: url('/fonts/oswald-variable.woff2') format('woff2');
+    src: url('/fonts/cormorant-garamond-var.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Cormorant Garamond';
+    font-style: italic;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('/fonts/cormorant-garamond-italic-var.woff2') format('woff2');
 }
 
 /* Poppins - 300 */
@@ -90,9 +97,16 @@ body {
    Typography
    ======================================== */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-family: 'Cormorant Garamond','Iowan Old Style','Palatino Linotype',Georgia,serif;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.12;
+    font-size-adjust: 0.44;
+}
+
+:is(h1, h2, h3, h4, h5, h6).font-bold,
+:is(h1, h2, h3, h4, h5, h6).font-semibold {
+    font-weight: 600;
 }
 
 /* ========================================
@@ -101,8 +115,10 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
     background-color: var(--brand-gray);
     color: var(--brand-dark);
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8125rem;
     font-weight: 600;
     padding: 0.75rem 2rem;
     transition: all 0.3s ease;
@@ -144,8 +160,10 @@ h1, h2, h3, h4, h5, h6 {
     background-color: transparent;
     border: 1px solid var(--brand-gray);
     color: var(--brand-gray);
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8125rem;
     font-weight: 500;
     padding: 0.75rem 2rem;
     transition: all 0.3s ease;
@@ -164,8 +182,10 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary {
     background-color: var(--brand-dark);
     color: var(--brand-light);
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8125rem;
     font-weight: 600;
     padding: 0.75rem 2rem;
     transition: all 0.3s ease;
@@ -185,8 +205,10 @@ h1, h2, h3, h4, h5, h6 {
     background-color: transparent;
     border: 1px solid var(--brand-dark);
     color: var(--brand-dark);
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8125rem;
     font-weight: 500;
     padding: 0.75rem 2rem;
     transition: all 0.3s ease;

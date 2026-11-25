@@ -31,7 +31,7 @@
 
                 <!-- Resources -->
                 <div>
-                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">RESOURCES</h3>
+                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">Resources</h3>
                     <div class="space-y-2 text-sm">
                         <p class="text-brand-gray">
                             <a href="/blood-work/" class="hover:text-brand-light transition py-2 inline-block">Blood Work Guide</a>
@@ -50,7 +50,7 @@
 
                 <!-- Contact -->
                 <div>
-                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">CONTACT</h3>
+                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">Contact</h3>
                     <div class="space-y-2 text-sm">
                         <p class="text-brand-gray">
                             <a href="tel:+12244354280" class="hover:text-brand-light transition py-2 inline-block">224-435-4280</a>
@@ -63,7 +63,7 @@
 
                 <!-- Social -->
                 <div>
-                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">FOLLOW</h3>
+                    <h3 class="text-brand-light font-heading font-bold text-sm tracking-widest mb-4">Follow</h3>
                     <div class="space-y-2">
                         <a href="https://www.instagram.com/moonshotmp" target="_blank" rel="noopener noreferrer" class="text-brand-gray hover:text-white text-sm uppercase tracking-wider flex items-center gap-2 py-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>

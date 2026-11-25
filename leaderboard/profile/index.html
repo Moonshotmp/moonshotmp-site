@@ -14,7 +14,7 @@
 
     <!-- Tailwind CSS + Global Styles -->
     <link rel="preload" href="/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/cormorant-garamond-var.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/shared/critical.css">
     <link rel="stylesheet" href="/shared/tailwind.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="/shared/styles.css" media="print" onload="this.media='all'">
@@ -22,7 +22,7 @@
 
     <style>
         /* Status badges */
-        .badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Oswald', sans-serif; }
+        .badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Poppins', sans-serif; }
         .badge-pending { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
         .badge-verified { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
         .badge-rejected { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
@@ -74,7 +74,7 @@
                 <!-- Login state -->
                 <div id="state-login" class="hidden">
                     <div class="text-center mb-8">
-                        <h1 class="text-3xl md:text-5xl font-bold text-brand-light mb-3">MANAGE YOUR SCORES</h1>
+                        <h1 class="text-3xl md:text-5xl font-bold text-brand-light mb-3">Manage your scores</h1>
                         <p class="text-brand-gray font-light">Sign in to view your entries, add proof videos, and update your profile.</p>
                     </div>
                     <div class="max-w-md mx-auto">
@@ -107,7 +107,7 @@
                     <!-- Profile Edit (inline, hidden by default) -->
                     <div id="profile-edit" class="hidden mb-8">
                         <div class="bg-brand-slate border border-white/10 rounded-lg p-6">
-                            <h2 class="text-xl font-bold text-brand-light mb-4">EDIT PROFILE</h2>
+                            <h2 class="text-xl font-bold text-brand-light mb-4">Edit profile</h2>
                             <form id="edit-form" class="space-y-4">
                                 <div class="grid sm:grid-cols-2 gap-4">
                                     <div>
@@ -157,7 +157,7 @@
 
                     <!-- My Entries -->
                     <div id="entries-section" class="mb-8">
-                        <h2 class="text-2xl md:text-3xl font-bold text-brand-light mb-4">MY ENTRIES</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-brand-light mb-4">My entries</h2>
                         <div id="entries-list">
                             <!-- Rendered by JS -->
                         </div>
@@ -194,7 +194,7 @@
                 <button type="button" id="proof-modal-close" class="absolute top-4 right-4 text-brand-gray hover:text-brand-light transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
-                <h3 class="text-lg font-bold text-brand-light mb-4" id="proof-modal-title">ADD PROOF</h3>
+                <h3 class="text-lg font-bold text-brand-light mb-4" id="proof-modal-title">Add proof</h3>
 
                 <!-- Proof tabs -->
                 <div class="flex gap-2 mb-4">
