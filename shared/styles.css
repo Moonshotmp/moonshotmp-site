@@ -102,6 +102,11 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.005em;
     line-height: 1.12;
     font-size-adjust: 0.44;
+    font-variant-numeric: lining-nums;
+}
+
+.font-serif {
+    font-variant-numeric: lining-nums;
 }
 
 :is(h1, h2, h3, h4, h5, h6).font-bold,
