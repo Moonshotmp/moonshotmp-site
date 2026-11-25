@@ -83,6 +83,13 @@ h1,h2,h3{font-family:var(--display);font-weight:500;color:var(--ink);line-height
 .nav .tel{opacity:.85}
 .nav .book span{border-bottom:1px solid #fff;padding-bottom:3px}
 .menu{display:none}
+.menu summary{list-style:none;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:10px;font-size:15px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary i{width:18px;height:10px;border-top:1px solid #fff;border-bottom:1px solid #fff}
+.menu[open] summary i{height:0;border-bottom:0}
+.menu .panel{position:absolute;left:0;right:0;top:100%;background:var(--ink);padding:8px var(--gutter) 28px;display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.16)}
+.menu .panel a{min-height:52px;display:flex;align-items:center;font-size:17px;border-bottom:1px solid rgba(255,255,255,.12)}
+.menu{display:none}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:max(640px,100svh);display:flex;align-items:flex-end;color:#fff;background:var(--ink);overflow:hidden}
@@ -237,6 +244,7 @@ h1,h2,h3{font-family:var(--display);font-weight:500;color:var(--ink);line-height
 /* ---------- responsive ---------- */
 @media (max-width:1000px){
   .nav .hide-m{display:none}
+  .menu{display:block}
   .signals{grid-template-columns:1fr;padding-inline:var(--gutter)}
   .signals figure{aspect-ratio:16/10}
   .panels > ul{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -555,6 +563,18 @@ h1,h2,h3{font-family:var(--display);font-weight:500;color:var(--ink);line-height
       <a class="hide-m" href="/learn/">Learn</a>
       <a class="hide-m" href="/about/">Our Team</a>
       <a class="tel" href="tel:+12244354280">224-435-4280</a>
+      <details class="menu">
+        <summary><i aria-hidden="true"></i>Menu</summary>
+        <div class="panel">
+          <a href="/medical/">Medical</a>
+          <a href="/rehab/">Rehab</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/learn/">Learn</a>
+          <a href="/about/">Our Team</a>
+          <a href="/contact/">Contact</a>
+          <a href="tel:+12244354280">Call 224-435-4280</a>
+        </div>
+      </details>
       <a class="book" href="/booking/"><span>Book a Visit</span></a>
     </nav>
   </div>
